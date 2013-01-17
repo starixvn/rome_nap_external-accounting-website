@@ -1,0 +1,29 @@
+﻿@using Fanex.ExternalAccount.Utilities
+<div id='jqWidget' style="background-color: #fff; font-size: 13px; font-family: Verdana;">
+    <div class="bgTitle titleForm">
+        <div style="float: left; margin: 5px; vertical-align: middle;">
+            Menu Management</div>
+        <div style="float: right; margin: 2px">
+            <input type="button" id="jqbutton" value="Add New Menu" class="button-add" />
+        </div>
+    </div>
+    <div style="margin: 0px 3px 0px 3px">
+        <table id="jqgrid" class="removeRadius">
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Menus.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        Fanex.ExtAcc.Menus.dataTexts = [
+        '@ViewLang.MenuItem',
+        '@ViewLang.Description',
+        '@ViewLang.Url',
+        '@ViewLang.Function',
+        '@ViewLang.Order',
+        '@ViewLang.Lastmodified',
+        '@ViewLang.Active',
+        '@ViewLang.Delete'
+        ];
+    </script>
+}

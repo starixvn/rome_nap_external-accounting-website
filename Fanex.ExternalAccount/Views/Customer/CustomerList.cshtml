@@ -1,0 +1,82 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO
+@section StyleSheet{
+    <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+}
+<div id='jqxWidget' style="background-color: #fff; font-size: 13px; font-family: Verdana;">
+    <div class="bgTitle titleForm">
+        <div style="float: left; margin: 5px; vertical-align: middle;">
+            Customer List
+        </div>
+    </div>
+    <div class="bgTitle titleSearch">
+        <div class="searchBar">
+            <div style="float: left; margin-right: 5px; margin-top: 5px">
+                @ViewLang.Username
+            </div>
+            <div style="float: left">
+                <input id="txtUserName" type="text" class="usernameInput" autocomplete="off" />
+            </div>
+            <div style="float: left; margin-left: 20px; margin-top: 5px">
+                @ViewLang.Status
+            </div>
+            <div id="userGroup" style="float: left; margin-left: 5px">
+                <select id="customerStatus" class="usernameInput group">
+                    <option value="-1">@ViewLang.All</option>
+                    <option value="1">@ViewLang.Open</option>
+                    <option value="2">@ViewLang.Closed</option>
+                    <option value="3">@ViewLang.Suspended</option>
+                </select>
+            </div>
+            <div style="float: left; margin-left: 10px;">
+                <input id="btnSearch" type="button" value="Search" onclick="Fanex.ExtAcc.Customer.Search()" />
+            </div>
+        </div>
+    </div>
+    <div class="bgTitle titleSearch">
+        <div class="searchBar">
+            <div style="float: left; margin-top: 4px;">@ViewLang.Select:</div>
+            <div style="float: left; margin-top: 4px; margin-left: 5px; cursor: pointer; font-weight: bold;" onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</div>
+            <div style="float: left; margin: 2px 5px 0px 5px; color: #C9C9C9">
+                |</div>
+            <div style="float: left; margin-top: 4px; cursor: pointer; font-weight: bold;" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</div>
+        </div>
+        <div style="float: right">
+            <div id="breadcrumbs">
+            </div>
+            <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
+        </div>
+    </div>
+    <div style="margin: 0px 3px 0px 3px" id="mainGrid">
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('#customerStatus').combobox();
+        Fanex.ExtAcc.Customer.dataTexts = [
+            '@ViewLang.Username',
+            '@ViewLang.Firstname',
+            '@ViewLang.Lastname',
+            '@ViewLang.GroupName',
+            '@ViewLang.Creator',
+            '@ViewLang.CreatedDate',
+            '@ViewLang.Permission',
+            '@ViewLang.Active',
+            '@ViewLang.Password'
+        ];
+
+        $(document).ready(function () {
+            $("#userGroup input").val($("#customerStatus")[0].options[0].text);
+            $("#userGroup input").attr("readonly", "true");
+            $("#userGroup input").bind("click", function () {
+                $(this).autocomplete("search", '');
+            });
+            Fanex.ExtAcc.InitSuggestion();
+        });
+    </script>
+}

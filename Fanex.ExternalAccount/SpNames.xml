@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="main">
+    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="main" Plain="0" />
+    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="Report">
+
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="archive" Plain="0" />
+
+    <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SAg" SpName="EAS_Rpt_WinLossDaily_SAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_MAg14" SpName="EAS_Rpt_WinLossDaily_MAg14" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="archive" Plain="0" />
+
+    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="archive" Plain="0" />
+
+    <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="Group">
+    <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="User">
+    <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserCheckPermission_All" SpName="EAS_UserCheckPermission_All" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoAddExistingUser" SpName="EAS_UserInfoAddExistingUser" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoSel" SpName="EAS_UserInfoSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoSelByUserID" SpName="EAS_UserInfoSelByUserID" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdStatus" SpName="EAS_UserInfoUpdStatus" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="main" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="main" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="main" Plain="0" />
+  </Function>
+  <Function Name="Menu and Function">
+    <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FunctionSel" SpName="EAS_FunctionSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FunctionUpd" SpName="EAS_FunctionUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FuncUpdStatus" SpName="EAS_FuncUpdStatus" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuIns" SpName="EAS_MenuIns" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuUpd" SpName="EAS_MenuUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="Customer List">
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="main" Plain="0" />
+    <Setting Key="Age_CustomerUpdUserInfo" SpName="Age_CustomerUpdUserInfo" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="main" Plain="0" />
+  </Function>
+</Functions>

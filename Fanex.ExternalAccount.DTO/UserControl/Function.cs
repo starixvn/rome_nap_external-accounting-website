@@ -1,0 +1,46 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="Function.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.DTO.UserControl
+{
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class Function
+    {
+        public int FuncID { get; set; }
+
+        public string FuncName { get; set; }
+
+        public string FuncDesc { get; set; }
+
+        public string FuncKey { get; set; }
+
+        public int ParentID { get; set; }
+
+        public string ParentName { get; set; }
+
+        public string CreatedDate { get; set; }
+
+        public int Creator { get; set; }
+
+        public int Modifier { get; set; }
+
+        public string ModifiedDate { get; set; }
+
+        public int DisplayOrder { get; set; }
+
+        public bool IsTest { get; set; }
+
+        public ePolicy Policy { get; set; }
+
+        public ePolicy GroupPolicy { get; set; }
+
+        public IEnumerable<FunctionPolicy> AssignGroups { get; set; }
+    }
+}

@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D172255E-6B0A-4602-B22C-8A4BABA84D07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.ExternalAccount.Service</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging">
+      <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interface\Customer\IMemberService.cs" />
+    <Compile Include="Interface\Customer\IAgentService.cs" />
+    <Compile Include="Interface\Customer\IMasterService.cs" />
+    <Compile Include="Interface\Customer\ICustomerService.cs" />
+    <Compile Include="Interface\Customer\IDataService.cs" />
+    <Compile Include="Interface\Customer\ISuperService.cs" />
+    <Compile Include="Interface\Login\ILoginService.cs" />
+    <Compile Include="Interface\Report\IReportService.cs" />
+    <Compile Include="Interface\UserControl\ICachingService.cs" />
+    <Compile Include="Interface\UserControl\IFunctionService.cs" />
+    <Compile Include="Interface\UserControl\IGroupService.cs" />
+    <Compile Include="Interface\UserControl\IMenuService.cs" />
+    <Compile Include="Interface\UserControl\IUserService.cs" />
+    <Compile Include="Impl\Customer\MemberService.cs" />
+    <Compile Include="Impl\Customer\AgentService.cs" />
+    <Compile Include="Impl\Customer\MasterService.cs" />
+    <Compile Include="Impl\Customer\CustomerService.cs" />
+    <Compile Include="Impl\Customer\SuperService.cs" />
+    <Compile Include="Impl\Login\LoginService.cs" />
+    <Compile Include="Impl\Base\ServiceBase.cs" />
+    <Compile Include="Impl\Report\ReportService.cs" />
+    <Compile Include="Impl\UserControl\CachingService.cs" />
+    <Compile Include="Impl\UserControl\GroupService.cs" />
+    <Compile Include="Impl\UserControl\FunctionService.cs" />
+    <Compile Include="Impl\UserControl\MenuService.cs" />
+    <Compile Include="Impl\UserControl\UserService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
+      <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
+      <Name>Fanex.ExternalAccount.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
+      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
+      <Name>Fanex.ExternalAccount.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
+      <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
+      <Name>Fanex.ExternalAccount.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

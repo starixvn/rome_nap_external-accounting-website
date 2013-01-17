@@ -1,0 +1,278 @@
+﻿/*
+* monPickr - jQuery Plugin
+* Just a simple month picker
+*
+* Examples and documentation at: http://update.later
+*
+* Copyright (c) 2012 Nexcel Solutions
+*
+* Version: 0.0.1 (6 Jan 2012)
+* Requires: jQuery v1.7+
+*
+* Swatch color: BDC7D8 - base color
+*               333333 - text, link color
+*               999999 - border, button background
+*/
+
+.monPickrWrap 
+{
+    background-color: #e3dfdf;
+    width: 150px;    
+    font-family:Tahoma, Verdana, Helvetica, Sans-Serif;
+    font-size: 12px;
+    color: #333;
+    border: #bbb solid 1px;
+    z-index: 9999;    
+    border-bottom-left-radius:3px !important;border-bottom-right-radius:3px !important;border-top-left-radius:3px !important;border-top-right-radius:3px !important;
+    line-height: 18px;
+}
+
+.monPickrWrap:hover {
+    box-shadow: 0 0 4px 2px #ccc;
+    -moz-box-shadow: 0 0 4px 2px #ccc;
+    -webkit-box-shadow: 0 0 5px 2px #ccc;
+    
+}
+
+.monPickr {
+    width: 146px;
+    padding: 2px;
+    text-align: center;
+    position:relative;
+    height:20px;
+    background-image: -moz-linear-gradient(center top , #FAFAFA, #DADADA);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #FAFAFA),color-stop(1, #DADADA));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FAFAFA', EndColorStr='#DADADA')";
+	border-bottom-left-radius:3px !important;border-bottom-right-radius:3px !important;border-top-left-radius:3px !important;border-top-right-radius:3px !important;
+}
+
+.monPickr a {
+    border: #999 solid 1px;
+    width: 14px;
+    height: 14px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.monPickr a:hover {
+    /*background-color: #999;
+    text-decoration: underline;
+    color: #FFF;*/
+}
+
+.selectedMonth {
+    cursor: pointer;
+    padding: 0;
+    font-size:12px;
+}
+
+.selectedMonth:hover {
+    text-decoration: underline;
+}
+
+.monPickr .prev {
+    float: left;
+    background: url("Images/icon-left.png") no-repeat;
+    border: 0px;
+}
+
+.monPickr .prev b {
+    float: left;
+    margin-left: 4px;
+    margin-top: -3px;
+}
+
+.monPickr .next {
+    float: right;
+    position:absolute;
+    top:2px;
+    left:132px;
+    background: url("Images/icon-right.png") no-repeat;
+    border: 0px;
+}
+
+.monPickr .next b {
+    float: right;
+    margin-right: 4px;
+    margin-top: -3px;
+}
+
+.monPickrDropDown {
+    display: none;
+    width: 146px;
+    max-height: 330px;
+    overflow: auto;
+    padding: 2px;
+    border-top: 1px solid #999;    
+    background: #FFF;
+}
+
+.monPickrDropDown a {
+    text-decoration: none;
+    color: #333;
+}
+
+.monPickrDropDown a:hover {
+}
+
+.monPickrDropDown .monthWrap li:hover {
+    background-color: #D0E9ED;
+}
+
+.monPickrDropDown a.hover:hover {
+    cursor: default;
+}
+
+.monPickrDropDownInner {
+    margin: 0 0 0 20px;
+    padding: 0;
+    list-style-type: none;
+    line-height: 20px;
+}
+
+.monPickrDropDownInner .year {
+    font-size: 15px;    
+    background-image: url(images/spindown-closed.png);
+    background-repeat: no-repeat;
+    background-position: 0px 8px;
+    padding-left: 14px; 
+}
+
+.monPickrDropDownInner .year_selected {
+    font-size: 15px;    
+    background-image: url(images/spindown-open.png);
+    background-repeat: no-repeat;
+    background-position: 0px 8px;
+    padding-left: 14px; 
+}
+
+.monPickrDropDownInner .monthWrap {
+    display: none;
+}
+
+.monPickrDropDownInner .monthWrap, .monPickrDropDownInner .monthWrap li {
+    list-style-type: none;
+}
+
+.monPickrDropDownInner .monthWrap ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.monPickrDropDownInner .monthWrap a {
+    margin-left: 14px;
+    font-size: 12px;
+}
+
+.monPickrDropDownInner .monthWrap a.selected {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* DATE RANGE   
+----------------------------------------------------------*/
+
+.selectedDayWrap {
+    background-color: #e3dfdf;
+    border: #bbb solid 1px;
+    width: 50px;
+    font-family: Tahoma, Verdana, Helvetica, Sans-Serif;
+    color: #333;
+    z-index: 9999;    	
+	
+	border-bottom-left-radius:3px !important;border-bottom-right-radius:3px !important;border-top-left-radius:3px !important;border-top-right-radius:3px !important;
+}
+
+.selectedDayWrap:hover {
+    box-shadow: 0 0 4px 2px #ccc;
+    -moz-box-shadow: 0 0 4px 2px #ccc;
+    -webkit-box-shadow: 0 0 5px 2px #ccc;
+    cursor: pointer;
+}
+
+.selectedDayWrap a {
+    color: #333;
+    text-decoration: none;
+    line-height: 19px;
+}
+
+.selectedDayWrap a:hover {
+    text-decoration: none;
+}
+
+.dayPickr {
+    text-indent: 10px;
+    font-size:12px;
+    position:relative;
+    height:23px;
+    
+    background-image: -moz-linear-gradient(center top , #FAFAFA, #DADADA);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #FAFAFA),color-stop(1, #DADADA));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#FAFAFA', EndColorStr='#DADADA')";
+	
+	border-bottom-left-radius:3px !important;border-bottom-right-radius:3px !important;border-top-left-radius:3px !important;border-top-right-radius:3px !important;
+}
+
+.dayPickr .selectedDay {
+    line-height:22px;
+}
+.dayPickr .selectedDay:hover {
+    cursor: pointer;
+}
+
+.dayPickr .darr {
+    width: 15px;
+    height: 12px;
+    display: block;
+    float: right;
+    text-decoration: none;
+    font-size: 14px;
+    top:1px;
+    left:32px;
+    position:absolute;
+    background: url("Images/icon-down.png") no-repeat;
+}
+
+.selectedDayWrap:hover .darr {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dayPickr .darr b 
+{
+    font-size: 10px;
+    height: 12px;
+    left:-5px;
+    margin-right: 0px;
+    position:absolute;
+    margin-top:-2px;
+}
+
+.dayPickrDropDown {
+    max-height: 330px;
+    overflow: auto;
+    border-top: #999 solid 1px;
+    display: none;
+    background: #FFF;
+}
+
+.dayPickrDropDown ul {
+    margin: 0;
+    padding: 0;
+}
+
+.dayPickrDropDown li {
+    list-style-type: none;
+    text-indent: 13px;
+}
+
+.dayPickrDropDown li:hover {
+    background-color: #999;
+}
+
+.dayPickrDropDown li:hover a {
+    color: #FFF;
+    cursor: default;
+}

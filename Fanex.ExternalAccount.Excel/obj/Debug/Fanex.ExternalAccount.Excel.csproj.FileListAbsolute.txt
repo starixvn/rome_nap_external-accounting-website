@@ -1,0 +1,8 @@
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\obj\Debug\ResolveAssemblyReference.cache
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.Excel.dll
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.Excel.pdb
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\bin\Debug\NPOI.dll
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\obj\Debug\Fanex.ExternalAccount.Excel.dll
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\obj\Debug\Fanex.ExternalAccount.Excel.pdb
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.DTO.dll
+D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.DTO.pdb

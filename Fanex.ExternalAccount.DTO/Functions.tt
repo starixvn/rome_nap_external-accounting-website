@@ -1,0 +1,30 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ Assembly Name="System.Data" #>
+<#@ Import Namespace="System.Data" #>
+<#@ Import Namespace="System.Data.SqlClient" #>
+
+<#
+	string connectionString = "Persist Security Info=False;User ID=bodbExtAccNet;Password=%bodbExtAccNetLogin6534;Initial Catalog=bodb_EAS;Data Source=10.18.200.215";
+#>
+public enum eFunctions : int
+{
+<#
+	
+	SqlConnection conn = new SqlConnection(connectionString);
+	string sql = "EAS_FunctionSel";
+	SqlCommand command = new SqlCommand(sql, conn);
+	command.CommandType = CommandType.StoredProcedure;
+	conn.Open();
+	SqlDataReader reader = command.ExecuteReader();
+	bool loop = reader.Read();
+	while (loop)
+	{
+#>
+		<#= reader["FuncKey"].ToString() #> = <#= reader["FuncID"].ToString() #><#loop = reader.Read();#><#=loop ? "," : "" #>
+	<#}#>
+	<#
+	reader.Close();
+    conn.Close();
+	#>
+}

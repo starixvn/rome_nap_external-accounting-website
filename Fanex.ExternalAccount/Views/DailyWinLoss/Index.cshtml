@@ -1,0 +1,76 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using System.Web.Optimization
+@{
+    ViewBag.Title = "Home Page";
+}
+@section StyleSheet
+{
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link href="@Url.Content("~/Content/Reports/DailyWinLoss.css")" rel="stylesheet" type="text/css" />
+    }
+    else
+    {
+        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/dailywinloss/css")" rel="stylesheet" type="text/css" />
+    }
+}
+<div>
+    <div class="bgTitle titleForm">
+        <div class="wlDetail">
+            Daily Win Loss
+        </div>
+    </div>
+    <div class="bgTitle titleSearch">
+        <div style="float: left" class="searchBar">
+            <div style="float: left; margin-right: 5px; margin-top: 3px">
+                @ViewLang.Username
+            </div>
+            <div style="float: left;">
+                <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+            </div>
+            <div class="pdCommon">@ViewLang.Date</div>
+            <div style="float: left;">
+                <input id="dtpWinLossDate" type="text" readonly="readonly" />
+                <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate"/>
+            </div>
+            <div style="float: left; padding-left: 25px">
+                <input type="button" value="Submit" id='Submit' class="btnSearch" />
+            </div>
+        </div>
+        <div class="HideMG">
+            <input type="button" value="Hide Margin" id='btnHideMG' style="font-weight: normal; display: none" /></div>
+    </div>
+    <div id="headlineDaily">
+        <div id="InfoDate">
+            <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
+        </div>
+        <div class="groupBack">
+            <div id="tabAgent">
+                Agent</div>
+            <div id="tabMaster">
+                Master</div>
+            <div id="tabSuper">
+                Super</div>
+        </div>
+        <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
+    </div>
+    <div id="mainGrid">
+        <table id="jqgrid" class="removeRadius">
+        </table>
+        <div id="jqpager">
+        </div>
+    </div>
+    <div id='msgNoinfo'>
+        There is no data.</div>
+</div>
+@section Scripts
+{
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script src="@Url.Content("~/Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js")" type="text/javascript"></script>
+    }
+    else
+    {
+        <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/dailywinloss/js")" type="text/javascript"></script>
+    }
+}

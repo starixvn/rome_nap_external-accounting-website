@@ -1,0 +1,102 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.UserControl
+@section StyleSheet
+{
+    <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+}
+<div id='jqWidget' style="background-color: #fff; font-size: 13px; font-family: Verdana;">
+    <div class="bgTitle titleForm">
+        <div style="float: left; margin: 5px; vertical-align: middle;">
+            User Management
+        </div>
+        <div style="float: right; margin: 2px">
+            <input type="button" id="jqbuttonAddUser" value="Add New User" class="button-add" />
+            <input type="button" id="jqbuttonAddExistUser" value="Add Existing User" class="button-add" />
+        </div>
+    </div>
+    <div class="bgTitle titleSearch">
+        <div class="searchBar">
+            <div style="float: left; margin-right: 5px; margin-top: 5px">
+                @ViewLang.Username
+            </div>
+            <div style="float: left">
+                <input id="Usernames" type="text" class="usernameInput" />
+            </div>
+            <div style="float: left; margin-left: 20px; margin-top: 5px">
+                @ViewLang.Group
+            </div>
+            @*<div class="btn-group btn-small">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                @ViewLang.All
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                @{
+                    var CurrentSession = new Fanex.ExternalAccount.Controllers.Context.CurrentSession();
+                }
+                @if (CurrentSession.IsITAdmin)
+                {
+                    <li><a href="#">@ViewLang.All</a></li>
+                }
+                @foreach (Group item in ViewBag.GroupList)
+                {   
+                    <li><a href="#">@item.GroupName</a></li>
+                }
+              </ul>
+            </div>*@
+      
+            <div id="userGroup" style="float: left; margin-left: 5px">
+                <select id="GroupIDs" class="usernameInput group">
+                    @{
+                        var CurrentSession = new Fanex.ExternalAccount.Controllers.Context.CurrentSession();
+                    }
+                    @if (CurrentSession.IsITAdmin)
+                    {
+                        <option value="-1">@ViewLang.All</option>
+                    }
+                    @foreach (Group item in ViewBag.GroupList)
+                    {
+                        <option value="@item.GroupID">@item.GroupName</option>
+                    }
+                </select>
+            </div>
+            <div style="float: left; margin-left: 10px;">
+                <input id="btnSearch" type="button" value="Search" onclick="Fanex.ExtAcc.User.Search()" />
+            </div>
+        </div>
+        <div style="float: right; margin: 8px;">
+            <div style="float: left; font-weight: bold">
+                Active User:&nbsp;
+            </div>
+            <div style="float: left; font-weight: bold" id="activeUsers">
+            </div>
+            <div style="float: left; margin: 0px 10px 0px 10px; color: #C9C9C9">
+                |</div>
+            <div style="float: left; font-weight: bold">
+                Inactive User:&nbsp;
+            </div>
+            <div style="float: left; font-weight: bold" id="inActiveUsers">
+            </div>
+        </div>
+    </div>
+    <div style="margin: 0px 3px 0px 3px">
+        <table id="jqgrid" class="removeRadius">
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        Fanex.ExtAcc.User.dataTexts = [
+        '@ViewLang.Username',
+        '@ViewLang.Firstname',
+        '@ViewLang.Lastname',
+        '@ViewLang.GroupName',
+        '@ViewLang.Creator',
+        '@ViewLang.CreatedDate',
+        '@ViewLang.Permission',
+        '@ViewLang.Active',
+        '@ViewLang.Password'
+    ];
+    </script>
+}
