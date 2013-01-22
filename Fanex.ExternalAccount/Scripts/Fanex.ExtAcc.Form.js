@@ -119,6 +119,6 @@ Fanex.ExtAcc.Form = {
         var timeout = setTimeout(function () {
             $('#windowPopup').remove();
             clearTimeout(timeout);
-        }, 2000);
+        }, 500);
     }
 }
