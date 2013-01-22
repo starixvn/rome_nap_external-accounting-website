@@ -46,7 +46,7 @@ Fanex.ExtAcc.Header = {
 
                     $('#userMenu').superfish();
                     $("#accMenu").css('visibility', 'visible');
-                    // Set Group Name
+                    // Set Group name
                     $('#selectedGroupName').html(selectedGroupName);
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('font-weight', 'bold');
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('color', '#fff');
