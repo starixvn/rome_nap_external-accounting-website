@@ -112,12 +112,12 @@ Fanex.ExtAcc.DailyWinLoss = {
             if (!$this.hidedMargin) {
                 $('#btnHideMG').val('Show Margin');
                 $this.hidedMargin = true;
-                $("#jqgrid").nexcelGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
+                $("#jqgrid").fanexGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
                 $('#HeaderWinlossMargin').html('Win/Loss');
             } else {
                 $('#btnHideMG').val('Hide Margin');
                 $this.hidedMargin = false;
-                $("#jqgrid").nexcelGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
+                $("#jqgrid").fanexGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
                 $('#HeaderWinlossMargin').html('Win/Loss & Margin');
             }
         });
@@ -144,7 +144,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $("#jqgrid").nexcelGrid("resizeGrid");
+                $("#jqgrid").fanexGrid("resizeGrid");
             }
             catch (err) { }
         }
@@ -410,7 +410,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
                 if ($this.totalRows > 0) {
                     $this.gridOptions = $this.Render();
-                    $("#jqgrid").nexcelGrid($this.gridOptions);
+                    $("#jqgrid").fanexGrid($this.gridOptions);
                 }
 
                 $(document).ajaxStop($.unblockUI);

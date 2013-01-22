@@ -133,7 +133,7 @@ Fanex.ExtAcc.Menus = {
         Fanex.ExtAcc.OnResize = function () {
             $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
-                $('#jqgrid').nexcelGrid('resizeGrid');
+                $('#jqgrid').fanexGrid('resizeGrid');
             }
             catch (err) {
             }
@@ -143,7 +143,7 @@ Fanex.ExtAcc.Menus = {
     RenderGrid: function (options) {
         try {
             // Init Grid jqgrid
-            $('#jqgrid').nexcelGrid(options);
+            $('#jqgrid').fanexGrid(options);
             $(document).ajaxStop($.unblockUI);
 
             $('#mainGrid').css('visibility', 'visible');

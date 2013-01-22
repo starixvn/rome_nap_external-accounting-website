@@ -307,7 +307,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $("#jqgrid").nexcelGrid("resizeGrid");
+                $("#jqgrid").fanexGrid("resizeGrid");
             }
             catch (err) { }
         }
@@ -755,7 +755,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $("#jqgrid").nexcelGrid($this.Render());
+                    $("#jqgrid").fanexGrid($this.Render());
                 }
 
                 $(document).ajaxStop($.unblockUI);

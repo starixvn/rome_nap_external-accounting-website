@@ -229,7 +229,7 @@ Fanex.ExtAcc = {
                 $('#fn-' + parentId).addClass('itemParentCollapse2');
             }
 
-            $("#jqgrid").nexcelGrid("resizeGrid");
+            $("#jqgrid").fanexGrid("resizeGrid");
         }
     },
 

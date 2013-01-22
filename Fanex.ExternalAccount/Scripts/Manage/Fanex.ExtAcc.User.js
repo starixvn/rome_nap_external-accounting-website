@@ -99,7 +99,7 @@ Fanex.ExtAcc.User = {
         Fanex.ExtAcc.OnResize = function () {
             $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
-                $('#jqgrid').nexcelGrid('resizeGrid');
+                $('#jqgrid').fanexGrid('resizeGrid');
             }
             catch (err) {
             }
@@ -155,7 +155,7 @@ Fanex.ExtAcc.User = {
                     $('#msgNoinfo').css('display', 'none');
                     $('#jqgrid').css('display', 'block');
                     // Init Grid jqgrid
-                    $('#jqgrid').nexcelGrid(Fanex.ExtAcc.User.options);
+                    $('#jqgrid').fanexGrid(Fanex.ExtAcc.User.options);
 
                     var divs = $('div');
                     var activeUsers = 0;

@@ -213,7 +213,7 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.OnResize = function () {
                 $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
-                    $("#jqgrid").nexcelGrid("resizeGrid");
+                    $("#jqgrid").fanexGrid("resizeGrid");
                 }
                 catch (err) {
                 }
@@ -386,7 +386,7 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.OnResize = function () {
                 $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
-                    $("#jqgrid").nexcelGrid("resizeGrid");
+                    $("#jqgrid").fanexGrid("resizeGrid");
                 }
                 catch (err) {
                 }
@@ -561,7 +561,7 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.OnResize = function () {
                 $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
-                    $("#jqgrid").nexcelGrid("resizeGrid");
+                    $("#jqgrid").fanexGrid("resizeGrid");
                 }
                 catch (err) {
                 }
@@ -742,7 +742,7 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.OnResize = function () {
                 $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
-                    $("#jqgrid").nexcelGrid("resizeGrid");
+                    $("#jqgrid").fanexGrid("resizeGrid");
                 }
                 catch (err) {
                 }
@@ -809,7 +809,7 @@ Fanex.ExtAcc.Customer = {
                 $('#msgNoinfo').css('display', 'none');
                 $('#jqgrid').css('display', 'block');
                 // Init Grid jqgrid
-                $('#jqgrid').nexcelGrid(options);
+                $('#jqgrid').fanexGrid(options);
             }
 
             $(document).ajaxStop($.unblockUI);
