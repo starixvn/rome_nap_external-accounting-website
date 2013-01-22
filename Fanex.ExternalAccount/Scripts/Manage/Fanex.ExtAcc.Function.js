@@ -230,7 +230,7 @@ Fanex.ExtAcc.Function = {
                         }
                     });
 
-                    $('#groups input').css('width', '240px');
+                    $('#groups input').css('width', '235px');
                 });
             });
     },
@@ -351,7 +351,7 @@ Fanex.ExtAcc.Function = {
                     }
                 });
 
-                $('#groupsAdd input').css('width', '240px');
+                $('#groupsAdd input').css('width', '235px');
             });
         });
     },
