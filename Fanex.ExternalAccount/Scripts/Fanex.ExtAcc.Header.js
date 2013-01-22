@@ -79,18 +79,9 @@ Fanex.ExtAcc.Header = {
 
                             var id = event.target.id;
                             selectedGroupName = event.target.innerHTML;
-
-<<<<<<< HEAD
-                            $(id).css('font-weight', 'bold');
-                            $(id).css('color', '#fff');
-                            $('#selectedGroup').html(selectedGroupName);
-                            //$('#selectedGroup').html($(id).html() + '<span class="sf-sub-indicator"></span>'); // tes
-=======
                             $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('font-weight', 'bold');
                             $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('color', '#fff');
                             $('#selectedGroup').html(selectedGroupName + '<span class="sf-sub-indicator"> »</span>');
-                            //$('#selectedGroup').html($(id).html() + '<span class="sf-sub-indicator"></span>');
->>>>>>> 1c3f245a1fbaab7f25b57862df377bd02cf2a861
                             $('#selectedGroupIndex').html(id);
                             $('#selectedGroupName').html(selectedGroupName);
 
