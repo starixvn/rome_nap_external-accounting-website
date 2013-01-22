@@ -82,7 +82,7 @@ Fanex.ExtAcc.Header = {
 
                             $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('font-weight', 'bold');
                             $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('color', '#fff');
-                            $('#selectedGroup').html(selectedGroupName);
+                            $('#selectedGroup').html(selectedGroupName + '<span class="sf-sub-indicator"> »</span>');
                             //$('#selectedGroup').html($(id).html() + '<span class="sf-sub-indicator"></span>');
                             $('#selectedGroupIndex').html(id);
                             $('#selectedGroupName').html(selectedGroupName);
