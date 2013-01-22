@@ -506,3 +506,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 {
 	background-color: #ebebeb !important;
 }
+input, textarea
+{
+	text-indent: 5px;
+}
