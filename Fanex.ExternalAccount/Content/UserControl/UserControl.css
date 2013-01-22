@@ -503,7 +503,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	background: #d4e3eb !important;
 	color: #464646 !important;
 }
-.freegrid tr.highlightrow:hover td, .freegrid .mousehoverbeyond td
+.freegrid tr.highlight-row:hover td, .freegrid .mousehoverbeyond td
 {
 	background-color: #ebebeb !important;
 }

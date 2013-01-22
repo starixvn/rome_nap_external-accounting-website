@@ -216,7 +216,7 @@ Fanex.ExtAcc = {
 
     TogglejqRows: function (parentId, fncIds) {
         for (var i = 0; i < fncIds.length; i++) {
-            var item = $(document).find('[highlightatt=highlightatt_main_' + fncIds[i] + ']');
+            var item = $(document).find('[highlightatt=highlight-att-main-' + fncIds[i] + ']');
 
             if (item.css('display') == 'none') {
                 item.css('display', 'table-row');
