@@ -15,7 +15,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     using Fanex.Common.Extensions;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Infterface.Customer;
+    using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
 

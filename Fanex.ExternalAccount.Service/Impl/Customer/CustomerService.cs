@@ -8,7 +8,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
     using System;
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;
-    using Fanex.ExternalAccount.DataAccess.Infterface.Customer;
+    using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.ExternalAccount.Service.Impl.Base;

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.ExternalAccount.DataAccess.Infterface.Customer
+namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;

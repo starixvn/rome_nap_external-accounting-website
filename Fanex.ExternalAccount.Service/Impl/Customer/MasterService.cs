@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     using System.Linq;
     using System.Text;
     using Fanex.ExternalAccount.DataAccess;
-    using Fanex.ExternalAccount.DataAccess.Infterface.Customer;
+    using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
 
