@@ -1391,7 +1391,6 @@ li:hover
 input[type=text], input[type=password]
 {
 	border: 1px solid #bbb;
-	padding-left: 3px;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1433,7 +1432,7 @@ textarea
 
 .groupCboMenu input
 {
-	width: 258px;
+	width: 255px;
 	height: 22px;
 	vertical-align: top;
 	text-indent: 5px;
