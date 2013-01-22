@@ -14,16 +14,16 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
     //// Method expose for user use
     var methods = {
-        createNexcelGrid: function (opts) {
+        createFanexGrid: function (opts) {
             if(opts.showColumnsShowHide == false)
             {
                 opts.columns = Fanex.Grid.Helper.SetColumnDisplay(opts.columns, opts.columnsNeedHide);
             }
-            opts = $.extend(true, {}, $.fn.nexcelGrid.defaults, opts);
+            opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
             return this.each(function () {
-                var nexcelGrid = new Fanex.Grid(this, opts);
-                nexcelGrid.RenderGrid();
-                return nexcelGrid.GetjQueryInstance();
+                var fanexGrid = new Fanex.Grid(this, opts);
+                fanexGrid.RenderGrid();
+                return fanexGrid.GetjQueryInstance();
             });
         },
         reRender: function (opts) {
@@ -31,48 +31,48 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             {
                 opts.columns = Fanex.Grid.Helper.SetColumnDisplay(opts.columns, opts.columnsNeedHide);
             }
-            opts = $.extend(true, {}, $.fn.nexcelGrid.defaults, opts);
+            opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
             return this.each(function () {
-                var nexcelGrid = new Fanex.Grid(this, opts);
-                nexcelGrid.RenderGrid();
-                return nexcelGrid.GetjQueryInstance();
+                var fanexGrid = new Fanex.Grid(this, opts);
+                fanexGrid.RenderGrid();
+                return fanexGrid.GetjQueryInstance();
             });
         },
         reRenderBodyAfterSort: function(opts, sortColumnName, sortDirection)
         {
-            opts = $.extend(true, {}, $.fn.nexcelGrid.defaults, opts);
+            opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
             return this.each(function () {
-                var nexcelGrid = new Fanex.Grid(this, opts);
-                nexcelGrid.ReRenderBodyAfterSort(sortColumnName, sortDirection);
+                var fanexGrid = new Fanex.Grid(this, opts);
+                fanexGrid.ReRenderBodyAfterSort(sortColumnName, sortDirection);
                 if (opts.showPager == true) {
-                    nexcelGrid.RenderPager();
+                    fanexGrid.RenderPager();
                 }
-                return nexcelGrid.GetjQueryInstance();
+                return fanexGrid.GetjQueryInstance();
             });
         },
         showColumns: function (opts, columnsNeedShow) {
             opts.showColumnsShowHide = true;
             opts.columns = Fanex.Grid.Helper.SetColumnDisplay(opts.columns, columnsNeedShow);
-            opts = $.extend(true, {}, $.fn.nexcelGrid.defaults, opts);
+            opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
             return this.each(function () {
-                var nexcelGrid = new Fanex.Grid(this, opts);
-                opts.pagerOption = Fanex.Grid.List[nexcelGrid.tableContentId].pagerOption;
-                Fanex.Grid.Helper.UpdateSortInforAfterShowHideColumns(opts, Fanex.Grid.List[nexcelGrid.tableContentId].sortOption);
-                nexcelGrid.RenderGrid();
-                return nexcelGrid.GetjQueryInstance();
+                var fanexGrid = new Fanex.Grid(this, opts);
+                opts.pagerOption = Fanex.Grid.List[fanexGrid.tableContentId].pagerOption;
+                Fanex.Grid.Helper.UpdateSortInforAfterShowHideColumns(opts, Fanex.Grid.List[fanexGrid.tableContentId].sortOption);
+                fanexGrid.RenderGrid();
+                return fanexGrid.GetjQueryInstance();
             });
         },
         hideColumns: function (opts, columnsNeedHide) {
             opts.showColumnsShowHide = false;
             opts.columns = Fanex.Grid.Helper.SetColumnDisplay(opts.columns, columnsNeedHide);
             opts.columnsNeedHide = columnsNeedHide;
-            opts = $.extend(true, {}, $.fn.nexcelGrid.defaults, opts);
+            opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
             return this.each(function () {
-                var nexcelGrid = new Fanex.Grid(this, opts);
-                opts.pagerOption = Fanex.Grid.List[nexcelGrid.tableContentId].pagerOption;
-                Fanex.Grid.Helper.UpdateSortInforAfterShowHideColumns(opts, Fanex.Grid.List[nexcelGrid.tableContentId].sortOption);
-                nexcelGrid.RenderGrid();
-                return nexcelGrid.GetjQueryInstance();
+                var fanexGrid = new Fanex.Grid(this, opts);
+                opts.pagerOption = Fanex.Grid.List[fanexGrid.tableContentId].pagerOption;
+                Fanex.Grid.Helper.UpdateSortInforAfterShowHideColumns(opts, Fanex.Grid.List[fanexGrid.tableContentId].sortOption);
+                fanexGrid.RenderGrid();
+                return fanexGrid.GetjQueryInstance();
             });
         },
         resizeGrid: function ()
@@ -87,12 +87,12 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
     };
 
     //// Plugin
-    $.fn.nexcelGrid = function (options) {
+    $.fn.fanexGrid = function (options) {
         if (methods[options]) {
             return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
         }
         else if (typeof options === 'object' || !options) {
-            return methods.createNexcelGrid.apply(this, arguments);
+            return methods.createFanexGrid.apply(this, arguments);
         }
         else {
             throw 'Options cannot be null';
@@ -100,7 +100,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
     };
 
     //// Default Options
-    $.fn.nexcelGrid.defaults = {
+    $.fn.fanexGrid.defaults = {
         customizeHeader: false,
         headerRows: [],
         columns: [],
@@ -130,7 +130,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             currentPage: 1,
             totalItem: 0,
             startPerPage: 100,
-            pageStep: 50
+            pageStep: 50,
+            afterPagedFunction: null
         },
         showTree: false,
         gridExpandHeight: 50,
@@ -147,7 +148,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         {
             customGridSort: null,
             serverSortFunction: null,
-            afterGridSorted: null
+            afterGridSorted: null,
+            beforeGridSorted : null
         },
         hideYBackGroundScroller: false,
         bottomBorderWidth: 1
@@ -523,7 +525,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 parentRowClass = ' parent-row';
             }
             frozenRowHtml.push('<tr class="' 
-            + trClass
+            + trClass + ' '
             + parentRowClass 
             + '" ' 
             + (currentRow.CustomAttr || '')
@@ -538,7 +540,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
                 //// If Merge Row, then add rowspan, If in the same row and there are no other columns, then cal height, or there are some columns but they also have colspan, then cal height
                 if (isValid(currentCol.MergeRowNumber)) {
-                    customSpan += ' rowspan="' + currentCol.MergeRowNumber + '"';
+                    customSpan += ' rowspan="' + currentCol.MergeRowNumber + '" ';
                     if (Fanex.Grid.Helper.CheckHideColSpan(currentRow.Columns)) {
                         currentHeightForComputeCenter = ((options.bodyRowHeight * currentCol.MergeRowNumber) + (currentCol.MergeRowNumber - 1) * 5);
                         currentHeight = 'height:' + currentHeightForComputeCenter + 'px;';
@@ -548,7 +550,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
                 //// If Merge Column and current row is footer, then calculate height
                 if (isValid(currentCol.MergeColNumber)) {
-                    customSpan += ' colspan="' + currentCol.MergeColNumber + '"';
+                    customSpan += ' colspan="' + currentCol.MergeColNumber + '" ';
                     if (isBody == false) {
                         setCurrentWidth = true;
                         var currentWidth = Fanex.Grid.Helper.GetColMergeWidth(me.columnsWidth, me.columnsHastable[currentCol.Name].ColumnIndex, currentCol.MergeColNumber, options.showColumnsShowHide, options.columns);
@@ -566,7 +568,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 if (options.showTree == true
                 && currentRow.SubRows
                 && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true) {
-                    tdClass = 'tr-grid-collapse-expand';
+                    tdClass = 'tr-grid-collapse-expand ';
                 }
 
                 //// Custom render and format number
@@ -584,13 +586,13 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                         + '</span>';
                     }
                 }
-                 var cellContent = '';
-                    if(isForNoData == true)
-                    {
-                        cellContent = currentCol.Value;
-                    }else
-                    {
-                 cellContent = typeof (currentCol.CustomCellRender) == 'function' ? currentCol.CustomCellRender(currentCol, currentValue) : ((typeof (me.columnsHastable[currentCol.Name].CustomCellRender) == 'function' && isBody) ? me.columnsHastable[currentCol.Name].CustomCellRender(currentCol, currentValue) : currentValue);
+                var cellContent = '';
+                if(isForNoData == true)
+                {
+                    cellContent = currentCol.Value;
+                }else
+                {
+                    cellContent = typeof (currentCol.CustomCellRender) == 'function' ? currentCol.CustomCellRender(currentCol, currentValue) : ((typeof (me.columnsHastable[currentCol.Name].CustomCellRender) == 'function' && isBody) ? me.columnsHastable[currentCol.Name].CustomCellRender(currentCol, currentValue) : currentValue);
                 }
 
                 
@@ -609,15 +611,16 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 if(typeof(currentCol.Value) == 'string' 
                 && (currentCol.Value.length * me.currentFontSize > me.columnsHastable[currentCol.Name].Width))
                 {
-                        titleTooltip = ' title="' + currentCol.Value + '"';
+                        titleTooltip = ' title="' + currentCol.Value + '" ';
                 }
 
                 frozenRowHtml.push('<'
                 + colHtmlTag + ' '
-                + customSpan
+                + customSpan + ' '
                 + ' class="' + tdClass + '" >');
+
                 frozenRowHtml.push('<div class="' + (currentCol.CssClass || '') + ' '
-                + customClass
+                + customClass + ' '
                 + truncateClass
                 + '" style="width:' + ((setCurrentWidth && currentWidth) || me.columnsHastable[currentCol.Name].Width) + 'px;'
                 + truncateTop
@@ -662,8 +665,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var parentRowClass = '';
             var trHighlightAtt = (options.showHighlightRow && isBody ? (' highlightatt="highlight-att-main-' + rowIndex + '"') : '');
             var trClass = (options.showHighlightRow ? 'highlight-row ' : '')
-            + (currentRow.CssClass || '')
-            + (treeCollapseExpandClass || '')
+            + (currentRow.CssClass || '') + ' '
+            + (treeCollapseExpandClass || '')  + ' '
             + (options.showDistinctRow ? ((rowIndex+1) % 2 == 0 ? ' freegrid-even' : '') : '');
 
             if (colsLength > 0) {
@@ -673,7 +676,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 }
                 rowHtml.push('<tr class="' + trClass + ' '
                 + parentRowClass + '" '
-                + (currentRow.CustomAttr || '')
+                + (currentRow.CustomAttr || '') + ' '
                 + trHighlightAtt + '>');
 
                 for (var colIndex = 0; colIndex < colsLength; colIndex++) {
@@ -683,13 +686,13 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                     var currentHeight = 'height:' + options.bodyRowHeight + 'px;';
                     var currentHeightForComputeCenter = options.bodyRowHeight;
                     if (isValid(currentCol.MergeRowNumber)) {
-                        customSpan += ' rowspan="' + currentCol.MergeRowNumber + '"';
+                        customSpan += ' rowspan="' + currentCol.MergeRowNumber + '" ';
                         currentHeightForComputeCenter *= currentCol.MergeRowNumber;
                     }
 
                     //// If merge Column, then calculate width for merging
                     if (isValid(currentCol.MergeColNumber)) {
-                        customSpan += ' colspan="' + currentCol.MergeColNumber + '"';
+                        customSpan += ' colspan="' + currentCol.MergeColNumber + '" ';
                         currentWidth = Fanex.Grid.Helper.GetColMergeWidth(me.columnsWidth, me.columnsHastable[currentCol.Name].ColumnIndex, currentCol.MergeColNumber, options.showColumnsShowHide, options.columns);
                     }
 
@@ -745,12 +748,12 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                     if(typeof(currentCol.Value) == 'string' 
                     && (currentCol.Value.length * me.currentFontSize > me.columnsHastable[currentCol.Name].Width))
                     {
-                            titleTooltip = ' title="' + currentCol.Value + '"';
+                            titleTooltip = ' title="' + currentCol.Value + '" ';
                     }
 
                     rowHtml.push('<' + colHtmlTag + ' ' + customSpan + ' class="' + tdClass + '" >');
                     rowHtml.push('<div class="table-cell '
-                    + (currentCol.CssClass || '')
+                    + (currentCol.CssClass || '') + ' '
                     + truncateClass
                     + '" style="width:' + currentWidth + 'px;'
                     + truncateTop
@@ -832,7 +835,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             + '" >');
 
             cellHtml.push('<div class="table-cell '
-                                                + cssClass
+                                                + cssClass + ' '
                                                 + sortClass
                                                 + '" style="'
                                                 + cellWidth
@@ -1006,6 +1009,10 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                             me.RegisterMouseHoverEvent();
                             //// Save for rerender
                             Fanex.Grid.List[me.tableContentId].pagerOption = me.Options.pagerOption;
+                            if(typeof(options.pagerOption.afterPagedFunction) == 'function')
+                            {
+                                 options.pagerOption.afterPagedFunction();
+                            }
                             return false;
                         }
                     };
@@ -1128,6 +1135,10 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                         }
                         else
                         {
+                            if(typeof(options.sortOption.beforeGridSorted) == 'function')
+                            {
+                                options.bodyRows = options.sortOption.beforeGridSorted(options.bodyRows,$this.data('columnname'), currentDirection );
+                            }
                             if(typeof(options.sortOption.customGridSort) == 'function')
                             {
                                 options.bodyRows = options.sortOption.customGridSort(options.bodyRows, $this.data('columnname'), currentDirection, customSortFunction);
@@ -1138,7 +1149,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                             }
                             if(typeof(options.sortOption.afterGridSorted) == 'function')
                             {
-                                options.bodyRows = options.sortOption.afterGridSorted(options.bodyRows);
+                                options.bodyRows = options.sortOption.afterGridSorted(options.bodyRows,$this.data('columnname'), currentDirection );
                             }
                             me.ReRenderBodyAfterSort($this.data('columnname'),currentDirection);
                         }
