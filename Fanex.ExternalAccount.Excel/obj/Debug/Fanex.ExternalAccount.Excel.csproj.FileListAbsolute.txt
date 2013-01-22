@@ -1,8 +1,0 @@
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.Excel.dll
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.Excel.pdb
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.DTO.dll
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\bin\Debug\NPOI.dll
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\bin\Debug\Fanex.ExternalAccount.DTO.pdb
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\obj\Debug\ResolveAssemblyReference.cache
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\obj\Debug\Fanex.ExternalAccount.Excel.dll
-D:\git\external-accounting-site\Fanex.ExternalAccount.Excel\obj\Debug\Fanex.ExternalAccount.Excel.pdb
