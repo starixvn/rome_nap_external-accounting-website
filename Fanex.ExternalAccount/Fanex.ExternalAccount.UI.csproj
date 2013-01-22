@@ -15,10 +15,14 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -213,6 +217,7 @@
     <Content Include="bootstrap\Images\member-btn.png" />
     <Content Include="bootstrap\Images\right.png" />
     <Content Include="bootstrap\Images\showMargin.png" />
+    <Content Include="bootstrap\Images\sort-icon-new3.png" />
     <Content Include="bootstrap\Images\sort.png" />
     <Content Include="bootstrap\Images\super-btn.png" />
     <Content Include="bootstrap\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -413,21 +418,17 @@
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new1.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new3.png" />
+    <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new3a.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sorting_asc.gif" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sorting_bg.gif" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sorting_desc.gif" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\white-top-bottom.gif" />
-    <Content Include="Scripts\Fanex.Grid\numeral.js" />
     <Content Include="Scripts\Fanex.Grid\Pager\go-hover-icon.png" />
     <Content Include="Scripts\Fanex.Grid\Pager\icon_page.gif" />
     <Content Include="Scripts\Fanex.Grid\Pager\jpager.js" />
     <Content Include="Scripts\Fanex.Grid\Pager\pagination.css" />
     <Content Include="Scripts\Fanex.Grid\Pager\seperations.png" />
-    <Content Include="Scripts\jqgrid\css\ui.jqgrid.css" />
-    <Content Include="Scripts\jqgrid\js\grid.locale-en.js" />
-    <Content Include="Scripts\jqgrid\js\jquery.jqGrid.min.js" />
-    <Content Include="Scripts\jqgrid\js\jquery.jqGrid.src.js" />
     <Content Include="Scripts\jquery-1.8.3-vsdoc.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\collapsible.html" />

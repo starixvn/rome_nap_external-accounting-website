@@ -4,45 +4,49 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.Function = {
-    Adapter: null,
     DataFields: null,
     DataSource: null,
-    gridHeight: 200,
+
     FunctionId: null,
-    leftMenuWidth: Fanex.ExtAcc.leftMenuWidth,
+
     URL: '',
-    gHeight: 200,
-    gSize: { width: 500, height: 300 },
-    totalRows: 0,
+
+    $this: null,
 
     Init: function () {
+        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $('#mainGrid').css('visibility', 'hidden');
+
+        $this = this;
+
         this.URL = resolveClientUrl("Function/FunctionListPost");
 
         var titles = $.parseJSON(menuTitles);
         var index = 0;
+        var options = null;
 
-        Fanex.ExtAcc.Function.DataFields = [
+        $this.DataFields = [
             {
-                name: 'FuncName', align: 'left', width: 250, sortable: false, resizable: false, title: false,
-                formatter: function (value, model, row) {
-                    var funcId = row.FuncID;
-                    var isParent = row.ParentID == 0;
+                HeaderText: 'Function', Name: 'FuncName', Width: 220,
+                CustomCellRender: function (cell) {
+                    var funcId = cell.Value.FuncID;
+                    var isParent = cell.Value.ParentID == 0;
                     var hasChild = false;
 
-                    if (Fanex.ExtAcc.Function.DataSource.rows[index + 1]) {
-                        hasChild = Fanex.ExtAcc.Function.DataSource.rows[index + 1].ParentID != 0;
+                    if ($this.DataSource.rows[index + 1]) {
+                        hasChild = $this.DataSource.rows[index + 1].ParentID != 0;
                     }
 
-                    var func = "javascript:Fanex.ExtAcc.Function.ShowEdit(" + row.FuncID + ", '" + titles.EditFunction + "')";
+                    var func = "javascript:Fanex.ExtAcc.Function.ShowEdit(" + funcId + ", '" + titles.EditFunction + "')";
                     var style = isParent && !hasChild ? "menuItemParentOnly" : (!isParent ? "menuItemChild" : "menuItemParent");
                     var div = '';
 
                     if (isParent && hasChild) {
                         var ids = [];
-                        var length = Fanex.ExtAcc.Function.DataSource.rows.length;
+                        var length = $this.DataSource.rows.length;
 
                         for (var i = 0; i < length; i++) {
-                            if (Fanex.ExtAcc.Function.DataSource.rows[i].ParentID == funcId) {
+                            if ($this.DataSource.rows[i].ParentID == funcId) {
                                 ids.push(i);
                             }
                         }
@@ -53,19 +57,18 @@ Fanex.ExtAcc.Function = {
 
                     index++;
 
-                    return div + '<div class="' + style + '"><a href="' + func + '">' + value + '</a></div>';
+                    return div + '<div class="' + style + '"><a href="' + func + '">' + cell.Value.FuncName + '</a></div>';
                 }
             },
-            { name: 'FuncKey', align: 'left', width: 200, sortable: false, resizable: false },
-            { name: 'FuncDesc', align: 'left', width: 250, sortable: false, resizable: false },
-        //                  { name: 'ParentName', align: 'left', width: 150, sortable: false, resizable: false },
-            {name: 'DisplayOrder', align: 'center', width: 50, sortable: false, resizable: false },
-            { name: 'ModifiedDate', align: 'center', width: 150, sortable: false, resizable: false },
-            { name: 'IsTest', align: 'center', width: 50, fixed: true, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
-                    var style = row.IsTest == true ? "menuActive" : "menuInactive";
-                    var funcId = row.FuncID;
-                    var funcName = row.FuncName;
+            { HeaderText: 'Key', Name: 'FuncKey', Width: 200 },
+            { HeaderText: 'Description', Name: 'FuncDesc', Width: 245, AllowTruncate: true },
+            { HeaderText: 'Order', Name: 'DisplayOrder', Width: 50, CellAlign: 'center' },
+            { HeaderText: 'Modified Date', Name: 'ModifiedDate', Width: 160 },
+            { HeaderText: 'Is Test', Name: 'IsTest', Width: 50, CellAlign: 'center',
+                CustomCellRender: function (cell) {
+                    var style = cell.Value.IsTest == true ? "menuActive" : "menuInactive";
+                    var funcId = cell.Value.FuncID;
+                    var funcName = cell.Value.FuncName;
                     var onclick = "javascript:Fanex.ExtAcc.Function.ShowActivate(" + funcId + ", '" + funcName + "')";
 
                     return '<div id="test-' + funcId + '" class="' + style + '" onclick="' + onclick + '"></div>';
@@ -73,9 +76,42 @@ Fanex.ExtAcc.Function = {
             },
         ];
 
-        Fanex.ExtAcc.Function.RenderGrid(Fanex.ExtAcc.Function.dataTexts);
+        $.ajax({
+            url: this.URL,
+            dataType: 'json'
+        })
+        .success(function (data) {
+            $this.DataSource = data;
 
-        $this = this;
+            var rows = data.rows;
+            var bodyRows = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                bodyRows.push({
+                    Columns: [
+                        { Name: 'FuncName', Value: rows[i] },
+                        { Name: 'FuncKey', Value: rows[i].FuncKey },
+                        { Name: 'FuncDesc', Value: rows[i].FuncDesc },
+                        { Name: 'DisplayOrder', Value: rows[i].DisplayOrder },
+                        { Name: 'ModifiedDate', Value: rows[i].ModifiedDate },
+                        { Name: 'IsTest', Value: rows[i] }
+                    ]
+                });
+            }
+
+            options = {
+                columns: $this.DataFields,
+                bodyRows: bodyRows,
+                gridExpandHeight: 100,
+                marginRight: 2,
+                showDistinctRow: false
+            };
+
+            $this.RenderGrid(options);
+        })
+        .error(function (xhr) {
+            $(document).ajaxStop($.unblockUI);
+        });
 
         $('#jqbutton').bind('click', function () {
             $this.AddNew();
@@ -84,67 +120,28 @@ Fanex.ExtAcc.Function = {
         Fanex.ExtAcc.OnResize = function () {
             $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
-                $this.Resize(true);
+                $("#jqgrid").fanexGrid("resizeGrid");
             }
             catch (err) {
             }
         }
     },
 
-    CalculateHeight: function () {
-        this.gridHeight = Math.round($("#footer").position().top - $("#jqgrid").position().top);
-        var oHeight = 103;
-        var mHeight = this.totalRows * 25 + oHeight;
-        if (mHeight < this.gridHeight) {
-            this.gridHeight = mHeight
-        }
-    },
-
-    Resize: function (autoResizeGrid) {
+    RenderGrid: function (options) {
         try {
-            this.CalculateHeight();
+            // Init Grid jqgrid
+            $('#jqgrid').fanexGrid(options);
+            $(document).ajaxStop($.unblockUI);
 
-            // Calculate totalWidth
-            this.totalWidth = 0;
-            for (var i = 0; i < this.DataFields.length; i++) {
-                this.totalWidth += this.DataFields[i].width;
+            $('#mainGrid').css('visibility', 'visible');
+        }
+        catch (e) {
+            if (typeof console != 'undefined') {
+                console.log(e);
             }
 
-            var width = this.width = $("#footer").position().left - this.leftMenuWidth - 8;
-            var height = this.gHeight - (width > this.totalWidth ? 16 : 0);
-
-            if (this.gSize && this.gSize.width == width && this.gSize.height == height) {
-                return;
-            }
-            else {
-                if (autoResizeGrid && this.gSize.width != width) {
-                    $("#jqgrid").setGridWidth(width, true);
-                }
-                this.gSize = { width: width, height: height };
-            }
-        } catch (e) { }
-    },
-
-    RenderGrid: function (columns) {
-        $("#jqgrid").jqGrid({
-            autowidth: true,
-            url: Fanex.ExtAcc.Function.URL,
-            datatype: "json",
-            colNames: columns,
-            colModel: Fanex.ExtAcc.Function.DataFields,
-            height: '100%',
-            jsonReader: { repeatitems: false },
-            hoverrows: true,
-            beforeSelectRow: function (rowid, e) {
-                return false;
-            },
-            beforeProcessing: function (data, status, xhr) {
-                Fanex.ExtAcc.Function.DataSource = data;
-            },
-            loadComplete: function () {
-                $("tr.jqgrow").css("background", "#ffffff");
-            }
-        });
+            $(document).ajaxStop($.unblockUI);
+        }
     },
 
     ShowEdit: function (funcId, title) {

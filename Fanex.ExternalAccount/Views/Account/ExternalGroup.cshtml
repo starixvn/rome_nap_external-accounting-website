@@ -8,6 +8,7 @@
     <title>Select Group</title>
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <link href='http://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
+    <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link href="@Url.Content("~/Content/Account/Login.css")" rel="stylesheet" type="text/css" />
@@ -21,8 +22,7 @@
     {
         <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/externalgroup/css")" rel="stylesheet" type="text/css" />
     }
-    @*    <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
-*@</head>
+</head>
 <body class="main">
     <div id="header">
         <div>

@@ -34,44 +34,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.ViewModel", "Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj", "{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://10.18.200.210:8080/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Fanex.ExternalAccount\\Fanex.ExternalAccount.UI.csproj
-		SccProjectTopLevelParentUniqueName1 = ExternalAccount.sln
-		SccProjectName1 = Fanex.ExternalAccount
-		SccLocalPath1 = Fanex.ExternalAccount
-		SccProjectUniqueName2 = Fanex.ExternalAccount.Controllers\\Fanex.ExternalAccount.Controllers.csproj
-		SccProjectTopLevelParentUniqueName2 = ExternalAccount.sln
-		SccProjectName2 = Fanex.ExternalAccount.Controllers
-		SccLocalPath2 = Fanex.ExternalAccount.Controllers
-		SccProjectUniqueName3 = Fanex.ExternalAccount.Utility\\Fanex.ExternalAccount.Utilities.csproj
-		SccProjectTopLevelParentUniqueName3 = ExternalAccount.sln
-		SccProjectName3 = Fanex.ExternalAccount.Utility
-		SccLocalPath3 = Fanex.ExternalAccount.Utility
-		SccProjectUniqueName4 = Fanex.ExternalAccount.Excel\\Fanex.ExternalAccount.Excel.csproj
-		SccProjectTopLevelParentUniqueName4 = ExternalAccount.sln
-		SccProjectName4 = Fanex.ExternalAccount.Excel
-		SccLocalPath4 = Fanex.ExternalAccount.Excel
-		SccProjectUniqueName5 = Fanex.ExternalAccount.DataAccess\\Fanex.ExternalAccount.DataAccess.csproj
-		SccProjectTopLevelParentUniqueName5 = ExternalAccount.sln
-		SccProjectName5 = Fanex.ExternalAccount.DataAccess
-		SccLocalPath5 = Fanex.ExternalAccount.DataAccess
-		SccProjectUniqueName6 = Fanex.ExternalAccount.DTO\\Fanex.ExternalAccount.DTO.csproj
-		SccProjectTopLevelParentUniqueName6 = ExternalAccount.sln
-		SccProjectName6 = Fanex.ExternalAccount.DTO
-		SccLocalPath6 = Fanex.ExternalAccount.DTO
-		SccProjectUniqueName7 = Fanex.ExternalAccount.Service\\Fanex.ExternalAccount.Service.csproj
-		SccProjectTopLevelParentUniqueName7 = ExternalAccount.sln
-		SccProjectName7 = Fanex.ExternalAccount.Service
-		SccLocalPath7 = Fanex.ExternalAccount.Service
-		SccProjectUniqueName8 = Fanex.ExternalAccount.ViewModel\\Fanex.ExternalAccount.ViewModel.csproj
-		SccProjectTopLevelParentUniqueName8 = ExternalAccount.sln
-		SccProjectName8 = Fanex.ExternalAccount.ViewModel
-		SccLocalPath8 = Fanex.ExternalAccount.ViewModel
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -116,11 +78,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AA9460E2-D098-401E-805B-F7F32CAD8965} = {CE4DF81C-19C1-45D0-8137-EDC702DDEEF7}
 		{4C610986-FD5A-4729-A5C7-747667A0EF9E} = {D1F4405E-ECBD-40D7-B546-4055AD41E9E2}
-		{C8CB1E7B-E68A-4065-AE30-3F8FB371974A} = {1F0C7F58-DBFB-46A0-8265-DDD0D2F1027B}
 		{016F274C-1F76-450B-B80D-E7FB59BE6A2B} = {C6FD860C-848C-44BD-A70F-5C8BC783160C}
 		{E397E628-A155-4259-A806-D8210D54025D} = {A6EE861D-0F4E-4555-85E8-59087743F166}
 		{E0A7A640-964E-4ED8-A065-6109BD505107} = {B0B26207-7F4C-4A21-9E18-6E977520111C}
 		{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B} = {5F81D41A-A506-4DB0-A932-3539EDACB35D}
 		{D172255E-6B0A-4602-B22C-8A4BABA84D07} = {63856606-1856-4DE7-B687-1E7149EF6F1A}
+		{C8CB1E7B-E68A-4065-AE30-3F8FB371974A} = {1F0C7F58-DBFB-46A0-8265-DDD0D2F1027B}
 	EndGlobalSection
 EndGlobal

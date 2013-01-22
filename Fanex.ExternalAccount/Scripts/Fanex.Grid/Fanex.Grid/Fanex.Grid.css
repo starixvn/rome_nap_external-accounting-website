@@ -300,9 +300,9 @@
 
 .freegrid .row_footer table thead th, .freegrid .col_footer table thead th
 {
-    background: #dce2bc !important;
-    background: -moz-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
-    background: -webkit-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
+    background: #f1f1a6 !important;
+    background: -moz-linear-gradient(#f1f1a6, #f1f1a6) #f1f1a6 !important;
+    background: -webkit-linear-gradient(#f1f1a6, #f1f1a6) #f1f1a6 !important;
     color: #4F4F4F;
 }
 
@@ -358,7 +358,7 @@
 
 .freegrid .row-footer-background
 {
-    border-top: 3px solid #ff6600;
+    border-top: 1px solid #ff6600;
     overflow: hidden;
     background: none repeat scroll 0 0 #dce2bc;
     position: absolute;
@@ -457,23 +457,23 @@ div.divSorter.desc {
     background-position: 0 -53px !important;
 }
 
-.freegrid .parentRow td {
+.freegrid .parent-row td {
     background-color: #C2D9EC;
     color: #30465D;
     font-weight: bold;
 }
 
-.freegrid .parentRow .trgridcollapseexpand {
+.freegrid .parent-row .tr-grid-collapse-expand {
     cursor: pointer;
 }
 
 
-.freegrid span.gridexpand {
+.freegrid span.grid-expand {
     background: url("images/expand-small.png") no-repeat scroll 4px center transparent;
     padding: 8px;
 }
 
-.freegrid span.gridcollapse{
+.freegrid span.grid-collapse{
 	padding:8px;
 	background: url(images/collapse-small.png) 4px center no-repeat;
 }
@@ -486,7 +486,7 @@ div.divSorter.desc {
     display: inline-block;
 }
 
-.freegrid .nodatanotfrozen {
+.freegrid .no-data-not-frozen {
 	color: red;
     font-weight: bold;
     text-align: center !important;
@@ -500,16 +500,16 @@ div.divSorter.desc {
     text-align: left !important;
 }
 
-.freegrid .gridId_showhidecolumn {
+.freegrid .grid-show-hide-column {
 	display:none;
 }
 
-.freegrid .highlightrow {
+.freegrid .highlight-row {
 	
 }
 
 
-.freegrid tr.highlightrow:hover td {
+.freegrid tr.highlight-row:hover td {
 	 background-color: #E2FFFF !important;
 }
 
@@ -517,10 +517,20 @@ div.divSorter.desc {
     	background-color: #E2FFFF !important;
 }
 
-.freegrid .borderrighthighlight {
+.freegrid .border-right-highlight {
 	 border-right-width: 2px !important;
 }
 
 .freegrid .colSorter {
 	cursor: pointer;
+}
+
+.freegrid .format-negative {
+	color: Red;
+}
+
+.freegrid .column-truncate {
+	display: inline-block;
+    position: relative;
+    white-space: pre;
 }

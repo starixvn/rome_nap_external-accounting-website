@@ -1,5 +1,5 @@
-D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.DTO\bin\Fanex.ExternalAccount.DTO.dll
-D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.DTO\bin\Fanex.ExternalAccount.DTO.pdb
-D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.DTO\obj\Debug\ResolveAssemblyReference.cache
-D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.DTO\obj\Debug\Fanex.ExternalAccount.DTO.dll
-D:\Samurai\Dev\ExternalAccount\Fanex.ExternalAccount.DTO\obj\Debug\Fanex.ExternalAccount.DTO.pdb
+D:\git\external-accounting-site\Fanex.ExternalAccount.DTO\bin\Fanex.ExternalAccount.DTO.dll
+D:\git\external-accounting-site\Fanex.ExternalAccount.DTO\bin\Fanex.ExternalAccount.DTO.pdb
+D:\git\external-accounting-site\Fanex.ExternalAccount.DTO\obj\Debug\ResolveAssemblyReference.cache
+D:\git\external-accounting-site\Fanex.ExternalAccount.DTO\obj\Debug\Fanex.ExternalAccount.DTO.dll
+D:\git\external-accounting-site\Fanex.ExternalAccount.DTO\obj\Debug\Fanex.ExternalAccount.DTO.pdb

@@ -4,53 +4,55 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.Group = {
-    Adapter: null,
     DataFields: null,
-    gridHeight: 200,
+
     DataSource: null,
     GroupID: 0,
-    leftMenuWidth: Fanex.ExtAcc.leftMenuWidth,
+
     URL: '',
-    gHeight: 200,
-    gSize: { width: 500, height: 300 },
-    totalRows: 0,
+
+    $this: null,
 
     Init: function () {
-        var titles = $.parseJSON(menuTitles);
-        this.URL = resolveClientUrl("Group/GroupListPost");
-        this.DataFields = [
-                    { name: 'GroupName', index: 'GroupName', width: 120, sortable: false, resizable: false,
-                        formatter: function (value, model, row) {
-                            var func = "javascript:Fanex.ExtAcc.Group.ShowEdit(" + row.GroupID + ", '" + titles.EditGroup + "')";
+        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $('#mainGrid').css('visibility', 'hidden');
+        $this = this;
 
-                            return '<div class="editInfo"><a href="' + func + '">' + value + '</a></div>';
+        var titles = $.parseJSON(menuTitles);
+        $this.URL = resolveClientUrl("Group/GroupListPost");
+        $this.DataFields = [
+                    { HeaderText: 'Group Name', Name: 'GroupName', Width: 195,
+                        CustomCellRender: function (cell) {
+                            var func = "javascript:Fanex.ExtAcc.Group.ShowEdit(" + cell.Value.GroupID + ", '" + titles.EditGroup + "')";
+
+                            return '<div class="editInfo"><a href="' + func + '">' + cell.Value.GroupName + '</a></div>';
                         }
                     },
-                    { name: 'NoUsers', index: 'NoUsers', width: 80, align: 'center', sortable: false, resizable: false,
-                        formatter: function (value, model, row) {
-                            var groupId = row.GroupID;
+                    { HeaderText: 'No. of Users', Name: 'NoUsers', Width: 100, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
+                            var groupId = cell.Value.GroupID;
                             var onclick = "javascript:Fanex.ExtAcc.Group.SearchUser(" + groupId + ")";
 
-                            return '<div style="margin-top: 3px; text-align: center"><a href="' + onclick + '">' + value + '</a></div>';
+                            return '<div style="text-align: center"><a href="' + onclick + '">' + cell.Value.NoUsers + '</a></div>';
                         }
                     },
-                    { name: 'Description', index: 'Description', sortable: false, resizable: false, width: 150 },
-                    { name: 'Creator', index: 'Creator', width: 80, sortable: false, resizable: false, align: 'center' },
-                    { name: 'CreatedDate', index: 'CreatedDate', sortable: false, resizable: false, width: 150, align: 'center' },
-                    { name: '', width: 75, align: 'center', sortable: false, resizable: false, fixed: true,
-                        formatter: function (value, model, row) {
-                            var groupId = row.GroupID;
-                            var groupName = row.GroupName;
+                    { HeaderText: 'Description', Name: 'Description', Width: 220 },
+                    { HeaderText: 'Creator', Name: 'Creator', Width: 120, CellAlign: 'center' },
+                    { HeaderText: 'Created Date', Name: 'CreatedDate', Width: 160, CellAlign: 'center' },
+                    { HeaderText: 'Permission', Name: 'Permission', Width: 75, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
+                            var groupId = cell.Value.GroupID;
+                            var groupName = cell.Value.GroupName;
                             var onclick = "javascript:Fanex.ExtAcc.Group.ShowPermission(" + groupId + ", '" + groupName + "')";
 
                             return '<div id="' + groupId + '" class="edit" onclick="' + onclick + '"></div>';
                         }
                     },
-                    { name: '', width: 50, align: 'center', sortable: false, resizable: false, fixed: true,
-                        formatter: function (value, model, row) {
+                    { HeaderText: 'Delete', Name: 'Delete', Width: 50, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
                             var style = "menuDelete";
-                            var groupId = row.GroupID;
-                            var groupName = row.GroupName;
+                            var groupId = cell.Value.GroupID;
+                            var groupName = cell.Value.GroupName;
                             var onclick = "javascript:Fanex.ExtAcc.Group.ShowDelete(" + groupId + ", '" + groupName + "')";
 
                             return '<div id="' + groupId + '" class="' + style + '" onclick="' + onclick + '"></div>';
@@ -58,72 +60,75 @@ Fanex.ExtAcc.Group = {
                     }
                 ];
 
+        $.ajax({
+            url: $this.URL,
+            dataType: 'json'
+        })
+        .success(function (data) {
+            $this.DataSource = data;
+
+            var options = null;
+            var rows = data.rows;
+            var bodyRows = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                bodyRows.push({
+                    Columns: [
+                        { Name: 'GroupName', Value: rows[i] },
+                        { Name: 'NoUsers', Value: rows[i] },
+                        { Name: 'Description', Value: rows[i].Description },
+                        { Name: 'Creator', Value: rows[i].Creator },
+                        { Name: 'CreatedDate', Value: rows[i].CreatedDate },
+                        { Name: 'Permission', Value: rows[i] },
+                        { Name: 'Delete', Value: rows[i] }
+                    ]
+                });
+            }
+
+            options = {
+                columns: $this.DataFields,
+                bodyRows: bodyRows,
+                gridExpandHeight: 100,
+                marginRight: 2,
+                showDistinctRow: false,
+                allowTruncate: true
+            };
+
+            $this.RenderGrid(options);
+        })
+        .error(function (xhr) {
+            $(document).ajaxStop($.unblockUI);
+        });
+
         $('#jqbutton').bind('click', function () {
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Group/AddGroup'), 'Add New Group', 400, 330, false);
         });
 
-        $this = this;
-
         Fanex.ExtAcc.OnResize = function () {
             $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-            $this.Resize(true)
-        }
-
-        this.RenderGrid(this.dataTexts);
-    },
-
-    CalculateHeight: function () {
-        this.gridHeight = Math.round($("#footer").position().top - $("#jqgrid").position().top);
-        var oHeight = 103;
-        var mHeight = this.totalRows * 25 + oHeight;
-        if (mHeight < this.gridHeight) {
-            this.gridHeight = mHeight
+            try {
+                $("#jqgrid").fanexGrid("resizeGrid");
+            }
+            catch (err) {
+            }
         }
     },
-    Resize: function (autoResizeGrid) {
+
+    RenderGrid: function (options) {
         try {
-            this.CalculateHeight();
+            // Init Grid jqgrid
+            $('#jqgrid').fanexGrid(options);
+            $(document).ajaxStop($.unblockUI);
 
-            // Calculate totalWidth
-            this.totalWidth = 0;
-            for (var i = 0; i < this.DataFields.length; i++) {
-                this.totalWidth += this.DataFields[i].width;
+            $('#mainGrid').css('visibility', 'visible');
+        }
+        catch (e) {
+            if (typeof console != 'undefined') {
+                console.log(e);
             }
 
-            var width = this.width = $("#footer").position().left - this.leftMenuWidth - 8;
-            var height = this.gHeight - (width > this.totalWidth ? 16 : 0);
-
-            if (this.gSize && this.gSize.width == width && this.gSize.height == height) {
-                return;
-            }
-            else {
-                if (autoResizeGrid && this.gSize.width != width) {
-                    $("#jqgrid").setGridWidth(width, true);
-                }
-                this.gSize = { width: width, height: height };
-            }
-        } catch (e) { }
-    },
-
-    RenderGrid: function (columns) {
-        var titles = $.parseJSON(menuTitles);
-        $("#jqgrid").jqGrid(
-            {
-                autowidth: true,
-                url: Fanex.ExtAcc.Group.URL,
-                datatype: "json",
-                colNames: columns,
-                colModel: Fanex.ExtAcc.Group.DataFields,
-                height: '100%',
-                jsonReader: { repeatitems: false, id: 'GroupName' },
-                hoverrows: true,
-                beforeSelectRow: function (rowid, e) {
-                    return false;
-                },
-                loadComplete: function () {
-                    $("tr.jqgrow").css("background", "#ffffff");
-                }
-            });
+            $(document).ajaxStop($.unblockUI);
+        }
     },
 
     ShowEdit: function (groupId, title) {
@@ -259,12 +264,6 @@ Fanex.ExtAcc.Group = {
     },
 
     SearchUser: function (groupId) {
-        var index = '?index=0';
-
-        if (location.href.indexOf('?index=') != -1) {
-            index = '?index=' + location.href.split('?index=')[1];
-        }
-
-        location.href = resolveClientUrl('User/UserList/?username=&groupId=' + groupId + index);
+        location.href = resolveClientUrl('User/UserList/?username=&groupId=' + groupId + '&/' + $('#selectedGroupName').html());
     }
 }
