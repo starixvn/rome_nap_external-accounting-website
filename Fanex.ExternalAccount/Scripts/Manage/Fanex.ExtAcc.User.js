@@ -4,19 +4,21 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.User = {
-    Adapter: null,
     DataFields: null,
     DataSource: null,
-    gridHeight: 200,
+
     UserId: null,
-    leftMenuWidth: Fanex.ExtAcc.leftMenuWidth,
+
     IsFirstLoad: true,
     URL: '',
-    gHeight: 200,
-    gSize: { width: 500, height: 300 },
-    totalRows: 0,
+
+    $this: null,
+    options: null,
 
     Init: function () {
+        $('#mainGrid').css('visibility', 'hidden');
+        $this = this;
+
         $("#GroupIDs").combobox({
         });
 
@@ -28,46 +30,46 @@ Fanex.ExtAcc.User = {
 
         var titles = $.parseJSON(menuTitles);
 
-        this.DataFields = [
+        $this.DataFields = [
             {
-                name: 'Username', align: 'left', width: 120, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
-                    var userId = row.UserID;
+                HeaderText: 'Username', Name: 'Username', Width: 120,
+                CustomCellRender: function (cell) {
+                    var userId = cell.Value.UserID;
 
                     var func = "javascript:Fanex.ExtAcc.User.ShowEdit(" + userId + ", '" + titles.EditUser + "')";
 
-                    return '<div style="margin: 3px"><a href="' + func + '">' + value + '</a></div>';
+                    return '<div style="margin: 3px"><a href="' + func + '">' + cell.Value.Username + '</a></div>';
                 }
             },
-            { name: 'FirstName', align: 'left', width: 120, sortable: false, resizable: false },
-            { name: 'LastName', align: 'left', width: 120, sortable: false, resizable: false },
-            { name: 'GroupName', align: 'left', width: 120, sortable: false, resizable: false },
-            { name: 'Creator', align: 'left', width: 120, sortable: false, resizable: false },
-            { name: 'CreatedDate', align: 'center', width: 150, sortable: false, resizable: false },
-            { name: '', align: 'center', width: 75, fixed: true, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
-                    var userId = row.UserID;
-                    var username = row.Username;
-                    var groupName = row.GroupName;
+            { HeaderText: 'First Name', Name: 'FirstName', Width: 100 },
+            { HeaderText: 'Last Name', Name: 'LastName', Width: 100 },
+            { HeaderText: 'Group Name', Name: 'GroupName', Width: 115 },
+            { HeaderText: 'Creator', Name: 'Creator', Width: 120 },
+            { HeaderText: 'Created Date', Name: 'CreatedDate', CellAlign: 'center', Width: 160 },
+            { HeaderText: 'Permission', Name: 'Permission', CellAlign: 'center', Width: 75,
+                CustomCellRender: function (cell) {
+                    var userId = cell.Value.UserID;
+                    var username = cell.Value.Username;
+                    var groupName = cell.Value.GroupName;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowPermission(" + userId + ",'" + username + "','" + groupName + "')";
 
                     return '<div class="edit" onclick="' + onclick + '"></div>';
                 }
             },
-            { name: '', align: 'center', cellsalign: 'center', width: 50, fixed: true, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
-                    var style = row.Enabled == true ? "menuActive" : "menuInactive";
-                    var userId = row.UserID;
-                    var userName = row.Username;
+            { HeaderText: 'Active', Name: 'Enabled', CellAlign: 'center', Width: 50,
+                CustomCellRender: function (cell) {
+                    var style = cell.Value.Enabled == true ? "menuActive" : "menuInactive";
+                    var userId = cell.Value.UserID;
+                    var userName = cell.Value.Username;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowActivate(" + userId + ", '" + userName + "')";
 
                     return '<div id="' + userId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                 }
             },
-            { name: '', align: 'center', cellsalign: 'center', width: 70, fixed: true, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
+            { HeaderText: 'Password', Name: 'ResetPwd', CellAlign: 'center', Width: 70,
+                CustomCellRender: function (cell) {
                     var style = "menuResetPwd";
-                    var userId = row.UserID;
+                    var userId = cell.Value.UserID;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowResetPwd(" + userId + ")";
 
                     return '<div class="' + style + '" onclick="' + onclick + '"></div>';
@@ -79,12 +81,12 @@ Fanex.ExtAcc.User = {
             var code = e.keyCode ? e.keyCode : e.which;
 
             if (code == 13) {
-                Fanex.ExtAcc.User.IsFirstLoad = false;
-                Fanex.ExtAcc.User.Search();
+                $this.IsFirstLoad = false;
+                $this.Search($this.IsFirstLoad);
             }
         });
 
-        this.Search(this.IsFirstLoad);
+        $this.Search($this.IsFirstLoad);
 
         $('#jqbuttonAddUser').bind('click', function () {
             Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, 300, false);
@@ -94,92 +96,97 @@ Fanex.ExtAcc.User = {
             Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddExistUser"), $.parseJSON(menuTitles).CreateExistUser, 400, 200, false);
         });
 
-        $this = this;
-
         Fanex.ExtAcc.OnResize = function () {
             $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
-                $this.Resize(true);
+                $('#jqgrid').nexcelGrid('resizeGrid');
             }
             catch (err) {
             }
         }
     },
 
-    CalculateHeight: function () {
-        this.gridHeight = Math.round($("#footer").position().top - $("#jqgrid").position().top);
-        var oHeight = 103;
-        var mHeight = this.totalRows * 25 + oHeight;
-        if (mHeight < this.gridHeight) {
-            this.gridHeight = mHeight
-        }
-    },
-
-    Resize: function (autoResizeGrid) {
+    RenderGrid: function () {
         try {
-            this.CalculateHeight();
+            $.ajax({
+                url: Fanex.ExtAcc.User.URL,
+                dataType: 'json'
+            })
+            .success(function (data) {
+                Fanex.ExtAcc.User.DataSource = data;
 
-            // Calculate totalWidth
-            this.totalWidth = 0;
-            for (var i = 0; i < this.DataFields.length; i++) {
-                this.totalWidth += this.DataFields[i].width;
-            }
+                var rows = data.rows;
+                var bodyRows = [];
 
-            var width = this.width = $("#footer").position().left - this.leftMenuWidth - 8;
-            var height = this.gHeight - (width > this.totalWidth ? 16 : 0);
-
-            if (this.gSize && this.gSize.width == width && this.gSize.height == height) {
-                return;
-            }
-            else {
-                if (autoResizeGrid && this.gSize.width != width) {
-                    $("#jqgrid").setGridWidth(width, true);
+                for (var i = 0; i < rows.length; i++) {
+                    bodyRows.push({
+                        Columns: [
+                        { Name: 'Username', Value: rows[i] },
+                        { Name: 'FirstName', Value: rows[i].FirstName },
+                        { Name: 'LastName', Value: rows[i].LastName },
+                        { Name: 'GroupName', Value: rows[i].GroupName },
+                        { Name: 'Creator', Value: rows[i].Creator },
+                        { Name: 'CreatedDate', Value: rows[i].CreatedDate },
+                        { Name: 'Permission', Value: rows[i] },
+                        { Name: 'Enabled', Value: rows[i] },
+                        { Name: 'ResetPwd', Value: rows[i] }
+                    ]
+                    });
                 }
-                this.gSize = { width: width, height: height };
-            }
-        } catch (e) { }
-    },
 
-    RenderGrid: function (columns) {
-        if ($('#gbox_jqgrid').length == 0) {
-            $('#jqgrid').jqGrid('GridUnload');
+                Fanex.ExtAcc.User.options = {
+                    columns: Fanex.ExtAcc.User.DataFields,
+                    bodyRows: bodyRows,
+                    gridExpandHeight: 130,
+                    marginRight: 2,
+                    showDistinctRow: false
+                };
+
+                if (bodyRows.length == 0) {
+                    $('#msgNoinfo').css('display', 'block');
+                    $('#jqgrid').css('display', 'none');
+
+                    $('#activeUsers').html('0');
+                    $('#inActiveUsers').html('0');
+
+                    $('#mainGrid').css('visibility', 'visible');
+                }
+                else {
+                    $('#msgNoinfo').css('display', 'none');
+                    $('#jqgrid').css('display', 'block');
+                    // Init Grid jqgrid
+                    $('#jqgrid').nexcelGrid(Fanex.ExtAcc.User.options);
+
+                    var divs = $('div');
+                    var activeUsers = 0;
+                    var inActiveUsers = 0;
+
+                    for (var i = 0; i < divs.length; i++) {
+                        if (divs[i].className == 'menuActive') {
+                            activeUsers++;
+                        }
+
+                        if (divs[i].className == 'menuInactive') {
+                            inActiveUsers++;
+                        }
+                    }
+
+                    $('#activeUsers').html(activeUsers);
+                    $('#inActiveUsers').html(inActiveUsers);
+
+                    $('#mainGrid').css('visibility', 'visible');
+                }
+
+                $(document).ajaxStop($.unblockUI);
+            });
         }
-
-        $("#jqgrid").jqGrid({
-            autowidth: true,
-            url: Fanex.ExtAcc.User.URL,
-            datatype: "json",
-            colNames: columns,
-            colModel: Fanex.ExtAcc.User.DataFields,
-            height: '100%',
-            jsonReader: { repeatitems: false },
-            hoverrows: true,
-            beforeSelectRow: function (rowid, e) {
-                return false;
-            },
-            loadComplete: function (data) {
-                var divs = $('div');
-                var activeUsers = 0;
-                var inActiveUsers = 0;
-
-                for (var i = 0; i < divs.length; i++) {
-                    if (divs[i].className == 'menuActive') {
-                        activeUsers++;
-                    }
-
-                    if (divs[i].className == 'menuInactive') {
-                        inActiveUsers++;
-                    }
-                }
-
-                $('#activeUsers').html(activeUsers);
-                $('#inActiveUsers').html(inActiveUsers);
-
-                $("tr.jqgrow").css("background", "#ffffff");
+        catch (e) {
+            if (typeof console != 'undefined') {
+                console.log(e);
             }
-        });
 
-        $("#jqgrid").jqGrid('setGridParam', { url: Fanex.ExtAcc.User.URL, datatype: "json", page: 1 }).trigger("reloadGrid");
+            $(document).ajaxStop($.unblockUI);
+        }
     },
 
     ShowEdit: function (userId, title) {
@@ -392,6 +399,7 @@ Fanex.ExtAcc.User = {
     },
 
     Search: function (IsFirstLoad) {
+        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
         var username = '';
         var groupId = null;
 
@@ -422,7 +430,7 @@ Fanex.ExtAcc.User = {
         Fanex.ExtAcc.User.URL = resolveClientUrl("User/UserListPost/?username=" + username + "&groupId=" + groupId);
 
         if (this.dataTexts) {
-            this.RenderGrid(this.dataTexts);
+            this.RenderGrid();
         }
     }
 }

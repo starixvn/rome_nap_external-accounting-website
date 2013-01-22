@@ -4,45 +4,47 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.Menus = {
-    Adapter: null,
     DataFields: null,
     DataSource: null,
-    gridHeight: 200,
+
     MenuId: null,
-    leftMenuWidth: Fanex.ExtAcc.leftMenuWidth,
+
     URL: '',
-    gHeight: 200,
-    gSize: { width: 500, height: 300 },
-    totalRows: 0,
+
+    $this: null,
 
     Init: function () {
-        this.URL = resolveClientUrl("Menu/MenuListPost");
+        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $('#mainGrid').css('visibility', 'hidden');
+        $this = this;
+
+        $this.URL = resolveClientUrl("Menu/MenuListPost");
 
         var titles = $.parseJSON(menuTitles);
         var index = 0;
 
-        Fanex.ExtAcc.Menus.DataFields = [
+        $this.DataFields = [
             {
-                name: 'MenuName', align: 'left', width: 150, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
-                    var menuId = row.MenuID;
-                    var isParent = row.ParentID == 0;
+                HeaderText: 'Menu Item', Name: 'MenuName', Width: 160,
+                CustomCellRender: function (cell) {
+                    var menuId = cell.Value.MenuID;
+                    var isParent = cell.Value.ParentID == 0;
                     var hasChild = false;
 
-                    if (Fanex.ExtAcc.Menus.DataSource.rows[index + 1]) {
-                        hasChild = Fanex.ExtAcc.Menus.DataSource.rows[index + 1].ParentID != 0;
+                    if ($this.DataSource.rows[index + 1]) {
+                        hasChild = $this.DataSource.rows[index + 1].ParentID != 0;
                     }
 
-                    var func = "javascript:Fanex.ExtAcc.Menus.ShowEdit(" + row.MenuID + ", '" + titles.Edit + "')";
+                    var func = "javascript:Fanex.ExtAcc.Menus.ShowEdit(" + cell.Value.MenuID + ", '" + titles.Edit + "')";
                     var style = isParent && !hasChild ? "menuItemParentOnly" : (!isParent ? "menuItemChild" : "menuItemParent");
                     var div = '';
 
                     if (isParent && hasChild) {
                         var ids = [];
-                        var length = Fanex.ExtAcc.Menus.DataSource.rows.length;
+                        var length = $this.DataSource.rows.length;
 
                         for (var i = 0; i < length; i++) {
-                            if (Fanex.ExtAcc.Menus.DataSource.rows[i].ParentID == menuId) {
+                            if ($this.DataSource.rows[i].ParentID == menuId) {
                                 ids.push(i);
                             }
                         }
@@ -53,30 +55,29 @@ Fanex.ExtAcc.Menus = {
 
                     index++;
 
-                    return div + '<div class="' + style + '"><a href="' + func + '">' + value + '</a></div>';
+                    return div + '<div class="' + style + '"><a href="' + func + '">' + cell.Value.MenuName + '</a></div>';
                 }
             },
-            { name: 'MenuDesc', align: 'left', width: 150, sortable: false, resizable: false },
-        //                  { name: 'ParentName', align: 'left', width: 120, sortable: false, resizable: false },
-            {name: 'Url', align: 'left', width: 200, sortable: false, resizable: false },
-            { name: 'FuncName', align: 'left', width: 150, sortable: false, resizable: false },
-            { name: 'DisplayOrder', align: 'center', width: 50, sortable: false, resizable: false },
-            { name: 'ModifiedDate', align: 'center', width: 150, sortable: false, resizable: false },
-            { name: '', align: 'center', width: 50, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
-                    var style = row.IsActive == true ? "menuActive" : "menuInactive";
-                    var menuId = row.MenuID;
-                    var menuName = row.MenuName;
+            { HeaderText: 'Description', Name: 'MenuDesc', Width: 150 },
+            { HeaderText: 'URL', Name: 'Url', Width: 145 },
+            { HeaderText: 'Function', Name: 'FuncName', Width: 150 },
+            { HeaderText: 'Order', Name: 'DisplayOrder', Width: 50, CellAlign: 'center' },
+            { HeaderText: 'Last Modified', Name: 'ModifiedDate', Width: 160 },
+            { HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
+                CustomCellRender: function (cell) {
+                    var style = cell.Value.IsActive == true ? "menuActive" : "menuInactive";
+                    var menuId = cell.Value.MenuID;
+                    var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowActivate(" + menuId + ", '" + menuName + "')";
 
                     return '<div id="menu-' + menuId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                 }
             },
-            { name: '', align: 'center', width: 50, sortable: false, resizable: false,
-                formatter: function (value, model, row) {
+            { HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
+                CustomCellRender: function (cell) {
                     var style = "menuDelete";
-                    var menuId = row.MenuID;
-                    var menuName = row.MenuName;
+                    var menuId = cell.Value.MenuID;
+                    var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowDelete(" + menuId + ", '" + menuName + "')";
 
                     return '<div id="' + menuId + '" class="' + style + '" onclick="' + onclick + '"></div>';
@@ -84,81 +85,76 @@ Fanex.ExtAcc.Menus = {
             }
         ];
 
-        Fanex.ExtAcc.Menus.RenderGrid(Fanex.ExtAcc.Menus.dataTexts);
+        $.ajax({
+            url: $this.URL,
+            dataType: 'json'
+        })
+        .success(function (data) {
+            $this.DataSource = data;
+
+            var options = null;
+            var bodyRows = [];
+            var rows = data.rows;
+
+            for (var i = 0; i < rows.length; i++) {
+                bodyRows.push({
+                    Columns: [
+                        { Name: 'MenuName', Value: rows[i] },
+                        { Name: 'MenuDesc', Value: rows[i].MenuDesc },
+                        { Name: 'Url', Value: rows[i].Url },
+                        { Name: 'FuncName', Value: rows[i].FuncName },
+                        { Name: 'DisplayOrder', Value: rows[i].DisplayOrder },
+                        { Name: 'ModifiedDate', Value: rows[i].ModifiedDate },
+                        { Name: 'IsActive', Value: rows[i] },
+                        { Name: 'Delete', Value: rows[i] }
+                    ]
+                });
+            }
+
+            options = {
+                columns: $this.DataFields,
+                bodyRows: bodyRows,
+                gridExpandHeight: 100,
+                marginRight: 2,
+                showDistinctRow: false,
+                allowTruncate: true
+            };
+
+            $this.RenderGrid(options);
+        })
+        .error(function (xhr) {
+            $(document).ajaxStop($.unblockUI);
+        });
 
         $('#jqbutton').bind('click', function () {
             Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, 460, false);
         });
 
-        $this = this;
-
         Fanex.ExtAcc.OnResize = function () {
             $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
-                $this.Resize(true);
+                $('#jqgrid').nexcelGrid('resizeGrid');
             }
             catch (err) {
             }
         }
     },
 
-    CalculateHeight: function () {
-        this.gridHeight = Math.round($("#footer").position().top - $("#jqgrid").position().top);
-        var oHeight = 103;
-        var mHeight = this.totalRows * 25 + oHeight;
-        if (mHeight < this.gridHeight) {
-            this.gridHeight = mHeight
-        }
-    },
-
-    Resize: function (autoResizeGrid) {
+    RenderGrid: function (options) {
         try {
-            this.CalculateHeight();
+            // Init Grid jqgrid
+            $('#jqgrid').nexcelGrid(options);
+            $(document).ajaxStop($.unblockUI);
 
-            // Calculate totalWidth
-            this.totalWidth = 0;
-            for (var i = 0; i < this.DataFields.length; i++) {
-                this.totalWidth += this.DataFields[i].width;
+            $('#mainGrid').css('visibility', 'visible');
+        }
+        catch (e) {
+            if (typeof console != 'undefined') {
+                console.log(e);
             }
 
-            var width = this.width = $("#footer").position().left - this.leftMenuWidth - 8;
-            var height = this.gHeight - (width > this.totalWidth ? 16 : 0);
-
-            if (this.gSize && this.gSize.width == width && this.gSize.height == height) {
-                return;
-            }
-            else {
-                if (autoResizeGrid && this.gSize.width != width) {
-                    $("#jqgrid").setGridWidth(width, true);
-                }
-                this.gSize = { width: width, height: height };
-            }
-        } catch (e) { }
-    },
-
-    RenderGrid: function (columns) {
-        var titles = $.parseJSON(menuTitles);
-
-        $("#jqgrid").jqGrid(
-            {
-                autowidth: true,
-                url: Fanex.ExtAcc.Menus.URL,
-                datatype: "json",
-                colNames: columns,
-                colModel: Fanex.ExtAcc.Menus.DataFields,
-                height: '100%',
-                jsonReader: { repeatitems: false },
-                hoverrows: true,
-                beforeSelectRow: function (rowid, e) {
-                    return false;
-                },
-                beforeProcessing: function (data, status, xhr) {
-                    Fanex.ExtAcc.Menus.DataSource = data;
-                },
-                loadComplete: function () {
-                    $("tr.jqgrow").css("background", "#ffffff");
-                }
-            });
+            $(document).ajaxStop($.unblockUI);
+        }
     },
 
     ShowEdit: function (menuId, title) {

@@ -15,6 +15,7 @@
 }
 #btnHideMG
 {
+    font-family: Tahoma;
 	background: url(../../Images/hideMargin.png) repeat-x scroll 5px center;
 	border: 1px solid #aaa;
 	color: #464646;
@@ -31,6 +32,7 @@
 }
 #btnHideMG:hover
 {
+    font-family: Tahoma;
 	background: url(../../Images/showMargin.png) repeat-x scroll 5px center;
 	border: 1px solid #aaa;
 	color: #464646;

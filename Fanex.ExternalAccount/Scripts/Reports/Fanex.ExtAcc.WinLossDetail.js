@@ -4,13 +4,6 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.WinLossDetail = {
-    theme: Fanex.ExtAcc.theme,
-    leftMenuWidth: Fanex.ExtAcc.leftMenuWidth,
-    gHeight: 200,
-    separatedLineHeight: 15,
-    gSize: { width: 500, height: 300 },
-    totalRows: 0,
-    totalRowsInPage: 50,
     groupName: '',
     username: '',
     srecommend: 0,
@@ -20,24 +13,16 @@ Fanex.ExtAcc.WinLossDetail = {
     supername: '',
     mastername: '',
     agentname: '',
-    pageSize: 50,
     fromdate: new Date(),
     todate: new Date(),
     parameterProducts: '',
-    isCheckAll: true,
-    dataResult: new Array(),
     fixedsortdata: new Array(),
     removedsortdata: new Array(),
     fixedsortlist: new Array(),
     url: resolveClientUrl('WinLossDetail/GetData'),
     viewlevel: 5,
-    bindingCompleted: true,
     dataSource: [],
     $this: null,
-    fixedFrozen: 0,
-    fixedFrozenFullHeight: 17,
-    sumTurnover: 0,
-    sumGrossComm: 0,
     SetRange: function () {
         return {
             minDate: new Date($('#MinDate').val()),
@@ -225,8 +210,6 @@ Fanex.ExtAcc.WinLossDetail = {
 
         $this.initMonthlyCalendar();
 
-        this.gHeight = Math.round($("#footer").position().top - $("#mainGrid").position().top);
-
         $('#ddlGroupName').bind('change', function (event) {
             var args = event.args;
             if (args) {
@@ -252,7 +235,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         $('#exporttoexcel').click(function () {
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = "WinLossDetail/GetExportToExcelWinLossDetail?" + params;
+            document.location.href = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params;
         });
 
         $('#ViewHistoryReport').click(function () {
@@ -323,8 +306,10 @@ Fanex.ExtAcc.WinLossDetail = {
         });
 
         Fanex.ExtAcc.OnResize = function () {
-            $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-            $this.Resize(true);
+            try {
+                $("#jqgrid").nexcelGrid("resizeGrid");
+            }
+            catch (err) { }
         }
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
@@ -344,185 +329,143 @@ Fanex.ExtAcc.WinLossDetail = {
             $('#SelectedLevel').html('Super');
         }
     },
-    VAlignColumns: function (gridId, colsIndex) {
-    },
-    BorderRightColumn: function (gridId, colIdx) {
-    },
-    GroupColums: function (gridId, colText, colsIndex) {
-    },
-
-    RenderUsernameColumn: function (value, model, row) {
-        if (row == null || value == 'Grand Total' || $this.viewlevel < 2) {
-            return '<div style="line-height: 22px; text-align: left; padding-left: 3px">' + value + '</div>';
+    RenderUsernameColumn: function (cell) {
+        if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
+            return '<div style="line-height: 22px; text-align: left; padding-left: 3px">' + cell.Value.Username + '</div>';
         }
         else {
-            var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + row.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;"><a style="text-decoration: none;margin:0" href="' + func + '">' + value + '</a></div>';
+            var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
+            return html = '<div style="line-height: 22px; text-align: left;"><a style="text-decoration: none;margin:0" href="' + func + '">' + cell.Value.Username + '</a></div>';
         }
     },
-    RenderValueNum: function (value) {
-        var classNum = "posNum";
-        if (value < 0) {
-            classNum = "negNum";
+    CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
+        if (sortDirection == 'ASC') {
+            return cell1Value.Username > cell2Value.Username ? 1 : -1;
         }
-        return '<div class="' + classNum + '">' + numeral(value).format('0,0.00') + '</div>';
+        else {
+            return cell1Value.Username < cell2Value.Username ? 1 : -1;
+        }
     },
     defaultColumns: [
-        { name: '', width: 0, hidden: true, frozen: true, fixed: true },
-        { name: 'CustId', width: 0, hidden: true, frozen: true, fixed: true },
-        { name: 'Username', index: 'Username', width: 100, resizable: false, sorttype: "text", frozen: true, formatter: function (value, model, row) { return $this.RenderUsernameColumn(value, model, row); }, fixed: true },
-        { name: 'Turnover', index: 'Turnover', width: 110, resizable: false, sorttype: "float", frozen: true, formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'GrossComm', index: 'GrossComm', width: 110, resizable: false, sorttype: "float", frozen: true, formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MemberWinlost', index: 'MemberWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'PlayerComm', index: 'PlayerComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MemberTotal', index: 'MemberTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgWinlost', index: 'AgWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgComm', index: 'AgComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgTotal', index: 'AgTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MAgWinlost', index: 'MAgWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MAgComm', index: 'MAgComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MAgTotal', index: 'MAgTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'SAgWinlost', index: 'SAgWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'SAgComm', index: 'SAgComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'SAgTotal', index: 'SAgTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'Company', index: 'Company', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true }
+        { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
+        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'MAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'SAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'SAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'SAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
         ],
     MAgColumns: [
-        { name: '', width: 0, hidden: true, frozen: true, fixed: true },
-        { name: 'CustId', width: 0, hidden: true, frozen: true, fixed: true },
-        { name: 'Username', index: 'Username', width: 100, resizable: false, sorttype: "text", frozen: true, formatter: function (value, model, row) { return $this.RenderUsernameColumn(value, model, row); }, fixed: true },
-        { name: 'Turnover', index: 'Turnover', width: 110, resizable: false, sorttype: "float", frozen: true, formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'GrossComm', index: 'GrossComm', width: 110, resizable: false, sorttype: "float", frozen: true, formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MemberWinlost', index: 'MemberWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'PlayerComm', index: 'PlayerComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MemberTotal', index: 'MemberTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgWinlost', index: 'AgWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgComm', index: 'AgComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgTotal', index: 'AgTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MAgWinlost', index: 'MAgWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MAgComm', index: 'MAgComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MAgTotal', index: 'MAgTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'Company', index: 'Company', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true }
+        { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
+        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'MAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
         ],
     AgColumns: [
-        { name: '', width: 0, hidden: true, frozen: true, fixed: true },
-        { name: 'CustId', width: 0, hidden: true, frozen: true, fixed: true },
-        { name: 'Username', index: 'Username', width: 100, resizable: false, sorttype: "string", frozen: true, formatter: function (value, model, row) { return $this.RenderUsernameColumn(value, model, row); }, fixed: true },
-        { name: 'Turnover', index: 'Turnover', width: 110, resizable: false, sorttype: "float", frozen: true, formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'GrossComm', index: 'GrossComm', width: 110, resizable: false, sorttype: "float", frozen: true, formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MemberWinlost', index: 'MemberWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'PlayerComm', index: 'PlayerComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'MemberTotal', index: 'MemberTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgWinlost', index: 'AgWinlost', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgComm', index: 'AgComm', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'AgTotal', index: 'AgTotal', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true },
-        { name: 'Company', index: 'Company', width: 110, resizable: false, sorttype: "float", formatter: function (value) { return $this.RenderValueNum(value); }, fixed: true }
+        { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
+        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
         ],
+    SAgHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    ],
+    MAgHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    ],
+    AgHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    ],
     Render: function () {
-        // Init Grid jqgrid
-        $('#gbox_jqgrid').remove();
-        $('#jqgrid').remove();
-        $('#jqpager').remove();
-        $('#mainGrid').append($('<table id="jqgrid" class="removeRadius"></table><div id="jqpager"></div>'));
-
         var arrColData = new Array();
-        var arrColNames = new Array();
         var arrGroupHeaders = new Array();
+        var arrGroupFooters = new Array();
 
         if (this.viewlevel == 1) {
             arrColData = this.AgColumns;
-            arrColNames = ['', '', 'Username', 'Turnover', 'GrossComm', 'Win/Loss', 'Comm', 'Total', 'Win/Loss', 'Comm', 'Total', 'Company'];
-            arrGroupHeaders = [
-	                { startColumnName: 'MemberWinlost', numberOfColumns: 3, titleText: 'Member' },
-                    { startColumnName: 'AgWinlost', numberOfColumns: 3, titleText: 'Agent' }
-                ];
+            arrGroupHeaders = this.AgHeaderColumns;
+            arrGroupFooters = this.AgFooterColumns;
         } else if (this.viewlevel == 2) {
             arrColData = this.MAgColumns;
-            arrColNames = ['', '', 'Username', 'Turnover', 'GrossComm', 'Win/Loss', 'Comm', 'Total', 'Win/Loss', 'Comm', 'Total', 'Win/Loss', 'Comm', 'Total', 'Company'];
-            arrGroupHeaders = [
-	                { startColumnName: 'MemberWinlost', numberOfColumns: 3, titleText: 'Member' },
-                    { startColumnName: 'AgWinlost', numberOfColumns: 3, titleText: 'Agent' },
-                    { startColumnName: 'MAgWinlost', numberOfColumns: 3, titleText: 'Master' }
-                ];
+            arrGroupHeaders = this.MAgHeaderColumns;
+            arrGroupFooters = this.MAgFooterColumns;
         } else {
             arrColData = this.defaultColumns;
-            arrColNames = ['', '', 'Username', 'Turnover', 'GrossComm', 'Win/Loss', 'Comm', 'Total', 'Win/Loss', 'Comm', 'Total', 'Win/Loss', 'Comm', 'Total', 'Win/Loss', 'Comm', 'Total', 'Company'];
-            arrGroupHeaders = [
-                                { startColumnName: 'MemberWinlost', numberOfColumns: 3, titleText: 'Member' },
-                                { startColumnName: 'AgWinlost', numberOfColumns: 3, titleText: 'Agent' },
-                                { startColumnName: 'MAgWinlost', numberOfColumns: 3, titleText: 'Master' },
-            	                { startColumnName: 'SAgWinlost', numberOfColumns: 3, titleText: 'Super' }
-                            ];
+            arrGroupHeaders = this.SAgHeaderColumns;
+            arrGroupFooters = this.SAgFooterColumns;
         }
 
-        // Render with jqGrid
-        $('#jqgrid').jqGrid({
-            datatype: "local",
-            width: this.gSize.width,
-            height: '100%',
-            pager: '#jqpager',
-            rowNum: this.pageSize,
-            rowList: [50, 100, 500],
-            colNames: arrColNames,
-            colModel: arrColData,
-            hoverrows: true,
-            footerrow: true,
-            userDataOnFooter: true,
-            viewsortcols: 'vertical',
-            beforeSelectRow: function (rowid, e) {
-                return false;
+        var gridOption = {
+            customizeHeader: true,
+            groupHeaderRows: [{ Columns: arrGroupHeaders}],
+            columns: arrColData,
+            numberOfFrozenColumn: 3,
+            showFooter: true,
+            gridExpandHeight: 256,
+            showPager: true,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 500],
+                currentPage: 0,
+                totalItem: $this.totalRows,
+                itemsPerPage: 50
             },
-            onPaging: function () {
-                if ($('#jqgrid').jqGrid('getGridParam', 'page') == $('#jqgrid').jqGrid('getGridParam', 'total')) {
-                    $this.totalRowsInPage = $this.totalRows % $this.pageSize;
+            highlightFrozenWidth: 2,
+            marginRight: 2,
+            bottomBorderWidth: 0,
+            showDistinctRow: false,
+            sortOption:
+            {
+                afterGridSorted: function (rows) {
+                    return $this.customsortfunc(rows);
                 }
-                else {
-                    $this.totalRowsInPage = $this.pageSize;
-                }
-                $this.CalculateHeight();
-
-                // For Fixed Column Footer
-                var topFooterPosition = $this.gHeight - $this.fixedFrozen + 21;
-                $('#frozenFooter').remove();
-                $('#jqpager').before('<div id="frozenFooter" style="top:' + topFooterPosition + 'px;" class="ui-jqgrid-bdiv frozen-div fixedColumnFooter"><table cellspacing="0" cellpadding="0" border="0" role="grid" class="ui-jqgrid-ftable"><tbody><tr role="row" class="ui-widget-content footrow footrow-ltr"><td role="gridcell" style="display:none;" aria-describedby="jqgrid_"></td><td title="Grand Total" role="gridcell" style="width: 100px;" aria-describedby="jqgrid_Username"><div class="grandTotal">Grand Total</div></td><td title="' + numeral($this.sumTurnover).format('0,0.00') + '" role="gridcell" style="width: 110px;" aria-describedby="jqgrid_Turnover"><div class="posNum">' + numeral($this.sumTurnover).format('0,0.00') + '</div></td><td title="' + numeral($this.sumGrossComm).format('0,0.00') + '" role="gridcell" style="width: 110px;" aria-describedby="jqgrid_GrossComm"><div class="posNum">' + numeral($this.sumGrossComm).format('0,0.00') + '</div></td></tr></tbody></table></div>');
-            },
-            previousSelectedTh: null,
-            onSortCol: function (iCol, index, sortorder) {
-                this.previousSelectedTh = (this.previousSelectedTh != null) ? this.previousSelectedTh : $("tr.ui-jqgrid-labels:last th:eq(" + this.p.lastsort + ")", this.grid.fhDiv);
-                var newSelectedTh = $("tr.jqg-second-row-header th:eq(" + index + ")", this.grid.fhDiv);
-
-                // sort on another column
-                if (index != this.p.lastsort) {
-                    $("span.ui-grid-ico-sort", this.previousSelectedTh).addClass('ui-state-disabled');
-                    $(this.previousSelectedTh).attr("aria-selected", "false");
-                }
-                else { //sort on same column
-                    var prevSortOrder = (sortorder == "asc") ? "desc" : "asc";
-                    $("span.ui-icon-" + prevSortOrder, newSelectedTh).addClass('ui-state-disabled');
-                }
-
-                // enable sort order icon
-                $("span.ui-icon-" + sortorder, newSelectedTh).removeClass('ui-state-disabled');
-                $(newSelectedTh).attr("aria-selected", "true");
-
-                this.previousSelectedTh = newSelectedTh;
-            },
-            loadComplete: function () {
-                $("tr.jqgrow").css("background", "#ffffff");
             }
-        });
+        };
 
-        $('#jqgrid').jqGrid('setGroupHeaders', {
-            useColSpanStyle: true,
-            groupHeaders: arrGroupHeaders
-        });
-
-        $('#jqgrid').jqGrid('setFrozenColumns');
-
-        $('#jqgrid').clearGridData(true);
-
-        $this.sumTurnover = 0;
-        $this.sumGrossComm = 0;
+        // For Summary Footer
+        var sumTurnover = 0;
+        var sumGrossComm = 0;
         var sumMemberWinlost = 0;
         var sumPlayerComm = 0;
         var sumMemberTotal = 0;
@@ -537,10 +480,67 @@ Fanex.ExtAcc.WinLossDetail = {
         var sumSAgTotal = 0;
         var sumCompany = 0;
 
+        //// Assing BodyData
+        var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
-            $('#jqgrid').jqGrid('addRowData', i + 1, this.dataSource[i]);
-            $this.sumTurnover += this.dataSource[i].Turnover;
-            $this.sumGrossComm += this.dataSource[i].GrossComm;
+            if (this.viewlevel == 1) {
+                bodyData.push({
+                    Columns: [
+                    { Name: "Username", Value: this.dataSource[i] },
+                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                    { Name: "Company", Value: this.dataSource[i].Company }
+                ]
+                })
+            } else if (this.viewlevel == 2) {
+                bodyData.push({
+                    Columns: [
+                    { Name: "Username", Value: this.dataSource[i] },
+                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                    { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                    { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                    { Name: "Company", Value: this.dataSource[i].Company }
+                ]
+                })
+            } else {
+                bodyData.push({
+                    Columns: [
+                    { Name: "Username", Value: this.dataSource[i] },
+                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                    { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                    { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                    { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
+                    { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
+                    { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
+                    { Name: "Company", Value: this.dataSource[i].Company }
+                ]
+                })
+            }
+
+            sumTurnover += this.dataSource[i].Turnover;
+            sumGrossComm += this.dataSource[i].GrossComm;
             sumMemberWinlost += this.dataSource[i].MemberWinlost;
             sumPlayerComm += this.dataSource[i].PlayerComm;
             sumMemberTotal += this.dataSource[i].MemberTotal;
@@ -560,92 +560,81 @@ Fanex.ExtAcc.WinLossDetail = {
             sumCompany += this.dataSource[i].Company;
         }
 
+        gridOption.bodyRows = bodyData;
+        gridOption.pagerOption.totalItem = this.totalRows;
+
+        //// Asign Footer Data
+        var footerData = [];
         if (this.viewlevel == 1) {
-            $('#jqgrid').jqGrid('footerData', 'set', { Username: 'Grand Total', Turnover: $this.sumTurnover, GrossComm: $this.sumGrossComm
-                        , MemberWinlost: sumMemberWinlost, PlayerComm: sumPlayerComm, MemberTotal: sumMemberTotal
-                        , AgWinlost: sumAgWinlost, AgComm: sumAgComm, AgTotal: sumAgTotal
-                        , Company: sumCompany
+            footerData.push({ Columns: [
+                { Name: "Username", Value: "Grand Total" },
+                { Name: "Turnover", Value: sumTurnover },
+                { Name: "GrossComm", Value: sumGrossComm },
+                { Name: "MemberWinlost", Value: sumMemberWinlost },
+                { Name: "PlayerComm", Value: sumPlayerComm },
+                { Name: "MemberTotal", Value: sumMemberTotal },
+                { Name: "AgWinlost", Value: sumAgWinlost },
+                { Name: "AgComm", Value: sumAgComm },
+                { Name: "AgTotal", Value: sumAgTotal },
+                { Name: "Company", Value: sumCompany }
+            ]
             });
         } else if (this.viewlevel == 2) {
-            $('#jqgrid').jqGrid('footerData', 'set', { Username: 'Grand Total', Turnover: $this.sumTurnover, GrossComm: $this.sumGrossComm
-                        , MemberWinlost: sumMemberWinlost, PlayerComm: sumPlayerComm, MemberTotal: sumMemberTotal
-                        , AgWinlost: sumAgWinlost, AgComm: sumAgComm, AgTotal: sumAgTotal
-                        , MAgWinlost: sumMAgWinlost, MAgComm: sumMAgComm, MAgTotal: sumMAgTotal
-                        , Company: sumCompany
+            footerData.push({ Columns: [
+                { Name: "Username", Value: "Grand Total" },
+                { Name: "Turnover", Value: sumTurnover },
+                { Name: "GrossComm", Value: sumGrossComm },
+                { Name: "MemberWinlost", Value: sumMemberWinlost },
+                { Name: "PlayerComm", Value: sumPlayerComm },
+                { Name: "MemberTotal", Value: sumMemberTotal },
+                { Name: "AgWinlost", Value: sumAgWinlost },
+                { Name: "AgComm", Value: sumAgComm },
+                { Name: "AgTotal", Value: sumAgTotal },
+                { Name: "MAgWinlost", Value: sumMAgWinlost },
+                { Name: "MAgComm", Value: sumMAgComm },
+                { Name: "MAgTotal", Value: sumMAgTotal },
+                { Name: "Company", Value: sumCompany }
+            ]
+            });
+        } else {
+            footerData.push({ Columns: [
+                { Name: "Username", Value: "Grand Total" },
+                { Name: "Turnover", Value: sumTurnover },
+                { Name: "GrossComm", Value: sumGrossComm },
+                { Name: "MemberWinlost", Value: sumMemberWinlost },
+                { Name: "PlayerComm", Value: sumPlayerComm },
+                { Name: "MemberTotal", Value: sumMemberTotal },
+                { Name: "AgWinlost", Value: sumAgWinlost },
+                { Name: "AgComm", Value: sumAgComm },
+                { Name: "AgTotal", Value: sumAgTotal },
+                { Name: "MAgWinlost", Value: sumMAgWinlost },
+                { Name: "MAgComm", Value: sumMAgComm },
+                { Name: "MAgTotal", Value: sumMAgTotal },
+                { Name: "SAgWinlost", Value: sumSAgWinlost },
+                { Name: "SAgComm", Value: sumSAgComm },
+                { Name: "SAgTotal", Value: sumSAgTotal },
+                { Name: "Company", Value: sumCompany }
+            ]
             });
         }
-        else {
-            $('#jqgrid').jqGrid('footerData', 'set', { Username: 'Grand Total', Turnover: $this.sumTurnover, GrossComm: $this.sumGrossComm
-                        , MemberWinlost: sumMemberWinlost, PlayerComm: sumPlayerComm, MemberTotal: sumMemberTotal
-                        , AgWinlost: sumAgWinlost, AgComm: sumAgComm, AgTotal: sumAgTotal
-                        , MAgWinlost: sumMAgWinlost, MAgComm: sumMAgComm, MAgTotal: sumMAgTotal
-                        , SAgWinlost: sumSAgWinlost, SAgComm: sumSAgComm, SAgTotal: sumSAgTotal
-                        , Company: sumCompany
-            });
-        }
 
-        $("#jqgrid").jqGrid('setGridParam', { rowNum: $this.pageSize, page: 1, total: parseInt($this.totalRows / $this.pageSize + 1) }).trigger("reloadGrid");
-
-        if (this.totalRows < this.pageSize) {
-            this.totalRowsInPage = this.totalRows;
-            $('#jqpager').hide();
-        }
-        else {
-            this.totalRowsInPage = this.pageSize;
-            $('#jqpager').show();
-        }
-
-        $('#mainGrid').css('visibility', 'visible');
-        this.Resize(true);
+        gridOption.footerRows = footerData;
+        return gridOption;
     },
-    CalculateHeight: function () {
-        this.gHeight = Math.round($("#footer").position().top - $("#mainGrid").position().top) - 75;
-        var mHeight = (this.totalRowsInPage) * 25 + 25;
-        if (mHeight < this.gHeight) {
-            this.gHeight = mHeight;
-            this.fixedFrozen = this.totalRowsInPage * 2;
-        }
-        else {
-            this.fixedFrozen = this.fixedFrozenFullHeight;
-        }
-    },
-    Resize: function (autoResizeGrid) {
-        try {
-            this.CalculateHeight();
-
-            // Calculate totalWidth
-            this.totalWidth = 0;
-            for (var i = 0; i < this.defaultColumns.length; i++) {
-                this.totalWidth += this.defaultColumns[i].width;
-            }
-
-            var width = this.width = $("#footer").position().left - this.leftMenuWidth - 8;
-            var height = this.gHeight - (width > this.totalWidth ? 16 : 0);
-
-            if (this.gSize && this.gSize.width == width && this.gSize.height == height) {
-            }
-            else {
-                if (autoResizeGrid && this.gSize.width != width) {
-                    $("#jqgrid").setGridWidth(width, false);
+    customsortfunc: function (rows) {
+        var countFixedSort = $this.fixedsortlist.length;
+        if (countFixedSort > 0) {
+            for (var i = 0; i < countFixedSort; i++) {
+                for (var j = 0; j < rows.length; j++) {
+                    if ($this.fixedsortlist[i] == rows[j].Columns[0].Value.CustId) {
+                        $this.fixedsortdata.push(rows.slice(j, j + 1)[0]);
+                        rows.unshift(rows.splice(j, 1)[0]);
+                        break;
+                    }
                 }
-                if (autoResizeGrid && this.gSize.height != height) {
-                    $("#jqgrid").setGridHeight(height);
-                }
-                this.gSize = { width: width, height: height };
             }
-
-            // For Frozen
-            $(".ui-jqgrid-bdiv").css('height', ($this.gHeight - $this.fixedFrozen - 25) + 'px');
-
-            // For Fixed Column Footer
-            var topFooterPosition = $this.gHeight - $this.fixedFrozen + 21;
-            $('#frozenFooter').remove();
-            $('#jqpager').before('<div id="frozenFooter" style="top:' + topFooterPosition + 'px;" class="ui-jqgrid-bdiv frozen-div fixedColumnFooter" style="overflow:hidden"><table cellspacing="0" cellpadding="0" border="0" role="grid" class="ui-jqgrid-ftable"><tbody><tr role="row" class="ui-widget-content footrow footrow-ltr"><td role="gridcell" style="display:none;" aria-describedby="jqgrid_"></td><td title="Grand Total" role="gridcell" style="width: 100px;" aria-describedby="jqgrid_Username"><div class="grandTotal">Grand Total</div></td><td title="' + numeral($this.sumTurnover).format('0,0.00') + '" role="gridcell" style="width: 110px;" aria-describedby="jqgrid_Turnover"><div class="posNum">' + numeral($this.sumTurnover).format('0,0.00') + '</div></td><td title="' + numeral($this.sumGrossComm).format('0,0.00') + '" role="gridcell" style="width: 110px;" aria-describedby="jqgrid_GrossComm"><div class="posNum">' + numeral($this.sumGrossComm).format('0,0.00') + '</div></td></tr></tbody></table></div>');
-
-            var moreFooterWidth = this.fixedFrozen != this.fixedFrozenFullHeight ? 0 : 17;
-            $(".ui-jqgrid-sdiv").css('width', $("#gview_jqgrid").width() - moreFooterWidth + 'px');
-            $($("#gview_jqgrid").children()[1]).css('width', $("#gview_jqgrid").width() - moreFooterWidth + 'px');
-        } catch (e) { }
+        }
+        return rows;
     },
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
@@ -696,72 +685,7 @@ Fanex.ExtAcc.WinLossDetail = {
             this.todate = $('#monPickr1').monPickr("getToDate", "MM/dd/yyyy");
         }
     },
-    customsortfunc: function (column, direction) {
-        $this = Fanex.ExtAcc.WinLossDetail;
-        if (direction == 'ascending') direction = true;
-        if (direction == 'descending') direction = false;
-        var tmpToString = Object.prototype.toString;
-        Object.prototype.toString = (typeof column == "function") ? column : function () { return this[column] };
-        if (direction != null) {
-            var countFixedSort = $this.fixedsortlist.length;
-            if (countFixedSort > 0) {
-                $this.dataSource.sort($this.compare);
-                if (!direction) {
-                    $this.dataSource.reverse();
-                }
-
-                for (var i = 0; i < countFixedSort; i++) {
-                    for (var j = 0; j < $this.dataSource.length; j++) {
-                        if ($this.fixedsortlist[i] == $this.dataSource[j].CustId) {
-                            $this.fixedsortdata.push($this.dataSource.slice(j, j + 1)[0]);
-                            $this.dataSource.unshift($this.dataSource.splice(j, 1)[0]);
-                            break;
-                        }
-                    }
-                }
-            }
-            else {
-                $this.dataSource.sort($this.compare);
-                if (!direction) {
-                    $this.dataSource.reverse();
-                }
-            }
-        }
-
-        $("#statusbarjqxgrid").css("visibility", "hidden");
-        $this.dataSource.localdata = $this.dataSource;
-        $this.GroupAllColumns();
-
-        setTimeout(function () {
-            $("#statusbarjqxgrid").css("visibility", "visible");
-            $("#statusbarjqxgrid").css("z-index", "1000");
-        }, 100);
-    },
-    GroupAllColumns: function () {
-    },
-    compare: function (value1, value2) {
-        value1 = String(value1).toLowerCase();
-        value2 = String(value2).toLowerCase();
-        try {
-            var tmpvalue1 = parseFloat(value1);
-            if (isNaN(tmpvalue1)) {
-                if (value1 < value2) { return -1; }
-                if (value1 > value2) { return 1; }
-            }
-            else {
-                var tmpvalue2 = parseFloat(value2);
-                if (tmpvalue1 < tmpvalue2) { return -1; }
-                if (tmpvalue1 > tmpvalue2) { return 1; }
-            }
-        }
-        catch (error) {
-            var er = error;
-        }
-        return 0;
-    },
     Databind: function () {
-        if (!this.bindingCompleted) return;
-        this.bindingCompleted = false;
         if ($("#txtUserName").val() != '') {
             this.username = $("#txtUserName").val();
         }
@@ -824,21 +748,19 @@ Fanex.ExtAcc.WinLossDetail = {
 
                 $this.ChangeHeadlineTab();
 
+                $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
-                $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $this.Render();
+                    $("#jqgrid").nexcelGrid($this.Render());
                 }
 
-                $this.bindingCompleted = true;
                 $(document).ajaxStop($.unblockUI);
             },
             error: function () {
-                $this.bindingCompleted = true;
                 $(document).ajaxStop($.unblockUI);
             }
         })

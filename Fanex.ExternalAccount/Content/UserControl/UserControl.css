@@ -3,8 +3,6 @@
 	background-image: url(../../Images/Content/arrowdown-icn.png);
 	background-repeat: no-repeat;
 	background-position: center;
-	margin-left: 5px;
-	margin-top: 3px;
 	width: 20px;
 }
 .itemParentCollapse1
@@ -12,8 +10,8 @@
 	background-image: url(../../Images/Content/arrowblack-icn.png);
 	background-repeat: no-repeat;
 	background-position: left;
+	margin-left: 10px;
 	font-weight: bold;
-	margin-left: 5px;
 	text-indent: 10px;
 }
 .itemParentCollapse2
@@ -21,29 +19,22 @@
 	background-image: url(../../Images/Content/arrowblue-icn.png);
 	background-repeat: no-repeat;
 	background-position: center;
-	margin-left: 5px;
 	margin-top: 3px;
 	width: 20px;
 }
 .menuItemParent
 {
-	margin-left: 5px;
-	margin-top: 3px;
-	text-indent: 5px;
 	font-weight: bold;
 	color: #2489ce;
 }
 .menuItemChild
 {
-	margin-left: 20px;
-	text-indent: 20px;
+	margin-left: 30px;
 	color: #2489ce;
-	margin-top: 3px;
 }
 .menuItemParentOnly
 {
 	color: #2489ce;
-	margin-top: 3px;
 	margin-left: 5px;
 	font-weight: bold;
 }
@@ -57,7 +48,6 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	margin-left: 18px;
 }
 .menuInactive
 {
@@ -69,7 +59,6 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	margin-left: 18px;
 }
 .menuDelete
 {
@@ -81,7 +70,6 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	margin-left: 18px;
 }
 .menuResetPwd
 {
@@ -93,7 +81,6 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	margin-left: 30px;
 }
 .button-add
 {
@@ -112,6 +99,7 @@
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	padding-bottom: 2px;
+	margin-right: 3px;
 }
 .button-add:hover
 {
@@ -227,11 +215,9 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	margin-left: 30px;
 }
 td .editInfo a, td div a
 {
-	margin-left: 5px;
 	color: #2489CE !important;
 }
 .checkboxMulti-active
@@ -325,56 +311,22 @@ td .editInfo a, td div a
 	background-image: url(../../Images/Content/arrow-down-icn.png);
 	background-repeat: no-repeat;
 	background-position: left center;
-	margin-left: 5px;
+	margin-left: 10px;
 	text-indent: 10px;
 	font-weight: bold;
 }
 .permItemChild
 {
-	margin-left: 20px;
-	text-indent: 10px;
+	margin-left: 30px;
 }
 .permItemParentOnly
 {
 	margin-left: 5px;
 	font-weight: bold;
 }
-.usernameInput
-{
-	height: 22px;
-	border-width: 1px;
-	width: 147px;
-}
 .group
 {
 	height: 25px;
-}
-#btnSearch, .btnSearch
-{
-	background: url(../../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center;
-	border: 1px solid #5897C3;
-	color: #fff;
-	cursor: pointer;
-	width: 80px;
-	height: 25px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	text-align: center;
-	vertical-align: text-top;
-	padding-bottom: 2px;
-}
-#btnSearch:hover, .btnSearch:hover
-{
-	background: url(../../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
-	border: 1px solid #5897C3;
-	color: #fff;
-	cursor: pointer;
-	width: 80px;
-	height: 25px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 }
 .warningResetPwd
 {
@@ -430,6 +382,7 @@ td .editInfo a, td div a
 {
 	font-weight: bold;
 	height: 17px;
+	margin-top: 2px;
 	overflow: hidden;
 	position: relative;
 	cursor: default !important;
@@ -543,4 +496,14 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	height: 30px;
 	font-weight: bold;
 	margin-top: 10px;
+}
+
+.freegrid .free-top-left table thead th, .freegrid .col_header table thead th
+{
+	background: #d4e3eb !important;
+	color: #464646 !important;
+}
+.freegrid tr.highlightrow:hover td, .freegrid .mousehoverbeyond td
+{
+	background-color: #ebebeb !important;
 }

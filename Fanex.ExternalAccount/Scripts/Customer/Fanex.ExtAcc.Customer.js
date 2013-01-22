@@ -6,19 +6,14 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 Fanex.ExtAcc.Customer = {
     DataFields: null,
     DataSource: null,
-    gridHeight: 200,
+
     UserId: null,
     superId: null,
     masterId: null,
-    leftMenuWidth: Fanex.ExtAcc.leftMenuWidth,
+
     URL: '',
-    gHeight: 200,
-    gSize: { width: 500, height: 300 },
-    totalRows: 0,
+
     $this: null,
-    fixedFrozen: 0,
-    fixedFrozenFullHeight: 17,
-    totalRowsInPage: 50,
 
     Init: function () {
         $this = this;
@@ -48,70 +43,6 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.InitSuggestion();
             }
         });
-
-        Fanex.ExtAcc.OnResize = function () {
-            $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-            try {
-                $this.Resize(true);
-                $("#jqgrid").nexcelGrid("resizeGrid");
-            }
-            catch (err) {
-            }
-        }
-    },
-
-    CalculateHeight: function () {
-        this.gHeight = Math.round($("#footer").position().top - $("#mainGrid").position().top) - 50;
-        var mHeight = (this.totalRowsInPage) * 25 + 25;
-        if (mHeight < this.gHeight) {
-            this.gHeight = mHeight;
-            this.fixedFrozen = this.totalRowsInPage * 2;
-        }
-        else {
-            this.fixedFrozen = this.fixedFrozenFullHeight;
-        }
-    },
-
-    Resize: function (autoResizeGrid) {
-        try {
-            this.CalculateHeight();
-
-            // Calculate totalWidth
-            this.totalWidth = 0;
-            for (var i = 0; i < this.DataFields.length; i++) {
-                this.totalWidth += this.DataFields[i].width;
-            }
-
-            var width = this.width = $("#footer").position().left - this.leftMenuWidth - 8;
-            var height = this.gHeight - (width > this.totalWidth ? 16 : 0);
-            var gHeight = 0;
-
-            for (var i = 0; i < this.totalRows; i++) {
-                gHeight += 22;
-            }
-
-            $("#jqgrid").setGridWidth(width, false);
-            if (gHeight >= height) {
-                $("#jqgrid").setGridHeight(height);
-                var moreFooterWidth = this.fixedFrozen != this.fixedFrozenFullHeight ? 0 : 17;
-                $(".ui-jqgrid-sdiv").css('width', $("#gview_jqgrid").width() - moreFooterWidth + 'px');
-                $($("#gview_jqgrid").children()[1]).css('width', $("#gview_jqgrid").width() - moreFooterWidth + 'px');
-            }
-            else {
-                $("#jqgrid").setGridHeight('100%');
-                $(".ui-jqgrid-sdiv").css('width', $("#gview_jqgrid").width() + 'px');
-                $($("#gview_jqgrid").children()[1]).css('width', $("#gview_jqgrid").width() + 'px');
-            }
-
-            this.gSize = { width: width, height: height };
-
-            $('#jqgrid_frozen').css('margin-bottom', '2px');
-        }
-        catch (e) {
-            if (typeof console != 'undefined') {
-                console.log(e);
-            }
-        }
     },
 
     Search: function (isFirstLoad) {
@@ -137,69 +68,66 @@ Fanex.ExtAcc.Customer = {
         };
 
         $this.DataFields = [
-                    { HeaderText: 'No', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
-                    { HeaderText: 'kjki', Name: 'Check', Width: 100, CellAlign: 'center'
-                        //                                            ,
-                        //                        CustomHeaderRender: function (col) {
-                        //                            return '<div style="text-align: right;">' + "Demo" + "</div>";
-                        //                        }
-                        ,
-                        CustomCellRenderer: function (value, model, row) {
-                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 8px !important" id="' + row.custid + '" class="menuInactive"></div>';
+                    { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
+                    { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
+                        CustomHeaderRender: function (cell) {
+                            return '<div class="editMult"></div>';
+                        },
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
+                        }
+                    },
+                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                        CustomCellRender: function (cell) {
+                            var custId = cell.Value.custid;
+
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ")";
+
+                            return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
+                        }
+                    },
+                    { HeaderText: 'Edit', Name: 'Edit', Width: 30,
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
+                        }
+                    },
+                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
+                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                        }
+                    },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                            }
+
+                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                        }
+                    },
+                    { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
+                    { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
+                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center' },
+                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value) {
+                                return cell.Value.replace('T', ' ');
+                            }
+
+                            return new Date().toDateString();
+                        }
+                    },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            return '<div><a href="#">' + cell.Value + '</a></div>';
                         }
                     }
-                            ,
-                            { HeaderText: 'Username', Name: 'username', Width: 120,
-                                CustomCellRenderer: function (value, model, row) {
-                                    var custId = row.custid;
-
-                                    var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ")";
-
-                                    return '<div><a href="' + func + '">' + value + '</a></div>';
-                                }
-                            },
-                            { HeaderText: 'Edit', Name: 'Edit', Width: 40,
-                                CustomCellRenderer: function (value, model, row) {
-                                    return '<div onclick="" id="edit-' + row.custid + '" class="editInfo"></div>';
-                                }
-                            },
-                            { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
-                                CustomCellRenderer: function (value, model, row) {
-                                    return row.closed ? 'Closed' : (row.suspended ? 'Suspended' : (!row.enabled ? 'Disabled' : 'Open'));
-                                }
-                            },
-                            { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 150,
-                                CustomCellRender12: function (cell) {
-                                    if (cell.Value) {
-                                        return '<div id="dbl-' + row.custid + '" class="allowDblComm"></div>';
-                                    }
-
-                                    return '<div id="dbl-' + row.custid + '" class="disallowDblComm"></div>';
-                                }
-                            },
-                            { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
-                            { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
-                            { HeaderText: 'Group A', Name: 'groupa', Width: 100, CellAlign: 'center' },
-                            { HeaderText: 'Group B', Name: 'groupb', Width: 100, CellAlign: 'center' },
-                            { HeaderText: 'Group C', Name: 'groupc', Width: 100, CellAlign: 'center' },
-                            { HeaderText: 'Group D', Name: 'groupd', Width: 100, CellAlign: 'center' },
-                            { HeaderText: '1X2', Name: 'discount1x2', Width: 100, CellAlign: 'center' },
-                            { HeaderText: 'Others', Name: 'discountcs', Width: 200, CellAlign: 'center' },
-                            { HeaderText: 'Game', Name: 'discountnumber', Width: 200, CellAlign: 'center' },
-                            { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 200,
-                                CustomCellRender: function (cell) {
-                                    if (cell.Value) {
-                                        return cell.Value.replace('T', ' ');
-                                    }
-
-                                    return new Date().toDateString();
-                                }
-                            },
-                            { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 200,
-                                CustomCellRender: function (cell) {
-                                    return '<div><a href="#">' + cell.Value + '</a></div>';
-                                }
-                            }
                 ];
 
         $.ajax({
@@ -212,15 +140,17 @@ Fanex.ExtAcc.Customer = {
             var options = null;
             var bodyRows = [];
 
+            Fanex.ExtAcc.Customer.DataSource = rows;
+
             for (var i = 0; i < rows.length; i++) {
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
-                        { Name: 'Check', Value: 'aaa' },
-                        { Name: 'username', Value: rows[i].username },
-                        { Name: 'Edit', Value: '' },
-                        { Name: 'Status', Value: '' },
-                        { Name: 'DoubleCommLosing', Value: '' },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
                         { Name: 'firstname', Value: rows[i].firstname },
                         { Name: 'lastname', Value: rows[i].lastname },
                         { Name: 'groupa', Value: rows[i].groupa },
@@ -239,8 +169,8 @@ Fanex.ExtAcc.Customer = {
             var groupHeader =
             [{
                 Columns: [
-                    { HeaderText: 'No', Name: 'RowNumber', MergeRowNumber: 2 },
-                    { HeaderText: 'aaa', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
                     { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
                     { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
                     { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
@@ -248,30 +178,46 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
                     { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
                     { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
-                    { HeaderText: 'CreateDate', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
                     { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
                 ]
-            }
-            ]
+            }]
 
             options = {
                 columns: Fanex.ExtAcc.Customer.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 180,
+                gridExpandHeight: 165,
                 numberOfFrozenColumn: 6,
                 customizeHeader: true,
-                groupHeaderRows: groupHeader
+                groupHeaderRows: groupHeader,
+                highlightFrozenWidth: 2,
+                showPager: true,
+                customPager: false,
+                pagerOption: {
+                    itemsPerPageArray: [50, 100, 500],
+                    currentPage: 0,
+                    totalItem: rows.length,
+                    itemsPerPage: 50
+                },
+                marginRight: 2,
+                showDistinctRow: false
             };
 
             Fanex.ExtAcc.Customer.Render(options);
             Fanex.ExtAcc.Customer.totalRows = rows.length;
 
-            //$("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style", $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style") + " overflow-x: scroll; ");
-
             $('#mainGrid').css('visibility', 'visible');
 
             $('#breadcrumbs').empty();
-            //Fanex.ExtAcc.Customer.Resize(true);
+
+            Fanex.ExtAcc.OnResize = function () {
+                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
+                try {
+                    $("#jqgrid").nexcelGrid("resizeGrid");
+                }
+                catch (err) {
+                }
+            }
         })
         .error(function (xhr, status, err) {
             $(document).ajaxStop($.unblockUI);
@@ -292,64 +238,67 @@ Fanex.ExtAcc.Customer = {
 
         $this.superId = srecommend;
         $this.DataFields = [
-                { name: 'RowNumber', fixed: true, sortable: false, resizable: false, width: 30, align: 'center', frozen: true },
-                { name: '', fixed: true, sortable: false, resizable: false, width: 30, align: 'center', frozen: true,
-                    formatter: function (value, model, row) {
-                        return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 8px !important" id="' + row.custid + '" class="menuInactive"></div>';
-                    }
-                },
-                { name: 'username', sortable: false, resizable: false, fixed: true, width: 120, frozen: true,
-                    formatter: function (value, model, row) {
-                        var custId = row.custid;
-
-                        var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ")";
-
-                        return '<div><a href="' + func + '">' + value + '</a></div>';
-                    }
-                },
-                { name: '', fixed: true, sortable: false, resizable: false, width: 30, fixed: true, frozen: true,
-                    formatter: function (value, model, row) {
-                        return '<div onclick="" id="edit-' + row.custid + '" class="editInfo"></div>';
-                    }
-                },
-                { name: '', sortable: false, resizable: false, fixed: true, width: 60, frozen: true, align: 'center',
-                    formatter: function (value, model, row) {
-                        return row.closed ? 'Closed' : (row.suspended ? 'Suspended' : (!row.enabled ? 'Disabled' : 'Open'));
-                    }
-                },
-                { name: 'DoubleCommLosing', sortable: false, resizable: false, fixed: true, width: 100, frozen: true,
-                    formatter: function (value, model, row) {
-                        if (value) {
-                            return '<div id="dbl-' + row.custid + '" class="allowDblComm"></div>';
+                    { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
+                    { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
+                        CustomHeaderRender: function (cell) {
+                            return '<div class="editMult"></div>';
+                        },
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
+                    },
+                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                        CustomCellRender: function (cell) {
+                            var custId = cell.Value.custid;
 
-                        return '<div id="dbl-' + row.custid + '" class="disallowDblComm"></div>';
-                    }
-                },
-                { name: 'firstname', sortable: false, resizable: false, fixed: true, width: 120 },
-                { name: 'lastname', sortable: false, resizable: false, fixed: true, width: 120 },
-                { name: 'groupa', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'groupb', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'groupc', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'groupd', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'discount1x2', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'discountcs', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'discountnumber', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                { name: 'createdate', sortable: false, resizable: false, align: 'center', width: 140, fixed: true,
-                    formatter: function (value) {
-                        if (value) {
-                            return value.replace('T', ' ');
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ")";
+
+                            return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
+                    },
+                    { HeaderText: 'Edit', Name: 'Edit', Width: 30,
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
+                        }
+                    },
+                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
+                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                        }
+                    },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                            }
 
-                        return new Date().toDateString();
+                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                        }
+                    },
+                    { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
+                    { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
+                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center' },
+                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value) {
+                                return cell.Value.replace('T', ' ');
+                            }
+
+                            return new Date().toDateString();
+                        }
+                    },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            return '<div><a href="#">' + cell.Value + '</a></div>';
+                        }
                     }
-                },
-                { name: 'lastloginip', sortable: false, resizable: false, align: 'center', width: 100, fixed: true,
-                    formatter: function (value) {
-                        return '<div><a href="#">' + value + '</a></div>';
-                    }
-                },
-            ];
+                ];
 
         $.ajax({
             url: url,
@@ -358,21 +307,90 @@ Fanex.ExtAcc.Customer = {
         })
         .success(function (result) {
             var rows = $.parseJSON(result.rows);
+            var options = null;
+            var bodyRows = [];
 
-            Fanex.ExtAcc.Customer.Render();
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
+            Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
-                $('#jqgrid').jqGrid('addRowData', i + 1, rows[i]);
+                bodyRows.push({
+                    Columns: [
+                        { Name: 'RowNumber', Value: rows[i].RowNumber },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
+                        { Name: 'firstname', Value: rows[i].firstname },
+                        { Name: 'lastname', Value: rows[i].lastname },
+                        { Name: 'groupa', Value: rows[i].groupa },
+                        { Name: 'groupb', Value: rows[i].groupb },
+                        { Name: 'groupc', Value: rows[i].groupc },
+                        { Name: 'groupd', Value: rows[i].groupd },
+                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                        { Name: 'discountcs', Value: rows[i].discountcs },
+                        { Name: 'discountnumber', Value: rows[i].discountnumber },
+                        { Name: 'createdate', Value: rows[i].createdate },
+                        { Name: 'lastloginip', Value: rows[i].lastloginip }
+                    ]
+                });
             }
 
-            $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style", $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style") + " overflow-x: scroll; ");
+            var groupHeader =
+            [{
+                Columns: [
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                ]
+            }
+            ]
+
+            options = {
+                columns: Fanex.ExtAcc.Customer.DataFields,
+                bodyRows: bodyRows,
+                gridExpandHeight: 165,
+                numberOfFrozenColumn: 6,
+                customizeHeader: true,
+                groupHeaderRows: groupHeader,
+                highlightFrozenWidth: 2,
+                showPager: true,
+                customPager: false,
+                pagerOption: {
+                    itemsPerPageArray: [50, 100, 500],
+                    currentPage: 0,
+                    totalItem: rows.length,
+                    itemsPerPage: 50
+                },
+                marginRight: 2,
+                showDistinctRow: false
+            };
+
+            Fanex.ExtAcc.Customer.Render(options);
+            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
+
             $('#breadcrumbs').empty();
+
             $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>');
 
-            Fanex.ExtAcc.Customer.Resize(true);
+            Fanex.ExtAcc.OnResize = function () {
+                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
+                try {
+                    $("#jqgrid").nexcelGrid("resizeGrid");
+                }
+                catch (err) {
+                }
+            }
         })
         .error(function (xhr, status, err) {
             $(document).ajaxStop($.unblockUI);
@@ -395,63 +413,66 @@ Fanex.ExtAcc.Customer = {
 
         $this.masterId = mrecommend;
         $this.DataFields = [
-                    { name: 'RowNumber', fixed: true, sortable: false, resizable: false, width: 30, align: 'center', frozen: true },
-                    { name: '', fixed: true, sortable: false, resizable: false, width: 30, align: 'center', frozen: true,
-                        formatter: function (value, model, row) {
-                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 8px !important" id="' + row.custid + '" class="menuInactive"></div>';
+                    { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
+                    { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
+                        CustomHeaderRender: function (cell) {
+                            return '<div class="editMult"></div>';
+                        },
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
                     },
-                    { name: 'username', sortable: false, resizable: false, fixed: true, width: 120, frozen: true,
-                        formatter: function (value, model, row) {
-                            var custId = row.custid;
+                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                        CustomCellRender: function (cell) {
+                            var custId = cell.Value.custid;
 
                             var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ")";
 
-                            return '<div><a href="' + func + '">' + value + '</a></div>';
+                            return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
                     },
-                    { name: '', fixed: true, sortable: false, resizable: false, width: 30, fixed: true, frozen: true,
-                        formatter: function (value, model, row) {
-                            return '<div onclick="" id="edit-' + row.custid + '" class="editInfo"></div>';
+                    { HeaderText: 'Edit', Name: 'Edit', Width: 30,
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
                         }
                     },
-                    { name: '', sortable: false, resizable: false, fixed: true, width: 60, frozen: true, align: 'center',
-                        formatter: function (value, model, row) {
-                            return row.closed ? 'Closed' : (row.suspended ? 'Suspended' : (!row.enabled ? 'Disabled' : 'Open'));
+                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
+                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
                     },
-                    { name: 'DoubleCommLosing', sortable: false, resizable: false, fixed: true, width: 100, frozen: true,
-                        formatter: function (value, model, row) {
-                            if (value) {
-                                return '<div id="dbl-' + row.custid + '" class="allowDblComm"></div>';
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
                             }
 
-                            return '<div id="dbl-' + row.custid + '" class="disallowDblComm"></div>';
+                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
                         }
                     },
-                    { name: 'firstname', sortable: false, resizable: false, fixed: true, width: 120 },
-                    { name: 'lastname', sortable: false, resizable: false, fixed: true, width: 120 },
-                    { name: 'groupa', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'groupb', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'groupc', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'groupd', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'discount1x2', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'discountcs', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'discountnumber', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'createdate', sortable: false, resizable: false, align: 'center', width: 140, fixed: true,
-                        formatter: function (value) {
-                            if (value) {
-                                return value.replace('T', ' ');
+                    { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
+                    { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
+                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center' },
+                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value) {
+                                return cell.Value.replace('T', ' ');
                             }
 
                             return new Date().toDateString();
                         }
                     },
-                    { name: 'lastloginip', sortable: false, resizable: false, align: 'center', width: 100, fixed: true,
-                        formatter: function (value) {
-                            return '<div><a href="#">' + value + '</a></div>';
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            return '<div><a href="#">' + cell.Value + '</a></div>';
                         }
-                    },
+                    }
                 ];
 
         $.ajax({
@@ -461,20 +482,90 @@ Fanex.ExtAcc.Customer = {
         })
         .success(function (result) {
             var rows = $.parseJSON(result.rows);
+            var options = null;
+            var bodyRows = [];
 
-            Fanex.ExtAcc.Customer.Render();
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
+            Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
-                $('#jqgrid').jqGrid('addRowData', i + 1, rows[i]);
+                bodyRows.push({
+                    Columns: [
+                        { Name: 'RowNumber', Value: rows[i].RowNumber },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
+                        { Name: 'firstname', Value: rows[i].firstname },
+                        { Name: 'lastname', Value: rows[i].lastname },
+                        { Name: 'groupa', Value: rows[i].groupa },
+                        { Name: 'groupb', Value: rows[i].groupb },
+                        { Name: 'groupc', Value: rows[i].groupc },
+                        { Name: 'groupd', Value: rows[i].groupd },
+                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                        { Name: 'discountcs', Value: rows[i].discountcs },
+                        { Name: 'discountnumber', Value: rows[i].discountnumber },
+                        { Name: 'createdate', Value: rows[i].createdate },
+                        { Name: 'lastloginip', Value: rows[i].lastloginip }
+                    ]
+                });
             }
 
-            $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style", $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style") + " overflow-x: scroll; ");
+            var groupHeader =
+            [{
+                Columns: [
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                ]
+            }
+            ]
+
+            options = {
+                columns: Fanex.ExtAcc.Customer.DataFields,
+                bodyRows: bodyRows,
+                gridExpandHeight: 165,
+                numberOfFrozenColumn: 6,
+                customizeHeader: true,
+                groupHeaderRows: groupHeader,
+                highlightFrozenWidth: 2,
+                showPager: true,
+                customPager: false,
+                pagerOption: {
+                    itemsPerPageArray: [50, 100, 500],
+                    currentPage: 0,
+                    totalItem: rows.length,
+                    itemsPerPage: 50
+                },
+                marginRight: 2,
+                showDistinctRow: false
+            };
+
+            Fanex.ExtAcc.Customer.Render(options);
+            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
+
             $('#breadcrumbs').empty();
+
             $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
-            Fanex.ExtAcc.Customer.Resize(true);
+
+            Fanex.ExtAcc.OnResize = function () {
+                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
+                try {
+                    $("#jqgrid").nexcelGrid("resizeGrid");
+                }
+                catch (err) {
+                }
+            }
         })
         .error(function (xhr, status, err) {
             $(document).ajaxStop($.unblockUI);
@@ -494,58 +585,65 @@ Fanex.ExtAcc.Customer = {
         };
 
         $this.DataFields = [
-                    { name: 'RowNumber', fixed: true, sortable: false, resizable: false, width: 30, align: 'center', frozen: true },
-                    { name: '', fixed: true, sortable: false, resizable: false, width: 30, align: 'center', frozen: true,
-                        formatter: function (value, model, row) {
-                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 8px !important" id="' + row.custid + '" class="menuInactive"></div>';
+                    { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
+                    { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
+                        CustomHeaderRender: function (cell) {
+                            return '<div class="editMult"></div>';
+                        },
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
                     },
-                    { name: 'username', sortable: false, resizable: false, fixed: true, width: 120, frozen: true },
-                    { name: '', fixed: true, sortable: false, resizable: false, width: 30, fixed: true, frozen: true,
-                        formatter: function (value, model, row) {
-                            return '<div onclick="" id="edit-' + row.custid + '" class="editInfo"></div>';
+                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                        CustomCellRender: function (cell) {
+                            return '<div style="margin-left:5px">' + cell.Value.username + '</div>';
                         }
                     },
-                    { name: '', sortable: false, resizable: false, fixed: true, width: 60, frozen: true, align: 'center',
-                        formatter: function (value, model, row) {
-                            return row.closed ? 'Closed' : (row.suspended ? 'Suspended' : (!row.enabled ? 'Disabled' : 'Open'));
+                    { HeaderText: 'Edit', Name: 'Edit', Width: 30,
+                        CustomCellRender: function (cell) {
+                            return '<div onclick="" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
                         }
                     },
-                    { name: 'DoubleCommLosing', sortable: false, resizable: false, fixed: true, width: 100, frozen: true,
-                        formatter: function (value, model, row) {
-                            if (value) {
-                                return '<div id="dbl-' + row.custid + '" class="onDblComm"></div>';
+                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                        CustomCellRender: function (cell) {
+                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                        }
+                    },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div id="dbl-' + cell.Value.custid + '" class="onDblComm"></div>';
                             }
 
-                            return '<div id="dbl-' + row.custid + '" class="offDblComm"></div>';
+                            return '<div id="dbl-' + cell.Value.custid + '" class="offDblComm"></div>';
                         }
                     },
-                    { name: 'nickname', sortable: false, resizable: false, fixed: true, width: 120 },
-                    { name: 'firstname', sortable: false, resizable: false, fixed: true, width: 120 },
-                    { name: 'lastname', sortable: false, resizable: false, fixed: true, width: 120 },
-                    { name: 'ugroup', fixed: true, sortable: false, resizable: false, width: 120, align: 'center' },
-                    { name: 'discount', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'discount1x2', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'discountcs', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'discountnumber', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'playerdiscount', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'playerdiscount1x2', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'playerdiscountcs', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'playerdiscountnumber', fixed: true, sortable: false, resizable: false, width: 60, align: 'center' },
-                    { name: 'createdate', sortable: false, resizable: false, align: 'center', width: 140, fixed: true,
-                        formatter: function (value) {
-                            if (value) {
-                                return value.replace('T', ' ');
+                    { HeaderText: 'Nickname', Name: 'NickName', Width: 120 },
+                    { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
+                    { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
+                    { HeaderText: 'User Group', Name: 'ugroup', CellAlign: 'center', Width: 120 },
+                    { HeaderText: 'Group', Name: 'discount', CellAlign: 'center', Width: 60 },
+                    { HeaderText: '1X2', Name: 'discount1x2', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Others', Name: 'discountcs', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Game', Name: 'discountnumber', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Group', Name: 'playerdiscount', CellAlign: 'center', Width: 60 },
+                    { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Game', Name: 'playerdiscountnumber', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            if (cell.Value) {
+                                return cell.Value.replace('T', ' ');
                             }
 
                             return new Date().toDateString();
                         }
                     },
-                    { name: 'lastloginip', sortable: false, resizable: false, align: 'center', width: 100, fixed: true,
-                        formatter: function (value) {
-                            return '<div><a href="#">' + value + '</a></div>';
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                        CustomCellRender: function (cell) {
+                            return '<div><a href="#">' + cell.Value + '</a></div>';
                         }
-                    },
+                    }
                 ];
 
         $.ajax({
@@ -555,24 +653,100 @@ Fanex.ExtAcc.Customer = {
         })
         .success(function (result) {
             var rows = $.parseJSON(result.rows);
+            var options = null;
+            var bodyRows = [];
+
+            Fanex.ExtAcc.Customer.DataSource = rows;
+
+            for (var i = 0; i < rows.length; i++) {
+                bodyRows.push({
+                    Columns: [
+                        { Name: 'RowNumber', Value: rows[i].RowNumber },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
+                        { Name: 'NickName', Value: rows[i].NickName },
+                        { Name: 'firstname', Value: rows[i].firstname },
+                        { Name: 'lastname', Value: rows[i].lastname },
+                        { Name: 'ugroup', Value: rows[i].ugroup },
+                        { Name: 'discount', Value: rows[i].discount },
+                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                        { Name: 'discountcs', Value: rows[i].discountcs },
+                        { Name: 'discountnumber', Value: rows[i].discountnumber },
+                        { Name: 'playerdiscount', Value: rows[i].playerdiscount },
+                        { Name: 'playerdiscount1x2', Value: rows[i].playerdiscount1x2 },
+                        { Name: 'playerdiscountcs', Value: rows[i].playerdiscountcs },
+                        { Name: 'playerdiscountnumber', Value: rows[i].playerdiscountnumber },
+                        { Name: 'createdate', Value: rows[i].createdate },
+                        { Name: 'lastloginip', Value: rows[i].lastloginip }
+                    ]
+                });
+            }
+
+            var groupHeader =
+            [{
+                Columns: [
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                    { HeaderText: 'Nickname', Name: 'NickName', MergeRowNumber: 2 },
+                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                    { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 },
+                    { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: 4 },
+                    { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: 4 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                ]
+            }
+            ]
+
+            options = {
+                columns: Fanex.ExtAcc.Customer.DataFields,
+                bodyRows: bodyRows,
+                gridExpandHeight: 165,
+                numberOfFrozenColumn: 6,
+                customizeHeader: true,
+                groupHeaderRows: groupHeader,
+                highlightFrozenWidth: 2,
+                showPager: true,
+                customPager: false,
+                pagerOption: {
+                    itemsPerPageArray: [50, 100, 500],
+                    currentPage: 0,
+                    totalItem: rows.length,
+                    itemsPerPage: 50
+                },
+                marginRight: 2,
+                showDistinctRow: false
+            };
+
+            Fanex.ExtAcc.Customer.Render(options);
+            Fanex.ExtAcc.Customer.totalRows = rows.length;
+
+            $('#mainGrid').css('visibility', 'visible');
+
+            $('#breadcrumbs').empty();
+
             var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
             var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
             var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ')"' + '">' + 'Agent' + '</a>';
 
-            Fanex.ExtAcc.Customer.RenderMember();
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
-
-            for (var i = 0; i < rows.length; i++) {
-                $('#jqgrid').jqGrid('addRowData', i + 1, rows[i]);
-            }
-
-            $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style", $("#jqgrid").closest(".ui-jqgrid-bdiv").attr("style") + " overflow-x: scroll; ");
-
-            $('#mainGrid').css('visibility', 'visible');
-            $('#breadcrumbs').empty();
             $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
-            Fanex.ExtAcc.Customer.Resize(true);
+            Fanex.ExtAcc.OnResize = function () {
+                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
+                try {
+                    $("#jqgrid").nexcelGrid("resizeGrid");
+                }
+                catch (err) {
+                }
+            }
         })
         .error(function (xhr, status, err) {
             $(document).ajaxStop($.unblockUI);
@@ -627,63 +801,26 @@ Fanex.ExtAcc.Customer = {
 
     Render: function (options) {
         try {
-            // Init Grid jqgrid
-            $('#gbox_jqgrid').remove();
-            //$('#jqgrid').remove();
-            $('#mainGrid').append($('<table id="jqgrid" class="removeRadius"></table>'));
+            if (Fanex.ExtAcc.Customer.DataSource.length == 0) {
+                $('#msgNoinfo').css('display', 'block');
+                $('#jqgrid').css('display', 'none');
+            }
+            else {
+                $('#msgNoinfo').css('display', 'none');
+                $('#jqgrid').css('display', 'block');
+                // Init Grid jqgrid
+                $('#jqgrid').nexcelGrid(options);
+            }
+
+            $(document).ajaxStop($.unblockUI);
         }
         catch (e) {
             if (typeof console != 'undefined') {
                 console.log(e);
             }
+
+            $(document).ajaxStop($.unblockUI);
         }
-
-        $('#jqgrid').nexcelGrid(options);
-
-        $(document).ajaxStop($.unblockUI);
-    },
-
-    RenderMember: function () {
-        try {
-            // Init Grid jqgrid
-            $('#gbox_jqgrid').remove();
-            $('#jqgrid').remove();
-            $('#mainGrid').append($('<table id="jqgrid" class="removeRadius"></table>'));
-        }
-        catch (e) {
-            if (typeof console != 'undefined') {
-                console.log(e);
-            }
-        }
-
-        $('#jqgrid').jqGrid({
-            sortable: false,
-            autowidth: true,
-            height: '600px',
-            datatype: 'local',
-            colNames: ['No.', '<div class="editMult" style="cursor: pointer !important"></div>', 'Username', 'Edit', 'Status', 'Double Comm', 'Nickname', 'First Name', 'Last Name', 'User Group', 'Group', '1X2', 'Others', 'Game', 'Group', '1X2', 'Others', 'Game', 'Created Date', 'Login IP'],
-            colModel: Fanex.ExtAcc.Customer.DataFields,
-            rowNum: 500,
-            beforeSelectRow: function (rowid, e) {
-                return false;
-            },
-            gridComplete: function () {
-                $("tr.jqgrow").css("background", "#ffffff");
-                $(document).ajaxStop($.unblockUI);
-            }
-        });
-
-        //$('#jqxgrid').clearGridData(true);
-
-        $('#jqgrid').jqGrid('setGroupHeaders', {
-            useColSpanStyle: true,
-            groupHeaders: [
-                    { startColumnName: 'discount', numberOfColumns: 4, titleText: 'Agent Commission' },
-                    { startColumnName: 'playerdiscount', numberOfColumns: 4, titleText: 'Player Commission' }
-                ]
-        });
-
-        $('#jqgrid').jqGrid('setFrozenColumns');
     },
 
     SearchList: function () {

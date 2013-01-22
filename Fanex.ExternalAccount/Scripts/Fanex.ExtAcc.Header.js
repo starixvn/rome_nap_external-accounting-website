@@ -4,21 +4,15 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.Header = {
+    Groups: [],
     GroupLength: 0,
     theme: Fanex.ExtAcc.theme,
+    $this: null,
+
     Init: function () {
-        var $this = this;
-
-        var queryString = "#0";
-        var items = location.href.split("#");
-
-        if (location.href.indexOf("#") >= 0) {
-            queryString = "#" + items[items.length - 1];
-        }
+        $this = this;
 
         var links = $('a');
-
-        $("#selectedGroupIndex").html(items.length == 1 ? "0" : items[1]);
 
         // Menu
         $("#functionsMenu").superfish({
@@ -34,6 +28,7 @@ Fanex.ExtAcc.Header = {
                 success: function (data) {
                     var index = 0;
                     var items = eval(data);
+                    $this.Groups = items;
 
                     $this.GroupLength = items.length;
 
@@ -41,18 +36,21 @@ Fanex.ExtAcc.Header = {
                     var indexes = location.href.split('/');
                     var selectedGroupName = indexes[indexes.length - 1];
 
+                    if (selectedGroupName.indexOf('#') != -1) {
+                        selectedGroupName = selectedGroupName.split('#')[1];
+                    }
+
                     for (var i = 0; i < items.length; i++) {
-                        $("#ddlGroupName").append('<li class="divUL"><div class="sf-menu divLI" id="group' + items[i] + '" ignorehref="1">' + items[i] + '</div></li>');
+                        $("#ddlGroupName").append('<li class="divUL"><div class="sf-menu divLI" id="group' + Fanex.ExtAcc.ReplaceAll(items[i], ' ', '') + '" ignorehref="1">' + items[i] + '</div></li>');
                     }
 
                     $('#userMenu').superfish();
                     $("#accMenu").css('visibility', 'visible');
-
                     // Set Group Name
                     $('#selectedGroupName').html(selectedGroupName);
-                    $('#group' + selectedGroupName).css('font-weight', 'bold');
-                    $('#group' + selectedGroupName).css('color', '#fff');
-                    $('#selectedGroup').html(selectedGroupName);
+                    $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('font-weight', 'bold');
+                    $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('color', '#fff');
+                    $('#selectedGroup').html(Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', ' '));
                     $("#groupsMenu").superfish();
                     $("#groupsMenu").css('visibility', 'visible');
 
@@ -60,6 +58,9 @@ Fanex.ExtAcc.Header = {
                         if ($(links[i]).attr('ignorehref') != '1' && links[i].href.indexOf('javascript') < 0 && links[i].href.indexOf('Fanex') < 0) {
                             var originalURL = links[i].href.split('#')[0];
                             links[i].href = originalURL + "/" + selectedGroupName; // queryString;
+                        }
+                        else {
+                            links[i].href = 'javascript:;';
                         }
                     }
 
@@ -72,15 +73,15 @@ Fanex.ExtAcc.Header = {
                             $('#ddlGroupName').hide();
 
                             for (var i = 0; i < $this.GroupLength; i++) {
-                                $('#group' + i).css('font-weight', 'normal');
-                                $('#group' + i).css('color', '#acacac');
+                                $('#group' + Fanex.ExtAcc.ReplaceAll($this.Groups[i], ' ', '')).css('font-weight', 'normal');
+                                $('#group' + Fanex.ExtAcc.ReplaceAll($this.Groups[i], ' ', '')).css('color', '#acacac');
                             }
 
                             var id = event.target.id;
                             selectedGroupName = event.target.innerHTML;
 
-                            $(id).css('font-weight', 'bold');
-                            $(id).css('color', '#fff');
+                            $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('font-weight', 'bold');
+                            $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('color', '#fff');
                             $('#selectedGroup').html(selectedGroupName);
                             //$('#selectedGroup').html($(id).html() + '<span class="sf-sub-indicator"></span>');
                             $('#selectedGroupIndex').html(id);
@@ -105,6 +106,9 @@ Fanex.ExtAcc.Header = {
                             for (var i = 0; i < links.length; i++) {
                                 if ($(links[i]).attr('ignorehref') != '1' && links[i].href.indexOf('javascript') < 0 && links[i].href.indexOf('Fanex') < 0) {
                                     links[i].href = links[i].href.substr(0, links[i].href.lastIndexOf('/')) + "/" + selectedGroupName;
+                                }
+                                else {
+                                    links[i].href = 'javascript:;';
                                 }
                             }
                         }

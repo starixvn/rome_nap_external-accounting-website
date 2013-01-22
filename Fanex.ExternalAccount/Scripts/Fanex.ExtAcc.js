@@ -74,7 +74,7 @@ Fanex.ExtAcc = {
         }
         else {
             if (typeof console != 'undefined') console.log('Could not load module: ');
-            if (typeof console != 'undefined') console.log(module.toString());
+            if (typeof console != 'undefined') console.log(module);
         }
     },
 
@@ -216,19 +216,29 @@ Fanex.ExtAcc = {
 
     TogglejqRows: function (parentId, fncIds) {
         for (var i = 0; i < fncIds.length; i++) {
-            var div = document.getElementById(fncIds[i] + 1);
+            var item = $(document).find('[highlightatt=highlightatt_main_' + fncIds[i] + ']');
 
-            if (div.style.display == 'none') {
-                div.style.display = 'table-row';
+            if (item.css('display') == 'none') {
+                item.css('display', 'table-row');
                 $('#fn-' + parentId).removeClass('itemParentCollapse2');
                 $('#fn-' + parentId).addClass('itemParent');
             }
             else {
-                div.style.display = 'none';
+                item.css('display', 'none');
                 $('#fn-' + parentId).removeClass('itemParent');
                 $('#fn-' + parentId).addClass('itemParentCollapse2');
             }
+
+            $("#jqgrid").nexcelGrid("resizeGrid");
         }
+    },
+
+    ReplaceAll: function (src, args, replace) {
+        while (src.indexOf(args) != -1) {
+            src = src.replace(args, replace);
+        }
+
+        return src;
     }
 };
 

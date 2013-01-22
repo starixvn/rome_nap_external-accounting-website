@@ -21,24 +21,24 @@
         </div>
     </div>
     <div class="bgTitle titleSearch">
-        <div style="float: left" class="searchBar">
-            <div style="float: left; margin-right: 5px; margin-top: 3px">
+        <div class="searchBar floatL">
+            <div class="lbl-width-normal">
                 @ViewLang.Username
             </div>
-            <div style="float: left;">
+            <div class="floatL">
                 <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
             </div>
             <div class="pdCommon">@ViewLang.Date</div>
-            <div style="float: left;">
+            <div class="floatL">
                 <input id="dtpWinLossDate" type="text" readonly="readonly" />
                 <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate"/>
             </div>
-            <div style="float: left; padding-left: 25px">
+            <div class="float-padding-left-normal">
                 <input type="button" value="Submit" id='Submit' class="btnSearch" />
             </div>
         </div>
         <div class="HideMG">
-            <input type="button" value="Hide Margin" id='btnHideMG' style="font-weight: normal; display: none" /></div>
+            <input type="button" value="Hide Margin" id='btnHideMG' style="display: none" /></div>
     </div>
     <div id="headlineDaily">
         <div id="InfoDate">
@@ -55,9 +55,7 @@
         <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
     </div>
     <div id="mainGrid">
-        <table id="jqgrid" class="removeRadius">
-        </table>
-        <div id="jqpager">
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
     </div>
     <div id='msgNoinfo'>

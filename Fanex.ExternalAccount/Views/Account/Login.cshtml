@@ -6,10 +6,10 @@
 @{
     ViewBag.Title = ViewLang.LoginTitle;
 }
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>@ViewBag.Title</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=9" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/Login.css")" />
@@ -19,8 +19,7 @@
     {
         <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/login/css")" rel="stylesheet" type="text/css" />
     }
-    @*    <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
-*@</head>
+</head>
 <body>
     @using (Html.BeginForm())
     {
@@ -55,7 +54,7 @@
                         <td>
                         </td>
                         <td>
-                            @Html.TextBoxFor(m => m.Captcha, new { @autocomplete = "off", @class = "captchaText text bgLoginControl", @maxlength = 4, @width = "80px" })&nbsp;<span class="captcha"><img src="@Url.Action("CaptchaImage")" id="imgCode" alt="" class="captcha" onclick="Fanex.ExtAcc.Account.GetValidateImage()" /></span>
+                            @Html.TextBoxFor(m => m.Captcha, new { @autocomplete = "off", @class = "captchaText text bgLoginControl", @maxlength = 4, @width = "80px" })&nbsp;<span><img src="@Url.Action("CaptchaImage")" id="imgCode" alt="" class="captcha" onclick="Fanex.ExtAcc.Account.GetValidateImage()" /></span>
                         </td>
                     </tr>
                     <tr>
