@@ -67,8 +67,7 @@
     <Reference Include="Sunplus.Agent.Configurations">
       <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Core.Common, Version=1.1.4771.18852, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Sunplus.Core.Common">
       <HintPath>..\Dependencies\Sunplus.Core.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -102,6 +101,7 @@
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />
     <Compile Include="Home\HomeController.cs" />

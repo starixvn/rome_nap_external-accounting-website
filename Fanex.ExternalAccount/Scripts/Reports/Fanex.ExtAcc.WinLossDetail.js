@@ -481,6 +481,7 @@ Fanex.ExtAcc.WinLossDetail = {
         var sumCompany = 0;
 
         //// Assing BodyData
+        $this.InitSort();
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
             if (this.viewlevel == 1) {
@@ -635,6 +636,20 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         }
         return rows;
+    },
+    InitSort: function () {
+        var countFixedSort = $this.fixedsortlist.length;
+        if (countFixedSort > 0) {
+            for (var i = 0; i < countFixedSort; i++) {
+                for (var j = 0; j < $this.dataSource.length; j++) {
+                    if ($this.fixedsortlist[i] == $this.dataSource[j].CustId) {
+                        $this.fixedsortdata.push($this.dataSource.slice(j, j + 1)[0]);
+                        $this.dataSource.unshift($this.dataSource.splice(j, 1)[0]);
+                        break;
+                    }
+                }
+            }
+        }
     },
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {

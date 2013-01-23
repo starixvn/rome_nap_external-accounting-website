@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IReportBuilder.cs" />
+    <Compile Include="Statement\StatementPage\StatementPage.cs" />
+    <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
+    <Compile Include="Statement\StatementPage\TemplateSettings.cs" />
     <Compile Include="Utility\CellExtension.cs" />
     <Compile Include="Utility\CellRangeAddressExtension.cs" />
     <Compile Include="Utility\HSSFSheetExtension.cs" />
@@ -82,6 +85,7 @@
       <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
