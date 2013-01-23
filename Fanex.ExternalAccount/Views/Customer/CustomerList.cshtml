@@ -3,6 +3,7 @@
 @section StyleSheet{
     <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="stylesheet" type="text/css" />
 }
 <div id='jqxWidget' style="background-color: #fff; font-size: 13px; font-family: Verdana;">
     <div class="bgTitle titleForm">
@@ -58,6 +59,7 @@
 @section Scripts{
     <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $('#customerStatus').combobox();
         Fanex.ExtAcc.Customer.dataTexts = [
@@ -69,7 +71,7 @@
             '@ViewLang.CreatedDate',
             '@ViewLang.Permission',
             '@ViewLang.Active',
-            '@ViewLang.Password'
+            '@ViewLang.Password',
         ];
 
         $(document).ready(function () {
@@ -80,5 +82,7 @@
             });
             Fanex.ExtAcc.InitSuggestion();
         });
+
+        var titles = ['@ViewLang.EditPersonalInfo'];
     </script>
 }

@@ -323,6 +323,7 @@
     <Content Include="Images\Content\checkbox.png" />
     <Content Include="Images\Content\close-icn.png" />
     <Content Include="Images\Content\delete-icn.png" />
+    <Content Include="Images\Content\enableEdit.jpg" />
     <Content Include="Images\Content\icon-customerlist.png" />
     <Content Include="Images\Content\on-off.png" />
     <Content Include="Images\Content\password-icon.png" />
@@ -390,6 +391,8 @@
     <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\Combobox\Combobox.js" />
     <Content Include="Scripts\Combobox\Combobox.css" />
+    <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
+    <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Fanex.ExtAcc.Form.js" />
@@ -1155,6 +1158,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
+    <Folder Include="Views\Customer\Agent\" />
+    <Folder Include="Views\Customer\Master\" />
+    <Folder Include="Views\Customer\Super\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

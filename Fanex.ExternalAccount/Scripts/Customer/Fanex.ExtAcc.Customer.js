@@ -55,7 +55,52 @@ Fanex.ExtAcc.Customer = {
             this.SearchList();
         }
     },
+    ShowEditInfoSuper: function (custId, title) {
+        Fanex.ExtAcc.Customer.UserId = custId;
 
+        $.contextMenu({
+            selector: '.editInfo',
+            items: {
+                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + custId), title, 750, 265, false); } },
+                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+            },
+            trigger: "left",
+            ignoreRightClick: true,
+            autoHide: true
+        });
+    },
+    EditInfo: function () {
+        var firstName = $('#FirstName').val();
+        var lastName = $('#LastName').val();
+        var homePhone = $('#HomePhone').val();
+        var mobilePhone = $('#MobilePhone').val();
+        var email = $('#Email').val();
+        var fax = $('#Fax').val();
+
+        var editUrl = 'Customer/EditInfoPost/?';
+        var params = 'custId=' + $('#CustId').val();
+
+        params += '&firstName=' + firstName;
+        params += '&lastName=' + lastName;
+        params += '&homePhone=' + homePhone;
+        params += '&mobilePhone=' + mobilePhone;
+        params += '&email=' + email;
+        params += '&fax=' + fax;
+
+        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        .done(function (data) {
+            if (!data.IsSuccess) {
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(data.ErrorMessage);
+            }
+            else {
+                Fanex.ExtAcc.Form.Close(true);
+            }
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') console.log(data.responseText);
+        });
+    },
     GetSuperList: function () {
         $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
 
@@ -88,7 +133,9 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            return '<div onclick="" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoSuper(" + cell.Value.custid + ", '" + titles[0] + ": " + cell.Value.username + "')";
+
+                            return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
                         }
                     },
                     { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',

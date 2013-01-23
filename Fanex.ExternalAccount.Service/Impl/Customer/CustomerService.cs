@@ -37,11 +37,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             return null;
         }
 
-        public Result EditUserInfo(Customer custInfo, Request request)
+        public Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,
+                                    string email, string fax, string ip, int userId, int subAccId, string language)
         {
             try
             {
-                return this.dao.EditUserInfo(custInfo, request);
+                return this.dao.EditUserInfo(custId, firstName, lastName, homePhone,mobilePhone, email, fax, ip, userId, subAccId, language);
             }
             catch (Exception ex)
             {

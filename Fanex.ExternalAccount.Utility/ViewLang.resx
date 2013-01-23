@@ -633,4 +633,10 @@
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
   </data>
+	<data name="EditInfo" xml:space="preserve">
+    <value>Edit Info</value>
+  </data>
+	<data name="EditPersonalInfo" xml:space="preserve">
+    <value>Edit Personal Info</value>
+  </data>
 </root>

@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     using System;
     using System.Collections;
     using Fanex.Common;
+    using Fanex.Data;
     using Fanex.Common.Extensions;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
@@ -29,6 +30,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         public Customer UserInfo(int custId)
         {
             var param = new Hashtable();
+            param.Add("custid", custId);
 
             using (var reader = this.ExecDataReader("Age_CustomerSelUserInfo", param))
             {
@@ -54,22 +56,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             }
         }
 
-        public Result EditUserInfo(Customer custInfo, DTO.Request request)
+        public Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,
+                                    string email, string fax, string ip, int userId, int subAccId, string language)
         {
             var param = new Hashtable();
-            param.Add("custid", custInfo.CustId);
-            param.Add("firstname", custInfo.FirstName);
-            param.Add("lastname", custInfo.LastName);
-            param.Add("phone", custInfo.HomePhone);
-            param.Add("mobilephone", custInfo.MobilePhone);
-            param.Add("email", custInfo.Email);
-            param.Add("fax", custInfo.Fax);
+            param.Add("custid", custId);
+            param.Add("firstname", firstName);
+            param.Add("lastname", lastName);
+            param.Add("phone", homePhone);
+            param.Add("mobilephone", mobilePhone);
+            param.Add("email", email);
+            param.Add("fax", fax);
             param.Add("discasino", 0);
-            param.Add("ip", request.IP);
-            param.Add("userid", request.UserId);
-            param.Add("subaccid", request.SubAccId);
-            param.Add("language", request.Language);
-            param.Add("errorcode", string.Empty);
+            param.Add("ip", ip);
+            param.Add("userid", userId);
+            param.Add("subaccid", subAccId);
+            param.Add("language", language);
+            param.Add("errorcode", 0);
             param.Add("errormsg", string.Empty);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdUserInfo", param);

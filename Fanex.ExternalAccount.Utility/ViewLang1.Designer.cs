@@ -484,11 +484,29 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Info.
+        /// </summary>
+        public static string EditInfo {
+            get {
+                return ResourceManager.GetString("EditInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Menu.
         /// </summary>
         public static string EditMenu {
             get {
                 return ResourceManager.GetString("EditMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Personal Info.
+        /// </summary>
+        public static string EditPersonalInfo {
+            get {
+                return ResourceManager.GetString("EditPersonalInfo", resourceCulture);
             }
         }
         
