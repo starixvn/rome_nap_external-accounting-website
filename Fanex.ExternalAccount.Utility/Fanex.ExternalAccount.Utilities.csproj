@@ -82,6 +82,7 @@
     <EmbeddedResource Include="ViewLang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewLang1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
