@@ -98,7 +98,6 @@
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
     <Compile Include="Customer\CustomerController.cs" />
-    <Compile Include="Report\Copy of DailyWinlossController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />
