@@ -13,5 +13,6 @@
     ManageFunction = 5,
     ManageMenu = 6,
     DailyWinloss = 8,
-    WinlossDetail = 9
+    WinlossDetail = 9,
+    Statement = 15
 }

@@ -37,25 +37,7 @@
             int colId = 0;
 
             // Header
-            string mainTitle = string.Empty;
-            if (this.builder.RoleId == 4)
-            {
-                mainTitle = "Super";
-            }
-            else if (this.builder.RoleId == 3)
-            {
-                mainTitle = "Master";
-            }
-            else if (this.builder.RoleId == 2)
-            {
-                mainTitle = "Agent";
-            }
-            else
-            {
-                mainTitle = "Member";
-            }
-
-            mainTitle += " Daily Win Loss on " + this.builder.WinlostDate;
+            string mainTitle = " Statement From " + this.builder.FromDate + " To " + this.builder.ToDate;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 

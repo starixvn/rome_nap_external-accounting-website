@@ -22,7 +22,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Statement
     {
         private const string BALANCEUP_DAY_KEY = "SUNPLUS.AGENT.MODEL.BL.STATEMENT.BALANCEUPDAY";
         private readonly IStatementDAO StatementDAO = null;
-        private ReportService reportService = new ReportService();
 
         public StatementService(IStatementDAO StatementDAO = null)
         {
@@ -31,7 +30,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Statement
         
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
         {
-            return StatementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, reportService.BalanceUpDate, reportService.MoveBetsDate, true);
+            return StatementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate, ReportService.MoveBetsDate, true);
         }
 
     }

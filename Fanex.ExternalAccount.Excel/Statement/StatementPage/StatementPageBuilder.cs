@@ -7,11 +7,11 @@
 
     public class StatementPageBuilder
     {
-        public StatementPageBuilder(List<Statement> Statement, bool isBold, int roleId, string winlostDate)
+        public StatementPageBuilder(List<Statement> Statement, bool isBold, string fromDate, string toDate)
         {
-            this.WinlostDate = winlostDate;
+            this.FromDate = fromDate;
+            this.ToDate = toDate;
             this.IsBold = isBold;
-            this.RoleId = roleId;
             this.Data = Statement;
         }
 
@@ -19,9 +19,9 @@
 
         public bool IsBold { get; private set; }
 
-        public int RoleId { get; private set; }
+        public string FromDate { get; private set; }
 
-        public string WinlostDate { get; private set; }
+        public string ToDate { get; private set; }
 
         public MemoryStream Build()
         {

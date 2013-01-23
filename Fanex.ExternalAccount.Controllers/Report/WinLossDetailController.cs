@@ -61,19 +61,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
         [Authorization(Function = eFunctions.WinlossDetail, Policy = ePolicy.Read)]
         public ActionResult Index()
         {
-            /*
-            var maintenanceInfo = MaintenanceService.GetMaintenanceInfo();
-            if (maintenanceInfo.IsDownTime)
-            {
-                return this.RedirectToAction("Offline", "Account");
-            }
-
-            if (this.currentSession.IsLogin && this.currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Index", "Home");
-            }*/
-
-            ////return this.PartialViewBase();
             return this.ViewBase();
         }
 

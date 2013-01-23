@@ -50,7 +50,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             return oldData as DataTable;
         }
 
-        public DateTime BalanceUpDate
+        public static DateTime BalanceUpDate
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             }
         }
 
-        public DateTime MoveBetsDate
+        public static DateTime MoveBetsDate
         {
             get
             {

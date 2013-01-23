@@ -1371,6 +1371,7 @@
     <Content Include="Scripts\numeral.js" />
     <Content Include="Scripts\Reports\Fanex.ExtAcc.DailyWinLoss.js" />
     <Content Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetail.js" />
+    <Content Include="Scripts\Statement\Fanex.ExtAcc.Statement.js" />
     <Content Include="Scripts\superfish\arrows-ffffff.png" />
     <Content Include="Scripts\superfish\shadow.png" />
     <Content Include="Scripts\superfish\superfish.css" />
@@ -1397,7 +1398,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
-    <Folder Include="Views\Statement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1447,6 +1447,7 @@
     <Content Include="Views\WinLossDetail\Index.cshtml" />
     <Content Include="Views\Customer\EditInfo.cshtml" />
     <Content Include="Views\Customer\ViewIP.cshtml" />
+    <Content Include="Views\Statement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
