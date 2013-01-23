@@ -802,7 +802,7 @@ Fanex.ExtAcc.Customer = {
     ResetPwd: function () {
     },
 
-    ConfigDoubleComm: function (custid, isSuper) {
+    ConfigDoubleComm: function (custid, isSuper, recommend) {
         var allow = ($('#dbl-' + custid).attr('class') == 'allowDblComm' || $('#dbl-' + custid).attr('class') == 'onDblComm');
 
         if (allow || isSuper) {
