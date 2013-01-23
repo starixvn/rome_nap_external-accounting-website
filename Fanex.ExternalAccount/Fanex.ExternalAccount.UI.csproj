@@ -1155,6 +1155,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
+    <Folder Include="Views\Statement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
