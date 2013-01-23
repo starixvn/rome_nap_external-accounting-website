@@ -125,7 +125,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
                         CustomCellRender: function (cell) {
-                            return '<div><a href="#">' + cell.Value + '</a></div>';
+                            return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
                     }
                 ];
@@ -765,7 +765,8 @@ Fanex.ExtAcc.Customer = {
     ShowTransferCondition: function () {
     },
 
-    ShowIpInfo: function () {
+    ShowIpInfo: function (ip) {
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false, null, 2);
     },
 
     EditUserInfo: function () {

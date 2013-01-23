@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.ViewModel", "Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj", "{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sunplus.Core.Common", "..\..\Samurai\Dev\Sunplus.Core\Common\Sunplus.Core.Common.csproj", "{F7FC1BB1-0B42-4249-8528-143B68FD658D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7FC1BB1-0B42-4249-8528-143B68FD658D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7FC1BB1-0B42-4249-8528-143B68FD658D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7FC1BB1-0B42-4249-8528-143B68FD658D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7FC1BB1-0B42-4249-8528-143B68FD658D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
