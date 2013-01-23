@@ -12,6 +12,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.ViewModel.Customer;
+    using Sunplus.Core.Common.IPs;
 
     /// <summary>
     /// TODO: Update summary.
@@ -62,6 +65,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
+        }
+
+        public ActionResult ViewIP(string ip)
+        {
+            var info = IpUtils.LocationFromIP(ip);
+            var ipInfo = new IPInfo()
+            {
+                IP = ip,
+                City = info.City,
+                Country = info.CountryLong,
+                Flag = info.CountryShort + ".gif",
+                Info = string.Format(ViewLang.IPNote, "" + ip)
+            };
+
+            return PartialViewBase(ipInfo);
         }
     }
 }

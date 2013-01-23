@@ -114,6 +114,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Samurai\Dev\Sunplus.Core\Common\Sunplus.Core.Common.csproj">
+      <Project>{F7FC1BB1-0B42-4249-8528-143B68FD658D}</Project>
+      <Name>Sunplus.Core.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
       <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
       <Name>Fanex.ExternalAccount.DataAccess</Name>
