@@ -12,7 +12,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     using System.Collections;
     using System.Data;
     using Fanex.Data.DNAide;
-    using Fanex.ExternalAccount.DataAccess.Infterface.Customer;
+    using Fanex.ExternalAccount.DataAccess.Interface.Customer;
 
     /// <summary>
     /// TODO: Update summary.

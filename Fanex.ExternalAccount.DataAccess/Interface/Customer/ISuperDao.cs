@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.ExternalAccount.DataAccess.Infterface.Customer
+namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
     /// <summary>
     /// TODO: Update summary.

@@ -65,7 +65,7 @@ Fanex.ExtAcc.Form = {
         DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin-left: 5px; margin-right: 30px');
+        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px;line-height: 18px');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;
@@ -119,6 +119,6 @@ Fanex.ExtAcc.Form = {
         var timeout = setTimeout(function () {
             $('#windowPopup').remove();
             clearTimeout(timeout);
-        }, 100);
+        }, 500);
     }
 }

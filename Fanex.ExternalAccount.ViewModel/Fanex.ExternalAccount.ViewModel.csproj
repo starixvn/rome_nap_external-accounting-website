@@ -55,6 +55,7 @@
     <Compile Include="Account\Login.cs" />
     <Compile Include="Account\LoginModel.cs" />
     <Compile Include="Account\UserModel.cs" />
+    <Compile Include="Customer\CustomerModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
     <Compile Include="Extension\MaxStringLengthAttribute.cs" />
     <Compile Include="Extension\MinStringLengthAttribute.cs" />

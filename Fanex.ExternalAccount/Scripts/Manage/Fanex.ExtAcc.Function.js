@@ -166,7 +166,7 @@ Fanex.ExtAcc.Function = {
 
                     $('#groups').css('display', 'block');
                     $("#groups").multiSelect({
-                        minWidth: 260,
+                        minWidth: 255,
                         showHeader: false,
                         onCheck: function () {
                             if (this.value == '-1') {
@@ -230,7 +230,7 @@ Fanex.ExtAcc.Function = {
                         }
                     });
 
-                    $('#groups input').css('width', '240px');
+                    $('#groups input').css('width', '235px');
                 });
             });
     },
@@ -288,7 +288,7 @@ Fanex.ExtAcc.Function = {
 
                 $('#groupsAdd').css('display', 'block');
                 $("#groupsAdd").multiSelect({
-                    minWidth: 260,
+                    minWidth: 255,
                     showHeader: false,
                     onCheck: function () {
                         if (this.value == '-1') {
@@ -351,7 +351,7 @@ Fanex.ExtAcc.Function = {
                     }
                 });
 
-                $('#groupsAdd input').css('width', '240px');
+                $('#groupsAdd input').css('width', '235px');
             });
         });
     },

@@ -4,9 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.ExternalAccount.DataAccess.Infterface.Customer
+namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
     using System.Data;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
