@@ -170,7 +170,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             param.Add("language", request.Language);
             param.Add("subaccid", request.SubAccId);
             param.Add("ip", request.IP);
-            param.Add("errcode", string.Empty);
+            param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
 
             var result = DbHelper.ExecuteDbResult("Acc_CustomerUpdDoubleCommLosing", param);

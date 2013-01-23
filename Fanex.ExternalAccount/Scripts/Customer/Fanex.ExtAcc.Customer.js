@@ -7,9 +7,9 @@ Fanex.ExtAcc.Customer = {
     DataFields: null,
     DataSource: null,
 
-    UserId: null,
-    superId: null,
-    masterId: null,
+    UserId: 0,
+    superId: 0,
+    masterId: 0,
 
     URL: '',
 
@@ -99,10 +99,10 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ', true)" id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ', true)" id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
                         }
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
@@ -268,11 +268,18 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
-                            if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                            var css = '';
+                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'allowDblComm';
+
+                            if (!allow) {
+                                css = 'style="cursor:default !important"';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="allowDblComm" ' + css + '></div>';
+                            }
+
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="disallowDblComm" ' + css + '></div>';
                         }
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
@@ -443,11 +450,18 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
-                            if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                            var css = '';
+                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'allowDblComm';
+
+                            if (!allow) {
+                                css = 'style="cursor:default !important"';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="allowDblComm" ' + css + '></div>';
+                            }
+
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="disallowDblComm" ' + css + '></div>';
                         }
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
@@ -611,11 +625,18 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
-                            if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="onDblComm"></div>';
+                            var css = '';
+                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'onDblComm';
+
+                            if (!allow) {
+                                css = 'style="cursor:default !important"';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="offDblComm"></div>';
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="onDblComm" ' + css + '></div>';
+                            }
+
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="offDblComm" ' + css + '></div>';
                         }
                     },
                     { HeaderText: 'Nickname', Name: 'NickName', Width: 120 },
@@ -766,7 +787,13 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowIpInfo: function (ip) {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false, null, 2);
+        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
+            function () {
+                $(document).ajaxStop($.unblockUI);
+            },
+            2);
     },
 
     EditUserInfo: function () {
@@ -775,7 +802,70 @@ Fanex.ExtAcc.Customer = {
     ResetPwd: function () {
     },
 
-    ConfigDoubleComm: function () {
+    ConfigDoubleComm: function (custid, isSuper) {
+        var allow = ($('#dbl-' + custid).attr('class') == 'allowDblComm' || $('#dbl-' + custid).attr('class') == 'onDblComm');
+
+        if (allow || isSuper) {
+            var msg = '';
+            var title = '';
+
+            if ($('#dbl-' + custid).attr('class') == 'disallowDblComm') {
+                msg = 'Are you sure you want to allow Double Commission feature for Sportsbook\'s Losing tickets on this customer?';
+                title = 'Allow Double Commission';
+            }
+            else if ($('#dbl-' + custid).attr('class') == 'allowDblComm') {
+                msg = 'Are you sure you want to disallow Double Commission feature for Sportsbook\'s Losing tickets on this customer? Warning, all members under this agent will be disallowed as well!';
+                title = 'Disallow Double Commission';
+            }
+            else if ($('#dbl-' + custid).attr('class') == 'onDblComm') {
+                msg = 'Are you sure you want to turn OFF Double Commission feature for Sportsbook\'s Losing tickets on this customer?';
+                title = 'Turn OFF Double Commission';
+            }
+            else {
+                msg = 'Are you sure you want to turn ON Double Commission feature for Sportsbook\'s Losing tickets on this customer?';
+                title = 'Turn ON Double Commission';
+            }
+
+            Fanex.ExtAcc.Form.ConfirmBox(title, msg, 450, 170, false, function () {
+                $.ajax({
+                    url: resolveClientUrl('Customer/ConfigDoubleComm'),
+                    dataType: 'json',
+                    data: {
+                        custid: custid,
+                        allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm')
+                    }
+                })
+            .success(function (result) {
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    if (result.IsSuccess) {
+                        if ($('#dbl-' + custid).attr('class') == 'disallowDblComm') {
+                            $('#dbl-' + custid).attr('class', 'allowDblComm');
+                        }
+                        else if ($('#dbl-' + custid).attr('class') == 'allowDblComm') {
+                            $('#dbl-' + custid).attr('class', 'disallowDblComm');
+                        }
+                        else if ($('#dbl-' + custid).attr('class') == 'onDblComm') {
+                            $('#dbl-' + custid).attr('class', 'offDblComm');
+                        }
+                        else {
+                            $('#dbl-' + custid).attr('class', 'onDblComm');
+                        }
+                    }
+
+                    clearTimeout(timeout);
+                }, 500);
+            })
+            .error(function (xhr) {
+                if (typeof console != 'undefined') {
+                    console.log(xhr);
+                }
+
+                Fanex.ExtAcc.Form.Close(false);
+            });
+            });
+        }
     },
 
     EditTransferCondition: function () {
