@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
@@ -79,7 +80,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 Info = string.Format(ViewLang.IPNote, "" + ip)
             };
 
-            return PartialViewBase(ipInfo);
+            return this.PartialViewBase(ipInfo);
+        }
+
+        public ActionResult ConfigDoubleComm(int custid, bool allow)
+        {
+            var result = this.superService.ConfigDoubleComm(custid, allow, new Request()
+            {
+                Browser = Request.Browser.Browser,
+                CountryCode = CurrentContext.CountryCode,
+                DomainName = CurrentContext.DomainName,
+                IP = CurrentContext.Ip4Address,
+                Language = "en",
+                NetSessionId = CurrentSession.NetSessionId,
+                Platform = Request.Browser.Platform,
+                SubAccId = 0,
+                UserId = CurrentSession.UserId
+            });
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
     }
 }
