@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Summary description for Statement
+    /// Summary description for Statements
     /// </summary>
     [Serializable]
     public class Statement
