@@ -17,9 +17,6 @@ namespace Fanex.ExternalAccount.Service.Interface.Report
     /// </summary>
     public interface IReportService
     {
-        DateTime BalanceUpDate;
-        DateTime MoveBetsDate;
-
         DataTable GetCustomerInfo(string groupname, int custId, string userName, Boolean isGetUplineInfo);
 
         List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);
