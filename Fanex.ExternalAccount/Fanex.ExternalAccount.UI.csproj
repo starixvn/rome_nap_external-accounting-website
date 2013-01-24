@@ -1440,6 +1440,7 @@
     <Content Include="Views\User\GrantPermission.cshtml" />
     <Content Include="Views\User\AddExistUser.cshtml" />
     <Content Include="Views\Group\GrantPermission.cshtml" />
+    <None Include="ExcelTemplates\Statement\Statement.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />

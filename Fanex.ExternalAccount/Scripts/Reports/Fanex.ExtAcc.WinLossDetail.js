@@ -176,8 +176,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), 0);
                 } else if (itemIndex == 6) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 2, 1);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 0);
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
                 } else if (itemIndex == 7) {
                     return;
                 }

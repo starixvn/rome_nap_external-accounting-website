@@ -62,7 +62,7 @@ Fanex.ExtAcc.Statement = {
 
         $('#exporttoexcel').click(function () {
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = resolveClientUrl("Statement/GetExportToExcelStatement?") + params;
+            document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
         });
 
         $this.groupName = $('#selectedGroupName').html();
