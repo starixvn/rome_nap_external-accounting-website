@@ -1,37 +1,44 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using System.Web.Optimization
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Statement";
+}
+@section StyleSheet
+{
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link href="@Url.Content("~/Content/Statement/Statement.css")" rel="stylesheet" type="text/css" />
+    }
+    else
+    {
+        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/css")" rel="stylesheet" type="text/css" />
+    }
 }
 <div>
     <div class="bgTitle titleForm">
         <div class="wlDetail">
-            Daily Win Loss
+            Statement
         </div>
     </div>
     <div class="bgTitle titleSearch">
-        <div class="searchBar floatL">
-            <div class="lbl-width-normal">
-                @ViewLang.Username
-            </div>
+        <div id="GroupFromToDate">
+            <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
+            <div class="wFrom">@ViewLang.From</div>
             <div class="floatL">
-                <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+                <input id="dtpFromDate" type="text" readonly="readonly" />
             </div>
-            <div class="pdCommon">@ViewLang.Date</div>
+            <div class="pdCommon">@ViewLang.To</div>
             <div class="floatL">
-                <input id="dtpWinLossDate" type="text" readonly="readonly" />
-                <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate"/>
+                <input id="dtpToDate" type="text" readonly="readonly" />
             </div>
-            <div class="float-padding-left-normal">
+            <div style="margin-left: 86px; float: left">
                 <input type="button" value="Submit" id='Submit' class="btnSearch" />
             </div>
         </div>
-        <div class="HideMG">
-            <input type="button" value="Hide Margin" id='btnHideMG' style="display: none" /></div>
     </div>
     <div id="headlineDaily">
         <div id="InfoDate">
-            <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
+            <span id="SelectedLevel">Super</span> Win Loss Detail <span id="DateValueInfo"></span>
         </div>
         <div class="groupBack">
             <div id="tabAgent">
@@ -58,6 +65,6 @@
     }
     else
     {
-        <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/dailywinloss/js")" type="text/javascript"></script>
+        <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/js")" type="text/javascript"></script>
     }
 }

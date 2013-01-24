@@ -297,6 +297,7 @@
     <Content Include="Content\normalize.css" />
     <Content Include="Content\Reports\DailyWinLoss.css" />
     <Content Include="Content\Reports\WinLossDetail.css" />
+    <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
     <Content Include="favicon.ico" />
