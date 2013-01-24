@@ -10,6 +10,18 @@ Fanex.ExtAcc.Customer = {
     UserId: 0,
     superId: 0,
     masterId: 0,
+    agentId: 0,
+
+    Super: 1,
+    Master: 2,
+    Agent: 3,
+    Member: 4,
+
+    CurrentLevel: 1,
+
+    AllowDoubleCommMaster: false,
+    AllowDoubleCommAgent: false,
+    AllowDoubleComm: false,
 
     URL: '',
 
@@ -57,7 +69,10 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetSuperList: function () {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        //$.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+
+        $this.CurrentLevel = $this.Super;
+        $this.AllowDoubleComm = true;
 
         var url = resolveClientUrl('Customer/SuperListPost');
         var data = {
@@ -80,10 +95,9 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ")";
-
-                            return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
+                            return '<div><a id="usr-' + custId + '" href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
@@ -220,12 +234,16 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
-    GetMasterList: function (srecommend) {
+    GetMasterList: function (srecommend, allow) {
         $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+
+        $this.CurrentLevel = $this.Master;
+        $this.AllowDoubleComm = allow;
+        $this.AllowDoubleCommMaster = allow;
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = {
@@ -250,8 +268,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -269,9 +286,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             var css = '';
-                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'allowDblComm';
 
-                            if (!allow) {
+                            if (!$this.AllowDoubleComm) {
                                 css = 'style="cursor:default !important"';
                             }
 
@@ -400,16 +416,20 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
-    GetAgentList: function (mrecommend) {
+    GetAgentList: function (mrecommend, allow) {
         $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+
+        $this.CurrentLevel = $this.Agent;
+        $this.AllowDoubleComm = allow;
+        $this.AllowDoubleCommAgent = allow;
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
         var data = {
             mrecommend: mrecommend,
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
@@ -432,8 +452,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -451,9 +470,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             var css = '';
-                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'allowDblComm';
 
-                            if (!allow) {
+                            if (!$this.AllowDoubleComm) {
                                 css = 'style="cursor:default !important"';
                             }
 
@@ -582,12 +600,16 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
-    GetMemberList: function (recommend) {
+    GetMemberList: function (recommend, allow) {
         $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+
+        $this.CurrentLevel = $this.Member;
+        $this.AllowDoubleComm = allow;
+        $this.agentId = recommend;
 
         var url = resolveClientUrl('Customer/MemberListPost');
         var data = {
@@ -626,9 +648,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             var css = '';
-                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'onDblComm';
 
-                            if (!allow) {
+                            if (!$this.AllowDoubleComm) {
                                 css = 'style="cursor:default !important"';
                             }
 
@@ -755,8 +776,8 @@ Fanex.ExtAcc.Customer = {
             $('#breadcrumbs').empty();
 
             var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-            var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
-            var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ')"' + '">' + 'Agent' + '</a>';
+            var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
+            var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ')"' + '">' + 'Agent' + '</a>';
 
             $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
@@ -770,7 +791,7 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
@@ -791,7 +812,7 @@ Fanex.ExtAcc.Customer = {
 
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             },
             2);
     },
@@ -802,8 +823,8 @@ Fanex.ExtAcc.Customer = {
     ResetPwd: function () {
     },
 
-    ConfigDoubleComm: function (custid, isSuper, recommend) {
-        var allow = ($('#dbl-' + custid).attr('class') == 'allowDblComm' || $('#dbl-' + custid).attr('class') == 'onDblComm');
+    ConfigDoubleComm: function (custid, isSuper) {
+        var allow = ($('#dbl-' + custid).attr('class') == 'allowDblComm' || $('#dbl-' + custid).attr('class') == 'onDblComm' || $('#dbl-' + custid).css('cursor') == 'pointer');
 
         if (allow || isSuper) {
             var msg = '';
@@ -835,35 +856,37 @@ Fanex.ExtAcc.Customer = {
                         allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm')
                     }
                 })
-            .success(function (result) {
-                Fanex.ExtAcc.Form.Close(false);
+                .success(function (result) {
+                    Fanex.ExtAcc.Form.Close(false);
+                    $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
 
-                var timeout = setTimeout(function () {
                     if (result.IsSuccess) {
-                        if ($('#dbl-' + custid).attr('class') == 'disallowDblComm') {
-                            $('#dbl-' + custid).attr('class', 'allowDblComm');
-                        }
-                        else if ($('#dbl-' + custid).attr('class') == 'allowDblComm') {
-                            $('#dbl-' + custid).attr('class', 'disallowDblComm');
-                        }
-                        else if ($('#dbl-' + custid).attr('class') == 'onDblComm') {
-                            $('#dbl-' + custid).attr('class', 'offDblComm');
-                        }
-                        else {
-                            $('#dbl-' + custid).attr('class', 'onDblComm');
-                        }
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+
+                            if ($this.CurrentLevel == $this.Super) {
+                                $this.GetSuperList();
+                            }
+                            else if ($this.CurrentLevel == $this.Master) {
+                                Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm);
+                            }
+                            else if ($this.CurrentLevel == $this.Agent) {
+                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                            }
+                            else {
+                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                            }
+                        }, 2000);
                     }
-
-                    clearTimeout(timeout);
-                }, 500);
-            })
-            .error(function (xhr) {
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
-
-                Fanex.ExtAcc.Form.Close(false);
-            });
+                    else {
+                        alert(result.ErrorMessage);
+                    }
+                })
+                .error(function (xhr) {
+                    if (typeof console != 'undefined') {
+                        console.log(xhr);
+                    }
+                });
             });
         }
     },
@@ -903,14 +926,14 @@ Fanex.ExtAcc.Customer = {
                 $('#jqgrid').fanexGrid(options);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
         catch (e) {
             if (typeof console != 'undefined') {
                 console.log(e);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
     },
 

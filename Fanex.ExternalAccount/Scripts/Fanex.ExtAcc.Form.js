@@ -114,11 +114,12 @@ Fanex.ExtAcc.Form = {
         });
     },
 
-    Close: function (reload) {
+    Close: function (reload, delay) {
+        var delayTime = delay ? delay : 100;
         reload && location.reload(true);
         var timeout = setTimeout(function () {
             $('#windowPopup').remove();
             clearTimeout(timeout);
-        }, 500);
+        }, delayTime);
     }
 }
