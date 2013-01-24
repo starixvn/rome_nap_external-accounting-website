@@ -239,7 +239,9 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetMasterList: function (srecommend, allow) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        if (!$.blockUI) {
+            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        }
 
         $this.CurrentLevel = $this.Master;
         $this.AllowDoubleComm = allow;
@@ -421,7 +423,9 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetAgentList: function (mrecommend, allow) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        if (!$.blockUI) {
+            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        }
 
         $this.CurrentLevel = $this.Agent;
         $this.AllowDoubleComm = allow;
@@ -605,7 +609,9 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetMemberList: function (recommend, allow) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        if (!$.blockUI) {
+            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        }
 
         $this.CurrentLevel = $this.Member;
         $this.AllowDoubleComm = allow;
