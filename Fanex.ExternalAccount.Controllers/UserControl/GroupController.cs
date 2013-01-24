@@ -14,12 +14,12 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
-    using Fanex.ExternalAccount.Controllers.Base;
-    using Fanex.ExternalAccount.Controllers.Context;
 
     /// <summary>
     /// TODO: Update summary.
@@ -130,6 +130,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                     isEditExtGroup = true;
                     break;
                 }
+            }
+
+            if (!isEditExtGroup) // Continue to check new external groups created after launching
+            {
+                isEditExtGroup = (groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase));
             }
 
             if (isEditExtGroup)
