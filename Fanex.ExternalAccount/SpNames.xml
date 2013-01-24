@@ -8,6 +8,9 @@
     <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="checkin" Plain="0" />
   </Function>
   <Function Name="Report">
+    <Setting Key="Acc_AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="archive" Plain="0" />
+  </Function>
+  <Function Name="Report">
 
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="archive" Plain="0" />
     <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="archive" Plain="0" />

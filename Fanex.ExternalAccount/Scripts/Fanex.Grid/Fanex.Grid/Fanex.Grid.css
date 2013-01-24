@@ -323,7 +323,7 @@
 .freegrid td, .freegrid .grid-fixed-table td
 {
     background-color: #fff;
-    line-height: inherit;
+    line-height: 18px;
     overflow: hidden;
     vertical-align: middle;
     white-space: normal;

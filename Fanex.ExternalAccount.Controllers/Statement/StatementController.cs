@@ -45,6 +45,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read)]
         public ActionResult Index()
         {
+            //return GetStatement();
             return this.ViewBase();
         }
 

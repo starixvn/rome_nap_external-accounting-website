@@ -30,7 +30,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Statement
         
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
         {
-            return StatementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate, ReportService.MoveBetsDate, true);
+            bool includeAccBal = false;
+            if (fromDate != ReportService.BalanceUpDate)
+            {
+                includeAccBal = true;
+            }
+            return StatementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate, ReportService.MoveBetsDate, includeAccBal);
         }
 
     }

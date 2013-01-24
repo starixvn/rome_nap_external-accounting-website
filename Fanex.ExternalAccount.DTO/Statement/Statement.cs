@@ -8,9 +8,9 @@
     [Serializable]
     public class Statement
     {
-        public DateTime AccDate { get; set; }
+        public string AccDate { get; set; }
 
-        public int RefNo { get; set; }
+        public long RefNo { get; set; }
 
         public double TotalAmt { get; set; }
 
