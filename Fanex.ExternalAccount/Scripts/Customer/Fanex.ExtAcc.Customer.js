@@ -879,6 +879,7 @@ Fanex.ExtAcc.Customer = {
                         }, 2000);
                     }
                     else {
+                        $.unblockUI(document);
                         alert(result.ErrorMessage);
                     }
                 })
