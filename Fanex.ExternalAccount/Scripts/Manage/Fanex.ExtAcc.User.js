@@ -176,7 +176,7 @@ Fanex.ExtAcc.User = {
                     $('#mainGrid').css('visibility', 'visible');
                 }
 
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             });
         }
         catch (e) {
@@ -184,7 +184,7 @@ Fanex.ExtAcc.User = {
                 console.log(e);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
     },
 
