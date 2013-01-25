@@ -61,7 +61,7 @@ Fanex.ExtAcc.Statement = {
         });
 
         $('#exporttoexcel').click(function () {
-            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
+            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName;
             document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
         });
 
@@ -110,13 +110,18 @@ Fanex.ExtAcc.Statement = {
         //// Assing BodyData
         var bodyData = [];
         var accumulatedTotal = 0;
+        var isText = false;
+        var ballanceResult = "OK";
         for (var i = 0; i < this.totalRows; i++) {
+            isText = false;
             if (this.dataSource[i].TransType.toUpperCase() == 'BAL' && this.dataSource[i].TransDesc.toUpperCase() != 'ACCUMULATED BALANCE') {
+                isText = true;
                 if (accumulatedTotal - this.dataSource[i].TotalAmt < 0.00001 || i == 0) {
-                    accumulatedTotal = "<span class='StatementOK'>OK</span>";
+                    ballanceResult = "<span class='StatementOK'>OK</span>";
                 }
                 else {
                     accumulatedTotal = accumulatedTotal - this.dataSource[i].TotalAmt;
+                    ballanceResult = "NOT EQUAL<br/>Diff: " + accumulatedTotal;
                 }
             }
             else {
@@ -128,11 +133,11 @@ Fanex.ExtAcc.Statement = {
                 { Name: "Date", Value: this.dataSource[i].AccDate },
                 { Name: "Remark", Value: '<b>' + this.dataSource[i].TransType + '<br/> - ' + this.dataSource[i].TransDesc + '</b>' },
                 { Name: "TotalAmt", Value: this.dataSource[i].TotalAmt },
-                { Name: "AccumulatedTotal", Value: accumulatedTotal }
+                { Name: "AccumulatedTotal", Value: isText ? ballanceResult : accumulatedTotal }
             ]
             })
 
-            if (isNaN(accumulatedTotal)) {
+            if (isText) {
                 accumulatedTotal = this.dataSource[i].TotalAmt;
             }
         }
