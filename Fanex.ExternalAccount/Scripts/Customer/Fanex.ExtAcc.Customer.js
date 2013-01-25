@@ -824,7 +824,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ConfigDoubleComm: function (custid, isSuper) {
-        var allow = ($('#dbl-' + custid).attr('class') == 'allowDblComm' || $('#dbl-' + custid).attr('class') == 'onDblComm' || $('#dbl-' + custid).css('cursor') == 'pointer');
+        var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
 
         if (allow || isSuper) {
             var msg = '';
