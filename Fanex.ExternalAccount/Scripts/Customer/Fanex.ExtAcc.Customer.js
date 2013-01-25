@@ -157,6 +157,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -176,7 +178,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'discountnumber', Value: rows[i].discountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -218,14 +221,12 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
             $('#breadcrumbs').empty();
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -336,6 +337,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -355,7 +358,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'discountnumber', Value: rows[i].discountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -398,7 +402,6 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
@@ -407,7 +410,6 @@ Fanex.ExtAcc.Customer = {
             $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>');
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -520,6 +522,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -539,7 +543,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'discountnumber', Value: rows[i].discountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -582,7 +587,6 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
@@ -591,7 +595,6 @@ Fanex.ExtAcc.Customer = {
             $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -701,6 +704,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -723,7 +728,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'playerdiscountnumber', Value: rows[i].playerdiscountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -769,7 +775,6 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
@@ -782,7 +787,6 @@ Fanex.ExtAcc.Customer = {
             $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }

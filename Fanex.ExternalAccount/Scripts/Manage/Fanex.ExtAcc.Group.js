@@ -105,7 +105,6 @@ Fanex.ExtAcc.Group = {
         });
 
         Fanex.ExtAcc.OnResize = function () {
-            $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
                 $("#jqgrid").fanexGrid("resizeGrid");
             }
