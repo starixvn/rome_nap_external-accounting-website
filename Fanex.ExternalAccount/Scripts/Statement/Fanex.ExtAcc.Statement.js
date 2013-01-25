@@ -117,7 +117,7 @@ Fanex.ExtAcc.Statement = {
                 }
                 else {
                     accumulatedTotal = accumulatedTotal - this.dataSource[i].TotalAmt;
-                    ballanceResult = "NOT EQUAL<br/>Diff: " + numeral(accumulatedTotal).format('0,0.00');
+                    ballanceResult = "NOT EQUAL<br/><b>Diff: " + numeral(accumulatedTotal).format('0,0.00') + "</b>";
                 }
             }
             else {

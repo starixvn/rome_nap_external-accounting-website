@@ -5,6 +5,7 @@
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
+    using Fanex.ExternalAccount.Utilities;
 
     internal class StatementPage : TemplateReport, IReportBuilder
     {
@@ -75,24 +76,33 @@
                         }
                         else {
                             accumulatedTotal = accumulatedTotal - item.TotalAmt;
-                            ballanceResult = "NOT EQUAL \nDiff: " + accumulatedTotal;
+                            ballanceResult = "NOT EQUAL \nDiff: " + Formater.DecFormat(accumulatedTotal, 2);
                         }
                     }
                     else {
                         accumulatedTotal = item.TotalAmt + accumulatedTotal;
                     }
 
-                    values = new List<object>
-                    {
-                        item.AccDate.Replace("<br/>", "\n"),
-                        item.TransType + "\n- " + item.TransDesc,
-                        item.TotalAmt,
-                        isText ? ballanceResult : accumulatedTotal.ToString(),
-                    };
-
                     if (isText)
                     {
+                        values = new List<object>   
+                        {
+                            item.AccDate.Replace("<br/>", "\n"),
+                            item.TransType + "\n- " + item.TransDesc,
+                            item.TotalAmt,
+                            ballanceResult
+                        };
                         accumulatedTotal = item.TotalAmt;
+                    }
+                    else
+                    {
+                        values = new List<object>
+                        {
+                            item.AccDate.Replace("<br/>", "\n"),
+                            item.TransType + "\n- " + item.TransDesc,
+                            item.TotalAmt,
+                            accumulatedTotal,
+                        };
                     }
 
                     resultSheet.GetRow(rowId).WriteCells(colId, values);
