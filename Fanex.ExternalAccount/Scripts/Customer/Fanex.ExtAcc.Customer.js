@@ -23,6 +23,8 @@ Fanex.ExtAcc.Customer = {
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
 
+    BlockedUI: false,
+
     URL: '',
 
     $this: null,
@@ -59,8 +61,6 @@ Fanex.ExtAcc.Customer = {
 
     Search: function (isFirstLoad) {
         if (isFirstLoad) {
-            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
-
             this.GetSuperList();
         }
         else {
@@ -69,7 +69,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetSuperList: function () {
-        //$.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $this.BlockUI();
 
         $this.CurrentLevel = $this.Super;
         $this.AllowDoubleComm = true;
@@ -239,9 +239,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetMasterList: function (srecommend, allow) {
-        if (!$.blockUI) {
-            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
-        }
+        $this.BlockUI();
 
         $this.CurrentLevel = $this.Master;
         $this.AllowDoubleComm = allow;
@@ -423,9 +421,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetAgentList: function (mrecommend, allow) {
-        if (!$.blockUI) {
-            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
-        }
+        $this.BlockUI();
 
         $this.CurrentLevel = $this.Agent;
         $this.AllowDoubleComm = allow;
@@ -609,9 +605,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetMemberList: function (recommend, allow) {
-        if (!$.blockUI) {
-            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
-        }
+        $this.BlockUI();
 
         $this.CurrentLevel = $this.Member;
         $this.AllowDoubleComm = allow;
@@ -814,7 +808,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowIpInfo: function (ip) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $this.BlockUI();
 
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
@@ -864,7 +858,7 @@ Fanex.ExtAcc.Customer = {
                 })
                 .success(function (result) {
                     Fanex.ExtAcc.Form.Close(false);
-                    $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+                    $this.BlockUI();
 
                     if (result.IsSuccess) {
                         var timeout = setTimeout(function () {
@@ -945,5 +939,19 @@ Fanex.ExtAcc.Customer = {
     },
 
     SearchList: function () {
+    },
+
+    BlockUI: function () {
+        if (!$this.BlockedUI) {
+            $.blockUI({
+                message: '<img src="../../Images/Loading.gif" />',
+                onBlock: function () {
+                    $this.BlockedUI = true;
+                },
+                onUnblock: function () {
+                    $this.BlockedUI = false;
+                }
+            });
+        }
     }
 }
