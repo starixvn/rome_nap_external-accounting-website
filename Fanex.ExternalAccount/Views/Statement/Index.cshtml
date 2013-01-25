@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="bgTitle titleSearch">
-        <div id="GroupFromToDate">
+        <div class="searchBar floatL">
             <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
             <div class="wFrom">@ViewLang.From</div>
             <div class="floatL">
@@ -31,18 +31,17 @@
             <div class="floatL">
                 <input id="dtpToDate" type="text" readonly="readonly" />
             </div>
-            <div style="margin-left: 86px; float: left">
+            <div class="float-margin-left-normal">
                 <input type="button" value="Submit" id='Submit' class="btnSearch" />
             </div>
-            <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
+            <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" class="excel"/>
         </div>
     </div>
     <div id="mainGrid">
         <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
     </div>
-    <div id='msgNoinfo'>
-        There is no data.</div>
+    <div id='msgNoinfo'>There is no data.</div>
 </div>
 @section Scripts
 {

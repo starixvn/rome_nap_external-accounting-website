@@ -1,12 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
+    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
-using System.Text.RegularExpressions;
-    using System;
 
     internal class StatementPage : TemplateReport, IReportBuilder
     {
@@ -71,7 +69,7 @@ using System.Text.RegularExpressions;
 
                     if (item.TransType.ToUpper() == "BAL" && item.TransDesc.ToUpper() != "ACCUMULATED BALANCE") {
                         isText = true;
-                        if (accumulatedTotal - item.TotalAmt < 0.00001 || id == 0)
+                        if (Math.Abs(accumulatedTotal - item.TotalAmt) < 0.00001 || id == 0)
                         {
                             ballanceResult = "OK";
                         }
@@ -84,26 +82,17 @@ using System.Text.RegularExpressions;
                         accumulatedTotal = item.TotalAmt + accumulatedTotal;
                     }
 
+                    values = new List<object>
+                    {
+                        item.AccDate.Replace("<br/>", "\n"),
+                        item.TransType + "\n- " + item.TransDesc,
+                        item.TotalAmt,
+                        isText ? ballanceResult : accumulatedTotal.ToString(),
+                    };
+
                     if (isText)
                     {
-                        values = new List<object>
-                        {
-                            item.AccDate.Replace("<br/>", "\n"),
-                            item.TransType + "\n- " + item.TransDesc,
-                            item.TotalAmt,
-                            ballanceResult,
-                        };
                         accumulatedTotal = item.TotalAmt;
-                    }
-                    else
-                    {
-                        values = new List<object>
-                        {
-                            item.AccDate.Replace("<br/>", "\n"),
-                            item.TransType + "\n- " + item.TransDesc,
-                            item.TotalAmt,
-                            accumulatedTotal,
-                        };
                     }
 
                     resultSheet.GetRow(rowId).WriteCells(colId, values);

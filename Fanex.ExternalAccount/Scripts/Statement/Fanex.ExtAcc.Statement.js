@@ -84,16 +84,14 @@ Fanex.ExtAcc.Statement = {
         }
     },
     defaultColumns: [
-        { HeaderText: 'Date', Name: 'Date', Width: 100, HeaderAlign: "center", CellAlign: 'center' },
-        { HeaderText: 'Remark', Name: 'Remark', Width: 500, HeaderAlign: "center" },
-        { HeaderText: 'Total', Name: 'TotalAmt', Width: 140, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Accumulated Total', Name: 'AccumulatedTotal', Width: 140, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$', AllowTruncate: false }
+        { HeaderText: 'Date', Name: 'Date', Width: 110, HeaderAlign: "center", CellAlign: 'center' },
+        { HeaderText: 'Remark', Name: 'Remark', Width: 505, HeaderAlign: "center" },
+        { HeaderText: 'Total', Name: 'TotalAmt', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Accumulated Total', Name: 'AccumulatedTotal', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$', AllowTruncate: false }
         ],
     Render: function () {
         var gridOption = {
             columns: this.defaultColumns,
-            numberOfFrozenColumn: 3,
-            showFooter: true,
             gridExpandHeight: 120,
             showPager: true,
             pagerOption: {
@@ -102,8 +100,6 @@ Fanex.ExtAcc.Statement = {
                 totalItem: $this.totalRows,
                 itemsPerPage: 100
             },
-            marginRight: 2,
-            bottomBorderWidth: 0,
             showDistinctRow: false
         };
 
@@ -116,12 +112,12 @@ Fanex.ExtAcc.Statement = {
             isText = false;
             if (this.dataSource[i].TransType.toUpperCase() == 'BAL' && this.dataSource[i].TransDesc.toUpperCase() != 'ACCUMULATED BALANCE') {
                 isText = true;
-                if (accumulatedTotal - this.dataSource[i].TotalAmt < 0.00001 || i == 0) {
+                if (Math.abs(accumulatedTotal - this.dataSource[i].TotalAmt) < 0.00001 || i == 0) {                    
                     ballanceResult = "<span class='StatementOK'>OK</span>";
                 }
                 else {
                     accumulatedTotal = accumulatedTotal - this.dataSource[i].TotalAmt;
-                    ballanceResult = "NOT EQUAL<br/>Diff: " + accumulatedTotal;
+                    ballanceResult = "NOT EQUAL<br/>Diff: " + numeral(accumulatedTotal).format('0,0.00');
                 }
             }
             else {
