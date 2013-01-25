@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Utilities;
@@ -27,11 +28,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private readonly AgentService agentService = new AgentService();
         private readonly MemberService memberService = new MemberService();
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult CustomerList()
         {
             return this.ViewBase();
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult SuperListPost(string groupName = "ACCDDD", bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this.superService.GetData(null, null, enabled, closed, suspended, groupName);
@@ -41,6 +44,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MasterListPost(int? sRecommend = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this.masterService.GetData(sRecommend, null, enabled, closed, suspended);
@@ -50,6 +54,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult AgentListPost(int? mRecommend = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this.agentService.GetData(mRecommend, null, enabled, closed, suspended);
@@ -59,6 +64,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MemberListPost(int? recommend = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this.memberService.GetData(recommend, null, enabled, closed, suspended);
@@ -68,6 +74,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult ViewIP(string ip)
         {
             var info = IpUtils.LocationFromIP(ip);
@@ -83,6 +90,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(ipInfo);
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = this.superService.ConfigDoubleComm(custid, allow, new Request()
