@@ -9,11 +9,13 @@
 
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.Data;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Sunplus.Core.Common.IPs;
@@ -35,9 +37,50 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult SuperListPost(string groupName = "ACCDDD", bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult SearchListPost(string groupName = "ACCDDD", bool? enabled = null, bool? closed = null, bool? suspended = null, string username = null)
         {
-            var result = this.superService.GetData(null, null, enabled, closed, suspended, groupName);
+            var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
+            var result = new DataTable();
+            var sRecommend = 0;
+            var mRecommend = 0;
+            var recommend = 0;
+            var roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                var custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                sRecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mRecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+
+                if (roleId == 4)
+                {
+                    result = this.superService.GetData(null, custId, enabled, closed, suspended, groupName);
+                }
+                else if (roleId == 3)
+                {
+                    result = this.masterService.GetData(sRecommend, custId, enabled, closed, suspended);
+                }
+                else if (roleId == 2)
+                {
+                    result = this.agentService.GetData(mRecommend, custId, enabled, closed, suspended);
+                }
+                else
+                {
+                    result = this.memberService.GetData(recommend, custId, enabled, closed, suspended);
+                }
+            }
+
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+
+            return this.JsonBase(new { total = 1, page = 1, records = result != null ? result.Rows.Count : 0, rows = ret, roleId = roleId, srecommend = sRecommend, mrecommend = mRecommend, recommend = recommend });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperListPost(string groupName = "ACCDDD", int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        {
+            var result = this.superService.GetData(null, custId, enabled, closed, suspended, groupName);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
@@ -45,9 +88,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult MasterListPost(int? sRecommend = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult MasterListPost(int? sRecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = this.masterService.GetData(sRecommend, null, enabled, closed, suspended);
+            var result = this.masterService.GetData(sRecommend, custId, enabled, closed, suspended);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
@@ -55,9 +98,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult AgentListPost(int? mRecommend = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult AgentListPost(int? mRecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = this.agentService.GetData(mRecommend, null, enabled, closed, suspended);
+            var result = this.agentService.GetData(mRecommend, custId, enabled, closed, suspended);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
@@ -65,9 +108,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult MemberListPost(int? recommend = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = this.memberService.GetData(recommend, null, enabled, closed, suspended);
+            var result = this.memberService.GetData(recommend, custId, enabled, closed, suspended);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
