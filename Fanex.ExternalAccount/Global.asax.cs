@@ -36,8 +36,8 @@ namespace Fanex.ExternalAccount
 
             routes.MapRoute(
                 name: "Default2",
-                url: "{controller}/{action}/{custid}/{groupname}",
-                defaults: new { controller = "Home", action = "Index", custid = UrlParameter.Optional, groupname = UrlParameter.Optional });
+                url: "{controller}/{action}/{id}/{groupname}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, groupname = UrlParameter.Optional });
         }
 
         protected void Application_Start()

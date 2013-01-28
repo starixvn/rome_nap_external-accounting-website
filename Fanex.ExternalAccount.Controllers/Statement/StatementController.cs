@@ -65,9 +65,9 @@ using Fanex.ExternalAccount.Service.Impl.Report;
         }
 
         public void GetRequestPage()
-        {
+        {            
             this.custId = CheckRequest.GetIntRequest("custid", 0);
-            this.groupname = CheckRequest.GetStringRequest("groupname", "ACCDDD");
+            this.groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
             this.fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this.toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
             this.cacheList = "CacheList" + this.groupname + this.custId.ToString() + this.fromDate.ToString() + this.toDate.ToString();
