@@ -851,6 +851,9 @@ Fanex.ExtAcc.Customer = {
             }
 
             Fanex.ExtAcc.Form.ConfirmBox(title, msg, 450, 170, false, function () {
+                Fanex.ExtAcc.Form.Close(false);
+                $this.BlockUI();
+
                 $.ajax({
                     url: resolveClientUrl('Customer/ConfigDoubleComm'),
                     dataType: 'json',
@@ -860,9 +863,6 @@ Fanex.ExtAcc.Customer = {
                     }
                 })
                 .success(function (result) {
-                    Fanex.ExtAcc.Form.Close(false);
-                    $this.BlockUI();
-
                     if (result.IsSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
