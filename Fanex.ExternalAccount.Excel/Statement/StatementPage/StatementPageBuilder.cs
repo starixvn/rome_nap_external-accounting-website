@@ -7,8 +7,9 @@
 
     public class StatementPageBuilder
     {
-        public StatementPageBuilder(List<Statement> Statement, bool isBold, string fromDate, string toDate)
+        public StatementPageBuilder(List<Statement> Statement, bool isBold, string username, string fromDate, string toDate)
         {
+            this.Username = username;
             this.FromDate = fromDate;
             this.ToDate = toDate;
             this.IsBold = isBold;
@@ -18,6 +19,8 @@
         public List<Statement> Data { get; private set; }
 
         public bool IsBold { get; private set; }
+
+        public string Username { get; private set; }
 
         public string FromDate { get; private set; }
 

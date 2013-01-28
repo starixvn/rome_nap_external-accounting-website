@@ -145,52 +145,55 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this.GetRequestPage();
             this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.fromDate.ToString() + this.toDate.ToString();
 
-            if (this.viewlevel == 1)
+            if (this.CheckBelonging())
             {
-                // Expired Cache
-                if (cache.Get<List<WinLossDetailAg>>(this.cacheList) == null)
+                if (this.viewlevel == 1)
                 {
-                    this.GetData();
-                }
+                    // Expired Cache
+                    if (cache.Get<List<WinLossDetailAg>>(this.cacheList) == null)
+                    {
+                        this.GetData();
+                    }
 
-                var builder = new Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport.WinLossDetailReportAgBuilder(cache.Get<List<WinLossDetailAg>>(this.cacheList), false, this.viewlevel, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
-                var excelStream = builder.Build();
-                if (excelStream != null)
-                {
-                    this.ExportToExcel(excelStream, "MemberWinLossDetail_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
-                    excelStream.Dispose();
+                    var builder = new Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport.WinLossDetailReportAgBuilder(cache.Get<List<WinLossDetailAg>>(this.cacheList), false, this.viewlevel, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
+                    var excelStream = builder.Build();
+                    if (excelStream != null)
+                    {
+                        this.ExportToExcel(excelStream, "MemberWinLossDetail_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
+                        excelStream.Dispose();
+                    }
                 }
-            }
-            else if (this.viewlevel == 2)
-            {
-                // Expired Cache
-                if (cache.Get<List<WinLossDetailMAg>>(this.cacheList) == null)
+                else if (this.viewlevel == 2)
                 {
-                    this.GetData();
-                }
+                    // Expired Cache
+                    if (cache.Get<List<WinLossDetailMAg>>(this.cacheList) == null)
+                    {
+                        this.GetData();
+                    }
 
-                var builder = new Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport.WinLossDetailReportMAgBuilder(cache.Get<List<WinLossDetailMAg>>(this.cacheList), false, this.viewlevel, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
-                var excelStream = builder.Build();
-                if (excelStream != null)
-                {
-                    this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "WinLossDetail_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
-                    excelStream.Dispose();
+                    var builder = new Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport.WinLossDetailReportMAgBuilder(cache.Get<List<WinLossDetailMAg>>(this.cacheList), false, this.viewlevel, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
+                    var excelStream = builder.Build();
+                    if (excelStream != null)
+                    {
+                        this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "WinLossDetail_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
+                        excelStream.Dispose();
+                    }
                 }
-            }
-            else
-            {
-                // Expired Cache
-                if (cache.Get<List<WinLossDetail>>(this.cacheList) == null)
+                else
                 {
-                    this.GetData();
-                }
+                    // Expired Cache
+                    if (cache.Get<List<WinLossDetail>>(this.cacheList) == null)
+                    {
+                        this.GetData();
+                    }
 
-                var builder = new Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport.WinLossDetailReportBuilder(cache.Get<List<WinLossDetail>>(this.cacheList), false, this.viewlevel, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
-                var excelStream = builder.Build();
-                if (excelStream != null)
-                {
-                    this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "WinLossDetail_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
-                    excelStream.Dispose();
+                    var builder = new Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport.WinLossDetailReportBuilder(cache.Get<List<WinLossDetail>>(this.cacheList), false, this.viewlevel, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
+                    var excelStream = builder.Build();
+                    if (excelStream != null)
+                    {
+                        this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "WinLossDetail_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
+                        excelStream.Dispose();
+                    }
                 }
             }
         }

@@ -38,7 +38,7 @@
             int colId = 0;
 
             // Header
-            string mainTitle = " Statement From " + this.builder.FromDate + " To " + this.builder.ToDate;
+            string mainTitle = " Statement " + this.builder.Username + " From " + this.builder.FromDate + " To " + this.builder.ToDate;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
