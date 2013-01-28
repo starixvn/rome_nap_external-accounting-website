@@ -65,9 +65,9 @@ Fanex.ExtAcc.Statement = {
             document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
         });
 
-        $this.groupName = $('#selectedGroupName').html();
-
-        $this.CallSubmit();
+        var indexes = location.href.split('/');
+        $this.groupName = indexes[indexes.length - 1];
+        $this.Databind();
 
         Fanex.ExtAcc.OnResize = function () {
             try {
@@ -114,7 +114,7 @@ Fanex.ExtAcc.Statement = {
             isText = false;
             if (this.dataSource[i].TransType.toUpperCase() == 'BAL' && this.dataSource[i].TransDesc.toUpperCase() != 'ACCUMULATED BALANCE') {
                 isText = true;
-                if (Math.abs(accumulatedTotal - this.dataSource[i].TotalAmt) < 0.00001 || i == 0) {                    
+                if (Math.abs(accumulatedTotal - this.dataSource[i].TotalAmt) < 0.00001 || i == 0) {
                     ballanceResult = "<span class='StatementOK'>OK</span>";
                 }
                 else {
@@ -160,7 +160,6 @@ Fanex.ExtAcc.Statement = {
         }
 
         this.GetFromDateToDate();
-        this.groupName = $('#selectedGroupName').html();
         var parameterUrl = "?groupname=" + this.groupName
                             + "&custid=" + this.custId
                             + "&fromdate=" + this.fromdate
@@ -178,6 +177,7 @@ Fanex.ExtAcc.Statement = {
             success: function (data) {
                 $this.dataSource = data.rows;
                 $this.totalRows = data.rows.length;
+                $('#StatementUsername').html(data.username);
 
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');

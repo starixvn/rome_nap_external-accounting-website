@@ -132,19 +132,22 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this.GetRequestPage();
             this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.winlostDate.ToString();
 
-            // Expired Cache
-            if (this.cache.Get<List<DailyWinLoss>>(this.cacheList) == null)
+            if (this.CheckBelonging())
             {
-                this.GetDailyWinLoss();
-            }
+                // Expired Cache
+                if (this.cache.Get<List<DailyWinLoss>>(this.cacheList) == null)
+                {
+                    this.GetDailyWinLoss();
+                }
 
-            var builder = new Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReportBuilder(this.cache.Get<List<DailyWinLoss>>(this.cacheList), false, this.viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
+                var builder = new Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReportBuilder(this.cache.Get<List<DailyWinLoss>>(this.cacheList), false, this.viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
 
-            var excelStream = builder.Build();
-            if (excelStream != null)
-            {
-                this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "DailyWinLoss_" + this.winlostDate.ToString("yyyyMMdd") + ".xls");
-                excelStream.Dispose();
+                var excelStream = builder.Build();
+                if (excelStream != null)
+                {
+                    this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "DailyWinLoss_" + this.winlostDate.ToString("yyyyMMdd") + ".xls");
+                    excelStream.Dispose();
+                }
             }
         }             
 

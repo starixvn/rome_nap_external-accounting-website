@@ -23,8 +23,8 @@ namespace Fanex.ExternalAccount.Controllers.Statement
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
-using Fanex.ExternalAccount.Service.Interface.Report;
-using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
+    using Fanex.ExternalAccount.Service.Impl.Report;
 
     /// <summary>
     /// Statement controller
@@ -32,16 +32,15 @@ using Fanex.ExternalAccount.Service.Impl.Report;
     public class StatementController : BaseController
     {
         #region Init Statement
-
         private ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private IStatementService StatementService = new StatementService();
         private List<Statement> listStatement = null;
         private DateTime fromDate = DateTime.Today;
         private DateTime toDate = DateTime.Today;
+        private string username = string.Empty;
         private string groupname = string.Empty;
         private string cacheList = string.Empty;
         private int custId = 0;
-
         #endregion Init Statement
 
         [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read)]
@@ -56,6 +55,7 @@ using Fanex.ExternalAccount.Service.Impl.Report;
             DataTable customerInfo = reportService.GetCustomerInfo(this.groupname, this.custId, string.Empty, true);
             if (customerInfo != null)
             {
+                this.username = Utils.ToString(customerInfo.Rows[0]["username"]);
                 return true;
             }
             else
@@ -83,27 +83,29 @@ using Fanex.ExternalAccount.Service.Impl.Report;
             }
             else
             {
-                return this.JsonBase(new { rows = string.Empty });
+                return this.JsonBase(new { rows = string.Empty, username = this.username });
             }
         }
 
         public void GetExportToExcel()
         {
             this.GetRequestPage();
-
-            // Expired Cache
-            if (this.cache.Get<List<Statement>>(this.cacheList) == null)
+            if (custId > 0 && CheckBelonging())
             {
-                this.GetStatement();
-            }
+                // Expired Cache
+                if (this.cache.Get<List<Statement>>(this.cacheList) == null)
+                {
+                    this.GetStatement();
+                }
 
-            var builder = new Fanex.ExternalAccount.Excel.Statement.StatementPage.StatementPageBuilder(this.cache.Get<List<Statement>>(this.cacheList), false, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
+                var builder = new Fanex.ExternalAccount.Excel.Statement.StatementPage.StatementPageBuilder(this.cache.Get<List<Statement>>(this.cacheList), false, this.username, this.fromDate.ToString("MMM, dd yyyy"), this.toDate.ToString("MMM, dd yyyy"));
 
-            var excelStream = builder.Build();
-            if (excelStream != null)
-            {
-                this.ExportToExcel(excelStream, "Statement_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
-                excelStream.Dispose();
+                var excelStream = builder.Build();
+                if (excelStream != null)
+                {
+                    this.ExportToExcel(excelStream, "Statement_" + this.username + "_" + this.fromDate.ToString("yyyyMMdd") + "_" + this.toDate.ToString("yyyyMMdd") + ".xls");
+                    excelStream.Dispose();
+                }
             }
         }
 
@@ -111,7 +113,7 @@ using Fanex.ExternalAccount.Service.Impl.Report;
         {
             this.listStatement = this.StatementService.GetStatement(this.custId, this.fromDate, this.toDate);
             cache.Set<List<Statement>>(this.cacheList, this.listStatement, 120);
-            return this.JsonBase(new { rows = this.listStatement });
+            return this.JsonBase(new { rows = this.listStatement, username = this.username });
         }
     }
 }
