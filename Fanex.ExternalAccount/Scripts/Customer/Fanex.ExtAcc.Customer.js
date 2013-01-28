@@ -7,7 +7,6 @@ Fanex.ExtAcc.Customer = {
     DataFields: null,
     DataSource: null,
 
-    UserId: 0,
     superId: 0,
     masterId: 0,
     agentId: 0,
