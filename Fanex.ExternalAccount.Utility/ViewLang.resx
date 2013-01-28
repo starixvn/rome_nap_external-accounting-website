@@ -637,6 +637,10 @@
     <value>Additional info at DNSstuff:&lt;a href="{0}" target="_blank"&gt; click here&lt;/a&gt;.
 Note: Country and city information is provided by IP2Location™ and DNSstuff which might only serve as a reference, with no warranty. Please consult other reliable sources for the current and accurate information, if required.</value>
   </data>
+	<data name="EditInfo" xml:space="preserve">
+    <value>Edit Info</value>
+  </data>
+	<data name="EditPersonalInfo" xml:space="preserve">
     <value>Edit Personal Info</value>
   </data>
 </root>
