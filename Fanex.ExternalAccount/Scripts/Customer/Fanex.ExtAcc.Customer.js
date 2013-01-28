@@ -403,7 +403,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
-                            return '<div style="margin-left:5px">' + cell.Value.username + '</div>';
+                            return '<div>' + cell.Value.username + '</div>';
                         }
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
