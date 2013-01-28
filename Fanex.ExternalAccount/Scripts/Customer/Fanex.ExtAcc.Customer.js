@@ -689,6 +689,10 @@ Fanex.ExtAcc.Customer = {
     },
 
     RenderSuperList: function (dataSource) {
+        $this.superId = dataSource.srecommend;
+        $this.masterId = dataSource.mrecommend;
+        $this.agentId = dataSource.recommend;
+
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
         var bodyRows = [];
@@ -775,6 +779,10 @@ Fanex.ExtAcc.Customer = {
     },
 
     RenderMasterList: function (dataSource) {
+        $this.superId = dataSource.srecommend;
+        $this.masterId = dataSource.mrecommend;
+        $this.agentId = dataSource.recommend;
+
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
         var bodyRows = [];
@@ -864,6 +872,10 @@ Fanex.ExtAcc.Customer = {
     },
 
     RenderAgentList: function (dataSource) {
+        $this.superId = dataSource.srecommend;
+        $this.masterId = dataSource.mrecommend;
+        $this.agentId = dataSource.recommend;
+
         var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
         var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
 
@@ -956,6 +968,10 @@ Fanex.ExtAcc.Customer = {
     },
 
     RenderMemberList: function (dataSource) {
+        $this.superId = dataSource.srecommend;
+        $this.masterId = dataSource.mrecommend;
+        $this.agentId = dataSource.recommend;
+
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
         var bodyRows = [];
