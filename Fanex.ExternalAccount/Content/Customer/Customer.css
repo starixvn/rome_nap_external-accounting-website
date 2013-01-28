@@ -1,4 +1,34 @@
-﻿.editMult
+﻿.enabled
+{
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -5px -43px;
+	width: 16px;
+	height: 16px !important;
+	border: none;
+	cursor: pointer !important;
+}
+.disabled
+{
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -36px -43px;
+	width: 16px;
+	height: 16px !important;
+	border: none;
+	cursor: pointer !important;
+}
+.unsynced
+{
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -20px -43px;
+	width: 16px;
+	height: 16px !important;
+	border: none;
+	cursor: pointer !important;
+}
+.editMult
 {
 	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
