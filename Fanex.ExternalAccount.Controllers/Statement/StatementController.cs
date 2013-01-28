@@ -64,7 +64,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
             this.GetRequestPage();
             if (custId > 0)
             {
-                return this.LoadDateStatement();
+                return this.LoadDataStatement();
             }
             else
             {
@@ -92,7 +92,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
             }
         }
 
-        private ActionResult LoadDateStatement()
+        private ActionResult LoadDataStatement()
         {
             this.listStatement = this.StatementService.GetStatement(this.custId, this.fromDate, this.toDate);
             cache.Set<List<Statement>>(this.cacheList, this.listStatement, 120);

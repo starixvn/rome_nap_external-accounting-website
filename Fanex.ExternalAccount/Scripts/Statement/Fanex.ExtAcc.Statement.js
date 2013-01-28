@@ -67,6 +67,8 @@ Fanex.ExtAcc.Statement = {
 
         $this.groupName = $('#selectedGroupName').html();
 
+        $this.CallSubmit();
+
         Fanex.ExtAcc.OnResize = function () {
             try {
                 $("#jqgrid").fanexGrid("resizeGrid");

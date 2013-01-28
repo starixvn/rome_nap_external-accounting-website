@@ -190,6 +190,22 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static string JsStatement
+        {
+            get
+            {
+                return GetValue("JsStatement");
+            }
+        }
+
+        public static string CssStatement
+        {
+            get
+            {
+                return GetValue("CssStatement");
+            }
+        }
+
         public static string JsCustomer
         {
             get

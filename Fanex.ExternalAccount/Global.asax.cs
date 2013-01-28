@@ -53,6 +53,7 @@ namespace Fanex.ExternalAccount
             BundleTable.Bundles.EnableLoginBundle();
             BundleTable.Bundles.EnableExternalGroupBundle();
             BundleTable.Bundles.EnableDailyWinLossBundle();
+            BundleTable.Bundles.EnableStatementBundle();
             BundleTable.Bundles.EnableWinLossDetailBundle();
         }
     }

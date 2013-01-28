@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this.username = CheckRequest.GetStringRequest("username", string.Empty);
             if (!string.IsNullOrEmpty(this.username))
             {
-                DataTable customerInfo = customerInfo = this.reportService.GetCustomerInfo(this.groupname, this.custId, this.username, true);
+                DataTable customerInfo = this.reportService.GetCustomerInfo(this.groupname, this.custId, this.username, true);
                 if (customerInfo != null)
                 {
                     this.roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);

@@ -526,6 +526,30 @@
             bundles.Add(bootstrapJs);
         }
 
+        public static void EnableStatementBundle(this BundleCollection bundles)
+        {
+            // For css and js external group selection using
+            var bootstrapCss = new Bundle("~/bootstrap/Statement/css", new CssMinify());
+            var bootstrapJs = new Bundle("~/bootstrap/Statement/js", new JsMinify());
+
+            var css = Config.CssStatement.Split(';');
+            var js = Config.JsStatement.Split(';');
+
+            foreach (var item in css)
+            {
+                bootstrapCss.AddFile(item);
+            }
+
+            bundles.Add(bootstrapCss);
+
+            foreach (var item in js)
+            {
+                bootstrapJs.AddFile(item);
+            }
+
+            bundles.Add(bootstrapJs);
+        }
+
         public static void EnableCustomerBundle(this BundleCollection bundles)
         {
             // For css and js external group selection using
