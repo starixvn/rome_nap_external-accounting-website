@@ -55,7 +55,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return this.ViewBase();
         }
 
-        private bool VerifyDataRequest()
+        private bool CheckBelonging()
         {
             this.username = CheckRequest.GetStringRequest("username", string.Empty);
             if (!string.IsNullOrEmpty(this.username))
@@ -108,7 +108,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this.winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
             this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.winlostDate.ToString();
 
-            if (this.VerifyDataRequest())
+            if (this.CheckBelonging())
             {
                 if (this.custId != 0)
                 {

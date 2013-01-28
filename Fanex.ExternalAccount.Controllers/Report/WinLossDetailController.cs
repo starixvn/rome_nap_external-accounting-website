@@ -64,7 +64,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return this.ViewBase();
         }
 
-        private bool VerifyDataRequest()
+        private bool CheckBelonging()
         {
             this.username = CheckRequest.GetStringRequest("username", string.Empty);
             if (!string.IsNullOrEmpty(this.username))
@@ -119,7 +119,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this.filterParams = new FilterController().AsCollection();
             this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.fromDate.ToString() + this.toDate.ToString();
 
-            if (this.VerifyDataRequest())
+            if (this.CheckBelonging())
             {
                 this.sortingOrderList = this.reportService.GetSortingOrderList(this.groupname);
 
