@@ -5,7 +5,7 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 
 Fanex.ExtAcc.Statement = {
     groupName: '',
-    custId: 1539009,
+    custId: $('#CustId').val(), //1539009,
     fromdate: new Date(),
     todate: new Date(),
     url: resolveClientUrl('Statement/GetStatement'),

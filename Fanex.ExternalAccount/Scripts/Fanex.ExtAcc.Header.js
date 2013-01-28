@@ -56,8 +56,14 @@ Fanex.ExtAcc.Header = {
 
                     for (var i = 0; i < links.length; i++) {
                         if ($(links[i]).attr('ignorehref') != '1' && links[i].href.indexOf('javascript') < 0 && links[i].href.indexOf('Fanex') < 0) {
-                            var originalURL = links[i].href.split('#')[0];
-                            links[i].href = originalURL + "/" + selectedGroupName; // queryString;
+                            var originalURL = links[i].href;
+                            var indexOriUrl = originalURL.split('/')[3];
+                            if (indexOriUrl.toLowerCase() == "statement") {
+                                links[i].href = originalURL + "/1539009/" + selectedGroupName;
+                            }
+                            else {
+                                links[i].href = originalURL + "/" + selectedGroupName; // queryString;
+                            }
                         }
                         else {
                             links[i].href = 'javascript:;';
