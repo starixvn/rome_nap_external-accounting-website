@@ -33,6 +33,11 @@ namespace Fanex.ExternalAccount
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
+            routes.MapRoute(
+                name: "Default2",
+                url: "{controller}/{action}/{id}/{groupname}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, groupname = UrlParameter.Optional });
         }
 
         protected void Application_Start()
@@ -48,6 +53,7 @@ namespace Fanex.ExternalAccount
             BundleTable.Bundles.EnableLoginBundle();
             BundleTable.Bundles.EnableExternalGroupBundle();
             BundleTable.Bundles.EnableDailyWinLossBundle();
+            BundleTable.Bundles.EnableStatementBundle();
             BundleTable.Bundles.EnableWinLossDetailBundle();
         }
     }

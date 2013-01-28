@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IReportBuilder.cs" />
+    <Compile Include="Statement\StatementPage\StatementPage.cs" />
+    <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
+    <Compile Include="Statement\StatementPage\TemplateSettings.cs" />
     <Compile Include="Utility\CellExtension.cs" />
     <Compile Include="Utility\CellRangeAddressExtension.cs" />
     <Compile Include="Utility\HSSFSheetExtension.cs" />
@@ -80,6 +83,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
       <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
+      <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
+      <Name>Fanex.ExternalAccount.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

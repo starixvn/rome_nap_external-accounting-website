@@ -1,32 +1,32 @@
 ﻿.enabled
 {
- background-image: url(../../Images/Content/icon-customerlist.png);
- background-repeat: no-repeat;
- background-position: -5px -43px;
- width: 16px;
- height: 16px !important;
- border: none;
- cursor: pointer !important;
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -5px -43px;
+	width: 16px;
+	height: 16px !important;
+	border: none;
+	cursor: pointer !important;
 }
 .disabled
 {
- background-image: url(../../Images/Content/icon-customerlist.png);
- background-repeat: no-repeat;
- background-position: -36px -43px;
- width: 16px;
- height: 16px !important;
- border: none;
- cursor: pointer !important;
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -36px -43px;
+	width: 16px;
+	height: 16px !important;
+	border: none;
+	cursor: pointer !important;
 }
 .unsynced
 {
- background-image: url(../../Images/Content/icon-customerlist.png);
- background-repeat: no-repeat;
- background-position: -20px -43px;
- width: 16px;
- height: 16px !important;
- border: none;
- cursor: pointer !important;
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -20px -43px;
+	width: 16px;
+	height: 16px !important;
+	border: none;
+	cursor: pointer !important;
 }
 .editMult
 {
@@ -114,10 +114,17 @@
 	width: 20px;
 }
 
-.iconEnableEdit
-{ 
-	background-image: url(../../Images/Content/enableEdit.jpg);
-	background-repeat: no-repeat;
-	border: none;
-	height: 16px;
+tr.rowClosed td
+{
+	background-color: #efefef !important;
+}
+
+tr.rowSuspended td
+{
+	background-color: #f8ded7 !important;
+}
+
+tr.rowDisabled td
+{
+	background-color: #a0a97a !important;
 }

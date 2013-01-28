@@ -6,9 +6,6 @@
 // For current session info
 // </summary>
 // --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
 namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System;
@@ -52,28 +49,14 @@ namespace Fanex.ExternalAccount.Controllers.Report
         [Authorization(Function = eFunctions.DailyWinloss, Policy = ePolicy.Read)]
         public ActionResult Index()
         {
-            /*
-            var maintenanceInfo = MaintenanceService.GetMaintenanceInfo();
-            if (maintenanceInfo.IsDownTime)
-            {
-                return this.RedirectToAction("Offline", "Account");
-            }
-
-            if (this.currentSession.IsLogin && this.currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Index", "Home");
-            }*/
-
-            ////return this.PartialViewBase();
             return this.ViewBase();
         }
 
-        private bool VerifyDataRequest()
-        {
-            this.username = CheckRequest.GetStringRequest("username", string.Empty);
+        private bool CheckBelonging()
+        {            
             if (!string.IsNullOrEmpty(this.username))
             {
-                DataTable customerInfo = customerInfo = this.reportService.GetCustomerInfo(this.groupname, this.custId, this.username, true);
+                DataTable customerInfo = this.reportService.GetCustomerInfo(this.groupname, this.custId, this.username, true);
                 if (customerInfo != null)
                 {
                     this.roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
@@ -109,19 +92,25 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return true;
         }
 
+        public void GetRequestPage()
+        {
+            this.username = CheckRequest.GetStringRequest("username", string.Empty);
+            this.viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
+            this.custId = CheckRequest.GetIntRequest("custid", 0);
+            this.groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
+            this.winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
+        }
+
         [Authorization(Function = eFunctions.DailyWinloss, Policy = ePolicy.Read)]
         public ActionResult GetDailyWinLoss()
         {
-            this.viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
+            this.GetRequestPage();
             this.srecommend = CheckRequest.GetIntRequest("srecommend", 0);
             this.mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
             this.recommend = CheckRequest.GetIntRequest("recommend", 0);
-            this.custId = CheckRequest.GetIntRequest("custid", 0);
-            this.groupname = CheckRequest.GetStringRequest("groupname", "ACCDDD");
-            this.winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
             this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.winlostDate.ToString();
 
-            if (this.VerifyDataRequest())
+            if (this.CheckBelonging())
             {
                 if (this.custId != 0)
                 {
@@ -140,26 +129,25 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
         public void GetExportToExcel()
         {
-            this.username = CheckRequest.GetStringRequest("username", string.Empty);
-            this.viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
-            this.custId = CheckRequest.GetIntRequest("custid", 0);
-            this.groupname = CheckRequest.GetStringRequest("groupname", "ACCDDD");
-            this.winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
+            this.GetRequestPage();
             this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.winlostDate.ToString();
 
-            // Expired Cache
-            if (this.cache.Get<List<DailyWinLoss>>(this.cacheList) == null)
+            if (this.CheckBelonging())
             {
-                this.GetDailyWinLoss();
-            }
+                // Expired Cache
+                if (this.cache.Get<List<DailyWinLoss>>(this.cacheList) == null)
+                {
+                    this.GetDailyWinLoss();
+                }
 
-            var builder = new Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReportBuilder(this.cache.Get<List<DailyWinLoss>>(this.cacheList), false, this.viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
+                var builder = new Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReportBuilder(this.cache.Get<List<DailyWinLoss>>(this.cacheList), false, this.viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
 
-            var excelStream = builder.Build();
-            if (excelStream != null)
-            {
-                this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "DailyWinLoss_" + this.winlostDate.ToString("yyyyMMdd") + ".xls");
-                excelStream.Dispose();
+                var excelStream = builder.Build();
+                if (excelStream != null)
+                {
+                    this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "DailyWinLoss_" + this.winlostDate.ToString("yyyyMMdd") + ".xls");
+                    excelStream.Dispose();
+                }
             }
         }             
 

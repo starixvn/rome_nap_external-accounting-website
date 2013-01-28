@@ -7,9 +7,22 @@ Fanex.ExtAcc.Customer = {
     DataFields: null,
     DataSource: null,
 
-    UserId: null,
-    superId: null,
-    masterId: null,
+    superId: 0,
+    masterId: 0,
+    agentId: 0,
+
+    Super: 1,
+    Master: 2,
+    Agent: 3,
+    Member: 4,
+
+    CurrentLevel: 1,
+
+    AllowDoubleCommMaster: false,
+    AllowDoubleCommAgent: false,
+    AllowDoubleComm: false,
+
+    BlockedUI: false,
 
     URL: '',
 
@@ -47,8 +60,6 @@ Fanex.ExtAcc.Customer = {
 
     Search: function (isFirstLoad) {
         if (isFirstLoad) {
-            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
-
             this.GetSuperList();
         }
         else {
@@ -58,11 +69,11 @@ Fanex.ExtAcc.Customer = {
     ShowEditInfoSuper: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
 
-        $.contextMenu({
-            selector: '.editInfo',
-            items: {
-                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + custId), title, 750, 265, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+    GetSuperList: function (custId, dataSource) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Super;
+        $this.AllowDoubleComm = true;
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -101,15 +112,15 @@ Fanex.ExtAcc.Customer = {
             if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
-    GetSuperList: function () {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
 
         var url = resolveClientUrl('Customer/SuperListPost');
         var data = {
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
             enabled: $('#customerStatus').val() == '1',
             closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3'
+            suspended: $('#customerStatus').val() == '3',
+            username: $('#txtUserName').val(),
+            custId: custId == 'undefined' ? 0 : custId
         };
 
         $this.DataFields = [
@@ -125,10 +136,9 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ")";
-
-                            return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
+                            return '<div><a id="usr-' + custId + '" href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
@@ -146,10 +156,10 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ', true)" id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ', true)" id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
                         }
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
@@ -172,107 +182,35 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
                         CustomCellRender: function (cell) {
-                            return '<div><a href="#">' + cell.Value + '</a></div>';
+                            return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
                     }
                 ];
 
-        $.ajax({
-            url: url,
-            data: data,
-            dataType: 'json'
-        })
-        .success(function (result) {
-            var rows = $.parseJSON(result.rows);
-            var options = null;
-            var bodyRows = [];
-
-            Fanex.ExtAcc.Customer.DataSource = rows;
-
-            for (var i = 0; i < rows.length; i++) {
-                bodyRows.push({
-                    Columns: [
-                        { Name: 'RowNumber', Value: rows[i].RowNumber },
-                        { Name: 'Check', Value: rows[i] },
-                        { Name: 'username', Value: rows[i] },
-                        { Name: 'Edit', Value: rows[i] },
-                        { Name: 'Status', Value: rows[i] },
-                        { Name: 'DoubleCommLosing', Value: rows[i] },
-                        { Name: 'firstname', Value: rows[i].firstname },
-                        { Name: 'lastname', Value: rows[i].lastname },
-                        { Name: 'groupa', Value: rows[i].groupa },
-                        { Name: 'groupb', Value: rows[i].groupb },
-                        { Name: 'groupc', Value: rows[i].groupc },
-                        { Name: 'groupd', Value: rows[i].groupd },
-                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
-                        { Name: 'discountcs', Value: rows[i].discountcs },
-                        { Name: 'discountnumber', Value: rows[i].discountnumber },
-                        { Name: 'createdate', Value: rows[i].createdate },
-                        { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
-                });
-            }
-
-            var groupHeader =
-            [{
-                Columns: [
-                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
-                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
-                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
-                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
-                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
-                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
-                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
-                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
-                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
-                ]
-            }]
-
-            options = {
-                columns: Fanex.ExtAcc.Customer.DataFields,
-                bodyRows: bodyRows,
-                gridExpandHeight: 165,
-                numberOfFrozenColumn: 6,
-                customizeHeader: true,
-                groupHeaderRows: groupHeader,
-                highlightFrozenWidth: 2,
-                showPager: true,
-                customPager: false,
-                pagerOption: {
-                    itemsPerPageArray: [50, 100, 500],
-                    currentPage: 0,
-                    totalItem: rows.length,
-                    itemsPerPage: 50
-                },
-                marginRight: 2,
-                showDistinctRow: false
-            };
-
-            Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
-
-            $('#mainGrid').css('visibility', 'visible');
-
-            $('#breadcrumbs').empty();
-
-            Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-                try {
-                    $("#jqgrid").fanexGrid("resizeGrid");
-                }
-                catch (err) {
-                }
-            }
-        })
-        .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
-        });
+        if (dataSource) {
+            $this.RenderSuperList(dataSource);
+        }
+        else {
+            $.ajax({
+                url: url,
+                data: data,
+                dataType: 'json'
+            })
+            .success(function (result) {
+                $this.RenderSuperList(result);
+            })
+            .error(function (xhr, status, err) {
+                $.unblockUI(document);
+            });
+        }
     },
 
-    GetMasterList: function (srecommend) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+    GetMasterList: function (srecommend, allow, custId, dataSource) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Master;
+        $this.AllowDoubleComm = allow;
+        $this.AllowDoubleCommMaster = allow;
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = {
@@ -280,7 +218,9 @@ Fanex.ExtAcc.Customer = {
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
             enabled: $('#customerStatus').val() == '1',
             closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3'
+            suspended: $('#customerStatus').val() == '3',
+            username: $('#txtUserName').val(),
+            custId: custId == 'undefined' ? 0 : custId
         };
 
         $this.superId = srecommend;
@@ -297,8 +237,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -315,11 +254,17 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
-                            if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                            var css = '';
+
+                            if (!$this.AllowDoubleComm) {
+                                css = 'style="cursor:default !important"';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="allowDblComm" ' + css + '></div>';
+                            }
+
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="disallowDblComm" ' + css + '></div>';
                         }
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
@@ -342,120 +287,45 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
                         CustomCellRender: function (cell) {
-                            return '<div><a href="#">' + cell.Value + '</a></div>';
+                            return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
                     }
                 ];
 
-        $.ajax({
-            url: url,
-            data: data,
-            dataType: 'json'
-        })
-        .success(function (result) {
-            var rows = $.parseJSON(result.rows);
-            var options = null;
-            var bodyRows = [];
-
-            Fanex.ExtAcc.Customer.DataSource = rows;
-
-            for (var i = 0; i < rows.length; i++) {
-                bodyRows.push({
-                    Columns: [
-                        { Name: 'RowNumber', Value: rows[i].RowNumber },
-                        { Name: 'Check', Value: rows[i] },
-                        { Name: 'username', Value: rows[i] },
-                        { Name: 'Edit', Value: rows[i] },
-                        { Name: 'Status', Value: rows[i] },
-                        { Name: 'DoubleCommLosing', Value: rows[i] },
-                        { Name: 'firstname', Value: rows[i].firstname },
-                        { Name: 'lastname', Value: rows[i].lastname },
-                        { Name: 'groupa', Value: rows[i].groupa },
-                        { Name: 'groupb', Value: rows[i].groupb },
-                        { Name: 'groupc', Value: rows[i].groupc },
-                        { Name: 'groupd', Value: rows[i].groupd },
-                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
-                        { Name: 'discountcs', Value: rows[i].discountcs },
-                        { Name: 'discountnumber', Value: rows[i].discountnumber },
-                        { Name: 'createdate', Value: rows[i].createdate },
-                        { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
-                });
-            }
-
-            var groupHeader =
-            [{
-                Columns: [
-                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
-                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
-                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
-                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
-                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
-                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
-                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
-                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
-                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
-                ]
-            }
-            ]
-
-            options = {
-                columns: Fanex.ExtAcc.Customer.DataFields,
-                bodyRows: bodyRows,
-                gridExpandHeight: 165,
-                numberOfFrozenColumn: 6,
-                customizeHeader: true,
-                groupHeaderRows: groupHeader,
-                highlightFrozenWidth: 2,
-                showPager: true,
-                customPager: false,
-                pagerOption: {
-                    itemsPerPageArray: [50, 100, 500],
-                    currentPage: 0,
-                    totalItem: rows.length,
-                    itemsPerPage: 50
-                },
-                marginRight: 2,
-                showDistinctRow: false
-            };
-
-            Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
-
-            $('#mainGrid').css('visibility', 'visible');
-
-            $('#breadcrumbs').empty();
-
-            $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>');
-
-            Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-                try {
-                    $("#jqgrid").fanexGrid("resizeGrid");
-                }
-                catch (err) {
-                }
-            }
-        })
-        .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
-        });
+        if (dataSource) {
+            $this.RenderMasterList(dataSource);
+        }
+        else {
+            $.ajax({
+                url: url,
+                data: data,
+                dataType: 'json'
+            })
+            .success(function (result) {
+                $this.RenderMasterList(result);
+            })
+            .error(function (xhr, status, err) {
+                $.unblockUI(document);
+            });
+        }
     },
 
-    GetAgentList: function (mrecommend) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+    GetAgentList: function (mrecommend, allow, custId, dataSource) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Agent;
+        $this.AllowDoubleComm = allow;
+        $this.AllowDoubleCommAgent = allow;
 
         var url = resolveClientUrl('Customer/AgentListPost');
-        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
         var data = {
             mrecommend: mrecommend,
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
             enabled: $('#customerStatus').val() == '1',
             closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3'
+            suspended: $('#customerStatus').val() == '3',
+            username: $('#txtUserName').val(),
+            custId: custId == 'undefined' ? 0 : custId
         };
 
         $this.masterId = mrecommend;
@@ -472,8 +342,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -490,11 +359,17 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
-                            if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
+                            var css = '';
+
+                            if (!$this.AllowDoubleComm) {
+                                css = 'style="cursor:default !important"';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="disallowDblComm"></div>';
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="allowDblComm" ' + css + '></div>';
+                            }
+
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="disallowDblComm" ' + css + '></div>';
                         }
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
@@ -517,110 +392,35 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
                         CustomCellRender: function (cell) {
-                            return '<div><a href="#">' + cell.Value + '</a></div>';
+                            return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
                     }
                 ];
 
-        $.ajax({
-            url: url,
-            data: data,
-            dataType: 'json'
-        })
-        .success(function (result) {
-            var rows = $.parseJSON(result.rows);
-            var options = null;
-            var bodyRows = [];
-
-            Fanex.ExtAcc.Customer.DataSource = rows;
-
-            for (var i = 0; i < rows.length; i++) {
-                bodyRows.push({
-                    Columns: [
-                        { Name: 'RowNumber', Value: rows[i].RowNumber },
-                        { Name: 'Check', Value: rows[i] },
-                        { Name: 'username', Value: rows[i] },
-                        { Name: 'Edit', Value: rows[i] },
-                        { Name: 'Status', Value: rows[i] },
-                        { Name: 'DoubleCommLosing', Value: rows[i] },
-                        { Name: 'firstname', Value: rows[i].firstname },
-                        { Name: 'lastname', Value: rows[i].lastname },
-                        { Name: 'groupa', Value: rows[i].groupa },
-                        { Name: 'groupb', Value: rows[i].groupb },
-                        { Name: 'groupc', Value: rows[i].groupc },
-                        { Name: 'groupd', Value: rows[i].groupd },
-                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
-                        { Name: 'discountcs', Value: rows[i].discountcs },
-                        { Name: 'discountnumber', Value: rows[i].discountnumber },
-                        { Name: 'createdate', Value: rows[i].createdate },
-                        { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
-                });
-            }
-
-            var groupHeader =
-            [{
-                Columns: [
-                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
-                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
-                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
-                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
-                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
-                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
-                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
-                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
-                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
-                ]
-            }
-            ]
-
-            options = {
-                columns: Fanex.ExtAcc.Customer.DataFields,
-                bodyRows: bodyRows,
-                gridExpandHeight: 165,
-                numberOfFrozenColumn: 6,
-                customizeHeader: true,
-                groupHeaderRows: groupHeader,
-                highlightFrozenWidth: 2,
-                showPager: true,
-                customPager: false,
-                pagerOption: {
-                    itemsPerPageArray: [50, 100, 500],
-                    currentPage: 0,
-                    totalItem: rows.length,
-                    itemsPerPage: 50
-                },
-                marginRight: 2,
-                showDistinctRow: false
-            };
-
-            Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
-
-            $('#mainGrid').css('visibility', 'visible');
-
-            $('#breadcrumbs').empty();
-
-            $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
-
-            Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-                try {
-                    $("#jqgrid").fanexGrid("resizeGrid");
-                }
-                catch (err) {
-                }
-            }
-        })
-        .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
-        });
+        if (dataSource) {
+            $this.RenderAgentList(dataSource);
+        }
+        else {
+            $.ajax({
+                url: url,
+                data: data,
+                dataType: 'json'
+            })
+            .success(function (result) {
+                $this.RenderAgentList(result);
+            })
+            .error(function (xhr, status, err) {
+                $.unblockUI(document);
+            });
+        }
     },
 
-    GetMemberList: function (recommend) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+    GetMemberList: function (recommend, allow, custId, dataSource) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Member;
+        $this.AllowDoubleComm = allow;
+        $this.agentId = recommend;
 
         var url = resolveClientUrl('Customer/MemberListPost');
         var data = {
@@ -628,7 +428,9 @@ Fanex.ExtAcc.Customer = {
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
             enabled: $('#customerStatus').val() == '1',
             closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3'
+            suspended: $('#customerStatus').val() == '3',
+            username: $('#txtUserName').val(),
+            custId: custId == 'undefined' ? 0 : custId
         };
 
         $this.DataFields = [
@@ -643,7 +445,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
-                            return '<div style="margin-left:5px">' + cell.Value.username + '</div>';
+                            return '<div>' + cell.Value.username + '</div>';
                         }
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
@@ -658,11 +460,17 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
-                            if (cell.Value.DoubleCommLosing) {
-                                return '<div id="dbl-' + cell.Value.custid + '" class="onDblComm"></div>';
+                            var css = '';
+
+                            if (!$this.AllowDoubleComm) {
+                                css = 'style="cursor:default !important"';
                             }
 
-                            return '<div id="dbl-' + cell.Value.custid + '" class="offDblComm"></div>';
+                            if (cell.Value.DoubleCommLosing) {
+                                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="onDblComm" ' + css + '></div>';
+                            }
+
+                            return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ')" id="dbl-' + cell.Value.custid + '" class="offDblComm" ' + css + '></div>';
                         }
                     },
                     { HeaderText: 'Nickname', Name: 'NickName', Width: 120 },
@@ -688,116 +496,27 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
                         CustomCellRender: function (cell) {
-                            return '<div><a href="#">' + cell.Value + '</a></div>';
+                            return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
                     }
                 ];
 
-        $.ajax({
-            url: url,
-            data: data,
-            dataType: 'json'
-        })
-        .success(function (result) {
-            var rows = $.parseJSON(result.rows);
-            var options = null;
-            var bodyRows = [];
-
-            Fanex.ExtAcc.Customer.DataSource = rows;
-
-            for (var i = 0; i < rows.length; i++) {
-                bodyRows.push({
-                    Columns: [
-                        { Name: 'RowNumber', Value: rows[i].RowNumber },
-                        { Name: 'Check', Value: rows[i] },
-                        { Name: 'username', Value: rows[i] },
-                        { Name: 'Edit', Value: rows[i] },
-                        { Name: 'Status', Value: rows[i] },
-                        { Name: 'DoubleCommLosing', Value: rows[i] },
-                        { Name: 'NickName', Value: rows[i].NickName },
-                        { Name: 'firstname', Value: rows[i].firstname },
-                        { Name: 'lastname', Value: rows[i].lastname },
-                        { Name: 'ugroup', Value: rows[i].ugroup },
-                        { Name: 'discount', Value: rows[i].discount },
-                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
-                        { Name: 'discountcs', Value: rows[i].discountcs },
-                        { Name: 'discountnumber', Value: rows[i].discountnumber },
-                        { Name: 'playerdiscount', Value: rows[i].playerdiscount },
-                        { Name: 'playerdiscount1x2', Value: rows[i].playerdiscount1x2 },
-                        { Name: 'playerdiscountcs', Value: rows[i].playerdiscountcs },
-                        { Name: 'playerdiscountnumber', Value: rows[i].playerdiscountnumber },
-                        { Name: 'createdate', Value: rows[i].createdate },
-                        { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
-                });
-            }
-
-            var groupHeader =
-            [{
-                Columns: [
-                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
-                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
-                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
-                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
-                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
-                    { HeaderText: 'Nickname', Name: 'NickName', MergeRowNumber: 2 },
-                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
-                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
-                    { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 },
-                    { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: 4 },
-                    { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: 4 },
-                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
-                ]
-            }
-            ]
-
-            options = {
-                columns: Fanex.ExtAcc.Customer.DataFields,
-                bodyRows: bodyRows,
-                gridExpandHeight: 165,
-                numberOfFrozenColumn: 6,
-                customizeHeader: true,
-                groupHeaderRows: groupHeader,
-                highlightFrozenWidth: 2,
-                showPager: true,
-                customPager: false,
-                pagerOption: {
-                    itemsPerPageArray: [50, 100, 500],
-                    currentPage: 0,
-                    totalItem: rows.length,
-                    itemsPerPage: 50
-                },
-                marginRight: 2,
-                showDistinctRow: false
-            };
-
-            Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
-
-            $('#mainGrid').css('visibility', 'visible');
-
-            $('#breadcrumbs').empty();
-
-            var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-            var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
-            var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ')"' + '">' + 'Agent' + '</a>';
-
-            $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
-
-            Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
-                try {
-                    $("#jqgrid").fanexGrid("resizeGrid");
-                }
-                catch (err) {
-                }
-            }
-        })
-        .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
-        });
+        if (dataSource) {
+            $this.RenderMemberList(dataSource);
+        }
+        else {
+            $.ajax({
+                url: url,
+                data: data,
+                dataType: 'json'
+            })
+            .success(function (result) {
+                $this.RenderMemberList(result);
+            })
+            .error(function (xhr, status, err) {
+                $.unblockUI(document);
+            });
+        }
     },
 
     ShowEditUserInfo: function () {
@@ -812,7 +531,14 @@ Fanex.ExtAcc.Customer = {
     ShowTransferCondition: function () {
     },
 
-    ShowIpInfo: function () {
+    ShowIpInfo: function (ip) {
+        $this.BlockUI();
+
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
+            function () {
+                $.unblockUI(document);
+            },
+            2);
     },
 
     EditUserInfo: function () {
@@ -821,7 +547,73 @@ Fanex.ExtAcc.Customer = {
     ResetPwd: function () {
     },
 
-    ConfigDoubleComm: function () {
+    ConfigDoubleComm: function (custid, isSuper) {
+        var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
+
+        if (allow || isSuper) {
+            var msg = '';
+            var title = '';
+
+            if ($('#dbl-' + custid).attr('class') == 'disallowDblComm') {
+                msg = 'Are you sure you want to allow Double Commission feature for Sportsbook\'s Losing tickets on this customer?';
+                title = 'Allow Double Commission';
+            }
+            else if ($('#dbl-' + custid).attr('class') == 'allowDblComm') {
+                msg = 'Are you sure you want to disallow Double Commission feature for Sportsbook\'s Losing tickets on this customer? Warning, all members under this agent will be disallowed as well!';
+                title = 'Disallow Double Commission';
+            }
+            else if ($('#dbl-' + custid).attr('class') == 'onDblComm') {
+                msg = 'Are you sure you want to turn OFF Double Commission feature for Sportsbook\'s Losing tickets on this customer?';
+                title = 'Turn OFF Double Commission';
+            }
+            else {
+                msg = 'Are you sure you want to turn ON Double Commission feature for Sportsbook\'s Losing tickets on this customer?';
+                title = 'Turn ON Double Commission';
+            }
+
+            Fanex.ExtAcc.Form.ConfirmBox(title, msg, 450, 170, false, function () {
+                Fanex.ExtAcc.Form.Close(false);
+                $this.BlockUI();
+
+                $.ajax({
+                    url: resolveClientUrl('Customer/ConfigDoubleComm'),
+                    dataType: 'json',
+                    data: {
+                        custid: custid,
+                        allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm')
+                    }
+                })
+                .success(function (result) {
+                    if (result.IsSuccess) {
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+
+                            if ($this.CurrentLevel == $this.Super) {
+                                $this.GetSuperList();
+                            }
+                            else if ($this.CurrentLevel == $this.Master) {
+                                Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm);
+                            }
+                            else if ($this.CurrentLevel == $this.Agent) {
+                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                            }
+                            else {
+                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                            }
+                        }, 2000);
+                    }
+                    else {
+                        $.unblockUI(document);
+                        alert(result.ErrorMessage);
+                    }
+                })
+                .error(function (xhr) {
+                    if (typeof console != 'undefined') {
+                        console.log(xhr);
+                    }
+                });
+            });
+        }
     },
 
     EditTransferCondition: function () {
@@ -859,17 +651,472 @@ Fanex.ExtAcc.Customer = {
                 $('#jqgrid').fanexGrid(options);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
         catch (e) {
             if (typeof console != 'undefined') {
                 console.log(e);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
     },
 
     SearchList: function () {
+        if ($('#txtUserName').val() == '') {
+            $this.GetSuperList();
+        }
+        else {
+            $this.GetSearchList();
+        }
+    },
+
+    BlockUI: function () {
+        if (!$this.BlockedUI) {
+            $.blockUI({
+                message: '<img src="../../Images/Loading.gif" />',
+                onBlock: function () {
+                    $this.BlockedUI = true;
+                },
+                onUnblock: function () {
+                    $this.BlockedUI = false;
+                }
+            });
+        }
+    },
+
+    GetSearchList: function () {
+        $this.BlockUI();
+
+        var url = resolveClientUrl('Customer/SearchListPost');
+        var data = {
+            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+            enabled: $('#customerStatus').val() == '1',
+            closed: $('#customerStatus').val() == '2',
+            suspended: $('#customerStatus').val() == '3',
+            username: $('#txtUserName').val()
+        };
+
+        $.ajax({
+            url: url,
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var rows = $.parseJSON(result.rows);
+            var options = null;
+            var bodyRows = [];
+
+            Fanex.ExtAcc.Customer.DataSource = rows;
+
+            if (result.roleId != 0 && rows.length > 0) {
+                var custId = rows[0].custid;
+
+                if (result.roleId == 4) {
+                    $this.GetSuperList(rows[0].custid, result);
+                }
+                else if (result.roleId == 3) {
+                    $this.GetMasterList(result.srecommend, $this.AllowDoubleComm, custId, result);
+                }
+                else if (result.roleId == 2) {
+                    $this.GetAgentList(result.mrecommend, $this.AllowDoubleComm, custId, result);
+                }
+                else {
+                    $this.GetMemberList(result.recommend, $this.AllowDoubleComm, custId, result);
+                }
+            } else {
+                $.unblockUI(document);
+            }
+        });
+    },
+
+    RenderSuperList: function (dataSource) {
+        if (dataSource.srecommend) {
+            $this.superId = dataSource.srecommend;
+            $this.masterId = dataSource.mrecommend;
+            $this.agentId = dataSource.recommend;
+        }
+
+        var rows = $.parseJSON(dataSource.rows);
+        var options = null;
+        var bodyRows = [];
+
+        Fanex.ExtAcc.Customer.DataSource = rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
+            bodyRows.push({
+                Columns: [
+                            { Name: 'RowNumber', Value: rows[i].RowNumber },
+                            { Name: 'Check', Value: rows[i] },
+                            { Name: 'username', Value: rows[i] },
+                            { Name: 'Edit', Value: rows[i] },
+                            { Name: 'Status', Value: rows[i] },
+                            { Name: 'DoubleCommLosing', Value: rows[i] },
+                            { Name: 'firstname', Value: rows[i].firstname },
+                            { Name: 'lastname', Value: rows[i].lastname },
+                            { Name: 'groupa', Value: rows[i].groupa },
+                            { Name: 'groupb', Value: rows[i].groupb },
+                            { Name: 'groupc', Value: rows[i].groupc },
+                            { Name: 'groupd', Value: rows[i].groupd },
+                            { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                            { Name: 'discountcs', Value: rows[i].discountcs },
+                            { Name: 'discountnumber', Value: rows[i].discountnumber },
+                            { Name: 'createdate', Value: rows[i].createdate },
+                            { Name: 'lastloginip', Value: rows[i].lastloginip }
+                        ],
+                CssClass: cssRow
+            });
+        }
+
+        var groupHeader =
+                [{
+                    Columns: [
+                        { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                        { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                        { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                        { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                        { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                        { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                        { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                        { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                        { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
+                        { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                        { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                    ]
+                }]
+
+        options = {
+            columns: Fanex.ExtAcc.Customer.DataFields,
+            bodyRows: bodyRows,
+            gridExpandHeight: 165,
+            numberOfFrozenColumn: 6,
+            customizeHeader: true,
+            groupHeaderRows: groupHeader,
+            highlightFrozenWidth: 2,
+            showPager: true,
+            customPager: false,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 500],
+                currentPage: 0,
+                totalItem: rows.length,
+                itemsPerPage: 50
+            },
+            marginRight: 2,
+            showDistinctRow: false
+        };
+
+        Fanex.ExtAcc.Customer.Render(options);
+
+        $('#mainGrid').css('visibility', 'visible');
+
+        $('#breadcrumbs').empty();
+
+        Fanex.ExtAcc.OnResize = function () {
+            try {
+                $("#jqgrid").fanexGrid("resizeGrid");
+            }
+            catch (err) {
+            }
+        }
+    },
+
+    RenderMasterList: function (dataSource) {
+        if (dataSource.srecommend) {
+            $this.superId = dataSource.srecommend;
+            $this.masterId = dataSource.mrecommend;
+            $this.agentId = dataSource.recommend;
+        }
+
+        var rows = $.parseJSON(dataSource.rows);
+        var options = null;
+        var bodyRows = [];
+
+        Fanex.ExtAcc.Customer.DataSource = rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
+            bodyRows.push({
+                Columns: [
+                        { Name: 'RowNumber', Value: rows[i].RowNumber },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
+                        { Name: 'firstname', Value: rows[i].firstname },
+                        { Name: 'lastname', Value: rows[i].lastname },
+                        { Name: 'groupa', Value: rows[i].groupa },
+                        { Name: 'groupb', Value: rows[i].groupb },
+                        { Name: 'groupc', Value: rows[i].groupc },
+                        { Name: 'groupd', Value: rows[i].groupd },
+                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                        { Name: 'discountcs', Value: rows[i].discountcs },
+                        { Name: 'discountnumber', Value: rows[i].discountnumber },
+                        { Name: 'createdate', Value: rows[i].createdate },
+                        { Name: 'lastloginip', Value: rows[i].lastloginip }
+                    ],
+                CssClass: cssRow
+            });
+        }
+
+        var groupHeader =
+            [{
+                Columns: [
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                ]
+            }
+            ]
+
+        options = {
+            columns: Fanex.ExtAcc.Customer.DataFields,
+            bodyRows: bodyRows,
+            gridExpandHeight: 165,
+            numberOfFrozenColumn: 6,
+            customizeHeader: true,
+            groupHeaderRows: groupHeader,
+            highlightFrozenWidth: 2,
+            showPager: true,
+            customPager: false,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 500],
+                currentPage: 0,
+                totalItem: rows.length,
+                itemsPerPage: 50
+            },
+            marginRight: 2,
+            showDistinctRow: false
+        };
+
+        Fanex.ExtAcc.Customer.Render(options);
+
+        $('#mainGrid').css('visibility', 'visible');
+
+        $('#breadcrumbs').empty();
+
+        $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>');
+
+        Fanex.ExtAcc.OnResize = function () {
+            try {
+                $("#jqgrid").fanexGrid("resizeGrid");
+            }
+            catch (err) {
+            }
+        }
+    },
+
+    RenderAgentList: function (dataSource) {
+        if (dataSource.srecommend) {
+            $this.superId = dataSource.srecommend;
+            $this.masterId = dataSource.mrecommend;
+            $this.agentId = dataSource.recommend;
+        }
+
+        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
+
+        var rows = $.parseJSON(dataSource.rows);
+        var options = null;
+        var bodyRows = [];
+
+        Fanex.ExtAcc.Customer.DataSource = rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
+            bodyRows.push({
+                Columns: [
+                        { Name: 'RowNumber', Value: rows[i].RowNumber },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
+                        { Name: 'firstname', Value: rows[i].firstname },
+                        { Name: 'lastname', Value: rows[i].lastname },
+                        { Name: 'groupa', Value: rows[i].groupa },
+                        { Name: 'groupb', Value: rows[i].groupb },
+                        { Name: 'groupc', Value: rows[i].groupc },
+                        { Name: 'groupd', Value: rows[i].groupd },
+                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                        { Name: 'discountcs', Value: rows[i].discountcs },
+                        { Name: 'discountnumber', Value: rows[i].discountnumber },
+                        { Name: 'createdate', Value: rows[i].createdate },
+                        { Name: 'lastloginip', Value: rows[i].lastloginip }
+                    ],
+                CssClass: cssRow
+            });
+        }
+
+        var groupHeader =
+            [{
+                Columns: [
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                    { HeaderText: 'Commission', Name: 'groupa', MergeColNumber: 7 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                ]
+            }
+            ]
+
+        options = {
+            columns: Fanex.ExtAcc.Customer.DataFields,
+            bodyRows: bodyRows,
+            gridExpandHeight: 165,
+            numberOfFrozenColumn: 6,
+            customizeHeader: true,
+            groupHeaderRows: groupHeader,
+            highlightFrozenWidth: 2,
+            showPager: true,
+            customPager: false,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 500],
+                currentPage: 0,
+                totalItem: rows.length,
+                itemsPerPage: 50
+            },
+            marginRight: 2,
+            showDistinctRow: false
+        };
+
+        Fanex.ExtAcc.Customer.Render(options);
+
+        $('#mainGrid').css('visibility', 'visible');
+
+        $('#breadcrumbs').empty();
+
+        $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
+
+        Fanex.ExtAcc.OnResize = function () {
+            try {
+                $("#jqgrid").fanexGrid("resizeGrid");
+            }
+            catch (err) {
+            }
+        }
+    },
+
+    RenderMemberList: function (dataSource) {
+        if (dataSource.srecommend) {
+            $this.superId = dataSource.srecommend;
+            $this.masterId = dataSource.mrecommend;
+            $this.agentId = dataSource.recommend;
+        }
+
+        var rows = $.parseJSON(dataSource.rows);
+        var options = null;
+        var bodyRows = [];
+
+        Fanex.ExtAcc.Customer.DataSource = rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
+            bodyRows.push({
+                Columns: [
+                        { Name: 'RowNumber', Value: rows[i].RowNumber },
+                        { Name: 'Check', Value: rows[i] },
+                        { Name: 'username', Value: rows[i] },
+                        { Name: 'Edit', Value: rows[i] },
+                        { Name: 'Status', Value: rows[i] },
+                        { Name: 'DoubleCommLosing', Value: rows[i] },
+                        { Name: 'NickName', Value: rows[i].NickName },
+                        { Name: 'firstname', Value: rows[i].firstname },
+                        { Name: 'lastname', Value: rows[i].lastname },
+                        { Name: 'ugroup', Value: rows[i].ugroup },
+                        { Name: 'discount', Value: rows[i].discount },
+                        { Name: 'discount1x2', Value: rows[i].discount1x2 },
+                        { Name: 'discountcs', Value: rows[i].discountcs },
+                        { Name: 'discountnumber', Value: rows[i].discountnumber },
+                        { Name: 'playerdiscount', Value: rows[i].playerdiscount },
+                        { Name: 'playerdiscount1x2', Value: rows[i].playerdiscount1x2 },
+                        { Name: 'playerdiscountcs', Value: rows[i].playerdiscountcs },
+                        { Name: 'playerdiscountnumber', Value: rows[i].playerdiscountnumber },
+                        { Name: 'createdate', Value: rows[i].createdate },
+                        { Name: 'lastloginip', Value: rows[i].lastloginip }
+                    ],
+                CssClass: cssRow
+            });
+        }
+
+        var groupHeader =
+            [{
+                Columns: [
+                    { HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 },
+                    { HeaderText: '', Name: 'Check', MergeRowNumber: 2 },
+                    { HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 },
+                    { HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 },
+                    { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 },
+                    { HeaderText: 'Nickname', Name: 'NickName', MergeRowNumber: 2 },
+                    { HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 },
+                    { HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 },
+                    { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 },
+                    { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: 4 },
+                    { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: 4 },
+                    { HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 },
+                    { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
+                ]
+            }
+            ]
+
+        options = {
+            columns: Fanex.ExtAcc.Customer.DataFields,
+            bodyRows: bodyRows,
+            gridExpandHeight: 165,
+            numberOfFrozenColumn: 6,
+            customizeHeader: true,
+            groupHeaderRows: groupHeader,
+            highlightFrozenWidth: 2,
+            showPager: true,
+            customPager: false,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 500],
+                currentPage: 0,
+                totalItem: rows.length,
+                itemsPerPage: 50
+            },
+            marginRight: 2,
+            showDistinctRow: false
+        };
+
+        Fanex.ExtAcc.Customer.Render(options);
+
+        $('#mainGrid').css('visibility', 'visible');
+
+        $('#breadcrumbs').empty();
+
+        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
+        var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ')"' + '">' + 'Agent' + '</a>';
+
+        $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
+
+        Fanex.ExtAcc.OnResize = function () {
+            try {
+                $("#jqgrid").fanexGrid("resizeGrid");
+            }
+            catch (err) {
+            }
+        }
     }
 }

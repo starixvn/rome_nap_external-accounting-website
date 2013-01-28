@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\Transfer.cs" />
+    <Compile Include="Statement\Statement.cs" />
     <Compile Include="StatusKickedOut.cs" />
     <Compile Include="Functions.generated.cs">
       <DependentUpon>Functions.tt</DependentUpon>

@@ -176,8 +176,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), 0);
                 } else if (itemIndex == 6) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 2, 1);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 0);
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
                 } else if (itemIndex == 7) {
                     return;
                 }
@@ -481,6 +480,7 @@ Fanex.ExtAcc.WinLossDetail = {
         var sumCompany = 0;
 
         //// Assing BodyData
+        $this.InitSort();
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
             if (this.viewlevel == 1) {
@@ -636,6 +636,20 @@ Fanex.ExtAcc.WinLossDetail = {
         }
         return rows;
     },
+    InitSort: function () {
+        var countFixedSort = $this.fixedsortlist.length;
+        if (countFixedSort > 0) {
+            for (var i = 0; i < countFixedSort; i++) {
+                for (var j = 0; j < $this.dataSource.length; j++) {
+                    if ($this.fixedsortlist[i] == $this.dataSource[j].CustId) {
+                        $this.fixedsortdata.push($this.dataSource.slice(j, j + 1)[0]);
+                        $this.dataSource.unshift($this.dataSource.splice(j, 1)[0]);
+                        break;
+                    }
+                }
+            }
+        }
+    },
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
@@ -711,7 +725,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             + "&viewlevel=" + this.viewlevel
                             + this.parameterProducts;
 
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
 
         $.ajax({
             context: $this,
@@ -758,10 +772,10 @@ Fanex.ExtAcc.WinLossDetail = {
                     $("#jqgrid").fanexGrid($this.Render());
                 }
 
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             },
             error: function () {
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             }
         })
     }

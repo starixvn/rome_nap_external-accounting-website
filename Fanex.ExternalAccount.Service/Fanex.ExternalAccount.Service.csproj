@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\Statement\StatementService.cs" />
     <Compile Include="Interface\Customer\IMemberService.cs" />
     <Compile Include="Interface\Customer\IAgentService.cs" />
     <Compile Include="Interface\Customer\IMasterService.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Interface\Customer\ISuperService.cs" />
     <Compile Include="Interface\Login\ILoginService.cs" />
     <Compile Include="Interface\Report\IReportService.cs" />
+    <Compile Include="Interface\Statement\IStatementService.cs" />
     <Compile Include="Interface\UserControl\ICachingService.cs" />
     <Compile Include="Interface\UserControl\IFunctionService.cs" />
     <Compile Include="Interface\UserControl\IGroupService.cs" />

@@ -47,6 +47,10 @@ Fanex.ExtAcc = {
             module: 'Fanex.ExtAcc.WinLossDetail'
         },
         {
+            url: 'Statement/Index',
+            module: 'Fanex.ExtAcc.Statement'
+        },
+        {
             url: 'Group/GroupList',
             module: 'Fanex.ExtAcc.Group'
         },

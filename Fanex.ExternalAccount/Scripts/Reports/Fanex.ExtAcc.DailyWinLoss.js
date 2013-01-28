@@ -371,7 +371,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                             + "&date=" + this.date
                             + "&viewlevel=" + this.viewlevel;
 
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
         $.ajax({
             context: $this,
             url: this.url + parameterUrl,
@@ -413,10 +413,10 @@ Fanex.ExtAcc.DailyWinLoss = {
                     $("#jqgrid").fanexGrid($this.gridOptions);
                 }
 
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             },
             error: function () {
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             }
         })
     }

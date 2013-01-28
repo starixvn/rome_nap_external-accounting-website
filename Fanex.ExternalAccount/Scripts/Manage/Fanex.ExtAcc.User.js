@@ -97,7 +97,6 @@ Fanex.ExtAcc.User = {
         });
 
         Fanex.ExtAcc.OnResize = function () {
-            $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
                 $('#jqgrid').fanexGrid('resizeGrid');
             }
@@ -177,7 +176,7 @@ Fanex.ExtAcc.User = {
                     $('#mainGrid').css('visibility', 'visible');
                 }
 
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             });
         }
         catch (e) {
@@ -185,7 +184,7 @@ Fanex.ExtAcc.User = {
                 console.log(e);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
     },
 
