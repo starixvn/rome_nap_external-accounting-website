@@ -110,7 +110,7 @@ Fanex.ExtAcc.Function = {
             $this.RenderGrid(options);
         })
         .error(function (xhr) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
 
         $('#jqbutton').bind('click', function () {
@@ -118,7 +118,6 @@ Fanex.ExtAcc.Function = {
         });
 
         Fanex.ExtAcc.OnResize = function () {
-            $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
             try {
                 $("#jqgrid").fanexGrid("resizeGrid");
             }
@@ -131,7 +130,7 @@ Fanex.ExtAcc.Function = {
         try {
             // Init Grid jqgrid
             $('#jqgrid').fanexGrid(options);
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
 
             $('#mainGrid').css('visibility', 'visible');
         }
@@ -140,7 +139,7 @@ Fanex.ExtAcc.Function = {
                 console.log(e);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
     },
 

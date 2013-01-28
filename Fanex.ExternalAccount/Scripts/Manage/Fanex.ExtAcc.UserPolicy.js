@@ -54,9 +54,11 @@ Fanex.ExtAcc.UserPolicy = {
     GrantPermissionsWrite: function (target) {
         var targetId = $(target).attr('id');
         var isCheck = $(target).hasClass('permInactive');
+
         this.CheckPermission(isCheck, target);
-        this.CheckPermission(isCheck, $('#' + targetId.replace('w-', 'r-')).get(0));
+
         $('#' + targetId).attr('val', '2');
+
         if (!isCheck)
             $('#' + targetId).attr('val', '0');
 
@@ -64,11 +66,25 @@ Fanex.ExtAcc.UserPolicy = {
         var divs = table.getElementsByTagName("div");
 
         for (var i = 0; i < divs.length; i++) {
-            if (($(divs[i]).attr("parent") == targetId.replace('w-', 'r-') || $(divs[i]).attr("parent") == targetId.replace('r-', 'w-')) && ($(divs[i]).attr("permission") == 2 || $(divs[i]).attr("permission") == 1)) {
-                this.CheckPermission(isCheck, $(divs[i]).get(0));
-                $(divs[i]).attr('val', '2');
-                if (!isCheck)
-                    $(divs[i]).attr('val', '0');
+            if (isCheck) {
+                if (($(divs[i]).attr("parent") == targetId.replace('w-', 'r-') || $(divs[i]).attr("parent") == targetId.replace('r-', 'w-')) && ($(divs[i]).attr("permission") == 2 || $(divs[i]).attr("permission") == 1)) {
+                    this.CheckPermission(isCheck, $(divs[i]).get(0));
+                    $(divs[i]).attr('val', '2');
+                    if (!isCheck)
+                        $(divs[i]).attr('val', '0');
+                }
+            }
+            else {
+                if ($(divs[i]).attr("parent") == targetId || (!isCheck && $(divs[i]).attr("parent") == targetId.replace('r-', 'w-') && $(divs[i]).attr("permission") == 2)) {
+                    this.CheckPermission(false, $(divs[i]).get(0));
+                    var id = divs[i].id.replace('w-', 'r-');
+                    if ($('#' + id.replace('w-', 'r-')).attr('class') == 'permActive') {
+                        $(divs[i]).attr('val', '1');
+                    }
+                    else {
+                        $(divs[i]).attr('val', '0');
+                    }
+                }
             }
         }
     },
@@ -78,9 +94,9 @@ Fanex.ExtAcc.UserPolicy = {
         var parentId = $(target).attr('parent');
         var targetId = $(target).attr('id');
         var isCheck = $(target).hasClass('permInactive');
-        var allUnChecked = false;
+        var allUnChecked = true;
 
-        if (permission == 1) // read
+        if (permission == 1) // read permission
         {
             this.CheckPermission(isCheck, target);
             $('#' + targetId.replace('r-', 'w-')).attr('val', '1');
@@ -120,13 +136,15 @@ Fanex.ExtAcc.UserPolicy = {
                 $('#' + parentId.replace('r-', 'w-')).attr('val', '1');
             }
         }
-        else {
+        else { //Write permission
             this.CheckPermission(isCheck, target);
-            this.CheckPermission(isCheck, $('#' + targetId.replace('w-', 'r-')).get(0));
 
-            if (!isCheck) {
-                $('#' + targetId.replace('r-', 'w-')).attr('val', '0');
-                $('#' + targetId.replace('w-', 'r-')).attr('val', '0');
+            if (!isCheck) { //Uncheck write permission
+                this.CheckPermission(!isCheck, $('#' + targetId.replace('w-', 'r-')).get(0));
+
+                if ($('#' + targetId.replace('w-', 'r-')).attr('class') == 'permActive') {
+                    $('#' + targetId.replace('r-', 'w-')).attr('val', '1');
+                }
 
                 var divs = document.getElementById('tblInner').getElementsByTagName("div");
 
@@ -136,10 +154,7 @@ Fanex.ExtAcc.UserPolicy = {
                     }
 
                     if ($(divs[i]).attr("parent") == parentId) {
-                        if ($(divs[i]).hasClass("permInactive")) {
-                            allUnChecked = true;
-                        }
-                        else {
+                        if ($(divs[i]).hasClass("permActive")) {
                             allUnChecked = false;
                             break;
                         }
@@ -148,19 +163,24 @@ Fanex.ExtAcc.UserPolicy = {
 
                 if (allUnChecked) {
                     this.CheckPermission(false, $('#' + parentId)); //Uncheck parent node of write permission
-                    this.CheckPermission(false, $('#' + parentId.replace('w-', 'r-')).get(0)); //Uncheck parent node of read permission
 
-                    $('#' + parentId.replace('r-', 'w-')).attr('val', '0');
-                    $('#' + parentId.replace('w-', 'r-')).attr('val', '0');
+                    if ($('#' + parentId.replace('w-', 'r-')).attr('class') == 'permActive') {
+                        $('#' + parentId.replace('r-', 'w-')).attr('val', '1');
+                    }
+                    else {
+                        $('#' + parentId.replace('r-', 'w-')).attr('val', '0'); //Set parent of Write column to None permission
+                    }
                 }
             }
-            else {
+            else { //Check write permission
+                this.CheckPermission(true, target); //Check write permission
+                this.CheckPermission(true, $('#' + targetId.replace('w-', 'r-')).get(0)); //Check read permission
                 this.CheckPermission(true, $('#' + parentId)); //Check parent node of write permission
                 this.CheckPermission(true, $('#' + parentId.replace('w-', 'r-')).get(0)); //Check parent node of read permission
 
+                //Set write permission for both child and parent of Read & Write columns to Write permission
                 $('#' + targetId.replace('r-', 'w-')).attr('val', '2');
                 $('#' + targetId.replace('w-', 'r-')).attr('val', '2');
-
                 $('#' + parentId.replace('r-', 'w-')).attr('val', '2');
                 $('#' + parentId.replace('w-', 'r-')).attr('val', '2');
             }

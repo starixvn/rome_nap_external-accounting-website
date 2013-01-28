@@ -83,3 +83,18 @@
 	background: url("../../Images/arrow-icn.png") no-repeat center transparent !important;
 	width: 20px;
 }
+
+tr.rowClosed td
+{
+	background-color: #efefef !important;
+}
+
+tr.rowSuspended td
+{
+	background-color: #f8ded7 !important;
+}
+
+tr.rowDisabled td
+{
+	background-color: #a0a97a !important;
+}

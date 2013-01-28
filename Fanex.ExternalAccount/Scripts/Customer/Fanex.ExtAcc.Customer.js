@@ -10,6 +10,20 @@ Fanex.ExtAcc.Customer = {
     UserId: 0,
     superId: 0,
     masterId: 0,
+    agentId: 0,
+
+    Super: 1,
+    Master: 2,
+    Agent: 3,
+    Member: 4,
+
+    CurrentLevel: 1,
+
+    AllowDoubleCommMaster: false,
+    AllowDoubleCommAgent: false,
+    AllowDoubleComm: false,
+
+    BlockedUI: false,
 
     URL: '',
 
@@ -47,8 +61,6 @@ Fanex.ExtAcc.Customer = {
 
     Search: function (isFirstLoad) {
         if (isFirstLoad) {
-            $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
-
             this.GetSuperList();
         }
         else {
@@ -57,7 +69,10 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetSuperList: function () {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Super;
+        $this.AllowDoubleComm = true;
 
         var url = resolveClientUrl('Customer/SuperListPost');
         var data = {
@@ -80,10 +95,9 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ")";
-
-                            return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
+                            return '<div><a id="usr-' + custId + '" href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
@@ -143,6 +157,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -162,7 +178,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'discountnumber', Value: rows[i].discountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -204,14 +221,12 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
             $('#breadcrumbs').empty();
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -220,12 +235,16 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
-    GetMasterList: function (srecommend) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+    GetMasterList: function (srecommend, allow) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Master;
+        $this.AllowDoubleComm = allow;
+        $this.AllowDoubleCommMaster = allow;
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = {
@@ -250,8 +269,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -269,9 +287,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             var css = '';
-                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'allowDblComm';
 
-                            if (!allow) {
+                            if (!$this.AllowDoubleComm) {
                                 css = 'style="cursor:default !important"';
                             }
 
@@ -320,6 +337,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -339,7 +358,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'discountnumber', Value: rows[i].discountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -382,7 +402,6 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
@@ -391,7 +410,6 @@ Fanex.ExtAcc.Customer = {
             $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>');
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -400,16 +418,20 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
-    GetAgentList: function (mrecommend) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+    GetAgentList: function (mrecommend, allow) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Agent;
+        $this.AllowDoubleComm = allow;
+        $this.AllowDoubleCommAgent = allow;
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
         var data = {
             mrecommend: mrecommend,
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
@@ -432,8 +454,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -451,9 +472,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             var css = '';
-                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'allowDblComm';
 
-                            if (!allow) {
+                            if (!$this.AllowDoubleComm) {
                                 css = 'style="cursor:default !important"';
                             }
 
@@ -502,6 +522,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -521,7 +543,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'discountnumber', Value: rows[i].discountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -564,7 +587,6 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
@@ -573,7 +595,6 @@ Fanex.ExtAcc.Customer = {
             $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -582,12 +603,16 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
-    GetMemberList: function (recommend) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+    GetMemberList: function (recommend, allow) {
+        $this.BlockUI();
+
+        $this.CurrentLevel = $this.Member;
+        $this.AllowDoubleComm = allow;
+        $this.agentId = recommend;
 
         var url = resolveClientUrl('Customer/MemberListPost');
         var data = {
@@ -626,9 +651,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
                         CustomCellRender: function (cell) {
                             var css = '';
-                            var allow = $('#dbl-' + cell.Value.custid).attr('class') == 'onDblComm';
 
-                            if (!allow) {
+                            if (!$this.AllowDoubleComm) {
                                 css = 'style="cursor:default !important"';
                             }
 
@@ -680,6 +704,8 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Customer.DataSource = rows;
 
             for (var i = 0; i < rows.length; i++) {
+                var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+
                 bodyRows.push({
                     Columns: [
                         { Name: 'RowNumber', Value: rows[i].RowNumber },
@@ -702,7 +728,8 @@ Fanex.ExtAcc.Customer = {
                         { Name: 'playerdiscountnumber', Value: rows[i].playerdiscountnumber },
                         { Name: 'createdate', Value: rows[i].createdate },
                         { Name: 'lastloginip', Value: rows[i].lastloginip }
-                    ]
+                    ],
+                    CssClass: cssRow
                 });
             }
 
@@ -748,20 +775,18 @@ Fanex.ExtAcc.Customer = {
             };
 
             Fanex.ExtAcc.Customer.Render(options);
-            Fanex.ExtAcc.Customer.totalRows = rows.length;
 
             $('#mainGrid').css('visibility', 'visible');
 
             $('#breadcrumbs').empty();
 
             var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-            var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ')"' + '">' + 'Master' + '</a>';
-            var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ')"' + '">' + 'Agent' + '</a>';
+            var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
+            var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ')"' + '">' + 'Agent' + '</a>';
 
             $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
             Fanex.ExtAcc.OnResize = function () {
-                $this.leftMenuWidth = Fanex.ExtAcc.leftMenuWidth;
                 try {
                     $("#jqgrid").fanexGrid("resizeGrid");
                 }
@@ -770,7 +795,7 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .error(function (xhr, status, err) {
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         });
     },
 
@@ -787,11 +812,11 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowIpInfo: function (ip) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $this.BlockUI();
 
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
-                $(document).ajaxStop($.unblockUI);
+                $.unblockUI(document);
             },
             2);
     },
@@ -803,7 +828,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ConfigDoubleComm: function (custid, isSuper) {
-        var allow = ($('#dbl-' + custid).attr('class') == 'allowDblComm' || $('#dbl-' + custid).attr('class') == 'onDblComm');
+        var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
 
         if (allow || isSuper) {
             var msg = '';
@@ -835,35 +860,38 @@ Fanex.ExtAcc.Customer = {
                         allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm')
                     }
                 })
-            .success(function (result) {
-                Fanex.ExtAcc.Form.Close(false);
+                .success(function (result) {
+                    Fanex.ExtAcc.Form.Close(false);
+                    $this.BlockUI();
 
-                var timeout = setTimeout(function () {
                     if (result.IsSuccess) {
-                        if ($('#dbl-' + custid).attr('class') == 'disallowDblComm') {
-                            $('#dbl-' + custid).attr('class', 'allowDblComm');
-                        }
-                        else if ($('#dbl-' + custid).attr('class') == 'allowDblComm') {
-                            $('#dbl-' + custid).attr('class', 'disallowDblComm');
-                        }
-                        else if ($('#dbl-' + custid).attr('class') == 'onDblComm') {
-                            $('#dbl-' + custid).attr('class', 'offDblComm');
-                        }
-                        else {
-                            $('#dbl-' + custid).attr('class', 'onDblComm');
-                        }
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+
+                            if ($this.CurrentLevel == $this.Super) {
+                                $this.GetSuperList();
+                            }
+                            else if ($this.CurrentLevel == $this.Master) {
+                                Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm);
+                            }
+                            else if ($this.CurrentLevel == $this.Agent) {
+                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                            }
+                            else {
+                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                            }
+                        }, 2000);
                     }
-
-                    clearTimeout(timeout);
-                }, 500);
-            })
-            .error(function (xhr) {
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
-
-                Fanex.ExtAcc.Form.Close(false);
-            });
+                    else {
+                        $.unblockUI(document);
+                        alert(result.ErrorMessage);
+                    }
+                })
+                .error(function (xhr) {
+                    if (typeof console != 'undefined') {
+                        console.log(xhr);
+                    }
+                });
             });
         }
     },
@@ -903,17 +931,31 @@ Fanex.ExtAcc.Customer = {
                 $('#jqgrid').fanexGrid(options);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
         catch (e) {
             if (typeof console != 'undefined') {
                 console.log(e);
             }
 
-            $(document).ajaxStop($.unblockUI);
+            $.unblockUI(document);
         }
     },
 
     SearchList: function () {
+    },
+
+    BlockUI: function () {
+        if (!$this.BlockedUI) {
+            $.blockUI({
+                message: '<img src="../../Images/Loading.gif" />',
+                onBlock: function () {
+                    $this.BlockedUI = true;
+                },
+                onUnblock: function () {
+                    $this.BlockedUI = false;
+                }
+            });
+        }
     }
 }
