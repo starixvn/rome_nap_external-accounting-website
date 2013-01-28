@@ -166,7 +166,7 @@ Fanex.ExtAcc.Statement = {
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate;
 
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
 
         $.ajax({
             context: $this,

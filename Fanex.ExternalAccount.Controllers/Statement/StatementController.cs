@@ -23,6 +23,8 @@ namespace Fanex.ExternalAccount.Controllers.Statement
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
+using Fanex.ExternalAccount.Service.Interface.Report;
+using Fanex.ExternalAccount.Service.Impl.Report;
 
     /// <summary>
     /// Statement controller
@@ -45,14 +47,27 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read)]
         public ActionResult Index()
         {
-            //return GetStatement();
             return this.ViewBase();
         }
 
-        public void GetRequestPage()
+        private bool CheckBelonging()
         {
+            IReportService reportService = new ReportService();
+            DataTable customerInfo = reportService.GetCustomerInfo(this.groupname, this.custId, string.Empty, true);
+            if (customerInfo != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void GetRequestPage()
+        {            
             this.custId = CheckRequest.GetIntRequest("custid", 0);
-            this.groupname = CheckRequest.GetStringRequest("groupname", "ACCDDD");
+            this.groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
             this.fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this.toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
             this.cacheList = "CacheList" + this.groupname + this.custId.ToString() + this.fromDate.ToString() + this.toDate.ToString();
@@ -62,7 +77,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         public ActionResult GetStatement()
         {
             this.GetRequestPage();
-            if (custId > 0)
+            if (custId > 0 && CheckBelonging())
             {
                 return this.LoadDataStatement();
             }

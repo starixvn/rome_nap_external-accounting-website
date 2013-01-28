@@ -725,7 +725,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             + "&viewlevel=" + this.viewlevel
                             + this.parameterProducts;
 
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
 
         $.ajax({
             context: $this,
