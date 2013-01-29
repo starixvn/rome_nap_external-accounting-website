@@ -12,7 +12,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
 
     public class StatementDAO : DAOBase, IStatementDAO
     {
-        private bool includeAccBal = false;
         public List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate, DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal)
         {
             Hashtable parameters = new Hashtable();
@@ -22,6 +21,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
             parameters.Add("balanceupday", balanceUpDay);
             parameters.Add("movebetday", moveBetDay);
             parameters.Add("includeaccbal", includeAccBal);
+            parameters.Add("showexchangerate", false);
 
             string type = string.Empty;
             string remark = string.Empty;
