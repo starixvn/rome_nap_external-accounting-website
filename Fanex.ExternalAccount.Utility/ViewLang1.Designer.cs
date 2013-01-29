@@ -538,7 +538,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit transfer Condition.
+        ///   Looks up a localized string similar to Edit transfer condition.
         /// </summary>
         public static string editTransferCondition {
             get {
