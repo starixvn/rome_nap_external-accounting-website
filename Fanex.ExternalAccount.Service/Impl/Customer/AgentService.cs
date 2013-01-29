@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Fanex.ExternalAccount.DTO.Customer;
 
     /// <summary>
     /// TODO: Update summary.
@@ -28,6 +29,20 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             try
             {
                 return this.dao.GetData(recommend, custId, enabled, closed, suspended);
+            }
+            catch (Exception ex)
+            {
+                this.ProcessException(ex);
+            }
+
+            return null;
+        }
+
+        public Transfer GetTransferOption(int custId)
+        {
+            try
+            {
+                return this.dao.GetTransferOption(custId);
             }
             catch (Exception ex)
             {

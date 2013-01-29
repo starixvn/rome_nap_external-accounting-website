@@ -12,6 +12,8 @@
             <td>
                 @Html.TextBoxFor(m => m.FirstName, new { @class = "editControl" })
             </td>
+        </tr>
+        <tr>
             <td style="text-align: right">
                 @Html.LabelFor(m => m.LastName, ViewLang.Lastname, new { @class = "divMargin" })
             </td>
@@ -26,6 +28,8 @@
             <td>
                 @Html.TextBoxFor(m => m.HomePhone, new { @class = "editControl" })
             </td>
+        </tr>
+        <tr>
             <td style="text-align: right">
                 @Html.LabelFor(m => m.MobilePhone, ViewLang.MobilePhone, new { @class = "divMargin" })
             </td>
@@ -40,6 +44,8 @@
             <td>
                 @Html.TextBoxFor(m => m.Email, new { @class = "editControl" })
             </td>
+        </tr>
+        <tr>
             <td style="text-align: right">
                 @Html.LabelFor(m => m.Fax, ViewLang.Fax, new { @class = "divMargin" })
             </td>
@@ -49,7 +55,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <div style="float: right;">
+                <div style="float: right; padding-right: 3px;">
                     <input class="buttonPopup" type="button" value="Reset" onclick="Fanex.ExtAcc.User.Edit()" />
                 </div>
                 <div style="float: right; padding-right: 10px;">
