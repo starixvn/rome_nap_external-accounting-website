@@ -52,20 +52,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             return null;
         }
 
-        public Transfer TransferOption(int custId)
-        {
-            try
-            {
-                return this.dao.TransferOption(custId);
-            }
-            catch (Exception ex)
-            {
-                this.ProcessException(ex);
-            }
-
-            return null;
-        }
-
         public Result EditTransferOption(int custId, Transfer transferOption, Request request)
         {
             try
