@@ -25,6 +25,7 @@ Fanex.ExtAcc.Customer = {
     BlockedUI: false,
 
     URL: '',
+    MultipleDblCommError: '',
 
     $this: null,
 
@@ -132,7 +133,8 @@ Fanex.ExtAcc.Customer = {
             },
             trigger: "left",
             ignoreRightClick: true,
-            autoHide: true
+            autoHide: false,
+            width: 150
         });
     },
 
@@ -252,7 +254,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
                     { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
                         CustomHeaderRender: function (cell) {
-                            return '<div class="editMult"></div>';
+                            return '<div id="editMult" class="editMult"></div>';
                         },
                         CustomCellRender: function (cell) {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
@@ -354,7 +356,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
                     { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
                         CustomHeaderRender: function (cell) {
-                            return '<div class="editMult"></div>';
+                            return '<div id="editMult" class="editMult"></div>';
                         },
                         CustomCellRender: function (cell) {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
@@ -462,7 +464,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
                     { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
                         CustomHeaderRender: function (cell) {
-                            return '<div class="editMult"></div>';
+                            return '<div id="editMult" class="editMult"></div>';
                         },
                         CustomCellRender: function (cell) {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
@@ -569,7 +571,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
                     { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
                         CustomHeaderRender: function (cell) {
-                            return '<div class="editMult"></div>';
+                            return '<div id="editMult" class="editMult"></div>';
                         },
                         CustomCellRender: function (cell) {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
@@ -682,6 +684,62 @@ Fanex.ExtAcc.Customer = {
     ResetPwd: function () {
     },
 
+    ConfigMultipleDoubleComm: function (custids, isSuper, index) {
+        $this.BlockUI();
+
+        if (index == 0) {
+            $this.MultipleDblCommError = '';
+        }
+
+        var len = custids.length - 1;
+        var current = index;
+
+        $.ajax({
+            url: resolveClientUrl('Customer/ConfigDoubleComm'),
+            dataType: 'json',
+            data: {
+                custid: custids[current],
+                allow: ($('#dbl-' + custids[current]).attr('class') == 'disallowDblComm' || $('#dbl-' + custids[current]).attr('class') == 'offDblComm')
+            }
+        })
+        .success(function (result) {
+            if (current == len) {
+                if ($this.CurrentLevel == $this.Super) {
+                    $this.GetSuperList();
+                }
+                else if ($this.CurrentLevel == $this.Master) {
+                    $this.GetMasterList($this.superId, $this.AllowDoubleComm);
+                }
+                else if ($this.CurrentLevel == $this.Agent) {
+                    $this.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                }
+                else {
+                    $this.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                }
+
+                console.log($this.MultipleDblCommError);
+            }
+            else {
+                $this.MultipleDblCommError += result.ErrorMessage + '<br/>';
+            }
+
+            current++;
+            $this.ConfigMultipleDoubleComm(custids, isSuper, current);
+        })
+        .error(function (xhr, status, err) {
+            if (typeof console != 'undefined') {
+                console.log(err);
+            }
+
+            $this.MultipleDblCommError += err + '<br/>';
+            current++;
+            $this.ConfigMultipleDoubleComm(custids, isSuper, current);
+        });
+    },
+
+    UpdateDoubleComm: function () {
+    },
+
     ConfigDoubleComm: function (custid, isSuper) {
         var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
 
@@ -755,15 +813,33 @@ Fanex.ExtAcc.Customer = {
     },
 
     Select: function (div) {
+        $('#editMult').attr('style', 'cursor: default !important');
+
         if (div.className == 'menuInactive') {
             div.className = 'menuActive';
         }
         else {
             div.className = 'menuInactive'
         }
+
+        var divs = $('div');
+
+        for (var i = 0; i < divs.length; i++) {
+            if ((divs[i].className == 'menuActive' || divs[i].className == 'menuInactive') && divs[i].className == 'menuActive') {
+                $('#editMult').attr('style', 'cursor: pointer !important');
+                break;
+            }
+        }
     },
 
     SelectAll: function (className) {
+        if (className == 'menuActive') {
+            $('#editMult').attr('style', 'cursor: pointer !important');
+        }
+        else {
+            $('#editMult').attr('style', 'cursor: default !important');
+        }
+
         var divs = document.getElementsByTagName('div');
 
         for (var i = 0; i < divs.length; i++) {
@@ -785,6 +861,8 @@ Fanex.ExtAcc.Customer = {
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
             }
+
+            $('#editMult').attr('style', 'cursor: default !important');
 
             $.unblockUI(document);
         }
