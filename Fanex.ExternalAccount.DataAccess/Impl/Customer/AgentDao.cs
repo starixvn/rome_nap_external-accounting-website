@@ -9,10 +9,12 @@
 
 namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
+    using System;
     using System.Collections;
     using System.Data;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
+    using Fanex.ExternalAccount.DTO.Customer;
 
     /// <summary>
     /// TODO: Update summary.
@@ -43,6 +45,45 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return DbHelper.ExecuteDataTable("EAS_CustomerSelByMAg", param);
         }
 
-        #endregion IData Members
+        public Transfer GetTransferOption(int custId)
+        {
+            var param = new Hashtable();
+            param.Add("custid", custId);
+            param.Add("transferoption", "00000000");
+
+            using (var reader = this.ExecDataReader("Acc_CustomerSelTransferOption", param))
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.FieldCount == 8)
+                        {
+                            return new Transfer()
+                            {
+                                Daily = Convert.ToBoolean(reader[0]),
+                                Mon = Convert.ToBoolean(reader[1]),
+                                Wed = Convert.ToBoolean(reader[3]),
+                                Thu = Convert.ToBoolean(reader[4]),
+                                Fri = Convert.ToBoolean(reader[5]),
+                                Sat = Convert.ToBoolean(reader[6]),
+                                Sun = Convert.ToBoolean(reader[7])
+                            };
+                        }
+                        else
+                        {
+                            return new Transfer()
+                            {
+                                Daily = Convert.ToBoolean(reader[0])
+                            };
+                        }
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        #endregion IData Agents
     }
 }

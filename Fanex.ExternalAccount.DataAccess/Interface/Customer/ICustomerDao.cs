@@ -19,7 +19,6 @@ namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
         Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,
                                     string email, string fax, string ip, int userId, int subAccId, string language);
 
-        Transfer TransferOption(int custId);
 
         Result EditTransferOption(int custId, Transfer transferOption, Request request);
 

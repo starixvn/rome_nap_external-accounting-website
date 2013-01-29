@@ -80,43 +80,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return new Result(result.Outputs["errorcode"].ToString(), result.Outputs["errormsg"].ToString(), result.ResultSet);
         }
 
-        public Transfer TransferOption(int custId)
-        {
-            var param = new Hashtable();
-            param.Add("custid", custId);
-            param.Add("transferoption", string.Empty);
-
-            var result = DbHelper.ExecuteDbResult("Acc_CustomerSelTransferOption", param);
-            var output = result.Outputs["transferoption"] as string;
-
-            if (!string.IsNullOrWhiteSpace(output))
-            {
-                if (output.Length == 8)
-                {
-                    return new Transfer()
-                    {
-                        Daily = Convert.ToBoolean(output[0]),
-                        Mon = Convert.ToBoolean(output[1]),
-                        Tue = Convert.ToBoolean(output[2]),
-                        Wed = Convert.ToBoolean(output[3]),
-                        Thu = Convert.ToBoolean(output[4]),
-                        Fri = Convert.ToBoolean(output[5]),
-                        Sat = Convert.ToBoolean(output[6]),
-                        Sun = Convert.ToBoolean(output[7])
-                    };
-                }
-                else
-                {
-                    return new Transfer()
-                    {
-                        Daily = Convert.ToBoolean(output[0])
-                    };
-                }
-            }
-
-            return null;
-        }
-
         public Result EditTransferOption(int custId, Transfer transferOption, Request request)
         {
             var transfer = string.Empty;
