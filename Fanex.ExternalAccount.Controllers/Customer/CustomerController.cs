@@ -166,7 +166,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var result = this.customerService.EditUserInfo(custId, firstName, lastName, homePhone, mobilePhone, email, fax, CurrentContext.Ip4Address, CurrentSession.CustId, 0, "E");
 
-            return this.JsonBase(result);
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
     }
 }
