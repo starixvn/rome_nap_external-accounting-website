@@ -33,7 +33,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
                 {
                     while (reader.Read())
                     {
-                        type = reader.IsDBNull(reader.GetOrdinal("TransType")) ? string.Empty : reader["TransType"].ToString();
+                        type = reader.IsDBNull(reader.GetOrdinal("TransType")) ? string.Empty : reader["TransType"].ToString().ToUpper();
                         remark = reader.IsDBNull(reader.GetOrdinal("TransDesc")) ? string.Empty : reader["TransDesc"].ToString();
                         bool isAccBal = string.Compare(remark.ToLowerInvariant(), "accumulated balance", true) == 0;
 
