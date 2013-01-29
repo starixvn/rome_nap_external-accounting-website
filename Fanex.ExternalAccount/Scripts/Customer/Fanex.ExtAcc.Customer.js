@@ -189,13 +189,42 @@ Fanex.ExtAcc.Customer = {
         $this.AllowDoubleComm = true;
 
         var url = resolveClientUrl('Customer/SuperListPost');
+        var enabled = false;
+        var closed = false;
+        var suspended = false;
+
+        if ($('#customerStatus').val() == '-1') {
+            enabled = null;
+            closed = null;
+            suspended = null;
+        }
+        else if ($('#customerStatus').val() == '1') {
+            enabled = true;
+            closed = false;
+            suspended = false;
+        }
+        else if ($('#customerStatus').val() == '2') {
+            enabled = false;
+            closed = true;
+            suspended = null;
+        }
+        else if ($('#customerStatus').val() == '3') {
+            enabled = null;
+            closed = null;
+            suspended = true;
+        }
+        else {
+            enabled = false;
+            closed = null;
+            suspended = null;
+        }
+
         var data = {
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: $('#customerStatus').val() == '1',
-            closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3',
-            username: $('#txtUserName').val(),
-            custId: custId == 'undefined' ? 0 : custId
+            enabled: enabled,
+            closed: closed,
+            suspended: suspended,
+            username: $('#txtUserName').val()
         };
 
         $this.DataFields = [
@@ -224,7 +253,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
                         }
                     },
-                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                    { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
@@ -326,7 +355,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMasterAgent"></div>';
                         }
                     },
-                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                    { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
@@ -434,7 +463,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMasterAgent"></div>';
                         }
                     },
-                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                    { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
@@ -538,7 +567,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMember"></div>';
                         }
                     },
-                    { HeaderText: 'Status', Name: 'Status', Width: 60, CellAlign: 'center',
+                    { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
@@ -773,14 +802,40 @@ Fanex.ExtAcc.Customer = {
     GetSearchList: function () {
         $this.BlockUI();
 
-        var url = resolveClientUrl('Customer/SearchListPost');
+        var enabled = false;
+        var closed = false;
+        var suspended = false;
+
+        if ($('#customerStatus').val() == '-1') {
+            enabled = null;
+            closed = null;
+            suspended = null;
+        }
+        else if ($('#customerStatus').val() == '1') {
+            enabled = true;
+            closed = null;
+            suspended = null;
+        }
+        else if ($('#customerStatus').val() == '2') {
+            enabled = false;
+            closed = true;
+            suspended = null;
+        }
+        else {
+            enabled = false;
+            closed = null;
+            suspended = null;
+        }
+
         var data = {
             groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: $('#customerStatus').val() == '1',
-            closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3',
+            enabled: enabled,
+            closed: closed,
+            suspended: suspended,
             username: $('#txtUserName').val()
         };
+
+        var url = resolveClientUrl('Customer/SearchListPost');
 
         $.ajax({
             url: url,
@@ -889,7 +944,8 @@ Fanex.ExtAcc.Customer = {
                 itemsPerPage: 50
             },
             marginRight: 2,
-            showDistinctRow: false
+            showDistinctRow: false,
+            allowTruncate: true
         };
 
         Fanex.ExtAcc.Customer.Render(options);
@@ -982,7 +1038,8 @@ Fanex.ExtAcc.Customer = {
                 itemsPerPage: 50
             },
             marginRight: 2,
-            showDistinctRow: false
+            showDistinctRow: false,
+            allowTruncate: true
         };
 
         Fanex.ExtAcc.Customer.Render(options);
@@ -1080,7 +1137,8 @@ Fanex.ExtAcc.Customer = {
                 itemsPerPage: 50
             },
             marginRight: 2,
-            showDistinctRow: false
+            showDistinctRow: false,
+            allowTruncate: true
         };
 
         Fanex.ExtAcc.Customer.Render(options);
@@ -1181,7 +1239,8 @@ Fanex.ExtAcc.Customer = {
                 itemsPerPage: 50
             },
             marginRight: 2,
-            showDistinctRow: false
+            showDistinctRow: false,
+            allowTruncate: true
         };
 
         Fanex.ExtAcc.Customer.Render(options);
