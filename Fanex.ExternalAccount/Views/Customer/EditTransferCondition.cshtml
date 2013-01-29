@@ -1,0 +1,52 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.Customer
+@model Transfer
+
+<div>
+    <table width="100%" border="0" cellpadding="2">
+        <tr>
+            <td style="text-align: right" colspan="8">
+                @Html.CheckBoxFor(m => m.Daily) @ViewLang.daily
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Weekly) @ViewLang.Weekly
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Mon) @ViewLang.Mon
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Tue) @ViewLang.Tue
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Wed) @ViewLang.Wed
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Thu) @ViewLang.Thur
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Fri) @ViewLang.Fri
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Sat) @ViewLang.Sat
+            </td>
+            <td style="text-align: right">
+                @Html.CheckBoxFor(m => m.Sun) @ViewLang.Sun
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <div style="float: right; padding-right: 3px;">
+                    <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div id="errMsg" style="display: none;" class="errMsg">
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

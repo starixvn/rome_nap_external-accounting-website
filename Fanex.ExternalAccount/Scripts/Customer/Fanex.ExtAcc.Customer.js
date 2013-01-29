@@ -66,6 +66,7 @@ Fanex.ExtAcc.Customer = {
             this.SearchList();
         }
     },
+
     ShowEditInfoSuper: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -81,6 +82,7 @@ Fanex.ExtAcc.Customer = {
             autoHide: true
         });
     },
+
     ShowEditInfoMasterAgent: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -100,13 +102,15 @@ Fanex.ExtAcc.Customer = {
                 virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
                 separator2: "-----",
                 editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+                changePassword: { name: "Reset Password", className: "iconEnableEdit" },
+                transferCondition: { name: "Transfer Condition", className: "iconEnableEdit" }
             },
             trigger: "left",
             ignoreRightClick: true,
             autoHide: true
         });
     },
+
     ShowEditInfoMember: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -131,6 +135,17 @@ Fanex.ExtAcc.Customer = {
             autoHide: true
         });
     },
+
+    ResetInfo: function () {
+        $('#FirstName').val('');
+        $('#LastName').val('');
+        $('#HomePhone').val('');
+        $('#MobilePhone').val('');
+        $('#Email').val('');
+        $('#Fax').val('');
+        $('#FirstName').focus();
+    },
+
     EditInfo: function () {
         var firstName = $('#FirstName').val();
         var lastName = $('#LastName').val();
@@ -149,11 +164,15 @@ Fanex.ExtAcc.Customer = {
         params += '&email=' + email;
         params += '&fax=' + fax;
 
+        Fanex.ExtAcc.Form.Close(false);
+
+        $this.BlockUI();
+
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                alert(data.ErrorMessage);
+                $.unblockUI(document);
             }
             else {
                 
@@ -172,16 +191,18 @@ Fanex.ExtAcc.Customer = {
                     else {
                         Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
                     }
-                }, 3000);
 
-                Fanex.ExtAcc.Form.Close(false, 3000);
+                    $.unblockUI(document);
+                }, 2000);
             }
 
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+            $.unblockUI(document);
         });
     },
+
     GetSuperList: function (custId, dataSource) {
         $this.BlockUI();
 
