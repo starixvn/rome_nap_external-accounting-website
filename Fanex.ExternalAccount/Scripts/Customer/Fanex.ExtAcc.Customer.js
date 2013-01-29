@@ -151,6 +151,10 @@ Fanex.ExtAcc.Customer = {
         params += '&email=' + email;
         params += '&fax=' + fax;
 
+        Fanex.ExtAcc.Form.Close(false);
+
+        $this.BlockUI();
+
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
@@ -158,7 +162,6 @@ Fanex.ExtAcc.Customer = {
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
 
@@ -174,14 +177,14 @@ Fanex.ExtAcc.Customer = {
                     else {
                         Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
                     }
-                }, 3000);
 
-                Fanex.ExtAcc.Form.Close(false, 3000);
+                    $.unblockUI(document);
+                }, 2000);
             }
-
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+            $.unblockUI(document);
         });
     },
     GetSuperList: function (custId, dataSource) {
