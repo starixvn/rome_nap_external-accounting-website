@@ -73,7 +73,7 @@ Fanex.ExtAcc.Customer = {
         $.contextMenu({
             selector: '.editInfo',
             items: {
-                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 750, 265, false); } },
+                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit" }
             },
             trigger: "left",
@@ -99,7 +99,7 @@ Fanex.ExtAcc.Customer = {
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 750, 265, false); } },
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit" }
             },
             trigger: "left",
@@ -123,7 +123,7 @@ Fanex.ExtAcc.Customer = {
                 casino: { name: "Casino", className: "iconEnableEdit" },
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 750, 265, false); } },
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit" }
             },
             trigger: "left",
@@ -174,7 +174,7 @@ Fanex.ExtAcc.Customer = {
                     }
                 }, 3000);
 
-                Fanex.ExtAcc.Form.Close(false, 4000);
+                Fanex.ExtAcc.Form.Close(false, 3000);
             }
 
         })
