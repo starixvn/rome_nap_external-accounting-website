@@ -14,6 +14,7 @@ html, body
 	font-family: Tahoma, Helvetica, Arial, sans-serif;
 }
 
+.w100{width:100%;}
 .floatL
 {
 	float: left;
