@@ -1456,6 +1456,7 @@
     <Content Include="Views\Customer\EditInfo.cshtml" />
     <Content Include="Views\Customer\ViewIP.cshtml" />
     <Content Include="Views\Statement\Index.cshtml" />
+    <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

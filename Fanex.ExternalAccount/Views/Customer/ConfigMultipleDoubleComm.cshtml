@@ -1,0 +1,27 @@
+﻿<div>
+    <div style="height: 25px">
+        <input style="margin: 5px" id="dblAllow" type="radio" name="dblComm" value="" /><label for="dblAllow">Allow Double Commission</label></div>
+    <div style="height: 25px">
+        <input style="margin: 5px" id="dblDisallow" type="radio" name="dblComm" value="" /><label for="dblDisallow">Disallow Double Commission</label></div>
+    <div style="float: right">
+        <input id="btnSubmit" type="button" value="Submit" class="buttonPopup" /></div>
+</div>
+<script type="text/javascript">
+    var allow = true;
+    $(document).ready(function () {
+        $('#dblAllow').bind('click', function () {
+            allow = true;
+        });
+
+        $('#dblDisallow').bind('click', function () {
+            allow = false;
+            console.log(allow);
+        });
+
+        $('#btnSubmit').bind('click', function () {
+            console.log(allow);
+
+            Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm(allow);
+        });
+    });
+</script>

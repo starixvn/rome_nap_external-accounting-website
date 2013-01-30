@@ -158,8 +158,8 @@ Fanex.ExtAcc.Customer = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                alert(data.ErrorMessage);
+                $.unblockUI(document);
             }
             else {
                 var timeout = setTimeout(function () {
@@ -666,7 +666,7 @@ Fanex.ExtAcc.Customer = {
     ResetPwd: function () {
     },
 
-    ConfigMultipleDoubleComm: function (custids, isSuper, index) {
+    ConfigMultipleDoubleComm: function (custids, isSuper, allow, index) {
         $this.BlockUI();
 
         if (index == 0) {
@@ -680,33 +680,38 @@ Fanex.ExtAcc.Customer = {
             url: resolveClientUrl('Customer/ConfigDoubleComm'),
             dataType: 'json',
             data: {
-                custid: custids[current],
-                allow: ($('#dbl-' + custids[current]).attr('class') == 'disallowDblComm' || $('#dbl-' + custids[current]).attr('class') == 'offDblComm')
+                custid: parseInt(custids[current]),
+                allow: allow
             }
         })
         .success(function (result) {
             if (current == len) {
-                if ($this.CurrentLevel == $this.Super) {
-                    $this.GetSuperList();
-                }
-                else if ($this.CurrentLevel == $this.Master) {
-                    $this.GetMasterList($this.superId, $this.AllowDoubleComm);
-                }
-                else if ($this.CurrentLevel == $this.Agent) {
-                    $this.GetAgentList($this.masterId, $this.AllowDoubleComm);
-                }
-                else {
-                    $this.GetMemberList($this.agentId, $this.AllowDoubleComm);
-                }
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
 
-                console.log($this.MultipleDblCommError);
+                    if ($this.CurrentLevel == $this.Super) {
+                        $this.GetSuperList();
+                    }
+                    else if ($this.CurrentLevel == $this.Master) {
+                        $this.GetMasterList($this.superId, $this.AllowDoubleComm);
+                    }
+                    else if ($this.CurrentLevel == $this.Agent) {
+                        $this.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                    }
+                    else {
+                        $this.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                    }
+                }, 2000);
             }
             else {
                 $this.MultipleDblCommError += result.ErrorMessage + '<br/>';
             }
 
             current++;
-            $this.ConfigMultipleDoubleComm(custids, isSuper, current);
+
+            if (current <= len) {
+                $this.ConfigMultipleDoubleComm(custids, isSuper, allow, current);
+            }
         })
         .error(function (xhr, status, err) {
             if (typeof console != 'undefined') {
@@ -714,12 +719,13 @@ Fanex.ExtAcc.Customer = {
             }
 
             $this.MultipleDblCommError += err + '<br/>';
-            current++;
-            $this.ConfigMultipleDoubleComm(custids, isSuper, current);
-        });
-    },
 
-    UpdateDoubleComm: function () {
+            current++;
+
+            if (current <= len) {
+                $this.ConfigMultipleDoubleComm(custids, isSuper, allow, current);
+            }
+        });
     },
 
     ConfigDoubleComm: function (custid, isSuper) {
@@ -799,9 +805,13 @@ Fanex.ExtAcc.Customer = {
 
         if (div.className == 'menuInactive') {
             div.className = 'menuActive';
+            $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
+            $('#editMult').contextMenu(true);
         }
         else {
             div.className = 'menuInactive'
+            $('#editMult').attr('onclick', '');
+            $('#editMult').contextMenu(false);
         }
 
         var divs = $('div');
@@ -817,9 +827,13 @@ Fanex.ExtAcc.Customer = {
     SelectAll: function (className) {
         if (className == 'menuActive') {
             $('#editMult').attr('style', 'cursor: pointer !important');
+            $('#editMult').attr('onclick', 'Fanex.ExtAcc.Customer.EditMultiple(this)');
+            $('#editMult').contextMenu(true);
         }
         else {
             $('#editMult').attr('style', 'cursor: default !important');
+            $('#editMult').attr('onclick', '');
+            $('#editMult').contextMenu(false);
         }
 
         var divs = document.getElementsByTagName('div');
@@ -1343,5 +1357,44 @@ Fanex.ExtAcc.Customer = {
             catch (err) {
             }
         }
+    },
+
+    EditMultiple: function (div) {
+        $.contextMenu({
+            selector: '.editMult',
+            items: {
+                sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit" },
+                racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" },
+                casino: { name: "Edit Multiple Casino", className: "iconEnableEdit" },
+                bingo: { name: "Edit Multiple Bingo", className: "iconEnableEdit" },
+                poker: { name: "Edit Multiple Poker", className: "iconEnableEdit" },
+                liveCasino: { name: "Edit Multiple Live Casino", className: "iconEnableEdit" },
+                virtualSport: { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" },
+                doubleComm: { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
+                            'Edit Multiple Double Commission For Losing Tickets',
+                            450, 180, false);
+                    }
+                }
+            },
+            trigger: "left",
+            ignoreRightClick: true,
+            autoHide: true
+        });
+    },
+
+    UpdateMultipleDoubleComm: function (allow) {
+        Fanex.ExtAcc.Form.Close(false);
+        var custids = [];
+        var divs = $('div');
+
+        for (var i = 0; i < divs.length; i++) {
+            if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
+                custids.push(divs[i].id);
+            }
+        }
+
+        $this.ConfigMultipleDoubleComm(custids, $this.CurrentLevel == $this.Super, allow, 0);
     }
 }
