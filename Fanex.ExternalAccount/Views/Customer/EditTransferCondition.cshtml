@@ -55,3 +55,41 @@
         </tr>
     </table>
 </div>
+<script type="text/javascript">
+    var arrWeekly = new Array("#Sun", "#Mon", "#Tue", "#Wed", "#Thu", "#Fri", "#Sat");
+    function CheckChooseDaily(){
+        var chkCount = 0;
+        if ($('input:radio[name=Weekly]').is(':checked')) {
+            for (var i = 0; i < arrWeekly.length; i++) {
+                if ($(arrWeekly[i]).is(':checked')) {
+                    chkCount++;
+                    if (chkCount == 7) {
+                        alert("grwgwegwer");
+                    }
+                }
+            }
+        }
+    };
+
+    $(document).ready(function () {
+        for (var i = 0; i < arrWeekly.length; i++) {
+            $(arrWeekly[i]).bind('click', CheckChooseDaily);
+        }
+
+        $('#Daily').bind('click', function () {
+            for (var i = 0; i < arrWeekly.length; i++) {
+                $(arrWeekly[i]).attr("disabled", true);
+            }
+
+            $('input:radio[name=Weekly]').attr("checked", false);
+        });
+
+        $('#Weekly').bind('click', function () {
+            for (var i = 0; i < arrWeekly.length; i++) {
+                $(arrWeekly[i]).attr("disabled", false);
+            }
+
+            $('input:radio[name=Daily]').attr("checked", false);
+        });
+    });
+</script>
