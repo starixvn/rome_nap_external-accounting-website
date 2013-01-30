@@ -75,7 +75,7 @@ Fanex.ExtAcc.Customer = {
         $.contextMenu({
             selector: '.editInfo',
             items: {
-                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
+                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
@@ -102,7 +102,7 @@ Fanex.ExtAcc.Customer = {
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } },
                 transferCondition: { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 600, 200, false); } }
             },
@@ -128,7 +128,7 @@ Fanex.ExtAcc.Customer = {
                 casino: { name: "Casino", className: "iconEnableEdit" },
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
@@ -268,8 +268,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
-                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoSuper(" + cell.Value.custid + ", '" + title + "')";
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoSuper(" + cell.Value.custid + ", '" + cell.Value.username.replace('$', '&#36') + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
                         }
@@ -478,7 +477,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
+                            var title = cell.Value.username.replace('$', '&#36');
                             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoMasterAgent(" + cell.Value.custid + ", '" + title + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMasterAgent"></div>';
@@ -582,7 +581,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
+                            var title = cell.Value.username.replace('$', '&#36');
                             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoMember(" + cell.Value.custid + ", '" + title + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMember"></div>';
