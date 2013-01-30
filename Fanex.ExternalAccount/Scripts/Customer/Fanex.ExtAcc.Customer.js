@@ -693,12 +693,6 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowDoubleComm: function () {
-    },
-
-    ShowTransferCondition: function () {
-    },
-
     ShowIpInfo: function (ip) {
         $this.BlockUI();
 
@@ -840,9 +834,6 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    EditTransferCondition: function () {
-    },
-
     Select: function (div) {
         $('#editMult').attr('style', 'cursor: default !important');
 
@@ -854,7 +845,7 @@ Fanex.ExtAcc.Customer = {
             }
         }
         else {
-            div.className = 'menuInactive'
+            div.className = 'menuInactive';
             $('#editMult').attr('onclick', '');
             $('#editMult').contextMenu(false);
         }
