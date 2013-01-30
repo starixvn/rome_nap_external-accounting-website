@@ -19,6 +19,7 @@
     </SccLocalPath>
     <SccProvider>
     </SccProvider>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -660,7 +661,6 @@
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new1.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new3.png" />
-    <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon-new3a.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sort-icon.png" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sorting_asc.gif" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid\images\sorting_bg.gif" />
@@ -1420,6 +1420,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
+    <None Include="ExcelTemplates\Customer\CustomerList.xls" />
     <None Include="ExcelTemplates\Reports\WinLossDetailAg.xls" />
     <None Include="ExcelTemplates\Reports\WinLossDetailMAg.xls" />
     <None Include="ExcelTemplates\Reports\WinLossDetail.xls" />

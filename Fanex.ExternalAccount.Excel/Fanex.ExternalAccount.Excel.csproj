@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\CustomerList\CustomerListPage.cs" />
+    <Compile Include="Customer\CustomerList\CustomerListPageBuilder.cs" />
+    <Compile Include="Customer\CustomerList\TemplateSettings.cs" />
     <Compile Include="IReportBuilder.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />

@@ -40,6 +40,39 @@ Fanex.ExtAcc.Customer = {
             }
         }, 100);
 
+        $('#exporttoexcel').click(function () {
+            var enabled = false;
+            var closed = false;
+            var suspended = false;
+
+            if ($('#customerStatus').val() == '-1') {
+                enabled = null;
+                closed = null;
+                suspended = null;
+            }
+            else if ($('#customerStatus').val() == '1') {
+                enabled = true;
+                closed = null;
+                suspended = null;
+            }
+            else if ($('#customerStatus').val() == '2') {
+                enabled = false;
+                closed = true;
+                suspended = null;
+            }
+            else {
+                enabled = false;
+                closed = null;
+                suspended = null;
+            }
+
+            var params = "groupName=" + $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html()
+                    + "&enabled=" + enabled + "&closed=" + closed + "&suspended=" + suspended
+                    + "&superId=" + $this.superId + "&masterId=" + $this.masterId + "&agentId=" + $this.agentId
+                    + "&currentLevel=" + $this.CurrentLevel + "&username=" + $('#txtUserName').val()
+            document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
+        });
+
         $('#txtUserName').keypress(function (e) {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
