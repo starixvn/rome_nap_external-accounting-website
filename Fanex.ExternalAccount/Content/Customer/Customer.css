@@ -39,7 +39,7 @@
 	cursor: pointer !important;
 }
 
-.editInfo , .editInfoMasterAgent, .editInfoMember
+.editInfo, .editInfoMasterAgent, .editInfoMember
 {
 	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
@@ -133,6 +133,6 @@ tr.rowDisabled td
 {
 	background-image: url(../../Images/Content/enableEdit.jpg);
 	background-repeat: no-repeat;
-	height: 18px;
+	height: 16px;
 	font-size: 12px;
 }
