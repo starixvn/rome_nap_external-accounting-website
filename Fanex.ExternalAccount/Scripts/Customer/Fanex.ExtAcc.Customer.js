@@ -76,7 +76,7 @@ Fanex.ExtAcc.Customer = {
             selector: '.editInfo',
             items: {
                 editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -103,8 +103,8 @@ Fanex.ExtAcc.Customer = {
                 virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
                 separator2: "-----",
                 editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" },
-                transferCondition: { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 600, 200, false); } } 
+                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } },
+                transferCondition: { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 600, 200, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -129,7 +129,7 @@ Fanex.ExtAcc.Customer = {
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 separator2: "-----",
                 editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -654,7 +654,43 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    ShowResetPwd: function () {
+    ResetPwd: function () {
+        if (!Validators.validateInput($('#Password').val())) {
+            $('#Password').focus();
+            Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            return false;
+        }
+
+        if (!Validators.validateInput($('#confirmPwd').val())) {
+            $('#confirmPwd').focus();
+            Validators.show($('#confirmPwd').get(0), 'This field is required');
+            return false;
+        }
+
+        if ($('#confirmPwd').val() !== $('#Password').val()) {
+            $('#confirmPwd').focus();
+            Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
+            return false;
+        }
+
+        $this.BlockUI();
+
+        $.ajax({ url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val()), type: 'POST' })
+        .done(function (data) {
+            if (!data.IsSuccess) {
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(data.ErrorMessage);
+            }
+            else {
+                Fanex.ExtAcc.Form.Close(false);
+            }
+
+            $.unblockUI(document);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') console.log(data.responseText);
+            $.unblockUI(document);
+        });
     },
 
     ShowDoubleComm: function () {
@@ -671,9 +707,6 @@ Fanex.ExtAcc.Customer = {
                 $.unblockUI(document);
             },
             2);
-    },
-
-    ResetPwd: function () {
     },
 
     ConfigMultipleDoubleComm: function (custids, isSuper, allow, index) {
@@ -1384,7 +1417,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            450, 180, false);
+                            450, 165, false);
                     }
                 }
             },

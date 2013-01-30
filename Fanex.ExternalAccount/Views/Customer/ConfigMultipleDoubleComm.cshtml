@@ -17,12 +17,9 @@
 
         $('#dblDisallow').bind('click', function () {
             allow = false;
-            console.log(allow);
         });
 
         $('#btnSubmit').bind('click', function () {
-            console.log(allow);
-
             Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm(allow);
         });
     });

@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
@@ -181,6 +182,34 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = this.masterService.GetTransferOption(custId);
 
             return this.PartialViewBase(model);
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult ResetPassword(int custId)
+        {
+            var user = this.customerService.UserInfo(custId);
+
+            return this.PartialViewBase(user);
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdatePassword(int custId, string password)
+        {
+            var result = this.customerService.ResetPassword(custId, password,
+                new Request()
+                {
+                    Browser = Request.Browser.Browser,
+                    CountryCode = CurrentContext.CountryCode,
+                    DomainName = CurrentContext.DomainName,
+                    IP = CurrentContext.Ip4Address,
+                    Language = "en",
+                    NetSessionId = CurrentSession.NetSessionId,
+                    Platform = Request.Browser.Platform,
+                    SubAccId = 0,
+                    UserId = custId
+                });
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
     }
 }
