@@ -4,14 +4,19 @@
 
 <div>
     <table width="100%" border="0" cellpadding="2">
-        <tr>
-            <td style="text-align: left" colspan="8">
-                @Html.CheckBoxFor(m => m.Daily) @ViewLang.daily
+        <tr class="rowTransferCondition headerTransferCondition">
+            <td colspan="8">
+                @ViewLang.accbalanceTransferCondition
             </td>
         </tr>
-        <tr>
-            <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Weekly) @ViewLang.Weekly
+        <tr class="rowTransferCondition">
+            <td style="text-align: left; padding-left: 5px;" colspan="8">
+                @Html.RadioButtonFor(m => m.Daily, "true") @ViewLang.daily
+            </td>
+        </tr>
+        <tr class="rowTransferCondition">
+            <td style="text-align: left; padding-left: 5px;">
+                @Html.RadioButtonFor(m => m.Weekly, "true") @ViewLang.Weekly
             </td>
             <td style="text-align: left">
                 @Html.CheckBoxFor(m => m.Mon) @ViewLang.Mon
@@ -37,7 +42,7 @@
         </tr>
         <tr>
             <td colspan="8">
-                <div style="float: right; padding-right: 3px;">
+                <div style="float: right; padding-top: 10px;">
                     <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
                 </div>
             </td>

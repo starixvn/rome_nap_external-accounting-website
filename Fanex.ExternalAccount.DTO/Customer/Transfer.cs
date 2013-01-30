@@ -18,16 +18,16 @@ namespace Fanex.ExternalAccount.DTO.Customer
     {
         public bool Daily
         {
-            get;
-            set;
+            get
+            {
+                return Weekly ? false : true;
+            }
         }
 
         public bool Weekly
         {
-            get
-            {
-                return Daily ? false : true;
-            }
+            get;
+            set;
         }
 
         public bool Mon
