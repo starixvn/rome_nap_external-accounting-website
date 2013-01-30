@@ -650,7 +650,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
     <value>Account Balance Transfer Condition</value>
   </data>
 	<data name="editTransferCondition" xml:space="preserve">
-    <value>Edit transfer Condition</value>
+    <value>Edit transfer condition</value>
   </data>
 	<data name="daily" xml:space="preserve">
     <value>Daily</value>

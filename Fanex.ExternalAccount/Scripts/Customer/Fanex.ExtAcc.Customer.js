@@ -67,6 +67,7 @@ Fanex.ExtAcc.Customer = {
             this.SearchList();
         }
     },
+
     ShowEditInfoSuper: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -82,6 +83,7 @@ Fanex.ExtAcc.Customer = {
             autoHide: true
         });
     },
+
     ShowEditInfoMasterAgent: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -100,14 +102,16 @@ Fanex.ExtAcc.Customer = {
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
+                changePassword: { name: "Reset Password", className: "iconEnableEdit" },
+                transferCondition: { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 600, 200, false); } } 
             },
             trigger: "left",
             ignoreRightClick: true,
             autoHide: true
         });
     },
+
     ShowEditInfoMember: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -133,6 +137,17 @@ Fanex.ExtAcc.Customer = {
             width: 150
         });
     },
+
+    ResetInfo: function () {
+        $('#FirstName').val('');
+        $('#LastName').val('');
+        $('#HomePhone').val('');
+        $('#MobilePhone').val('');
+        $('#Email').val('');
+        $('#Fax').val('');
+        $('#FirstName').focus();
+    },
+
     EditInfo: function () {
         var firstName = $('#FirstName').val();
         var lastName = $('#LastName').val();
@@ -187,6 +202,7 @@ Fanex.ExtAcc.Customer = {
             $.unblockUI(document);
         });
     },
+
     GetSuperList: function (custId, dataSource) {
         $this.BlockUI();
 
@@ -354,7 +370,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
+                            var title = cell.Value.username.replace('$', '&#36');
                             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoMasterAgent(" + cell.Value.custid + ", '" + title + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMasterAgent"></div>';
@@ -638,9 +654,6 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    ShowEditUserInfo: function () {
-    },
-
     ShowResetPwd: function () {
     },
 
@@ -658,9 +671,6 @@ Fanex.ExtAcc.Customer = {
                 $.unblockUI(document);
             },
             2);
-    },
-
-    EditUserInfo: function () {
     },
 
     ResetPwd: function () {

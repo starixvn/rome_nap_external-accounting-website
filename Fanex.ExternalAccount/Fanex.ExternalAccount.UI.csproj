@@ -13,14 +13,10 @@
     <RootNamespace>Fanex.ExternalAccount.UI</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
     </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
     <SccProvider>
     </SccProvider>
   </PropertyGroup>
@@ -1457,6 +1453,7 @@
     <Content Include="Views\Customer\ViewIP.cshtml" />
     <Content Include="Views\Statement\Index.cshtml" />
     <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
+    <Content Include="Views\Customer\EditTransferCondition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
@@ -1470,7 +1467,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
