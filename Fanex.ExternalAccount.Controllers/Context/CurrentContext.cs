@@ -21,7 +21,6 @@ namespace Fanex.ExternalAccount.Controllers.Context
     public class CurrentContext : ICurrentContext
     {
         private static string loginErrorMessage = string.Empty;
-        private static ICurrentContext instance = null;
 
         public static string LoginErrorMessage
         {
@@ -33,7 +32,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
         {
             get
             {
-                return instance ?? new CurrentContext();
+                return new CurrentContext();
             }
         }
 
