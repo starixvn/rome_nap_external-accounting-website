@@ -709,7 +709,7 @@ Fanex.ExtAcc.Customer = {
             2);
     },
 
-    ConfigMultipleDoubleComm: function (custids, isSuper, allow, index) {
+    ConfigMultipleDoubleComm: function (custids, allow, index) {
         $this.BlockUI();
 
         if (index == 0) {
@@ -753,7 +753,7 @@ Fanex.ExtAcc.Customer = {
             current++;
 
             if (current <= len) {
-                $this.ConfigMultipleDoubleComm(custids, isSuper, allow, current);
+                $this.ConfigMultipleDoubleComm(custids, allow, current);
             }
         })
         .error(function (xhr, status, err) {
@@ -766,7 +766,7 @@ Fanex.ExtAcc.Customer = {
             current++;
 
             if (current <= len) {
-                $this.ConfigMultipleDoubleComm(custids, isSuper, allow, current);
+                $this.ConfigMultipleDoubleComm(custids, allow, current);
             }
         });
     },
@@ -848,8 +848,10 @@ Fanex.ExtAcc.Customer = {
 
         if (div.className == 'menuInactive') {
             div.className = 'menuActive';
-            $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
-            $('#editMult').contextMenu(true);
+            if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
+                $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
+                $('#editMult').contextMenu(true);
+            }
         }
         else {
             div.className = 'menuInactive'
@@ -861,7 +863,10 @@ Fanex.ExtAcc.Customer = {
 
         for (var i = 0; i < divs.length; i++) {
             if ((divs[i].className == 'menuActive' || divs[i].className == 'menuInactive') && divs[i].className == 'menuActive') {
-                $('#editMult').attr('style', 'cursor: pointer !important');
+                if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
+                    $('#editMult').attr('style', 'cursor: pointer !important');
+                }
+
                 break;
             }
         }
@@ -869,9 +874,11 @@ Fanex.ExtAcc.Customer = {
 
     SelectAll: function (className) {
         if (className == 'menuActive') {
-            $('#editMult').attr('style', 'cursor: pointer !important');
-            $('#editMult').attr('onclick', 'Fanex.ExtAcc.Customer.EditMultiple(this)');
-            $('#editMult').contextMenu(true);
+            if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
+                $('#editMult').attr('style', 'cursor: pointer !important');
+                $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
+                $('#editMult').contextMenu(true);
+            }
         }
         else {
             $('#editMult').attr('style', 'cursor: default !important');
@@ -902,6 +909,9 @@ Fanex.ExtAcc.Customer = {
             }
 
             $('#editMult').attr('style', 'cursor: default !important');
+
+            $('#editMult').attr('onclick', '');
+            $('#editMult').contextMenu(false);
 
             $.unblockUI(document);
         }
@@ -1438,6 +1448,6 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        $this.ConfigMultipleDoubleComm(custids, $this.CurrentLevel == $this.Super, allow, 0);
+        $this.ConfigMultipleDoubleComm(custids, allow, 0);
     }
 }
