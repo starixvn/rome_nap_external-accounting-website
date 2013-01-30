@@ -685,4 +685,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
 	<data name="choonseDaily" xml:space="preserve">
     <value>Please choose Daily instead of 7 days.</value>
   </data>
+	<data name="chooseOneDay" xml:space="preserve">
+    <value>Please select at least one day.</value>
+  </data>
 </root>

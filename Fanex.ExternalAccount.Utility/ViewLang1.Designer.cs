@@ -295,6 +295,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select at least one day..
+        /// </summary>
+        public static string chooseOneDay {
+            get {
+                return ResourceManager.GetString("chooseOneDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closed.
         /// </summary>
         public static string Closed {
