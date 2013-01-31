@@ -39,7 +39,7 @@
             int colId = 0;
 
             // Header
-            string mainTitle = builder.Status + (builder.RoleId == 1 ? "Member" : (builder.RoleId == 2 ? "Agent" : (builder.RoleId == 3 ? "Master" : "Super"))) + " List";
+            string mainTitle = builder.Status + (builder.RoleId == 1 ? " Member" : (builder.RoleId == 2 ? " Agent" : (builder.RoleId == 3 ? " Master" : " Super"))) + " List";
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
@@ -61,6 +61,8 @@
                 }
                 else
                 {
+                    totalColumn = 18;
+                    lastColumnIndex = colId + totalColumn - 1;
                     GetMemberList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex);
                 }
             }

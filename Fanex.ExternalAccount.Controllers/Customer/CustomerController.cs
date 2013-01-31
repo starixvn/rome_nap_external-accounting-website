@@ -305,7 +305,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var excelStream = builder.Build();
             if (excelStream != null)
             {
-                this.ExportToExcel(excelStream, status + fileName);
+                this.ExportToExcel(excelStream, status + fileName + "_" + DateTime.Now.ToString("yyyyMMdd"));
                 excelStream.Dispose();
             }
             return this.ViewBase();
