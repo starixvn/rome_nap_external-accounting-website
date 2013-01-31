@@ -9,6 +9,7 @@
 
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
     using System.Data;
     using System.Web.Mvc;
     using Fanex.Caching;
@@ -21,7 +22,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Sunplus.Core.Common.IPs;
-    using System;
 
     /// <summary>
     /// TODO: Update summary.
@@ -61,7 +61,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int roleId;
             this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out sRecommend, out mRecommend, out recommend, out roleId);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result == null ? new DataTable() : result);
 
             return this.JsonBase(new { total = 1, page = 1, records = result != null ? result.Rows.Count : 0, rows = ret, roleId = roleId, srecommend = sRecommend, mrecommend = mRecommend, recommend = recommend });
         }
@@ -69,7 +69,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private void GetDataResult(string groupName, bool? enabled, bool? closed, bool? suspended, string username, out DataTable result, out int sRecommend, out int mRecommend, out int recommend, out int roleId)
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
-            result = new DataTable();
+            result = null;
             sRecommend = 0;
             mRecommend = 0;
             recommend = 0;
@@ -108,7 +108,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult SuperListPost(string groupName = "ACCDDD", int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;          
+            this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
             var result = this.superService.GetData(null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
 
@@ -224,7 +224,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
-        }        
+        }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult ResetPassword(int custId)
