@@ -259,7 +259,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             string fileName = "CustomerList.xls";
             if (currentLevel == 4)
             {
-                fileName = "SuperList.xls";
+                fileName = "SuperList";
                 this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
@@ -268,7 +268,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 3)
             {
-                fileName = "MasterList.xls";
+                fileName = "MasterList";
                 this.cacheList = "CacheList" + sRecommend + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
@@ -277,7 +277,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 2)
             {
-                fileName = "AgentList.xls";
+                fileName = "AgentList";
                 this.cacheList = "CacheList" + mRecommend + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
@@ -286,7 +286,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 1)
             {
-                fileName = "MemberList.xls";
+                fileName = "MemberList";
                 this.cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
@@ -305,7 +305,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var excelStream = builder.Build();
             if (excelStream != null)
             {
-                this.ExportToExcel(excelStream, status + fileName + "_" + DateTime.Now.ToString("yyyyMMdd"));
+                this.ExportToExcel(excelStream, status + fileName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".xls");
                 excelStream.Dispose();
             }
             return this.ViewBase();

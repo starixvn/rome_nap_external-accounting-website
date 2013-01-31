@@ -73,22 +73,32 @@
 
         private static void GetMemberList(ISheet templateSheet, ISheet resultSheet, ref int rowId, int colId, ref int id, DataRowCollection dtr, ref List<object> values, int lastColumnIndex)
         {
+            string custStatus = "Disabled";
             foreach (DataRow items in dtr)
             {
-                if (id % 2 == 0)
+                custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
+                if (custStatus.ToLower() == "open")
                 {
                     resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
                 }
-                else
+                else if (custStatus.ToLower() == "suspended")
                 {
                     resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
+                }
+                else if (custStatus.ToLower() == "closed")
+                {
+                    resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+                }
+                else if (custStatus.ToLower() == "disabled")
+                {
+                    resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
                 }
 
                 values = new List<object>   
                     {
                         id,
                         items["username"].ToString(),
-                        Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled")),
+                        custStatus,
                         Convert.ToBoolean(items["DoubleCommLosing"]) ? "ON" : "OFF",
                         items["nickname"].ToString(),
                         items["firstname"].ToString(),
@@ -115,22 +125,32 @@
 
         private static void GetOtherList(ISheet templateSheet, ISheet resultSheet, ref int rowId, int colId, ref int id, DataRowCollection dtr, ref List<object> values, int lastColumnIndex)
         {
+            string custStatus = "Disabled";
             foreach (DataRow items in dtr)
             {
-                if (id % 2 == 0)
+                custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
+                if (custStatus.ToLower() == "open")
                 {
                     resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
                 }
-                else
+                else if (custStatus.ToLower() == "suspended")
                 {
                     resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
+                }
+                else if (custStatus.ToLower() == "closed")
+                {
+                    resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+                }
+                else if (custStatus.ToLower() == "disabled")
+                {
+                    resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
                 }
 
                 values = new List<object>   
                     {
                         id,
                         items["username"].ToString(),
-                        Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled")),
+                        custStatus,
                         Convert.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
                         items["firstname"].ToString(),
                         items["lastname"].ToString(),
