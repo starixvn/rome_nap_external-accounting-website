@@ -8,9 +8,10 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(DataTable CustomerList, bool isBold, string status)
+        public CustomerListPageBuilder(DataTable CustomerList, bool isBold, string status, int roleId)
         {
             this.Status = status;
+            this.RoleId = roleId;
             this.IsBold = isBold;
             this.Data = CustomerList;
         }
@@ -19,13 +20,15 @@
 
         public bool IsBold { get; private set; }
 
+        public int RoleId { get; private set; }
+
         public string Status { get; private set; }
 
         public MemoryStream Build()
         {
             TemplateReport report = null;
             TemplateSettings settings = new TemplateSettings();
-            string filePath = settings.CustomerListPath();
+            string filePath = settings.CustomerListPath(this.RoleId);
 
             report = new CustomerListPage(filePath, this);
 
