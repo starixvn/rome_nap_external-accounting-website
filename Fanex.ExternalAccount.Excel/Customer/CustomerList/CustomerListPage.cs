@@ -39,7 +39,7 @@
             int colId = 0;
 
             // Header
-            string mainTitle = builder.Status + " Customer List";
+            string mainTitle = builder.Status + (builder.RoleId == 1 ? " Member" : (builder.RoleId == 2 ? " Agent" : (builder.RoleId == 3 ? " Master" : " Super"))) + " List";
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
@@ -55,19 +55,78 @@
                 var values = new List<object> { };
                 int totalColumn = 15;
                 int lastColumnIndex = colId + totalColumn - 1;
-
-                foreach (DataRow items in dtr)
+                if (builder.RoleId != 1)
                 {
-                    if (id % 2 == 0)
-                    {
-                        resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                    }
-                    else
-                    {
-                        resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                    }
+                    GetOtherList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex);
+                }
+                else
+                {
+                    totalColumn = 18;
+                    lastColumnIndex = colId + totalColumn - 1;
+                    GetMemberList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex);
+                }
+            }
 
-                    values = new List<object>   
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
+            return this.HssfWorkbook;
+        }
+
+        private static void GetMemberList(ISheet templateSheet, ISheet resultSheet, ref int rowId, int colId, ref int id, DataRowCollection dtr, ref List<object> values, int lastColumnIndex)
+        {
+            foreach (DataRow items in dtr)
+            {
+                if (id % 2 == 0)
+                {
+                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
+                }
+                else
+                {
+                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
+                }
+
+                values = new List<object>   
+                    {
+                        id,
+                        items["username"].ToString(),
+                        Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled")),
+                        Convert.ToBoolean(items["DoubleCommLosing"]) ? "ON" : "OFF",
+                        items["nickname"].ToString(),
+                        items["firstname"].ToString(),
+                        items["lastname"].ToString(),
+                        items["ugroup"].ToString(),
+                        Convert.ToDecimal(items["discount"]),
+                        Convert.ToDecimal(items["discount1x2"]),
+                        Convert.ToDecimal(items["discountcs"]),
+                        Convert.ToDecimal(items["discountnumber"]),
+                        Convert.ToDecimal(items["playerdiscount"]),
+                        Convert.ToDecimal(items["playerdiscount1x2"]),
+                        Convert.ToDecimal(items["playerdiscountcs"]),
+                        Convert.ToDecimal(items["playerdiscountnumber"]),
+                        String.Format("{0:yyyy-MM-dd HH:mm:ss}", items["createdate"]),
+                        items["lastloginip"].ToString()
+                    };
+
+                resultSheet.GetRow(rowId).WriteCells(colId, values);
+
+                id++;
+                rowId++;
+            }
+        }
+
+        private static void GetOtherList(ISheet templateSheet, ISheet resultSheet, ref int rowId, int colId, ref int id, DataRowCollection dtr, ref List<object> values, int lastColumnIndex)
+        {
+            foreach (DataRow items in dtr)
+            {
+                if (id % 2 == 0)
+                {
+                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
+                }
+                else
+                {
+                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
+                }
+
+                values = new List<object>   
                     {
                         id,
                         items["username"].ToString(),
@@ -75,7 +134,7 @@
                         Convert.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
                         items["firstname"].ToString(),
                         items["lastname"].ToString(),
-                        items["groupa"],
+                        Convert.ToDecimal(items["groupa"]),
                         Convert.ToDecimal(items["groupb"]),
                         Convert.ToDecimal(items["groupc"]),
                         Convert.ToDecimal(items["groupd"]),
@@ -86,20 +145,11 @@
                         items["lastloginip"].ToString()
                     };
 
-                    resultSheet.GetRow(rowId).WriteCells(colId, values);
+                resultSheet.GetRow(rowId).WriteCells(colId, values);
 
-                    id++;
-                    rowId++;
-                }
+                id++;
+                rowId++;
             }
-
-            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
-            return this.HssfWorkbook;
         }
-
-        //private bool GetBool(string status)
-        //{
-            
-        //}
     }
 }

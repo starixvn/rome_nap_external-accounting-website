@@ -11,9 +11,16 @@
             this.dir = HttpContext.Current.Server.MapPath("~") + "\\ExcelTemplates\\Customer";
         }
 
-        public string CustomerListPath()
+        public string CustomerListPath(int roleId)
         {
-            return this.dir + "\\" + "CustomerList.xls";
+            if (roleId == 1)
+            {
+                return this.dir + "\\" + "MemberList.xls";
+            }
+            else
+            {
+                return this.dir + "\\" + "CustomerList.xls";
+            }
         }
     }
 }

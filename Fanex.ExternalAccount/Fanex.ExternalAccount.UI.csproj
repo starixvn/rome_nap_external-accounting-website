@@ -1421,6 +1421,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
+    <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
     <None Include="ExcelTemplates\Reports\WinLossDetailAg.xls" />
     <None Include="ExcelTemplates\Reports\WinLossDetailMAg.xls" />
