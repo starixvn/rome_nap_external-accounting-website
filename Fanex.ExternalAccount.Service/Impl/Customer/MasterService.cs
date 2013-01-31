@@ -57,6 +57,20 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             return null;
         }
 
+        public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
+        {
+            try
+            {
+                return this.dao.EditTransferOption(transferOption, custId, userId, ip, subAccId, language);
+            }
+            catch (Exception ex)
+            {
+                this.ProcessException(ex);
+            }
+
+            return null;
+        }
+
         #endregion IDataService Members
     }
 }

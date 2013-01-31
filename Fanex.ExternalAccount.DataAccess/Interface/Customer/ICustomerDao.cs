@@ -20,7 +20,6 @@ namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
                                     string email, string fax, string ip, int userId, int subAccId, string language);
 
 
-        Result EditTransferOption(int custId, Transfer transferOption, Request request);
 
         Result ResetPassword(int custId, string password, Request request);
 

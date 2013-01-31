@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     using System.Data;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
 
     /// <summary>
@@ -59,6 +60,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
                 {
                     Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
                     Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
+                    Tue = Convert.ToBoolean(int.Parse(transferOption[2].ToString())),
                     Wed = Convert.ToBoolean(int.Parse(transferOption[3].ToString())),
                     Thu = Convert.ToBoolean(int.Parse(transferOption[4].ToString())),
                     Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
@@ -69,6 +71,26 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             
             return null;          
         }
+
+        public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
+        {
+            var param = new Hashtable();
+
+            param.Add("custid", custId);
+            param.Add("transferoption", transferOption);
+            param.Add("userid", userId);
+            param.Add("ip", ip);
+            param.Add("subaccid", subAccId);
+            param.Add("language", language);
+            param.Add("returnerrcode", false);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+
+            var result = DbHelper.ExecuteDbResult("Acc_CustomerUpdTransferOption", param);
+
+            return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
+        }
+
         #endregion IData Masters
     }
 }

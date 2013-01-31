@@ -22,9 +22,6 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
         Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,
                                     string email, string fax, string ip, int userId, int subAccId, string language);
 
-
-        Result EditTransferOption(int custId, Transfer transferOption, Request request);
-
         Result ResetPassword(int custId, string password, Request request);
 
         Result ConfigDoubleComm(int custId, bool allow, Request request);

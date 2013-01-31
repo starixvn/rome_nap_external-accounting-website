@@ -45,7 +45,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
         return true;
     },
 
-    ValidationTransferCondition: function() {
+    ValidationTransferCondition: function () {
         var isSelect = false;
         if ($('input:radio[name=Weekly]').is(':checked')) {
             for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
@@ -56,7 +56,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             }
 
             if (!isSelect) {
-                Validators.show($('#Daily').get(0), titles[4]);
+                Validators.show($('#Mon').get(0), titles[4]);
 
                 return false;
             }
@@ -65,16 +65,19 @@ Fanex.ExtAcc.Customer.TransferCondition = {
         return true;
     },
 
-    TransferOption: function (transferOption) {
-        var str = transferOption;
-        var transferConditionId = document.getElementsByName("transferCondition");
+    EditTransferCondition: function (transferOption) {
+        var str = '';
+        var urlTransferCondition = resolveClientUrl('Customer/EditTransferConditionPost');
 
-        if (transferConditionId != 'undefined' && transferConditionId.length > 0) {
-            if (transferConditionId[1].checked) {
-                str = "";
-                var arrWeekly = new Array("chkSun", "chkMon", "chkTue", "chkWed", "chkThurs", "chkFri", "chkSat");
-                for (var i = 0; i < arrWeekly.length; i++) {
-                    if (document.getElementById(arrWeekly[i]).checked) {
+        if (!Fanex.ExtAcc.Customer.TransferCondition.ValidationTransferCondition()) {
+            return;
+        }
+
+        if (confirm(titles[2])) {
+            if ($('input:radio[name=Weekly]').is(':checked')) {
+
+                for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
+                    if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
                         str += "1";
                     }
                     else {
@@ -84,9 +87,37 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
                 str += "1";
             }
+            else {
+                str = '00000000';
+            }
         }
+        var data = {
+            transferOption: str,
+            custId: Fanex.ExtAcc.Customer.UserId
+        };
 
-        return str;
+        $this.BlockUI();
+
+        $.ajax({
+            url: urlTransferCondition,
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            if (result.IsSuccess) {
+                Fanex.ExtAcc.Form.Close(false);
+                $.unblockUI(document);
+            }
+            else {
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(result.ErrorMessage);
+            }
+        })
+        .error(function (xhr, status, err) {
+            $.unblockUI(document);
+            $('#errMsg').css('display', 'block');
+            $('#errMsg').html(err);
+        });
     }
 }
 
