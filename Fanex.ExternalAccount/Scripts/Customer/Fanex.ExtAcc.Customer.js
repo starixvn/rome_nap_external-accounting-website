@@ -1450,7 +1450,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            450, 165, false);
+                            430, 140, false, false, 1);
                     }
                 }
             },
