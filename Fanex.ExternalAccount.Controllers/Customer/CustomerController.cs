@@ -253,6 +253,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             //}
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult ResetPassword(int custId)
+        {
+            var user = this.customerService.UserInfo(custId);
+
+            return this.PartialViewBase(user);
+        }
+
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult UpdatePassword(int custId, string password)
         {
