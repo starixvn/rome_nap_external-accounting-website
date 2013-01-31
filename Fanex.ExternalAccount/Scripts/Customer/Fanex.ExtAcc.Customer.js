@@ -1041,6 +1041,9 @@ Fanex.ExtAcc.Customer = {
                     $this.GetMemberList(result.recommend, $this.AllowDoubleComm, custId, result);
                 }
             } else {
+                $('#msgNoinfo').css('display', 'block');
+                $('#jqgrid').css('display', 'none');
+
                 $.unblockUI(document);
             }
         });
