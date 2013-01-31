@@ -14,13 +14,13 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using System.Data;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Controllers.Base;
-    using Fanex.ExternalAccount.Controllers.Context;
 
     /// <summary>
     /// Report controller
@@ -50,7 +50,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
         private string searchName = string.Empty;
         private ICollection<KeyValuePair<string, bool>> filterParams = null;
         int pageSize = 50;
-        int pageIndex = 1;
         int totalPages = 1;
 
         #endregion Init WinLossDetail
@@ -62,7 +61,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         }
 
         private bool CheckBelonging()
-        {            
+        {
             if (!string.IsNullOrEmpty(this.username))
             {
                 DataTable customerInfo = this.reportService.GetCustomerInfo(this.groupname, this.custId, this.username, true);
