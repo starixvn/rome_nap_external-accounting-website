@@ -41,40 +41,12 @@ Fanex.ExtAcc.Customer = {
         }, 100);
 
         $('#exporttoexcel').click(function () {
-            var enabled = false;
-            var closed = false;
-            var suspended = false;
+            var data = Fanex.ExtAcc.Customer.GetParams();
 
-            if ($('#customerStatus').val() == '-1') {
-                enabled = null;
-                closed = null;
-                suspended = null;
-            }
-            else if ($('#customerStatus').val() == '1') {
-                enabled = true;
-                closed = false;
-                suspended = false;
-            }
-            else if ($('#customerStatus').val() == '2') {
-                enabled = false;
-                closed = true;
-                suspended = null;
-            }
-            else if ($('#customerStatus').val() == '3') {
-                enabled = null;
-                closed = null;
-                suspended = true;
-            }
-            else {
-                enabled = false;
-                closed = null;
-                suspended = null;
-            }
-
-            var params = "groupName=" + ($('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html())
-                    + "&enabled=" + enabled + "&closed=" + closed + "&suspended=" + suspended
+            var params = "groupName=" + data.groupName
+                    + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
                     + "&sRecommend=" + $this.superId + "&mRecommend=" + $this.masterId + "&recommend=" + $this.agentId + "&custId="
-                    + "&currentLevel=" + $this.CurrentLevel + "&username=" + $('#txtUserName').val()
+                    + "&currentLevel=" + $this.CurrentLevel + "&username=" + data.username
             document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });
 
@@ -95,6 +67,52 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.InitSuggestion();
             }
         });
+    },
+
+    GetParams: function () {
+        var enabled = false;
+        var closed = false;
+        var suspended = false;
+
+        if ($('#customerStatus').val() == '-1') {
+            enabled = null;
+            closed = null;
+            suspended = null;
+        }
+        else if ($('#customerStatus').val() == '1') {
+            enabled = true;
+            closed = false;
+            suspended = false;
+        }
+        else if ($('#customerStatus').val() == '2') {
+            enabled = false;
+            closed = true;
+            suspended = null;
+        }
+        else if ($('#customerStatus').val() == '3') {
+            enabled = null;
+            closed = null;
+            suspended = true;
+        }
+        else {
+            enabled = false;
+            closed = null;
+            suspended = null;
+        }
+
+        var data = {
+            srecommend: $this.superId,
+            mrecommend: $this.masterId,
+            recommend: $this.agentId,
+            custId: null,
+            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+            enabled: enabled,
+            closed: closed,
+            suspended: suspended,
+            username: $('#txtUserName').val()
+        };
+
+        return data;
     },
 
     Search: function (isFirstLoad) {
@@ -248,43 +266,8 @@ Fanex.ExtAcc.Customer = {
         $this.AllowDoubleComm = true;
 
         var url = resolveClientUrl('Customer/SuperListPost');
-        var enabled = false;
-        var closed = false;
-        var suspended = false;
 
-        if ($('#customerStatus').val() == '-1') {
-            enabled = null;
-            closed = null;
-            suspended = null;
-        }
-        else if ($('#customerStatus').val() == '1') {
-            enabled = true;
-            closed = false;
-            suspended = false;
-        }
-        else if ($('#customerStatus').val() == '2') {
-            enabled = false;
-            closed = true;
-            suspended = null;
-        }
-        else if ($('#customerStatus').val() == '3') {
-            enabled = null;
-            closed = null;
-            suspended = true;
-        }
-        else {
-            enabled = false;
-            closed = null;
-            suspended = null;
-        }
-
-        var data = {
-            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: enabled,
-            closed: closed,
-            suspended: suspended,
-            username: $('#txtUserName').val()
-        };
+        var data = Fanex.ExtAcc.Customer.GetParams();
 
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
@@ -371,22 +354,15 @@ Fanex.ExtAcc.Customer = {
     GetMasterList: function (srecommend, allow, custId, dataSource) {
         $this.BlockUI();
 
+        $this.superId = srecommend;
         $this.CurrentLevel = $this.Master;
         $this.AllowDoubleComm = allow;
         $this.AllowDoubleCommMaster = allow;
 
         var url = resolveClientUrl('Customer/MasterListPost');
-        var data = {
-            srecommend: srecommend,
-            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: $('#customerStatus').val() == '1',
-            closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3',
-            username: $('#txtUserName').val(),
-            custId: custId == 'undefined' ? 0 : custId
-        };
+        var data = Fanex.ExtAcc.Customer.GetParams();
+        data.custId = custId == 'undefined' ? 0 : custId;
 
-        $this.superId = srecommend;
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
                     { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
@@ -479,22 +455,15 @@ Fanex.ExtAcc.Customer = {
     GetAgentList: function (mrecommend, allow, custId, dataSource) {
         $this.BlockUI();
 
+        $this.masterId = mrecommend;
         $this.CurrentLevel = $this.Agent;
         $this.AllowDoubleComm = allow;
         $this.AllowDoubleCommAgent = allow;
 
         var url = resolveClientUrl('Customer/AgentListPost');
-        var data = {
-            mrecommend: mrecommend,
-            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: $('#customerStatus').val() == '1',
-            closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3',
-            username: $('#txtUserName').val(),
-            custId: custId == 'undefined' ? 0 : custId
-        };
+        var data = Fanex.ExtAcc.Customer.GetParams();
+        data.custId = custId == 'undefined' ? 0 : custId;
 
-        $this.masterId = mrecommend;
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
                     { HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
@@ -587,20 +556,14 @@ Fanex.ExtAcc.Customer = {
     GetMemberList: function (recommend, allow, custId, dataSource) {
         $this.BlockUI();
 
+        $this.agentId = recommend;
         $this.CurrentLevel = $this.Member;
         $this.AllowDoubleComm = allow;
-        $this.agentId = recommend;
 
         var url = resolveClientUrl('Customer/MemberListPost');
-        var data = {
-            recommend: recommend,
-            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: $('#customerStatus').val() == '1',
-            closed: $('#customerStatus').val() == '2',
-            suspended: $('#customerStatus').val() == '3',
-            username: $('#txtUserName').val(),
-            custId: custId == 'undefined' ? 0 : custId
-        };
+
+        var data = Fanex.ExtAcc.Customer.GetParams();
+        data.custId = custId == 'undefined' ? 0 : custId;
 
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
@@ -978,38 +941,7 @@ Fanex.ExtAcc.Customer = {
     GetSearchList: function () {
         $this.BlockUI();
 
-        var enabled = false;
-        var closed = false;
-        var suspended = false;
-
-        if ($('#customerStatus').val() == '-1') {
-            enabled = null;
-            closed = null;
-            suspended = null;
-        }
-        else if ($('#customerStatus').val() == '1') {
-            enabled = true;
-            closed = null;
-            suspended = null;
-        }
-        else if ($('#customerStatus').val() == '2') {
-            enabled = false;
-            closed = true;
-            suspended = null;
-        }
-        else {
-            enabled = false;
-            closed = null;
-            suspended = null;
-        }
-
-        var data = {
-            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: enabled,
-            closed: closed,
-            suspended: suspended,
-            username: $('#txtUserName').val()
-        };
+        var data = Fanex.ExtAcc.Customer.GetParams();
 
         var url = resolveClientUrl('Customer/SearchListPost');
 
