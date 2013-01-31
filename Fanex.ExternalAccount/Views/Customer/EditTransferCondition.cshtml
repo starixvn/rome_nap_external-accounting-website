@@ -11,44 +11,44 @@
         </tr>
         <tr class="rowTransferCondition">
             <td style="text-align: left; padding-left: 5px;" colspan="8">
-                @Html.RadioButtonFor(m => m.Daily, "true") @ViewLang.daily
+                @Html.RadioButtonFor(m => m.Daily, "true") @Html.LabelFor(m => m.Daily)
             </td>
         </tr>
         <tr class="rowTransferCondition">
             <td style="text-align: left; padding-left: 5px;">
-                @Html.RadioButtonFor(m => m.Weekly, "true") @ViewLang.Weekly
+                @Html.RadioButtonFor(m => m.Weekly, "true") @Html.LabelFor(m => m.Weekly)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Mon) @ViewLang.Mon
+                @Html.CheckBoxFor(m => m.Mon) @Html.LabelFor(m => m.Mon)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Tue) @ViewLang.Tue
+                @Html.CheckBoxFor(m => m.Tue) @Html.LabelFor(m => m.Tue)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Wed) @ViewLang.Wed
+                @Html.CheckBoxFor(m => m.Wed) @Html.LabelFor(m => m.Wed)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Thu) @ViewLang.Thur
+                @Html.CheckBoxFor(m => m.Thu) @Html.LabelFor(m => m.Thu)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Fri) @ViewLang.Fri
+                @Html.CheckBoxFor(m => m.Fri) @Html.LabelFor(m => m.Fri)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Sat) @ViewLang.Sat
+                @Html.CheckBoxFor(m => m.Sat) @Html.LabelFor(m => m.Sat)
             </td>
             <td style="text-align: left">
-                @Html.CheckBoxFor(m => m.Sun) @ViewLang.Sun
+                @Html.CheckBoxFor(m => m.Sun) @Html.LabelFor(m => m.Sun)
             </td>
         </tr>
         <tr>
             <td colspan="8">
                 <div style="float: right; padding-top: 10px;">
-                    <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
+                    <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Customer.TransferCondition.EditTransferCondition()" />
                 </div>
             </td>
         </tr>
         <tr>
-            <td colspan="4">
+            <td colspan="8">
                 <div id="errMsg" style="display: none;" class="errMsg">
                 </div>
             </td>

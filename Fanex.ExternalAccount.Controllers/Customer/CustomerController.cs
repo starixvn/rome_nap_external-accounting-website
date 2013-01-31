@@ -218,33 +218,39 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
-            DataTable result;
+            var result = this.masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public void GetExportexcel()
+        {
+            //DataTable result;
             
-            // Expired Cache
-            if (currentLevel == 1)
-            {
-                this.cacheList = "CacheList" + custId + enabled + closed + suspended;
-                if (this.cache.Get<DataTable>(this.cacheList) == null)
-                {
-                    //this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out sRecommend, out mRecommend, out recommend, out roleId);
-                }
-            }
+            //// Expired Cache
+            ////if (currentLevel == 1)
+            //{
+            //    this.cacheList = "CacheList" + custId + enabled + closed + suspended;
+            //    if (this.cache.Get<DataTable>(this.cacheList) == null)
+            //    {
+            //        //this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out sRecommend, out mRecommend, out recommend, out roleId);
+            //    }
+            //}
 
-            string status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
+            //string status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
 
-            var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(this.cache.Get<DataTable>(this.cacheList), false, status);
+            //var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(this.cache.Get<DataTable>(this.cacheList), false, status);
 
-            var excelStream = builder.Build();
-            if (excelStream != null)
-            {
-                this.ExportToExcel(excelStream, "CustomerList_" + status + ".xls");
-                excelStream.Dispose();
-            }
-            var user = this.customerService.UserInfo(custId);
-
-            return this.PartialViewBase(user);
+            //var excelStream = builder.Build();
+            //if (excelStream != null)
+            //{
+            //    this.ExportToExcel(excelStream, "CustomerList_" + status + ".xls");
+            //    excelStream.Dispose();
+            //}
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]

@@ -80,35 +80,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return new Result(result.Outputs["errorcode"].ToString(), result.Outputs["errormsg"].ToString(), result.ResultSet);
         }
 
-        public Result EditTransferOption(int custId, Transfer transferOption, Request request)
-        {
-            var transfer = string.Empty;
-            var param = new Hashtable();
-
-            transfer = (transferOption.Daily ? "1" : "0") +
-                (transferOption.Mon ? "1" : "0") +
-                (transferOption.Tue ? "1" : "0") +
-                (transferOption.Wed ? "1" : "0") +
-                (transferOption.Thu ? "1" : "0") +
-                (transferOption.Fri ? "1" : "0") +
-                (transferOption.Sat ? "1" : "0") +
-                (transferOption.Sun ? "1" : "0");
-
-            param.Add("custid", custId);
-            param.Add("transferoption", transfer);
-            param.Add("userid", request.UserId);
-            param.Add("ip", request.IP);
-            param.Add("subaccid", request.SubAccId);
-            param.Add("language", request.Language);
-            param.Add("returnerrcode", false);
-            param.Add("errcode", string.Empty);
-            param.Add("errmsg", string.Empty);
-
-            var result = DbHelper.ExecuteDbResult("Acc_CustomerUpdTransferOption", param);
-
-            return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
-        }
-
         public Result ResetPassword(int custId, string password, DTO.Request request)
         {
             var param = new Hashtable();
