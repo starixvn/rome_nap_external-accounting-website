@@ -1455,6 +1455,7 @@
     <Content Include="Views\Statement\Index.cshtml" />
     <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
     <Content Include="Views\Customer\EditTransferCondition.cshtml" />
+    <Content Include="Views\Customer\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

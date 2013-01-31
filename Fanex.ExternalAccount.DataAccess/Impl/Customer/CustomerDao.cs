@@ -12,8 +12,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     using System;
     using System.Collections;
     using Fanex.Common;
-    using Fanex.Data;
     using Fanex.Common.Extensions;
+    using Fanex.Data;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
@@ -119,7 +119,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             param.Add("language", request.Language);
             param.Add("subaccid", request.SubAccId);
             param.Add("loginip", request.IP);
-            param.Add("errcode", string.Empty);
+            param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdPwd", param);

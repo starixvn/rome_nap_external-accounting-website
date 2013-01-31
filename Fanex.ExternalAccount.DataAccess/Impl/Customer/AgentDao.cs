@@ -51,37 +51,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             param.Add("custid", custId);
             param.Add("transferoption", "00000000");
 
-            using (var reader = this.ExecDataReader("Acc_CustomerSelTransferOption", param))
+            var result = DbHelper.ExecuteDbResult("Acc_CustomerSelTransferOption", param);
+            var transferOption = result.Outputs["transferoption"].ToString();
+            if (transferOption.Length > 0)
             {
-                if (reader != null)
+                return new Transfer()
                 {
-                    while (reader.Read())
-                    {
-                        if (reader.FieldCount == 8)
-                        {
-                            return new Transfer()
-                            {
-                                Daily = Convert.ToBoolean(reader[0]),
-                                Mon = Convert.ToBoolean(reader[1]),
-                                Wed = Convert.ToBoolean(reader[3]),
-                                Thu = Convert.ToBoolean(reader[4]),
-                                Fri = Convert.ToBoolean(reader[5]),
-                                Sat = Convert.ToBoolean(reader[6]),
-                                Sun = Convert.ToBoolean(reader[7])
-                            };
-                        }
-                        else
-                        {
-                            return new Transfer()
-                            {
-                                Daily = Convert.ToBoolean(reader[0])
-                            };
-                        }
-                    }
-                }
-
-                return null;
+                    Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
+                    Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
+                    Wed = Convert.ToBoolean(int.Parse(transferOption[3].ToString())),
+                    Thu = Convert.ToBoolean(int.Parse(transferOption[4].ToString())),
+                    Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
+                    Sat = Convert.ToBoolean(int.Parse(transferOption[6].ToString())),
+                    Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
+                };
             }
+
+            return null;
         }
 
         #endregion IData Agents

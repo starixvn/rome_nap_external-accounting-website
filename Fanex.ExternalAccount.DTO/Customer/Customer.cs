@@ -63,5 +63,11 @@ namespace Fanex.ExternalAccount.DTO.Customer
             get;
             set;
         }
+
+        public string Password
+        {
+            get;
+            set;
+        }
     }
 }

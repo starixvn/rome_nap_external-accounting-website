@@ -108,8 +108,8 @@ Fanex.ExtAcc.Customer = {
         $.contextMenu({
             selector: '.editInfo',
             items: {
-                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
+                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -135,9 +135,9 @@ Fanex.ExtAcc.Customer = {
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" },
-                transferCondition: { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 600, 200, false); } } 
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
+                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } },
+                transferCondition: { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': ' + Fanex.ExtAcc.Customer.TitleEditInfo, 600, 200, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -161,8 +161,8 @@ Fanex.ExtAcc.Customer = {
                 casino: { name: "Casino", className: "iconEnableEdit" },
                 poker: { name: "Poker", className: "iconEnableEdit" },
                 separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), Fanex.ExtAcc.Customer.TitleEditInfo, 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit" }
+                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
+                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -301,8 +301,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
-                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoSuper(" + cell.Value.custid + ", '" + title + "')";
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoSuper(" + cell.Value.custid + ", '" + cell.Value.username.replace('$', '&#36') + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
                         }
@@ -511,7 +510,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
+                            var title = cell.Value.username.replace('$', '&#36');
                             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoMasterAgent(" + cell.Value.custid + ", '" + title + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMasterAgent"></div>';
@@ -615,7 +614,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
-                            var title = titles[0] + ": " + cell.Value.username.replace('$', '&#36');
+                            var title = cell.Value.username.replace('$', '&#36');
                             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditInfoMember(" + cell.Value.custid + ", '" + title + "')";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfoMember"></div>';
@@ -687,13 +686,43 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    ShowResetPwd: function () {
-    },
+    ResetPwd: function () {
+        if (!Validators.validateInput($('#Password').val())) {
+            $('#Password').focus();
+            Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            return false;
+        }
 
-    ShowDoubleComm: function () {
-    },
+        if (!Validators.validateInput($('#confirmPwd').val())) {
+            $('#confirmPwd').focus();
+            Validators.show($('#confirmPwd').get(0), 'This field is required');
+            return false;
+        }
 
-    ShowTransferCondition: function () {
+        if ($('#confirmPwd').val() !== $('#Password').val()) {
+            $('#confirmPwd').focus();
+            Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
+            return false;
+        }
+
+        $this.BlockUI();
+
+        $.ajax({ url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val()), type: 'POST' })
+        .done(function (data) {
+            if (!data.IsSuccess) {
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(data.ErrorMessage);
+            }
+            else {
+                Fanex.ExtAcc.Form.Close(false);
+            }
+
+            $.unblockUI(document);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') console.log(data.responseText);
+            $.unblockUI(document);
+        });
     },
 
     ShowIpInfo: function (ip) {
@@ -706,10 +735,7 @@ Fanex.ExtAcc.Customer = {
             2);
     },
 
-    ResetPwd: function () {
-    },
-
-    ConfigMultipleDoubleComm: function (custids, isSuper, allow, index) {
+    ConfigMultipleDoubleComm: function (custids, allow, index) {
         $this.BlockUI();
 
         if (index == 0) {
@@ -753,7 +779,7 @@ Fanex.ExtAcc.Customer = {
             current++;
 
             if (current <= len) {
-                $this.ConfigMultipleDoubleComm(custids, isSuper, allow, current);
+                $this.ConfigMultipleDoubleComm(custids, allow, current);
             }
         })
         .error(function (xhr, status, err) {
@@ -766,7 +792,7 @@ Fanex.ExtAcc.Customer = {
             current++;
 
             if (current <= len) {
-                $this.ConfigMultipleDoubleComm(custids, isSuper, allow, current);
+                $this.ConfigMultipleDoubleComm(custids, allow, current);
             }
         });
     },
@@ -840,19 +866,18 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    EditTransferCondition: function () {
-    },
-
     Select: function (div) {
         $('#editMult').attr('style', 'cursor: default !important');
 
         if (div.className == 'menuInactive') {
             div.className = 'menuActive';
-            $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
-            $('#editMult').contextMenu(true);
+            if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
+                $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
+                $('#editMult').contextMenu(true);
+            }
         }
         else {
-            div.className = 'menuInactive'
+            div.className = 'menuInactive';
             $('#editMult').attr('onclick', '');
             $('#editMult').contextMenu(false);
         }
@@ -861,7 +886,10 @@ Fanex.ExtAcc.Customer = {
 
         for (var i = 0; i < divs.length; i++) {
             if ((divs[i].className == 'menuActive' || divs[i].className == 'menuInactive') && divs[i].className == 'menuActive') {
-                $('#editMult').attr('style', 'cursor: pointer !important');
+                if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
+                    $('#editMult').attr('style', 'cursor: pointer !important');
+                }
+
                 break;
             }
         }
@@ -869,9 +897,11 @@ Fanex.ExtAcc.Customer = {
 
     SelectAll: function (className) {
         if (className == 'menuActive') {
-            $('#editMult').attr('style', 'cursor: pointer !important');
-            $('#editMult').attr('onclick', 'Fanex.ExtAcc.Customer.EditMultiple(this)');
-            $('#editMult').contextMenu(true);
+            if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
+                $('#editMult').attr('style', 'cursor: pointer !important');
+                $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
+                $('#editMult').contextMenu(true);
+            }
         }
         else {
             $('#editMult').attr('style', 'cursor: default !important');
@@ -902,6 +932,9 @@ Fanex.ExtAcc.Customer = {
             }
 
             $('#editMult').attr('style', 'cursor: default !important');
+
+            $('#editMult').attr('onclick', '');
+            $('#editMult').contextMenu(false);
 
             $.unblockUI(document);
         }
@@ -1417,7 +1450,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            450, 180, false);
+                            450, 165, false);
                     }
                 }
             },
@@ -1438,6 +1471,6 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        $this.ConfigMultipleDoubleComm(custids, $this.CurrentLevel == $this.Super, allow, 0);
+        $this.ConfigMultipleDoubleComm(custids, allow, 0);
     }
 }

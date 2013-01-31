@@ -286,6 +286,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please choose Daily instead of 7 days..
+        /// </summary>
+        public static string choonseDaily {
+            get {
+                return ResourceManager.GetString("choonseDaily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closed.
         /// </summary>
         public static string Closed {
@@ -327,6 +336,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Confirmpassword {
             get {
                 return ResourceManager.GetString("Confirmpassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to update this transfer condition for all of downlines?.
+        /// </summary>
+        public static string confirmTransCondition {
+            get {
+                return ResourceManager.GetString("confirmTransCondition", resourceCulture);
             }
         }
         
