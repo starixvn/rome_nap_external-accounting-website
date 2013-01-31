@@ -104,11 +104,19 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             dataType: 'json'
         })
         .success(function (result) {
-            Fanex.ExtAcc.Form.Close(false);
-            $.unblockUI(document);
+            if (result.IsSuccess) {
+                Fanex.ExtAcc.Form.Close(false);
+                $.unblockUI(document);
+            }
+            else {
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(result.ErrorMessage);
+            }
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
+            $('#errMsg').css('display', 'block');
+            $('#errMsg').html(err);
         });
     }
 }
