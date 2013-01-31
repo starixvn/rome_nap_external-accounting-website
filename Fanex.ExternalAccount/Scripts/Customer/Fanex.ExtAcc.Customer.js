@@ -11,12 +11,12 @@ Fanex.ExtAcc.Customer = {
     masterId: 0,
     agentId: 0,
 
-    Super: 1,
-    Master: 2,
-    Agent: 3,
-    Member: 4,
+    Super: 4,
+    Master: 3,
+    Agent: 2,
+    Member: 1,
 
-    CurrentLevel: 1,
+    CurrentLevel: 4,
 
     AllowDoubleCommMaster: false,
     AllowDoubleCommAgent: false,
@@ -52,13 +52,18 @@ Fanex.ExtAcc.Customer = {
             }
             else if ($('#customerStatus').val() == '1') {
                 enabled = true;
-                closed = null;
-                suspended = null;
+                closed = false;
+                suspended = false;
             }
             else if ($('#customerStatus').val() == '2') {
                 enabled = false;
                 closed = true;
                 suspended = null;
+            }
+            else if ($('#customerStatus').val() == '3') {
+                enabled = null;
+                closed = null;
+                suspended = true;
             }
             else {
                 enabled = false;
@@ -66,9 +71,9 @@ Fanex.ExtAcc.Customer = {
                 suspended = null;
             }
 
-            var params = "groupName=" + $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html()
+            var params = "groupName=" + ($('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html())
                     + "&enabled=" + enabled + "&closed=" + closed + "&suspended=" + suspended
-                    + "&superId=" + $this.superId + "&masterId=" + $this.masterId + "&agentId=" + $this.agentId
+                    + "&sRecommend=" + $this.superId + "&mRecommend=" + $this.masterId + "&recommend=" + $this.agentId + "&custId="
                     + "&currentLevel=" + $this.CurrentLevel + "&username=" + $('#txtUserName').val()
             document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });

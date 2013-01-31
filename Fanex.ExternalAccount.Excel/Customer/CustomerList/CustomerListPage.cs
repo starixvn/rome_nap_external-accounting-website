@@ -39,12 +39,12 @@
             int colId = 0;
 
             // Header
-            string mainTitle = " Customer List";
+            string mainTitle = builder.Status + " Customer List";
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
             // content
-            rowId = 2;
+            rowId = 3;
             int id = 1;
 
             int count = data.Rows.Count;
@@ -53,7 +53,7 @@
             if (count > 0)
             {
                 var values = new List<object> { };
-                int totalColumn = 4;
+                int totalColumn = 15;
                 int lastColumnIndex = colId + totalColumn - 1;
 
                 foreach (DataRow items in dtr)
@@ -75,15 +75,15 @@
                         Convert.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
                         items["firstname"].ToString(),
                         items["lastname"].ToString(),
-                        items["groupa"].ToString(),
-                        items["groupb"].ToString(),
-                        items["groupc"].ToString(),
-                        items["groupd"].ToString(),
-                        items["discount1x2"].ToString(),
-                        items["discountcs"].ToString(),
-                        items["discountnumber"].ToString(),
-                        Convert.ToDateTime(items["createdate"]),
-                        items["ip"].ToString()
+                        items["groupa"],
+                        Convert.ToDecimal(items["groupb"]),
+                        Convert.ToDecimal(items["groupc"]),
+                        Convert.ToDecimal(items["groupd"]),
+                        Convert.ToDecimal(items["discount1x2"]),
+                        Convert.ToDecimal(items["discountcs"]),
+                        Convert.ToDecimal(items["discountnumber"]),
+                        String.Format("{0:yyyy-MM-dd HH:mm:ss}", items["createdate"]),
+                        items["lastloginip"].ToString()
                     };
 
                     resultSheet.GetRow(rowId).WriteCells(colId, values);

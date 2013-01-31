@@ -52,7 +52,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult SearchListPost(string groupName = "ACCDDD", bool? enabled = null, bool? closed = null, bool? suspended = null, string username = null)
+        public ActionResult SearchListPost(string groupName = "ACCDDD", bool? enabled = null, bool? closed = null, bool? suspended = null, string username = null, bool? isExportExcel = null)
         {
             DataTable result;
             int sRecommend;
@@ -108,7 +108,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult SuperListPost(string groupName = "ACCDDD", int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
+            this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;          
             var result = this.superService.GetData(null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
 
@@ -219,32 +219,61 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult GetExportToExcel(int? currentLevel = null, string groupName = "ACCDDD", int? sRecommend = null, int? mRecommend = null, int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            DataTable result;
-            
-            // Expired Cache
-            if (currentLevel == 1)
+            string fileName = "CustomerList.xls";
+            if (currentLevel == 4)
             {
-                this.cacheList = "CacheList" + custId + enabled + closed + suspended;
+                fileName = "SuperList.xls";
+                this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
-                    //this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out sRecommend, out mRecommend, out recommend, out roleId);
+                    this.SetCacheList(this.superService.GetData(null, custId, enabled, closed, suspended, groupName));
+                }
+            }
+            else if (currentLevel == 3)
+            {
+                fileName = "MasterList.xls";
+                this.cacheList = "CacheList" + sRecommend + custId + enabled + closed + suspended;
+                if (this.cache.Get<DataTable>(this.cacheList) == null)
+                {
+                    this.SetCacheList(this.masterService.GetData(sRecommend, custId, enabled, closed, suspended));
+                }
+            }
+            else if (currentLevel == 2)
+            {
+                fileName = "AgentList.xls";
+                this.cacheList = "CacheList" + mRecommend + custId + enabled + closed + suspended;
+                if (this.cache.Get<DataTable>(this.cacheList) == null)
+                {
+                    this.SetCacheList(this.agentService.GetData(mRecommend, custId, enabled, closed, suspended));
+                }
+            }
+            else if (currentLevel == 1)
+            {
+                fileName = "MemberList.xls";
+                this.cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
+                if (this.cache.Get<DataTable>(this.cacheList) == null)
+                {
+                    this.SetCacheList(this.memberService.GetData(recommend, custId, enabled, closed, suspended));
                 }
             }
 
-            string status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
+            string status = string.Empty;
+            if (enabled != null || closed != null || suspended != null)
+            {
+                status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
+            }
 
             var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(this.cache.Get<DataTable>(this.cacheList), false, status);
 
             var excelStream = builder.Build();
             if (excelStream != null)
             {
-                this.ExportToExcel(excelStream, "CustomerList_" + status + ".xls");
+                this.ExportToExcel(excelStream, status + fileName);
                 excelStream.Dispose();
             }
-            var user = this.customerService.UserInfo(custId);
-
-            return this.PartialViewBase(user);
+            return this.ViewBase();
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
