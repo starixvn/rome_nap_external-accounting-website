@@ -234,13 +234,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 3)
             {
-<<<<<<< HEAD
-                fileName = "MasterList";
-                this.cacheList = "CacheList" + sRecommend + custId + enabled + closed + suspended;
-=======
                 fileName = "MasterList.xls";
                 this.cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
->>>>>>> dd7513744359a3bce0a83dc52c8ca48c6fae9eb6
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
                     this.SetCacheList(this.masterService.GetData(srecommend, custId, enabled, closed, suspended));
@@ -248,13 +243,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 2)
             {
-<<<<<<< HEAD
-                fileName = "AgentList";
-                this.cacheList = "CacheList" + mRecommend + custId + enabled + closed + suspended;
-=======
                 fileName = "AgentList.xls";
                 this.cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
->>>>>>> dd7513744359a3bce0a83dc52c8ca48c6fae9eb6
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
                     this.SetCacheList(this.agentService.GetData(mrecommend, custId, enabled, closed, suspended));
