@@ -124,6 +124,27 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
+    EscapeHtml: function (string) {
+        var result = '';
+        if (string.length < 1) {
+            return result;
+        }
+
+        for (var i = 0; i < string.length; i++) {
+            if (string.charAt(i) == "&" && string.length - i - 1 >= 4 && string.substr(i, 4) != "&amp;") {
+                result = result + "&amp;";
+            } else if (string.charAt(i) == "<") {
+                result = result + "&lt;";
+            } else if (string.charAt(i) == ">") {
+                result = result + "&gt;";
+            } else {
+                result = result + string.charAt(i);
+            }
+        }
+
+        return result;
+    },
+
     ShowEditInfoSuper: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -213,20 +234,21 @@ Fanex.ExtAcc.Customer = {
         var fax = $('#Fax').val();
 
         var editUrl = 'Customer/EditInfoPost/?';
-        var params = 'custId=' + $('#CustId').val();
 
-        params += '&firstName=' + firstName;
-        params += '&lastName=' + lastName;
-        params += '&homePhone=' + homePhone;
-        params += '&mobilePhone=' + mobilePhone;
-        params += '&email=' + email;
-        params += '&fax=' + fax;
+        var data = {
+            custId: $('#CustId').val(),
+            firstName: Fanex.ExtAcc.Customer.EscapeHtml(firstName),
+            lastName: Fanex.ExtAcc.Customer.EscapeHtml(lastName),
+            homePhone: Fanex.ExtAcc.Customer.EscapeHtml(homePhone),
+            mobilePhone: Fanex.ExtAcc.Customer.EscapeHtml(mobilePhone),
+            email: Fanex.ExtAcc.Customer.EscapeHtml(email),
+            fax: Fanex.ExtAcc.Customer.EscapeHtml(fax)
+        };
 
         Fanex.ExtAcc.Form.Close(false);
-
         $this.BlockUI();
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: data, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 alert(data.ErrorMessage);
