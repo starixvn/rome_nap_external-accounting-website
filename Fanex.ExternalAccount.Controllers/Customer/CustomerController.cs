@@ -218,7 +218,41 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(model);
         }
 
-<<<<<<< HEAD
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult EditTransferConditionPost(string transferOption, int custId)
+        {
+            var result = this.masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
+        }        
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult ResetPassword(int custId)
+        {
+            var user = this.customerService.UserInfo(custId);
+            return this.PartialViewBase(user);
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdatePassword(int custId, string password)
+        {
+            var result = this.customerService.ResetPassword(custId, password,
+                new Request()
+                {
+                    Browser = Request.Browser.Browser,
+                    CountryCode = CurrentContext.CountryCode,
+                    DomainName = CurrentContext.DomainName,
+                    IP = CurrentContext.Ip4Address,
+                    Language = "en",
+                    NetSessionId = CurrentSession.NetSessionId,
+                    Platform = Request.Browser.Platform,
+                    SubAccId = 0,
+                    UserId = custId
+                });
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
+        }
+
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult GetExportToExcel(int? currentLevel = null, string groupName = "ACCDDD", int? sRecommend = null, int? mRecommend = null, int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
@@ -265,44 +299,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             {
                 status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
             }
-=======
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult EditTransferConditionPost(string transferOption, int custId)
-        {
-            var result = this.masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
-        }
->>>>>>> 3a163928ca5fa92ef599dfc6e6ae0804f99dd23f
+            var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(this.cache.Get<DataTable>(this.cacheList), false, status);
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public void GetExportexcel()
-        {
-            //DataTable result;
-            
-            //// Expired Cache
-            ////if (currentLevel == 1)
-            //{
-            //    this.cacheList = "CacheList" + custId + enabled + closed + suspended;
-            //    if (this.cache.Get<DataTable>(this.cacheList) == null)
-            //    {
-            //        //this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out sRecommend, out mRecommend, out recommend, out roleId);
-            //    }
-            //}
-
-            //string status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
-
-            //var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(this.cache.Get<DataTable>(this.cacheList), false, status);
-
-            //var excelStream = builder.Build();
-            //if (excelStream != null)
-            //{
-            //    this.ExportToExcel(excelStream, "CustomerList_" + status + ".xls");
-            //    excelStream.Dispose();
-            //}
-        }
-
-<<<<<<< HEAD
             var excelStream = builder.Build();
             if (excelStream != null)
             {
@@ -310,34 +309,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 excelStream.Dispose();
             }
             return this.ViewBase();
-=======
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult ResetPassword(int custId)
-        {
-            var user = this.customerService.UserInfo(custId);
-
-            return this.PartialViewBase(user);
->>>>>>> 3a163928ca5fa92ef599dfc6e6ae0804f99dd23f
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult UpdatePassword(int custId, string password)
-        {
-            var result = this.customerService.ResetPassword(custId, password,
-                new Request()
-                {
-                    Browser = Request.Browser.Browser,
-                    CountryCode = CurrentContext.CountryCode,
-                    DomainName = CurrentContext.DomainName,
-                    IP = CurrentContext.Ip4Address,
-                    Language = "en",
-                    NetSessionId = CurrentSession.NetSessionId,
-                    Platform = Request.Browser.Platform,
-                    SubAccId = 0,
-                    UserId = custId
-                });
-
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
     }
 }
