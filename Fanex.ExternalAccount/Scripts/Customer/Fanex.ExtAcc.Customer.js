@@ -11,6 +11,12 @@ Fanex.ExtAcc.Customer = {
     masterId: 0,
     agentId: 0,
 
+    directSuperId: null,
+    directMasterId: null,
+    directAgentId: null,
+
+    custId: null,
+
     Super: 4,
     Master: 3,
     Agent: 2,
@@ -268,6 +274,13 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/SuperListPost');
 
         var data = Fanex.ExtAcc.Customer.GetParams();
+        data.custId = custId == 'undefined' ? null : custId;
+
+        if (custId == undefined) {
+            $this.directSuperId = null;
+            $this.directMasterId = null;
+            $this.directAgentId = null;
+        }
 
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
@@ -361,7 +374,13 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? 0 : custId;
+        data.custId = custId == 'undefined' ? null : custId;
+
+        if (custId == undefined) {
+            $this.directSuperId = null;
+            $this.directMasterId = null;
+            $this.directAgentId = null;
+        }
 
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
@@ -462,7 +481,13 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? 0 : custId;
+        data.custId = custId == 'undefined' ? null : custId;
+
+        if (custId == undefined) {
+            $this.directSuperId = null;
+            $this.directMasterId = null;
+            $this.directAgentId = null;
+        }
 
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
@@ -563,7 +588,13 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/MemberListPost');
 
         var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? 0 : custId;
+        data.custId = custId == 'undefined' ? null : custId;
+
+        if (custId == undefined) {
+            $this.directSuperId = null;
+            $this.directMasterId = null;
+            $this.directAgentId = null;
+        }
 
         $this.DataFields = [
                     { HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' },
@@ -960,6 +991,10 @@ Fanex.ExtAcc.Customer = {
             if (result.roleId != 0 && rows.length > 0) {
                 var custId = rows[0].custid;
 
+                $this.directSuperId = result.srecommend;
+                $this.directMasterId = result.mrecommend;
+                $this.directAgentId = result.recommend;
+
                 if (result.roleId == 4) {
                     $this.GetSuperList(rows[0].custid, result);
                 }
@@ -1159,7 +1194,7 @@ Fanex.ExtAcc.Customer = {
 
         $('#breadcrumbs').empty();
 
-        $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>');
+        $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + $this.directSuperId + ")" + '">' + 'Super' + '</a>');
 
         Fanex.ExtAcc.OnResize = function () {
             try {
@@ -1177,8 +1212,8 @@ Fanex.ExtAcc.Customer = {
             $this.agentId = dataSource.recommend;
         }
 
-        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
+        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + $this.directSuperId + ")" + '">' + 'Super' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ')"' + '">' + 'Master' + '</a>';
 
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
@@ -1360,9 +1395,9 @@ Fanex.ExtAcc.Customer = {
 
         $('#breadcrumbs').empty();
 
-        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList()" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ')"' + '">' + 'Master' + '</a>';
-        var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ')"' + '">' + 'Agent' + '</a>';
+        var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + $this.directSuperId + ")" + '">' + 'Super' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ')">' + 'Master' + '</a>';
+        var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ',' + $this.directAgentId + ')">' + 'Agent' + '</a>';
 
         $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
@@ -1376,9 +1411,21 @@ Fanex.ExtAcc.Customer = {
     },
 
     EditMultiple: function (div) {
-        $.contextMenu({
-            selector: '.editMult',
-            items: {
+        var menuItems = {};
+
+        if ($this.CurrentLevel == $this.Super) {
+            menuItems = {
+                doubleComm: { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
+                            'Edit Multiple Double Commission For Losing Tickets',
+                            430, 140, false, false, 1);
+                    }
+                }
+            };
+        }
+        else {
+            menuItems = {
                 sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit" },
                 racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" },
                 casino: { name: "Edit Multiple Casino", className: "iconEnableEdit" },
@@ -1389,11 +1436,18 @@ Fanex.ExtAcc.Customer = {
                 doubleComm: { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
-                            'Edit Multiple Double Commission For Losing Tickets',
-                            430, 140, false, false, 1);
+                                'Edit Multiple Double Commission For Losing Tickets',
+                                430, 140, false, false, 1);
                     }
                 }
-            },
+            };
+        }
+
+        $.contextMenu('destroy');
+
+        $.contextMenu({
+            selector: '.editMult',
+            items: menuItems,
             trigger: "left",
             ignoreRightClick: true,
             autoHide: true
