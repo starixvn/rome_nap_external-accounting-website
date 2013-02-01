@@ -229,7 +229,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult GetExportToExcel(int? currentLevel = null, string groupName = "ACCDDD", int? srecommend = null, int? mrecommend = null, int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            string fileName = "CustomerList.xls";
+            string fileName = "CustomerList";
             if (currentLevel == 4)
             {
                 fileName = "SuperList";
@@ -241,7 +241,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 3)
             {
-                fileName = "MasterList.xls";
+                fileName = "MasterList";
                 this.cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
@@ -250,7 +250,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             else if (currentLevel == 2)
             {
-                fileName = "AgentList.xls";
+                fileName = "AgentList";
                 this.cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
                 if (this.cache.Get<DataTable>(this.cacheList) == null)
                 {
