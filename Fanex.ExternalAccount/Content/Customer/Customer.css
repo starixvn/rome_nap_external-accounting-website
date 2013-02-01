@@ -133,6 +133,7 @@ tr.rowDisabled td
 {
 	background-image: url(../../Images/Content/icon-customerlist-active.png);
 	background-repeat: no-repeat;
+	background-position: left center;
 	height: 16px;
 	font-size: 12px;
 }
@@ -140,6 +141,7 @@ tr.rowDisabled td
 {
 	background-image: url(../../Images/Content/icon-customerlist-unactive.png);
 	background-repeat: no-repeat;
+	background-position: left center;
 	height: 16px;
 	font-size: 12px;
 }
@@ -147,6 +149,7 @@ tr.rowDisabled td
 {
 	background-image: url(../../Images/Content/icon-customerlist-sync.png);
 	background-repeat: no-repeat;
+	background-position: left center;
 	height: 16px;
 	font-size: 12px;
 }
