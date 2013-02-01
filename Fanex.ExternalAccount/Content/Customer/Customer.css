@@ -131,7 +131,21 @@ tr.rowDisabled td
 
 .iconEnableEdit
 {
-	background-image: url(../../Images/Content/enableEdit.jpg);
+	background-image: url(../../Images/Content/icon-customerlist-active.png);
+	background-repeat: no-repeat;
+	height: 16px;
+	font-size: 12px;
+}
+.iconDisableEdit
+{
+	background-image: url(../../Images/Content/icon-customerlist-unactive.png);
+	background-repeat: no-repeat;
+	height: 16px;
+	font-size: 12px;
+}
+.iconUnsyncEdit
+{
+	background-image: url(../../Images/Content/icon-customerlist-sync.png);
 	background-repeat: no-repeat;
 	height: 16px;
 	font-size: 12px;
