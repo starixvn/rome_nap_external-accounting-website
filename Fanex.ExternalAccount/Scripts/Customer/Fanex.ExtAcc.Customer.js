@@ -256,7 +256,7 @@ Fanex.ExtAcc.Customer = {
             },
             trigger: "left",
             ignoreRightClick: true,
-            autoHide: false,
+            autoHide: true,
             width: 150
         });
     },
