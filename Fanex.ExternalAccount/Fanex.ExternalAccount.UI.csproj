@@ -322,6 +322,9 @@
     <Content Include="Images\Content\close-icn.png" />
     <Content Include="Images\Content\delete-icn.png" />
     <Content Include="Images\Content\enableEdit.jpg" />
+    <Content Include="Images\Content\icon-customerlist-active.png" />
+    <Content Include="Images\Content\icon-customerlist-sync.png" />
+    <Content Include="Images\Content\icon-customerlist-unactive.png" />
     <Content Include="Images\Content\icon-customerlist.png" />
     <Content Include="Images\Content\on-off.png" />
     <Content Include="Images\Content\password-icon.png" />
