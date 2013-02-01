@@ -22,6 +22,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Sunplus.Core.Common.IPs;
+    using System.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -156,6 +157,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult EditInfo(int custId)
         {
             var model = this.customerService.UserInfo(custId);
+            model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
+            model.LastName = HttpUtility.HtmlDecode(model.LastName);
+            model.HomePhone = HttpUtility.HtmlDecode(model.HomePhone);
+            model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
+            model.Email = HttpUtility.HtmlDecode(model.Email);
+            model.Fax = HttpUtility.HtmlDecode(model.Fax);
 
             return this.PartialViewBase(model);
         }
