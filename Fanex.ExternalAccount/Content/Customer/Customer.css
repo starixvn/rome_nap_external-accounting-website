@@ -170,3 +170,7 @@ tr.rowTransferCondition
 {
 	background-color: #ececec !important;
 }
+.editInfoBg:hover
+{
+	background-color: #39F !important;
+}
