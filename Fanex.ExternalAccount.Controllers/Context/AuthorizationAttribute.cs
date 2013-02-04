@@ -27,8 +27,6 @@ namespace Fanex.ExternalAccount.Controllers.Context
     {
         private readonly ILoginService userService = new LoginService();
         private readonly ICachingService cachingService = new CachingService();
-        private ICurrentSession currentSession = new CurrentSession();
-        private ICurrentContext currentContext = new CurrentContext();
 
         public AuthorizationAttribute()
         {
@@ -40,11 +38,15 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            var currentSession = new CurrentSession();
+            var currentContext = new CurrentContext();
+
             try
             {
                 if (filterContext.HttpContext == null)
                 {
                     this.CloseConnection(filterContext);
+
                     return;
                 }
 
@@ -56,12 +58,13 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     return;
                 }
 
-                if (!this.FunctionAuthorization(this.currentSession.UserId, (int)this.Function))
+                if (!this.FunctionAuthorization(currentSession.UserId, (int)this.Function))
                 {
                     this.CloseConnection(filterContext);
                     return;
                 }
             }
+
             catch (Exception ex)
             {
                 this.ProcessException(ex, filterContext.HttpContext.Response);
@@ -71,6 +74,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
         private void CloseConnection(AuthorizationContext filterContext)
         {
             HttpResponseBase response = filterContext.HttpContext.Response;
+
             try
             {
                 if (filterContext == null
@@ -112,15 +116,19 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
         private void SignOut(HttpResponseBase response)
         {
-            int onUserId = this.currentSession.OnUserId;
+            var currentSession = new CurrentSession();
+            var currentContext = new CurrentContext();
+
+            var onUserId = currentSession.OnUserId;
+
             if (onUserId > 0)
             {
-                this.userService.Logout(onUserId, this.currentSession.UserName);
-                this.currentContext.Context.Session.Abandon();
+                this.userService.Logout(onUserId, currentSession.UserName);
+                currentContext.Context.Session.Abandon();
             }
             else
             {
-                this.currentContext.Context.Session.Abandon();
+                currentContext.Context.Session.Abandon();
             }
 
             response.Redirect("~/Account/Login", true);
