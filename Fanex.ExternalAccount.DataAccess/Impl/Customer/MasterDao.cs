@@ -68,8 +68,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
                     Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
                 };
             }
-            
-            return null;          
+
+            return null;
         }
 
         public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
@@ -86,7 +86,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             param.Add("errcode", 0);
             param.Add("errmsg", string.Empty);
 
-            var result = DbHelper.ExecuteDbResult("Acc_CustomerUpdTransferOption", param);
+            var result = DbHelper.ExecuteDbResult("EAS_CustomerUpdTransferOption", param);
 
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
         }

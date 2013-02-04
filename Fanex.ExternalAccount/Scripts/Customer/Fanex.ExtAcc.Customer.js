@@ -167,29 +167,80 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditIMaster: function (custId, title, transferCondition) {
+    ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, disableVirtualSport) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
         itemsMaster = {
             sportbook: { name: "Sportbook", className: "iconEnableEdit" },
-            minPT: { name: "Min PT", className: "iconEnableEdit" },
+            minPTSportbook: { name: "Min PT", className: "iconEnableEdit" },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
             commission: { name: "Commission", className: "iconEnableEdit" },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
-            separator1: "-----",
-            casino: { name: "Casino", className: "iconEnableEdit" },
-            poker: { name: "Poker", className: "iconEnableEdit" },
-            virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
-            separator2: "-----",
-            editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
-            changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
+            minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
+            separator1: "-----"
         };
+
+        if (syncCasino) {
+            if (disableCasino) {
+                itemsMaster.casino = { name: "Casino", className: "iconDisableEdit" };
+            }
+            else {
+                itemsMaster.casino = { name: "Casino", className: "iconEnableEdit" };
+            }
+        }
+        else {
+            itemsMaster.casino = { name: "Casino", className: "iconUnsyncEdit" };
+        }
+
+        if (syncBingo) {
+            if (disableBingo) {
+                itemsMaster.bingo = { name: "Bingo", className: "iconDisableEdit" };
+            }
+            else {
+                itemsMaster.bingo = { name: "Bingo", className: "iconEnableEdit" };
+            }
+        }
+        else {
+            itemsMaster.bingo = { name: "Bingo", className: "iconUnsyncEdit" };
+        }
+
+        if (disableP2P) {
+            itemsMaster.poker = { name: "Poker", className: "iconDisableEdit" };
+        }
+        else {
+            itemsMaster.poker = { name: "Poker", className: "iconEnableEdit" };
+        }
+
+        if (syncLiveCasino) {
+            if (disableLiveCasino) {
+                itemsMaster.liveCasino = { name: "Live Casino", className: "iconDisableEdit" };
+            }
+            else {
+                itemsMaster.liveCasino = { name: "Live Casino", className: "iconEnableEdit" };
+            }
+        }
+        else {
+            itemsMaster.liveCasino = { name: "Live Casino", className: "iconUnsyncEdit" };
+        }
+
+        if (disableVirtualSport) {
+            itemsMaster.virtualSport = { name: "Virtual Sport", className: "iconDisableEdit" };
+        }
+        else {
+            itemsMaster.virtualSport = { name: "Virtual Sport", className: "iconEnableEdit" };
+        }
+
+        itemsMaster.separator2 = "-----";
+        itemsMaster.editInfo = { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } };
+        itemsMaster.changePassword = { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
 
         if (transferCondition == false) {
             itemsMaster.transferCondition = { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } };
         }
+
+        $.contextMenu('destroy');
 
         $.contextMenu({
             selector: '.editMaster',
@@ -200,7 +251,7 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditAgent: function (custId, title, transferCondition) {
+    ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
@@ -211,14 +262,69 @@ Fanex.ExtAcc.Customer = {
             commission: { name: "Commission", className: "iconEnableEdit" },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
-            separator1: "-----",
-            casino: { name: "Casino", className: "iconEnableEdit" },
-            poker: { name: "Poker", className: "iconEnableEdit" },
-            virtualSport: { name: "Virtual Sport", className: "iconEnableEdit" },
-            separator2: "-----",
-            editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
-            changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
+            minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
+            separator1: "-----"
         };
+
+        if (masterSyncCasino) {
+            if (syncCasino) {
+                if (disableCasino) {
+                    itemsAgent.casino = { name: "Casino", className: "iconDisableEdit" };
+                }
+                else {
+                    itemsAgent.casino = { name: "Casino", className: "iconEnableEdit" };
+                }
+            }
+            else {
+                itemsAgent.casino = { name: "Casino", className: "iconUnsyncEdit" };
+            }
+        }
+
+        if (masterSyncBingo) {
+            if (syncBingo) {
+                if (disableBingo) {
+                    itemsAgent.bingo = { name: "Bingo", className: "iconDisableEdit" };
+                }
+                else {
+                    itemsAgent.bingo = { name: "Bingo", className: "iconEnableEdit" };
+                }
+            }
+            else {
+                itemsAgent.bingo = { name: "Bingo", className: "iconUnsyncEdit" };
+            }
+        }
+
+        if (disableP2P) {
+            itemsAgent.poker = { name: "Poker", className: "iconDisableEdit" };
+        }
+        else {
+            itemsAgent.poker = { name: "Poker", className: "iconEnableEdit" };
+        }
+
+        if (masterSyncLiveCasino) {
+            if (syncLiveCasino) {
+                if (disableLiveCasino) {
+                    itemsAgent.liveCasino = { name: "Live Casino", className: "iconDisableEdit" };
+                }
+                else {
+                    itemsAgent.liveCasino = { name: "Live Casino", className: "iconEnableEdit" };
+                }
+            }
+            else {
+                itemsAgent.liveCasino = { name: "Live Casino", className: "iconUnsyncEdit" };
+            }
+        }
+
+        if (disableVirtualSport) {
+            itemsAgent.virtualSport = { name: "Virtual Sport", className: "iconDisableEdit" };
+        }
+        else {
+            itemsAgent.virtualSport = { name: "Virtual Sport", className: "iconEnableEdit" };
+        }
+
+        itemsAgent.separator2 = "-----";
+        itemsAgent.editInfo = { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } };
+        itemsAgent.changePassword = { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
 
         if (transferCondition == false) {
             itemsAgent.transferCondition = { name: "Transfer Condition", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } };
@@ -235,25 +341,83 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditMember: function (custId, title) {
+    ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
+        var itemsMember = {
+            sportbook: { name: "Sportbook", className: "iconEnableEdit" },
+            minPT: { name: "Min PT", className: "iconEnableEdit" },
+            betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
+            commission: { name: "Commission", className: "iconEnableEdit" },
+            separator: "-----",
+            racing: { name: "Racing", className: "iconEnableEdit" },
+            separator1: "-----"
+        };
+
+        if (agentSyncCasino) {
+            if (syncCasino) {
+                if (disableCasino) {
+                    itemsMember.casino = { name: "Casino", className: "iconDisableEdit" };
+                }
+                else {
+                    itemsMember.casino = { name: "Casino", className: "iconEnableEdit" };
+                }
+            }
+            else {
+                itemsMember.casino = { name: "Casino", className: "iconUnsyncEdit" };
+            }
+        }
+
+        if (agentSyncBingo) {
+            if (syncBingo) {
+                if (disableBingo) {
+                    itemsMember.bingo = { name: "Bingo", className: "iconDisableEdit" };
+                }
+                else {
+                    itemsMember.bingo = { name: "Bingo", className: "iconEnableEdit" };
+                }
+            }
+            else {
+                itemsMember.bingo = { name: "Bingo", className: "iconUnsyncEdit" };
+            }
+        }
+
+        if (disableP2P) {
+            itemsMember.poker = { name: "Poker", className: "iconDisableEdit" };
+        }
+        else {
+            itemsMember.poker = { name: "Poker", className: "iconEnableEdit" };
+        }
+
+        if (agentSyncLiveCasino) {
+            if (syncLiveCasino) {
+                if (disableLiveCasino) {
+                    itemsMember.liveCasino = { name: "Live Casino", className: "iconDisableEdit" };
+                }
+                else {
+                    itemsMember.liveCasino = { name: "Live Casino", className: "iconEnableEdit" };
+                }
+            }
+            else {
+                itemsMember.liveCasino = { name: "Live Casino", className: "iconUnsyncEdit" };
+            }
+        }
+        if (disableVirtualSport) {
+            itemsMember.virtualSport = { name: "Virtual Sport", className: "iconDisableEdit" };
+        }
+        else {
+            itemsMember.virtualSport = { name: "Virtual Sport", className: "iconEnableEdit" };
+        }
+
+        itemsMember.separator2 = "-----";
+        itemsMember.editInfo = { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } };
+        itemsMember.changePassword = { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
+
+        $.contextMenu('destroy');
         $.contextMenu({
             selector: '.editMember',
-            items: {
-                sportbook: { name: "Sportbook", className: "iconEnableEdit" },
-                betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
-                commission: { name: "Commission", className: "iconEnableEdit" },
-                separator: "-----",
-                racing: { name: "Racing", className: "iconEnableEdit" },
-                separator1: "-----",
-                casino: { name: "Casino", className: "iconEnableEdit" },
-                poker: { name: "Poker", className: "iconEnableEdit" },
-                separator2: "-----",
-                editInfo: { name: "Edit Info", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 300, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
-            },
+            items: itemsMember,
             trigger: "left",
             ignoreRightClick: true,
             autoHide: false,
@@ -457,7 +621,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", " + cell.Value.synccasino + ", " + cell.Value.syncbingo + ", " + cell.Value.synclivecasino + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -465,7 +629,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
                             var title = cell.Value.username.replace('$', '&#36');
-                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditIMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncbingo + ", " + cell.Value.disablebingo + ", " + cell.Value.disablep2p + ", " + cell.Value.synclivecasino + ", " + cell.Value.disablelivecasino + ", " + cell.Value.disablevirtualsport + ")";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMaster"></div>';
                         }
@@ -533,7 +697,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    GetAgentList: function (mrecommend, allow, custId, dataSource) {
+    GetAgentList: function (mrecommend, allow, custId, dataSource, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino) {
         $this.BlockUI();
 
         $this.masterId = mrecommend;
@@ -564,7 +728,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ", " + cell.Value.synccasino + ", " + cell.Value.syncbingo + ", " + cell.Value.synclivecasino + ")";
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -572,7 +736,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
                             var title = cell.Value.username.replace('$', '&#36');
-                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditAgent(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditAgent(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncbingo + ", " + cell.Value.disablebingo + ", " + cell.Value.disablep2p + ", " + cell.Value.synclivecasino + ", " + cell.Value.disablelivecasino + ", " + cell.Value.disablevirtualsport + ", " + masterSyncCasino + ", " + masterSyncBingo + ", " + masterSyncLiveCasino + ")";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editAgent"></div>';
                         }
@@ -676,7 +840,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
                             var title = cell.Value.username.replace('$', '&#36');
-                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "')";
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncbingo + ", " + cell.Value.disablebingo + ", " + cell.Value.disablep2p + ", " + cell.Value.synclivecasino + ", " + cell.Value.disablelivecasino + ", " + cell.Value.disablevirtualsport + ")";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMember"></div>';
                         }
