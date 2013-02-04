@@ -290,6 +290,8 @@
     <Content Include="Content\Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\Images\user.png" />
     <Content Include="Content\Images\warning.png" />
+    <Content Include="Content\LeftMenu\AccountInfo.css" />
+    <Content Include="Content\LeftMenu\styles.css" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\normalize.css" />
     <Content Include="Content\Reports\DailyWinLoss.css" />
@@ -1465,6 +1467,7 @@
     <Content Include="Views\Shared\_SettingBox.cshtml" />
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Shared\_BalanceBox.cshtml" />
+    <Content Include="Views\Shared\Copy of _LeftMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
