@@ -28,6 +28,16 @@ Fanex.ExtAcc.Customer = {
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
 
+    superSyncCasino: false,
+    superSyncBingo: false,
+    superSyncLiveCasino: false,
+    masterSyncCasino: false,
+    masterSyncBingo: false,
+    masterSyncLiveCasino: false,
+    agentSyncCasino: false,
+    agentSyncBingo: false,
+    agentSyncLiveCasino: false,
+
     BlockedUI: false,
 
     URL: '',
@@ -469,13 +479,13 @@ Fanex.ExtAcc.Customer = {
                         $this.GetSuperList();
                     }
                     else if ($this.CurrentLevel == $this.Master) {
-                        Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm);
+                        Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm, null, null, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
                     }
                     else if ($this.CurrentLevel == $this.Agent) {
-                        Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                        Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm, null, null, $this.masterSyncCasino, $this.masterSyncBingo, $this.masterSyncLiveCasino);
                     }
                     else {
-                        Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                        Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm, null, null, $this.agentSyncCasino, $this.agentSyncBingo, $this.agentSyncLiveCasino);
                     }
 
                     $.unblockUI(document);
@@ -587,13 +597,17 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    GetMasterList: function (srecommend, allow, custId, dataSource, superSynCasino, superSyncBingo, superSyncLiveCasino) {
+    GetMasterList: function (srecommend, allow, custId, dataSource, superSyncCasino, superSyncBingo, superSyncLiveCasino) {
         $this.BlockUI();
 
         $this.superId = srecommend;
         $this.CurrentLevel = $this.Master;
         $this.AllowDoubleComm = allow;
         $this.AllowDoubleCommMaster = allow;
+
+        $this.superSyncCasino = superSyncCasino;
+        $this.superSyncBingo = superSyncBingo;
+        $this.superSyncLiveCasino = superSyncLiveCasino;
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
@@ -626,7 +640,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Edit', Name: 'Edit', Width: 30,
                         CustomCellRender: function (cell) {
                             var title = cell.Value.username.replace('$', '&#36');
-                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.DisableVirtualSports + ", " + superSynCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + ")";
 
                             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMaster"></div>';
                         }
@@ -701,6 +715,10 @@ Fanex.ExtAcc.Customer = {
         $this.CurrentLevel = $this.Agent;
         $this.AllowDoubleComm = allow;
         $this.AllowDoubleCommAgent = allow;
+
+        $this.masterSyncCasino = masterSyncCasino;
+        $this.masterSyncBingo = masterSyncBingo;
+        $this.masterSyncLiveCasino = masterSyncLiveCasino;
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
@@ -807,6 +825,10 @@ Fanex.ExtAcc.Customer = {
         $this.agentId = recommend;
         $this.CurrentLevel = $this.Member;
         $this.AllowDoubleComm = allow;
+
+        $this.agentSyncCasino = agentSyncCasino;
+        $this.agentSyncBingo = agentSyncBingo;
+        $this.agentSyncLiveCasino = agentSyncLiveCasino;
 
         var url = resolveClientUrl('Customer/MemberListPost');
 
@@ -984,13 +1006,13 @@ Fanex.ExtAcc.Customer = {
                         $this.GetSuperList();
                     }
                     else if ($this.CurrentLevel == $this.Master) {
-                        $this.GetMasterList($this.superId, $this.AllowDoubleComm);
+                        $this.GetMasterList($this.superId, $this.AllowDoubleComm, null, null, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
                     }
                     else if ($this.CurrentLevel == $this.Agent) {
-                        $this.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                        $this.GetAgentList($this.masterId, $this.AllowDoubleComm, null, null, $this.masterSyncCasino, $this.masterSyncBingo, $this.masterSyncLiveCasino);
                     }
                     else {
-                        $this.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                        $this.GetMemberList($this.agentId, $this.AllowDoubleComm, null, null, $this.agentSyncCasino, $this.agentSyncBingo, $this.agentSyncLiveCasino);
                     }
                 }, 2000);
             }
@@ -1064,13 +1086,13 @@ Fanex.ExtAcc.Customer = {
                                 $this.GetSuperList();
                             }
                             else if ($this.CurrentLevel == $this.Master) {
-                                Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm);
+                                Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm, null, null, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
                             }
                             else if ($this.CurrentLevel == $this.Agent) {
-                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm);
+                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm, null, null, $this.masterSyncCasino, $this.masterSyncBingo, $this.masterSyncLiveCasino);
                             }
                             else {
-                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm);
+                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm, null, null, $this.agentSyncCasino, $this.agentSyncBingo, $this.agentSyncLiveCasino);
                             }
                         }, 2000);
                     }
@@ -1222,13 +1244,13 @@ Fanex.ExtAcc.Customer = {
                     $this.GetSuperList(rows[0].custid, result);
                 }
                 else if (result.roleId == 3) {
-                    $this.GetMasterList(result.srecommend, $this.AllowDoubleComm, custId, result);
+                    $this.GetMasterList(result.srecommend, $this.AllowDoubleComm, custId, result, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
                 }
                 else if (result.roleId == 2) {
-                    $this.GetAgentList(result.mrecommend, $this.AllowDoubleComm, custId, result);
+                    $this.GetAgentList(result.mrecommend, $this.AllowDoubleComm, custId, result, $this.masterSyncCasino, $this.masterSyncBingo, $this.masterSyncLiveCasino);
                 }
                 else {
-                    $this.GetMemberList(result.recommend, $this.AllowDoubleComm, custId, result);
+                    $this.GetMemberList(result.recommend, $this.AllowDoubleComm, custId, result, $this.agentSyncCasino, $this.agentSyncBingo, $this.agentSyncLiveCasino);
                 }
             } else {
                 $('#msgNoinfo').css('display', 'block');
@@ -1436,7 +1458,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + $this.directSuperId + ")" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ')"' + '">' + 'Master' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ', null, ' + $this.superSyncCasino + ',' + $this.superSyncBingo + ',' + $this.superSyncLiveCasino + ')"' + '">' + 'Master' + '</a>';
 
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
@@ -1619,8 +1641,8 @@ Fanex.ExtAcc.Customer = {
         $('#breadcrumbs').empty();
 
         var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + $this.directSuperId + ")" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ')">' + 'Master' + '</a>';
-        var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ',' + $this.directAgentId + ')">' + 'Agent' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ', null, ' + $this.superSyncCasino + ',' + $this.superSyncBingo + ',' + $this.superSyncLiveCasino + ')">' + 'Master' + '</a>';
+        var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + $this.masterId + ', ' + $this.AllowDoubleCommAgent + ',' + $this.directAgentId + ', null, ' + $this.masterSyncCasino + ',' + $this.masterSyncBingo + ',' + $this.masterSyncLiveCasino + ')">' + 'Agent' + '</a>';
 
         $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
 
