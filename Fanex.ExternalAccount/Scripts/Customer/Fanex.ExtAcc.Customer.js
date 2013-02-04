@@ -1167,10 +1167,12 @@ Fanex.ExtAcc.Customer = {
             if (Fanex.ExtAcc.Customer.DataSource.length == 0) {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
+                $('#exporttoexcel').css('display', 'none');
             }
             else {
                 $('#msgNoinfo').css('display', 'none');
                 $('#jqgrid').css('display', 'block');
+                $('#exporttoexcel').css('display', 'block');
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
             }
@@ -1255,6 +1257,7 @@ Fanex.ExtAcc.Customer = {
             } else {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
+                $('#exporttoexcel').css('display', 'none');
 
                 $.unblockUI(document);
             }
