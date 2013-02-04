@@ -1458,7 +1458,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         var linkSuper = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + $this.directSuperId + ")" + '">' + 'Super' + '</a>';
-        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ', null, ' + $this.masterSyncCasino + ',' + $this.masterSyncBingo + ',' + $this.masterSyncLiveCasino + ')"' + '">' + 'Master' + '</a>';
+        var linkMaster = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + $this.superId + ', ' + $this.AllowDoubleCommMaster + ',' + $this.directMasterId + ', null, ' + $this.superSyncCasino + ',' + $this.superSyncBingo + ',' + $this.superSyncLiveCasino + ')"' + '">' + 'Master' + '</a>';
 
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
