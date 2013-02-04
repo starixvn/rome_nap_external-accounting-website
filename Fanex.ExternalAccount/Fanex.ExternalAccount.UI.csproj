@@ -1462,6 +1462,9 @@
     <Content Include="Views\Customer\EditTransferCondition.cshtml" />
     <Content Include="Views\Customer\ResetPassword.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
+    <Content Include="Views\Shared\_SettingBox.cshtml" />
+    <Content Include="Views\Shared\_SearchBox.cshtml" />
+    <Content Include="Views\Shared\_BalanceBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

@@ -1,7 +1,7 @@
-﻿<div style="float: left; padding-top: 2px; padding-left: 2px; visibility:hidden">
+﻿<div style="float: left; padding-top: 2px; padding-left: 2px;visibility:hidden">
     <input id="jqInput" placeholder="Enter user name" class="input" type="text" />
     <input type="button" value="Search" id='jqButtonSearch' />
-    <div id="leftpanewrapper">
+    @*<div id="leftpanewrapper">
         <div id="tab_menu">
             <div id="tab_menu_m">
                 <a class="tab_menu01" target="menu" href="../_Menu/Menu.aspx">{static:Resources.Lang.mainmenu}</a></div>
@@ -36,7 +36,7 @@
                 </div>
                 <!--/NoData-->
                 
-                {searchBox}
+                @Html.Action("_SearchBox", "Shared")
                 <!--TheRestAcc-->
                 {balanceBox}
                 <div id="clear02">
@@ -46,5 +46,5 @@
             </div>
             <br />
         </div>
-    </div>
+    </div>*@
 </div>
