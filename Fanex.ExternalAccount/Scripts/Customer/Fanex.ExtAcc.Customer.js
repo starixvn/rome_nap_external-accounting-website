@@ -1089,10 +1089,10 @@ Fanex.ExtAcc.Customer = {
                                 Fanex.ExtAcc.Customer.GetMasterList($this.superId, $this.AllowDoubleComm, null, null, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
                             }
                             else if ($this.CurrentLevel == $this.Agent) {
-                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm, null, null, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
+                                Fanex.ExtAcc.Customer.GetAgentList($this.masterId, $this.AllowDoubleComm, null, null, $this.masterSyncCasino, $this.masterSyncBingo, $this.masterSyncLiveCasino);
                             }
                             else {
-                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm, null, null, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
+                                Fanex.ExtAcc.Customer.GetMemberList($this.agentId, $this.AllowDoubleComm, null, null, $this.agentSyncCasino, $this.agentSyncBingo, $this.agentSyncLiveCasino);
                             }
                         }, 2000);
                     }
@@ -1247,10 +1247,10 @@ Fanex.ExtAcc.Customer = {
                     $this.GetMasterList(result.srecommend, $this.AllowDoubleComm, custId, result, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
                 }
                 else if (result.roleId == 2) {
-                    $this.GetAgentList(result.mrecommend, $this.AllowDoubleComm, custId, result, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
+                    $this.GetAgentList(result.mrecommend, $this.AllowDoubleComm, custId, result, $this.masterSyncCasino, $this.masterSyncBingo, $this.masterSyncLiveCasino);
                 }
                 else {
-                    $this.GetMemberList(result.recommend, $this.AllowDoubleComm, custId, result, $this.superSyncCasino, $this.superSyncBingo, $this.superSyncLiveCasino);
+                    $this.GetMemberList(result.recommend, $this.AllowDoubleComm, custId, result, $this.agentSyncCasino, $this.agentSyncBingo, $this.agentSyncLiveCasino);
                 }
             } else {
                 $('#msgNoinfo').css('display', 'block');
