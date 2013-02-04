@@ -13,23 +13,23 @@
   <Function Name="Report">
 
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="archive" Plain="0" />
-    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="archive" Plain="0" />
-    <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="archive" Plain="0" />
-    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="checkin" Plain="0" />
 
-    <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_SAg" SpName="EAS_Rpt_WinLossDaily_SAg" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_MAg14" SpName="EAS_Rpt_WinLossDaily_MAg14" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SAg" SpName="EAS_Rpt_WinLossDaily_SAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_MAg14" SpName="EAS_Rpt_WinLossDaily_MAg14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="checkin" Plain="0" />
 
-    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="archive" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="archive" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="checkin" Plain="0" />
 
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="checkin" Plain="0" />
   </Function>
