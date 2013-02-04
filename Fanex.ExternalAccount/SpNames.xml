@@ -72,10 +72,10 @@
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="checkin" Plain="0" />
   </Function>
   <Function Name="Customer List">
-    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="archive" Plain="0" />
-    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="archive" Plain="0" />
-    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="archive" Plain="0" />
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="checkin" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="archive" Plain="0" />
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="archive" Plain="0" />
     <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="main" Plain="0" />
