@@ -81,10 +81,7 @@
         <div id='mainContent'>
             <div id="mainSplitter">
                 <div class="splitter-panel" id="leftSplitter">
-                    <div style="float: left; padding-top: 2px; padding-left: 2px; visibility: hidden">
-                        <input id="jqInput" placeholder="Enter user name" class="input" type="text" />
-                        <input type="button" value="Search" id='jqButtonSearch' />
-                    </div>
+                    @Html.Action("_LeftMenu", "Shared")
                 </div>
                 <div id="splitterBar">
                     <div>

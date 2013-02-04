@@ -1458,6 +1458,7 @@
     <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
     <Content Include="Views\Customer\EditTransferCondition.cshtml" />
     <Content Include="Views\Customer\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\_LeftMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

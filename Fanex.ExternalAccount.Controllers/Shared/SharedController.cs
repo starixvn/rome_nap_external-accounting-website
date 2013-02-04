@@ -66,5 +66,10 @@ namespace Fanex.ExternalAccount.Controllers.Shared
 
             return this.PartialViewBase();
         }
+
+        public ActionResult _LeftMenu()
+        {
+            return this.PartialViewBase();
+        }
     }
 }
