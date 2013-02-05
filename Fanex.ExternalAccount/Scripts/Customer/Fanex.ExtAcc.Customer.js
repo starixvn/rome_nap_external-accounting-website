@@ -1121,12 +1121,13 @@ Fanex.ExtAcc.Customer = {
 
         if (div.className == 'menuInactive') {
             div.className = 'menuActive';
-
+            $('#editMult').attr('style', 'cursor: pointer !important');
             $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
             $('#editMult').contextMenu(true);
         }
         else {
             div.className = 'menuInactive';
+            $('#editMult').attr('style', 'cursor: default !important');
             $('#editMult').attr('onclick', '');
             $('#editMult').contextMenu(false);
         }
@@ -1146,11 +1147,9 @@ Fanex.ExtAcc.Customer = {
 
     SelectAll: function (className) {
         if (className == 'menuActive') {
-            if ($this.AllowDoubleComm || $this.CurrentLevel == $this.Super) {
-                $('#editMult').attr('style', 'cursor: pointer !important');
-                $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
-                $('#editMult').contextMenu(true);
-            }
+            $('#editMult').attr('style', 'cursor: pointer !important');
+            $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
+            $('#editMult').contextMenu(true);
         }
         else {
             $('#editMult').attr('style', 'cursor: default !important');
@@ -1172,10 +1171,12 @@ Fanex.ExtAcc.Customer = {
             if (Fanex.ExtAcc.Customer.DataSource.length == 0) {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
+                $('#exporttoexcel').css('display', 'none');
             }
             else {
                 $('#msgNoinfo').css('display', 'none');
                 $('#jqgrid').css('display', 'block');
+                $('#exporttoexcel').css('display', 'block');
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
             }
@@ -1260,6 +1261,7 @@ Fanex.ExtAcc.Customer = {
             } else {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
+                $('#exporttoexcel').css('display', 'none');
 
                 $.unblockUI(document);
             }
@@ -1698,7 +1700,7 @@ Fanex.ExtAcc.Customer = {
 
             menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
 
-            if ($this.AllowDoubleComm) {
+            if ($this.AllowDoubleCommMaster) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
@@ -1731,7 +1733,7 @@ Fanex.ExtAcc.Customer = {
 
             menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
 
-            if ($this.AllowDoubleCommMaster) {
+            if ($this.AllowDoubleCommAgent) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
@@ -1740,7 +1742,6 @@ Fanex.ExtAcc.Customer = {
                     }
                 };
             }
-
         }
         else {
             menuItems = {
@@ -1766,7 +1767,7 @@ Fanex.ExtAcc.Customer = {
 
             menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
 
-            if ($this.AllowDoubleCommAgent) {
+            if ($this.AllowDoubleComm) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
