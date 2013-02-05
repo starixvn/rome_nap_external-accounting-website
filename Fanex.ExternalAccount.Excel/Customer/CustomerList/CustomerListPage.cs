@@ -112,7 +112,7 @@
                         Convert.ToDecimal(items["playerdiscount1x2"]),
                         Convert.ToDecimal(items["playerdiscountcs"]),
                         Convert.ToDecimal(items["playerdiscountnumber"]),
-                        String.Format("{0:yyyy-MM-dd HH:mm:ss}", items["createdate"]),
+                        String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
                         items["lastloginip"].ToString()
                     };
 
@@ -161,7 +161,7 @@
                         Convert.ToDecimal(items["discount1x2"]),
                         Convert.ToDecimal(items["discountcs"]),
                         Convert.ToDecimal(items["discountnumber"]),
-                        String.Format("{0:yyyy-MM-dd HH:mm:ss}", items["createdate"]),
+                        String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
                         items["lastloginip"].ToString()
                     };
 
