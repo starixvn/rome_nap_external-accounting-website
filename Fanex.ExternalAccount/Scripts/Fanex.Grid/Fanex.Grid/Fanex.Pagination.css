@@ -6,11 +6,11 @@
      padding-left: 10px;
 }
 #pagination a{ text-decoration:none;color:#616161; border-radius:2px;text-align:center;}
-#pagination a:hover, #pagination .current, #pagination .current.prev,#pagination .current.next{background:#363636;color:#fff;border-radius:2px;margin-right: 2px;}
+#pagination a:hover, #pagination .current, #pagination .current.prev,#pagination .current.next{ font-weight:bold;background:#355391;color:#fff;border-radius:2px;margin-right: 2px;}
 #pagination a,#pagination span{display:block;float:left;margin-right:2px;line-height:14px;padding:0 2px}
 #pagination a.prev,#pagination a.next,#pagination span.prev,#pagination span.next{font-weight:bold;font-size:0.9em;}
 #itemperpage{float:left;padding:1px; border: 1px solid #969696;outline: 0 none;border-radius:3px;margin-left:6px;font-size:0.9em;}
-#pagination div.itemperpage{float:left;color:#363636;padding:0; margin-top:3px; font-weight:bold;}
+#pagination div.itemperpage{float:left;color:#3e5fa6;padding:0; margin-top:3px; font-weight:bold;}
 .numberlist{float:left;padding:2px;border: 1px solid #969696;border-radius:3px;margin-left:12px;}
 .numberlist ul
 {
@@ -28,7 +28,7 @@
 }
 .numberlist ul li.sep
 {
-     background: url(seperations.png) right 4px no-repeat;
+     background: url(images/seperations.png) right 4px no-repeat;
     }
 .numberlist ul li.last
 {
@@ -50,6 +50,7 @@
     padding: 0px !important;
     position: absolute;
     z-index: 9999;
+    width: 135px;
 }
 #pagination .lnk
 {
@@ -67,7 +68,7 @@
 }
 #pagenav_ibtn
 {
-    background:url(go-hover-icon.png) 0 0 no-repeat;
+    background:url(images/go-hover-icon.png) 0 0 no-repeat;
     width:20px;
     height:20px;
     padding:0px;

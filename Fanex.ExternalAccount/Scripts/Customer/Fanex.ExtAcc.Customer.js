@@ -567,15 +567,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
-                        CustomCellRender: function (cell) {
-                            if (cell.Value) {
-                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
-                            }
-
-                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
-                        }
-                    },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
@@ -679,15 +671,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
-                        CustomCellRender: function (cell) {
-                            if (cell.Value) {
-                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
-                            }
-
-                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
-                        }
-                    },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
@@ -791,15 +775,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
-                        CustomCellRender: function (cell) {
-                            if (cell.Value) {
-                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
-                            }
-
-                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
-                        }
-                    },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
@@ -902,15 +878,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60 },
                     { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60 },
                     { HeaderText: 'Game', Name: 'playerdiscountnumber', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
-                        CustomCellRender: function (cell) {
-                            if (cell.Value) {
-                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
-                            }
-
-                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
-                        }
-                    },
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
@@ -1172,11 +1140,13 @@ Fanex.ExtAcc.Customer = {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
                 $('#exporttoexcel').css('display', 'none');
+                $('#breadcrumbs').css('display', 'none');
             }
             else {
                 $('#msgNoinfo').css('display', 'none');
                 $('#jqgrid').css('display', 'block');
                 $('#exporttoexcel').css('display', 'block');
+                $('#breadcrumbs').css('display', 'block');
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
             }
@@ -1262,6 +1232,7 @@ Fanex.ExtAcc.Customer = {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
                 $('#exporttoexcel').css('display', 'none');
+                $('#breadcrumbs').css('display', 'none');
 
                 $.unblockUI(document);
             }

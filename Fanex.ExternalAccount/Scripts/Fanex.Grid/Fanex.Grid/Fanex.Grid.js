@@ -4,19 +4,19 @@
 // </copyright>
 // --------------------------------------------------------------------------
 
-//// Grid Scroller
-var ub = $.browser;
-ub.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
-var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
+(function ($) {
 
-
-(function () {
-
+    //// Grid Scroller
+    var ub = $.browser;
+    ub.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
+    var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
+    var ff18 = $.browser.mozilla && (parseInt($.browser.version, 10) >= 18);
+    var extraPosition = ff18 ? 1 : 0;
     //// Method expose for user use
-    var methods = {
+    var methods =
+    {
         createFanexGrid: function (opts) {
-            if(opts.showColumnsShowHide == false)
-            {
+            if (opts.showColumnsShowHide == false) {
                 opts.columns = Fanex.Grid.Helper.SetColumnDisplay(opts.columns, opts.columnsNeedHide);
             }
             opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
@@ -27,8 +27,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             });
         },
         reRender: function (opts) {
-            if(opts.showColumnsShowHide == false)
-            {
+            if (opts.showColumnsShowHide == false) {
                 opts.columns = Fanex.Grid.Helper.SetColumnDisplay(opts.columns, opts.columnsNeedHide);
             }
             opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
@@ -38,8 +37,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 return fanexGrid.GetjQueryInstance();
             });
         },
-        reRenderBodyAfterSort: function(opts, sortColumnName, sortDirection)
-        {
+        reRenderBodyAfterSort: function (opts, sortColumnName, sortDirection) {
             opts = $.extend(true, {}, $.fn.fanexGrid.defaults, opts);
             return this.each(function () {
                 var fanexGrid = new Fanex.Grid(this, opts);
@@ -75,13 +73,12 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 return fanexGrid.GetjQueryInstance();
             });
         },
-        resizeGrid: function ()
-        {
+        resizeGrid: function () {
             return this.each(function () {
-                 var $this = $(this);
-                 var currentContentId = 'tblContent_' + $this.attr('id');
-                 $this.gridScroller(Fanex.Grid.List[currentContentId].gridOptions);
-                 return $this;
+                var $this = $(this);
+                var currentContentId = 'tblContent_' + $this.attr('id');
+                $this.gridScroller(Fanex.Grid.List[currentContentId].gridOptions);
+                return $this;
             });
         }
     };
@@ -100,7 +97,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
     };
 
     //// Default Options
-    $.fn.fanexGrid.defaults = {
+    $.fn.fanexGrid.defaults =
+    {
         customizeHeader: false,
         headerRows: [],
         columns: [],
@@ -126,7 +124,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             customButtons: ''
         },
         showPager: false,
-        pagerOption: {
+        pagerOption:
+        {
             itemsPerPage: 100,
             maxItemsPerPage: 500,
             currentPage: 1,
@@ -136,14 +135,14 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             afterPagedFunction: null
         },
         showTree: false,
-        gridExpandHeight: 50,
+        gridExpandHeight: 150,
         showNoDataOnFrozen: false,
         showColumnsShowHide: true,
         showDistinctRow: true,
         showHighlightRow: true,
         highlightFrozenWidth: 1,
         showNumberColumn: false,
-        marginRight : 0,
+        marginRight: 5,
         allowTruncate: false,
         columnsNeedHide: [],
         sortOption:
@@ -151,11 +150,11 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             customGridSort: null,
             serverSortFunction: null,
             afterGridSorted: null,
-            beforeGridSorted : null
+            beforeGridSorted: null
         },
         hideYBackGroundScroller: false,
-        bottomBorderWidth: 1
-        
+        bottomBorderWidth: 1,
+        treeParentPaddingLeft: 20
     };
 
     var Fanex = Fanex || {};
@@ -167,14 +166,21 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         this.tableContentId = 'tblContent_' + this.gridId;
         this.frozenContentId = 'frozenContent_' + this.gridId;
         //// Calculate fontsize for hide cell value if cell value exceed
-        try {this.currentFontSize = parseInt(this.$grid.css('font-size').replace('px','')) } catch(e){ this.currentFontSize = 12 };
+        try {
+            this.currentFontSize = parseInt(this.$grid.css('font-size').replace('px', ''));
+        }
+        catch (e) {
+            this.currentFontSize = 12;
+        }
         this.currentFontSize -= 4;
         //// Create a hashtable contain columns information for esay retrieve data
         this.columnsHastable = Fanex.Grid.Helper.GetColumnsHastable(options.columns);
         //// Create columnswidth array
         this.columnsWidth = Fanex.Grid.Helper.GetArrayWidth(options.columns, options.showColumnsShowHide, false);
         this.columnsForComputingWidth = Fanex.Grid.Helper.GetArrayWidth(options.columns, options.showColumnsShowHide, true);
-        this.Options.pagerOption.totalItem = this.Options.bodyRows.length;
+        if (this.Options.customPager != true) {
+            this.Options.pagerOption.totalItem = this.Options.bodyRows.length;
+        }
         this.gridOptions = null;
         this.frozenColsName = [];
         //// If frozen, then create an array contain frozen columns name
@@ -197,7 +203,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         }
     };
 
-    Fanex.Grid.prototype = {
+    Fanex.Grid.prototype =
+    {
         RenderGrid: function () {
             var me = this;
             var options = me.Options;
@@ -243,7 +250,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             me.RegisterMouseHoverEvent();
             me.Initialize();
         },
-        ReRenderBodyAfterSort: function(sortColumnName, sortDirection){
+        ReRenderBodyAfterSort: function (sortColumnName, sortDirection) {
             var me = this;
             var options = me.Options;
             me.RenderBody('', true);
@@ -252,9 +259,10 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             me.RegisterMouseHoverEvent();
             $(me.$grid).gridScroller(me.gridOptions);
             //// Save Current Sor
-            Fanex.Grid.List[me.tableContentId].sortOption = {
-                SortColumnName : sortColumnName,
-                SortDirection : sortDirection
+            Fanex.Grid.List[me.tableContentId].sortOption =
+            {
+                SortColumnName: sortColumnName,
+                SortDirection: sortDirection
             };
         },
         GetjQueryInstance: function () {
@@ -265,20 +273,21 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var options = this.Options;
             var numberOfFrozenColumnNew = (options.showColumnsShowHide == false ? Fanex.Grid.Helper.ComputeNewFrozenColumn(options.columnsNeedHide, options.numberOfFrozenColumn) : options.numberOfFrozenColumn);
             //// Render Grid Scroller
-            me.gridOptions = {
+            me.gridOptions =
+            {
                 tblContentId: me.tableContentId,
                 fullHeight: true,
                 column: me.columnsWidth,
                 gridHeight: options.gridExpandHeight,
                 numberFreezeCol: numberOfFrozenColumnNew,
                 highlightFrozenWidth: options.highlightFrozenWidth,
-                heightScrollYAdd : 0,
-                marginRight : options.marginRight,
+                heightScrollYAdd: 0,
+                marginRight: options.marginRight,
                 hideYBackGroundScroller: options.hideYBackGroundScroller,
                 bottomBorderWidth: options.bottomBorderWidth
             };
             $(me.$grid).initGrid({
-                isShowPager: options.showPager && (options.bodyRows.length > 0)
+                isShowPager: (options.showPager && (options.bodyRows.length > 0))
             }).gridScroller(me.gridOptions);
 
             //// Render Pager
@@ -292,7 +301,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         RenderTitle: function () {
             var me = this;
             var options = me.Options;
-            var titleId = me.gridId + '-grid-title' ;
+            var titleId = me.gridId + '-grid-title';
             if (options.showTitle == false) {
                 return '';
             }
@@ -303,12 +312,14 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 titleHtml.push('<div id="' + me.gridId + '-grid-title' + '" class="grid-title display-none"><div class="grid-title-label" id="reporttile">');
                 titleHtml.push(options.titleInfo.text);
                 titleHtml.push('</div>');
-                titleHtml.push(' <div class="grid-toolbox">');
+                titleHtml.push('<div class="grid-toolbox">');
                 if (options.titleInfo.showBackButton == true) {
                     titleHtml.push('<input id="btnBack' + me.gridId + '" class="btnBack" type="button" title="Back" value="" name="btnBack" />');
                 }
-                if(options.titleInfo.hideWhenNoData == true && options.bodyRows.length > 0)
-                {
+                if (options.titleInfo.hideWhenNoData == true && options.bodyRows.length > 0) {
+                    if (options.titleInfo.customButtons != '') {
+                        titleHtml.push(options.titleInfo.customButtons);
+                    }
                     if (options.titleInfo.showCollapseExpandButton == true) {
                         titleHtml.push('<input class="btExpand expanded" id="btnCollapseExpand' + me.gridId + '" type="button" value="" title="Collapse/Expand" />');
                     }
@@ -318,12 +329,9 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                     if (options.titleInfo.showSendMailButton == true) {
                         titleHtml.push('<input id="btnSendMail' + me.gridId + '" class="btnSendMail" type="button" title="Send Mail" />');
                     }
-                    if (options.titleInfo.customButton != ''){
-                        titleHtml.push(options.titleInfo.customButton);
-                    }
                 }
                 titleHtml.push('</div></div>');
-                
+
                 return titleHtml.join('');
             }
         },
@@ -405,9 +413,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 headerHtml.push('<div class="' + divHeaderClass + '">');
             }
             headerHtml.push('<div class="' + divContainerClass + '">');
-            headerHtml.push('<table class="' + tableClass + '" '
-            + (hasId ? ('id="' + tableContainId + '"') : '')
-            + ' ><thead>');
+            headerHtml.push('<table class="' + tableClass + '" ' + (hasId ? ('id="' + tableContainId + '"') : '') + ' ><thead>');
 
             if (options.customizeHeader) {
                 var currentGroupHeader = options.cloneGroupHeaderRows;
@@ -435,7 +441,6 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                                     if (type == 'frozenheader' || type == 'frozenbody') {
                                         //// Calculate height for merger row
                                         currentHeight = ((options.headerColumnHeight * currentCol.MergeRowNumber) + (currentCol.MergeRowNumber - 1) * 5);
-                                        //currentMergeRowNumber = '';
                                     }
                                     customSpan += currentMergeRowNumber;
                                 }
@@ -488,23 +493,23 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                     var currentCol = options.columns[colIndex];
 
                     var cellInfo =
-                                {
-                                    CellTag: 'th',
-                                    CustomSpan: '',
-                                    CssClass: currentCol.CssClass,
-                                    SortClass: (currentCol.Sort == true ? ' colSorter' : ''),
-                                    CellWidth: (currentCol.Width || me.columnsHastable[currentCol.Name].Width),
-                                    CellHeight: options.headerColumnHeight,
-                                    CellId: (me.columnsHastable[currentCol.Name].Sort == true ? (me.gridId + '_header_sort_' + currentCol.Name) : ''),
-                                    Sort: currentCol.Sort,
-                                    CellColumnName: currentCol.Name,
-                                    HeaderText: currentCol.HeaderText,
-                                    CustomHeaderRender: currentCol.CustomHeaderRender || me.columnsHastable[currentCol.Name].CustomHeaderRender,
-                                    SortDirection: currentCol.SortDirection || '',
-                                    CanShowHide: me.columnsHastable[currentCol.Name].CanShowHide && (!options.showColumnsShowHide),
-                                    TdClass: me.columnsHastable[currentCol.Name].TdClass || '',
-                                    CellAlign: me.columnsHastable[currentCol.Name].HeaderAlign || (me.columnsHastable[currentCol.Name].CellAlign || 'center')
-                                };
+                    {
+                        CellTag: 'th',
+                        CustomSpan: '',
+                        CssClass: currentCol.CssClass,
+                        SortClass: (currentCol.Sort == true ? ' colSorter' : ''),
+                        CellWidth: (currentCol.Width || me.columnsHastable[currentCol.Name].Width),
+                        CellHeight: options.headerColumnHeight,
+                        CellId: (me.columnsHastable[currentCol.Name].Sort == true ? (me.gridId + '_header_sort_' + currentCol.Name) : ''),
+                        Sort: currentCol.Sort,
+                        CellColumnName: currentCol.Name,
+                        HeaderText: currentCol.HeaderText,
+                        CustomHeaderRender: currentCol.CustomHeaderRender || me.columnsHastable[currentCol.Name].CustomHeaderRender,
+                        SortDirection: currentCol.SortDirection || '',
+                        CanShowHide: me.columnsHastable[currentCol.Name].CanShowHide && (!options.showColumnsShowHide),
+                        TdClass: me.columnsHastable[currentCol.Name].TdClass || '',
+                        CellAlign: me.columnsHastable[currentCol.Name].HeaderAlign || (me.columnsHastable[currentCol.Name].CellAlign || 'center')
+                    };
                     trsHeader.push(me.RenderHeaderCell(cellInfo, currentCol));
                 }
                 headerHtml.push(trsHeader.join(''));
@@ -517,32 +522,25 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             }
             return headerHtml.join('');
         },
-        RenderFrozenRow: function (currentRow, colHtmlTag, isBody, rowIndex, treeCollapseExpandClass, isForNoData, parentHighlight) {
+        RenderFrozenRow: function (currentRow, colHtmlTag, isBody, rowIndex, treeCollapseExpandClass, isForNoData, parentHighlight, level) {
             var me = this;
             var options = me.Options;
             var frozenRowHtml = [];
             var colsLength = currentRow.Columns.length;
             var currentCollapseExpandId = '';
             var parentRowClass = '';
-            var trHighlightAtt = (options.showHighlightRow ? (' highlightatt="highlight-att-frozen-'+ parentHighlight + '-' + rowIndex + '"') : '');
-            var trClass = (options.showHighlightRow ? 'highlight-row ' : '')
-            + (treeCollapseExpandClass || '')
-            + (currentRow.CssClass || '')
-            + (options.showDistinctRow ? ((rowIndex+1) % 2 == 0 ? ' freegrid-even' : '') : '');
+            var trHighlightAtt = (options.showHighlightRow ? (' highlightatt="highlight-att-frozen-' + parentHighlight + '-' + rowIndex + '"') : '');
+            var trClass = (options.showHighlightRow ? 'highlight-row ' : '') + (treeCollapseExpandClass || '') + (currentRow.CssClass || '') + (options.showDistinctRow ? ((rowIndex + 1) % 2 == 0 ? ' freegrid-even' : '') : '');
             if (options.showTree == true && currentRow.SubRows) {
-                parentRowClass = ' parent-row';
+                parentRowClass = 'parent-row parent-level-' + level;
             }
-            frozenRowHtml.push('<tr class="' 
-            + trClass + ' '
-            + parentRowClass 
-            + '" ' 
-            + (currentRow.CustomAttr || '')
-            + trHighlightAtt + '>');
+            frozenRowHtml.push('<tr class="' + trClass + ' ' + parentRowClass + '" ' + (currentRow.CustomAttr || '') + trHighlightAtt + '>');
             for (var columnIndex = 0; columnIndex < colsLength; columnIndex++) {
                 var currentCol = currentRow.Columns[columnIndex];
                 var customSpan = '';
                 var currentHeight = 'height:' + options.bodyRowHeight + 'px;';
                 var customClass = 'table-cell';
+                var currentWidth = me.columnsHastable[currentCol.Name].Width;
                 var setCurrentWidth = false;
                 var currentHeightForComputeCenter = options.bodyRowHeight;
 
@@ -559,122 +557,43 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 //// If Merge Column and current row is footer, then calculate height
                 if (isValid(currentCol.MergeColNumber)) {
                     customSpan += ' colspan="' + currentCol.MergeColNumber + '" ';
-                    if (isBody == false) {
-                        setCurrentWidth = true;
-                        var currentWidth = Fanex.Grid.Helper.GetColMergeWidth(me.columnsWidth, me.columnsHastable[currentCol.Name].ColumnIndex, currentCol.MergeColNumber, options.showColumnsShowHide, options.columns);
-                    }
+                    currentWidth = Fanex.Grid.Helper.GetColMergeWidth(me.columnsWidth, me.columnsHastable[currentCol.Name].ColumnIndex, currentCol.MergeColNumber, options.showColumnsShowHide, options.columns);
                 }
-
-                //// If show/hide column then add class for futher show/hide column
-                var tdClass = 'free-grid-td-' + columnIndex + ' ' + (currentCol.TdClass || ( me.columnsHastable[currentCol.Name].TdClass || ''));
-                if (me.columnsHastable[currentCol.Name].CanShowHide
-                && me.columnsHastable[currentCol.Name].CanShowHide == true
-                && (!options.showColumnsShowHide)) {
-                    tdClass += ' grid-show-hide-column';
+                var renderObject = me.RenderBodyCell(
+                        {
+                            HtmlTag: colHtmlTag,
+                            CustomSpan: customSpan,
+                            Height: currentHeight
+                        },
+                        {
+                            IsNoData: isForNoData,
+                            ColIndex: columnIndex,
+                            RowIndex: rowIndex,
+                            CssClass: (currentCol.CssClass || (me.columnsHastable[currentCol.Name].CellCssClass || '')),
+                            Width: currentWidth,
+                            Align: (currentCol.CellAlign || (me.columnsHastable[currentCol.Name].CellAlign || 'left')),
+                            CustomAttr: (currentCol.CustomAttr || ''),
+                            ParentHighlight: parentHighlight
+                        },
+                        currentCol,
+                        currentRow,
+                        isBody,
+                        level
+                    );
+                frozenRowHtml.push(renderObject.CellHtml);
+                if (renderObject.CurrentColumnShowTree == true) {
+                    currentCollapseExpandId = renderObject.CurrentCollapseExpandId;
                 }
-                //// If show tree, then add icon expand
-                if (options.showTree == true
-                && currentRow.SubRows
-                && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true) {
-                    tdClass = 'tr-grid-collapse-expand ';
-                }
-
-                //// Custom render and format number
-                var currentValue = currentCol.Value;
-                if (me.columnsHastable[currentCol.Name].FormatNumber
-                && !isNaN(currentValue) && currentValue !== '') {
-                    currentValue = numeral(currentValue).format(me.columnsHastable[currentCol.Name].FormatNumber);
-                }
-                if(me.columnsHastable[currentCol.Name].FormatNegative)
-                {
-                    if(currentCol.Value < 0)
-                    {
-                        currentValue = '<span class="format-negative">' 
-                        + me.columnsHastable[currentCol.Name].FormatNegative.replace('$', currentValue)
-                        + '</span>';
-                    }
-                }
-                if(me.columnsHastable[currentCol.Name].FormatPositive)
-                {
-                    if(currentCol.Value > 0)
-                    {
-                        currentValue = '<span class="format-positive">' 
-                        + me.columnsHastable[currentCol.Name].FormatPositive.replace('$', currentValue)
-                        + '</span>';
-                    }
-                }
-                var cellContent = '';
-                if(isForNoData == true)
-                {
-                    cellContent = currentCol.Value;
-                }else
-                {
-                    cellContent = typeof (currentCol.CustomCellRender) == 'function' ? currentCol.CustomCellRender(currentCol, currentValue) : ((typeof (me.columnsHastable[currentCol.Name].CustomCellRender) == 'function' && isBody) ? me.columnsHastable[currentCol.Name].CustomCellRender(currentCol, currentValue) : currentValue);
-                }
-
-                
-
-                var truncateClass ='';
-                var truncateTop = '';
-                var allowTruncate = me.columnsHastable[currentCol.Name].AllowTruncate == true ? true : options.allowTruncate; 
-                if(allowTruncate == true)
-                {   
-                    truncateClass = ' column-truncate';
-                    truncateTop = Math.round(currentHeightForComputeCenter / 5); 
-                    truncateTop = ' top:' + truncateTop + 'px;';
-                }
-                
-                var titleTooltip = '';
-                if(typeof(currentCol.Value) == 'string' 
-                && allowTruncate == true
-                && (currentCol.Value.length * me.currentFontSize > me.columnsHastable[currentCol.Name].Width))
-                {
-                        titleTooltip = ' title="' + currentCol.Value + '" ';
-                }
-
-                frozenRowHtml.push('<'
-                + colHtmlTag + ' '
-                + customSpan + ' '
-                + ' class="' + tdClass + '" >');
-
-                frozenRowHtml.push('<div class="' + (currentCol.CssClass || (me.columnsHastable[currentCol.Name].CellCssClass || '')) + ' '
-                + customClass + ' '
-                + truncateClass
-                + '" style="width:' + ((setCurrentWidth && currentWidth) || me.columnsHastable[currentCol.Name].Width) + 'px;'
-                + truncateTop
-                + currentHeight + '" '
-                + 'align="' + (currentCol.CellAlign || ( me.columnsHastable[currentCol.Name].CellAlign || 'left')) + '" '
-                + titleTooltip
-                + (currentCol.CustomAttr || '')
-                + '>');
-
-                if (options.showTree == true
-                    && currentRow.SubRows
-                    && currentRow.SubRows.length > 0
-                    && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true) {
-                        currentCollapseExpandId = me.gridId + '_tree_' + rowIndex;
-                        frozenRowHtml.push('<span class="grid-collapse-expand grid-expand" id="' + currentCollapseExpandId + '"></span>');
-                        currentCollapseExpandId += ' child-row';
-                    }
-
-
-                frozenRowHtml.push((isBody && options.showNumberColumn && columnIndex == 0 && !isForNoData) ? (rowIndex + 1) : cellContent);
-                frozenRowHtml.push('</div></' + colHtmlTag + '>');
             }
             frozenRowHtml.push('</tr>');
 
-            if (options.showTree == true
-                && currentRow.SubRows) {
-                    var currentSubRows = Fanex.Grid.Helper.CreateRowsForFrozenColumn(currentRow.SubRows, options.numberOfFrozenColumn, me.frozenColsName);
-                    var SubRowsLength = currentSubRows.length;
-                    for (var subRowIndex = 0; subRowIndex < SubRowsLength; subRowIndex++) {
-                        frozenRowHtml.push(me.RenderFrozenRow(currentSubRows[subRowIndex], 'td', false, 0, currentCollapseExpandId, false,  parentHighlight + '-' + rowIndex + '-' + subRowIndex));
-                    }
-                }
+            if (options.showTree == true && currentRow.SubRows) {
+                frozenRowHtml.push(me.RenderSubRow(currentRow, false, isBody, 0, currentCollapseExpandId, parentHighlight, level));
+            }
 
             return frozenRowHtml.join('');
         },
-        RenderNormalRow: function (currentRow, colHtmlTag, isBody, rowIndex, treeCollapseExpandClass, isForNoData, parentHighlight) {
+        RenderNormalRow: function (currentRow, colHtmlTag, isBody, rowIndex, treeCollapseExpandClass, isForNoData, parentHighlight, level) {
             var me = this;
             var options = me.Options;
             var rowHtml = [];
@@ -682,20 +601,14 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var currentCollapseExpandId = '';
             var parentRowClass = '';
             var trHighlightAtt = (options.showHighlightRow && isBody ? (' highlightatt="highlight-att-main-' + parentHighlight + '-' + rowIndex + '"') : '');
-            var trClass = (options.showHighlightRow ? 'highlight-row ' : '')
-            + (currentRow.CssClass || '') + ' '
-            + (treeCollapseExpandClass || '')  + ' '
-            + (options.showDistinctRow ? ((rowIndex+1) % 2 == 0 ? ' freegrid-even' : '') : '');
+            var trClass = (options.showHighlightRow ? 'highlight-row ' : '') + (currentRow.CssClass || '') + ' ' + (treeCollapseExpandClass || '') + ' ' + (options.showDistinctRow ? ((rowIndex + 1) % 2 == 0 ? ' freegrid-even' : '') : '');
 
             if (colsLength > 0) {
                 //// If show grid with tree, then add class to parent row
                 if (options.showTree == true && currentRow.SubRows) {
-                    parentRowClass = 'parent-row';
+                    parentRowClass = 'parent-row parent-level-' + level;
                 }
-                rowHtml.push('<tr class="' + trClass + ' '
-                + parentRowClass + '" '
-                + (currentRow.CustomAttr || '') + ' '
-                + trHighlightAtt + '>');
+                rowHtml.push('<tr class="' + trClass + ' ' + parentRowClass + '" ' + (currentRow.CustomAttr || '') + ' ' + trHighlightAtt + '>');
 
                 for (var colIndex = 0; colIndex < colsLength; colIndex++) {
                     var currentCol = currentRow.Columns[colIndex];
@@ -713,121 +626,161 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                         customSpan += ' colspan="' + currentCol.MergeColNumber + '" ';
                         currentWidth = Fanex.Grid.Helper.GetColMergeWidth(me.columnsWidth, me.columnsHastable[currentCol.Name].ColumnIndex, currentCol.MergeColNumber, options.showColumnsShowHide, options.columns);
                     }
-
-                    var currentValue = currentCol.Value;
-                    if (me.columnsHastable[currentCol.Name].FormatNumber && !isNaN(currentValue)  && currentValue !== '') {
-                        currentValue = numeral(currentValue).format(me.columnsHastable[currentCol.Name].FormatNumber);
+                    var renderObject = me.RenderBodyCell({
+                        HtmlTag: colHtmlTag,
+                        CustomSpan: customSpan,
+                        Height: currentHeight
+                    }, {
+                        IsNoData: isForNoData,
+                        ColIndex: colIndex,
+                        RowIndex: rowIndex,
+                        CssClass: (currentCol.CssClass || (me.columnsHastable[currentCol.Name].CellCssClass || '')),
+                        Width: currentWidth,
+                        Align: (currentCol.CellAlign || (me.columnsHastable[currentCol.Name].CellAlign || 'left')),
+                        CustomAttr: (currentCol.CustomAttr || ''),
+                        ParentHighlight: parentHighlight
+                    },
+                        currentCol,
+                        currentRow,
+                        isBody,
+                        level
+                    );
+                    rowHtml.push(renderObject.CellHtml);
+                    if (renderObject.CurrentColumnShowTree == true) {
+                        currentCollapseExpandId = renderObject.CurrentCollapseExpandId;
                     }
 
-                    if(me.columnsHastable[currentCol.Name].FormatNegative)
-                    {
-                        if(currentCol.Value < 0)
-                        {
-                            currentValue = '<span class="format-negative">' 
-                            + me.columnsHastable[currentCol.Name].FormatNegative.replace('$', currentValue)
-                            + '</span>';
-                        }
-                    }
-
-                    if(me.columnsHastable[currentCol.Name].FormatPositive)
-                    {
-                        if(currentCol.Value > 0)
-                        {
-                            currentValue = '<span class="format-positive">' 
-                            + me.columnsHastable[currentCol.Name].FormatPositive.replace('$', currentValue)
-                            + '</span>';
-                        }
-                    }
-                    var cellContent = '';
-                    if(isForNoData == true)
-                    {
-                        cellContent = currentCol.Value;
-                    }else
-                    {
-                        cellContent = typeof currentCol.CustomCellRender == 'function' ? currentCol.CustomCellRender(currentCol, currentValue) : ((typeof (me.columnsHastable[currentCol.Name].CustomCellRender) == 'function' && isBody) ? me.columnsHastable[currentCol.Name].CustomCellRender(currentCol, currentValue) : currentValue);
-                    }
-
-                    //// If show tree, then add icon expand
-                    var tdClass = 'free-grid-td-' + colIndex + ' ' + (currentCol.TdClass || (me.columnsHastable[currentCol.Name].TdClass || ''));
-                    if (options.showTree == true
-                    && currentRow.SubRows
-                    && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true) {
-                        tdClass = 'tr-grid-collapse-expand';
-                    }
-
-                    //// For show/hide column
-                    if (me.columnsHastable[currentCol.Name].CanShowHide
-                    && me.columnsHastable[currentCol.Name].CanShowHide == true
-                    && (!options.showColumnsShowHide)) {
-                        tdClass += ' grid-show-hide-column';
-                    }
-
-                    var truncateClass ='';
-                    var truncateTop = '';
-                    var allowTruncate = me.columnsHastable[currentCol.Name].AllowTruncate == true ? true : options.allowTruncate; 
-                    if(allowTruncate == true)
-                    {   
-                        truncateClass = ' column-truncate';
-                        truncateTop = Math.round(currentHeightForComputeCenter/ 5); 
-                        truncateTop = ' top:' + truncateTop + 'px;';
-                    }
-
-                    var titleTooltip = '';
-                    if(typeof(currentCol.Value) == 'string' 
-                    && allowTruncate == true
-                    && (currentCol.Value.length * me.currentFontSize > me.columnsHastable[currentCol.Name].Width))
-                    {
-                            titleTooltip = ' title="' + currentCol.Value + '" ';
-                    }
-
-                    rowHtml.push('<' + colHtmlTag + ' ' + customSpan + ' class="' + tdClass + '" >');
-                    rowHtml.push('<div class="table-cell '
-                    + (currentCol.CssClass || (me.columnsHastable[currentCol.Name].CellCssClass || '')) + ' '
-                    + truncateClass
-                    + '" style="width:' + currentWidth + 'px;'
-                    + truncateTop
-                    + currentHeight + '" '
-                    + 'align="' + (currentCol.CellAlign || ( me.columnsHastable[currentCol.Name].CellAlign || 'left')) + '" '
-                    + titleTooltip
-                    + (currentCol.CustomAttr || '')
-                    + '>');
-
-                    if (options.showTree == true
-                    && currentRow.SubRows
-                    && currentRow.SubRows.length > 0
-                    && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true) {
-                        currentCollapseExpandId = me.gridId + '_tree_' + rowIndex;
-                        rowHtml.push('<span class="grid-collapse-expand grid-expand" id="' + currentCollapseExpandId + '"></span>');
-                        currentCollapseExpandId += ' child-row';
-                    }
-                    rowHtml.push((isBody && options.showNumberColumn && colIndex == 0 && !isForNoData) ? (rowIndex + 1) : cellContent);
-                    rowHtml.push('</div></' + colHtmlTag + '>');
                 }
                 rowHtml.push('</tr>');
 
-                if (options.showTree == true
-                && currentRow.SubRows) {
-                    var SubRowsLength = currentRow.SubRows.length;
-                    for (var subRowIndex = 0; subRowIndex < SubRowsLength; subRowIndex++) {
-                        var currentSubRow = currentRow.SubRows[subRowIndex];
-                        rowHtml.push(me.RenderNormalRow(currentSubRow, 'td', true, 0, currentCollapseExpandId, false, parentHighlight + '-' + rowIndex + '-' + subRowIndex));
-                    }
+                if (options.showTree == true && currentRow.SubRows) {
+                    rowHtml.push(me.RenderSubRow(currentRow, true, isBody, 0, currentCollapseExpandId, parentHighlight, level));
                 }
             }
 
             return rowHtml.join('');
         },
+        RenderSubRow: function (currentRow, isMain, isBody, rowIndex, currentCollapseExpandId, parentHighlight, level) {
+            var me = this;
+            var options = me.Options;
+            var subRowHtml = [];
+            var currentSubRows = (isMain == true ? currentRow.SubRows : Fanex.Grid.Helper.CreateRowsForFrozenColumn(currentRow.SubRows, options.numberOfFrozenColumn, me.frozenColsName));
+            var subRowsLength = currentSubRows.length;
+            level++;
+            for (var subRowIndex = 0; subRowIndex < subRowsLength; subRowIndex++) {
+                var currentSubRow = currentSubRows[subRowIndex];
+                if (isMain == true) {
+                    subRowHtml.push(me.RenderNormalRow(currentSubRow, 'td', isBody, subRowIndex, currentCollapseExpandId, false, parentHighlight + '-' + rowIndex + '-' + subRowIndex, level));
+                }
+                else {
+                    subRowHtml.push(me.RenderFrozenRow(currentSubRow, 'td', isBody, subRowIndex, currentCollapseExpandId, false, parentHighlight + '-' + rowIndex + '-' + subRowIndex, level));
+                }
+            }
+            return subRowHtml.join('');
+        },
+        RenderBodyCell: function (container, cell, currentCol, currentRow, isBody, level) {
+            var me = this;
+            var options = me.Options;
+            var cellHtml = [];
+            var currentCollapseExpandId = '';
+
+            var currentValue = currentCol.Value;
+            if (me.columnsHastable[currentCol.Name].FormatNumber && !isNaN(currentValue) && currentValue !== '') {
+                currentValue = numeral(currentValue).format(me.columnsHastable[currentCol.Name].FormatNumber);
+            }
+
+            if (me.columnsHastable[currentCol.Name].FormatDateTime && currentValue !== '') {
+                var momentObject = moment(currentValue);
+                if (momentObject.isValid()) {
+                    currentValue = momentObject.format(me.columnsHastable[currentCol.Name].FormatDateTime);
+                }
+            }
+
+            if (me.columnsHastable[currentCol.Name].FormatNegative) {
+                if (currentCol.Value < 0) {
+                    currentValue = '<span class="format-negative">' + me.columnsHastable[currentCol.Name].FormatNegative.replace('$', currentValue) + '</span>';
+                }
+            }
+
+            if (me.columnsHastable[currentCol.Name].FormatPositive) {
+                if (currentCol.Value > 0) {
+                    currentValue = '<span class="format-positive">' + me.columnsHastable[currentCol.Name].FormatPositive.replace('$', currentValue) + '</span>';
+                }
+            }
+
+            var cellContent = '';
+            if (cell.IsNoData == true) {
+                cellContent = currentCol.Value;
+            }
+            else {
+                cellContent = typeof currentCol.CustomCellRender == 'function' ? currentCol.CustomCellRender(currentCol, currentValue) : ((typeof (me.columnsHastable[currentCol.Name].CustomCellRender) == 'function' && isBody) ? me.columnsHastable[currentCol.Name].CustomCellRender(currentCol, currentValue) : currentValue);
+            }
+
+            //// If show tree, then add icon expand
+            var tdClass = 'free-grid-td-' + cell.ColIndex + ' ' + (currentCol.TdClass || (me.columnsHastable[currentCol.Name].TdClass || ''));
+            if (options.showTree == true && currentRow.SubRows && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true) {
+                tdClass = 'tr-grid-collapse-expand';
+            }
+
+            //// For show/hide column
+            if (me.columnsHastable[currentCol.Name].CanShowHide && me.columnsHastable[currentCol.Name].CanShowHide == true && (!options.showColumnsShowHide)) {
+                tdClass += ' grid-show-hide-column';
+            }
+
+            var truncateClass = '';
+            var allowTruncate = me.columnsHastable[currentCol.Name].AllowTruncate == true ? true : options.allowTruncate;
+            if (allowTruncate == true) {
+                truncateClass = ' column-truncate';
+            }
+
+
+            var titleTooltip = '';
+            if (typeof (currentCol.Value) == 'string' && (currentCol.Value.length * me.currentFontSize > me.columnsHastable[currentCol.Name].Width) && allowTruncate == true) {
+                titleTooltip = ' title="' + currentCol.Value + '" ';
+            }
+
+            var isCurrentColShowTree = (options.showTree == true
+            && currentRow.SubRows
+            && currentRow.SubRows.length > 0 && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true);
+
+            var paddingLeft = '';
+            if ((isCurrentColShowTree && level != 0)
+            || (level > 0
+                && !(currentRow.SubRows && currentRow.SubRows.length > 0)
+                && me.columnsHastable[currentCol.Name].ShowCollapseExpand == true)
+            || (level == 0 && isCurrentColShowTree
+                && (!isValid(currentRow.SubRows) || currentRow.SubRows.length == 0))) {
+                var totalPaddingLeft = level * options.treeParentPaddingLeft;
+                paddingLeft = 'padding-left:' + totalPaddingLeft + 'px;';
+                cell.Width -= totalPaddingLeft;
+            }
+
+            cellHtml.push('<' + container.HtmlTag + ' ' + container.CustomSpan + ' class="' + tdClass + '"' + ' style="' + container.Height + '"' + ' >');
+            cellHtml.push('<div class="table-cell ' + cell.CssClass + ' ' + truncateClass + '" style="width:' + cell.Width + 'px;' + paddingLeft + '" ' + 'align="' + cell.Align + '" ' + titleTooltip + cell.CustomAttr + '>');
+
+            if (isCurrentColShowTree) {
+                currentCollapseExpandId = me.gridId + '_tree_' + cell.ParentHighlight;
+                cellHtml.push('<span class="grid-collapse-expand grid-expand ' + currentCollapseExpandId + '-class' + '" id="' + currentCollapseExpandId + '"></span>');
+                currentCollapseExpandId += ' child-row';
+            }
+            cellHtml.push((isBody && options.showNumberColumn && cell.ColIndex == 0 && !cell.IsNoData) ? (cell.RowIndex + 1) : cellContent);
+            cellHtml.push('</div></' + container.HtmlTag + '>');
+
+            return {
+                CellHtml: cellHtml.join(''),
+                CurrentCollapseExpandId: currentCollapseExpandId,
+                CurrentColumnShowTree: isCurrentColShowTree
+            };
+        },
         RenderEmptyRow: function (columnName, columnValue, mergeColumnNumber, cssClass, showOnMainBody) {
             var me = this;
             var options = me.Options;
-            var columns = [
-                            {
-                                Name: columnName,
-                                Value: columnValue,
-                                MergeColNumber: mergeColumnNumber,
-                                CssClass: cssClass
-                            }
-                        ];
+            var columns = [{
+                Name: columnName,
+                Value: columnValue,
+                MergeColNumber: mergeColumnNumber,
+                CssClass: cssClass
+            }];
             if (showOnMainBody) {
                 columns.push({
                     Name: options.columns[options.numberOfFrozenColumn].Name,
@@ -855,25 +808,11 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var cellId = isValid(cellInfo.CellId) ? ' id="' + cellInfo.CellId + '"' : " ";
             var sort = cellInfo.Sort || false;
             var cellColumnName = cellInfo.CellColumnName || '';
-            var showClass = (isValid(cellInfo.CanShowHide) && cellInfo.CanShowHide) ? ('grid-show-hide-column') : ''
-            + cellInfo.TdClass;
+            var showClass = (isValid(cellInfo.CanShowHide) && cellInfo.CanShowHide) ? ('grid-show-hide-column') : '' + cellInfo.TdClass;
 
-            cellHtml.push('<' + cellTag + ' '
-            + customSpan +
-            ' class="' + showClass
-            + '" >');
+            cellHtml.push('<' + cellTag + ' ' + customSpan + ' class="' + showClass + '" >');
 
-            cellHtml.push('<div class="table-cell '
-                                                + cssClass + ' '
-                                                + sortClass
-                                                + '" style="'
-                                                + cellWidth
-                                                + cellHeight
-                                                + '" '
-                                                + cellId
-                                                + ' align="'
-                                                + cellInfo.CellAlign
-                                                + '">');
+            cellHtml.push('<div class="table-cell ' + cssClass + ' ' + sortClass + '" style="' + cellWidth + cellHeight + '" ' + cellId + ' align="' + cellInfo.CellAlign + '">');
             if (sort == true) {
                 cellHtml.push('<div class="display-inline-block">');
             }
@@ -887,11 +826,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
             if (sort == true) {
                 var sortDirection = cellInfo.SortDirection || '';
-                cellHtml.push('</div><div class="divSorter '
-                + sortDirection
-                + '" data-columnname="'
-                + cellColumnName
-                + '"> </div>');
+                cellHtml.push('</div><div class="divSorter ' + sortDirection + '" data-columnname="' + cellColumnName + '"> </div>');
             }
 
             cellHtml.push('</div>')
@@ -908,13 +843,13 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var currentPageStartIndex = 0;
 
             //// If show pager, then take approriate data range
-            if (options.showPager == true
-            && options.customPager != true) {
+            if (options.showPager == true && options.customPager != true) {
                 var startIndex = (options.pagerOption.currentPage * options.pagerOption.itemsPerPage);
                 var endIndex = ((options.pagerOption.currentPage + 1) * options.pagerOption.itemsPerPage);
                 currentBodyRows = options.bodyRows.slice(startIndex, endIndex);
                 currentPageStartIndex = startIndex;
-            } else {
+            }
+            else {
                 currentBodyRows = options.bodyRows;
             }
 
@@ -927,26 +862,27 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 for (var rowIndex = 0; rowIndex < frozenBodyLength; rowIndex++) {
                     var currentRow = currentBodyRows[rowIndex];
                     var currentFrozenRow = currentFrozenRows[rowIndex];
-                    bodyRowsHtml.push(me.RenderNormalRow(currentRow, 'td', true, rowIndex + currentPageStartIndex, '', false, rowIndex));
-                    bodyFrozenHtml.push(me.RenderFrozenRow(currentFrozenRow, 'td', true, rowIndex + currentPageStartIndex, '', false, rowIndex));
+                    bodyRowsHtml.push(me.RenderNormalRow(currentRow, 'td', true, rowIndex + currentPageStartIndex, '', false, rowIndex, 0));
+                    bodyFrozenHtml.push(me.RenderFrozenRow(currentFrozenRow, 'td', true, rowIndex + currentPageStartIndex, '', false, rowIndex, 0));
                 }
 
                 //// If MainRow still has item, then continue render
                 for (var rowIndex = frozenBodyLength; rowIndex < bodyLength; rowIndex++) {
                     var currentRow = currentBodyRows[rowIndex];
-                    bodyRowsHtml.push(me.RenderNormalRow(currentRow, 'td', true, rowIndex + currentPageStartIndex, '', false, rowIndex));
+                    bodyRowsHtml.push(me.RenderNormalRow(currentRow, 'td', true, rowIndex + currentPageStartIndex, '', false, rowIndex, 0));
                 }
             }
             else {
                 //// Render There is no data, showNoDataOnFrozen
                 var emptyData = Fanex.Grid.Constant.NO_DATA_INFO;
                 if (options.numberOfFrozenColumn > 0) {
-                    
+
                     if (options.showNoDataOnFrozen) {
                         //// Show No Info on the frozen table
                         bodyRowsHtml.push(me.RenderEmptyRow(options.columns[0].Name, emptyData, options.columns.length, 'no-data-frozen', false));
                         bodyFrozenHtml.push(me.RenderEmptyRow(options.columns[0].Name, emptyData, options.numberOfFrozenColumn, 'no-data-frozen', false));
-                    } else {
+                    }
+                    else {
                         //// Show No Info on the main table
                         bodyRowsHtml.push(me.RenderEmptyRow(options.columns[0].Name, '', options.numberOfFrozenColumn, 'no-data-frozen', true));
                         bodyFrozenHtml.push(me.RenderEmptyRow(options.columns[0].Name, '', options.numberOfFrozenColumn, '', false));
@@ -963,8 +899,15 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 me.$grid.find('#' + me.tableContentId + '> tbody').empty().html(bodyRowsHtml.join(''));
             }
             else {
-                bodyHtml = bodyHtml.replace('{$}frozenBody', bodyFrozenHtml.join(''));
-                bodyHtml = bodyHtml.replace('{$}_', bodyRowsHtml.join(''));
+                // Fixbug for replace $' string
+                var bodyHtmlTemp = bodyHtml.split('{$}frozenBody');
+                if (bodyHtmlTemp.length == 2) {
+                    bodyHtml = bodyHtmlTemp[0] + bodyFrozenHtml.join('') + bodyHtmlTemp[1];
+                }
+                bodyHtmlTemp = bodyHtml.split('{$}_');
+                if (bodyHtmlTemp.length == 2) {
+                    bodyHtml = bodyHtmlTemp[0] + bodyRowsHtml.join('') + bodyHtmlTemp[1];
+                }
             }
 
             return Fanex.Grid.Helper.RemoveSpaceIE9(bodyHtml);
@@ -975,14 +918,9 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var footerHtml = [];
             var frozenFooterHtml = [];
 
-            footerHtml.push('<div class="col_footer row-footer-background scroll-y">'
-                                + '<div class="footer-container">'
-                                    + '<table class="col_footer_content grid-fixed-table">'
-                                       + '<thead>');
+            footerHtml.push('<div class="col_footer row-footer-background scroll-y">' + '<div class="footer-container">' + '<table class="col_footer_content grid-fixed-table">' + '<thead>');
 
-            frozenFooterHtml.push(' <div class="row_footer row-footer-background z999">'
-                                       + ' <table class="grid-fixed-table row_footer_content">'
-                                        + '    <thead>');
+            frozenFooterHtml.push(' <div class="row_footer row-footer-background z999">' + ' <table class="grid-fixed-table row_footer_content">' + '    <thead>');
 
             var footerRowsLength = options.footerRows.length;
             var currentFrozenRows = (options.numberOfFrozenColumn > 0) ? Fanex.Grid.Helper.CreateRowsForFrozenColumn(options.footerRows, options.numberOfFrozenColumn, me.frozenColsName) : [];
@@ -1002,14 +940,9 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 footerHtml.push(me.RenderNormalRow(currentRow, 'th', false, rowIndex, '', false, ''));
             }
 
-            frozenFooterHtml.push('   </thead>'
-                                + '</table>'
-                            + '</div>');
+            frozenFooterHtml.push('   </thead>' + '</table>' + '</div>');
 
-            footerHtml.push(' </thead>'
-                        + '</table>'
-                    + '</div>'
-                + '</div>');
+            footerHtml.push(' </thead>' + '</table>' + '</div>' + '</div>');
 
             return frozenFooterHtml.join('') + footerHtml.join('');
         },
@@ -1019,18 +952,20 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var pagerOption = {};
             if (options.bodyRows.length > 0) {
                 if (options.customPager && options.customPager == true) {
-                    pagerOption = {
+                    pagerOption =
+                    {
                         callback: options.pagerOption.pagerSelectCallBack
                     };
                 }
                 else {
-                    pagerOption = {
-                        callback: function (page_index, items_per_page, jq) {
-                            if (me.Options.pagerOption.itemsPerPage != items_per_page) {
+                    pagerOption =
+                    {
+                        callback: function (page_index, itemsPerPage, jq) {
+                            if (me.Options.pagerOption.itemsPerPage != itemsPerPage) {
                                 page_index = 0;
                             }
                             me.Options.pagerOption.currentPage = page_index;
-                            me.Options.pagerOption.itemsPerPage = items_per_page;
+                            me.Options.pagerOption.itemsPerPage = itemsPerPage;
                             me.RenderBody('', true);
                             me.gridOptions.isResetScroller = true;
                             $(me.$grid).gridScroller(me.gridOptions);
@@ -1038,24 +973,23 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                             me.RegisterMouseHoverEvent();
                             //// Save for rerender
                             Fanex.Grid.List[me.tableContentId].pagerOption = me.Options.pagerOption;
-                            if(typeof(options.pagerOption.afterPagedFunction) == 'function')
-                            {
-                                 options.pagerOption.afterPagedFunction();
+                            if (typeof (options.pagerOption.afterPagedFunction) == 'function') {
+                                options.pagerOption.afterPagedFunction();
                             }
                             return false;
                         }
                     };
                 }
 
-                pagerOption.start_per_page = options.pagerOption.startPerPage;
-                pagerOption.step_per_page = options.pagerOption.pageStep;
-                pagerOption.max_items_per_page = options.pagerOption.maxItemsPerPage;
-                pagerOption.items_per_page = options.pagerOption.itemsPerPage;
-                pagerOption.current_page = options.pagerOption.currentPage;
+                pagerOption.startPerPage = options.pagerOption.startPerPage;
+                pagerOption.stepPerPage = options.pagerOption.pageStep;
+                pagerOption.maxTtemsPerPage = options.pagerOption.maxItemsPerPage;
+                pagerOption.itemsPerPage = options.pagerOption.itemsPerPage;
+                pagerOption.currentPage = options.pagerOption.currentPage;
                 pagerOption.total_items = options.pagerOption.totalItem;
-                pagerOption.item_per_page_arr = options.pagerOption.itemsPerPageArray;
+                pagerOption.itemsPerPageArray = options.pagerOption.itemsPerPageArray;
 
-                this.$grid.find('#pagination').pagination(pagerOption.total_items, pagerOption);
+                this.$grid.find('#pagination').fanexPagination(pagerOption.total_items, pagerOption);
             }
         },
         RegisterEvents: function () {
@@ -1067,24 +1001,16 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             //// For Onclick Title Button
             if (options.showTitle == true) {
                 if (typeof options.titleInfo.exportExcelFunction == 'function') {
-                    me.$grid.parent()
-                    .off('click', '#btnExport' + me.gridId, null)
-                    .on('click', '#btnExport' + me.gridId, options.titleInfo.exportExcelFunction);
+                    me.$grid.parent().off('click', '#btnExport' + me.gridId, null).on('click', '#btnExport' + me.gridId, options.titleInfo.exportExcelFunction);
                 }
                 if (typeof options.titleInfo.backFunction == 'function') {
-                    me.$grid.parent()
-                    .off('click', '#btnBack' + me.gridId, null)
-                    .on('click', '#btnBack' + me.gridId, options.titleInfo.backFunction);
+                    me.$grid.parent().off('click', '#btnBack' + me.gridId, null).on('click', '#btnBack' + me.gridId, options.titleInfo.backFunction);
                 }
                 if (typeof options.titleInfo.sendMailFunction == 'function') {
-                    me.$grid.parent()
-                    .off('click', '#btnSendMail' + me.gridId, null)
-                    .on('click', '#btnSendMail' + me.gridId, options.titleInfo.sendMailFunction);
+                    me.$grid.parent().off('click', '#btnSendMail' + me.gridId, null).on('click', '#btnSendMail' + me.gridId, options.titleInfo.sendMailFunction);
                 }
                 if (options.titleInfo.showCollapseExpandButton == true) {
-                    me.$grid.parent()
-                    .off('click', '#btnCollapseExpand' + me.gridId, null)
-                    .on('click', '#btnCollapseExpand' + me.gridId, function () {
+                    me.$grid.parent().off('click', '#btnCollapseExpand' + me.gridId, null).on('click', '#btnCollapseExpand' + me.gridId, function () {
                         var $this = $(this);
                         if ($this.hasClass('expanded')) {
                             me.$grid.find('.child-row').hide();
@@ -1104,21 +1030,52 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
             //// Bind collapse expand event
             if (options.showTree == true) {
-                me.$grid
-                .off('click', '.parent-row > td.tr-grid-collapse-expand', null)
-                .on('click', '.parent-row > td.tr-grid-collapse-expand', function () {
+                me.$grid.off('click', '.parent-row > td.tr-grid-collapse-expand', null).on('click', '.parent-row > td.tr-grid-collapse-expand', function () {
                     var $this = $(this);
                     var collapseexpandspan = $this.find('.grid-collapse-expand');
+                    var isExpand = false;
                     if (collapseexpandspan.hasClass('grid-expand')) {
-                        collapseexpandspan.removeClass('grid-expand').addClass('grid-collapse');
+                        me.$grid.find('.' + collapseexpandspan.attr('id') + '-class').removeClass('grid-expand').addClass('grid-collapse');
+                        isExpand = false;
                     }
                     else {
-                        collapseexpandspan.removeClass('grid-collapse').addClass('grid-expand');
+                        me.$grid.find('.' + collapseexpandspan.attr('id') + '-class').removeClass('grid-collapse').addClass('grid-expand');
+                        isExpand = true;
                     }
-                    $('.' + collapseexpandspan.attr('id')).toggle();
-                    me.gridOptions.isResetScroller = false;
-                    $(me.$grid).gridScroller(me.gridOptions);
+                    var $child = me.$grid.find('.' + collapseexpandspan.attr('id'));
+                    if ($child.length > 0) {
+                        $child.toggle();
+                        for (var index = 0; index < $child.length; index++) {
+                            var $currentChild = $($child[index]);
+                            RecursiveCollapseExpandChild($currentChild, isExpand);
+                        }
+                        me.gridOptions.isResetScroller = false;
+                        $(me.$grid).gridScroller(me.gridOptions);
+                    }
                 });
+
+                function RecursiveCollapseExpandChild($current, isExpand) {
+                    var currentStatus = '';
+                    var collapseexpandspan = $current.find('.grid-collapse-expand');
+                    var $child = me.$grid.find('.' + collapseexpandspan.attr('id'));
+
+                    if (isExpand) {
+                        if (collapseexpandspan.hasClass('grid-expand')) {
+                            $child.show();
+                        }
+                        else {
+                            $child.hide();
+                        }
+                    }
+                    else {
+                        $child.hide();
+                    }
+
+                    for (var index = 0; index < $child.length; index++) {
+                        var $currentChild = $($child[index]);
+                        RecursiveCollapseExpandChild($currentChild, isExpand);
+                    }
+                }
             }
         },
         RegisterSortEvent: function () {
@@ -1129,16 +1086,15 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             for (var colIndex = 0; colIndex < colsLength; colIndex++) {
                 var currentCol = options.columns[colIndex];
                 if (currentCol.Sort == true) {
-                    me.$grid
-                    .off('click', '#' + me.gridId + '_header_sort_' + currentCol.Name, null)
-                    .on('click', '#' + me.gridId + '_header_sort_' + currentCol.Name, function () {
+                    me.$grid.off('click', '#' + me.gridId + '_header_sort_' + currentCol.Name, null).on('click', '#' + me.gridId + '_header_sort_' + currentCol.Name, function () {
                         var $this = $(this).find('.divSorter');
                         var currentDirection = '';
                         if ($this.hasClass('desc')) {
                             me.$grid.find('.divSorter').removeClass('asc').removeClass('desc');
                             $this.addClass('asc');
                             currentDirection = 'ASC';
-                        } else if ($this.hasClass('asc')) {
+                        }
+                        else if ($this.hasClass('asc')) {
                             me.$grid.find('.divSorter').removeClass('asc').removeClass('desc');
                             $this.addClass('desc');
                             currentDirection = 'DESC';
@@ -1159,29 +1115,23 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                             }
                         }
                         //customGridSort: null
-                        if(typeof(options.sortOption.serverSortFunction) == 'function')
-                        {
-                             options.sortOption.serverSortFunction($this.data('columnname'), currentDirection);
+                        if (typeof (options.sortOption.serverSortFunction) == 'function') {
+                            options.sortOption.serverSortFunction($this.data('columnname'), currentDirection);
                         }
-                        else
-                        {
-                            if(typeof(options.sortOption.beforeGridSorted) == 'function')
-                            {
-                                options.bodyRows = options.sortOption.beforeGridSorted(options.bodyRows,$this.data('columnname'), currentDirection );
+                        else {
+                            if (typeof (options.sortOption.beforeGridSorted) == 'function') {
+                                options.bodyRows = options.sortOption.beforeGridSorted(options.bodyRows, $this.data('columnname'), currentDirection);
                             }
-                            if(typeof(options.sortOption.customGridSort) == 'function')
-                            {
+                            if (typeof (options.sortOption.customGridSort) == 'function') {
                                 options.bodyRows = options.sortOption.customGridSort(options.bodyRows, $this.data('columnname'), currentDirection, customSortFunction);
                             }
-                            else
-                            {
+                            else {
                                 options.bodyRows = Fanex.Grid.Helper.GetSortedArray(options.bodyRows, $this.data('columnname'), currentDirection, customSortFunction);
                             }
-                            if(typeof(options.sortOption.afterGridSorted) == 'function')
-                            {
-                                options.bodyRows = options.sortOption.afterGridSorted(options.bodyRows,$this.data('columnname'), currentDirection );
+                            if (typeof (options.sortOption.afterGridSorted) == 'function') {
+                                options.bodyRows = options.sortOption.afterGridSorted(options.bodyRows, $this.data('columnname'), currentDirection);
                             }
-                            me.ReRenderBodyAfterSort($this.data('columnname'),currentDirection);
+                            me.ReRenderBodyAfterSort($this.data('columnname'), currentDirection);
                         }
                     });
                 }
@@ -1192,8 +1142,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var options = me.Options;
             //// For Mouse hover event
             if (options.showHighlightRow == true && options.numberOfFrozenColumn > 0) {
-                me.$grid.find('.highlight-row').unbind('mouseenter mouseleave')
-                .mouseenter(function () {
+                me.$grid.find('.highlight-row').unbind('mouseenter mouseleave').mouseenter(function () {
                     var $this = $(this);
                     var hlattr = $this.attr('highlightatt');
                     if (isValid(hlattr)) {
@@ -1204,8 +1153,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                             me.$grid.find('tr[highlightatt="' + hlattr.replace('main', 'frozen') + '"]').addClass('mousehoverbeyond');
                         }
                     }
-                })
-                .mouseleave(function () {
+                }).mouseleave(function () {
                     var $this = $(this);
                     var hlattr = $this.attr('highlightatt');
                     if (isValid(hlattr)) {
@@ -1225,7 +1173,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
     Fanex.Grid.Helper =
     {
         RemoveItemForRowSpan: function (rows, currentRowIndex, mainColumn, colsHashtable) {
-            var rowSpanSize= mainColumn.MergeRowNumber;
+            var rowSpanSize = mainColumn.MergeRowNumber;
             var columnName = mainColumn.Name;
             var currentLength = currentRowIndex + rowSpanSize;
             var rowsLength = currentLength < rows.length ? currentLength : rows.length;
@@ -1234,30 +1182,27 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                     var currentCol = rows[rowIndex].Columns[colIndex];
                     if (currentCol.Name == columnName) {
                         if (isValid(currentCol.Sort) && currentCol.Sort == true) {
-                            var firstColIndex = Fanex.Grid.Helper.GetColumnIndexFromColumnName( rows[currentRowIndex], currentCol.Name);
+                            var firstColIndex = Fanex.Grid.Helper.GetColumnIndexFromColumnName(rows[currentRowIndex], currentCol.Name);
                             rows[currentRowIndex].Columns[firstColIndex].Sort = true;
                             rows[currentRowIndex].Columns[firstColIndex].SortDirection = currentCol.SortDirection;
                         }
-                       
-                       
-                        if(isValid(mainColumn.MergeColNumber))
-                        {
-                            var mergeColLength =  mainColumn.MergeColNumber + colIndex;
+
+
+                        if (isValid(mainColumn.MergeColNumber)) {
+                            var mergeColLength = mainColumn.MergeColNumber + colIndex;
                             mergeColLength = (mergeColLength <= rows[rowIndex].Columns.length ? mergeColLength : 0);
                             for (var mergeColIndex = colIndex + 1; mergeColIndex < mergeColLength; mergeColIndex++) {
                                 rows[rowIndex].Columns.remove(mergeColIndex);
                             }
                         }
-                         rows[rowIndex].Columns.remove(colIndex);
+                        rows[rowIndex].Columns.remove(colIndex);
                     }
                 }
             }
         },
-        GetColumnIndexFromColumnName: function(row, columnName)
-        {
+        GetColumnIndexFromColumnName: function (row, columnName) {
             for (var index = 0; index < row.Columns.length; index++) {
-                if(row.Columns[index].Name == columnName)
-                {
+                if (row.Columns[index].Name == columnName) {
                     return index;
                 }
             }
@@ -1280,10 +1225,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                         newRow.Columns.push(clone(currentRow.Columns[colIndex]));
                         isset = true;
                     }
-                    else if (isValid(prevCol.MergeColNumber)
-                    && prevCol.MergeColNumber + colIndex <= colsLength) {
-
-                    }
+                    else if (isValid(prevCol) && isValid(prevCol.MergeColNumber) && prevCol.MergeColNumber + colIndex <= colsLength) { }
                     var prevCol = currentCol;
                 }
                 if (isset) {
@@ -1296,15 +1238,6 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         CheckExistName: function (frozenColsName, name) {
             for (var colIndex = 0; colIndex < frozenColsName.length; colIndex++) {
                 if (frozenColsName[colIndex] == name) {
-                    return true;
-                }
-            }
-            return false;
-        },
-        CheckExistColumnNameOnNextRows: function (frozenRows, numberMergeRow, startIndex, colName) {
-            var frozenRowsLength = frozenRows.length < (startIndex + numberMergeRow) ? frozenRows.length : (startIndex + numberMergeRow);
-            for (var startIndex = 0; rowIndex < frozenRowsLength; rowIndex++) {
-                if (frozenRows[startIndex].Name == colName) {
                     return true;
                 }
             }
@@ -1324,12 +1257,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var columnLength = columns.length;
             for (var columnIndex = 0; columnIndex < columnLength; columnIndex++) {
                 var currentColumn = columns[columnIndex];
-                if (isValid(showColumnsShowHide)
-                && showColumnsShowHide == false
-                && currentColumn.CanShowHide
-                && currentColumn.CanShowHide == true
-                && isForComputingWidth == false) {
-                }
+                if (isValid(showColumnsShowHide) && showColumnsShowHide == false && currentColumn.CanShowHide && currentColumn.CanShowHide == true && isForComputingWidth == false) { }
                 else {
                     arrayWidth.push(currentColumn.Width);
                 }
@@ -1341,10 +1269,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var finalColMergeNumber = colMergeNumber;
             var colLength = arrayWidth.length < (startIndex + colMergeNumber) ? arrayWidth.length : (startIndex + colMergeNumber);
             for (var colIndex = startIndex; colIndex < colLength; colIndex++) {
-                if (isValid(showColumnsShowHide)
-                && showColumnsShowHide == false
-                && columns[colIndex].CanShowHide
-                && columns[colIndex].CanShowHide == true) {
+                if (isValid(showColumnsShowHide) && showColumnsShowHide == false && columns[colIndex].CanShowHide && columns[colIndex].CanShowHide == true) {
                     finalColMergeNumber--;
                 }
                 else {
@@ -1377,8 +1302,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             if (sortDirection == 'ASC') {
                 return rows.sort(function (row1, row2) {
                     return Fanex.Grid.Helper.CompareRow(row1, row2, sortField, function (col1Value, col2Value) {
-                        if(typeof(customSortFunction) == 'function')
-                        {
+                        if (typeof (customSortFunction) == 'function') {
                             return customSortFunction(col1Value, col2Value, sortDirection);
                         }
                         return col1Value > col2Value ? 1 : -1;
@@ -1388,8 +1312,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             else {
                 return rows.sort(function (row1, row2) {
                     return Fanex.Grid.Helper.CompareRow(row1, row2, sortField, function (col1Value, col2Value) {
-                        if(typeof(customSortFunction) == 'function')
-                        {
+                        if (typeof (customSortFunction) == 'function') {
                             return customSortFunction(col1Value, col2Value, sortDirection);
                         }
                         return col1Value < col2Value ? 1 : -1;
@@ -1416,10 +1339,10 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 }
             }
 
-//            if (typeof (col1Value) == 'string' && typeof (col2Value) == 'string') {
-//                col1Value = parseFloat(col1Value.replace(',', ''));
-//                col2Value = parseFloat(col2Value.replace(',', ''));
-//            }
+            //            if (typeof (col1Value) == 'string' && typeof (col2Value) == 'string') {
+            //                col1Value = parseFloat(col1Value.replace(',', ''));
+            //                col2Value = parseFloat(col2Value.replace(',', ''));
+            //            }
 
             return compareFunction(col1Value, col2Value);
         },
@@ -1462,16 +1385,13 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             }
             return currentMergeCol;
         },
-        UpdateSortInforAfterShowHideColumns: function(options, sortOption)
-        {
-            if(isValid(sortOption))
-            {
+        UpdateSortInforAfterShowHideColumns: function (options, sortOption) {
+            if (isValid(sortOption)) {
                 var colsLength = options.columns.length;
                 var customSortFunction = null;
                 for (var colIndex = 0; colIndex < colsLength; colIndex++) {
-                    if(options.columns[colIndex].Name == sortOption.SortColumnName)
-                    {
-                        options.columns[colIndex].SortDirection = sortOption.SortDirection.toLowerCase();;
+                    if (options.columns[colIndex].Name == sortOption.SortColumnName) {
+                        options.columns[colIndex].SortDirection = sortOption.SortDirection.toLowerCase(); ;
                         customSortFunction = options.columns[colIndex].CustomSortFunction
                     }
                 }
@@ -1509,26 +1429,24 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
 
             if (!isValid(Fanex.Grid.List[options.tblContentId])) {
-                $(window).resize(
-                    function () {
-                        if (!o.hasClass("display-none")) {
-                            o.resetGrid(options.tblContentId);
-                            var opt = $.extend({}, {}, Fanex.Grid.List[options.tblContentId].gridOptions);
-                            opt.manualCopyHeader = true;
-                            o.renderScroller(opt);
-                            o.find('.grid-fixed-table').append(' ');
-                            //console.log("resize-" + options.tblContentId);
-                        }
+                $(window).resize(function () {
+                    if (!o.hasClass("display-none")) {
+                        o.resetGrid(options.tblContentId);
+                        var opt = $.extend({}, {}, Fanex.Grid.List[options.tblContentId].gridOptions);
+                        opt.manualCopyHeader = true;
+                        o.renderScroller(opt);
+                        o.find('.grid-fixed-table').append(' ');
+                        //console.log("resize-" + options.tblContentId);
                     }
-                );
-                Fanex.Grid.List[options.tblContentId] = {
+                });
+                Fanex.Grid.List[options.tblContentId] =
+                {
                     gridOptions: options,
                     pagerOption: null,
                     sortOption: null
                 };
             }
-            else
-            {
+            else {
                 Fanex.Grid.List[options.tblContentId].gridOptions = options;
             }
 
@@ -1675,6 +1593,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 }
 
                 // (padding + border + padding) * col
+                //options.gridWidth += (options.padding + 1 + options.padding) * col;
                 options.gridWidth += (options.padding + 1 + options.padding) * col;
                 options.freezeWidth += (numOfFreezeCol - 1) * options.padding * 2 + numOfFreezeCol - 1;
             }
@@ -1684,8 +1603,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
             var parentWidth = o.parent().width();
             var browserWindowWidth = $(window).width();
-            if(parentWidth > browserWindowWidth)
-            {
+            if (parentWidth > browserWindowWidth) {
                 parentWidth = browserWindowWidth;
             }
 
@@ -1705,8 +1623,12 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             o.find(".scrollbar-x-content").css("width", (tblWidth - freezeWidth - (isOnChromeBrowser ? 5 : 0)) + "px");
             o.find(".free-cell-bottom-left").css("width", freezeWidth + "px");
             pager.css("width", gridWidth + "px");
-            rowHeaderContainer.css({ "width": (freezeWidth + 5 + 17 + options.highlightFrozenWidth) + "px" });
-            rowHeaderWarpper.css({ "width": (freezeWidth + 5 + options.highlightFrozenWidth) + "px" });
+            rowHeaderContainer.css({
+                "width": (freezeWidth + 5 + 17 + options.highlightFrozenWidth) + "px"
+            });
+            rowHeaderWarpper.css({
+                "width": (freezeWidth + 5 + options.highlightFrozenWidth) + "px"
+            });
 
             var tblHeight = tblContent.height();
             var freezeHeight = tblContent.find("thead").height();
@@ -1716,8 +1638,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             var isScrollY = gridHeight - titleHeight - pagerHeight - bar - freezeFooterHeight < tblHeight;
             gridHeight = isScrollY ? gridHeight : tblHeight + titleHeight + pagerHeight + bar + freezeFooterHeight;
 
-            if(options.hideYBackGroundScroller)
-            {
+            if (options.hideYBackGroundScroller) {
                 o.css("width", (gridWidth - (!isScrollY && !isScrollX ? 18 : 0)) + "px");
                 pager.css("width", (gridWidth - ((!isScrollY && !isScrollX ? 18 : 0) ? 18 : 0)) + "px");
             }
@@ -1736,14 +1657,12 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             o.find(".scrollbar-y-content").css("height", (tblHeight - freezeHeight) + "px");
 
             yscrollbar.css("top", (freezeHeight + titleHeight - (ub.chrome ? (colHeaderContainer.find("thead tr").length - 2) : 0) + options.heightScrollYAdd) + "px");
-            xscrollbar.css("top", (gridHeight - pagerHeight - bar - 1) + "px");
-            if(numOfFreezeCol > 0)
-            {
-                o.find(".free-bottom-left").css("top", (gridHeight - pagerHeight - bar - 1) + "px");
+            xscrollbar.css("top", (gridHeight - pagerHeight - bar - 1 + extraPosition) + "px");
+            if (numOfFreezeCol > 0) {
+                o.find(".free-bottom-left").css("top", (gridHeight - pagerHeight - bar - 1 + extraPosition) + "px");
             }
-            else
-            {
-                 o.find(".free-bottom-left").remove();
+            else {
+                o.find(".free-bottom-left").remove();
             }
 
             rowFooterContainer.css({
@@ -1753,14 +1672,14 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
             colFooterContainer.css({
                 "width": gridWidth + "px",
                 "top": (gridHeight - pagerHeight - freezeFooterHeight - bar) + "px",
-                "border-top-width": options.bottomBorderWidth + "px" 
-                });
+                "border-top-width": options.bottomBorderWidth + "px"
+            });
             //pager.css("top", (gridHeight - pagerHeight - (isScrollX ? -(isShowFooter ? 0 : 1) : bar) - (isShowFooter ? 1 : 1)) + "px");
             pager.css("top", (gridHeight - pagerHeight - (isScrollX ? -(isShowFooter ? 0 : 1) : bar) - 1) + "px");
 
-            xscrollbar.css("left", (freezeWidth + (options.padding) * 2 + 1) + "px");
-            yscrollbar.css("left", (gridWidth - bar - 1) + "px");
-            freeCellTop.css("left", (gridWidth - bar - 1) + "px");
+            xscrollbar.css("left", (freezeWidth + (options.padding) * 2 + 1 - extraPosition) + "px");
+            yscrollbar.css("left", (gridWidth - bar - 1 + extraPosition) + "px");
+            freeCellTop.css("left", (gridWidth - bar - 1 + extraPosition) + "px");
             freeCellBottom.css("left", (gridWidth - bar - 1) + "px");
 
             if (isScrollY) {
@@ -1779,20 +1698,19 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
 
             ////Recalculate Title Width
             var gridTitle = o.parent().find(".grid-title");
-            if(gridTitle.length > 0)
-            {
+            if (gridTitle.length > 0) {
                 gridTitle.width(o.width());
             }
             //// Fixbug show scroller on row header on chrome
-            if(isOnChromeBrowser)
-            {
+            if (isOnChromeBrowser) {
                 var currentRowHeaderStyle = rowHeaderContainer.attr('style');
                 rowHeaderContainer.css("overflow", "hidden !important");
             }
         });
     };
 
-    $.fn.renderScroller.defaults = {
+    $.fn.renderScroller.defaults =
+    {
         tblContentId: 'grid1',
         isUseLeftTable: false,
         isShowPager: false,
@@ -1800,10 +1718,12 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         numberFreezeCol: 2,
         fullWidth: true,
         fullHeight: true,
-        gridWidth: 0, //=totalColumnWidth + totalColumn*4 +totalColumn
+        gridWidth: 0,
+        //=totalColumnWidth + totalColumn*4 +totalColumn
         minWidth: 600,
         gridHeight: 300,
-        freezeWidth: 241, //=totalColumnWidth + (totalColumn-1)*2 + (totalColumn-1)
+        freezeWidth: 241,
+        //=totalColumnWidth + (totalColumn-1)*2 + (totalColumn-1)
         padding: 2,
         marginRight: 20,
         isResetScroller: true,
@@ -1822,7 +1742,8 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
         this.init(container, rowheader, xscrollbar, yscrollbar);
     };
 
-    scroller.prototype = {
+    scroller.prototype =
+    {
         init: function (container, rowheader, xscrollbar, yscrollbar) {
             var me = this;
             yscrollbar.scroll(function () {
@@ -1842,8 +1763,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                     me.preTop = top;
                 }
                 //
-                if(isOnSmartPhoneBrowser)
-                {
+                if (isOnSmartPhoneBrowser) {
                     var left = container.scrollLeft();
                     if (me.preLeft != left) {
                         me.colHeaderContainer.prop("scrollLeft", left);
@@ -1873,8 +1793,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                 }
             });
 
-            if(isOnSmartPhoneBrowser)
-            {
+            if (isOnSmartPhoneBrowser) {
                 me.colHeaderContainer.scroll(function () {
                     var left = me.colHeaderContainer.scrollLeft();
                     if (me.preLeft != left) {
@@ -1884,7 +1803,7 @@ var ff16 = $.browser.mozilla && parseInt($.browser.version, 10) >= 16;
                         me.preLeft = left;
                     }
                 });
-                me.colFooterContainer.scroll(function(){
+                me.colFooterContainer.scroll(function () {
                     var left = me.colFooterContainer.scrollLeft();
                     if (me.preLeft != left) {
                         container.prop("scrollLeft", left);
@@ -1955,8 +1874,7 @@ var deviceWinMob = "windows ce";
 
 var uagent = navigator.userAgent.toLowerCase();
 var currentDevice = "";
-function DetectSmartPhone()
-{
+function DetectSmartPhone() {
     if (uagent.indexOf(deviceIphone) > -1) {
         currentDevice = deviceIphone;
         return true;
@@ -1965,7 +1883,7 @@ function DetectSmartPhone()
         currentDevice = deviceIpod;
         return true;
     }
-     else if (uagent.indexOf(deviceIpad) > -1) {
+    else if (uagent.indexOf(deviceIpad) > -1) {
         currentDevice = deviceIpad;
         return true;
     }
@@ -2003,4 +1921,4 @@ function DetectSmartPhone()
 
 var isOnSmartPhoneBrowser = DetectSmartPhone();
 var isOnChromeBrowser = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-//alert(isOnSmartPhoneBrowser + ":" + currentDevice);
+var isOnFireFox4 = null;
