@@ -1,11 +1,4 @@
-﻿// moment.js
-// version : 1.7.2
-// author : Tim Wood
-// license : MIT
-// momentjs.com
-
-(function (undefined) {
-
+﻿(function (undefined) {
     /************************************
     Constants
     ************************************/
@@ -13,44 +6,44 @@
     var moment,
         VERSION = "1.7.2",
         round = Math.round, i,
-    // internal storage for language config files
+    //// internal storage for language config files
         languages = {},
         currentLanguage = 'en',
 
-    // check for nodeJS
+    //// check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports),
 
-    // Parameters to check for on the lang config.  This list of properties
-    // will be inherited from English if not provided in a language
-    // definition.  monthsParse is also a lang config property, but it
-    // cannot be inherited and as such cannot be enumerated here.
+    //// Parameters to check for on the lang config.  This list of properties
+    //// will be inherited from English if not provided in a language
+    //// definition.  monthsParse is also a lang config property, but it
+    //// cannot be inherited and as such cannot be enumerated here.
         langConfigProperties = 'months|monthsShort|weekdays|weekdaysShort|weekdaysMin|longDateFormat|calendar|relativeTime|ordinal|meridiem'.split('|'),
 
-    // ASP.NET json date format regex
+    //// ASP.NET json date format regex
         aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
 
-    // format tokens
+    //// format tokens
         formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|.)/g,
         localFormattingTokens = /(\[[^\[]*\])|(\\)?(LT|LL?L?L?)/g,
 
-    // parsing tokens
+    //// parsing tokens
         parseMultipleFormatChunker = /([0-9a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)/gi,
 
-    // parsing token regexes
-        parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
-        parseTokenOneToThreeDigits = /\d{1,3}/, // 0 - 999
-        parseTokenThreeDigits = /\d{3}/, // 000 - 999
-        parseTokenFourDigits = /\d{1,4}/, // 0 - 9999
-        parseTokenWord = /[0-9a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+/i, // any word characters or numbers
-        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/i, // +00:00 -00:00 +0000 -0000 or Z
-        parseTokenT = /T/i, // T (ISO seperator)
+    //// parsing token regexes
+        parseTokenOneOrTwoDigits = /\d\d?/, //// 0 - 99
+        parseTokenOneToThreeDigits = /\d{1,3}/, //// 0 - 999
+        parseTokenThreeDigits = /\d{3}/, //// 000 - 999
+        parseTokenFourDigits = /\d{1,4}/, //// 0 - 9999
+        parseTokenWord = /[0-9a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+/i, //// any word characters or numbers
+        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/i, //// +00:00 -00:00 +0000 -0000 or Z
+        parseTokenT = /T/i, //// T (ISO seperator)
 
-    // preliminary iso regex
-    // 0000-00-00 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000
+    //// preliminary iso regex
+    //// 0000-00-00 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000
         isoRegex = /^\s*\d{4}-\d\d-\d\d(T(\d\d(:\d\d(:\d\d(\.\d\d?\d?)?)?)?)?([\+\-]\d\d:?\d\d)?)?/,
         isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
 
-    // iso time formats and regexes
+    //// iso time formats and regexes
         isoTimes = [
             ['HH:mm:ss.S', /T\d\d:\d\d:\d\d\.\d{1,3}/],
             ['HH:mm:ss', /T\d\d:\d\d:\d\d/],
@@ -58,10 +51,10 @@
             ['HH', /T\d\d/]
         ],
 
-    // timezone chunker "+10:00" > ["10", "00"] or "-1530" > ["-15", "30"]
+    //// timezone chunker "+10:00" > ["10", "00"] or "-1530" > ["-15", "30"]
         parseTimezoneChunker = /([\+\-]|\d\d)/gi,
 
-    // getter and setter names
+    //// getter and setter names
         proxyGettersAndSetters = 'Month|Date|Hours|Minutes|Seconds|Milliseconds'.split('|'),
         unitMillisecondFactors = {
             'Milliseconds': 1,
@@ -73,10 +66,10 @@
             'Years': 31536e6
         },
 
-    // format function strings
+    //// format function strings
         formatFunctions = {},
 
-    // tokens to ordinalize and pad
+    //// tokens to ordinalize and pad
         ordinalizeTokens = 'DDD w M D d'.split(' '),
         paddedTokens = 'M D H h m s w'.split(' '),
 
@@ -88,13 +81,13 @@
     * These strings are appended into a function using replaceFormatTokens and makeFormatFunction
     */
         formatTokenFunctions = {
-            // a = placeholder
-            // b = placeholder
-            // t = the current moment being formatted
-            // v = getValueAtKey function
-            // o = language.ordinal function
-            // p = leftZeroFill function
-            // m = language.meridiem value or function
+            //// a = placeholder
+            //// b = placeholder
+            //// t = the current moment being formatted
+            //// v = getValueAtKey function
+            //// o = language.ordinal function
+            //// p = leftZeroFill function
+            //// m = language.meridiem value or function
             M: function () {
                 return this.month() + 1;
             },
@@ -209,13 +202,11 @@
     }
     formatTokenFunctions.DDDD = padToken(formatTokenFunctions.DDD, 3);
 
-
     /************************************
     Constructors
     ************************************/
 
-
-    // Moment prototype object
+    //// Moment prototype object
     function Moment(date, isUTC, lang) {
         this._d = date;
         this._isUTC = !!isUTC;
@@ -223,7 +214,7 @@
         this._lang = lang || false;
     }
 
-    // Duration Constructor
+    //// Duration Constructor
     function Duration(duration) {
         var data = this._data = {},
             years = duration.years || duration.y || 0,
@@ -235,23 +226,23 @@
             seconds = duration.seconds || duration.s || 0,
             milliseconds = duration.milliseconds || duration.ms || 0;
 
-        // representation for dateAddRemove
+        //// representation for dateAddRemove
         this._milliseconds = milliseconds +
-            seconds * 1e3 + // 1000
-            minutes * 6e4 + // 1000 * 60
-            hours * 36e5; // 1000 * 60 * 60
-        // Because of dateAddRemove treats 24 hours as different from a
-        // day when working around DST, we need to store them separately
+            seconds * 1e3 + //// 1000
+            minutes * 6e4 + //// 1000 * 60
+            hours * 36e5; //// 1000 * 60 * 60
+        //// Because of dateAddRemove treats 24 hours as different from a
+        //// day when working around DST, we need to store them separately
         this._days = days +
             weeks * 7;
-        // It is impossible translate months into days without knowing
-        // which months you are are talking about, so we have to store
-        // it separately.
+        //// It is impossible translate months into days without knowing
+        //// which months you are are talking about, so we have to store
+        //// it separately.
         this._months = months +
             years * 12;
 
-        // The following code bubbles up values, see the tests for
-        // examples of what that means.
+        //// The following code bubbles up values, see the tests for
+        //// examples of what that means.
         data.milliseconds = milliseconds % 1000;
         seconds += absRound(milliseconds / 1000);
 
@@ -277,11 +268,9 @@
         this._lang = false;
     }
 
-
     /************************************
     Helpers
     ************************************/
-
 
     function absRound(number) {
         if (number < 0) {
@@ -291,8 +280,8 @@
         }
     }
 
-    // left zero fill a number
-    // see http://jsperf.com/left-zero-filling for performance comparison
+    //// left zero fill a number
+    //// see http://jsperf.com/left-zero-filling for performance comparison
     function leftZeroFill(number, targetLength) {
         var output = number + '';
         while (output.length < targetLength) {
@@ -301,7 +290,7 @@
         return output;
     }
 
-    // helper function for _.addTime and _.subtractTime
+    //// helper function for _.addTime and _.subtractTime
     function addOrSubtractDurationFromMoment(mom, duration, isAdding) {
         var ms = duration._milliseconds,
             d = duration._days,
@@ -322,12 +311,12 @@
         }
     }
 
-    // check if is an array
+    //// check if is an array
     function isArray(input) {
         return Object.prototype.toString.call(input) === '[object Array]';
     }
 
-    // compare two arrays, return the number of differences
+    //// compare two arrays, return the number of differences
     function compareArrays(array1, array2) {
         var len = Math.min(array1.length, array2.length),
             lengthDiff = Math.abs(array1.length - array2.length),
@@ -341,23 +330,23 @@
         return diffs + lengthDiff;
     }
 
-    // convert an array to a date.
-    // the array should mirror the parameters below
-    // note: all values past the year are optional and will default to the lowest possible value.
-    // [year, month, day , hour, minute, second, millisecond]
+    //// convert an array to a date.
+    //// the array should mirror the parameters below
+    //// note: all values past the year are optional and will default to the lowest possible value.
+    //// [year, month, day , hour, minute, second, millisecond]
     function dateFromArray(input, asUTC, hoursOffset, minutesOffset) {
         var i, date, forValid = [];
         for (i = 0; i < 7; i++) {
             forValid[i] = input[i] = (input[i] == null) ? (i === 2 ? 1 : 0) : input[i];
         }
-        // we store whether we used utc or not in the input array
+        //// we store whether we used utc or not in the input array
         input[7] = forValid[7] = asUTC;
-        // if the parser flagged the input as invalid, we pass the value along
+        //// if the parser flagged the input as invalid, we pass the value along
         if (input[8] != null) {
             forValid[8] = input[8];
         }
-        // add the offsets to the time to be parsed so that we can have a clean array
-        // for checking isValid
+        //// add the offsets to the time to be parsed so that we can have a clean array
+        //// for checking isValid
         input[3] += hoursOffset || 0;
         input[4] += minutesOffset || 0;
         date = new Date(0);
@@ -372,10 +361,10 @@
         return date;
     }
 
-    // Loads a language definition into the `languages` cache.  The function
-    // takes a key and optionally values.  If not in the browser and no values
-    // are provided, it will load the language file module.  As a convenience,
-    // this function also returns the language values.
+    //// Loads a language definition into the `languages` cache.  The function
+    //// takes a key and optionally values.  If not in the browser and no values
+    //// are provided, it will load the language file module.  As a convenience,
+    //// this function also returns the language values.
     function loadLang(key, values) {
         var i, m,
             parse = [];
@@ -385,8 +374,8 @@
         }
 
         for (i = 0; i < langConfigProperties.length; i++) {
-            // If a language definition does not provide a value, inherit
-            // from English
+            //// If a language definition does not provide a value, inherit
+            //// from English
             values[langConfigProperties[i]] = values[langConfigProperties[i]] ||
               languages.en[langConfigProperties[i]];
         }
@@ -403,14 +392,14 @@
         return values;
     }
 
-    // Determines which language definition to use and returns it.
+    //// Determines which language definition to use and returns it.
     //
-    // With no parameters, it will return the global language.  If you
-    // pass in a language key, such as 'en', it will return the
-    // definition for 'en', so long as 'en' has already been loaded using
-    // moment.lang.  If you pass in a moment or duration instance, it
-    // will decide the language based on that, or default to the global
-    // language.
+    //// With no parameters, it will return the global language.  If you
+    //// pass in a language key, such as 'en', it will return the
+    //// definition for 'en', so long as 'en' has already been loaded using
+    //// moment.lang.  If you pass in a moment or duration instance, it
+    //// will decide the language based on that, or default to the global
+    //// language.
     function getLangDefinition(m) {
         var langKey = (typeof m === 'string') && m ||
                       m && m._lang ||
@@ -419,11 +408,9 @@
         return langKey ? (languages[langKey] || loadLang(langKey)) : moment;
     }
 
-
     /************************************
     Formatting
     ************************************/
-
 
     function removeFormattingTokens(input) {
         if (input.match(/\[.*\]/)) {
@@ -452,7 +439,7 @@
         };
     }
 
-    // format date using native date object
+    //// format date using native date object
     function formatMoment(m, format) {
         var i = 5;
 
@@ -471,13 +458,11 @@
         return formatFunctions[format](m);
     }
 
-
     /************************************
     Parsing
     ************************************/
 
-
-    // get the regex to find the next token
+    //// get the regex to find the next token
     function getParseRegexForToken(token) {
         switch (token) {
             case 'DDDD':
@@ -522,17 +507,17 @@
         }
     }
 
-    // function to convert string input to date
+    //// function to convert string input to date
     function addTimeToArrayFromToken(token, input, datePartArray, config) {
         var a, b;
 
         switch (token) {
-            // MONTH 
-            case 'M': // fall through to MM
+            //// MONTH
+            case 'M': //// fall through to MM
             case 'MM':
                 datePartArray[1] = (input == null) ? 0 : ~ ~input - 1;
                 break;
-            case 'MMM': // fall through to MMMM
+            case 'MMM': //// fall through to MMMM
             case 'MMMM':
                 for (a = 0; a < 12; a++) {
                     if (getLangDefinition().monthsParse[a].test(input)) {
@@ -541,57 +526,57 @@
                         break;
                     }
                 }
-                // if we didn't find a month name, mark the date as invalid.
+                //// if we didn't find a month name, mark the date as invalid.
                 if (!b) {
                     datePartArray[8] = false;
                 }
                 break;
-            // DAY OF MONTH 
-            case 'D': // fall through to DDDD
-            case 'DD': // fall through to DDDD
-            case 'DDD': // fall through to DDDD
+            //// DAY OF MONTH
+            case 'D': //// fall through to DDDD
+            case 'DD': //// fall through to DDDD
+            case 'DDD': //// fall through to DDDD
             case 'DDDD':
                 if (input != null) {
                     datePartArray[2] = ~ ~input;
                 }
                 break;
-            // YEAR 
+            //// YEAR
             case 'YY':
                 datePartArray[0] = ~ ~input + (~ ~input > 70 ? 1900 : 2000);
                 break;
             case 'YYYY':
                 datePartArray[0] = ~ ~Math.abs(input);
                 break;
-            // AM / PM 
-            case 'a': // fall through to A
+            //// AM / PM
+            case 'a': //// fall through to A
             case 'A':
                 config.isPm = ((input + '').toLowerCase() === 'pm');
                 break;
-            // 24 HOUR 
-            case 'H': // fall through to hh
-            case 'HH': // fall through to hh
-            case 'h': // fall through to hh
+            //// 24 HOUR
+            case 'H': //// fall through to hh
+            case 'HH': //// fall through to hh
+            case 'h': //// fall through to hh
             case 'hh':
                 datePartArray[3] = ~ ~input;
                 break;
-            // MINUTE 
-            case 'm': // fall through to mm
+            //// MINUTE
+            case 'm': //// fall through to mm
             case 'mm':
                 datePartArray[4] = ~ ~input;
                 break;
-            // SECOND 
-            case 's': // fall through to ss
+            //// SECOND
+            case 's': //// fall through to ss
             case 'ss':
                 datePartArray[5] = ~ ~input;
                 break;
-            // MILLISECOND 
+            //// MILLISECOND
             case 'S':
             case 'SS':
             case 'SSS':
                 datePartArray[6] = ~ ~(('0.' + input) * 1000);
                 break;
-            // TIMEZONE 
-            case 'Z': // fall through to ZZ
+            //// TIMEZONE
+            case 'Z': //// fall through to ZZ
             case 'ZZ':
                 config.isUTC = true;
                 a = (input + '').match(parseTimezoneChunker);
@@ -601,7 +586,7 @@
                 if (a && a[2]) {
                     config.tzm = ~ ~a[2];
                 }
-                // reverse offsets
+                //// reverse offsets
                 if (a && a[0] === '+') {
                     config.tzh = -config.tzh;
                     config.tzm = -config.tzm;
@@ -609,22 +594,22 @@
                 break;
         }
 
-        // if the input is null, the date is not valid
+        //// if the input is null, the date is not valid
         if (input == null) {
             datePartArray[8] = false;
         }
     }
 
-    // date from string and format string
+    //// date from string and format string
     function makeDateFromStringAndFormat(string, format) {
-        // This array is used to make a Date, either with `new Date` or `Date.UTC`
-        // We store some additional data on the array for validation
-        // datePartArray[7] is true if the Date was created with `Date.UTC` and false if created with `new Date`
-        // datePartArray[8] is false if the Date is invalid, and undefined if the validity is unknown.
+        //// This array is used to make a Date, either with `new Date` or `Date.UTC`
+        //// We store some additional data on the array for validation
+        //// datePartArray[7] is true if the Date was created with `Date.UTC` and false if created with `new Date`
+        //// datePartArray[8] is false if the Date is invalid, and undefined if the validity is unknown.
         var datePartArray = [0, 0, 1, 0, 0, 0, 0],
             config = {
-                tzh: 0, // timezone hour offset
-                tzm: 0  // timezone minute offset
+                tzh: 0, //// timezone hour offset
+                tzm: 0  //// timezone minute offset
             },
             tokens = format.match(formattingTokens),
             i, parsedInput;
@@ -634,24 +619,24 @@
             if (parsedInput) {
                 string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
             }
-            // don't parse if its not a known token
+            //// don't parse if its not a known token
             if (formatTokenFunctions[tokens[i]]) {
                 addTimeToArrayFromToken(tokens[i], parsedInput, datePartArray, config);
             }
         }
-        // handle am pm
+        //// handle am pm
         if (config.isPm && datePartArray[3] < 12) {
             datePartArray[3] += 12;
         }
-        // if is 12 am, change hours to 0
+        //// if is 12 am, change hours to 0
         if (config.isPm === false && datePartArray[3] === 12) {
             datePartArray[3] = 0;
         }
-        // return
+        //// return
         return dateFromArray(datePartArray, config.isUTC, config.tzh, config.tzm);
     }
 
-    // date from string and array of format strings
+    //// date from string and array of format strings
     function makeDateFromStringAndArray(string, formats) {
         var output,
             inputParts = string.match(parseMultipleFormatChunker) || [],
@@ -672,7 +657,7 @@
         return output;
     }
 
-    // date from iso format
+    //// date from iso format
     function makeDateFromString(string) {
         var format = 'YYYY-MM-DDT',
             i;
@@ -690,13 +675,11 @@
         return new Date(string);
     }
 
-
     /************************************
     Relative Time
     ************************************/
 
-
-    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
+    //// helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
     function substituteTimeAgo(string, number, withoutSuffix, isFuture, lang) {
         var rt = lang.relativeTime[string];
         return (typeof rt === 'function') ?
@@ -726,11 +709,9 @@
         return substituteTimeAgo.apply({}, args);
     }
 
-
     /************************************
     Top Level Functions
     ************************************/
-
 
     moment = function (input, format) {
         if (input === null || input === '') {
@@ -738,17 +719,17 @@
         }
         var date,
             matched;
-        // parse Moment object
+        //// parse Moment object
         if (moment.isMoment(input)) {
             return new Moment(new Date(+input._d), input._isUTC, input._lang);
-            // parse string and format
+            //// parse string and format
         } else if (format) {
             if (isArray(format)) {
                 date = makeDateFromStringAndArray(input, format);
             } else {
                 date = makeDateFromStringAndFormat(input, format);
             }
-            // evaluate it as a JSON-encoded date
+            //// evaluate it as a JSON-encoded date
         } else {
             matched = aspNetJsonRegex.exec(input);
             date = input === undefined ? new Date() :
@@ -762,12 +743,12 @@
         return new Moment(date);
     };
 
-    // creating with utc
+    //// creating with utc
     moment.utc = function (input, format) {
         if (isArray(input)) {
             return new Moment(dateFromArray(input, true), true);
         }
-        // if we don't have a timezone, we need to add one to trigger parsing into utc
+        //// if we don't have a timezone, we need to add one to trigger parsing into utc
         if (typeof input === 'string' && !parseTokenTimezone.exec(input)) {
             input += ' +0000';
             if (format) {
@@ -777,12 +758,12 @@
         return moment(input, format).utc();
     };
 
-    // creating with unix timestamp (in seconds)
+    //// creating with unix timestamp (in seconds)
     moment.unix = function (input) {
         return moment(input * 1000);
     };
 
-    // duration
+    //// duration
     moment.duration = function (input, key) {
         var isDuration = moment.isDuration(input),
             isNumber = (typeof input === 'number'),
@@ -806,22 +787,22 @@
         return ret;
     };
 
-    // humanizeDuration
-    // This method is deprecated in favor of the new Duration object.  Please
-    // see the moment.duration method.
+    //// humanizeDuration
+    //// This method is deprecated in favor of the new Duration object.  Please
+    //// see the moment.duration method.
     moment.humanizeDuration = function (num, type, withSuffix) {
         return moment.duration(num, type === true ? null : type).humanize(type === true ? true : withSuffix);
     };
 
-    // version number
+    //// version number
     moment.version = VERSION;
 
-    // default format
+    //// default format
     moment.defaultFormat = isoFormat;
 
-    // This function will load languages and then set the global language.  If
-    // no arguments are passed in, it will simply return the current global
-    // language key.
+    //// This function will load languages and then set the global language.  If
+    //// no arguments are passed in, it will simply return the current global
+    //// language key.
     moment.lang = function (key, values) {
         var i;
 
@@ -832,8 +813,8 @@
             loadLang(key, values);
         }
         if (languages[key]) {
-            // deprecated, to get the language definition variables, use the
-            // moment.fn.lang method or the getLangDefinition function.
+            //// deprecated, to get the language definition variables, use the
+            //// moment.fn.lang method or the getLangDefinition function.
             for (i = 0; i < langConfigProperties.length; i++) {
                 moment[langConfigProperties[i]] = languages[key][langConfigProperties[i]];
             }
@@ -842,20 +823,20 @@
         }
     };
 
-    // returns language data
+    //// returns language data
     moment.langData = getLangDefinition;
 
-    // compare moment object
+    //// compare moment object
     moment.isMoment = function (obj) {
         return obj instanceof Moment;
     };
 
-    // for typechecking Duration objects
+    //// for typechecking Duration objects
     moment.isDuration = function (obj) {
         return obj instanceof Duration;
     };
 
-    // Set default language, other languages will inherit from English.
+    //// Set default language, other languages will inherit from English.
     moment.lang('en', {
         months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
         monthsShort: "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_"),
@@ -908,14 +889,11 @@
         }
     });
 
-
     /************************************
     Moment Prototype
     ************************************/
 
-
     moment.fn = Moment.prototype = {
-
         clone: function () {
             return moment(this);
         },
@@ -952,8 +930,8 @@
 
         isValid: function () {
             if (this._a) {
-                // if the parser finds that the input is invalid, it sets
-                // the eighth item in the input array to false.
+                //// if the parser finds that the input is invalid, it sets
+                //// the eighth item in the input array to false.
                 if (this._a[8] != null) {
                     return !!this._a[8];
                 }
@@ -1001,11 +979,11 @@
             } else if (val === 'years') {
                 output = year + (month + date / 30) / 12;
             } else {
-                output = val === 'seconds' ? diff / 1e3 : // 1000
-                    val === 'minutes' ? diff / 6e4 : // 1000 * 60
-                    val === 'hours' ? diff / 36e5 : // 1000 * 60 * 60
-                    val === 'days' ? diff / 864e5 : // 1000 * 60 * 60 * 24
-                    val === 'weeks' ? diff / 6048e5 : // 1000 * 60 * 60 * 24 * 7
+                output = val === 'seconds' ? diff / 1e3 : //// 1000
+                    val === 'minutes' ? diff / 6e4 : //// 1000 * 60
+                    val === 'hours' ? diff / 36e5 : //// 1000 * 60 * 60
+                    val === 'days' ? diff / 864e5 : //// 1000 * 60 * 60 * 24
+                    val === 'weeks' ? diff / 6048e5 : //// 1000 * 60 * 60 * 24 * 7
                     diff;
             }
             return asFloat ? output : round(output);
@@ -1049,8 +1027,8 @@
         },
 
         startOf: function (val) {
-            // the following switch intentionally omits break keywords
-            // to utilize falling through the cases.
+            //// the following switch intentionally omits break keywords
+            //// to utilize falling through the cases.
             switch (val.replace(/s$/, '')) {
                 case 'year':
                     this.month(0);
@@ -1083,7 +1061,7 @@
         },
 
         eod: function () {
-            // end of day = start of day plus 1 day, minus 1 millisecond
+            //// end of day = start of day plus 1 day, minus 1 millisecond
             return this.clone().endOf('day');
         },
 
@@ -1095,9 +1073,9 @@
             return moment.utc([this.year(), this.month() + 1, 0]).date();
         },
 
-        // If passed a language key, it will set the language for this
-        // instance.  Otherwise, it will return the language configuration
-        // variables for this instance.
+        //// If passed a language key, it will set the language for this
+        //// instance.  Otherwise, it will return the language configuration
+        //// variables for this instance.
         lang: function (lang) {
             if (lang === undefined) {
                 return getLangDefinition(this);
@@ -1108,7 +1086,7 @@
         }
     };
 
-    // helper for adding shortcuts
+    //// helper for adding shortcuts
     function makeGetterAndSetter(name, key) {
         moment.fn[name] = function (input) {
             var utc = this._isUTC ? 'UTC' : '';
@@ -1121,19 +1099,17 @@
         };
     }
 
-    // loop through and add shortcuts (Month, Date, Hours, Minutes, Seconds, Milliseconds)
+    //// loop through and add shortcuts (Month, Date, Hours, Minutes, Seconds, Milliseconds)
     for (i = 0; i < proxyGettersAndSetters.length; i++) {
         makeGetterAndSetter(proxyGettersAndSetters[i].toLowerCase(), proxyGettersAndSetters[i]);
     }
 
-    // add shortcut for year (uses different syntax than the getter/setter 'year' == 'FullYear')
+    //// add shortcut for year (uses different syntax than the getter/setter 'year' == 'FullYear')
     makeGetterAndSetter('year', 'FullYear');
-
 
     /************************************
     Duration Prototype
     ************************************/
-
 
     moment.duration.fn = Duration.prototype = {
         weeks: function () {
@@ -1187,21 +1163,19 @@
 
     makeDurationAsGetter('Weeks', 6048e5);
 
-
     /************************************
     Exposing Moment
     ************************************/
 
-
-    // CommonJS module is defined
+    //// CommonJS module is defined
     if (hasModule) {
         module.exports = moment;
     }
     /*global ender:false */
     if (typeof ender === 'undefined') {
-        // here, `this` means `window` in the browser, or `global` on the server
-        // add `moment` as a global object via a string identifier,
-        // for Closure Compiler "advanced" mode
+        //// here, `this` means `window` in the browser, or `global` on the server
+        //// add `moment` as a global object via a string identifier,
+        //// for Closure Compiler "advanced" mode
         this['moment'] = moment;
     }
     /*global define:false */
