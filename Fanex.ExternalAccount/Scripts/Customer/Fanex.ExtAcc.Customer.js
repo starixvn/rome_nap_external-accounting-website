@@ -1139,14 +1139,12 @@ Fanex.ExtAcc.Customer = {
             if (Fanex.ExtAcc.Customer.DataSource.length == 0) {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
-                $('#exporttoexcel').css('display', 'none');
-                //$('#breadcrumbs').css('display', 'none');
             }
             else {
                 $('#msgNoinfo').css('display', 'none');
                 $('#jqgrid').css('display', 'block');
                 $('#exporttoexcel').css('display', 'block');
-                //$('#breadcrumbs').css('display', 'block');
+                $('#breadcrumbs').css('display', 'block');
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
             }
