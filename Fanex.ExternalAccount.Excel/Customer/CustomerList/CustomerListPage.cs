@@ -82,23 +82,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             string custStatus = "Disabled";
             foreach (DataRow items in dtr)
             {
-                custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
-                if (custStatus.ToLower() == "open")
-                {
-                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "suspended")
-                {
-                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "closed")
-                {
-                    resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "disabled")
-                {
-                    resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
-                }
+                custStatus = SetBackgroundRow(templateSheet, resultSheet, rowId, colId, lastColumnIndex, custStatus, items);
 
                 values = new List<object>   
                     {
@@ -134,23 +118,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             string custStatus = "Disabled";
             foreach (DataRow items in dtr)
             {
-                custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
-                if (custStatus.ToLower() == "open")
-                {
-                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "suspended")
-                {
-                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "closed")
-                {
-                    resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "disabled")
-                {
-                    resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
-                }
+                custStatus = SetBackgroundRow(templateSheet, resultSheet, rowId, colId, lastColumnIndex, custStatus, items);
 
                 values = new List<object>   
                     {
@@ -176,6 +144,28 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                 id++;
                 rowId++;
             }
+        }
+
+        private static string SetBackgroundRow(ISheet templateSheet, ISheet resultSheet, int rowId, int colId, int lastColumnIndex, string custStatus, DataRow items)
+        {
+            custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
+            if (custStatus.ToLower() == "open")
+            {
+                resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
+            }
+            else if (custStatus.ToLower() == "suspended")
+            {
+                resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
+            }
+            else if (custStatus.ToLower() == "closed")
+            {
+                resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+            }
+            else if (custStatus.ToLower() == "disabled")
+            {
+                resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
+            }
+            return custStatus;
         }
     }
 }
