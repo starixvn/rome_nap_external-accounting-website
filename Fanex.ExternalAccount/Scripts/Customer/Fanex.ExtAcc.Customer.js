@@ -64,7 +64,7 @@ Fanex.ExtAcc.Customer = {
 
             var params = "groupName=" + data.groupName
                     + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
-                    + "&sRecommend=" + $this.superId + "&mRecommend=" + $this.masterId + "&recommend=" + $this.agentId + "&custId="
+                    + "&sRecommend=" + $this.superId + "&mRecommend=" + $this.masterId + "&recommend=" + $this.agentId + "&custId=" + $this.custId
                     + "&currentLevel=" + $this.CurrentLevel + "&username=" + data.username
             document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });
@@ -510,12 +510,12 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/SuperListPost');
 
         var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? null : custId;
+        data.custId = $this.custId = custId == 'undefined' ? null : custId;
 
         if (custId == undefined) {
             $this.directSuperId = null;
             $this.directMasterId = null;
-            $this.directAgentId = null;
+            $this.directAgentId = null;            
         }
 
         $this.DataFields = [
@@ -615,7 +615,7 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? null : custId;
+        data.custId = $this.custId = custId == 'undefined' ? null : custId;
 
         if (custId == undefined) {
             $this.directSuperId = null;
@@ -726,8 +726,8 @@ Fanex.ExtAcc.Customer = {
         $this.masterSyncLiveCasino = masterSyncLiveCasino;
 
         var url = resolveClientUrl('Customer/AgentListPost');
-        var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? null : custId;
+        var data = Fanex.ExtAcc.Customer.GetParams();        
+        data.custId = $this.custId = custId == 'undefined' ? null : custId;
 
         if (custId == undefined) {
             $this.directSuperId = null;
@@ -838,8 +838,8 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/MemberListPost');
 
-        var data = Fanex.ExtAcc.Customer.GetParams();
-        data.custId = custId == 'undefined' ? null : custId;
+        var data = Fanex.ExtAcc.Customer.GetParams();        
+        data.custId = $this.custId = custId == 'undefined' ? null : custId;
 
         if (custId == undefined) {
             $this.directSuperId = null;
@@ -1245,6 +1245,7 @@ Fanex.ExtAcc.Customer = {
                 $this.directSuperId = result.srecommend;
                 $this.directMasterId = result.mrecommend;
                 $this.directAgentId = result.recommend;
+                $this.custId = result.custId;
 
                 if (result.roleId == 4) {
                     $this.GetSuperList(rows[0].custid, result);

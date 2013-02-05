@@ -59,12 +59,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int srecommend;
             int mrecommend;
             int recommend;
+            int custId;
             int roleId;
-            this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out roleId);
+            this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result == null ? new DataTable() : result);
 
-            return this.JsonBase(new { total = 1, page = 1, records = result != null ? result.Rows.Count : 0, rows = ret, roleId = roleId, srecommend = srecommend, mrecommend = mrecommend, recommend = recommend });
+            return this.JsonBase(new { total = 1, page = 1, records = result != null ? result.Rows.Count : 0, rows = ret, roleId = roleId, srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
@@ -286,39 +287,43 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.ViewBase();
         }
 
-        private void GetDataResult(string groupName, bool? enabled, bool? closed, bool? suspended, string username, out DataTable result, out int srecommend, out int mrecommend, out int recommend, out int roleId)
+        private void GetDataResult(string groupName, bool? enabled, bool? closed, bool? suspended, string username, out DataTable result, out int srecommend, out int mrecommend, out int recommend, out int custId, out int roleId)
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
             result = null;
             srecommend = 0;
             mrecommend = 0;
             recommend = 0;
+            custId = 0;
             roleId = 0;
 
             if (customerInfo != null)
             {
                 roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                var custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
                 srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
                 mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
                 recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);                
 
                 if (roleId == 4)
                 {
                     result = this.superService.GetData(null, custId, enabled, closed, suspended, groupName);
+                    this.cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
                 }
                 else if (roleId == 3)
                 {
                     result = this.masterService.GetData(srecommend, custId, enabled, closed, suspended);
+                    this.cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended;
                 }
                 else if (roleId == 2)
                 {
                     result = this.agentService.GetData(mrecommend, custId, enabled, closed, suspended);
+                    this.cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended;
                 }
                 else
                 {
                     result = this.memberService.GetData(recommend, custId, enabled, closed, suspended);
+                    this.cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended;
                 }
             }
 
