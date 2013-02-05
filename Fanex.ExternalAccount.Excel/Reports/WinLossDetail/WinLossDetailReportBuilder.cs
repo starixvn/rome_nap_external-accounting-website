@@ -1,4 +1,11 @@
-﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
+﻿// --------------------------------------------------------------------------
+// <copyright file="WinLossDetailReportBuilder.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Creator: Simon
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
     using System.Collections.Generic;
     using System.IO;

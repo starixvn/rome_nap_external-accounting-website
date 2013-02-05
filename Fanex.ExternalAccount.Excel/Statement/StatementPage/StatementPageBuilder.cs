@@ -1,4 +1,11 @@
-﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
+﻿// --------------------------------------------------------------------------
+// <copyright file="StatementPageBuilder.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Creator: Simon
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
     using System.Collections.Generic;
     using System.IO;
@@ -7,13 +14,13 @@
 
     public class StatementPageBuilder
     {
-        public StatementPageBuilder(List<Statement> Statement, bool isBold, string username, string fromDate, string toDate)
+        public StatementPageBuilder(List<Statement> statement, bool isBold, string username, string fromDate, string toDate)
         {
             this.Username = username;
             this.FromDate = fromDate;
             this.ToDate = toDate;
             this.IsBold = isBold;
-            this.Data = Statement;
+            this.Data = statement;
         }
 
         public List<Statement> Data { get; private set; }

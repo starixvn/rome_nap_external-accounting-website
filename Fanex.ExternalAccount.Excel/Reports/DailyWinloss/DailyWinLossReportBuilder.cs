@@ -1,10 +1,17 @@
-﻿namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
+﻿// --------------------------------------------------------------------------
+// <copyright file="DailyWinLossReportBuilder.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Creator: Simon
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.Collections.Generic;
     using System.IO;
     using Fanex.ExternalAccount.DTO;
-    using NPOI.HSSF.UserModel;
     using Fanex.ExternalAccount.DTO.Report;
+    using NPOI.HSSF.UserModel;
 
     public class DailyWinLossReportBuilder
     {

@@ -1,4 +1,11 @@
-﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
+﻿// --------------------------------------------------------------------------
+// <copyright file="TemplateSettings.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Creator: Simon
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
     using System.Web;
 

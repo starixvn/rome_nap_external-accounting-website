@@ -1,11 +1,18 @@
-﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
+﻿// --------------------------------------------------------------------------
+// <copyright file="StatementPage.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Creator: Simon
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.ExternalAccount.Utilities;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
-    using Fanex.ExternalAccount.Utilities;
 
     internal class StatementPage : TemplateReport, IReportBuilder
     {
@@ -68,18 +75,21 @@
                         resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
                     }
 
-                    if (item.TransType.ToUpper() == "BAL" && item.TransDesc.ToUpper() != "ACCUMULATED BALANCE") {
+                    if (item.TransType.ToUpper() == "BAL" && item.TransDesc.ToUpper() != "ACCUMULATED BALANCE") 
+                    {
                         isText = true;
                         if (Math.Abs(accumulatedTotal - item.TotalAmt) < 0.00001 || id == 0)
                         {
                             ballanceResult = "OK";
                         }
-                        else {
+                        else 
+                        {
                             accumulatedTotal = accumulatedTotal - item.TotalAmt;
                             ballanceResult = "NOT EQUAL \nDiff: " + Formater.DecFormat(accumulatedTotal, 2);
                         }
                     }
-                    else {
+                    else 
+                    {
                         accumulatedTotal = item.TotalAmt + accumulatedTotal;
                     }
 
