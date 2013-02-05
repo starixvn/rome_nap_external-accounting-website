@@ -531,7 +531,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableP2P + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
+                            $this.superDisableP2P = cell.Value.DisableP2P;
 
                             return '<div><a id="usr-' + custId + '" href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -600,7 +601,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    GetMasterList: function (srecommend, allow, custId, dataSource, superSyncCasino, superSyncBingo, superSyncLiveCasino, superDisableP2P) {
+    GetMasterList: function (srecommend, allow, custId, dataSource, superSyncCasino, superSyncBingo, superSyncLiveCasino) {
         $this.BlockUI();
 
         $this.superId = srecommend;
@@ -611,7 +612,6 @@ Fanex.ExtAcc.Customer = {
         $this.superSyncCasino = superSyncCasino;
         $this.superSyncBingo = superSyncBingo;
         $this.superSyncLiveCasino = superSyncLiveCasino;
-        $this.superDisableP2P = superDisableP2P;
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
@@ -636,7 +636,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableP2P + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
+                            $this.masterDisableP2P = cell.Value.DisableP2P;
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -712,7 +713,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    GetAgentList: function (mrecommend, allow, custId, dataSource, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, masterDisableP2P) {
+    GetAgentList: function (mrecommend, allow, custId, dataSource, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino) {
         $this.BlockUI();
 
         $this.masterId = mrecommend;
@@ -723,7 +724,6 @@ Fanex.ExtAcc.Customer = {
         $this.masterSyncCasino = masterSyncCasino;
         $this.masterSyncBingo = masterSyncBingo;
         $this.masterSyncLiveCasino = masterSyncLiveCasino;
-        $this.masterDisableP2P = masterDisableP2P;
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var data = Fanex.ExtAcc.Customer.GetParams();
@@ -748,7 +748,8 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 120,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
-                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableP2P + ")";
+                            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
+                            $this.agentDisableP2P = cell.Value.DisableP2P;
 
                             return '<div><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -824,7 +825,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    GetMemberList: function (recommend, allow, custId, dataSource, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, agentDisableP2P) {
+    GetMemberList: function (recommend, allow, custId, dataSource, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino) {
         $this.BlockUI();
 
         $this.agentId = recommend;
@@ -834,7 +835,6 @@ Fanex.ExtAcc.Customer = {
         $this.agentSyncCasino = agentSyncCasino;
         $this.agentSyncBingo = agentSyncBingo;
         $this.agentSyncLiveCasino = agentSyncLiveCasino;
-        $this.agentDisableP2P = agentDisableP2P;
 
         var url = resolveClientUrl('Customer/MemberListPost');
 
