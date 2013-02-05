@@ -1,12 +1,18 @@
-﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
+﻿// --------------------------------------------------------------------------
+// <copyright file="CustomerListPage.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Creator: Simon
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
-    using Fanex.ExternalAccount.Utilities;
-    using System.Data;
 
     internal class CustomerListPage : TemplateReport, IReportBuilder
     {
@@ -39,7 +45,7 @@
             int colId = 0;
 
             // Header
-            string mainTitle = builder.Status + (builder.RoleId == 1 ? " Member" : (builder.RoleId == 2 ? " Agent" : (builder.RoleId == 3 ? " Master" : " Super"))) + " List";
+            string mainTitle = this.builder.Status + (this.builder.RoleId == 1 ? " Member" : (this.builder.RoleId == 2 ? " Agent" : (this.builder.RoleId == 3 ? " Master" : " Super"))) + " List";
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
@@ -55,7 +61,7 @@
                 var values = new List<object> { };
                 int totalColumn = 15;
                 int lastColumnIndex = colId + totalColumn - 1;
-                if (builder.RoleId != 1)
+                if (this.builder.RoleId != 1)
                 {
                     GetOtherList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex);
                 }
@@ -76,23 +82,7 @@
             string custStatus = "Disabled";
             foreach (DataRow items in dtr)
             {
-                custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
-                if (custStatus.ToLower() == "open")
-                {
-                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "suspended")
-                {
-                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "closed")
-                {
-                    resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "disabled")
-                {
-                    resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
-                }
+                custStatus = SetBackgroundRow(templateSheet, resultSheet, rowId, colId, lastColumnIndex, custStatus, items);
 
                 values = new List<object>   
                     {
@@ -112,7 +102,7 @@
                         Convert.ToDecimal(items["playerdiscount1x2"]),
                         Convert.ToDecimal(items["playerdiscountcs"]),
                         Convert.ToDecimal(items["playerdiscountnumber"]),
-                        String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
+                        string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
                         items["lastloginip"].ToString()
                     };
 
@@ -128,23 +118,7 @@
             string custStatus = "Disabled";
             foreach (DataRow items in dtr)
             {
-                custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
-                if (custStatus.ToLower() == "open")
-                {
-                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "suspended")
-                {
-                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "closed")
-                {
-                    resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
-                }
-                else if (custStatus.ToLower() == "disabled")
-                {
-                    resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
-                }
+                custStatus = SetBackgroundRow(templateSheet, resultSheet, rowId, colId, lastColumnIndex, custStatus, items);
 
                 values = new List<object>   
                     {
@@ -161,7 +135,7 @@
                         Convert.ToDecimal(items["discount1x2"]),
                         Convert.ToDecimal(items["discountcs"]),
                         Convert.ToDecimal(items["discountnumber"]),
-                        String.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
+                        string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
                         items["lastloginip"].ToString()
                     };
 
@@ -170,6 +144,28 @@
                 id++;
                 rowId++;
             }
+        }
+
+        private static string SetBackgroundRow(ISheet templateSheet, ISheet resultSheet, int rowId, int colId, int lastColumnIndex, string custStatus, DataRow items)
+        {
+            custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
+            if (custStatus.ToLower() == "open")
+            {
+                resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
+            }
+            else if (custStatus.ToLower() == "suspended")
+            {
+                resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
+            }
+            else if (custStatus.ToLower() == "closed")
+            {
+                resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+            }
+            else if (custStatus.ToLower() == "disabled")
+            {
+                resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
+            }
+            return custStatus;
         }
     }
 }
