@@ -567,13 +567,13 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
                         CustomCellRender: function (cell) {
                             if (cell.Value) {
-                                return cell.Value.replace('T', ' ');
+                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
                             }
 
-                            return new Date().toDateString();
+                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
                         }
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
@@ -679,13 +679,13 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
                         CustomCellRender: function (cell) {
                             if (cell.Value) {
-                                return cell.Value.replace('T', ' ');
+                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
                             }
 
-                            return new Date().toDateString();
+                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
                         }
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
@@ -791,13 +791,13 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
                     { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
                         CustomCellRender: function (cell) {
                             if (cell.Value) {
-                                return cell.Value.replace('T', ' ');
+                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
                             }
 
-                            return new Date().toDateString();
+                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
                         }
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
@@ -902,13 +902,13 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60 },
                     { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60 },
                     { HeaderText: 'Game', Name: 'playerdiscountnumber', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 110,
                         CustomCellRender: function (cell) {
                             if (cell.Value) {
-                                return cell.Value.replace('T', ' ');
+                                return '<div class="formatDate">' + new Date(cell.Value.replace('T', ' ')).toLocaleString('en-US') + '</div>';
                             }
 
-                            return new Date().toDateString();
+                            return '<div class="formatDate">' + new Date().toLocaleString('en-US') + '</div>';
                         }
                     },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
