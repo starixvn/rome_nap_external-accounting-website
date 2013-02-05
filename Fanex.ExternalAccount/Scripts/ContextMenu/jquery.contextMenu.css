@@ -42,12 +42,14 @@
 	-moz-user-select: -moz-none;
 	-ms-user-select: none;
 	user-select: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .context-menu-separator
 {
 	padding-bottom: 0;
-	border-bottom: 1px solid #DDD;
+	border-bottom: 1px solid #ccc;
 }
 
 .context-menu-item > label > input, .context-menu-item > label > textarea

@@ -185,7 +185,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
         itemsMaster = {
-            sportbook: { name: "Sportbook", className: "iconEnableEdit" },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit" },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit" },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
             commission: { name: "Commission", className: "iconEnableEdit" },
@@ -272,7 +272,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
         var itemsAgent = {
-            sportbook: { name: "Sportbook", className: "iconEnableEdit" },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit" },
             minPT: { name: "Min PT", className: "iconEnableEdit" },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
             commission: { name: "Commission", className: "iconEnableEdit" },
@@ -359,7 +359,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
         var itemsMember = {
-            sportbook: { name: "Sportbook", className: "iconEnableEdit" },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit" },
             minPT: { name: "Min PT", className: "iconEnableEdit" },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
             commission: { name: "Commission", className: "iconEnableEdit" },
