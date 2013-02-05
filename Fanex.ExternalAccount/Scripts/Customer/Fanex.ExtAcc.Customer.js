@@ -515,7 +515,7 @@ Fanex.ExtAcc.Customer = {
         if (custId == undefined) {
             $this.directSuperId = null;
             $this.directMasterId = null;
-            $this.directAgentId = null;            
+            $this.directAgentId = null;
         }
 
         $this.DataFields = [
@@ -710,7 +710,7 @@ Fanex.ExtAcc.Customer = {
         $this.masterSyncLiveCasino = masterSyncLiveCasino;
 
         var url = resolveClientUrl('Customer/AgentListPost');
-        var data = Fanex.ExtAcc.Customer.GetParams();        
+        var data = Fanex.ExtAcc.Customer.GetParams();
         data.custId = $this.custId = custId == 'undefined' ? null : custId;
 
         if (custId == undefined) {
@@ -814,7 +814,7 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/MemberListPost');
 
-        var data = Fanex.ExtAcc.Customer.GetParams();        
+        var data = Fanex.ExtAcc.Customer.GetParams();
         data.custId = $this.custId = custId == 'undefined' ? null : custId;
 
         if (custId == undefined) {
