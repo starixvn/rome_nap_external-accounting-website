@@ -528,7 +528,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
                     },
-                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                    { HeaderText: 'Username', Name: 'username', Width: 100,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
                             var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
@@ -549,7 +549,7 @@ Fanex.ExtAcc.Customer = {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
                     },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
                         CustomCellRender: function (cell) {
                             if (cell.Value.DoubleCommLosing) {
                                 return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.custid + ', true)" id="dbl-' + cell.Value.custid + '" class="allowDblComm"></div>';
@@ -576,7 +576,7 @@ Fanex.ExtAcc.Customer = {
                             return new Date().toDateString();
                         }
                     },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
@@ -633,7 +633,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
                     },
-                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                    { HeaderText: 'Username', Name: 'username', Width: 100,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
                             var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
@@ -655,7 +655,7 @@ Fanex.ExtAcc.Customer = {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
                     },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
                         CustomCellRender: function (cell) {
                             var css = '';
 
@@ -688,7 +688,7 @@ Fanex.ExtAcc.Customer = {
                             return new Date().toDateString();
                         }
                     },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
@@ -745,7 +745,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
                     },
-                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                    { HeaderText: 'Username', Name: 'username', Width: 100,
                         CustomCellRender: function (cell) {
                             var custId = cell.Value.custid;
                             var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
@@ -767,7 +767,7 @@ Fanex.ExtAcc.Customer = {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
                     },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
                         CustomCellRender: function (cell) {
                             var css = '';
 
@@ -800,7 +800,7 @@ Fanex.ExtAcc.Customer = {
                             return new Date().toDateString();
                         }
                     },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
@@ -857,7 +857,7 @@ Fanex.ExtAcc.Customer = {
                             return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
                         }
                     },
-                    { HeaderText: 'Username', Name: 'username', Width: 120,
+                    { HeaderText: 'Username', Name: 'username', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div>' + cell.Value.username + '</div>';
                         }
@@ -875,7 +875,7 @@ Fanex.ExtAcc.Customer = {
                             return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
                         }
                     },
-                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 100,
+                    { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 57, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             var css = '';
 
@@ -893,7 +893,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Nickname', Name: 'NickName', Width: 120 },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
                     { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
-                    { HeaderText: 'User Group', Name: 'ugroup', CellAlign: 'center', Width: 120 },
+                    { HeaderText: 'User Group', Name: 'ugroup', CellAlign: 'center', Width: 50 },
                     { HeaderText: 'Group', Name: 'discount', CellAlign: 'center', Width: 60 },
                     { HeaderText: '1X2', Name: 'discount1x2', CellAlign: 'center', Width: 60 },
                     { HeaderText: 'Others', Name: 'discountcs', CellAlign: 'center', Width: 60 },
@@ -911,7 +911,7 @@ Fanex.ExtAcc.Customer = {
                             return new Date().toDateString();
                         }
                     },
-                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 140,
+                    { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
                             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
                         }
@@ -1669,7 +1669,7 @@ Fanex.ExtAcc.Customer = {
             menuItems = {
                 doubleComm: { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm/' + $this.CurrentLevel),
                             'Edit Multiple Double Commission For Losing Tickets',
                             430, 140, false, false, 1);
                     }
@@ -1703,7 +1703,7 @@ Fanex.ExtAcc.Customer = {
             if ($this.AllowDoubleCommMaster) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm/' + $this.CurrentLevel),
                                 'Edit Multiple Double Commission For Losing Tickets',
                                 430, 140, false, false, 1);
                     }
@@ -1736,7 +1736,7 @@ Fanex.ExtAcc.Customer = {
             if ($this.AllowDoubleCommAgent) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm/' + $this.CurrentLevel),
                                 'Edit Multiple Double Commission For Losing Tickets',
                                 430, 140, false, false, 1);
                     }
@@ -1770,7 +1770,7 @@ Fanex.ExtAcc.Customer = {
             if ($this.AllowDoubleComm) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm'),
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm/' + $this.CurrentLevel),
                                 'Edit Multiple Double Commission For Losing Tickets',
                                 430, 140, false, false, 1);
                     }

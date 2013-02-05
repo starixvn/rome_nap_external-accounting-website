@@ -1,14 +1,21 @@
 ﻿<div>
     <div style="height: 25px">
-        <input style="margin: 5px" id="dblAllow" type="radio" name="dblComm" value="" /><label for="dblAllow">Allow Double Commission</label></div>
+        <input style="margin: 5px" id="dblAllow" type="radio" name="dblComm" value="" /><label id="allow" for="dblAllow">Allow Double Commission</label></div>
     <div style="height: 25px">
-        <input style="margin: 5px" id="dblDisallow" type="radio" name="dblComm" value="" /><label for="dblDisallow">Disallow Double Commission</label></div>
+        <input style="margin: 5px" id="dblDisallow" type="radio" name="dblComm" value="" /><label id="disallow" for="dblDisallow">Disallow Double Commission</label></div>
     <div style="float: right">
         <input id="btnSubmit" type="button" value="Submit" class="buttonPopup" /></div>
 </div>
 <script type="text/javascript">
     var allow = true;
+    var roleId = '@ViewBag.RoleId';
+
     $(document).ready(function () {
+        if (roleId == '1') {
+            $('#allow').html('Turn ON Double Commission');
+            $('#disallow').html('Turn OFF Double Commission');
+        }
+
         $('#dblAllow').attr('checked', 'checked');
 
         $('#dblAllow').bind('click', function () {

@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
     using System.Data;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
     using Fanex.ExternalAccount.Controllers.Base;
@@ -22,7 +23,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Sunplus.Core.Common.IPs;
-    using System.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -176,8 +176,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult ConfigMultipleDoubleComm()
+        public ActionResult ConfigMultipleDoubleComm(int id)
         {
+            ViewBag.RoleId = id;
             return this.PartialViewBase();
         }
 
