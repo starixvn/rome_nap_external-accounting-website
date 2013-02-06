@@ -54,9 +54,16 @@ Fanex.ExtAcc.Header = {
                     $("#groupsMenu").superfish();
                     $("#groupsMenu").css('visibility', 'visible');
 
+                    $('#userMenu').bind('mouseover', function () {
+                        $('#ddlGroupName').hide();
+                    });
+
+                    $('#groupsMenu').bind('mouseover', function () {
+                        $('#dllUsername').hide();
+                    });
+
                     for (var i = 0; i < links.length; i++) {
-                        try
-                        {
+                        try {
                             if ($(links[i]).attr('ignorehref') != '1' && links[i].href.indexOf('javascript') < 0 && links[i].href.indexOf('Fanex') < 0) {
                                 var originalURL = links[i].href;
                                 var indexOriUrl = originalURL.split('/')[3];
