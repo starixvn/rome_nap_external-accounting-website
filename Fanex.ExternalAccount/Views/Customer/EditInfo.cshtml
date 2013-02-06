@@ -8,7 +8,7 @@
                 @Html.HiddenFor(m => m.CustId) @Html.LabelFor(m => m.FirstName, ViewLang.Firstname, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m =>m.FirstName, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "editControl" })
             </td>
         </tr>
         <tr>
@@ -69,3 +69,11 @@
         </tr>
     </table>
 </div>
+<script type="text/javascript">
+    Fanex.ExtAcc.Customer.FirstName = $('#FirstName').val();
+    Fanex.ExtAcc.Customer.LastName = $('#LastName').val();
+    Fanex.ExtAcc.Customer.HomePhone = $('#HomePhone').val();
+    Fanex.ExtAcc.Customer.MobilePhone = $('#MobilePhone').val();
+    Fanex.ExtAcc.Customer.Email = $('#Email').val();
+    Fanex.ExtAcc.Customer.Fax = $('#Fax').val();
+</script>

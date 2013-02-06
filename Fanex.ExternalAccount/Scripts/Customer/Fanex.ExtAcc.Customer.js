@@ -436,12 +436,12 @@ Fanex.ExtAcc.Customer = {
     },
 
     ResetInfo: function () {
-        $('#FirstName').val('');
-        $('#LastName').val('');
-        $('#HomePhone').val('');
-        $('#MobilePhone').val('');
-        $('#Email').val('');
-        $('#Fax').val('');
+        $('#FirstName').val(Fanex.ExtAcc.Customer.FirstName);
+        $('#LastName').val(Fanex.ExtAcc.Customer.LastName);
+        $('#HomePhone').val(Fanex.ExtAcc.Customer.HomePhone);
+        $('#MobilePhone').val(Fanex.ExtAcc.Customer.MobilePhone);
+        $('#Email').val(Fanex.ExtAcc.Customer.Email);
+        $('#Fax').val(Fanex.ExtAcc.Customer.Fax);
         $('#FirstName').focus();
     },
 
