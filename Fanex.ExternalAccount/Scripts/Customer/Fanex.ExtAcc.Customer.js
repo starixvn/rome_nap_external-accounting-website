@@ -911,9 +911,21 @@ Fanex.ExtAcc.Customer = {
             return false;
         }
 
+        if (!Validators.validatePassword($('#Password').val())) {
+            $('#Password').focus();
+            Validators.showDown($('#Password').get(0), 'Password must have at least 6 characters, including at least 2 letters and at least 2 digits. (e.g:pass22)', 0, 10, 41, -10, 15, 5000);
+            return false;
+        }
+
         if (!Validators.validateInput($('#confirmPwd').val())) {
             $('#confirmPwd').focus();
             Validators.show($('#confirmPwd').get(0), 'This field is required');
+            return false;
+        }
+
+        if (!Validators.validatePassword($('#confirmPwd').val())) {
+            $('#Password').focus();
+            Validators.show($('#confirmPwd').get(0), 'Password must have at least 6 characters, including at least 2 letters and at least 2 digits. (e.g:pass22)', null, null, 5000);
             return false;
         }
 

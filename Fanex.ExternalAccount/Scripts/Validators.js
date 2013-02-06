@@ -7,8 +7,9 @@ var Validators = {
         // Validate with expr
         // Show message and animate background color
     },
-    show: function (elementInput, message, xPos, pointerXPos) {
+    show: function (elementInput, message, xPos, pointerXPos, timeout) {
         // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
+        var hideTimeout = timeout ? timeout : 1000;
         var hint = document.getElementById('fHint');
         var hintPointer = null;
         if (hint == null) {
@@ -36,7 +37,7 @@ var Validators = {
         };
         this.timeOutHideTooltip = setTimeout(function () {
             hint.style.display = 'none';
-        }, 1000); // Auto hide in 1s
+        }, hideTimeout); // Auto hide in 1s
         if (elementInput != null) {
             if (typeof xPos == 'undefined') {
                 xPos = 0;
@@ -246,5 +247,34 @@ var Validators = {
         }
 
         return false;
+    },
+
+    validatePassword: function (str) {
+        var s = str.toLowerCase();
+        var numbers = "0123456789";
+
+        var i = 0;
+        var nCount = 0;
+
+        while (i < s.length) {
+            (numbers.indexOf(s.substring(i, i + 1)) >= 0) ? nCount++ : false;
+            i++;
+        }
+
+        var validNumber = ((nCount > (s.length - 2)) || nCount < 2 || s.length < 6) ? false : true;
+
+        var letters = "abcdefghijklmnopqrstuvwxyz";
+
+        i = 0;
+        nCount = 0;
+
+        while (i < s.length) {
+            (letters.indexOf(s.substring(i, i + 1)) >= 0) ? nCount++ : false;
+            i++;
+        }
+
+        var validLetter = ((nCount > (s.length - 2)) || nCount < 2 || s.length < 6) ? false : true;
+
+        return validNumber & validLetter;
     }
 };
