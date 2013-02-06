@@ -754,7 +754,7 @@
             var root = $(this).data('contextMenuRoot');
             $.contextMenu.defaults.timeoutHide = setTimeout(function () {
                 op.hide.call(root.$trigger, root, data && data.force);
-            }, 1000);
+            }, 500);
         },
         // focus <command>
         focusItem: function (e) {

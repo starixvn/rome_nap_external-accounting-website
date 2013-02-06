@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------
 
-(function ($) {
+; (function ($) {
 
     //// Grid Scroller
     var ub = $.browser;
@@ -689,7 +689,7 @@
                 currentValue = numeral(currentValue).format(me.columnsHastable[currentCol.Name].FormatNumber);
             }
 
-            if (me.columnsHastable[currentCol.Name].FormatDateTime && currentValue !== '') {
+            if (me.columnsHastable[currentCol.Name].FormatDateTime && isValid(currentValue) && currentValue !== '') {
                 var momentObject = moment(currentValue);
                 if (momentObject.isValid()) {
                     currentValue = momentObject.format(me.columnsHastable[currentCol.Name].FormatDateTime);

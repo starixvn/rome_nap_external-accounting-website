@@ -511,3 +511,7 @@ input, textarea
 {
 	text-indent: 5px;
 }
+.ui-dialog .ui-dialog-buttonpane
+{
+	border-width: 0 !important;
+}
