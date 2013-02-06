@@ -715,6 +715,9 @@
                 key = data.contextMenuKey,
                 callback;
 
+            // Andy added this trigger
+            root.$menu.trigger('contextmenu:hide');
+
             // abort if the key is unknown or disabled or is a menu
             if (!opt.items[key] || $this.is('.disabled, .context-menu-submenu, .context-menu-separator, .not-selectable')) {
                 return;
