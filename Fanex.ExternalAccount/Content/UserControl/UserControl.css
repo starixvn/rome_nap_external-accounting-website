@@ -127,6 +127,7 @@
 	-webkit-border-radius: 3px !important;
 	padding-bottom: 2px;
 	margin-top: 5px;
+	text-indent: 0 !important;
 }
 .buttonPopup:hover, .ui-button:hover
 {

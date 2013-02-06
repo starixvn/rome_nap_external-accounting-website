@@ -14,7 +14,10 @@ html, body
 	font-family: Tahoma, Helvetica, Arial, sans-serif;
 }
 
-.w100{width:100%;}
+.w100
+{
+	width: 100%;
+}
 .floatL
 {
 	float: left;
@@ -250,6 +253,7 @@ a
 	text-align: center;
 	vertical-align: text-top;
 	padding-bottom: 2px;
+	text-indent: 0 !important;
 }
 #btnSearch:hover, .btnSearch:hover
 {

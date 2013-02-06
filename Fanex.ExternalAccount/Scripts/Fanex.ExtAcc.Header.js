@@ -56,10 +56,12 @@ Fanex.ExtAcc.Header = {
 
                     $('#userMenu').bind('mouseover', function () {
                         $('#ddlGroupName').hide();
+                        $('#groupNameMenu').removeClass('sfHover');
                     });
 
                     $('#groupsMenu').bind('mouseover', function () {
                         $('#dllUsername').hide();
+                        $('#userNameMenu').removeClass('sfHover');
                     });
 
                     for (var i = 0; i < links.length; i++) {
