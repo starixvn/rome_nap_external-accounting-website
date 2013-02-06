@@ -716,7 +716,7 @@
                 callback;
 
             // Andy added this trigger
-            root.$menu.trigger('contextmenu:hide');
+            op.hide.call(root.$trigger, root);
 
             // abort if the key is unknown or disabled or is a menu
             if (!opt.items[key] || $this.is('.disabled, .context-menu-submenu, .context-menu-separator, .not-selectable')) {
@@ -752,7 +752,9 @@
         // hide <menu>
         hideMenu: function (e, data) {
             var root = $(this).data('contextMenuRoot');
-            op.hide.call(root.$trigger, root, data && data.force);
+            $.contextMenu.defaults.timeoutHide = setTimeout(function () {
+                op.hide.call(root.$trigger, root, data && data.force);
+            }, 1000);
         },
         // focus <command>
         focusItem: function (e) {
@@ -852,7 +854,8 @@
                 });
             }
         },
-        hide: function (opt, force) {
+        hide: function (opt, force, delay) {
+            var timeout = delay ? delay : 10;
             var $trigger = $(this);
             // Andy set this property
             $.contextMenu.defaults.timeoutHide = setTimeout(function () {
@@ -920,7 +923,7 @@
                         $trigger.trigger('contextmenu:hidden');
                     }, 10);
                 });
-            }, 1000);
+            }, timeout);
         },
         create: function (opt, root) {
             if (root === undefined) {
