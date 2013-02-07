@@ -13,8 +13,8 @@
 	font-size: 10pt;
 	font-weight: bold;
 	font-family: Tahoma;
-    border: 0px solid;
+    border: 1px solid #FFF;
     color: black;
-    background-color: transparent;
+    background-color: #FFF;
     cursor: default;
 }
