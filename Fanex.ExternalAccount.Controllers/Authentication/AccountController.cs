@@ -330,16 +330,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Index", "Home");
             }
 
-            var result = new GroupService().GetListGroup();
-
-            if (!this.currentSession.IsITAdmin && !this.currentSession.IsInternalAdmin)
-            {
-                result = new LoginService().GroupList();
-            }
-            else if (!this.currentSession.IsITAdmin && this.currentSession.IsInternalAdmin)
-            {
-                result = result.Where(o => o.GroupID != 1);
-            }
+            var result = this.userService.GroupList();
 
             return this.Json(result.Select(o => o.GroupName).ToArray(), JsonRequestBehavior.AllowGet);
         }
