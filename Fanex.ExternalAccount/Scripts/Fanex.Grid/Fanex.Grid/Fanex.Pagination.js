@@ -29,7 +29,7 @@
             }
 
             /**
-            * Calculate start and end point of pagination links depending on 
+            * Calculate start and end point of pagination links depending on
             * currentPage and numDisplayEntries.
             * @return {Array}
             */
@@ -44,7 +44,7 @@
             }
 
             /**
-            * This is the event handling function for the pagination links. 
+            * This is the event handling function for the pagination links.
             * @param {int} page_id The new page number
             */
             function pageSelected(page_id, evt) {
@@ -152,7 +152,6 @@
                     for (var i = begin; i < np; i++) {
                         appendItem(i, (i == (np - 1) ? ' last' : ''));
                     }
-
                 }
                 // Generate "Next"-Link
                 if (opts.nextText && (currentPage < np - 1 || opts.nextShowAlways)) {
@@ -247,7 +246,7 @@
             opts.itemsPerPage = (!opts.itemsPerPage || opts.itemsPerPage < 0) ? 1 : opts.itemsPerPage;
             // Store DOM element for easy access from all inner functions
             var panel = $(this);
-            // Attach control functions to the DOM element 
+            // Attach control functions to the DOM element
             this.selectPage = function (page_id) { pageSelected(page_id); }
             this.prevPage = function () {
                 if (currentPage > 0) {
@@ -273,4 +272,4 @@
             //opts.callback(currentPage, opts.itemsPerPage, this);
         });
     }
-})(jQuery)
+})(jQuery);

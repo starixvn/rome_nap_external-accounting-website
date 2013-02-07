@@ -1406,9 +1406,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
-    <Folder Include="Views\Customer\Agent\" />
-    <Folder Include="Views\Customer\Master\" />
-    <Folder Include="Views\Customer\Super\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1470,6 +1467,9 @@
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Shared\_BalanceBox.cshtml" />
     <Content Include="Views\Shared\Copy of _LeftMenu.cshtml" />
+    <Content Include="Views\Report\DailyWinLoss.cshtml" />
+    <Content Include="Views\Report\DailyWinLoss\Index.cshtml" />
+    <Content Include="Views\Report\WinLossDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

@@ -432,4 +432,4 @@ Fanex.ExtAcc.User = {
             this.RenderGrid();
         }
     }
-}
+};

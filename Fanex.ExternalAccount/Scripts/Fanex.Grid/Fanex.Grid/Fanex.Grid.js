@@ -4,8 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------
 
-; (function ($) {
-
+(function ($) {
     //// Grid Scroller
     var ub = $.browser;
     ub.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
@@ -296,7 +295,6 @@
                 Fanex.Grid.List[me.tableContentId].pagerOption = options.pagerOption;
             }
             me.RegisterEvents();
-
         },
         RenderTitle: function () {
             var me = this;
@@ -478,7 +476,6 @@
                                 };
                                 trsHeader.push(me.RenderHeaderCell(cellInfo, currentCol));
                             }
-
                         }
                         headerHtml.push(trsHeader.join(''));
                         headerHtml.push('</tr>');
@@ -649,7 +646,6 @@
                     if (renderObject.CurrentColumnShowTree == true) {
                         currentCollapseExpandId = renderObject.CurrentCollapseExpandId;
                     }
-
                 }
                 rowHtml.push('</tr>');
 
@@ -732,7 +728,6 @@
             if (allowTruncate == true) {
                 truncateClass = ' column-truncate';
             }
-
 
             var titleTooltip = '';
             if (typeof (currentCol.Value) == 'string' && (currentCol.Value.length * me.currentFontSize > me.columnsHastable[currentCol.Name].Width) && allowTruncate == true) {
@@ -876,7 +871,6 @@
                 //// Render There is no data, showNoDataOnFrozen
                 var emptyData = Fanex.Grid.Constant.NO_DATA_INFO;
                 if (options.numberOfFrozenColumn > 0) {
-
                     if (options.showNoDataOnFrozen) {
                         //// Show No Info on the frozen table
                         bodyRowsHtml.push(me.RenderEmptyRow(options.columns[0].Name, emptyData, options.columns.length, 'no-data-frozen', false));
@@ -1169,7 +1163,7 @@
         }
     };
 
-    //// Grid Helper 
+    //// Grid Helper
     Fanex.Grid.Helper =
     {
         RemoveItemForRowSpan: function (rows, currentRowIndex, mainColumn, colsHashtable) {
@@ -1186,7 +1180,6 @@
                             rows[currentRowIndex].Columns[firstColIndex].Sort = true;
                             rows[currentRowIndex].Columns[firstColIndex].SortDirection = currentCol.SortDirection;
                         }
-
 
                         if (isValid(mainColumn.MergeColNumber)) {
                             var mergeColLength = mainColumn.MergeColNumber + colIndex;
@@ -1426,7 +1419,6 @@
             o.parent().find('.grid-title').removeClass('display-none');
             var options = $.extend({}, $.fn.renderScroller.defaults, opts);
             var timeOutResize = null;
-
 
             if (!isValid(Fanex.Grid.List[options.tblContentId])) {
                 $(window).resize(function () {
@@ -1817,8 +1809,6 @@
     };
 })(jQuery);
 
-
-
 // Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function (from, to) {
     var rest = this.slice((to || from) + 1 || this.length);
@@ -1856,7 +1846,6 @@ Array.prototype.contains = function (obj) {
     }
     return false;
 }
-
 
 //----------------------------------------------
 // Search Devives
