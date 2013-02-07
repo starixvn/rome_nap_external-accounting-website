@@ -83,7 +83,6 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
         $self.ShowConfirm(titles[1], titles[2], 400, 150, function () {
             if ($('input:radio[name=Weekly]').is(':checked')) {
-
                 for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                     if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
                         str += "1";
@@ -113,6 +112,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             })
             .success(function (result) {
                 if (result.IsSuccess) {
+                    Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                     Fanex.ExtAcc.Form.Close(false);
                     $.unblockUI(document);
                 }
@@ -130,54 +130,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
     },
 
     ShowConfirm: function (title, message, width, height, okClickEvent) {
-        var Form = document.createElement("div");
-        var DivContent = document.createElement("div");
-
-        Form.setAttribute('id', 'windowConfirm');
-        Form.setAttribute('style', 'display: none; border: none;font-size:12px');
-
-        DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
-
-        var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px;line-height: 18px');
-
-        var frame = document.createElement("span");
-        frame.innerHTML = message;
-        frame.setAttribute('style', 'width: 100%; height: 100%; border: none');
-
-        divFrame.appendChild(frame);
-        DivContent.appendChild(divFrame);
-
-        Form.appendChild(DivContent);
-
-        document.body.appendChild(Form);
-
-        $('#windowConfirm').css('display', 'block');
-        $('#windowConfirm').dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
-            title: title,
-            resizable: false,
-            modal: true,
-            buttons: [
-            {
-                text: "Yes",
-                click: function () {
-                    if (okClickEvent && typeof okClickEvent === 'function') {
-                        okClickEvent();
-                    }
-
-                    $('#windowConfirm').remove();
-                }
-            },
-            {
-                text: "No",
-                click: function () {
-                    $('#windowConfirm').remove();
-                }
-            }],
-            close: function (event) {
-                $('#windowConfirm').remove();
-            }
-        });
+        Fanex.ExtAcc.Form.ConfirmBox(title, message, width, height, false, okClickEvent, null, 'windowConfirm');
     }
 }
 

@@ -7,7 +7,8 @@ Fanex.ExtAcc.Form = {
     Init: function () {
     },
 
-    Show: function (url, title, width, height, reloadOnClose, callBack, marginRight) {
+    Show: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId) {
+        var id = popupId ? popupId : 'windowPopup';
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
 
@@ -17,7 +18,7 @@ Fanex.ExtAcc.Form = {
             margin = marginRight + 'px';
         }
 
-        Form.setAttribute('id', 'windowPopup');
+        Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: block; border: none; font-size:12px; z-index:999999; margin-right: ' + margin);
 
         DivContent.setAttribute('style', 'height: ' + (height - 80) + 'px');
@@ -35,7 +36,7 @@ Fanex.ExtAcc.Form = {
         $.ajax(url).done(function (data) {
             DivContent.innerHTML = data;
             document.body.appendChild(Form);
-            $('#windowPopup').dialog({
+            $('#' + id).dialog({
                 title: title,
                 height: height,
                 width: width,
@@ -55,11 +56,12 @@ Fanex.ExtAcc.Form = {
         });
     },
 
-    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent) {
+    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
+        var id = popupId ? popupId : 'windowPopup';
 
-        Form.setAttribute('id', 'windowPopup');
+        Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: none; border: none;font-size:12px');
 
         DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
@@ -80,8 +82,8 @@ Fanex.ExtAcc.Form = {
 
         var $self = this;
 
-        $('#windowPopup').css('display', 'block');
-        $('#windowPopup').dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
+        $('#' + id).css('display', 'block');
+        $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
             modal: true,
@@ -93,7 +95,7 @@ Fanex.ExtAcc.Form = {
                         okClickEvent();
                     }
                     else {
-                        $self.Close(reloadOnClose);
+                        $self.Close(reloadOnClose, null, id);
                     }
                 }
             },
@@ -104,21 +106,24 @@ Fanex.ExtAcc.Form = {
                         cancelClickEvent();
                     }
                     else {
-                        $self.Close(reloadOnClose);
+                        $self.Close(reloadOnClose, null, id);
                     }
                 }
             }],
             close: function (event) {
-                $self.Close(reloadOnClose);
+                $self.Close(reloadOnClose, null, id);
             }
         });
     },
 
-    Close: function (reload, delay) {
+    Close: function (reload, delay, popupId) {
         var delayTime = delay ? delay : 100;
+        var id = popupId ? popupId : 'windowPopup';
+
         reload && location.reload(true);
+
         var timeout = setTimeout(function () {
-            $('#windowPopup').remove();
+            $('#' + id).remove();
             clearTimeout(timeout);
         }, delayTime);
     }
