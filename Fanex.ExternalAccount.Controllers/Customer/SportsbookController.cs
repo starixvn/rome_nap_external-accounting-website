@@ -10,9 +10,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     using System.Web.Mvc;
     using Fanex.Caching;
     using Fanex.ExternalAccount.Controllers.Base;
-    using Fanex.PTEngine.BusinessObjects;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
-        public string EditBetSettingMasterGet(int custId)
+        public ActionResult EditBetSettingMasterGet(int custId)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -52,12 +52,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 SiteName = "",
                 Language = "En",
                 LangKey = "E",
-
             };
 
             bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
-            return JsonConvert.SerializeObject(bettingLimit, settings);
+            //var ret = JsonConvert.SerializeObject(bettingLimit, settings);
+
+            return this.JsonBase(bettingLimit);
         }
     }
 }
