@@ -13,9 +13,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.PTEngine.BusinessObjects;
+    using Fanex.PTEngine.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Fanex.PTEngine.Services;
 
     /// <summary>
     /// TODO: Update summary.
@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.PartialViewBase();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult EditBetSettingMasterGet(int custId)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult EditBetSettingMasterPost(int custId, string txtCustomerObject)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();

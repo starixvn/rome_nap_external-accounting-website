@@ -14,13 +14,13 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
-    using Fanex.ExternalAccount.Controllers.Base;
-    using Fanex.ExternalAccount.Controllers.Context;
 
     /// <summary>
     /// TODO: Update summary.
@@ -182,7 +182,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
         public ActionResult GrantPermission(int userId, string username, string groupName)
         {
             var groups = new GroupService().GetListGroup();
@@ -245,7 +245,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageUser, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Update)]
         public ActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
             var result = this.userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy, CurrentContext.Ip4Address);

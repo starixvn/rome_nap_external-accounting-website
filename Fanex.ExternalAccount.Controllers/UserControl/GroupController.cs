@@ -33,19 +33,19 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             this.groupService = this.groupService ?? new GroupService();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GroupList()
         {
             return this.ViewBase();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult AddGroup()
         {
             return this.PartialViewBase();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GroupListPost()
         {
             var result = this.groupService.GetListGroup();
@@ -62,7 +62,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result });
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult EditGroup(int id)
         {
             var model = this.groupService.GetGroupById(id);
@@ -70,7 +70,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GetGroupPolicy(int groupId)
         {
             var model = this.groupService.GetAllGroupPolicy(groupId);
@@ -78,7 +78,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Create)]
         public ActionResult Add(string name, string description)
         {
             var groupId = 0;
@@ -88,7 +88,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
         public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this.groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
@@ -96,7 +96,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Delete)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Delete)]
         public ActionResult Delete(int groupId)
         {
             var result = this.groupService.DeleteGroup(groupId, CurrentSession.CustId);
@@ -104,7 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
             var result = this.groupService.EditGroup(groupName, description, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
@@ -112,7 +112,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
             var externalGroup = new LoginService().GroupList();
@@ -178,7 +178,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this.groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
