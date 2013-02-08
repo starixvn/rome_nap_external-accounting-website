@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditBetSettingMasterGet(int custId)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult EditBetSettingMasterPost(int custId, string txtCustomerObject)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
