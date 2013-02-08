@@ -56,9 +56,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
-            //var ret = JsonConvert.SerializeObject(bettingLimit, settings);
-
-            return this.JsonBase(bettingLimit);
+            return this.JsonBase(bettingLimit, settings);
         }
     }
 }

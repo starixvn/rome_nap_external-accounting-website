@@ -13,9 +13,13 @@
 namespace Fanex.ExternalAccount.Controllers.Base
 {
     using System.IO;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Fanex.ExternalAccount.Controllers.Context;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// Base controller for controller to inherit
@@ -128,8 +132,15 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="data">Data need to render JSON object</param>
         /// <param name="behavior">Allow Get method by default</param>
         /// <returns>ActionResult object</returns>
-        public virtual ActionResult JsonBase(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
+        public virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         {
+            if (settings == null)
+            {
+                settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+                settings.Formatting = Formatting.Indented;
+            }
+
             if (!this.CurrentSession.IsLogin && !this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
@@ -140,7 +151,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 return this.RedirectToAction("Index", "Home");
             }
 
-            return this.Json(data, behavior);
+            return new JsonBase(data, settings);
         }
 
         /// <summary>
