@@ -50,9 +50,9 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
             if (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                var group = currentSession.IsInternalAdmin ? "ACCDDD" : currentSession.CurrencyGroup;
+                var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
 
-                response.Redirect("~/Home/Index/" + group);
+                response.Redirect("~/Home/Index" + group);
             }
 
             try

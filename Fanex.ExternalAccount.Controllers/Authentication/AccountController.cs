@@ -66,9 +66,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             if (this.currentSession.IsLogin && this.currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                var group = this.currentSession.IsInternalAdmin ? "ACCDDD" : this.currentSession.CurrencyGroup;
+                var group = this.currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
 
-                return this.Redirect("~/Home/Index/" + group);
+                return this.Redirect("~/Home/Index" + group);
             }
 
             return this.PartialView(new Login());
