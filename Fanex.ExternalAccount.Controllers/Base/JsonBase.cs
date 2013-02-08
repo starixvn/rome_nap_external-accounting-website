@@ -29,16 +29,16 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
         public JsonBase(object responseBody)
         {
-            ResponseBody = responseBody;
+            this.ResponseBody = responseBody;
         }
 
         public JsonBase(object responseBody, JsonSerializerSettings settings)
             : this(responseBody)
         {
-            Settings = settings;
+            this.Settings = settings;
         }
 
-        /// <summary>Gets or sets the serialiser settings</summary>
+        /// <summary>Gets or sets the serializer settings</summary>
         public JsonSerializerSettings Settings { get; set; }
 
         /// <summary>Gets or sets the encoding of the response</summary>
@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
-        /// Serialises the response and writes it out to the response object
+        /// Serializes the response and writes it out to the response object
         /// </summary>
         /// <param name="context">The execution context</param>
         public override void ExecuteResult(ControllerContext context)
@@ -73,9 +73,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
             HttpResponseBase response = context.HttpContext.Response;
 
             // set content type
-            if (!string.IsNullOrEmpty(ContentType))
+            if (!string.IsNullOrEmpty(this.ContentType))
             {
-                response.ContentType = ContentType;
+                response.ContentType = this.ContentType;
             }
             else
             {
@@ -83,14 +83,14 @@ namespace Fanex.ExternalAccount.Controllers.Base
             }
 
             // set content encoding
-            if (ContentEncoding != null)
+            if (this.ContentEncoding != null)
             {
-                response.ContentEncoding = ContentEncoding;
+                response.ContentEncoding = this.ContentEncoding;
             }
 
-            if (ResponseBody != null)
+            if (this.ResponseBody != null)
             {
-                response.Write(JsonConvert.SerializeObject(ResponseBody, Formatting, Settings));
+                response.Write(JsonConvert.SerializeObject(this.ResponseBody, this.Formatting, this.Settings));
             }
         }
     }
