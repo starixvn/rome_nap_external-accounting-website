@@ -1,0 +1,31 @@
+﻿@using Fanex.PTEngine
+
+<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>
+<div>
+    <table width="100%" border="0" cellpadding="2">
+        <tr>
+            <td>
+                <div id="bettingLimitContainer">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="float: right; padding-right: 30px;">
+                    <input id="btnSubmit"class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="errMsg" style="display: none;" class="errMsg">
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script src="../../Scripts/Sportsbook/Fanex.ExtAcc.Customer.Sportsbook.js" type="text/javascript"></script>
+
+
+

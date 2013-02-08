@@ -2,36 +2,37 @@
 
 if (typeof Fanex == 'undefined') {
     Fanex = {};
-
-    Array.prototype.binarySearch = function (value, key) {
-        function match(value, target) {
-            return key ? value[key] === target[key] : value === target;
-        }
-
-        function compare(value, target) {
-            return key ? value[key] > target[key] : value > target;
-        }
-
-        var startIndex = 0,
-            stopIndex = this.length - 1,
-            middle = Math.floor((stopIndex + startIndex) / 2);
-
-        while (!match(this[middle], value) && startIndex < stopIndex) {
-            //adjust search area
-            if (compare(value, this[middle])) {
-                stopIndex = middle - 1;
-            } else if (compare(this[middle], value)) {
-                startIndex = middle + 1;
-            }
-
-            //recalculate middle
-            middle = Math.floor((stopIndex + startIndex) / 2);
-        }
-
-        //make sure it's the right value
-        return (!match(this[middle], value)) ? -1 : middle;
-    }
 }
+
+Array.prototype.binarySearch = function (value, key) {
+    function match(value, target) {
+        return key ? value[key] === target[key] : value === target;
+    }
+
+    function compare(value, target) {
+        return key ? value[key] > target[key] : value > target;
+    }
+
+    var startIndex = 0,
+        stopIndex = this.length - 1,
+        middle = Math.floor((stopIndex + startIndex) / 2);
+
+    while (!match(this[middle], value) && startIndex < stopIndex) {
+        //adjust search area
+        if (compare(value, this[middle])) {
+            stopIndex = middle - 1;
+        } else if (compare(this[middle], value)) {
+            startIndex = middle + 1;
+        }
+
+        //recalculate middle
+        middle = Math.floor((stopIndex + startIndex) / 2);
+    }
+
+    //make sure it's the right value
+    return (!match(this[middle], value)) ? -1 : middle;
+}
+
 
 Fanex.ExtAcc = {
     theme: 'classic',

@@ -48,6 +48,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTEngine">
+      <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -101,6 +104,7 @@
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="Customer\SportsbookController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />

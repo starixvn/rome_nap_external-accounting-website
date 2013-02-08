@@ -1470,6 +1470,7 @@
     <Content Include="Views\Report\DailyWinLoss.cshtml" />
     <Content Include="Views\Report\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\Report\WinLossDetail.cshtml" />
+    <Content Include="Views\Sportsbook\EditBetSettingMaster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
