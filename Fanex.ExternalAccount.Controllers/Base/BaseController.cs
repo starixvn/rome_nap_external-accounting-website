@@ -113,16 +113,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
             Response.AppendHeader("Content-Encoding", "gzip");
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
-            if (!this.CurrentSession.IsLogin && !this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Login", "Account");
-            }
-
-            if (this.CurrentSession.IsLogin && this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Index", "Home");
-            }
-
             return this.View(objModel);
         }
 
@@ -141,17 +131,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 settings.Formatting = Formatting.Indented;
             }
 
-            if (!this.CurrentSession.IsLogin && !this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Login", "Account");
-            }
-
-            if (this.CurrentSession.IsLogin && this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Index", "Home");
-            }
-
-            return new JsonBase(data, settings);
+            return this.JsonExt(data, settings);
         }
 
         /// <summary>
@@ -161,16 +141,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <returns>PartialViewResult object</returns>
         public virtual ActionResult PartialViewBase(object objModel = null)
         {
-            if (!this.CurrentSession.IsLogin && !this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Login", "Account");
-            }
-
-            if (this.CurrentSession.IsLogin && this.CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return this.RedirectToAction("Index", "Home");
-            }
-
             return this.PartialView(objModel);
         }
 

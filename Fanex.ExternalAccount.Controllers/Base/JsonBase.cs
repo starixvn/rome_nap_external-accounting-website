@@ -18,9 +18,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using System.Web.Mvc;
     using Newtonsoft.Json;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class JsonBase : ActionResult
     {
         public JsonBase()
@@ -92,6 +89,21 @@ namespace Fanex.ExternalAccount.Controllers.Base
             {
                 response.Write(JsonConvert.SerializeObject(this.ResponseBody, this.Formatting, this.Settings));
             }
+        }
+    }
+
+    /// <summary>
+    /// Extentions for controller
+    /// </summary>
+    public static class ControllerExtentions
+    {
+        /// <summary>
+        /// JSON class for render JSON to output stream
+        /// </summary>
+
+        public static JsonBase JsonExt(this Controller controller, object data, JsonSerializerSettings settings = null)
+        {
+            return new JsonBase(data, settings);
         }
     }
 }

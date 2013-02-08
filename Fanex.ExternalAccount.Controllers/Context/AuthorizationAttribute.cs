@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
 {
     using System;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.DTO;
@@ -40,6 +41,17 @@ namespace Fanex.ExternalAccount.Controllers.Context
         {
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
+            var response = filterContext.HttpContext.Response;
+
+            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            {
+                response.Redirect("~/Account/Login");
+            }
+
+            if (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            {
+                response.Redirect("~/Home/Index/" + currentSession.CurrencyGroup);
+            }
 
             try
             {
