@@ -5,7 +5,6 @@
     /// <summary>
     /// Summary description for Statements
     /// </summary>
-    [Serializable]
     public class Statement
     {
         public string AccDate { get; set; }

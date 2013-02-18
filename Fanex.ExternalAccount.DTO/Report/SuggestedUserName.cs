@@ -5,7 +5,6 @@
     /// <summary>
     /// Summary description for SuggestedUserName
     /// </summary>
-    [Serializable]
     public class SuggestedUserName
     {
         public string Username { get; set; }

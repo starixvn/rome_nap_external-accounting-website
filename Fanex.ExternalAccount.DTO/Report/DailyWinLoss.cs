@@ -5,7 +5,6 @@
     /// <summary>
     /// Summary description for DailyWinLoss
     /// </summary>
-    [Serializable]
     public class DailyWinLoss
     {
         public int No { get; set; }
