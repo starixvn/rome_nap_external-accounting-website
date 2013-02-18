@@ -1151,6 +1151,7 @@ Fanex.ExtAcc.Customer = {
             if (Fanex.ExtAcc.Customer.DataSource.length == 0) {
                 $('#msgNoinfo').css('display', 'block');
                 $('#jqgrid').css('display', 'none');
+                $('#exporttoexcel').css('display', 'none');
             }
             else {
                 $('#msgNoinfo').css('display', 'none');
