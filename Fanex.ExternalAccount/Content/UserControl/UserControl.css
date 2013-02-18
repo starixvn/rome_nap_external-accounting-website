@@ -190,8 +190,6 @@
 }
 .errMsg
 {
-	height: 30px;
-	width: 100%;
 	background-color: #8ed3ea;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -200,12 +198,13 @@
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	line-height: 2;
-	text-indent: 30px;
 	text-align: left;
 	vertical-align: middle;
 	color: #8d1b25;
 	font-size: 13px;
 	clear: both;
+	padding-left: 30px;
+	white-space: pre-line;
 }
 .edit
 {
