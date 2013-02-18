@@ -141,5 +141,77 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+
+
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditCommission(int custId)
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditCommissionMasterGet(int custId, int parentId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            IRequestContext currentContext = new RequestContext();
+            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
+
+            Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
+
+            currentContext = new RequestContext()
+            {
+                FormId = FormType.EditPT,
+                UserName = CurrentSession.UserName.ToUpper(),
+                CustId = parentId,
+                TargetCustId = custId,
+                RoleId = (int)CustomerRole.Super,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                SiteName = SiteName,
+                Language = "En",
+                LangKey = "E",
+            };
+
+            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+
+            return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditCommissionAgentGet(int custId, int parentId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            IRequestContext currentContext = new RequestContext();
+            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
+
+            Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
+
+            currentContext = new RequestContext()
+            {
+                FormId = FormType.EditPT,
+                UserName = CurrentSession.UserName.ToUpper(),
+                CustId = parentId,
+                TargetCustId = custId,
+                RoleId = (int)CustomerRole.Master,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                SiteName = SiteName,
+                Language = "En",
+                LangKey = "E",
+            };
+
+            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+
+            return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
+        }
     }
 }
