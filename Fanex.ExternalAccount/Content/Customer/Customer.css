@@ -1,4 +1,8 @@
-﻿.enabled
+﻿input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, div.BettingLimitItem92
+{
+	font-size: 11px !important;
+}
+.enabled
 {
 	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
@@ -173,4 +177,9 @@ tr.rowTransferCondition
 .formatDate
 {
 	font-size: 8px;
+}
+.BettingLimitTextBox, .BettingLimitTextBox9
+{
+	vertical-align: top !important;
+	height: 20px !important;
 }
