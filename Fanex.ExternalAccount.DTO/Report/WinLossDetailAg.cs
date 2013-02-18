@@ -11,7 +11,6 @@ namespace Fanex.ExternalAccount.DTO.Report
     /// <summary>
     /// Summary description for WinLossDetailAg
     /// </summary>
-    [Serializable]
     public class WinLossDetailAg
     {
         public int CustId { get; set; }

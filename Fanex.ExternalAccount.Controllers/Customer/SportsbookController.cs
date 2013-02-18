@@ -36,12 +36,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            IRequestContext currentContext = new RequestContext();
-            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
-
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
 
-            currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext()
             {
                 FormId = FormType.EditPT,
                 UserName = CurrentSession.UserName.ToUpper(),
@@ -55,7 +52,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            IBettingLimit<BettingLimitItem> bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
@@ -68,12 +65,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            IRequestContext currentContext = new RequestContext();
-            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
-
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
 
-            currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext()
             {
                 FormId = FormType.EditPT,
                 UserName = CurrentSession.UserName.ToUpper(),
@@ -87,7 +81,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            IBettingLimit<BettingLimitItem> bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
@@ -100,12 +94,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            IRequestContext currentContext = new RequestContext();
-            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
-
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
 
-            currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext()
             {
                 FormId = FormType.EditPT,
                 UserName = CurrentSession.UserName.ToUpper(),
@@ -119,7 +110,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            IBettingLimit<BettingLimitItem> bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
@@ -132,6 +123,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.Formatting = Formatting.Indented;
 
             var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
+
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,

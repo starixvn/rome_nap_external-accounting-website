@@ -5,7 +5,6 @@
     /// <summary>
     /// Summary description for WinLossDetail
     /// </summary>
-    [Serializable]
     public class WinLossDetail
     {
         public int CustId { get; set; }
