@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
         private void CloseConnection(AuthorizationContext filterContext)
         {
-            HttpResponseBase response = filterContext.HttpContext.Response;
+            var response = filterContext.HttpContext.Response;
 
             try
             {
@@ -158,6 +158,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             var userCache = this.cachingService.GetUserCache(userId);
             var policyList = userCache.PolicyList;
             var foundItems = policyList.Where(x => x.FuncID == functionId);
+
             if (foundItems.Count() > 0)
             {
                 var firstItem = foundItems.First();

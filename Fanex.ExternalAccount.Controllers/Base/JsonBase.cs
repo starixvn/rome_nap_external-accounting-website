@@ -67,7 +67,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 throw new ArgumentNullException("context");
             }
 
-            HttpResponseBase response = context.HttpContext.Response;
+            var response = context.HttpContext.Response;
 
             // set content type
             if (!string.IsNullOrEmpty(this.ContentType))
