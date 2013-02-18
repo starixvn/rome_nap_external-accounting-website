@@ -10,11 +10,15 @@ Fanex.ExtAcc.Customer.Sportsbook = {
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             this.GetAgentBetSetting();
         }
+        else {
+            this.GetMemberBetSetting();
+        }
     },
 
     GetMasterBetSetting: function () {
         var data = {
-            custId: Fanex.ExtAcc.Customer.UserId
+            custId: Fanex.ExtAcc.Customer.UserId,
+            parentId: Fanex.ExtAcc.Customer.superId
         };
 
         $.ajax({
@@ -39,6 +43,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
 
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
+                            parentId: Fanex.ExtAcc.Customer.superId,
                             txtCustomerObject: text
                         };
                     }
@@ -46,7 +51,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     $this.BlockUI();
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingMasterPost'),
+                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
                         data: para,
                         dataType: 'json'
                     })
@@ -76,7 +81,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
 
     GetAgentBetSetting: function () {
         var data = {
-            custId: Fanex.ExtAcc.Customer.UserId
+            custId: Fanex.ExtAcc.Customer.UserId,
+            parentId: Fanex.ExtAcc.Customer.masterId
         };
 
         $.ajax({
@@ -101,6 +107,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
 
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
+                            parentId: Fanex.ExtAcc.Customer.masterId,
                             txtCustomerObject: text
                         };
                     }
@@ -108,7 +115,70 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     $this.BlockUI();
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingAgentPost'),
+                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        data: para,
+                        dataType: 'json'
+                    })
+                    .success(function (result) {
+                        if (result.ErrorCode == 0) {
+                            Fanex.ExtAcc.Form.Close(false);
+                        }
+                        else {
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html(result.ErrorMessage);
+                        }
+
+                        $.unblockUI(document);
+                    })
+                    .error(function (xhr, status, err) {
+                        $.unblockUI(document);
+                    });
+                }
+            }
+
+            ko.applyBindings(new BetSettingModel());
+        })
+        .error(function (xhr, status, err) {
+            $.unblockUI(document);
+        });
+    },
+    GetMemberBetSetting: function () {
+        var data = {
+            custId: Fanex.ExtAcc.Customer.UserId,
+            parentId: Fanex.ExtAcc.Customer.agentId
+        };
+
+        $.ajax({
+            url: resolveClientUrl('Sportsbook/EditBetSettingMemberGet'),
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var bettingLimit = null;
+            var context = result.context;
+            bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+
+            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
+            bettingLimit.Render(bettingLimitContainer);
+
+            var BetSettingModel = function () {
+                this.saveCustomer = function () {
+                    if (!bettingLimit.Validate()) return;
+                    if (bettingLimit) {
+                        betting = bettingLimit.Save();
+                        var text = JSON.stringify(betting);
+
+                        var para = {
+                            custId: Fanex.ExtAcc.Customer.UserId,
+                            parentId: Fanex.ExtAcc.Customer.agentId,
+                            txtCustomerObject: text
+                        };
+                    }
+
+                    $this.BlockUI();
+
+                    $.ajax({
+                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
                         data: para,
                         dataType: 'json'
                     })

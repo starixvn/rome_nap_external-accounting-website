@@ -59,6 +59,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// </summary>
         protected const string OK = "OK";
 
+        /// <summary>
+        /// Constant object
+        /// </summary>
+        protected const string SiteName = "ExtAcc";
+
         #endregion Constant
 
         /// <summary>
