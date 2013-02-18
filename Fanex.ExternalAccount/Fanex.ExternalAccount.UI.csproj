@@ -1476,9 +1476,6 @@
     <Content Include="Views\Shared\Copy of _LeftMenu.cshtml" />
     <Content Include="Views\Sportsbook\EditBetSetting.cshtml" />
     <Content Include="Views\Sportsbook\EditCommission.cshtml" />
-    <Content Include="Views\Report\DailyWinLoss.cshtml" />
-    <Content Include="Views\Report\DailyWinLoss\Index.cshtml" />
-    <Content Include="Views\Report\WinLossDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
