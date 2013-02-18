@@ -274,7 +274,7 @@ Fanex.ExtAcc.Customer = {
         var itemsAgent = {
             sportbook: { name: "Sportsbook", className: "iconEnableEdit" },
             minPT: { name: "Min PT", className: "iconEnableEdit" },
-            betSetting: { name: "Bet Setting", className: "iconEnableEdit" },
+            betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSettingAgent/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Bet Setting', 871, 500, false, false, 1); } },
             commission: { name: "Commission", className: "iconEnableEdit" },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
