@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.PartialViewBase();
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [AuthorizationAttribute(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditBetSettingMasterGet(int custId)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -37,9 +37,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             IRequestContext currentContext = new RequestContext();
-            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
+            ICustomer bettingLimit = new Customer();
 
-            Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
+            ICustomerService bettingLimitService = new CustomerService();
 
             currentContext = new RequestContext()
             {
@@ -55,12 +55,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            bettingLimit = bettingLimitService.GetCustomerForMasterEditAgent(currentContext);
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        [AuthorizationAttribute(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [AuthorizationAttribute(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditBetSettingMasterPost(int custId, string txtCustomerObject)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();

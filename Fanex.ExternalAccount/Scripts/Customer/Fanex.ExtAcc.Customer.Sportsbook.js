@@ -14,19 +14,23 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-
+            var tmp = result;
+            console.log(JSON.stringify(tmp));
             var bettingLimit = null;
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+
 
             var bettingLimitContainer = document.getElementById('bettingLimitContainer');
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
+
                 this.saveCustomer = function () {
                     if (!bettingLimit.Validate()) return;
                     if (bettingLimit) {
                         betting = bettingLimit.Save();
+                        console.log(betting);
                         var text = JSON.stringify(betting);
 
                         var para = {
@@ -45,15 +49,17 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     .success(function (result) {
                         if (result.ErrorCode == 0) {
                             Fanex.ExtAcc.Form.Close(false);
-                            $.unblockUI(document);
+
                         }
                         else {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.ErrorMessage);
                         }
+
+                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
-
+                        $.unblockUI(document);
                     });
                 }
             }
@@ -62,7 +68,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
 
         })
         .error(function (xhr, status, err) {
-
+            $.unblockUI(document);
         });
     }
 }

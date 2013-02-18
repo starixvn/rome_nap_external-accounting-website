@@ -246,6 +246,7 @@
     <Content Include="bootstrap\winlossdetail\images\spindown-closed.png" />
     <Content Include="Content\Account\Login.css" />
     <Content Include="Content\Customer\Customer.css" />
+    <Content Include="Content\Customer\Customer.Sportsbook.css" />
     <Content Include="Content\Images\ajax-loader.png" />
     <Content Include="Content\Images\balance.png" />
     <Content Include="Content\Images\bg-top.png" />
@@ -603,6 +604,8 @@
     <Content Include="Images\showMargin.png" />
     <Content Include="Images\sort.png" />
     <Content Include="Images\super-btn.png" />
+    <Content Include="PTEngine\BettingLimit.xml" />
+    <Content Include="PTEngine\PTGrid.xml" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\Assets\css\1200.css" />
     <Content Include="Scripts\Assets\css\1200.min.css" />
@@ -1451,6 +1454,8 @@
     <Content Include="Views\User\AddExistUser.cshtml" />
     <Content Include="Views\Group\GrantPermission.cshtml" />
     <None Include="ExcelTemplates\Statement\Statement.xls" />
+    <Content Include="PTEngine\BettingLimitMappingSection.config" />
+    <Content Include="PTEngine\PTMappingSection.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
