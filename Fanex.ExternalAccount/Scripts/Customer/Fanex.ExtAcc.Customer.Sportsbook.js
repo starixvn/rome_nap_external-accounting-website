@@ -14,12 +14,9 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-            var tmp = result;
-            console.log(JSON.stringify(tmp));
             var bettingLimit = null;
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
-
 
             var bettingLimitContainer = document.getElementById('bettingLimitContainer');
             bettingLimit.Render(bettingLimitContainer);
@@ -30,7 +27,6 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     if (!bettingLimit.Validate()) return;
                     if (bettingLimit) {
                         betting = bettingLimit.Save();
-                        console.log(betting);
                         var text = JSON.stringify(betting);
 
                         var para = {
