@@ -125,7 +125,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// JSON base method to render JSON to output stream
         /// </summary>
         /// <param name="data">Data need to render JSON object</param>
-        /// <param name="behavior">Allow Get method by default</param>
+        /// <param name="settings">Allow Get method by default</param>
         /// <returns>ActionResult object</returns>
         public virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         {
@@ -149,6 +149,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             return this.PartialView(objModel);
         }
 
+        /// <summary>
+        /// Exports excel function
+        /// </summary>
+        /// <param name="excelStream">Excel stream</param>
+        /// <param name="fileName">Name of excel file</param>
         protected void ExportToExcel(MemoryStream excelStream, string fileName)
         {
             Response.ContentType = "application/vnd.ms-excel";
@@ -158,6 +163,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             Response.End();
         }
 
+        /// <summary>
+        /// Gets level name of request
+        /// </summary>
+        /// <param name="viewlevel">Level id</param>
+        /// <returns>Level name</returns>
         protected string LevelName(int viewlevel)
         {
             switch (viewlevel)
