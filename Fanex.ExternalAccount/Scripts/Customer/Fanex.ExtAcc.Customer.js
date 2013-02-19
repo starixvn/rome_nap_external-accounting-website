@@ -1115,6 +1115,13 @@ Fanex.ExtAcc.Customer = {
         var divs = $('div');
 
         for (var i = 0; i < divs.length; i++) {
+            if (divs[i].id == div.id && div.className == 'menuInactive') {
+                divs[i].className = 'menuInactive';
+                break;
+            }
+        }
+
+        for (var i = 0; i < divs.length; i++) {
             if ((divs[i].className == 'menuActive' || divs[i].className == 'menuInactive') && divs[i].className == 'menuActive') {
                 $('#editMult').attr('style', 'cursor: pointer !important');
                 $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
