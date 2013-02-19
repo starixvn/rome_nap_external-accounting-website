@@ -1,13 +1,10 @@
 ﻿@using Fanex.PTEngine
-@{
-    var tmpl = new Fanex.PTEngine.Age.Templates.Commission_Template();
-}
 @*<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>*@
 <div style="margin-top: 5px;">
     <table width="100%" border="0" cellpadding="2">
         <tr>
             <td>
-                @tmpl.ToString()
+                @Html.Raw(new Fanex.PTEngine.Age.Templates.Commission_Template())
                 <div id="commissionContainer">
                 </div>
             </td>

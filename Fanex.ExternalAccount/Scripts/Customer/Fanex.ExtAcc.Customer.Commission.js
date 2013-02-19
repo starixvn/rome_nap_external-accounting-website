@@ -15,7 +15,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
         }
     },
 
-    GetMasterCommission: function () {
+    GetMasterCommission: function () {        
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: Fanex.ExtAcc.Customer.superId
@@ -27,9 +27,28 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-            var commission = null;
+            var commission = result.commission;
             var context = result.context;
-            commission = new Fanex.PTEngine.BettingLimit(result.betting);
+
+            if (commission.roleId == 1) {
+                $("#textBoxDiscountAsian").val(commission.discount);
+                $("#textBoxDiscount1x2").val(commission.discount1x2);
+                $("#textBoxDiscountCS").val(commission.discountCS);
+                $("#textBoxDiscountNumber").val(commission.discountNumber);
+                Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
+                Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
+                Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
+                Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
+            }
+            else {
+                Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
+                Fanex.PTEngine.PT_SetSelect($("#groupB")[0], 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
+                Fanex.PTEngine.PT_SetSelect($("#groupC")[0], 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
+                Fanex.PTEngine.PT_SetSelect($("#groupD")[0], 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
+                Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
+                Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+            };
 
             var commissionContainer = document.getElementById('commissionContainer');
             commission.Render(commissionContainer);
