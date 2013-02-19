@@ -16,6 +16,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     },
 
     GetMasterBetSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: Fanex.ExtAcc.Customer.superId
@@ -73,6 +75,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             }
 
             ko.applyBindings(new BetSettingModel());
+
+            $.unblockUI(document);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -80,6 +84,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     },
 
     GetAgentBetSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: Fanex.ExtAcc.Customer.masterId
@@ -137,12 +143,16 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             }
 
             ko.applyBindings(new BetSettingModel());
+
+            $.unblockUI(document);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
         });
     },
     GetMemberBetSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: Fanex.ExtAcc.Customer.agentId
@@ -200,6 +210,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             }
 
             ko.applyBindings(new BetSettingModel());
+
+            $.unblockUI(document);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
