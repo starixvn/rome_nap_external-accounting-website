@@ -33,10 +33,25 @@ Array.prototype.binarySearch = function (value, key) {
     return (!match(this[middle], value)) ? -1 : middle;
 }
 
-
 Fanex.ExtAcc = {
+    $this: null,
+    BlockedUI: false,
     theme: 'classic',
     leftMenuWidth: Cookie.get('layout_1') ? parseInt(Cookie.get('layout_1')) : 300,
+
+    BlockUI: function () {
+        if (!$this.BlockedUI) {
+            $.blockUI({
+                message: '<img src="../../Images/Loading.gif" />',
+                onBlock: function () {
+                    $this.BlockedUI = true;
+                },
+                onUnblock: function () {
+                    $this.BlockedUI = false;
+                }
+            });
+        }
+    },
 
     modules: [
         {
@@ -117,7 +132,7 @@ Fanex.ExtAcc = {
     },
 
     Init: function () {
-        var $this = this;
+        $this = this;
 
         $.blockUI.defaults.css.border = '0px solid #aaa',
         $.blockUI.defaults.css.backgroundColor = "transparent";

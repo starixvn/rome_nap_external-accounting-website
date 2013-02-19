@@ -466,7 +466,7 @@ Fanex.ExtAcc.Customer = {
         };
 
         Fanex.ExtAcc.Form.Close(false);
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $.ajax({ url: resolveClientUrl(editUrl), data: data, type: 'POST' })
         .done(function (data) {
@@ -502,7 +502,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetSuperList: function (custId, dataSource) {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $this.CurrentLevel = $this.Super;
         $this.AllowDoubleComm = true;
@@ -594,7 +594,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetMasterList: function (srecommend, allow, custId, dataSource, superSyncCasino, superSyncBingo, superSyncLiveCasino) {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $this.superId = srecommend;
         $this.CurrentLevel = $this.Master;
@@ -698,7 +698,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetAgentList: function (mrecommend, allow, custId, dataSource, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino) {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $this.masterId = mrecommend;
         $this.CurrentLevel = $this.Agent;
@@ -802,7 +802,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetMemberList: function (recommend, allow, custId, dataSource, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino) {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $this.agentId = recommend;
         $this.CurrentLevel = $this.Member;
@@ -935,7 +935,7 @@ Fanex.ExtAcc.Customer = {
             return false;
         }
 
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $.ajax({ url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val()), type: 'POST' })
         .done(function (data) {
@@ -956,7 +956,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowIpInfo: function (ip) {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
@@ -966,7 +966,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ConfigMultipleDoubleComm: function (custids, allow, index) {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         if (index == 0) {
             $this.MultipleDblCommError = '';
@@ -1053,7 +1053,7 @@ Fanex.ExtAcc.Customer = {
 
             Fanex.ExtAcc.Form.ConfirmBox(title, msg, 450, 170, false, function () {
                 Fanex.ExtAcc.Form.Close(false);
-                $this.BlockUI();
+                Fanex.ExtAcc.BlockUI();
 
                 $.ajax({
                     url: resolveClientUrl('Customer/ConfigDoubleComm'),
@@ -1193,22 +1193,8 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    BlockUI: function () {
-        if (!$this.BlockedUI) {
-            $.blockUI({
-                message: '<img src="../../Images/Loading.gif" />',
-                onBlock: function () {
-                    $this.BlockedUI = true;
-                },
-                onUnblock: function () {
-                    $this.BlockedUI = false;
-                }
-            });
-        }
-    },
-
     GetSearchList: function () {
-        $this.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         var data = Fanex.ExtAcc.Customer.GetParams();
 

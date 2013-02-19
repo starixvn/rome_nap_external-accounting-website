@@ -48,7 +48,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                         };
                     }
 
-                    $this.BlockUI();
+                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/EditCommissionPost'),
@@ -112,7 +112,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                         };
                     }
 
-                    $this.BlockUI();
+                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/EditCommissionPost'),
@@ -175,7 +175,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                         };
                     }
 
-                    $this.BlockUI();
+                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/EditCommissionPost'),

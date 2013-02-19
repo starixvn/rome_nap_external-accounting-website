@@ -14,7 +14,8 @@ Fanex.ExtAcc.Group = {
     $this: null,
 
     Init: function () {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        Fanex.ExtAcc.BlockUI();
+
         $('#mainGrid').css('visibility', 'hidden');
         $this = this;
 
@@ -177,6 +178,8 @@ Fanex.ExtAcc.Group = {
             return false;
         }
 
+        Fanex.ExtAcc.BlockUI();
+
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
 
@@ -189,11 +192,17 @@ Fanex.ExtAcc.Group = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    Fanex.ExtAcc.Form.Close(true);
+                }, 2000);
             }
         })
         .error(function (data) {
@@ -208,6 +217,8 @@ Fanex.ExtAcc.Group = {
             return false;
         }
 
+        Fanex.ExtAcc.BlockUI();
+
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
 
@@ -220,11 +231,20 @@ Fanex.ExtAcc.Group = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    $.unblockUI(document);
+
+                    $this.Init();
+                }, 2000);
             }
         })
         .error(function (data) {
@@ -248,13 +268,21 @@ Fanex.ExtAcc.Group = {
     },
 
     Delete: function (groupId) {
+        Fanex.ExtAcc.BlockUI();
+
         $.ajax({ url: resolveClientUrl('Group/Delete/?groupId=' + groupId), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 alert(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    Fanex.ExtAcc.Form.Close(true);
+                }, 2000);
             }
         })
         .error(function (data) {

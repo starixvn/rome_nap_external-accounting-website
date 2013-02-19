@@ -103,7 +103,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
                 custId: Fanex.ExtAcc.Customer.UserId
             };
 
-            $this.BlockUI();
+            Fanex.ExtAcc.BlockUI();
 
             $.ajax({
                 url: urlTransferCondition,

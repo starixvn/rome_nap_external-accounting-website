@@ -14,7 +14,8 @@ Fanex.ExtAcc.Function = {
     $this: null,
 
     Init: function () {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        Fanex.ExtAcc.BlockUI();
+
         $('#mainGrid').css('visibility', 'hidden');
 
         $this = this;
@@ -380,6 +381,8 @@ Fanex.ExtAcc.Function = {
             return false;
         }
 
+        Fanex.ExtAcc.BlockUI();
+
         var name = $('#FuncName').val();
         var desc = $('#FuncDesc').val();
         var parentId = $('#ParentID').val() != '-1' ? $('#ParentID').val() : '0';
@@ -402,15 +405,26 @@ Fanex.ExtAcc.Function = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    $.unblockUI(document);
+
+                    $this.Init();
+                }, 2000);
             }
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+
+            $.unblockUI(document);
         });
     },
 
@@ -432,6 +446,8 @@ Fanex.ExtAcc.Function = {
             Validators.show($('#DisplayOrder').get(0), 'Please input a number');
             return false;
         }
+
+        Fanex.ExtAcc.BlockUI();
 
         var name = $('#FuncName').val();
         var desc = $('#FuncDesc').val();
@@ -460,26 +476,46 @@ Fanex.ExtAcc.Function = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    $this.Init();
+                }, 2000);
             }
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+
+            $.unblockUI(document);
         });
     },
 
     Activate: function (funcId, isActive) {
+        Fanex.ExtAcc.BlockUI();
+
         $.ajax({ url: resolveClientUrl('Function/UpdateStatus/?funcId=' + funcId + '&isTest=' + isActive), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 alert(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    $this.Init();
+                }, 2000);
             }
         })
         .error(function (data) {
