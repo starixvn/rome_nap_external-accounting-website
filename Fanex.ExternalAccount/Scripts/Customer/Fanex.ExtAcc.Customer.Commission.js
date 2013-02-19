@@ -64,7 +64,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     },
 
     UpdateCommission: function () {
-//        if (!commission.Validate()) return;
+        //        if (!commission.Validate()) return;
         if (commission) {
             if (commission.roleId == 1) {
                 commission.playerDiscount = $("#discountAsian").val();
@@ -73,10 +73,16 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 commission.playerDiscountNumber = $("#discountNumber").val();
             }
             else {
-                Fanex.Customer.SetValueCommissionSettings(commission);
+                commission.groupA = $("#groupA").val();
+                commission.groupB = $("#groupB").val();
+                commission.groupC = $("#groupC").val();
+                commission.groupD = $("#groupD").val();
+                commission.discount1x2 = $("#discount1x2").val();
+                commission.discountCS = $("#discountCS").val();
+                commission.discountNumber = $("#discountNumber").val();
             }
 
-            var text = JSON.stringify(betting);
+            var text = JSON.stringify(commission);
             var para = {
                 custId: Fanex.ExtAcc.Customer.UserId,
                 parentId: Fanex.ExtAcc.Customer.superId,
