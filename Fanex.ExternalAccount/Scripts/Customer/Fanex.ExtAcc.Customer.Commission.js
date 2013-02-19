@@ -47,6 +47,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
+                    Fanex.ExtAcc.BlockUI();
             }
             else {
                 Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
@@ -71,6 +72,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 commission.playerDiscount1x2 = $("#discount1x2").val();
                 commission.playerDiscountCs = $("#discountCS").val();
                 commission.playerDiscountNumber = $("#discountNumber").val();
+                    Fanex.ExtAcc.BlockUI();
             }
             else {
                 commission.groupA = $("#groupA").val();
@@ -90,7 +92,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             };
         }
 
-        $this.BlockUI();
+                    Fanex.ExtAcc.BlockUI();
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditCommissionPost'),

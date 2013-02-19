@@ -260,6 +260,8 @@ Fanex.ExtAcc.User = {
             return false;
         }
 
+        Fanex.ExtAcc.BlockUI();
+
         var name = $('#Username').val();
         var pass = $('#Password').val();
         var firstName = $('#FirstName').val();
@@ -278,15 +280,25 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    $.unblockUI(document);
+
+                    Fanex.ExtAcc.User.Search();
+                }, 2000);
             }
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+
+            $.unblockUI(document);
         });
     },
 
@@ -296,6 +308,8 @@ Fanex.ExtAcc.User = {
             Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 15);
             return false;
         }
+
+        Fanex.ExtAcc.BlockUI();
 
         var name = $('#Username').val();
         var groupId = $('#GroupID').val();
@@ -309,19 +323,32 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    $.unblockUI(document);
+
+                    Fanex.ExtAcc.User.Search();
+                }, 2000);
             }
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+
+            $.unblockUI(document);
         });
     },
 
     Edit: function () {
+        Fanex.ExtAcc.BlockUI();
+
         var firstName = $('#FirstName').val();
         var lastName = $('#LastName').val();
         var groupId = $('#GroupID').val();
@@ -336,26 +363,48 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    $.unblockUI(document);
+
+                    Fanex.ExtAcc.User.Search();
+                }, 2000);
             }
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
+
+            $.unblockUI(document);
         });
     },
 
     Activate: function (userId, isActive) {
+        Fanex.ExtAcc.BlockUI();
+
         $.ajax({ url: resolveClientUrl('User/UpdateStatus/?userId=' + userId + '&isActive=' + isActive), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
+                $.unblockUI(document);
+
                 alert(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(true);
+                Fanex.ExtAcc.Form.Close(false);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    $.unblockUI(document);
+
+                    Fanex.ExtAcc.User.Search();
+                }, 2000);
             }
         })
         .error(function (data) {
@@ -398,7 +447,8 @@ Fanex.ExtAcc.User = {
     },
 
     Search: function (IsFirstLoad) {
-        $.blockUI({ message: '<img src="../../Images/Loading.gif" />' });
+        Fanex.ExtAcc.BlockUI();
+
         var username = '';
         var groupId = null;
 
