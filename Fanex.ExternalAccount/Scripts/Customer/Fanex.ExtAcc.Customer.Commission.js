@@ -24,6 +24,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     },
 
     GetMasterCommission: function () {
+        Fanex.ExtAcc.BlockUI();
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: Fanex.ExtAcc.Customer.superId
@@ -47,7 +48,6 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
-                    Fanex.ExtAcc.BlockUI();
             }
             else {
                 Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
@@ -57,7 +57,9 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
-            };
+            }
+
+            $.unblockUI(document);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -72,7 +74,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 commission.playerDiscount1x2 = $("#discount1x2").val();
                 commission.playerDiscountCs = $("#discountCS").val();
                 commission.playerDiscountNumber = $("#discountNumber").val();
-                    Fanex.ExtAcc.BlockUI();
+                Fanex.ExtAcc.BlockUI();
             }
             else {
                 commission.groupA = $("#groupA").val();
