@@ -162,17 +162,21 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
                         x.FuncID != (int)eFunctions.ManageFunction &&
                         x.FuncID != (int)eFunctions.ManageMenu &&
-                        x.FuncID != (int)eFunctions.SystemConfiguration);
+                        x.FuncID != (int)eFunctions.SystemConfiguration &&
+                        x.FuncID != (int)eFunctions.ExternalGroup);
 
                 ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
                     x.FuncID != (int)eFunctions.ManageFunction &&
                     x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration);
+                    x.FuncID != (int)eFunctions.SystemConfiguration &&
+                    x.FuncID != (int)eFunctions.ExternalGroup);
             }
             else
             {
-                ViewBag.Function = functionList.Where(x => x.ParentID == 0);
-                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0);
+                ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
+                    x.FuncID != (int)eFunctions.ExternalGroup);
+                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
+                    x.FuncID != (int)eFunctions.ExternalGroup);
             }
 
             return this.PartialViewBase();
