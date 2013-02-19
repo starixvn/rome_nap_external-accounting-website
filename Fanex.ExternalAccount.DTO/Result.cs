@@ -4,10 +4,10 @@
 
     public class Result
     {
-        public Result(string errCode = null, string errMsg = null, object resultData = null)
+        public Result(object errCode = null, object errMsg = null, object resultData = null)
         {
-            this.ErrorCode = errCode;
-            this.ErrorMessage = errMsg;
+            this.ErrorCode = errCode != null ? errCode.ToString() : string.Empty;
+            this.ErrorMessage = errMsg != null ? errMsg.ToString(): string.Empty;
             this.ResultData = resultData;
         }
 

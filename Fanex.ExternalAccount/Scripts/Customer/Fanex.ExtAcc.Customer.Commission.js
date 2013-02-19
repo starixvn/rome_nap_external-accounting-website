@@ -92,7 +92,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             };
         }
 
-                    Fanex.ExtAcc.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditCommissionPost'),

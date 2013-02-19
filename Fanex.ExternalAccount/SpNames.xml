@@ -7,7 +7,7 @@
 		<Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="checkin" Plain="0" />
 		<Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="checkin" Plain="0" />
 	</Function>
-	<Function Name="Report">
+	<Function Name="Statement">
 		<Setting Key="Acc_AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="archive" Plain="0" />
 	</Function>
 	<Function Name="Report">
@@ -109,4 +109,9 @@
 		<Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="main" Plain="0" />
 		<Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" Plain="0" />
 	</Function>
+  <Function Name="Edit Commission">
+    <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="main" Plain="0" />
+    <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="main" Plain="0" />
+    <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="main" Plain="0" />
+  </Function>
 </Functions>

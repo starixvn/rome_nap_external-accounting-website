@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             parameters.Add("ip", requestContext.IP);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdMasterComm", parameters);
-            return new DTO.Result(result.Outputs["errorcode"].ToString(), result.Outputs["errormsg"].ToString(), result.ResultSet);
+            return new DTO.Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             parameters.Add("ip", requestContext.IP);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdAgentComm", parameters);
-            return new DTO.Result(result.Outputs["errorcode"].ToString(), result.Outputs["errormsg"].ToString(), result.ResultSet);
+            return new DTO.Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }        
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             parameters.Add("ip", requestContext.IP);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdUserComm", parameters);
-            return new DTO.Result(result.Outputs["errorcode"].ToString(), result.Outputs["errormsg"].ToString(), result.ResultSet);
+            return new DTO.Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
     }
 }

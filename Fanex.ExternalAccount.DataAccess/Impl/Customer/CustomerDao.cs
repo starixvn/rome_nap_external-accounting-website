@@ -77,7 +77,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdUserInfo", param);
 
-            return new Result(result.Outputs["errorcode"].ToString(), result.Outputs["errormsg"].ToString(), result.ResultSet);
+            return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
 
         public Result ResetPassword(int custId, string password, DTO.Request request)
