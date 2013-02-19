@@ -26,6 +26,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     {
         private ICommissionService commissionService = new CommissionService();
 
+        #region Bet Setting
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditBetSetting(int custId)
         {
@@ -145,9 +146,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+        #endregion Bet Setting
 
-
-
+        #region Edit Commission
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditCommission(int custId)
         {
@@ -181,36 +182,30 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditCommissionAgentGet(int custId, int parentId)
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult EditCommissionPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.Indented;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            IRequestContext currentContext = new RequestContext();
-            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
+            ICommissionSetting commissionSetting = JsonConvert.DeserializeObject<CommissionSetting>(txtCustomerObject, settings);
 
-            Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
-
-            currentContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext()
             {
-                FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(),
                 CustId = parentId,
                 TargetCustId = custId,
-                RoleId = (int)CustomerRole.Master,
+                FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                SiteName = SiteName,
-                Language = "En",
-                LangKey = "E",
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
             };
 
-            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-
-            return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
+            DTO.Result result = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
+            
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+        #endregion Edit Commission
     }
 }

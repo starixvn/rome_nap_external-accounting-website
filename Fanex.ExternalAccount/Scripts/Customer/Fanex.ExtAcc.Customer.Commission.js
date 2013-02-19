@@ -3,7 +3,11 @@
 }
 
 Fanex.ExtAcc.Customer.Sportsbook = {
+    commission: null,
+    $this: null,
     Init: function () {
+        $this = this;
+
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterCommission();
         }
@@ -13,9 +17,13 @@ Fanex.ExtAcc.Customer.Sportsbook = {
         else {
             this.GetMemberCommission();
         }
+
+        $('#btnUpdate').click(function (e) {
+            $this.UpdateCommission();
+        });
     },
 
-    GetMasterCommission: function () {        
+    GetMasterCommission: function () {
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: Fanex.ExtAcc.Customer.superId
@@ -27,7 +35,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-            var commission = result.commission;
+            commission = result.commission;
             var context = result.context;
 
             if (commission.roleId == 1) {
@@ -49,176 +57,50 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
             };
-
-            var commissionContainer = document.getElementById('commissionContainer');
-            commission.Render(commissionContainer);
-
-            var CommissionModel = function () {
-                this.saveCustomer = function () {
-                    if (!commission.Validate()) return;
-                    if (commission) {
-                        betting = commission.Save();
-                        var text = JSON.stringify(betting);
-
-                        var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: Fanex.ExtAcc.Customer.superId,
-                            txtCustomerObject: text
-                        };
-                    }
-
-                    $this.BlockUI();
-
-                    $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditCommissionPost'),
-                        data: para,
-                        dataType: 'json'
-                    })
-                    .success(function (result) {
-                        if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
-                        }
-                        else {
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
-                        }
-
-                        $.unblockUI(document);
-                    })
-                    .error(function (xhr, status, err) {
-                        $.unblockUI(document);
-                    });
-                }
-            }
-
-            ko.applyBindings(new CommissionModel());
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
         });
     },
 
-    GetAgentCommission: function () {
-        var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.masterId
-        };
+    UpdateCommission: function () {
+//        if (!commission.Validate()) return;
+        if (commission) {
+            if (commission.roleId == 1) {
+                commission.playerDiscount = $("#discountAsian").val();
+                commission.playerDiscount1x2 = $("#discount1x2").val();
+                commission.playerDiscountCs = $("#discountCS").val();
+                commission.playerDiscountNumber = $("#discountNumber").val();
+            }
+            else {
+                Fanex.Customer.SetValueCommissionSettings(commission);
+            }
+
+            var text = JSON.stringify(betting);
+            var para = {
+                custId: Fanex.ExtAcc.Customer.UserId,
+                parentId: Fanex.ExtAcc.Customer.superId,
+                txtCustomerObject: text
+            };
+        }
+
+        $this.BlockUI();
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditCommissionAgentGet'),
-            data: data,
+            url: resolveClientUrl('Sportsbook/EditCommissionPost'),
+            data: para,
             dataType: 'json'
         })
         .success(function (result) {
-            var commission = null;
-            var context = result.context;
-            commission = new Fanex.PTEngine.BettingLimit(result.betting);
-
-            var commissionContainer = document.getElementById('commissionContainer');
-            commission.Render(commissionContainer);
-
-            var CommissionModel = function () {
-                this.saveCustomer = function () {
-                    if (!commission.Validate()) return;
-                    if (commission) {
-                        betting = commission.Save();
-                        var text = JSON.stringify(betting);
-
-                        var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: Fanex.ExtAcc.Customer.masterId,
-                            txtCustomerObject: text
-                        };
-                    }
-
-                    $this.BlockUI();
-
-                    $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditCommissionPost'),
-                        data: para,
-                        dataType: 'json'
-                    })
-                    .success(function (result) {
-                        if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
-                        }
-                        else {
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
-                        }
-
-                        $.unblockUI(document);
-                    })
-                    .error(function (xhr, status, err) {
-                        $.unblockUI(document);
-                    });
-                }
+            if (result.ErrorCode == 0) {
+                Fanex.ExtAcc.Form.Close(false);
+            }
+            else {
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(result.ErrorMessage);
             }
 
-            ko.applyBindings(new CommissionModel());
-        })
-        .error(function (xhr, status, err) {
             $.unblockUI(document);
-        });
-    },
-    GetMemberCommission: function () {
-        var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.agentId
-        };
-
-        $.ajax({
-            url: resolveClientUrl('Sportsbook/EditCommissionMemberGet'),
-            data: data,
-            dataType: 'json'
-        })
-        .success(function (result) {
-            var commission = null;
-            var context = result.context;
-            commission = new Fanex.PTEngine.BettingLimit(result.betting);
-
-            var commissionContainer = document.getElementById('commissionContainer');
-            commission.Render(commissionContainer);
-
-            var CommissionModel = function () {
-                this.saveCustomer = function () {
-                    if (!commission.Validate()) return;
-                    if (commission) {
-                        betting = commission.Save();
-                        var text = JSON.stringify(betting);
-
-                        var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: Fanex.ExtAcc.Customer.agentId,
-                            txtCustomerObject: text
-                        };
-                    }
-
-                    $this.BlockUI();
-
-                    $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditCommissionPost'),
-                        data: para,
-                        dataType: 'json'
-                    })
-                    .success(function (result) {
-                        if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
-                        }
-                        else {
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
-                        }
-
-                        $.unblockUI(document);
-                    })
-                    .error(function (xhr, status, err) {
-                        $.unblockUI(document);
-                    });
-                }
-            }
-
-            ko.applyBindings(new CommissionModel());
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
