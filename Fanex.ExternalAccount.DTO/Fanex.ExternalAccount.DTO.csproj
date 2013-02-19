@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="Statement\Statement.cs" />
