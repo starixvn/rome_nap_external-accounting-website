@@ -27,18 +27,18 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-            var bettingLimit = null;
+            var commission = null;
             var context = result.context;
-            bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+            commission = new Fanex.PTEngine.BettingLimit(result.betting);
 
-            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
-            bettingLimit.Render(bettingLimitContainer);
+            var commissionContainer = document.getElementById('commissionContainer');
+            commission.Render(commissionContainer);
 
             var CommissionModel = function () {
                 this.saveCustomer = function () {
-                    if (!bettingLimit.Validate()) return;
-                    if (bettingLimit) {
-                        betting = bettingLimit.Save();
+                    if (!commission.Validate()) return;
+                    if (commission) {
+                        betting = commission.Save();
                         var text = JSON.stringify(betting);
 
                         var para = {
@@ -91,18 +91,18 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-            var bettingLimit = null;
+            var commission = null;
             var context = result.context;
-            bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+            commission = new Fanex.PTEngine.BettingLimit(result.betting);
 
-            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
-            bettingLimit.Render(bettingLimitContainer);
+            var commissionContainer = document.getElementById('commissionContainer');
+            commission.Render(commissionContainer);
 
             var CommissionModel = function () {
                 this.saveCustomer = function () {
-                    if (!bettingLimit.Validate()) return;
-                    if (bettingLimit) {
-                        betting = bettingLimit.Save();
+                    if (!commission.Validate()) return;
+                    if (commission) {
+                        betting = commission.Save();
                         var text = JSON.stringify(betting);
 
                         var para = {
@@ -154,18 +154,18 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             dataType: 'json'
         })
         .success(function (result) {
-            var bettingLimit = null;
+            var commission = null;
             var context = result.context;
-            bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+            commission = new Fanex.PTEngine.BettingLimit(result.betting);
 
-            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
-            bettingLimit.Render(bettingLimitContainer);
+            var commissionContainer = document.getElementById('commissionContainer');
+            commission.Render(commissionContainer);
 
             var CommissionModel = function () {
                 this.saveCustomer = function () {
-                    if (!bettingLimit.Validate()) return;
-                    if (bettingLimit) {
-                        betting = bettingLimit.Save();
+                    if (!commission.Validate()) return;
+                    if (commission) {
+                        betting = commission.Save();
                         var text = JSON.stringify(betting);
 
                         var para = {
