@@ -48,6 +48,10 @@
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4787.16346, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -58,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\Customer\CommissionService.cs" />
     <Compile Include="Impl\Statement\StatementService.cs" />
+    <Compile Include="Interface\Customer\ICommissionService.cs" />
     <Compile Include="Interface\Customer\IMemberService.cs" />
     <Compile Include="Interface\Customer\IAgentService.cs" />
     <Compile Include="Interface\Customer\IMasterService.cs" />

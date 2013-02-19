@@ -45,6 +45,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTEngine">
+      <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
@@ -59,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Base\DAOBase.cs" />
+    <Compile Include="Impl\Customer\CommissionDao.cs" />
     <Compile Include="Impl\Customer\CustomerDao.cs" />
     <Compile Include="Impl\Customer\MemberDao.cs" />
     <Compile Include="Impl\Customer\AgentDao.cs" />
@@ -72,6 +76,7 @@
     <Compile Include="Impl\UserControl\MenuDao.cs" />
     <Compile Include="DbTypes.cs" />
     <Compile Include="Impl\UserControl\User.cs" />
+    <Compile Include="Interface\Customer\ICommissionDao.cs" />
     <Compile Include="Interface\Customer\IAgentDao.cs" />
     <Compile Include="Interface\Customer\ICustomerDao.cs" />
     <Compile Include="Interface\Customer\IData.cs" />

@@ -16,12 +16,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     using Fanex.PTEngine.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class SportsbookController : BaseController
     {
+        private ICommissionService commissionService = new CommissionService();
+
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditBetSetting(int custId)
         {
@@ -158,12 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            IRequestContext currentContext = new RequestContext();
-            IBettingLimit<BettingLimitItem> bettingLimit = new BettingLimit();
-
-            Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
-
-            currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext()
             {
                 FormId = FormType.EditPT,
                 UserName = CurrentSession.UserName.ToUpper(),
@@ -177,9 +176,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            ICommissionSetting commissionSetting = commissionService.GetCommission(currentContext);
 
-            return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
+            return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
