@@ -99,8 +99,8 @@
 <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
 <script type="text/javascript">
     $('#ParentID').combobox();
+    var select = document.getElementById('ParentID');
     $(document).ready(function () {
-        var select = document.getElementById('ParentID');
         $(".groupCboMenu input").val(select.options[@counter].text);
         $(".groupCboMenu input").attr("readonly", "true");
         $(".groupCboMenu input").bind("click", function () {

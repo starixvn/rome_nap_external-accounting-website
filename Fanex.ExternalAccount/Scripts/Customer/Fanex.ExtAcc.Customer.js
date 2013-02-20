@@ -119,17 +119,17 @@ Fanex.ExtAcc.Customer = {
             suspended = null;
         }
 
-        var data = {
-            srecommend: Fanex.ExtAcc.Customer.superId,
-            mrecommend: Fanex.ExtAcc.Customer.masterId,
-            recommend: Fanex.ExtAcc.Customer.agentId,
-            custId: null,
-            groupName: $('#selectedGroupName').html().trim() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            enabled: enabled,
-            closed: closed,
-            suspended: suspended,
-            username: $('#txtUserName').val()
-        };
+        var data = new Object();
+
+        data.srecommend = Fanex.ExtAcc.Customer.superId;
+        data.mrecommend = Fanex.ExtAcc.Customer.masterId;
+        data.recommend = Fanex.ExtAcc.Customer.agentId;
+        data.custId = null;
+        data.groupName = $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html();
+        data.enabled = enabled;
+        data.closed = closed;
+        data.suspended = suspended;
+        data.username = $('#txtUserName').val();
 
         return data;
     },

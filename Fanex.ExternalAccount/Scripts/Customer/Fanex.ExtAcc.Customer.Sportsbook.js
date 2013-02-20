@@ -18,10 +18,10 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     GetMasterBetSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.superId
-        };
+        var data = new Object();
+
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditBetSettingMasterGet'),
@@ -86,10 +86,10 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     GetAgentBetSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.masterId
-        };
+        var data = new Object();
+
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditBetSettingAgentGet'),
@@ -153,10 +153,9 @@ Fanex.ExtAcc.Customer.Sportsbook = {
     GetMemberBetSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.agentId
-        };
+        var data = new Object();
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditBetSettingMemberGet'),
