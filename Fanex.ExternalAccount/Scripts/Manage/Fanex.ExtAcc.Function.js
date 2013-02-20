@@ -158,7 +158,7 @@ Fanex.ExtAcc.Function = {
                 $.ajax(url).success(function (result) {
                     var groups = '';
 
-                    result.forEach(function (data) {
+                    $.each(data, function () {
                         groups += '<option value="' + data.GroupID + '"' + (data.HasPermission ? ' selected="selected">' : '>') + data.GroupName + '</option>';
                     });
 
