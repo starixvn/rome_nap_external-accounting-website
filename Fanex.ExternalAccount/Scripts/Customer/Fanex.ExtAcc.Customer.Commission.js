@@ -2,7 +2,7 @@
     Fanex.ExtAcc.Customer.Commission = {};
 }
 
-Fanex.ExtAcc.Customer.Sportsbook = {
+Fanex.ExtAcc.Customer.Commission = {
     commission: null,
     $this: null,
     Init: function () {
@@ -119,5 +119,5 @@ Fanex.ExtAcc.Customer.Sportsbook = {
 }
 
 $(document).ready(function () {
-    Fanex.ExtAcc.Customer.Sportsbook.Init();
+    Fanex.ExtAcc.Customer.Commission.Init();
 });
