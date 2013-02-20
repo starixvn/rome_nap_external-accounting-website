@@ -158,8 +158,8 @@ Fanex.ExtAcc.Function = {
                 $.ajax(url).success(function (result) {
                     var groups = '';
 
-                    result.forEach(function (data) {
-                        groups += '<option value="' + data.GroupID + '"' + (data.HasPermission ? ' selected="selected">' : '>') + data.GroupName + '</option>';
+                    $.each(result, function (i) {
+                        groups += '<option value="' + result[i].GroupID + '"' + (result[i].HasPermission ? ' selected="selected">' : '>') + result[i].GroupName + '</option>';
                     });
 
                     $('#groups').html(groups);
@@ -278,8 +278,8 @@ Fanex.ExtAcc.Function = {
             $.ajax(url).success(function (result) {
                 var groups = '';
 
-                result.forEach(function (data) {
-                    groups += '<option value="' + data.GroupID + '"' + (data.HasPermission ? ' selected="selected">' : '>') + data.GroupName + '</option>';
+                $.each(result, function (i) {
+                    groups += '<option value="' + result[i].GroupID + '"' + (result[i].HasPermission ? ' selected="selected">' : '>') + result[i].GroupName + '</option>';
                 });
 
                 $('#groupsAdd').html(groups);
