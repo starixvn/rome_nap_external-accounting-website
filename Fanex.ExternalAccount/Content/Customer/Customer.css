@@ -183,3 +183,44 @@ tr.rowTransferCondition
 	vertical-align: top !important;
 	height: 20px !important;
 }
+
+
+.commission
+{
+	background-color: #F7F0E4;
+	border: 1px solid #B7B7B7;
+	float: left;
+	min-width: 841px;
+	width: 841px;
+}
+.headerTab
+{
+	background-color: #D4E3EB;
+	border-bottom: 1px solid #B7B7B7;
+	clear: both;
+	color: #464646;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 28px;
+	text-align: center;
+	text-indent: 5px;
+}
+.pb3 {padding-bottom: 5px;}
+.pt3 {padding-top: 5px;}
+.groupCom
+{
+	text-align: right;
+	width: 80px;
+	padding-right: 5px;
+}
+.widthGroup
+{
+	width: 70px;
+}
+.line
+{
+	background-color: #B7B7B7;
+	height: 1px;
+	margin: 2px 0;
+	min-width: 842px;
+}
