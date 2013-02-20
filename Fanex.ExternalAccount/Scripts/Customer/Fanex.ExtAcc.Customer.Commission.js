@@ -19,7 +19,7 @@ Fanex.ExtAcc.Customer.Commission = {
         }
 
         $('#btnUpdate').click(function (e) {
-            $this.UpdateCommission();
+            Fanex.ExtAcc.Customer.Commission.UpdateCommission();
         });
     },
 
