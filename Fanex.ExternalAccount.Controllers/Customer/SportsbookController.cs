@@ -156,7 +156,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditCommissionMasterGet(int custId, int parentId)
+        public ActionResult EditCommissionGet(int custId, int parentId)
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;

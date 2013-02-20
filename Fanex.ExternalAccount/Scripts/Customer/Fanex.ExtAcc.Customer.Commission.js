@@ -9,10 +9,10 @@ Fanex.ExtAcc.Customer.Commission = {
         $this = this;
 
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            this.GetMasterCommission();
+            this.GetCommission(4);
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            this.GetAgentCommission();
+            this.GetCommission(3);
         }
         else {
             this.GetMemberCommission();
@@ -23,15 +23,15 @@ Fanex.ExtAcc.Customer.Commission = {
         });
     },
 
-    GetMasterCommission: function () {
+    GetCommission: function (parentRoleId) {
         Fanex.ExtAcc.BlockUI();
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.superId
+            parentId: parentRoleId == 4 ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId
         };
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditCommissionMasterGet'),
+            url: resolveClientUrl('Sportsbook/EditCommissionGet'),
             data: data,
             dataType: 'json'
         })
@@ -67,7 +67,7 @@ Fanex.ExtAcc.Customer.Commission = {
     },
 
     UpdateCommission: function () {
-        //        if (!commission.Validate()) return;
+        // if (!commission.Validate()) return;
         if (commission) {
             if (commission.roleId == 1) {
                 commission.playerDiscount = $("#discountAsian").val();
