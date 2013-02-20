@@ -138,7 +138,8 @@ Fanex.ExtAcc.User = {
                     bodyRows: bodyRows,
                     gridExpandHeight: 130,
                     marginRight: 2,
-                    showDistinctRow: false
+                    showDistinctRow: false,
+                    allowTruncate: true
                 };
 
                 if (bodyRows.length == 0) {
@@ -268,16 +269,16 @@ Fanex.ExtAcc.User = {
         var lastName = $('#LastName').val();
         var groupId = $('#GroupID').val();
 
-        var editUrl = 'User/Add/?';
-        var params = '';
+        var editUrl = 'User/Add';
+        var params = new Object();
 
-        params += '&username=' + name;
-        params += '&pwd=' + pass;
-        params += '&firstName=' + firstName;
-        params += '&lastName=' + lastName;
-        params += '&groupId=' + groupId;
+        params.username = name;
+        params.pwd = pass;
+        params.firstName = firstName;
+        params.lastName = lastName;
+        params.groupId = groupId;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -315,12 +316,12 @@ Fanex.ExtAcc.User = {
         var groupId = $('#GroupID').val();
 
         var editUrl = 'User/AddExist/?';
-        var params = '';
+        var params = new Object();
 
-        params += '&username=' + name;
-        params += '&groupId=' + groupId;
+        params.username = name;
+        params.groupId = groupId;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -353,14 +354,14 @@ Fanex.ExtAcc.User = {
         var lastName = $('#LastName').val();
         var groupId = $('#GroupID').val();
 
-        var editUrl = 'User/Edit/?';
-        var params = 'custId=' + $('#UserID').val();
+        var editUrl = 'User/Edit';
+        var params = new Object();
+        params.custId = $('#UserID').val();
+        params.firstName = firstName;
+        params.lastName = lastName;
+        params.groupId = groupId;
 
-        params += '&firstName=' + firstName;
-        params += '&lastName=' + lastName;
-        params += '&groupId=' + groupId;
-
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -431,7 +432,11 @@ Fanex.ExtAcc.User = {
             return false;
         }
 
-        $.ajax({ url: resolveClientUrl('User/ResetPwd/?userId=' + $('#UserID').val() + '&pwd=' + $('#Password').val()), type: 'POST' })
+        var params = new Object();
+        params.userId = $('#UserID').val();
+        params.pwd = $('#Password').val();
+
+        $.ajax({ url: resolveClientUrl('User/ResetPwd'), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $('#errMsg').css('display', 'block');

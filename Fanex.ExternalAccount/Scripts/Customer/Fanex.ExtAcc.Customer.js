@@ -185,7 +185,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
 
         itemsMaster = {
-            sportbook: { name: "Sportsbook", className: "iconEnableEdit" },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Bet Setting', 871, 600, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit" },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSetting/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Bet Setting', 871, 500, false, false, 1); } },
             commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommission/?custId=' + Fanex.ExtAcc.Customer.UserId + '&isMemberCommission=0'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
@@ -456,7 +456,7 @@ Fanex.ExtAcc.Customer = {
         var editUrl = 'Customer/EditInfoPost';
 
         var data = {
-            custId: $('#CustId').val(),
+            custId: Fanex.ExtAcc.Customer.UserId,
             firstName: Fanex.ExtAcc.Customer.EscapeHtml(firstName),
             lastName: Fanex.ExtAcc.Customer.EscapeHtml(lastName),
             homePhone: Fanex.ExtAcc.Customer.EscapeHtml(homePhone),

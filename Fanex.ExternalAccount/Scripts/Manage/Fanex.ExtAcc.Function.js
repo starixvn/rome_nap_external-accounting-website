@@ -105,7 +105,8 @@ Fanex.ExtAcc.Function = {
                 bodyRows: bodyRows,
                 gridExpandHeight: 100,
                 marginRight: 2,
-                showDistinctRow: false
+                showDistinctRow: false,
+                allowTruncate: true
             };
 
             $this.RenderGrid(options);
@@ -391,18 +392,18 @@ Fanex.ExtAcc.Function = {
         var newGroups = $('#newGroups').val();
         var key = $('#FuncKey').val();
 
-        var editUrl = 'Function/Add/?';
-        var params = '';
+        var editUrl = 'Function/Add';
+        var params = new Object();
 
-        params += '&name=' + name;
-        params += '&key=' + key;
-        params += '&desc=' + desc;
-        params += '&parentId=' + parentId;
-        params += '&parent=' + parent;
-        params += '&order=' + order;
-        params += '&groups=' + newGroups;
+        params.name = name;
+        params.key = key;
+        params.desc = desc;
+        params.parentId = parentId;
+        params.parent = parent;
+        params.order = order;
+        params.groups = newGroups;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -455,18 +456,18 @@ Fanex.ExtAcc.Function = {
             newGroups = oldGroups;
         }
 
-        var editUrl = 'Function/Edit/?';
-        var params = 'funcId=' + funcId;
+        var editUrl = 'Function/Edit';
+        var params = new Object();
+        params.funcId = funcId;
+        params.name = name;
+        params.desc = desc;
+        params.parentId = parentId;
+        params.parent = parent;
+        params.order = order;
+        params.oldGroups = oldGroups;
+        params.groups = newGroups;
 
-        params += '&name=' + name;
-        params += '&desc=' + desc;
-        params += '&parentId=' + parentId;
-        params += '&parent=' + parent;
-        params += '&order=' + order;
-        params += '&oldGroups=' + oldGroups;
-        params += '&groups=' + newGroups;
-
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);

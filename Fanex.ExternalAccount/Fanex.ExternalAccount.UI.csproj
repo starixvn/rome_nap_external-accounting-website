@@ -42,6 +42,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\Dependencies\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Age.UI.Components">
+      <HintPath>..\Dependencies\Fanex.Age.UI.Components.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.96, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
@@ -653,6 +656,7 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Commission.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Sportsbook.js" />
@@ -1487,6 +1491,7 @@
     <Content Include="Views\Shared\Copy of _LeftMenu.cshtml" />
     <Content Include="Views\Sportsbook\EditBetSetting.cshtml" />
     <Content Include="Views\Sportsbook\EditCommission.cshtml" />
+    <Content Include="Views\Sportsbook\EditPT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

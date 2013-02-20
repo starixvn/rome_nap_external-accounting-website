@@ -12,12 +12,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTEngine.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Fanex.ExternalAccount.Service.Interface.Customer;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
 
     /// <summary>
     /// TODO: Update summary.
@@ -27,6 +27,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         private ICommissionService commissionService = new CommissionService();
 
         #region Bet Setting
+
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditBetSetting(int custId)
         {
@@ -146,9 +147,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+
         #endregion Bet Setting
 
         #region Edit Commission
+
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditCommission(int custId)
         {
@@ -215,9 +218,48 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 result = commissionService.UpdateCommissionMember(commissionSetting, requestContext);
             }
-            
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+
         #endregion Edit Commission
+
+        #region PT Setting
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditPT(/*int custId, int parentId*/)
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditPTMasterGet(int custId, int parentId)
+        {
+            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var context = new RequestContext()
+            {
+                AdminId = CurrentSession.UserId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.EditPT,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                RoleId = (int)CustomerRole.Super,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = CurrentSession.UserName.ToUpper()
+            };
+            var customer = ptSetting.GetCustomerForSuperEditMaster(context);
+
+            return this.JsonBase(new { customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
+        #endregion PT Setting
     }
 }

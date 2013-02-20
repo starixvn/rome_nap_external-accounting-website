@@ -183,13 +183,13 @@ Fanex.ExtAcc.Group = {
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
 
-        var editUrl = 'Group/Add/?';
-        var params = '';
+        var editUrl = 'Group/Add';
+        var params = new Object();
 
-        params += '&name=' + name;
-        params += '&description=' + desc;
+        params.name = name;
+        params.description = desc;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -222,13 +222,13 @@ Fanex.ExtAcc.Group = {
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
 
-        var editUrl = 'Group/Edit/?';
-        var params = 'groupId=' + $('#GroupID').val();
+        var editUrl = 'Group/Edit';
+        var params = new Object();
+        params.groupId = $('#GroupID').val();
+        params.groupName = name;
+        params.description = desc;
 
-        params += '&groupName=' + name;
-        params += '&description=' + desc;
-
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
