@@ -158,7 +158,7 @@ Fanex.ExtAcc.Function = {
                 $.ajax(url).success(function (result) {
                     var groups = '';
 
-                    $.each(data, function () {
+                    result.forEach(function (data) {
                         groups += '<option value="' + data.GroupID + '"' + (data.HasPermission ? ' selected="selected">' : '>') + data.GroupName + '</option>';
                     });
 
@@ -411,14 +411,7 @@ Fanex.ExtAcc.Function = {
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(false);
-
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    $.unblockUI(document);
-
-                    $this.Init();
-                }, 2000);
+                Fanex.ExtAcc.Form.Close(true, 2000);
             }
         })
         .error(function (data) {
@@ -482,13 +475,7 @@ Fanex.ExtAcc.Function = {
                 $('#errMsg').html(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(false);
-
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $this.Init();
-                }, 2000);
+                Fanex.ExtAcc.Form.Close(true, 2000);
             }
         })
         .error(function (data) {
@@ -509,13 +496,7 @@ Fanex.ExtAcc.Function = {
                 alert(data.ErrorMessage);
             }
             else {
-                Fanex.ExtAcc.Form.Close(false);
-
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $this.Init();
-                }, 2000);
+                Fanex.ExtAcc.Form.Close(true, 2000);
             }
         })
         .error(function (data) {
