@@ -274,8 +274,8 @@ Fanex.ExtAcc.User = {
 
         params.username = name;
         params.pwd = pass;
-        params.firstName = firstName;
-        params.lastName = lastName;
+        params.firstName = Fanex.ExtAcc.EscapeHtml(firstName);
+        params.lastName = Fanex.ExtAcc.EscapeHtml(lastName);
         params.groupId = groupId;
 
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
@@ -318,7 +318,7 @@ Fanex.ExtAcc.User = {
         var editUrl = 'User/AddExist/?';
         var params = new Object();
 
-        params.username = name;
+        params.username = Fanex.ExtAcc.EscapeHtml(name);
         params.groupId = groupId;
 
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
@@ -357,8 +357,8 @@ Fanex.ExtAcc.User = {
         var editUrl = 'User/Edit';
         var params = new Object();
         params.custId = $('#UserID').val();
-        params.firstName = firstName;
-        params.lastName = lastName;
+        params.firstName = Fanex.ExtAcc.EscapeHtml(firstName);
+        params.lastName = Fanex.ExtAcc.EscapeHtml(lastName);
         params.groupId = groupId;
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })

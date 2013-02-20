@@ -186,8 +186,8 @@ Fanex.ExtAcc.Group = {
         var editUrl = 'Group/Add';
         var params = new Object();
 
-        params.name = name;
-        params.description = desc;
+        params.name = Fanex.ExtAcc.EscapeHtml(name);
+        params.description = Fanex.ExtAcc.EscapeHtml(desc);
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
@@ -225,8 +225,8 @@ Fanex.ExtAcc.Group = {
         var editUrl = 'Group/Edit';
         var params = new Object();
         params.groupId = $('#GroupID').val();
-        params.groupName = name;
-        params.description = desc;
+        params.groupName = Fanex.ExtAcc.EscapeHtml(name);
+        params.description = Fanex.ExtAcc.EscapeHtml(desc);
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {

@@ -143,27 +143,6 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    EscapeHtml: function (string) {
-        var result = '';
-        if (string.length < 1) {
-            return result;
-        }
-
-        for (var i = 0; i < string.length; i++) {
-            if (string.charAt(i) == "&" && string.length - i - 1 >= 4 && string.substr(i, 4) != "&amp;") {
-                result = result + "&amp;";
-            } else if (string.charAt(i) == "<") {
-                result = result + "&lt;";
-            } else if (string.charAt(i) == ">") {
-                result = result + "&gt;";
-            } else {
-                result = result + string.charAt(i);
-            }
-        }
-
-        return result;
-    },
-
     ShowEditSuper: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
@@ -457,12 +436,12 @@ Fanex.ExtAcc.Customer = {
 
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
-            firstName: Fanex.ExtAcc.Customer.EscapeHtml(firstName),
-            lastName: Fanex.ExtAcc.Customer.EscapeHtml(lastName),
-            homePhone: Fanex.ExtAcc.Customer.EscapeHtml(homePhone),
-            mobilePhone: Fanex.ExtAcc.Customer.EscapeHtml(mobilePhone),
-            email: Fanex.ExtAcc.Customer.EscapeHtml(email),
-            fax: Fanex.ExtAcc.Customer.EscapeHtml(fax)
+            firstName: Fanex.ExtAcc.EscapeHtml(firstName),
+            lastName: Fanex.ExtAcc.EscapeHtml(lastName),
+            homePhone: Fanex.ExtAcc.EscapeHtml(homePhone),
+            mobilePhone: Fanex.ExtAcc.EscapeHtml(mobilePhone),
+            email: Fanex.ExtAcc.EscapeHtml(email),
+            fax: Fanex.ExtAcc.EscapeHtml(fax)
         };
 
         Fanex.ExtAcc.Form.Close(false);
