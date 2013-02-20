@@ -26,7 +26,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditBetSettingMasterGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var bettingLimit = null;
@@ -94,7 +95,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditBetSettingAgentGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var bettingLimit = null;
@@ -160,7 +162,8 @@ Fanex.ExtAcc.Customer.Sportsbook = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditBetSettingMemberGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var bettingLimit = null;
