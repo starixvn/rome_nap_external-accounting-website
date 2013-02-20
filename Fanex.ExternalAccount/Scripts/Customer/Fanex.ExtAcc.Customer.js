@@ -104,7 +104,7 @@ Fanex.ExtAcc.Customer = {
             suspended = false;
         }
         else if ($('#customerStatus').val() == '2') {
-            enabled = false;
+            enabled = null;
             closed = true;
             suspended = null;
         }
