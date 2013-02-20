@@ -303,9 +303,9 @@
 
 .freegrid .row_footer table thead th, .freegrid .col_footer table thead th
 {
-    background: #dce2bc !important;
-    background: -moz-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
-    background: -webkit-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
+    background: #f1f1a6 !important;
+    background: -moz-linear-gradient(#f1f1a6, #f1f1a6) #f1f1a6 !important;
+    background: -webkit-linear-gradient(#f1f1a6, #f1f1a6) #f1f1a6 !important;
     color: #4F4F4F;
 }
 
@@ -326,7 +326,7 @@
 .freegrid td, .freegrid .grid-fixed-table td
 {
     background-color: #fff;
-    line-height: inherit;
+    line-height: 18px;
     overflow: hidden;
     vertical-align: middle;
     white-space: normal;
@@ -460,7 +460,9 @@ div.divSorter.desc {
     background-position: 0 -53px !important;
 }
 
-.freegrid .parent-row td {
+.freegrid .parent-row td 
+{
+    background-color: #C2D9EC;
     color: #30465D;
     font-weight: bold;
 }
