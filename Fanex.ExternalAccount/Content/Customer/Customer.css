@@ -193,10 +193,36 @@ tr.rowTransferCondition
 	min-width: 841px;
 	width: 841px;
 }
+.commissionHeader
+{
+	color: Black;
+	font-weight: bold;
+}
+.commissionBlock1
+{
+	border-top: 1px solid #B7B7B7;
+	float: left;
+	line-height: 28px;
+	text-align: center;
+	vertical-align: middle;
+	width: 260px;
+	padding-right: 5px;
+	text-align: right;
+}
+.commissionBlock2
+{
+	border-left: 1px solid #B7B7B7;
+	border-top: 1px solid #B7B7B7;
+	float: left;
+	line-height: 28px;
+	text-align: center;
+	vertical-align: middle;
+	width: 285px;
+	padding: 2px 1px 1px;
+}
 .headerTab
 {
 	background-color: #D4E3EB;
-	border-bottom: 1px solid #B7B7B7;
 	clear: both;
 	color: #464646;
 	font-size: 12px;
@@ -206,7 +232,7 @@ tr.rowTransferCondition
 	text-indent: 5px;
 }
 .pb3 {padding-bottom: 5px;}
-.pt3 {padding-top: 5px;}
+.pt3 {padding-top: 5px; border-top: 1px solid #B7B7B7;}
 .groupCom
 {
 	text-align: right;

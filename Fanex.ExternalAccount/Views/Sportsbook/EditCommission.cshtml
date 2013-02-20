@@ -2,7 +2,14 @@
     <table width="100%" border="0" cellpadding="2">
         <tr>
             <td>
-                @Html.Raw(new Fanex.PTEngine.Age.Templates.Commission_Template())
+                @if ((string.IsNullOrEmpty(Request["isMemberCommission"]) ? "1" : Request["isMemberCommission"].ToString()) != "1")
+                {
+                    @Html.Raw(new Fanex.PTEngine.Age.Templates.Commission_Template())
+                }
+                else
+                {
+                    @Html.Raw(new Fanex.PTEngine.Age.Templates.AddNewMember_CommissionBlock_Block())
+                }
                 <div id="commissionContainer">
                 </div>
             </td>

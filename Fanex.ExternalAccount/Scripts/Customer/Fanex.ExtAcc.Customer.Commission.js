@@ -4,18 +4,22 @@
 
 Fanex.ExtAcc.Customer.Commission = {
     commission: null,
+    currentLevel: 1,
     $this: null,
     Init: function () {
         $this = this;
 
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            this.GetCommission(4);
+            this.GetCommission(Fanex.ExtAcc.Customer.superId);
+            this.currentLevel = 3;
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            this.GetCommission(3);
+            this.GetCommission(Fanex.ExtAcc.Customer.masterId);
+            this.currentLevel = 2;
         }
         else {
-            this.GetMemberCommission();
+            this.GetCommission(Fanex.ExtAcc.Customer.agentId);
+            this.currentLevel = 1;
         }
 
         $('#btnUpdate').click(function (e) {
@@ -23,11 +27,11 @@ Fanex.ExtAcc.Customer.Commission = {
         });
     },
 
-    GetCommission: function (parentRoleId) {
+    GetCommission: function (parentId) {
         Fanex.ExtAcc.BlockUI();
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: parentRoleId == 4 ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId
+            parentId: parentId
         };
 
         $.ajax({
@@ -38,8 +42,7 @@ Fanex.ExtAcc.Customer.Commission = {
         .success(function (result) {
             commission = result.commission;
             var context = result.context;
-
-            if (commission.roleId == 1) {
+            if ($this.currentLevel == 1) {
                 $("#textBoxDiscountAsian").val(commission.discount);
                 $("#textBoxDiscount1x2").val(commission.discount1x2);
                 $("#textBoxDiscountCS").val(commission.discountCS);
@@ -69,12 +72,11 @@ Fanex.ExtAcc.Customer.Commission = {
     UpdateCommission: function () {
         // if (!commission.Validate()) return;
         if (commission) {
-            if (commission.roleId == 1) {
+            if ($this.currentLevel == 1) {
                 commission.playerDiscount = $("#discountAsian").val();
                 commission.playerDiscount1x2 = $("#discount1x2").val();
                 commission.playerDiscountCs = $("#discountCS").val();
                 commission.playerDiscountNumber = $("#discountNumber").val();
-                Fanex.ExtAcc.BlockUI();
             }
             else {
                 commission.groupA = $("#groupA").val();
@@ -90,6 +92,7 @@ Fanex.ExtAcc.Customer.Commission = {
             var para = {
                 custId: Fanex.ExtAcc.Customer.UserId,
                 parentId: Fanex.ExtAcc.Customer.superId,
+                currentLevel: $this.currentLevel,
                 txtCustomerObject: text
             };
         }

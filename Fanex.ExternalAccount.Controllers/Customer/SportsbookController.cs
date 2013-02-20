@@ -183,7 +183,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult EditCommissionPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult EditCommissionPost(int custId, int parentId, int currentLevel, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -202,7 +202,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 Language = "En"
             };
 
-            DTO.Result result = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
+            DTO.Result result = null;
+            if (currentLevel == (int)CustomerRole.Master)
+            {
+                result = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
+            }
+            else if (currentLevel == (int)CustomerRole.Agent)
+            {
+                result = commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
+            }
+            else if (currentLevel == (int)CustomerRole.Member)
+            {
+                result = commissionService.UpdateCommissionMember(commissionSetting, requestContext);
+            }
             
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
