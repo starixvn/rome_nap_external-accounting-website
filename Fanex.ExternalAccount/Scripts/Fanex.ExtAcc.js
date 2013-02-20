@@ -145,12 +145,12 @@ Fanex.ExtAcc = {
         $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
 
         $('#splitterBar').click(function (event) {
-            $this.ToggleSpliter();
-            $this.Resize();
+            Fanex.ExtAcc.ToggleSpliter();
+            Fanex.ExtAcc.Resize();
         });
 
         $(window).resize(function () {
-            $this.Resize();
+            Fanex.ExtAcc.Resize();
         });
 
         if (this.leftMenuWidth === 300) {
