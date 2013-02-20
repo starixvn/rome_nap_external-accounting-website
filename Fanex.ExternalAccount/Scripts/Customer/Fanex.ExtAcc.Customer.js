@@ -546,7 +546,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
-                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                            return (cell.Value.closed && cell.Value.suspended) ? 'Disabled' : (cell.Value.closed && !cell.Value.suspended) ? 'Closed' : (cell.Value.suspended) ? 'Suspended' : 'Open';
                         }
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
@@ -644,7 +644,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
-                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                            return (cell.Value.closed && cell.Value.suspended) ? 'Disabled' : (cell.Value.closed && !cell.Value.suspended) ? 'Closed' : (cell.Value.suspended) ? 'Suspended' : 'Open';
                         }
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
@@ -748,7 +748,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
-                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                            return (cell.Value.closed && cell.Value.suspended) ? 'Disabled' : (cell.Value.closed && !cell.Value.suspended) ? 'Closed' : (cell.Value.suspended) ? 'Suspended' : 'Open';
                         }
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
@@ -848,7 +848,7 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
-                            return cell.Value.closed ? 'Closed' : (cell.Value.suspended ? 'Suspended' : (!cell.Value.enabled ? 'Disabled' : 'Open'));
+                            return (cell.Value.closed && cell.Value.suspended) ? 'Disabled' : (cell.Value.closed && !cell.Value.suspended) ? 'Closed' : (cell.Value.suspended) ? 'Suspended' : 'Open';
                         }
                     },
                     { HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 57, CellAlign: 'center',
@@ -1257,7 +1257,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.DataSource = rows;
 
         for (var i = 0; i < rows.length; i++) {
-            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+            var cssRow = (rows[i].closed && rows[i].suspended) ? 'rowDisabled' : (rows[i].closed && !rows[i].suspended) ? 'rowClosed' : (rows[i].suspended) ? 'rowSuspended' : '';
 
             bodyRows.push({
                 Columns: [
@@ -1350,7 +1350,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.DataSource = rows;
 
         for (var i = 0; i < rows.length; i++) {
-            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+            var cssRow = (rows[i].closed && rows[i].suspended) ? 'rowDisabled' : (rows[i].closed && !rows[i].suspended) ? 'rowClosed' : (rows[i].suspended) ? 'rowSuspended' : '';
 
             bodyRows.push({
                 Columns: [
@@ -1449,7 +1449,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.DataSource = rows;
 
         for (var i = 0; i < rows.length; i++) {
-            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+            var cssRow = (rows[i].closed && rows[i].suspended) ? 'rowDisabled' : (rows[i].closed && !rows[i].suspended) ? 'rowClosed' : (rows[i].suspended) ? 'rowSuspended' : '';
 
             bodyRows.push({
                 Columns: [
@@ -1545,7 +1545,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.DataSource = rows;
 
         for (var i = 0; i < rows.length; i++) {
-            var cssRow = rows[i].closed ? 'rowClosed' : (rows[i].suspended ? 'rowSuspended' : (!rows[i].enabled ? 'rowDisabled' : ''));
+            var cssRow = (rows[i].closed && rows[i].suspended) ? 'rowDisabled' : (rows[i].closed && !rows[i].suspended) ? 'rowClosed' : (rows[i].suspended) ? 'rowSuspended' : '';
 
             bodyRows.push({
                 Columns: [
