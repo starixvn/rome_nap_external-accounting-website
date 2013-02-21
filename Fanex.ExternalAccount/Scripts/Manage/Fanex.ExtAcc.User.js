@@ -237,15 +237,22 @@ Fanex.ExtAcc.User = {
     ShowPermission: function (userId, username, groupName) {
         Fanex.ExtAcc.User.UserId = userId;
 
+        var params = new Object();
+
+        params.userId = userId;
+        params.username = username;
+        params.groupName = groupName;
+
         Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('User/GrantPermission/?userId=' + userId + '&username=' + username + '&groupName=' + groupName),
+            resolveClientUrl('User/GrantPermission'),
             'Grant Permission',
             520,
             525,
             false,
             null,
-            3
-            );
+            3,
+            null,
+            params);
     },
 
     Add: function () {

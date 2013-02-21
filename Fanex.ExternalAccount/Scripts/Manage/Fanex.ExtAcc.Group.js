@@ -143,15 +143,22 @@ Fanex.ExtAcc.Group = {
 
     ShowPermission: function (groupId, groupName) {
         Fanex.ExtAcc.Group.GroupId = groupId;
+
+        var params = new Object();
+
+        params.groupId = groupId;
+        params.groupName = groupName;
+
         Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('Group/GrantPermission/?groupId=' + groupId + '&groupName=' + groupName),
+            resolveClientUrl('Group/GrantPermission'),
             'Grant Permission',
             400,
             525,
             false,
             null,
-            3
-            );
+            3,
+            null,
+            params);
     },
 
     ShowDelete: function (groupId, groupName) {

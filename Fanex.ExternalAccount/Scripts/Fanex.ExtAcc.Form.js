@@ -7,7 +7,7 @@ Fanex.ExtAcc.Form = {
     Init: function () {
     },
 
-    Show: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId) {
+    Show: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId, params) {
         var id = popupId ? popupId : 'windowPopup';
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
@@ -32,8 +32,13 @@ Fanex.ExtAcc.Form = {
         Form.appendChild(DivContent);
 
         var $self = this;
+        var data = null;
 
-        $.ajax(url).done(function (data) {
+        if (params) {
+            data = params;
+        }
+
+        $.ajax({ url: url, data: data }).done(function (data) {
             DivContent.innerHTML = data;
             document.body.appendChild(Form);
             $('#' + id).dialog({
