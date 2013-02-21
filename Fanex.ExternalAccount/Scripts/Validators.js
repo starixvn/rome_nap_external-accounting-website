@@ -279,6 +279,16 @@ var Validators = {
     },
 
     validateName: function (str) {
+        var reg = /^[A-z0-9 ]+$/;
+
+        if (!reg.test(str)) {
+            return false;
+        }
+
+        return true;
+    },
+
+    validateKey: function (str) {
         var reg = /^[A-z0-9]+$/;
 
         if (!reg.test(str)) {
