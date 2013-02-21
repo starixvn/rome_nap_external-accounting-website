@@ -211,7 +211,7 @@ Fanex.ExtAcc.Menus = {
 
         if (!Validators.validateName($('#MenuName').val())) {
             $('#MenuName').focus();
-            Validators.showDown($('#MenuName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#MenuName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 
@@ -279,7 +279,7 @@ Fanex.ExtAcc.Menus = {
 
         if (!Validators.validateName($('#MenuName').val())) {
             $('#MenuName').focus();
-            Validators.showDown($('#MenuName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#MenuName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 

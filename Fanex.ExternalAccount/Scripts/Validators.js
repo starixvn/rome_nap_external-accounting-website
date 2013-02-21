@@ -279,7 +279,7 @@ var Validators = {
     },
 
     validateName: function (str) {
-        var reg = /^[A-z]+$/;
+        var reg = /^[A-z0-9]+$/;
 
         if (!reg.test(str)) {
             return false;

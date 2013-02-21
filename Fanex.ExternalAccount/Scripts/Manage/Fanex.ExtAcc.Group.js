@@ -187,7 +187,7 @@ Fanex.ExtAcc.Group = {
 
         if (!Validators.validateName($('#GroupName').val())) {
             $('#GroupName').focus();
-            Validators.showDown($('#GroupName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#GroupName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 
@@ -232,7 +232,7 @@ Fanex.ExtAcc.Group = {
 
         if (!Validators.validateName($('#GroupName').val())) {
             $('#GroupName').focus();
-            Validators.showDown($('#GroupName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#GroupName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 

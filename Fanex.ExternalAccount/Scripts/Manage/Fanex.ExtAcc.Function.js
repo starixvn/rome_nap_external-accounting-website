@@ -366,7 +366,7 @@ Fanex.ExtAcc.Function = {
 
         if (!Validators.validateName($('#FuncName').val())) {
             $('#FuncName').focus();
-            Validators.showDown($('#FuncName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#FuncName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 
@@ -378,7 +378,7 @@ Fanex.ExtAcc.Function = {
 
         if (!Validators.validateName($('#FuncKey').val())) {
             $('#FuncKey').focus();
-            Validators.show($('#FuncKey').get(0), 'This field requires characters only');
+            Validators.show($('#FuncKey').get(0), 'Please input alphanumeric characters only');
             return false;
         }
 
@@ -443,7 +443,7 @@ Fanex.ExtAcc.Function = {
 
         if (!Validators.validateName($('#FuncName').val())) {
             $('#FuncName').focus();
-            Validators.showDown($('#FuncName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#FuncName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 

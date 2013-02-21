@@ -264,7 +264,7 @@ Fanex.ExtAcc.User = {
 
         if (!Validators.validateName($('#Username').val())) {
             $('#Username').focus();
-            Validators.showDown($('#Username').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            Validators.showDown($('#Username').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 
