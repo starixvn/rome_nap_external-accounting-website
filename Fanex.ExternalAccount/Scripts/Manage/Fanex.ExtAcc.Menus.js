@@ -209,6 +209,12 @@ Fanex.ExtAcc.Menus = {
             return false;
         }
 
+        if (!Validators.validateName($('#MenuName').val())) {
+            $('#MenuName').focus();
+            Validators.showDown($('#MenuName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         if (!Validators.validateInput($('#DisplayOrder').val())) {
             $('#DisplayOrder').focus();
             Validators.show($('#DisplayOrder').get(0), 'This field is required');
@@ -268,6 +274,12 @@ Fanex.ExtAcc.Menus = {
         if (!Validators.validateInput($('#MenuName').val())) {
             $('#MenuName').focus();
             Validators.showDown($('#MenuName').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            return false;
+        }
+
+        if (!Validators.validateName($('#MenuName').val())) {
+            $('#MenuName').focus();
+            Validators.showDown($('#MenuName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
             return false;
         }
 

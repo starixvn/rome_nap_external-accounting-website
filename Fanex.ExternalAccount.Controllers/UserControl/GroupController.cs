@@ -13,6 +13,7 @@
 namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
@@ -66,6 +67,9 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult EditGroup(int id)
         {
             var model = this.groupService.GetGroupById(id);
+
+            model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
+            model.Description = HttpUtility.HtmlDecode(model.Description);
 
             return this.PartialViewBase(model);
         }

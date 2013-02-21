@@ -255,6 +255,12 @@ Fanex.ExtAcc.User = {
             return false;
         }
 
+        if (!Validators.validateName($('#Username').val())) {
+            $('#Username').focus();
+            Validators.showDown($('#Username').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         if (!Validators.validateInput($('#Password').val())) {
             $('#Password').focus();
             Validators.show($('#Password').get(0), 'This field is required');

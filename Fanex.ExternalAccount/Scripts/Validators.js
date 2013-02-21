@@ -276,5 +276,15 @@ var Validators = {
         var validLetter = ((nCount > (s.length - 2)) || nCount < 2 || s.length < 6) ? false : true;
 
         return validNumber & validLetter;
+    },
+
+    validateName: function (str) {
+        var reg = /^[A-z]+$/;
+
+        if (!reg.test(str)) {
+            return false;
+        }
+
+        return true;
     }
 };

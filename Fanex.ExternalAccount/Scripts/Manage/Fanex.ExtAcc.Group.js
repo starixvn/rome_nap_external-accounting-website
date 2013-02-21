@@ -178,6 +178,12 @@ Fanex.ExtAcc.Group = {
             return false;
         }
 
+        if (!Validators.validateName($('#GroupName').val())) {
+            $('#GroupName').focus();
+            Validators.showDown($('#GroupName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         Fanex.ExtAcc.BlockUI();
 
         var name = $('#GroupName').val();
@@ -214,6 +220,12 @@ Fanex.ExtAcc.Group = {
         if (!Validators.validateInput($('#GroupName').val())) {
             $('#GroupName').focus();
             Validators.showDown($('#GroupName').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            return false;
+        }
+
+        if (!Validators.validateName($('#GroupName').val())) {
+            $('#GroupName').focus();
+            Validators.showDown($('#GroupName').get(0), 'This field requires characters only', 0, 10, 41, -10, 15);
             return false;
         }
 
