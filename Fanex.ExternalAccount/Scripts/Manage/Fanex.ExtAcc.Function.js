@@ -376,7 +376,7 @@ Fanex.ExtAcc.Function = {
             return false;
         }
 
-        if (!Validators.validateName($('#FuncKey').val())) {
+        if (!Validators.validateKey($('#FuncKey').val())) {
             $('#FuncKey').focus();
             Validators.show($('#FuncKey').get(0), 'Please input alphanumeric characters only');
             return false;
