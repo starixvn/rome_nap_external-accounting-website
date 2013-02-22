@@ -52,7 +52,8 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine.Age">
+    <Reference Include="Fanex.PTEngine.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTEngine.Age.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -656,7 +657,6 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
-    <Content Include="Scripts\Customer\Copy of Fanex.ExtAcc.Customer.SuperEditMinPTMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperEditMinPTMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Commission.js" />

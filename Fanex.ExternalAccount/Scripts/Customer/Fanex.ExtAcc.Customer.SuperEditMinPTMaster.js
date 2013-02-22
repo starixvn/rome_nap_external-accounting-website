@@ -2,34 +2,8 @@
     Fanex.ExtAcc.Customer.MinPT = {};
 }
 
-//Object.prototype.clone = function () {
-//    var newObj;
-//    if (this instanceof Array) {
-//        newObj = [];
-//    }
-//    else if (typeof this == 'string') {
-//        newObj = this + String.Empty;
-//    }
-//    else if (typeof this == 'number') {
-//        newObj = this + 0;
-//    }
-//    else {
-//        newObj = {};
-//    }
-
-//    for (i in this) {
-//        if (i == 'clone') continue;
-//        if (this[i] && typeof this[i] == "object") {
-//            newObj[i] = this[i].clone();
-//        } else {
-//            newObj[i] = this[i];
-//        }
-//    }
-//    return newObj;
-//};
-
-
 Fanex.ExtAcc.Customer.MinPT = {
+    customer: null,
     Init: function () {
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterMinPT();
@@ -57,24 +31,20 @@ Fanex.ExtAcc.Customer.MinPT = {
             type: 'post'
         })
         .success(function (result) {
-            //            var bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
-            //            var context = result.context;
-
-            //            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
-            //            bettingLimit.Render(bettingLimitContainer);
-
-            var customer = result.customer;
+            customer = result.customer;
             var context = result.context;
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
-            var ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
+            ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
+
+            /*
             ptGrid.ShowCloneHint = function () {
                 if (this.copiedItem == null) {
                     return;
                 }
                 var copiedElements = [0, this.items[0].items[0].items[0].items[0].element,
-                                        this.items[1].items[0].items[0].items[0].element]; // Handicap of Soccer and Basketball
+            this.items[1].items[0].items[0].items[0].element]; // Handicap of Soccer and Basketball
                 var hint = Language.COPY_ALL_HINT.Format('<b>' + this.activeCopiedTitle + '</b>');
                 var otherBetTypesOf = Language.OTHER_BET_TYPE_OF.Format(this.items[this.copiedItem.sportId - 1].name);
                 hint = hint + '<div class="ul-position"><ul><li>' + otherBetTypesOf + '</li>';
@@ -157,11 +127,9 @@ Fanex.ExtAcc.Customer.MinPT = {
                 };
                 hint.style.display = 'block';
             }
+            */
 
-            alert(5);
-            var div = $('#ptGridContainer');
-            ptGrid.Render(div);
-            alert(6);
+            ptGrid.Render(document.getElementById('ptContainer'));
 
             var CustomerModel = function () {
                 this.saveCustomer = function () {
@@ -174,7 +142,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                     customer.fax = customer.fax.escapeHtml();
 
                     if (ptGrid) {
-                        customer.ptSetting = ptGrid.Save();
+                        customer.ptSetting = customer.Save();
                         customer.bettingLimit = null;
                         customer.statusSetting = null;
                         customer.commissionSetting = null;

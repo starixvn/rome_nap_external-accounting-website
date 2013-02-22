@@ -646,46 +646,52 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
-	<data name="accbalanceTransferCondition" xml:space="preserve">
+  <data name="accbalanceTransferCondition" xml:space="preserve">
     <value>Account Balance Transfer Condition</value>
   </data>
-	<data name="editTransferCondition" xml:space="preserve">
+  <data name="editTransferCondition" xml:space="preserve">
     <value>Edit transfer condition</value>
   </data>
-	<data name="daily" xml:space="preserve">
+  <data name="daily" xml:space="preserve">
     <value>Daily</value>
   </data>
-	<data name="Weekly" xml:space="preserve">
+  <data name="Weekly" xml:space="preserve">
     <value>Weekly</value>
   </data>
-	<data name="Mon" xml:space="preserve">
+  <data name="Mon" xml:space="preserve">
     <value>Mon</value>
   </data>
-	<data name="Tue" xml:space="preserve">
+  <data name="Tue" xml:space="preserve">
     <value>Tue</value>
   </data>
-	<data name="Wed" xml:space="preserve">
+  <data name="Wed" xml:space="preserve">
     <value>Wed</value>
   </data>
-	<data name="Thur" xml:space="preserve">
+  <data name="Thur" xml:space="preserve">
     <value>Thur</value>
   </data>
-	<data name="Fri" xml:space="preserve">
+  <data name="Fri" xml:space="preserve">
     <value>Fri</value>
   </data>
-	<data name="Sat" xml:space="preserve">
+  <data name="Sat" xml:space="preserve">
     <value>Sat</value>
   </data>
-	<data name="Sun" xml:space="preserve">
+  <data name="Sun" xml:space="preserve">
     <value>Sun</value>
   </data>
-	<data name="confirmTransCondition" xml:space="preserve">
+  <data name="confirmTransCondition" xml:space="preserve">
     <value>Are you sure that you want to update this transfer condition for all of downlines?</value>
   </data>
-	<data name="choonseDaily" xml:space="preserve">
+  <data name="choonseDaily" xml:space="preserve">
     <value>Please choose Daily instead of 7 days.</value>
   </data>
-	<data name="chooseOneDay" xml:space="preserve">
+  <data name="chooseOneDay" xml:space="preserve">
     <value>Please select at least one day.</value>
+  </data>
+  <data name="generalInformation" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="sbminpt" xml:space="preserve">
+    <value>Sportsbook's Min PT</value>
   </data>
 </root>
