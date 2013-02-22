@@ -1510,6 +1510,7 @@
     <Content Include="App_GlobalResources\Lang.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Lang1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

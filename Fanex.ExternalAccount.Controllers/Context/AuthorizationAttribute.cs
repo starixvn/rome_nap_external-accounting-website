@@ -162,7 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             var foundItems = policyList.Where(x => x.FuncID == functionId);
             var hasPerm = true;
 
-            if (!request.RawUrl.ToLower().Contains("home/index") && !request.IsAjaxRequest())
+            if (!request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
             {
                 hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }
