@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
@@ -98,6 +99,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             var tmp = string.Empty;
             var groupIds = string.Empty;
             var index = 0;
+
+            model.FuncName = HttpUtility.HtmlDecode(model.FuncName);
+            model.FuncDesc = HttpUtility.HtmlDecode(model.FuncDesc);
+            model.FuncKey = HttpUtility.HtmlDecode(model.FuncKey);
 
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {

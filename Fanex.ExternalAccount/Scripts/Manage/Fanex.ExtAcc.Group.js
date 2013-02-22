@@ -143,15 +143,22 @@ Fanex.ExtAcc.Group = {
 
     ShowPermission: function (groupId, groupName) {
         Fanex.ExtAcc.Group.GroupId = groupId;
+
+        var params = new Object();
+
+        params.groupId = groupId;
+        params.groupName = groupName;
+
         Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('Group/GrantPermission/?groupId=' + groupId + '&groupName=' + groupName),
+            resolveClientUrl('Group/GrantPermission'),
             'Grant Permission',
             400,
             525,
             false,
             null,
-            3
-            );
+            3,
+            null,
+            params);
     },
 
     ShowDelete: function (groupId, groupName) {
@@ -178,18 +185,24 @@ Fanex.ExtAcc.Group = {
             return false;
         }
 
+        if (!Validators.validateName($('#GroupName').val())) {
+            $('#GroupName').focus();
+            Validators.showDown($('#GroupName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         Fanex.ExtAcc.BlockUI();
 
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
 
-        var editUrl = 'Group/Add/?';
-        var params = '';
+        var editUrl = 'Group/Add';
+        var params = new Object();
 
-        params += '&name=' + name;
-        params += '&description=' + desc;
+        params.name = Fanex.ExtAcc.EscapeHtml(name);
+        params.description = Fanex.ExtAcc.EscapeHtml(desc);
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -217,18 +230,24 @@ Fanex.ExtAcc.Group = {
             return false;
         }
 
+        if (!Validators.validateName($('#GroupName').val())) {
+            $('#GroupName').focus();
+            Validators.showDown($('#GroupName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         Fanex.ExtAcc.BlockUI();
 
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
 
-        var editUrl = 'Group/Edit/?';
-        var params = 'groupId=' + $('#GroupID').val();
+        var editUrl = 'Group/Edit';
+        var params = new Object();
+        params.groupId = $('#GroupID').val();
+        params.groupName = Fanex.ExtAcc.EscapeHtml(name);
+        params.description = Fanex.ExtAcc.EscapeHtml(desc);
 
-        params += '&groupName=' + name;
-        params += '&description=' + desc;
-
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);

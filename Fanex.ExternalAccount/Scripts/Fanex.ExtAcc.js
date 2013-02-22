@@ -31,13 +31,34 @@ Array.prototype.binarySearch = function (value, key) {
 
     //make sure it's the right value
     return (!match(this[middle], value)) ? -1 : middle;
-}
+};
 
 Fanex.ExtAcc = {
     $this: null,
     BlockedUI: false,
     theme: 'classic',
     leftMenuWidth: Cookie.get('layout_1') ? parseInt(Cookie.get('layout_1')) : 300,
+
+    EscapeHtml: function (string) {
+        var result = '';
+        if (string.length < 1) {
+            return result;
+        }
+
+        for (var i = 0; i < string.length; i++) {
+            if (string.charAt(i) == "&" && string.length - i - 1 >= 4 && string.substr(i, 4) != "&amp;") {
+                result = result + "&amp;";
+            } else if (string.charAt(i) == "<") {
+                result = result + "&lt;";
+            } else if (string.charAt(i) == ">") {
+                result = result + "&gt;";
+            } else {
+                result = result + string.charAt(i);
+            }
+        }
+
+        return result;
+    },
 
     BlockUI: function () {
         if (!$this.BlockedUI) {

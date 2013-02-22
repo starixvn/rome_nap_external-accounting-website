@@ -105,7 +105,8 @@ Fanex.ExtAcc.Function = {
                 bodyRows: bodyRows,
                 gridExpandHeight: 100,
                 marginRight: 2,
-                showDistinctRow: false
+                showDistinctRow: false,
+                allowTruncate: true
             };
 
             $this.RenderGrid(options);
@@ -363,9 +364,21 @@ Fanex.ExtAcc.Function = {
             return false;
         }
 
+        if (!Validators.validateName($('#FuncName').val())) {
+            $('#FuncName').focus();
+            Validators.showDown($('#FuncName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         if (!Validators.validateInput($('#FuncKey').val())) {
             $('#FuncKey').focus();
             Validators.show($('#FuncKey').get(0), 'This field is required');
+            return false;
+        }
+
+        if (!Validators.validateKey($('#FuncKey').val())) {
+            $('#FuncKey').focus();
+            Validators.show($('#FuncKey').get(0), 'Please input alphanumeric characters only');
             return false;
         }
 
@@ -391,18 +404,18 @@ Fanex.ExtAcc.Function = {
         var newGroups = $('#newGroups').val();
         var key = $('#FuncKey').val();
 
-        var editUrl = 'Function/Add/?';
-        var params = '';
+        var editUrl = 'Function/Add';
+        var params = new Object();
 
-        params += '&name=' + name;
-        params += '&key=' + key;
-        params += '&desc=' + desc;
-        params += '&parentId=' + parentId;
-        params += '&parent=' + parent;
-        params += '&order=' + order;
-        params += '&groups=' + newGroups;
+        params.name = Fanex.ExtAcc.EscapeHtml(name);
+        params.key = Fanex.ExtAcc.EscapeHtml(key);
+        params.desc = Fanex.ExtAcc.EscapeHtml(desc);
+        params.parentId = parentId;
+        params.parent = parent;
+        params.order = order;
+        params.groups = newGroups;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -425,6 +438,12 @@ Fanex.ExtAcc.Function = {
         if (!Validators.validateInput($('#FuncName').val())) {
             $('#FuncName').focus();
             Validators.showDown($('#FuncName').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            return false;
+        }
+
+        if (!Validators.validateName($('#FuncName').val())) {
+            $('#FuncName').focus();
+            Validators.showDown($('#FuncName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
             return false;
         }
 
@@ -455,18 +474,18 @@ Fanex.ExtAcc.Function = {
             newGroups = oldGroups;
         }
 
-        var editUrl = 'Function/Edit/?';
-        var params = 'funcId=' + funcId;
+        var editUrl = 'Function/Edit';
+        var params = new Object();
+        params.funcId = funcId;
+        params.name = Fanex.ExtAcc.EscapeHtml(name);
+        params.desc = Fanex.ExtAcc.EscapeHtml(desc);
+        params.parentId = parentId;
+        params.parent = parent;
+        params.order = order;
+        params.oldGroups = oldGroups;
+        params.groups = newGroups;
 
-        params += '&name=' + name;
-        params += '&desc=' + desc;
-        params += '&parentId=' + parentId;
-        params += '&parent=' + parent;
-        params += '&order=' + order;
-        params += '&oldGroups=' + oldGroups;
-        params += '&groups=' + newGroups;
-
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);

@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
@@ -63,6 +64,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var model = this.menuService.GetAllMenus().Where(o => o.MenuID == id).FirstOrDefault();
             var userCache = new CachingService().GetUserCache(CurrentSession.UserId);
+
+            model.MenuName = HttpUtility.HtmlDecode(model.MenuName);
+            model.MenuDesc = HttpUtility.HtmlDecode(model.MenuDesc);
+            model.Url = HttpUtility.HtmlDecode(model.Url);
 
             ViewBag.FunctionList = this.GetFunctions();
             ViewBag.MenuList = this.GetMenus();

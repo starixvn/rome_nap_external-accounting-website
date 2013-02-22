@@ -209,6 +209,12 @@ Fanex.ExtAcc.Menus = {
             return false;
         }
 
+        if (!Validators.validateName($('#MenuName').val())) {
+            $('#MenuName').focus();
+            Validators.showDown($('#MenuName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         if (!Validators.validateInput($('#DisplayOrder').val())) {
             $('#DisplayOrder').focus();
             Validators.show($('#DisplayOrder').get(0), 'This field is required');
@@ -230,18 +236,18 @@ Fanex.ExtAcc.Menus = {
         var funcId = $('#FuncID').val();
         var order = $('#DisplayOrder').val();
 
-        var editUrl = 'Menu/Add/?';
-        var params = '';
+        var editUrl = 'Menu/Add';
+        var params = new Object();
 
-        params += '&name=' + name;
-        params += '&description=' + desc;
-        params += '&url=' + url;
-        params += '&functionId=' + funcId;
-        params += '&parentId=' + parentId;
-        params += '&parentName=' + ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
-        params += '&displayOrder=' + order;
+        params.name = Fanex.ExtAcc.EscapeHtml(name);
+        params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.url = Fanex.ExtAcc.EscapeHtml(url);
+        params.functionId = funcId;
+        params.parentId = parentId;
+        params.parentName = ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
+        params.displayOrder = order;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
@@ -271,6 +277,12 @@ Fanex.ExtAcc.Menus = {
             return false;
         }
 
+        if (!Validators.validateName($('#MenuName').val())) {
+            $('#MenuName').focus();
+            Validators.showDown($('#MenuName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
+            return false;
+        }
+
         if (!Validators.validateInput($('#DisplayOrder').val())) {
             $('#DisplayOrder').focus();
             Validators.show($('#DisplayOrder').get(0), 'This field is required');
@@ -293,17 +305,18 @@ Fanex.ExtAcc.Menus = {
         var order = $('#DisplayOrder').val();
 
         var editUrl = 'Menu/Edit/?';
-        var params = 'menuId=' + $('#MenuID').val();
+        var params = new Object();
 
-        params += '&name=' + name;
-        params += '&description=' + desc;
-        params += '&url=' + url;
-        params += '&functionId=' + funcId;
-        params += '&parentId=' + parentId;
-        params += '&parentName=' + ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
-        params += '&displayOrder=' + order;
+        params.menuId = $('#MenuID').val();
+        params.name = Fanex.ExtAcc.EscapeHtml(name);
+        params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.url = Fanex.ExtAcc.EscapeHtml(url);
+        params.functionId = funcId;
+        params.parentId = parentId;
+        params.parentName = ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
+        params.displayOrder = order;
 
-        $.ajax({ url: resolveClientUrl(editUrl + params), type: 'POST' })
+        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $.unblockUI(document);
