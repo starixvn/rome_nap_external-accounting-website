@@ -656,6 +656,8 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
+    <Content Include="Scripts\Customer\Copy of Fanex.ExtAcc.Customer.SuperEditMinPTMaster.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperEditMinPTMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Commission.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
@@ -1491,6 +1493,7 @@
     <Content Include="Views\Shared\Copy of _LeftMenu.cshtml" />
     <Content Include="Views\Sportsbook\EditBetSetting.cshtml" />
     <Content Include="Views\Sportsbook\EditCommission.cshtml" />
+    <Content Include="Views\MinPT\SuperEditMinPTMaster.cshtml" />
     <Content Include="Views\Sportsbook\EditPT.cshtml" />
   </ItemGroup>
   <ItemGroup>
