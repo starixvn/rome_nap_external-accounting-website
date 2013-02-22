@@ -246,11 +246,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 Language = "En",
                 LangKey = "E",
                 RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
                 SiteName = SiteName,
                 SubAccId = 0,
                 UserName = CurrentSession.UserName.ToUpper()
             };
-            var customer = ptSetting.GetCustomerForSuperEditMaster(context);
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+
+            customer = ptSetting.GetCustomerForSuperEditMaster(context);
 
             return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
             {
