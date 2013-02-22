@@ -520,3 +520,8 @@ input, textarea
 {
 	margin-top: -12px !important;
 }
+.ui-menu
+{
+	max-height: 200px;
+	overflow: auto;
+}

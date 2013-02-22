@@ -163,11 +163,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             foreach (var parent in parents)
             {
                 list.Add(parent);
-                var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.MenuID);
-                if (items.Count() > 0)
-                {
-                    list.AddRange(items);
-                }
+                //var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.MenuID);
+                //if (items.Count() > 0)
+                //{
+                //    list.AddRange(items);
+                //}
             }
 
             return list;

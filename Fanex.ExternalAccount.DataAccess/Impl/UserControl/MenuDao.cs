@@ -89,6 +89,7 @@
                                      Url = c.Field<string>("Url"),
                                      FuncID = c.Field<int>("FuncID"),
                                      DisplayOrder = c.Field<int>("DisplayOrder"),
+                                     IsActive = c.Field<bool>("Active")
                                  }).ToList();
 
                         funcs = (from c in func.AsEnumerable()

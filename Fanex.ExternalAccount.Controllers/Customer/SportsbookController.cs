@@ -265,6 +265,33 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             });
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+
+            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+
+            IRequestContext requestContext = new RequestContext()
+            {
+                CustId = parentId,
+                TargetCustId = custId,
+                FormId = FormType.EditPT,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
+            };
+
+            var custSrv = new Fanex.PTEngine.Services.CustomerService();
+
+            Fanex.PTEngine.BusinessObjects.Result result = custSrv.SuperUpdateMaster(customer, requestContext, false, 0);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
         #endregion PT Setting
     }
 }
