@@ -29,56 +29,58 @@ Fanex.ExtAcc.Customer.PTSetting = {
             dataType: 'json'
         })
         .success(function (result) {
-            var customer = null;
+            var ptGrid = null;
             var context = result.context;
+            var customer = result.customer;
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
 
-            customer = new Fanex.PTEngine.PTGrid(result.customer.ptSetting);
+            ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
 
             var ptContainer = document.getElementById('ptContainer');
-            customer.Render(ptContainer);
-            /*
+            ptGrid.Render(ptContainer);
+
             var PTSettingModel = function () {
-            this.saveCustomer = function () {
-            if (!customer.Validate()) return;
-            if (customer) {
-            customer = customer.Save();
-            var text = JSON.stringify(customer);
+                this.saveCustomer = function () {
+                    if (ptGrid) {
+                        customer.ptSetting = ptGrid.Save();
 
-            var para = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: Fanex.ExtAcc.Customer.superId,
-            txtCustomerObject: text
-            };
+                        var text = JSON.stringify(customer);
+                        console.log(text);
+
+                        var para = {
+                            custId: Fanex.ExtAcc.Customer.UserId,
+                            parentId: Fanex.ExtAcc.Customer.superId,
+                            txtCustomerObject: text
+                        };
+                    }
+
+                    Fanex.ExtAcc.BlockUI();
+
+                    $.ajax({
+                        url: resolveClientUrl('Sportsbook/SuperUpdateMasterPTPost'),
+                        data: para,
+                        dataType: 'json'
+                    })
+                    .success(function (result) {
+                        if (result.ErrorCode == 0) {
+                            Fanex.ExtAcc.Form.Close(false);
+                        }
+                        else {
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html(result.ErrorMessage);
+                        }
+
+                        $.unblockUI(document);
+                    })
+                    .error(function (xhr, status, err) {
+                        $.unblockUI(document);
+                    });
+                }
             }
 
-            Fanex.ExtAcc.BlockUI();
-
-            $.ajax({
-            url: resolveClientUrl('Sportsbook/EditPTSettingPost'),
-            data: para,
-            dataType: 'json'
-            })
-            .success(function (result) {
-            if (result.ErrorCode == 0) {
-            Fanex.ExtAcc.Form.Close(false);
-            }
-            else {
-            $('#errMsg').css('display', 'block');
-            $('#errMsg').html(result.ErrorMessage);
-            }
-
-            $.unblockUI(document);
-            })
-            .error(function (xhr, status, err) {
-            $.unblockUI(document);
-            });
-            }
-            }
-
-            ko.applyBindings(new PTSettingModel());*/
+            ko.applyBindings(new PTSettingModel());
 
             $.unblockUI(document);
         })
@@ -221,3 +223,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         });
     }
 }
+
+$(document).ready(function () {
+    Fanex.ExtAcc.Customer.PTSetting.Init();
+});

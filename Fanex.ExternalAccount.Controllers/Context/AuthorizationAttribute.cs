@@ -42,6 +42,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
             var response = filterContext.HttpContext.Response;
+            var request = filterContext.HttpContext.Request;
 
             if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
@@ -72,7 +73,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     return;
                 }
 
-                if (!this.FunctionAuthorization(currentSession.UserId, (int)this.Function))
+                if (!this.FunctionAuthorization(currentSession.UserId, (int)this.Function, request))
                 {
                     this.CloseConnection(filterContext);
                     return;
@@ -148,7 +149,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             response.Redirect("~/Account/Login", true);
         }
 
-        private bool FunctionAuthorization(int userId, int functionId)
+        private bool FunctionAuthorization(int userId, int functionId, HttpRequestBase request)
         {
             if (userId <= 0)
             {
@@ -157,7 +158,19 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
             var userCache = this.cachingService.GetUserCache(userId);
             var policyList = userCache.PolicyList;
+            var menuList = userCache.MenuList;
             var foundItems = policyList.Where(x => x.FuncID == functionId);
+            var hasPerm = true;
+
+            if (!request.RawUrl.ToLower().Contains("home/index") && !request.IsAjaxRequest())
+            {
+                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+            }
+
+            if (!hasPerm)
+            {
+                return false;
+            }
 
             if (foundItems.Count() > 0)
             {
