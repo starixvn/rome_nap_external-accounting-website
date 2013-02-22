@@ -36,35 +36,37 @@ namespace Fanex.ExternalAccount.Controllers.Customer.MinPT
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
         {
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            IRequestContext currentContext = new RequestContext()
+            var context = new RequestContext()
             {
-                FormId = FormType.EditMinPT,
-                UserName = CurrentSession.UserName.ToUpper(),
-                CustId = parentId,
-                TargetCustId = custId,
-                RoleId = (int)CustomerRole.Super,
-                SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                SiteName = SiteName,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.EditMinPT,
+                IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
+                RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = CurrentSession.UserName.ToUpper()
             };
 
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = customerService.GetCustomerForSuperEditMinPTMaster(currentContext);
+            customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
             customer.BettingLimit = null;
             customer.StatusSetting = null;
             customer.CommissionSetting = null;
             customer.CommissionSetting2 = null;
 
-            return this.JsonBase(new { customer = customer, context = currentContext }, settings);
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
