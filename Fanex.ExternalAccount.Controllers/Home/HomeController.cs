@@ -14,9 +14,12 @@ namespace Fanex.ExternalAccount.Controllers.Home
 {
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.DTO;
 
     public class HomeController : BaseController
     {
+        [Authorization(Function = eFunctions.Reports, Policy = ePolicy.Read)]
         public ActionResult Index()
         {
             return this.ViewBase();

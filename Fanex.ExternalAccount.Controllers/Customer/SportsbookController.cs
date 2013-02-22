@@ -252,7 +252,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
             var customer = ptSetting.GetCustomerForSuperEditMaster(context);
 
-            return this.JsonBase(new { customer = customer }, new JsonSerializerSettings()
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,

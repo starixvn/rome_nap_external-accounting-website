@@ -1,6 +1,6 @@
 ﻿if (typeof Fanex.ExtAcc.Customer.PTSetting == 'undefined') {
     Fanex.ExtAcc.Customer.PTSetting = {};
-}
+};
 
 Fanex.ExtAcc.Customer.PTSetting = {
     Init: function () {
@@ -24,24 +24,24 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditBetSettingMasterGet'),
+            url: resolveClientUrl('Sportsbook/EditPTMasterGet'),
             data: data,
             dataType: 'json'
         })
         .success(function (result) {
-            var bettingLimit = null;
+            var customer = null;
             var context = result.context;
-            bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+            customer = new Fanex.PTEngine.PTGrid(result.customer.ptSetting);
 
-            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
-            bettingLimit.Render(bettingLimitContainer);
+            var ptContainer = document.getElementById('ptContainer');
+            customer.Render(ptContainer);
 
-            var BetSettingModel = function () {
+            var PTSettingModel = function () {
                 this.saveCustomer = function () {
-                    if (!bettingLimit.Validate()) return;
-                    if (bettingLimit) {
-                        betting = bettingLimit.Save();
-                        var text = JSON.stringify(betting);
+                    if (!customer.Validate()) return;
+                    if (customer) {
+                        customer = customer.Save();
+                        var text = JSON.stringify(customer);
 
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
@@ -53,28 +53,28 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        url: resolveClientUrl('Sportsbook/EditPTSettingPost'),
                         data: para,
                         dataType: 'json'
                     })
-                    .success(function (result) {
-                        if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
-                        }
-                        else {
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
-                        }
+            .success(function (result) {
+                if (result.ErrorCode == 0) {
+                    Fanex.ExtAcc.Form.Close(false);
+                }
+                else {
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html(result.ErrorMessage);
+                }
 
-                        $.unblockUI(document);
-                    })
-                    .error(function (xhr, status, err) {
-                        $.unblockUI(document);
-                    });
+                $.unblockUI(document);
+            })
+            .error(function (xhr, status, err) {
+                $.unblockUI(document);
+            });
                 }
             }
 
-            ko.applyBindings(new BetSettingModel());
+            ko.applyBindings(new PTSettingModel());
 
             $.unblockUI(document);
         })
@@ -92,7 +92,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditBetSettingAgentGet'),
+            url: resolveClientUrl('Sportsbook/EditPTAgentGet'),
             data: data,
             dataType: 'json'
         })
@@ -101,7 +101,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
 
-            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
+            var bettingLimitContainer = document.getElementById('ptContainer');
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
@@ -121,7 +121,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        url: resolveClientUrl('Sportsbook/EditPTSettingPost'),
                         data: para,
                         dataType: 'json'
                     })
@@ -158,7 +158,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditBetSettingMemberGet'),
+            url: resolveClientUrl('Sportsbook/EditPTMemberGet'),
             data: data,
             dataType: 'json'
         })
@@ -167,7 +167,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
 
-            var bettingLimitContainer = document.getElementById('bettingLimitContainer');
+            var bettingLimitContainer = document.getElementById('ptContainer');
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
@@ -187,7 +187,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        url: resolveClientUrl('Sportsbook/EditPTSettingPost'),
                         data: para,
                         dataType: 'json'
                     })
@@ -217,7 +217,3 @@ Fanex.ExtAcc.Customer.PTSetting = {
         });
     }
 }
-
-$(document).ready(function () {
-    Fanex.ExtAcc.Customer.PTSetting.Init();
-});

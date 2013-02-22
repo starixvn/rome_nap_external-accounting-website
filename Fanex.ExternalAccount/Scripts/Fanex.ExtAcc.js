@@ -31,7 +31,7 @@ Array.prototype.binarySearch = function (value, key) {
 
     //make sure it's the right value
     return (!match(this[middle], value)) ? -1 : middle;
-}
+};
 
 Fanex.ExtAcc = {
     $this: null,
