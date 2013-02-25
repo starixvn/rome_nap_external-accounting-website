@@ -51,6 +51,9 @@
     <Reference Include="Fanex.PTEngine">
       <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\Dependencies\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
