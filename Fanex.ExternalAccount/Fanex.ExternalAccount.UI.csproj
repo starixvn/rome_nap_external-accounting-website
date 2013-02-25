@@ -260,6 +260,7 @@
     <Content Include="bootstrap\winlossdetail\images\icon-right.png" />
     <Content Include="bootstrap\winlossdetail\images\spindown-closed.png" />
     <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Customer\PTEngine.css" />
     <Content Include="Content\Customer\Customer.css" />
     <Content Include="Content\Customer\Customer.Sportsbook.css" />
     <Content Include="Content\Images\ajax-loader.png" />
