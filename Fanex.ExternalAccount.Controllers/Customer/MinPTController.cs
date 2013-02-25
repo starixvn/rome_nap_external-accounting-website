@@ -70,7 +70,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.MinPT
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, int targetRoleId, string txtCustomerObject)
+        public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -80,7 +80,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.MinPT
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
-                TargetCustId = custId,
+                //TargetCustId = custId,
                 RoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master,
                 FormId = FormType.EditMinPT,
@@ -90,7 +90,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.MinPT
                 Language = "En"
             };
 
-            var result = customerService.SuperUpdateMinPTMaster(customer, requestContext);
+            Fanex.PTEngine.BusinessObjects.Result result = customerService.SuperUpdateMinPTMaster(customer, requestContext);
             
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
