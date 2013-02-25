@@ -41,15 +41,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var ptContainer = document.getElementById('ptContainer');
             ptGrid.Render(ptContainer);
 
-            console.log(customer);
-
             var PTSettingModel = function () {
                 this.saveCustomer = function () {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
-                        console.log(customer);
                         var text = JSON.stringify(customer);
-                        console.log(text);
 
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
@@ -131,15 +127,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var ptContainer = document.getElementById('ptContainer');
             ptGrid.Render(ptContainer);
 
-            console.log(customer);
-
             var PTSettingModel = function () {
                 this.saveCustomer = function () {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
-                        console.log(customer);
                         var text = JSON.stringify(customer);
-                        console.log(text);
 
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
@@ -220,15 +212,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var ptContainer = document.getElementById('ptContainer');
             ptGrid.Render(ptContainer);
 
-            console.log(customer);
-
             var PTSettingModel = function () {
                 this.saveCustomer = function () {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
-                        console.log(customer);
                         var text = JSON.stringify(customer);
-                        console.log(text);
 
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
