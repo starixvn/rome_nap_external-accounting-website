@@ -72,6 +72,8 @@ Fanex.ExtAcc.Customer.Commission = {
 
     UpdateCommission: function () {
         // if (!commission.Validate()) return;
+        Fanex.ExtAcc.BlockUI();
+
         if (commission) {
             if ($this.currentLevel == 1) {
                 commission.playerDiscount = $("#discountAsian").val();
@@ -97,8 +99,6 @@ Fanex.ExtAcc.Customer.Commission = {
                 txtCustomerObject: text
             };
         }
-
-        Fanex.ExtAcc.BlockUI();
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditCommissionPost'),

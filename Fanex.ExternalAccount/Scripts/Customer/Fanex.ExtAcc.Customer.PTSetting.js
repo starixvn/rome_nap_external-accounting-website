@@ -43,6 +43,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var PTSettingModel = function () {
                 this.saveCustomer = function () {
+                    Fanex.ExtAcc.BlockUI();
+
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         var text = JSON.stringify(customer);
@@ -53,8 +55,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/SuperUpdateMasterPTPost'),
@@ -134,6 +134,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var PTSettingModel = function () {
                 this.saveCustomer = function () {
+                    Fanex.ExtAcc.BlockUI();
+
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         var text = JSON.stringify(customer);
@@ -144,8 +146,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/MasterUpdateAgentPTPost'),
@@ -224,6 +224,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var PTSettingModel = function () {
                 this.saveCustomer = function () {
+                    Fanex.ExtAcc.BlockUI();
+
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         var text = JSON.stringify(customer);
@@ -234,8 +236,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/AgentUpdateMemberPTPost'),
