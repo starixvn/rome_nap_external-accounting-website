@@ -277,12 +277,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
-                TargetCustId = custId,
+                RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address,
-                Language = "En"
+                IP = CurrentContext.Ip4Address
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
