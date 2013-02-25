@@ -77,14 +77,19 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         }
 
                         if (success) {
-                            Fanex.ExtAcc.Form.Close(false);
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
                         }
                         else {
+                            $.unblockUI(document);
+
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(error);
                         }
-
-                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
                         $.unblockUI(document);
@@ -163,14 +168,19 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         }
 
                         if (success) {
-                            Fanex.ExtAcc.Form.Close(false);
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
                         }
                         else {
+                            $.unblockUI(document);
+
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(error);
                         }
-
-                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
                         $.unblockUI(document);
@@ -248,14 +258,19 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         }
 
                         if (success) {
-                            Fanex.ExtAcc.Form.Close(false);
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
                         }
                         else {
+                            $.unblockUI(document);
+
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(error);
                         }
-
-                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
                         $.unblockUI(document);

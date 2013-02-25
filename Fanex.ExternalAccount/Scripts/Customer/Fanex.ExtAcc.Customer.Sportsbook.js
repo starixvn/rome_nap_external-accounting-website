@@ -60,14 +60,19 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     })
                     .success(function (result) {
                         if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
                         }
                         else {
+                            $.unblockUI(document);
+
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.ErrorMessage);
                         }
-
-                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
                         $.unblockUI(document);
@@ -129,14 +134,19 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     })
                     .success(function (result) {
                         if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
                         }
                         else {
+                            $.unblockUI(document);
+
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.ErrorMessage);
                         }
-
-                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
                         $.unblockUI(document);
@@ -196,14 +206,19 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                     })
                     .success(function (result) {
                         if (result.ErrorCode == 0) {
-                            Fanex.ExtAcc.Form.Close(false);
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
                         }
                         else {
+                            $.unblockUI(document);
+
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.ErrorMessage);
                         }
-
-                        $.unblockUI(document);
                     })
                     .error(function (xhr, status, err) {
                         $.unblockUI(document);
