@@ -321,7 +321,7 @@ tr.rowTransferCondition
 	padding-top: 3px;
 	text-align: center;
 	font-weight: bold;
-	height: 25px;
+	height: 23px;
 }
 .ptSection
 {
@@ -330,4 +330,8 @@ tr.rowTransferCondition
 	clear: both;
 	margin-top: 3px;
 	margin-bottom: 3px;
+}
+.ptContainer
+{
+	margin: 3px;
 }
