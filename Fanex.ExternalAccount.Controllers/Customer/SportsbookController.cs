@@ -24,7 +24,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     /// </summary>
     public class SportsbookController : BaseController
     {
-        private ICommissionService commissionService = new CommissionService();
+        private ICommissionService commissionService = new CommissionService();        
 
         #region Bet Setting
 
@@ -293,5 +293,139 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         #endregion PT Setting
+
+        #region Edit Min PT
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMinPT()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
+        {
+            var context = new RequestContext()
+            {
+                AdminId = CurrentSession.UserId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.EditMinPT,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = CurrentSession.UserName.ToUpper()
+            };
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+
+            var customerService = new Fanex.PTEngine.Services.CustomerService();
+            customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
+
+            customer.BettingLimit = null;
+            customer.StatusSetting = null;
+            customer.CommissionSetting = null;
+            customer.CommissionSetting2 = null;
+
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
+        {
+            var context = new RequestContext()
+            {
+                AdminId = CurrentSession.UserId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.EditMinPT,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                RoleId = (int)CustomerRole.Master,
+                TargetRoleId = (int)CustomerRole.Agent,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = CurrentSession.UserName.ToUpper()
+            };
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+
+            var customerService = new Fanex.PTEngine.Services.CustomerService();
+            customer = customerService.GetCustomerForMasterEditMinPTAgent(context);
+
+            customer.BettingLimit = null;
+            customer.StatusSetting = null;
+            customer.CommissionSetting = null;
+            customer.CommissionSetting2 = null;
+
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+
+            Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            IRequestContext requestContext = new RequestContext()
+            {
+                CustId = parentId,
+                RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
+                FormId = FormType.EditMinPT,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
+            };
+
+            var result = new Fanex.PTEngine.Services.CustomerService().SuperUpdateMinPTMaster(customer, requestContext);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+
+            Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            IRequestContext requestContext = new RequestContext()
+            {
+                CustId = parentId,
+                RoleId = (int)CustomerRole.Master,
+                TargetRoleId = (int)CustomerRole.Agent,
+                FormId = FormType.EditMinPT,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
+            };
+
+            var result = new Fanex.PTEngine.Services.CustomerService().MasterUpdateMinPTAgent(customer, requestContext);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+        #endregion Edit Min PT
     }
 }

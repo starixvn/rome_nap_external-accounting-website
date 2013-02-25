@@ -107,7 +107,6 @@
     </Compile>
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
-    <Compile Include="Customer\MinPTController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookController.cs" />
     <Compile Include="Statement\StatementController.cs" />
