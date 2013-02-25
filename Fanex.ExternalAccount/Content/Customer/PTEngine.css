@@ -105,35 +105,21 @@
 	border-left: 1px solid #CCC !important;
 	border-top: 0px solid #CCC !important;
 }
-.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem, .BettingLimitItem
 {
     background-color: #FFF !important;
 	border-left: 1px solid #CCC !important;
 	border-top: 1px solid #CCC !important;
 }
-.GroupSetLabel
+.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop9, .BettingLimitHeaderTop
 {
 	background-color: #E7F7FF !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
-}
-
-
-.BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop9, .BettingLimitHeaderTop
-{
-	background-color: #E7F7FF !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
-}
-.BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem, .BettingLimitItem
-{
-	background-color: #FFF !important;
 	border-left: 1px solid #CCC !important;
 	border-top: 1px solid #CCC !important;
 }
 .BettingLimitItem2
 {
-background-color: #FFF !important;
+    background-color: #FFF !important;
 	border-top: 1px solid #CCC !important;
 }
 .BettingLimit {
