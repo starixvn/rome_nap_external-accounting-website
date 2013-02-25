@@ -1,7 +1,7 @@
 ﻿/* START: For Edit Commission */
 .commission
 {
-	background-color: #F7F0E4;
+	background-color: #FFF;
 	border: 1px solid #B7B7B7;
 	float: left;
 	min-width: 844px;
@@ -116,4 +116,27 @@
 	background-color: #E7F7FF !important;
 	border-left: 1px solid #CCC !important;
 	border-top: 1px solid #CCC !important;
+}
+
+
+.BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop9, .BettingLimitHeaderTop
+{
+	background-color: #E7F7FF !important;
+	border-left: 1px solid #CCC !important;
+	border-top: 1px solid #CCC !important;
+}
+.BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem, .BettingLimitItem
+{
+	background-color: #FFF !important;
+	border-left: 1px solid #CCC !important;
+	border-top: 1px solid #CCC !important;
+}
+.BettingLimitItem2
+{
+background-color: #FFF !important;
+	border-top: 1px solid #CCC !important;
+}
+.BettingLimit {
+	border-bottom: 1px solid #CCC !important;
+    border-right: 1px solid #CCC !important;
 }
