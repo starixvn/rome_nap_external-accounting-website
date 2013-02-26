@@ -24,7 +24,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     /// </summary>
     public class SportsbookController : BaseController
     {
-        private ICommissionService commissionService = new CommissionService();        
+        private ICommissionService commissionService = new CommissionService();
 
         #region Bet Setting
 
@@ -266,7 +266,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -287,7 +287,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
 
-            Fanex.PTEngine.BusinessObjects.Result result = custSrv.SuperUpdateMaster(customer, requestContext, false, 0);
+            Fanex.PTEngine.BusinessObjects.Result result = custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -415,6 +415,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         #endregion PT Setting
 
         #region Edit Min PT
+
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditMinPT()
         {
@@ -546,6 +547,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+
         #endregion Edit Min PT
     }
 }
