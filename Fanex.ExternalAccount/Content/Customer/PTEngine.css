@@ -111,6 +111,7 @@
 	border-left: 1px solid #CCC !important;
 	border-top: 1px solid #CCC !important;
 }
+.GroupSetLabel{min-width: 46px !important;}
 .GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop9, .BettingLimitHeaderTop
 {
 	background-color: #E7F7FF !important;
