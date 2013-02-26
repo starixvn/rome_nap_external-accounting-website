@@ -447,7 +447,6 @@ Fanex.EditPT = {
 
     // Confirm new value for all member before transfer to server
     SetNewValueToMember: function (isUpdateAllMember) {
-        Fanex.ExtAcc.Customer.PTSetting.isShowPopUpSetPTMember = true;
         if (isUpdateAllMember) {
             var valueMemberPositionTaking = $("#selectedMemberPositionTaking").val();
 
