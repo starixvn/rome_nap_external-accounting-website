@@ -1780,7 +1780,7 @@ Fanex.ExtAcc.Customer = {
 
             Fanex.ExtAcc.Customer.IsMultiple = false;
             Fanex.ExtAcc.Customer.UserId = parseInt(custids[0]);
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 871, 500, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 871, 600, false, false, 1);
         }
         else {
             Fanex.ExtAcc.Customer.IsMultiple = true;
