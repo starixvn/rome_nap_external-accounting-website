@@ -168,7 +168,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         customer.ptSetting = ptGrid.Save();
 
                         // For Check Edit Postion Taking
-                        if (context.targetCustId > 0) {
+                        if (context.targetCustId > 0 && !Fanex.ExtAcc.Customer.PTSetting.Saved) {
                             if (!isShowPopUpSetPTMember) {
                                 isChangeM2 = Fanex.EditPT.CheckChangeM2(oldPTSetting, customer.ptSetting);
                             }
