@@ -39,7 +39,9 @@ Fanex.ExtAcc.Customer.MinPT = {
             var CustomerModel = function () {
                 this.saveCustomer = function () {
                     // EscapeHTML String
-                    customer.firstName = customer.firstName.escapeHtml();
+                     Fanex.ExtAcc.BlockUI();
+
+                   customer.firstName = customer.firstName.escapeHtml();
                     customer.lastName = customer.lastName.escapeHtml();
                     customer.phone = customer.phone.escapeHtml();
                     customer.mobilePhone = customer.mobilePhone.escapeHtml();
@@ -59,8 +61,6 @@ Fanex.ExtAcc.Customer.MinPT = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/' + editMinPTStatus + 'Post'),

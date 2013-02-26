@@ -40,6 +40,9 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             var BetSettingModel = function () {
                 this.saveCustomer = function () {
                     if (!bettingLimit.Validate()) return;
+
+                    Fanex.ExtAcc.BlockUI();
+
                     if (bettingLimit) {
                         betting = bettingLimit.Save();
                         var text = JSON.stringify(betting);
@@ -50,8 +53,6 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
@@ -114,6 +115,9 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             var BetSettingModel = function () {
                 this.saveCustomer = function () {
                     if (!bettingLimit.Validate()) return;
+
+                    Fanex.ExtAcc.BlockUI();
+
                     if (bettingLimit) {
                         betting = bettingLimit.Save();
                         var text = JSON.stringify(betting);
@@ -124,8 +128,6 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
@@ -186,6 +188,9 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             var BetSettingModel = function () {
                 this.saveCustomer = function () {
                     if (!bettingLimit.Validate()) return;
+
+                    Fanex.ExtAcc.BlockUI();
+
                     if (bettingLimit) {
                         betting = bettingLimit.Save();
                         var text = JSON.stringify(betting);
@@ -196,8 +201,6 @@ Fanex.ExtAcc.Customer.Sportsbook = {
                             txtCustomerObject: text
                         };
                     }
-
-                    Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
                         url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
