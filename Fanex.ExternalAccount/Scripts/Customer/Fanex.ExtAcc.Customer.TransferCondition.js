@@ -42,7 +42,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
                 if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
                     chkCount++;
                     if (chkCount == 7) {
-                        Validators.show($('#Daily').get(0), titles[3], null, null, 5000);
+                        Validators.show($('#Daily').get(0), titles[3], -10, 7, -40, 35, 15, 5000);
 
                         return false;
                     }
@@ -64,7 +64,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             }
 
             if (!isSelect) {
-                Validators.show($('#Mon').get(0), titles[4], null, null, 5000);
+                Validators.show($('#Mon').get(0), titles[4], -10, 7, -40, 35, 15, 5000);
 
                 return false;
             }
