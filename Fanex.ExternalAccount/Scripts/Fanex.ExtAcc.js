@@ -33,6 +33,21 @@ Array.prototype.binarySearch = function (value, key) {
     return (!match(this[middle], value)) ? -1 : middle;
 };
 
+String.prototype.formatErrorMessage = function () {
+    var msg = this;
+
+    var indexOfStartParenthesis = msg.indexOf('(');
+    var indexOfEndParenthesis = msg.indexOf(')');
+    var orgMsg = msg.substring(indexOfStartParenthesis, indexOfEndParenthesis + 1);
+    var preMsg = msg.substring(0, indexOfStartParenthesis);
+    var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
+
+    var ret = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
+    '<font color="#ff5411">' + subMsg + '</font>';
+
+    return ret;
+};
+
 Fanex.ExtAcc = {
     $this: null,
     BlockedUI: false,

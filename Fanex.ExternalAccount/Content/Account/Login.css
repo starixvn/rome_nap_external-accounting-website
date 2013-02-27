@@ -118,7 +118,7 @@ tr
 }
 .errMsg
 {
-	background-color: #8ed3ea;
+	background-color: #ffedc1;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -128,9 +128,11 @@ tr
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle;
-	color: #8d1b25;
+	color: #ff5411;
 	font-size: 13px;
 	padding-left: 30px;
+	margin-bottom: 5px;
+	border: 1px solid #d2a243;
 }
 .currencyGroup
 {
