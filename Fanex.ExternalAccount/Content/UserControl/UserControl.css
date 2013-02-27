@@ -190,7 +190,7 @@
 }
 .errMsg
 {
-	background-color: #8ed3ea;
+	background-color: #ffedc1;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -199,12 +199,13 @@
 	background-position: 5px center;
 	line-height: 1.5;
 	text-align: left;
-	vertical-align: middle;
-	color: #8d1b25;
+	vertical-align: middle; /*color: #ff5411;*/
 	font-size: 13px;
 	clear: both;
 	padding-left: 30px;
 	white-space: pre-line;
+	margin-bottom: 5px;
+	border: 1px solid #d2a243;
 }
 .edit
 {

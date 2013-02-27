@@ -123,7 +123,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error);
+                            $('#errMsg').html(error.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -235,7 +235,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error);
+                            $('#errMsg').html(error.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -325,7 +325,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error);
+                            $('#errMsg').html(error.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -416,7 +416,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error);
+                            $('#errMsg').html(error.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -507,7 +507,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error);
+                            $('#errMsg').html(error.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
