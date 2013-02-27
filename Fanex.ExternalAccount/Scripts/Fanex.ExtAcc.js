@@ -180,6 +180,8 @@ Fanex.ExtAcc = {
 
         $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
 
+        $('#contentSplitter').css('height', $('#splitterBar').css('height'));
+
         $('#splitterBar').click(function (event) {
             Fanex.ExtAcc.ToggleSpliter();
             Fanex.ExtAcc.Resize();
@@ -220,6 +222,8 @@ Fanex.ExtAcc = {
             $('#splitterBar').attr('title', 'Hide left panel');
             $('#splitterBar div').attr('class', 'expanded');
         };
+
+        $('#contentSplitter').css('height', $('#splitterBar').css('height'));
     },
 
     OnResize: function () { },

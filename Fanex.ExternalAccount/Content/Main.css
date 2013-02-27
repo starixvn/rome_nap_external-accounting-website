@@ -125,6 +125,8 @@ html, body
 {
 	float: left;
 	background-color: #fff;
+	height: 100%;
+	overflow: auto;
 }
 
 #splitterBar
