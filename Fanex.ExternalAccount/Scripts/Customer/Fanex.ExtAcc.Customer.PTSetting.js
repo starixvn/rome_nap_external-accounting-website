@@ -333,6 +333,188 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .error(function (xhr, status, err) {
             $.unblockUI(document);
         });
+    },
+    SuperGetMemberPTSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        var data = new Object();
+
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.superId;
+        data.agentId = Fanex.ExtAcc.Customer.agentId;
+
+        $.ajax({
+            url: resolveClientUrl('Sportsbook/SuperEditPTMemberGet'),
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var ptGrid = null;
+            var context = result.context;
+            var customer = result.customer;
+
+            Fanex.PTEngine.CURRENT_CONTEXT = context;
+
+            ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
+
+            var ptContainer = document.getElementById('ptContainer');
+            ptGrid.Render(ptContainer);
+
+            Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
+                this.saveCustomer = function () {
+                    Fanex.ExtAcc.BlockUI();
+
+                    if (ptGrid) {
+                        customer.ptSetting = ptGrid.Save();
+                        var text = JSON.stringify(customer);
+
+                        var para = {
+                            custId: Fanex.ExtAcc.Customer.UserId,
+                            parentId: Fanex.ExtAcc.Customer.superId,
+                            agentId: Fanex.ExtAcc.Customer.agentId,
+                            txtCustomerObject: text
+                        };
+                    }
+
+                    $.ajax({
+                        url: resolveClientUrl('Sportsbook/SuperEditPTMemberPost'),
+                        data: para,
+                        dataType: 'json',
+                        type: 'post'
+                    })
+                    .success(function (result) {
+                        var codes = result.ErrorCode.split('\u0007');
+                        var msgs = result.ErrorMessage.split('\u0007');
+                        var success = true;
+                        var error = '';
+
+                        for (var i = 0; i < codes.length; i++) {
+                            if (parseInt(codes[i]) > 0) {
+                                success = false;
+
+                                error += msgs[i] + '<br/>';
+                            }
+                        }
+
+                        if (success) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
+                        }
+                        else {
+                            $.unblockUI(document);
+
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html(error);
+                        }
+                    })
+                    .error(function (xhr, status, err) {
+                        $.unblockUI(document);
+                    });
+                }
+            }
+
+            ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
+
+            $.unblockUI(document);
+        })
+        .error(function (xhr, status, err) {
+            $.unblockUI(document);
+        });
+    },
+    MasterGetMemberPTSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        var data = new Object();
+
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.masterId;
+        data.agentId = Fanex.ExtAcc.Customer.agentId;
+
+        $.ajax({
+            url: resolveClientUrl('Sportsbook/MasterEditPTMemberGet'),
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var ptGrid = null;
+            var context = result.context;
+            var customer = result.customer;
+
+            Fanex.PTEngine.CURRENT_CONTEXT = context;
+
+            ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
+
+            var ptContainer = document.getElementById('ptContainer');
+            ptGrid.Render(ptContainer);
+
+            Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
+                this.saveCustomer = function () {
+                    Fanex.ExtAcc.BlockUI();
+
+                    if (ptGrid) {
+                        customer.ptSetting = ptGrid.Save();
+                        var text = JSON.stringify(customer);
+
+                        var para = {
+                            custId: Fanex.ExtAcc.Customer.UserId,
+                            parentId: Fanex.ExtAcc.Customer.masterId,
+                            agentId: Fanex.ExtAcc.Customer.agentId,
+                            txtCustomerObject: text
+                        };
+                    }
+
+                    $.ajax({
+                        url: resolveClientUrl('Sportsbook/MasterEditPTMemberPost'),
+                        data: para,
+                        dataType: 'json',
+                        type: 'post'
+                    })
+                    .success(function (result) {
+                        var codes = result.ErrorCode.split('\u0007');
+                        var msgs = result.ErrorMessage.split('\u0007');
+                        var success = true;
+                        var error = '';
+
+                        for (var i = 0; i < codes.length; i++) {
+                            if (parseInt(codes[i]) > 0) {
+                                success = false;
+
+                                error += msgs[i] + '<br/>';
+                            }
+                        }
+
+                        if (success) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
+                        }
+                        else {
+                            $.unblockUI(document);
+
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html(error);
+                        }
+                    })
+                    .error(function (xhr, status, err) {
+                        $.unblockUI(document);
+                    });
+                }
+            }
+
+            ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
+
+            $.unblockUI(document);
+        })
+        .error(function (xhr, status, err) {
+            $.unblockUI(document);
+        });
     }
 };
 

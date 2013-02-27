@@ -694,4 +694,22 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="sbminpt" xml:space="preserve">
     <value>Sportsbook's Min PT</value>
   </data>
+  <data name="allowautopt" xml:space="preserve">
+    <value>Allow Auto PT</value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value>and</value>
+  </data>
+  <data name="BetSetting" xml:space="preserve">
+    <value>Bet Setting</value>
+  </data>
+  <data name="lblPasswordRequire" xml:space="preserve">
+    <value>Password must have at least 6 characters, including at least 2 letters and at least 2 digits. (e.g:pass22)</value>
+  </data>
+  <data name="MasterMaxCredit" xml:space="preserve">
+    <value>Master Max Credit</value>
+  </data>
+  <data name="PositionTaking" xml:space="preserve">
+    <value>Position Taking</value>
+  </data>
 </root>

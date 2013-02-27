@@ -133,6 +133,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allow Auto PT.
+        /// </summary>
+        public static string allowautopt {
+            get {
+                return ResourceManager.GetString("allowautopt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All sports.
         /// </summary>
         public static string Allsports {
@@ -147,6 +156,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Amount {
             get {
                 return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        public static string and {
+            get {
+                return ResourceManager.GetString("and", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string BetDetails {
             get {
                 return ResourceManager.GetString("BetDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Setting.
+        /// </summary>
+        public static string BetSetting {
+            get {
+                return ResourceManager.GetString("BetSetting", resourceCulture);
             }
         }
         
@@ -872,6 +899,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password must have at least 6 characters, including at least 2 letters and at least 2 digits. (e.g:pass22).
+        /// </summary>
+        public static string lblPasswordRequire {
+            get {
+                return ResourceManager.GetString("lblPasswordRequire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to League.
         /// </summary>
         public static string League {
@@ -967,6 +1003,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Max Credit.
+        /// </summary>
+        public static string MasterMaxCredit {
+            get {
+                return ResourceManager.GetString("MasterMaxCredit", resourceCulture);
             }
         }
         
@@ -1291,6 +1336,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string PopularEvents {
             get {
                 return ResourceManager.GetString("PopularEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position Taking.
+        /// </summary>
+        public static string PositionTaking {
+            get {
+                return ResourceManager.GetString("PositionTaking", resourceCulture);
             }
         }
         
