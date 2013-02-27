@@ -17,7 +17,15 @@ Fanex.ExtAcc.Customer.PTSetting = {
             this.GetAgentPTSetting();
         }
         else {
-            this.GetMemberPTSetting();
+            if (Fanex.ExtAcc.Customer.isSuperEditMember == true) {
+                this.SuperGetMemberPTSetting();
+            }
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember == true) {
+                this.MasterGetMemberPTSetting();
+            }
+            else {
+                this.GetMemberPTSetting();
+            }
         }
     },
 
