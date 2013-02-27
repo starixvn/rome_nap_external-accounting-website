@@ -53,7 +53,7 @@
 }
 .textBoxComm
 {
-	width: 60px !important;
+	width: 60px;
 	margin: 0;
 	padding: 0;
 	height: 18px;
@@ -61,6 +61,7 @@
 }
 .customerInfoBlock1
 {
+    background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -74,6 +75,7 @@
 } 
 .customerInfoBlock2
 {
+    background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -99,6 +101,7 @@
 }
 .customerInfoBlock3
 {
+    background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -112,6 +115,7 @@
 }
 .customerInfoBlock4
 {
+    background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -206,8 +210,6 @@
 	background-color: #FFF;
 	border: 1px solid #CCC;
 	float: left;
-	min-width: 844px;
-	width: 844px;
 }
 .commissionHeader
 {
@@ -288,7 +290,7 @@
 }
 .transferCondition
 {
-	background-color: #F7F0E4;
+	background-color: #FFF;
 	border-bottom: 1px solid #CCC;
 	border-left: 1px solid #CCC;
 	border-right: 1px solid #CCC;
@@ -307,7 +309,6 @@
 	min-width: 844px;
 	text-align: center;
 	text-indent: 5px;
-	width: 838px;
 }
 .positionTaking
 {
@@ -315,7 +316,6 @@
 	border-right: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
     padding: 3px;   
-	float: left;
 	min-width: 838px;
 }
 .line
@@ -326,28 +326,32 @@
 	min-width: 842px;	
 }
 .headerBetSetting
-{
-    background-color: #D4E3EB !important;
+{    
+    background-color: #F1F1A6;    
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
 	clear: both;
-	color: #FFFFFF;
+	color: #464646;
 	font-size: 12px;
-	height: 22px;
+	font-weight: bold;
+	line-height: 28px;
 	text-align: center;
 	text-indent: 5px;
 	width: 843px;
 }
 .PTSport
 {
-    background-color: #D4E3EB !important;
-    border-bottom: 1px solid #CCC !important;
-	border-right: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
+    background-color: #D4E3EB;
+    border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #CCC;
 }
 .PTSportLabel, .PTSportLabel2
 {
-	color: #464646 !important;
-	border-left: 1px solid  #CCC !important;
-	border-top: 0 none !important;
+	color: #464646;
+	border-left: 1px solid  #CCC;
+	border-top: 0 none;
 }
 
 .PTSportEditCopied
@@ -368,41 +372,41 @@
 }
 .BetTypeInactive
 {
-	background-color: #DDDDDD !important;
+	background-color: #DDDDDD;
 }
 .BettingLimit, .BettingLimit4
 {
 	background-color: #F7F0E4;
-	border-bottom: 1px solid #CCC !important;
-    border-right: 1px solid #CCC !important;
+	border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
 }
 .BettingLimitTextBox
 {
-	width: 110px !important;
+	width: 110px;
 }
 .BettingLimitTextBox4
 {
-	width: 186px !important;
+	width: 186px;
 }
 .BettingLimitTextBox9
 {
-	width: 90px !important;
+	width: 90px;
 }
 .BettingLimitTextBox5
 {
-	width: 137px !important;
+	width: 137px;
 }
 .BettingLimitItem2
 {
-	background-color: #FFF !important;
-	border-top: 1px solid #CCC !important;
+	background-color: #FFF;
+	border-top: 1px solid #CCC;
 }
-.GroupSetLabel{min-width: 46px !important;}
+.GroupSetLabel{min-width: 46px;}
 .GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
 {
-    background-color: #E7F7FF !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
+    background-color: #E7F7FF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
 }
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
 {
@@ -412,8 +416,8 @@
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
 {
-    background-color: #FFF !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
+    background-color: #FFF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
 }
 /* START: Base on MemberInfo.css */
