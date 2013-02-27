@@ -18,7 +18,7 @@
 }
 .pb3
 {
-    padding-bottom: 5px;
+	padding-bottom: 5px;
 }
 .pt7
 {
@@ -61,7 +61,7 @@
 }
 .customerInfoBlock1
 {
-    background: #FFF;
+	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -72,10 +72,10 @@
 	text-align: right;
 	vertical-align: middle;
 	width: 180px;
-} 
+}
 .customerInfoBlock2
 {
-    background: #FFF;
+	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -101,7 +101,7 @@
 }
 .customerInfoBlock3
 {
-    background: #FFF;
+	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -115,7 +115,7 @@
 }
 .customerInfoBlock4
 {
-    background: #FFF;
+	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -139,11 +139,11 @@
 }
 .customerInfoBlock6
 {
-    font-weight: bold;
-    text-align: center;
-    float: left;
-    width: 837px;
-    padding: 2px;
+	font-weight: bold;
+	text-align: center;
+	float: left;
+	width: 837px;
+	padding: 2px;
 }
 .customerInfoBlock7
 {
@@ -152,7 +152,7 @@
 	height: 22px;
 	line-height: 22px;
 	padding: 2px 1px 1px;
-    text-align: right;
+	text-align: right;
 	width: 418px;
 }
 .customerInfoBlock4NoBorderLeft
@@ -218,14 +218,14 @@
 }
 .commissionBlock1
 {
-    border-top: 1px solid #CCC;
+	border-top: 1px solid #CCC;
 	float: left;
 	line-height: 28px;
 	text-align: center;
 	vertical-align: middle;
 	width: 260px;
 	padding-right: 5px;
-	text-align: right;	
+	text-align: right;
 }
 .commissionBlock2
 {
@@ -269,9 +269,9 @@
 }
 .groupCom
 {
-    text-align: right;
+	text-align: right;
 	width: 80px;
-	padding-right: 5px;	
+	padding-right: 5px;
 }
 .widthGroup
 {
@@ -279,14 +279,14 @@
 }
 .headerTab
 {
-    background-color: #f1f1a6;
+	background-color: #f1f1a6;
 	clear: both;
 	color: #464646;
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 28px;
 	text-align: center;
-	text-indent: 5px;	
+	text-indent: 5px;
 }
 .transferCondition
 {
@@ -299,35 +299,32 @@
 }
 .headerPositionTaking
 {
-    border: 1px solid #CCC;
+	border: 1px solid #CCC;
 	background-color: #f1f1a6;
 	clear: both;
 	color: #464646;
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 25px;
-	min-width: 844px;
 	text-align: center;
 	text-indent: 5px;
 }
 .positionTaking
 {
-    border-left: 1px solid #CCC;
+	border-left: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
-    padding: 3px;   
-	min-width: 838px;
+	padding: 3px;
 }
 .line
 {
-    background-color: #CCC;
+	background-color: #CCC;
 	height: 1px;
 	margin: 2px 0;
-	min-width: 842px;	
 }
 .headerBetSetting
-{    
-    background-color: #F1F1A6;    
+{
+	background-color: #F1F1A6;
 	border-top: 1px solid #CCC;
 	border-left: 1px solid #CCC;
 	border-right: 1px solid #CCC;
@@ -342,15 +339,15 @@
 }
 .PTSport
 {
-    background-color: #D4E3EB;
-    border-bottom: 1px solid #CCC;
+	background-color: #D4E3EB;
+	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
 .PTSportLabel, .PTSportLabel2
 {
 	color: #464646;
-	border-left: 1px solid  #CCC;
+	border-left: 1px solid #CCC;
 	border-top: 0 none;
 }
 
@@ -378,7 +375,7 @@
 {
 	background-color: #F7F0E4;
 	border-bottom: 1px solid #CCC;
-    border-right: 1px solid #CCC;
+	border-right: 1px solid #CCC;
 }
 .BettingLimitTextBox
 {
@@ -401,10 +398,13 @@
 	background-color: #FFF;
 	border-top: 1px solid #CCC;
 }
-.GroupSetLabel{min-width: 46px;}
+.GroupSetLabel
+{
+	min-width: 46px;
+}
 .GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
 {
-    background-color: #E7F7FF;
+	background-color: #E7F7FF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
@@ -416,7 +416,7 @@
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
 {
-    background-color: #FFF;
+	background-color: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
