@@ -19,10 +19,10 @@
         <div class="headerTab">
             @ViewLang.generalInformation</div>
         <!--UserNameAndPasswordBlock-->
-        <div class="clearBlock">
-            <div class="customerInfoBlock1">
+        <div class="clear">
+            <div class="customerInfoBlock1 bdt0">
                 @ViewLang.Username</div>
-            <div class="customerInfoBlock2">
+            <div class="customerInfoBlock2 bdt0">
                 <b><span data-bind="text: customer.userName"></span></b>
                 <select id="selectedOne" name="selectedOne">
                 </select>
@@ -30,9 +30,9 @@
                 </select>
                 <span id="msgIcon">&nbsp;&nbsp;&nbsp;</span>
             </div>
-            <div class="customerInfoBlock3">
+            <div class="customerInfoBlock3 bdt0">
                 @ViewLang.Password</div>
-            <div class="customerInfoBlock4" id="divPassword" title="@ViewLang.lblPasswordRequire">
+            <div class="customerInfoBlock4 bdt0" id="divPassword" title="@ViewLang.lblPasswordRequire">
                 <div class="float_l">
                     <input id="password" autocomplete="off" class="textBoxInfo" type="password" data-bind="value: customer.password"
                         onkeyup="return Fanex.Customer.CheckPassword(this, 'spnNewPwdIcon');" maxlength="50" /></div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <!--/UserNameAndPasswordBlock-->
-        <div class="clearBlock">
+        <div class="clear">
             <div class="customerInfoBlock1">
                 @ViewLang.Firstname</div>
             <div class="customerInfoBlock2">
@@ -53,7 +53,7 @@
                 <input id="lastName" type="text" class="textBoxInfo" data-bind="value: customer.lastName"
                     maxlength="50" /></div>
         </div>
-        <div class="clearBlock">
+        <div class="clear">
             <div class="customerInfoBlock1">
                 @ViewLang.Phone</div>
             <div class="customerInfoBlock2">
@@ -65,7 +65,7 @@
                 <input id="mobilePhone" type="text" class="textBoxInfo" data-bind="value: customer.mobilePhone"
                     maxlength="50" /></div>
         </div>
-        <div class="clearBlock">
+        <div class="clear">
             <div class="customerInfoBlock1">
                 @ViewLang.MasterMaxCredit</div>
             <div class="customerInfoBlock2">
@@ -78,7 +78,7 @@
             <div class="customerInfoBlock4">
                 <input id="fax" type="text" class="textBoxInfo" data-bind="value: customer.fax" maxlength="50" /></div>
         </div>
-        <div class="clearBlock">
+        <div class="clear">
             <div id="closedId">
                 <div class="customerInfoBlock1">
                     <label for="closed">
@@ -109,18 +109,15 @@
     <!--TransferConditionBlock-->
     @Html.Raw(new Fanex.PTEngine.Age.Templates.TransferCondition_Template())
     <!--/TransferConditionBlock-->
-    <div class="clearBlock">
-    </div>
+    <div class="clear"></div>
     <br />
     <div class="headerBetSetting">
         @ViewLang.BetSetting</div>
     <div id="bettingLimitContainer">
     </div>
     <br />
-    <div class="clearBlock">
-    </div>
-    <div class="headerPositionTaking">@ViewLang.PositionTaking</div>
-    <div class="positionTaking">
+    <div class="headerPositionTaking widthPT">@ViewLang.PositionTaking</div>
+    <div class="positionTaking widthPT">
         <div id="ptContainer">
         </div>
     </div>
