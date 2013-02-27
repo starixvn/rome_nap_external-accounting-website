@@ -1,8 +1,210 @@
-﻿/* START: For Edit Commission */
+﻿/* START: Base on MemberInfo.css */
+.clearBlock
+{
+	clear: both;
+}
+.minWidthCustomer
+{
+	width: 845px;
+}
+.float_l
+{
+	float: left;
+}
+.pt3
+{
+	padding-top: 5px;
+	border-top: 1px solid #CCC;
+}
+.pb3
+{
+    padding-bottom: 5px;
+}
+.pt7
+{
+	padding-top: 7px;
+}
+.hide
+{
+	display: none;
+}
+.nowrap
+{
+	white-space: nowrap;
+}
+.customerInfo
+{
+	background-color: #F7F0E4;
+	border-right: 1px solid #CCC;
+	float: left;
+	min-width: 840px;
+	padding: 0;
+}
+.textBoxInfo
+{
+	height: 18px;
+	margin: 0;
+	padding: 0;
+	width: 120px;
+}
+.textBoxCredit
+{
+	text-align: right;
+}
+.textBoxComm
+{
+	width: 60px !important;
+	margin: 0;
+	padding: 0;
+	height: 18px;
+	text-align: right;
+}
+.customerInfoBlock1
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 180px;
+} 
+.customerInfoBlock2
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	text-align: left;
+	vertical-align: middle;
+	width: 335px;
+}
+.customerInfoBlock2NoBorderLeft
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 336px;
+}
+.customerInfoBlock3
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 110px;
+}
+.customerInfoBlock4
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	vertical-align: middle;
+	width: 200px;
+}
+.customerInfoBlock5
+{
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	padding: 2px 1px 1px;
+	vertical-align: middle;
+	width: 418px;
+}
+.customerInfoBlock6
+{
+    font-weight: bold;
+    text-align: center;
+    float: left;
+    width: 837px;
+    padding: 2px;
+}
+.customerInfoBlock7
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	padding: 2px 1px 1px;
+    text-align: right;
+	width: 418px;
+}
+.customerInfoBlock4NoBorderLeft
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	vertical-align: middle;
+	width: 201px;
+}
+
+.customerInfoViewBlock1
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 143px;
+}
+.customerInfoViewBlock2
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px 2px;
+	text-align: left;
+	vertical-align: middle;
+	width: 269px;
+}
+.customerInfoViewBlock2NoBorderLeft
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px 2px;
+	text-align: right;
+	vertical-align: middle;
+	width: 270px;
+}
 .commission
 {
 	background-color: #FFF;
-	border: 1px solid #B7B7B7;
+	border: 1px solid #CCC;
 	float: left;
 	min-width: 844px;
 	width: 844px;
@@ -14,19 +216,19 @@
 }
 .commissionBlock1
 {
-	border-top: 1px solid #B7B7B7;
+    border-top: 1px solid #CCC;
 	float: left;
 	line-height: 28px;
 	text-align: center;
 	vertical-align: middle;
 	width: 260px;
 	padding-right: 5px;
-	text-align: right;
+	text-align: right;	
 }
 .commissionBlock2
 {
-	border-left: 1px solid #B7B7B7;
-	border-top: 1px solid #B7B7B7;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
 	float: left;
 	line-height: 28px;
 	text-align: center;
@@ -34,63 +236,105 @@
 	width: 285px;
 	padding: 2px 1px 1px;
 }
-
+.commissionViewBlock1
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	width: 230px;
+	padding: 2px 1px 1px;
+	text-align: right;
+}
+.commissionViewBlock2
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	width: 200px;
+	padding: 2px 1px 1px;
+}
+.commissionGroup
+{
+	float: left;
+	margin-left: 2px;
+	padding: 2px 2px 2px 8px;
+	white-space: nowrap;
+}
+.groupCom
+{
+    text-align: right;
+	width: 80px;
+	padding-right: 5px;	
+}
+.widthGroup
+{
+	width: 70px;
+}
 .headerTab
 {
-	background-color: #f1f1a6;
+    background-color: #f1f1a6;
 	clear: both;
 	color: #464646;
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 28px;
 	text-align: center;
-	text-indent: 5px;
+	text-indent: 5px;	
 }
-.pb3
+.transferCondition
 {
-	padding-bottom: 5px;
-}
-.pt3
-{
-	padding-top: 5px;
-	border-top: 1px solid #B7B7B7;
-}
-.groupCom
-{
-	text-align: right;
-	width: 80px;
-	padding-right: 5px;
-}
-.widthGroup
-{
-	width: 70px;
-}
-.line
-{
-	background-color: #B7B7B7;
-	height: 1px;
-	margin: 2px 0;
-	min-width: 842px;
-}
-/* END: For Edit Commission */
-
-
-.positionTaking
-{
-    border-left: 1px solid #B7B7B7;
-	border-right: 1px solid #B7B7B7;
-	border-bottom: 1px solid #B7B7B7;
-    padding: 3px;
+	background-color: #F7F0E4;
+	border-bottom: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	float: left;
+	min-width: 840px;
 }
 .headerPositionTaking
 {
-	border: 1px solid #B7B7B7;
+    border: 1px solid #CCC;
 	background-color: #f1f1a6;
 	clear: both;
 	color: #464646;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 25px;
+	min-width: 844px;
 	text-align: center;
+	text-indent: 5px;
+	width: 838px;
+}
+.positionTaking
+{
+    border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+    padding: 3px;   
+	float: left;
+	min-width: 838px;
+}
+.line
+{
+    background-color: #CCC;
+	height: 1px;
+	margin: 2px 0;
+	min-width: 842px;	
+}
+.headerBetSetting
+{
+    background-color: #D4E3EB !important;
+	clear: both;
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 22px;
+	text-align: center;
+	text-indent: 5px;
+	width: 843px;
 }
 .PTSport
 {
@@ -102,28 +346,74 @@
 .PTSportLabel, .PTSportLabel2
 {
 	color: #464646 !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 0px solid #CCC !important;
+	border-left: 1px solid  #CCC !important;
+	border-top: 0 none !important;
 }
-.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem, .BettingLimitItem
+
+.PTSportEditCopied
 {
-    background-color: #FFF !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
 }
-.GroupSetLabel{min-width: 46px !important;}
-.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop9, .BettingLimitHeaderTop
+.PTGroup
 {
-	background-color: #E7F7FF !important;
-	border-left: 1px solid #CCC !important;
-	border-top: 1px solid #CCC !important;
+	background-color: #F7F0E4;
 }
-.BettingLimitItem2
+.PTGroup2
 {
-    background-color: #FFF !important;
-	border-top: 1px solid #CCC !important;
+	background-color: #FAF9EE;
 }
-.BettingLimit {
+.BetTypeCheckbox, .BetTypeHeaderActive
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+.BetTypeInactive
+{
+	background-color: #DDDDDD !important;
+}
+.BettingLimit, .BettingLimit4
+{
+	background-color: #F7F0E4;
 	border-bottom: 1px solid #CCC !important;
     border-right: 1px solid #CCC !important;
 }
+.BettingLimitTextBox
+{
+	width: 110px !important;
+}
+.BettingLimitTextBox4
+{
+	width: 186px !important;
+}
+.BettingLimitTextBox9
+{
+	width: 90px !important;
+}
+.BettingLimitTextBox5
+{
+	width: 137px !important;
+}
+.BettingLimitItem2
+{
+	background-color: #FFF !important;
+	border-top: 1px solid #CCC !important;
+}
+.GroupSetLabel{min-width: 46px !important;}
+.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
+{
+    background-color: #E7F7FF !important;
+	border-left: 1px solid #CCC !important;
+	border-top: 1px solid #CCC !important;
+}
+.BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
+{
+	background-position: 100px 2px;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
+{
+    background-color: #FFF !important;
+	border-left: 1px solid #CCC !important;
+	border-top: 1px solid #CCC !important;
+}
+/* START: Base on MemberInfo.css */

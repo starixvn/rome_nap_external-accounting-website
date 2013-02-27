@@ -16,7 +16,6 @@ Fanex.ExtAcc.SuperAddNewMaster = {
 //            this.GetEditMinPT('MasterEditMinPTAgent');
 //        }
     },
-
     GetEditMinPT: function (editMinPTStatus) {
         Fanex.ExtAcc.BlockUI();
 
@@ -58,8 +57,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
             Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
             Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
 
-            //Fanex.Customer.SetNextCustomer($("selectedOne"), $("selectedTwo"), null, customer.newUserName);
-            alert(9);
+            Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), null, customer.newUserName);
 
             // For Check Edit Postion Taking
             if (context.targetCustId > 0) {
