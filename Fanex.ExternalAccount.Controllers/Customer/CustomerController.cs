@@ -22,6 +22,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
+    using Fanex.PTEngine.BusinessObjects;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using Sunplus.Core.Common.IPs;
 
     /// <summary>
@@ -37,7 +40,96 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private string cacheList = string.Empty;
         private ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        #region Add New
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult SuperAddNewMaster()
+        {
+            return this.ViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult SuperAddNewMasterGet(int custId, int parentId)
+        {
+            var context = new RequestContext()
+            {
+                AdminId = CurrentSession.UserId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.EditMinPT,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = CurrentSession.UserName.ToUpper()
+            };
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+            customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+
+            Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            IRequestContext requestContext = new RequestContext()
+            {
+                CustId = parentId,
+                RoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master,
+                FormId = FormType.EditMinPT,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
+            };
+
+            var result = new Fanex.PTEngine.Services.CustomerService().SuperUpdateMinPTMaster(customer, requestContext);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+
+            Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            IRequestContext requestContext = new RequestContext()
+            {
+                CustId = parentId,
+                RoleId = (int)CustomerRole.Master,
+                TargetRoleId = (int)CustomerRole.Agent,
+                FormId = FormType.EditMinPT,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
+            };
+
+            var result = new Fanex.PTEngine.Services.CustomerService().MasterUpdateMinPTAgent(customer, requestContext);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+        #endregion Edit Min PT
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
         public ActionResult CustomerList()
         {
             return this.ViewBase();
