@@ -49,7 +49,7 @@ var Validators = {
             hint.style.backgroundPositionX = (pointerXPos + 'px');
             hintPointer.style.left = (pointerXPos + 'px');
 
-            var pos = Validators.utils.findPos(elementInput);
+            var pos = Validators.utils.findPosRelativeToViewport(elementInput);
             hint.style.left = (pos[0] + xPos) + 'px';
             hint.style.top = (pos[1] - 40) + 'px';
             elementInput.onchange = function () {
@@ -114,7 +114,7 @@ var Validators = {
             hint.style.height = height + 'px';
             hintPointer.style.left = (pointerXPos + 'px');
             hintPointer.style.top = (pointerYPos + 'px');
-            var pos = Validators.utils.findPos(elementInput);
+            var pos = Validators.utils.findPosRelativeToViewport(elementInput);
             hint.style.left = (pos[0] + xPos) + 'px';
             hint.style.top = (pos[1] + yPos) + 'px';
             elementInput.onchange = function () {
@@ -195,6 +195,14 @@ var Validators = {
                     curtop += obj.offsetTop;
                 } while (obj = obj.offsetParent);
             }
+
+            if (document.getElementById('windowPopup')) {
+                var parent = document.getElementById('windowPopup');
+
+                curleft -= parent.scrollLeft;
+                curtop -= parent.scrollTop;
+            }
+
             return [curleft, curtop];
         },
         // getPageScroll() by quirksmode.org
