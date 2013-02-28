@@ -712,4 +712,46 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="PositionTaking" xml:space="preserve">
     <value>Position Taking</value>
   </data>
+  <data name="AsianHDC_OU_OE" xml:space="preserve">
+    <value>Asian HDP, OU, OE</value>
+  </data>
+  <data name="commission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="CommissionForAgent" xml:space="preserve">
+    <value>Comm for Agent</value>
+  </data>
+  <data name="CommissionForMaster" xml:space="preserve">
+    <value>Comm for Master</value>
+  </data>
+  <data name="CommissionForMember" xml:space="preserve">
+    <value>Comm for Member</value>
+  </data>
+  <data name="Groupa" xml:space="preserve">
+    <value>Group A</value>
+  </data>
+  <data name="Groupb" xml:space="preserve">
+    <value>Group B</value>
+  </data>
+  <data name="Groupc" xml:space="preserve">
+    <value>Group C</value>
+  </data>
+  <data name="Groupd" xml:space="preserve">
+    <value>Group D</value>
+  </data>
+  <data name="lbl1x2" xml:space="preserve">
+    <value>1 X 2</value>
+  </data>
+  <data name="lbl1x2Comm" xml:space="preserve">
+    <value>1x2 Comm</value>
+  </data>
+  <data name="numbergamecomm" xml:space="preserve">
+    <value>Game Comm</value>
+  </data>
+  <data name="OtherComm" xml:space="preserve">
+    <value>Others Comm</value>
+  </data>
+  <data name="OtherTypes" xml:space="preserve">
+    <value>Other Bettypes</value>
+  </data>
 </root>

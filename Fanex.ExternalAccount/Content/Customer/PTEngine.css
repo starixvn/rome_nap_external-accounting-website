@@ -1,12 +1,11 @@
 ﻿/* START: Base on MemberInfo.css */
-input[type="text"], input[type="password"]
-{
+input[type="text"], input[type="password"] {
 	height: 20px !important;
 }
 .clear
-{
-	clear: both;
-}
+.widthPTH{width: 841px}
+.widthPTC{width: 835px}
+.blockBtn{width: 843px; text-align:right; margin-bottom: 3px}
 .widthPT
 {
 	width: 840px;
@@ -236,9 +235,9 @@ input[type="text"], input[type="password"]
 }
 .commissionBlock1
 {
-	border-top: 1px solid #CCC;
+	border-top: 0px solid #CCC;
 	float: left;
-	line-height: 28px;
+	line-height: 24px;
 	text-align: center;
 	vertical-align: middle;
 	width: 260px;
@@ -248,9 +247,9 @@ input[type="text"], input[type="password"]
 .commissionBlock2
 {
 	border-left: 1px solid #CCC;
-	border-top: 1px solid #CCC;
+	border-top: 0px solid #CCC;
 	float: left;
-	line-height: 28px;
+	line-height: 24px;
 	text-align: center;
 	vertical-align: middle;
 	width: 285px;

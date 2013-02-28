@@ -29,7 +29,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         #region Bet Setting
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditBetSetting(int custId)
+        public ActionResult EditBetSetting()
         {
             return this.PartialViewBase();
         }
@@ -153,7 +153,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         #region Edit Commission
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditCommission(int custId)
+        public ActionResult EditCommission()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditCommissionMember()
         {
             return this.PartialViewBase();
         }
