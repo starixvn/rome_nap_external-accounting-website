@@ -3,7 +3,9 @@ input[type="text"], input[type="password"] {
 	height: 20px !important;
 }
 .clear{clear: both;}
-.widthPT{width: 840px}
+.widthPTH{width: 841px}
+.widthPTC{width: 835px}
+.blockBtn{width: 843px; text-align:right; margin-bottom: 3px}
 .clearBlock
 {
 	clear: both;
