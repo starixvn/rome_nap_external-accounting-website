@@ -169,6 +169,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Asian HDP, OU, OE.
+        /// </summary>
+        public static string AsianHDC_OU_OE {
+            get {
+                return ResourceManager.GetString("AsianHDC_OU_OE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign to.
         /// </summary>
         public static string AssignTo {
@@ -354,6 +363,42 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Combo {
             get {
                 return ResourceManager.GetString("Combo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string commission {
+            get {
+                return ResourceManager.GetString("commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comm for Agent.
+        /// </summary>
+        public static string CommissionForAgent {
+            get {
+                return ResourceManager.GetString("CommissionForAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comm for Master.
+        /// </summary>
+        public static string CommissionForMaster {
+            get {
+                return ResourceManager.GetString("CommissionForMaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comm for Member.
+        /// </summary>
+        public static string CommissionForMember {
+            get {
+                return ResourceManager.GetString("CommissionForMember", resourceCulture);
             }
         }
         
@@ -799,6 +844,42 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group A.
+        /// </summary>
+        public static string Groupa {
+            get {
+                return ResourceManager.GetString("Groupa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group B.
+        /// </summary>
+        public static string Groupb {
+            get {
+                return ResourceManager.GetString("Groupb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group C.
+        /// </summary>
+        public static string Groupc {
+            get {
+                return ResourceManager.GetString("Groupc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group D.
+        /// </summary>
+        public static string Groupd {
+            get {
+                return ResourceManager.GetString("Groupd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group Name.
         /// </summary>
         public static string GroupName {
@@ -895,6 +976,24 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Lastname {
             get {
                 return ResourceManager.GetString("Lastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 X 2.
+        /// </summary>
+        public static string lbl1x2 {
+            get {
+                return ResourceManager.GetString("lbl1x2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1x2 Comm.
+        /// </summary>
+        public static string lbl1x2Comm {
+            get {
+                return ResourceManager.GetString("lbl1x2Comm", resourceCulture);
             }
         }
         
@@ -1187,6 +1286,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Comm.
+        /// </summary>
+        public static string numbergamecomm {
+            get {
+                return ResourceManager.GetString("numbergamecomm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No. of Users.
         /// </summary>
         public static string NumberOfUser {
@@ -1232,6 +1340,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Others Comm.
+        /// </summary>
+        public static string OtherComm {
+            get {
+                return ResourceManager.GetString("OtherComm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Others.
         /// </summary>
         public static string Others {
@@ -1246,6 +1363,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Othersports {
             get {
                 return ResourceManager.GetString("Othersports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Bettypes.
+        /// </summary>
+        public static string OtherTypes {
+            get {
+                return ResourceManager.GetString("OtherTypes", resourceCulture);
             }
         }
         
