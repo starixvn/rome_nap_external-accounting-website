@@ -1,0 +1,495 @@
+﻿/* START: Base on MemberInfo.css */
+input[type="text"], input[type="password"]
+{
+	height: 20px !important;
+}
+<<<<<<< HEAD
+.clear
+{
+	clear: both;
+}
+.widthPT
+{
+	width: 840px;
+}
+=======
+.clear{clear: both;}
+.widthPTH{width: 841px}
+.widthPTC{width: 835px}
+.blockBtn{width: 843px; text-align:right; margin-bottom: 3px}
+>>>>>>> a1ec655f7ba2db7188e8f09571fc8c5eae80640e
+.clearBlock
+{
+	clear: both;
+	border-top: 1px solid #CCC;
+}
+.minWidthCustomer
+{
+	width: 845px;
+}
+.float_l
+{
+	float: left;
+}
+.pt3
+{
+	padding-top: 5px;
+}
+.pb3
+{
+	padding-bottom: 5px;
+}
+.pt7
+{
+	padding-top: 7px;
+}
+.hide
+{
+	display: none;
+}
+.nowrap
+{
+	white-space: nowrap;
+}
+.customerInfo
+{
+	background-color: #FFF;
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	float: left;
+	min-width: 841px;
+	padding: 0;
+}
+.textBoxInfo
+{
+	height: 18px;
+	margin: 0;
+	padding: 0;
+	width: 120px;
+}
+.textBoxCredit
+{
+	text-align: right;
+}
+.textBoxComm
+{
+	width: 60px;
+	margin: 0;
+	padding: 0;
+	height: 18px;
+	text-align: right;
+}
+.bdt0
+{
+	border-top: 0px none !important;
+}
+.customerInfoBlock1
+{
+	background: #FFF;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 180px;
+}
+.customerInfoBlock2
+{
+	background: #FFF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	text-align: left;
+	vertical-align: middle;
+	width: 335px;
+}
+.customerInfoBlock2NoBorderLeft
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 336px;
+}
+.customerInfoBlock3
+{
+	background: #FFF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 110px;
+}
+.customerInfoBlock4
+{
+	background: #FFF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	vertical-align: middle;
+	width: 200px;
+}
+.customerInfoBlock5
+{
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	padding: 1px 1px 1px;
+	vertical-align: middle;
+	width: 418px;
+}
+.customerInfoBlock6
+{
+	font-weight: bold;
+	text-align: center;
+	float: left;
+	width: 837px;
+	padding: 2px;
+}
+.customerInfoBlock7
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	padding: 1px 1px 1px;
+	text-align: right;
+	width: 418px;
+}
+.customerInfoBlock4NoBorderLeft
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	vertical-align: middle;
+	width: 201px;
+}
+
+.customerInfoViewBlock1
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 1px 1px 1px;
+	text-align: right;
+	vertical-align: middle;
+	width: 143px;
+}
+.customerInfoViewBlock2
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px 2px;
+	text-align: left;
+	vertical-align: middle;
+	width: 269px;
+}
+.customerInfoViewBlock2NoBorderLeft
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 0 1px;
+	padding: 2px 1px 1px 2px;
+	text-align: right;
+	vertical-align: middle;
+	width: 270px;
+}
+.commission
+{
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	float: left;
+	min-width: 841px;
+}
+.commissionHeader
+{
+	color: Black;
+	font-weight: bold;
+}
+.commissionBlock1
+{
+	border-top: 0px solid #CCC;
+	float: left;
+	line-height: 24px;
+	text-align: center;
+	vertical-align: middle;
+	width: 260px;
+	padding-right: 5px;
+	text-align: right;
+}
+.commissionBlock2
+{
+	border-left: 1px solid #CCC;
+	border-top: 0px solid #CCC;
+	float: left;
+	line-height: 24px;
+	text-align: center;
+	vertical-align: middle;
+	width: 285px;
+	padding: 1px 1px 1px;
+}
+.commissionViewBlock1
+{
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	width: 230px;
+	padding: 1px 1px 1px;
+	text-align: right;
+}
+.commissionViewBlock2
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	float: left;
+	height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	width: 200px;
+	padding: 1px 1px 1px;
+}
+.commissionGroup
+{
+	float: left;
+	margin-left: 2px;
+	padding: 2px 2px 2px 8px;
+	white-space: nowrap;
+}
+.groupCom
+{
+	text-align: right;
+	width: 80px;
+	padding-right: 5px;
+}
+.widthGroup
+{
+	width: 70px;
+}
+.headerTab
+{
+	background-color: #f1f1a6;
+	border-bottom: 1px solid #CCC;
+	clear: both;
+	color: #464646;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 28px;
+	text-align: center;
+	text-indent: 5px;
+}
+.transferCondition
+{
+	background-color: #FFF;
+	border-bottom: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	float: left;
+	min-width: 841px;
+}
+.transferCondition div label
+{
+	padding-left: 10px;
+	line-height: 25px;
+}
+.headerPositionTaking
+{
+	border: 1px solid #CCC;
+	background-color: #f1f1a6;
+	clear: both;
+	color: #464646;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 25px;
+	text-align: center;
+	text-indent: 5px;
+	border-top: 0px;
+}
+.positionTaking
+{
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	padding: 3px;
+}
+.line
+{
+	background-color: #CCC;
+	height: 1px;
+	margin: 2px 0;
+}
+.headerBetSetting
+{
+	background-color: #F1F1A6;
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	clear: both;
+	color: #464646;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 28px;
+	text-align: center;
+	text-indent: 5px;
+	width: 841px;
+}
+.PTSport
+{
+	background-color: #D4E3EB;
+	border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+.PTSportLabel, .PTSportLabel2
+{
+	color: #464646;
+	border-left: 1px solid #CCC;
+	border-top: 0 none;
+}
+
+.PTSportEditCopied
+{
+}
+.PTGroup
+{
+	background-color: #F7F0E4;
+}
+.PTGroup2
+{
+	background-color: #FAF9EE;
+}
+.BetTypeCheckbox, .BetTypeHeaderActive
+{
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+.BetTypeInactive
+{
+	background-color: #DDDDDD;
+}
+.BettingLimit, .BettingLimit4
+{
+	background-color: #F7F0E4;
+	border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+}
+.BettingLimitTextBox
+{
+	width: 110px;
+}
+.BettingLimitTextBox4
+{
+	width: 186px;
+}
+.BettingLimitTextBox9
+{
+	width: 90px;
+}
+.BettingLimitTextBox5
+{
+	width: 137px;
+}
+.BettingLimitItem2
+{
+	background-color: #FFF;
+	border-top: 1px solid #CCC;
+}
+.GroupSetLabel
+{
+	min-width: 46px;
+}
+.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
+{
+	background-color: #E7F7FF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+.BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
+{
+	background-position: 100px 2px;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
+{
+	background-color: #FFF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+/* START: Base on MemberInfo.css */
+.names
+{
+	font-weight: bold;
+	text-align: justify;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 5px;
+}
+.collapse
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../../Images/Content/arrowblue-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.expand
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../../Images/Content/arrowdown-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
