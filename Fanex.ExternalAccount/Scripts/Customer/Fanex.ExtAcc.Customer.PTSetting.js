@@ -1,4 +1,5 @@
-﻿if (typeof Fanex.ExtAcc.Customer.PTSetting == 'undefined') {
+﻿/// <reference path="../_references.js" />
+if (typeof Fanex.ExtAcc.Customer.PTSetting == 'undefined') {
     Fanex.ExtAcc.Customer.PTSetting = {};
 };
 
@@ -27,6 +28,44 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 this.GetMemberPTSetting();
             }
         }
+
+        if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+            $('#arrowUpDown').bind('click', function () {
+                Fanex.ExtAcc.Customer.PTSetting.ToogleUsernames();
+            });
+
+            $('#names').css('display', 'block');
+
+            if (Fanex.ExtAcc.Customer.Usernames.length < 98) {
+                $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
+                $('#arrowUpDown').css('display', 'none');
+            }
+            else {
+                $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
+                $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
+                $('#arrowUpDown').css('display', 'block');
+            }
+
+            // Render status, comm, bet setting
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                var bettingLimit = null;
+                bettingLimit = new Fanex.PTEngine.BettingLimit(Fanex.ExtAcc.Customer.PTSetting.customer.bettingLimit)
+                var bettingLimitContainer = document.getElementById('betSetting');
+                bettingLimit.Render(bettingLimitContainer);
+
+                /* Render Commission to selected*/
+                var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("groupD"), 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
+
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("discount1x2"), 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("discountCS"), 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                Fanex.PTEngine.PT_SetSelect(document.getElementById("discountNumber"), 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+            }, 1000);
+        }
     },
 
     GetMasterPTSetting: function () {
@@ -45,7 +84,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .success(function (result) {
             var ptGrid = null;
             var context = result.context;
-            customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM3 = false;
             var isShowPopUpSetPTMember = false;
             var oldPTSetting = Fanex.copy(customer.ptSetting);
@@ -157,7 +196,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .success(function (result) {
             var ptGrid = null;
             var context = result.context;
-            customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
             var isChangeM2 = false;
             var isShowPopUpSetPTMember = false;
             var oldPTSetting = Fanex.copy(customer.ptSetting);
@@ -268,7 +307,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .success(function (result) {
             var ptGrid = null;
             var context = result.context;
-            var customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
@@ -359,7 +398,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .success(function (result) {
             var ptGrid = null;
             var context = result.context;
-            var customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
@@ -450,7 +489,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .success(function (result) {
             var ptGrid = null;
             var context = result.context;
-            var customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
@@ -523,6 +562,18 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .error(function (xhr, status, err) {
             $.unblockUI(document);
         });
+    },
+    ToogleUsernames: function () {
+        if ($('#arrowUpDown').hasClass('collapse')) {
+            $('#arrowUpDown').attr('class', 'expand');
+            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
+            $('#names').attr('title', '');
+        }
+        else {
+            $('#arrowUpDown').attr('class', 'collapse');
+            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
+            $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
+        }
     }
 };
 
