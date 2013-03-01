@@ -305,6 +305,7 @@ input[type="text"], input[type="password"]
 .widthGroup
 {
 	width: 70px;
+	font-size: 10px !important;
 }
 .headerTab
 {
@@ -453,6 +454,8 @@ input[type="text"], input[type="password"]
 	background-position: 100px 2px;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
+	font-size: 10px !important;
+	text-indent: 1px !important;
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
 {

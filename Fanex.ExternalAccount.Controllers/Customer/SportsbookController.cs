@@ -7,6 +7,7 @@
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     using System;
+    using System.Collections;
     using System.Web.Mvc;
     using Fanex.Caching;
     using Fanex.ExternalAccount.Controllers.Base;
@@ -274,9 +275,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
+            var mult = Request.QueryString["isMult"];
+            var para = Request.QueryString["para"];
+            var param = new Hashtable();
             var settings = new JsonSerializerSettings();
+
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.Indented;
+
+            if (!string.IsNullOrWhiteSpace(para))
+            {
+                for (int i = 0; i < para.Length; i++)
+                {
+                    param.Add(i, para[i]);
+                }
+            }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
@@ -292,8 +305,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
+            var result = new Fanex.PTEngine.BusinessObjects.Result();
 
-            Fanex.PTEngine.BusinessObjects.Result result = custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
+            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("1"))
+            {
+                result = custSrv.SuperUpdateMultipleMasters(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
+            }
+            else
+            {
+                result = custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -332,11 +353,23 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
+            var mult = Request.QueryString["isMult"];
+            var para = Request.QueryString["para"];
+            var param = new Hashtable();
             var settings = new JsonSerializerSettings();
+
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.Indented;
+
+            if (!string.IsNullOrWhiteSpace(para))
+            {
+                for (int i = 0; i < para.Length; i++)
+                {
+                    param.Add(i, para[i]);
+                }
+            }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
@@ -353,8 +386,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
 
-            Fanex.PTEngine.BusinessObjects.Result result = custSrv.MasterUpdateAgent(customer, requestContext, false, 0);
+            var result = new Fanex.PTEngine.BusinessObjects.Result();
 
+            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("1"))
+            {
+                result = custSrv.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
+            }
+            else
+            {
+                result = custSrv.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
+            }
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
@@ -394,9 +435,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
+            var mult = Request.QueryString["isMult"];
+            var para = Request.QueryString["para"];
+            var param = new Hashtable();
             var settings = new JsonSerializerSettings();
+
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.Indented;
+
+            if (!string.IsNullOrWhiteSpace(para))
+            {
+                for (int i = 0; i < para.Length; i++)
+                {
+                    param.Add(i, para[i]);
+                }
+            }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
@@ -413,8 +466,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
 
-            Fanex.PTEngine.BusinessObjects.Result result = custSrv.AgentUpdateMember(customer, requestContext);
+            var result = new Fanex.PTEngine.BusinessObjects.Result();
 
+            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("1"))
+            {
+                result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
+            }
+            else
+            {
+                result = custSrv.AgentUpdateMember(customer, requestContext);
+            }
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
