@@ -1,11 +1,26 @@
 ﻿/* START: Base on MemberInfo.css */
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"]
+{
 	height: 20px !important;
 }
-.clear{clear: both;}
-.widthPTH{width: 841px}
-.widthPTC{width: 835px}
-.blockBtn{width: 843px; text-align:right; margin-bottom: 3px}
+.clear .widthPTH
+{
+	width: 841px;
+}
+.widthPTC
+{
+	width: 835px;
+}
+.blockBtn
+{
+	width: 843px;
+	text-align: right;
+	margin-bottom: 3px;
+}
+.widthPT
+{
+	width: 840px;
+}
 .clearBlock
 {
 	clear: both;
@@ -21,7 +36,7 @@ input[type="text"], input[type="password"] {
 }
 .pt3
 {
-	padding-top: 5px;	
+	padding-top: 5px;
 }
 .pb3
 {
@@ -68,11 +83,14 @@ input[type="text"], input[type="password"] {
 	height: 18px;
 	text-align: right;
 }
-.bdt0{border-top: 0px none !important;}
+.bdt0
+{
+	border-top: 0px none !important;
+}
 .customerInfoBlock1
 {
 	background: #FFF;
-	border-top: 1px solid #CCC;	
+	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
 	line-height: 22px;
@@ -282,6 +300,7 @@ input[type="text"], input[type="password"] {
 	text-align: right;
 	width: 80px;
 	padding-right: 5px;
+	font-size: 10px !important;
 }
 .widthGroup
 {
@@ -310,8 +329,8 @@ input[type="text"], input[type="password"] {
 }
 .transferCondition div label
 {
-    padding-left: 10px;
-    line-height: 25px;
+	padding-left: 10px;
+	line-height: 25px;
 }
 .headerPositionTaking
 {
@@ -323,7 +342,8 @@ input[type="text"], input[type="password"] {
 	font-weight: bold;
 	line-height: 25px;
 	text-align: center;
-	text-indent: 5px;	
+	text-indent: 5px;
+	border-top: 0px;
 }
 .positionTaking
 {
@@ -365,6 +385,8 @@ input[type="text"], input[type="password"] {
 	color: #464646;
 	border-left: 1px solid #CCC;
 	border-top: 0 none;
+	text-indent: 1px !important;
+	font-size: 10px !important;
 }
 
 .PTSportEditCopied
@@ -412,7 +434,7 @@ input[type="text"], input[type="password"] {
 .BettingLimitItem2
 {
 	background-color: #FFF;
-	border-top: 1px solid #CCC;	
+	border-top: 1px solid #CCC;
 }
 .GroupSetLabel
 {
@@ -423,6 +445,8 @@ input[type="text"], input[type="password"] {
 	background-color: #E7F7FF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
+	font-size: 10px !important;
+	text-indent: 1px !important;
 }
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
 {
@@ -435,6 +459,45 @@ input[type="text"], input[type="password"] {
 	background-color: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
-	
 }
 /* START: Base on MemberInfo.css */
+.names
+{
+	font-weight: bold;
+	text-align: justify;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 5px;
+}
+.collapse
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../../Images/Content/arrowblue-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.expand
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../../Images/Content/arrowdown-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}

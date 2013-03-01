@@ -485,7 +485,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
@@ -548,6 +547,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         #endregion PT Setting
+
+        #region Multiple PT Setting
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMultiplePT()
+        {
+            return this.PartialViewBase();
+        }
+
+        #endregion Multiple PT Setting
 
         #region Edit Min PT
 
