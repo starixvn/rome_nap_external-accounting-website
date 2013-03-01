@@ -110,8 +110,22 @@ Fanex.ExtAcc.Customer.Commission = {
             if (result.ErrorCode == 0) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    $.unblockUI(document);
 
+                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
+                        Fanex.ExtAcc.Customer.GetSuperList();
+                    }
+                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+                        Fanex.ExtAcc.Customer.GetMasterList(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
+                    }
+                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+                        Fanex.ExtAcc.Customer.GetAgentList(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
+                    }
+
+
+                    $.unblockUI(document);
                     Fanex.ExtAcc.Form.Close(false);
                 }, 2000);
             }

@@ -171,7 +171,7 @@ Fanex.ExtAcc.Customer = {
             sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 600, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMinPT'), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 600, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 500, false, false, 1); } },
-            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommission'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
+            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionOther'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
             minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
@@ -258,7 +258,7 @@ Fanex.ExtAcc.Customer = {
             sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 600, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMinPT'), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 600, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 500, false, false, 1); } },
-            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommission'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
+            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionOther'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
             minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
@@ -461,20 +461,7 @@ Fanex.ExtAcc.Customer = {
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
-                        Fanex.ExtAcc.Customer.GetSuperList();
-                    }
-                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-                        Fanex.ExtAcc.Customer.GetMasterList(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
-                    }
-                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-                        Fanex.ExtAcc.Customer.GetAgentList(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
-                    }
-                    else {
-                        Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
-                    }
-
+                    CallBackCustomerList();
                     $.unblockUI(document);
                 }, 2000);
             }
@@ -949,6 +936,21 @@ Fanex.ExtAcc.Customer = {
             2);
     },
 
+    CallBackCustomerList: function () {
+        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
+            Fanex.ExtAcc.Customer.GetSuperList();
+        }
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            Fanex.ExtAcc.Customer.GetMasterList(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
+        }
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            Fanex.ExtAcc.Customer.GetAgentList(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
+        }
+        else {
+            Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
+        }
+    },
+
     ConfigMultipleDoubleComm: function (custids, allow, index) {
         Fanex.ExtAcc.BlockUI();
 
@@ -971,19 +973,7 @@ Fanex.ExtAcc.Customer = {
             if (current == len) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
-                        Fanex.ExtAcc.Customer.GetSuperList();
-                    }
-                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-                        Fanex.ExtAcc.Customer.GetMasterList(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
-                    }
-                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-                        Fanex.ExtAcc.Customer.GetAgentList(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
-                    }
-                    else {
-                        Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
-                    }
+                    CallBackCustomerList();
                 }, 2000);
             }
             else {
@@ -1051,19 +1041,8 @@ Fanex.ExtAcc.Customer = {
                     if (result.IsSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
-
-                            if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
-                                Fanex.ExtAcc.Customer.GetSuperList();
-                            }
-                            else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-                                Fanex.ExtAcc.Customer.GetMasterList(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
-                            }
-                            else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-                                Fanex.ExtAcc.Customer.GetAgentList(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
-                            }
-                            else {
-                                Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
-                            }
+                            CallBackCustomerList();
+                            $.unblockUI(document);
                         }, 2000);
                     }
                     else {

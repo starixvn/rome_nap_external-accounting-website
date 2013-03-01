@@ -19,7 +19,6 @@
     <div class="customerInfo clear">
         <div class="headerTab">
             @ViewLang.generalInformation</div>
-        <!--UserNameAndPasswordBlock-->
         <div class="clear">
             <div class="customerInfoBlock1 bdt0">
                 @ViewLang.Username</div>
@@ -41,7 +40,6 @@
                     <span id="spnNewPwdIcon">&nbsp;</span></div>
             </div>
         </div>
-        <!--/UserNameAndPasswordBlock-->
         <div class="clear">
             <div class="customerInfoBlock1">
                 @ViewLang.Firstname</div>
@@ -106,7 +104,8 @@
                 <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: context.targetCustId > 0 ? true : !customer.statusSetting.suspended" /></div>
         </div>
     </div>
-    @Html.Raw(new Fanex.PTEngine.Age.Templates.Commission_Template())
+    @Html.Action("EditCommission", "Sportsbook")    
+
     <!--TransferConditionBlock-->
     @Html.Raw(new Fanex.PTEngine.Age.Templates.TransferCondition_Template())
     <!--/TransferConditionBlock-->

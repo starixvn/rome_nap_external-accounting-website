@@ -1500,6 +1500,7 @@
     <Content Include="Views\Sportsbook\EditMinPT.cshtml" />
     <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
     <Content Include="Views\Sportsbook\EditCommissionMember.cshtml" />
+    <Content Include="Views\Sportsbook\EditCommissionOther.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
