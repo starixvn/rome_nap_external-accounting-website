@@ -281,8 +281,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
-            var mult = Request.QueryString["isMult"];
-            var para = Request.QueryString["para"];
+            var mult = Request["isMult"];
+            var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
 
@@ -313,7 +313,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
             var result = new Fanex.PTEngine.BusinessObjects.Result();
 
-            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("1"))
+            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
             {
                 result = custSrv.SuperUpdateMultipleMasters(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
             }
@@ -361,8 +361,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
-            var mult = Request.QueryString["isMult"];
-            var para = Request.QueryString["para"];
+            var mult = Request["isMult"];
+            var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
 
@@ -394,7 +394,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var result = new Fanex.PTEngine.BusinessObjects.Result();
 
-            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("1"))
+            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
             {
                 result = custSrv.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
             }
@@ -441,8 +441,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
-            var mult = Request.QueryString["isMult"];
-            var para = Request.QueryString["para"];
+            var mult = Request["isMult"];
+            var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
 
@@ -474,7 +474,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var result = new Fanex.PTEngine.BusinessObjects.Result();
 
-            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("1"))
+            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
             {
                 result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
             }

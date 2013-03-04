@@ -194,7 +194,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -296,7 +299,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -380,7 +386,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -851,7 +860,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -886,7 +894,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -962,7 +969,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -997,7 +1003,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -1073,7 +1078,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -1108,7 +1112,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
