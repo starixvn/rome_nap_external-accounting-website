@@ -3,7 +3,7 @@ input[type="text"], input[type="password"]
 {
 	height: 20px !important;
 }
-.clear, .widthPTH
+.clear .widthPTH
 {
 	width: 841px;
 }
@@ -300,12 +300,12 @@ input[type="text"], input[type="password"]
 	text-align: right;
 	width: 80px;
 	padding-right: 5px;
-	font-size: 12px !important;
+	font-size: 10px !important;
 }
 .widthGroup
 {
 	width: 70px;
-	font-size: 12px !important;
+	font-size: 10px !important;
 }
 .headerTab
 {
@@ -343,7 +343,8 @@ input[type="text"], input[type="password"]
 	font-weight: bold;
 	line-height: 25px;
 	text-align: center;
-	text-indent: 5px;	
+	text-indent: 5px;
+	border-top: 0px;
 }
 .positionTaking
 {
@@ -386,7 +387,7 @@ input[type="text"], input[type="password"]
 	border-left: 1px solid #CCC;
 	border-top: 0 none;
 	text-indent: 1px !important;
-	font-size: 11px !important;
+	font-size: 10px !important;
 }
 
 .PTSportEditCopied
@@ -445,7 +446,7 @@ input[type="text"], input[type="password"]
 	background-color: #E7F7FF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
-	font-size: 12px !important;
+	font-size: 10px !important;
 	text-indent: 1px !important;
 }
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
@@ -453,7 +454,7 @@ input[type="text"], input[type="password"]
 	background-position: 100px 2px;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
-	font-size: 12px !important;
+	font-size: 10px !important;
 	text-indent: 1px !important;
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
