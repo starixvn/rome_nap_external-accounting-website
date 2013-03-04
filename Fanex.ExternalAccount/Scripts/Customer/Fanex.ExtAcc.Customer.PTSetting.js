@@ -130,62 +130,74 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () {
-                    var updateParameters = '';
-                    var customer = Fanex.copy(result.customer);
+                if (!customer.statusSetting.uplineClosed) {
+                    this.saveCustomer = function () {
+                        var updateParameters = '';
+                        var customer = Fanex.copy(result.customer);
 
-                    if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
-                        if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                            updateParameters = getUpdateParamaters();
+                        if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                                updateParameters = getUpdateParamaters();
 
-                            if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
-                                return;
+                                if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                    return;
 
-                            customer.statusSetting.closed = document.getElementById("closed").checked;
-                            saveCommissionSettings(customer.commissionSetting);
-                            customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
-                            customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        }
-                        else {
-                            customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        }
+                                if (!customer.statusSetting.uplineClosed && document.getElementById('status').checked)
+                                    customer.statusSetting.closed = document.getElementById("closed").checked;
 
-                        // For Check Edit Postion Taking
-                        if (context.targetCustId > 0 && !Fanex.ExtAcc.Customer.PTSetting.Saved) {
-                            if (!isShowPopUpSetPTMember) {
-                                isChangeM3 = Fanex.EditPT.CheckChangeM3(oldPTSetting, customer.ptSetting);
+                                if (document.getElementById('commission').checked)
+                                    saveCommissionSettings(customer.commissionSetting);
+
+                                customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
-                            if (isChangeM3 && !isShowPopUpSetPTMember) {
-                                Popups.Confirm(Fanex.EditPT.MemberMaximumPT(), Language.CONFIRM_MASTER_NOT_TO_TAKE_AUTO_POSITION_TAKING);
-                                return;
+                            else {
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
-                            else if (isChangeM3 && isShowPopUpSetPTMember) {
-                                Popups.Close();
+
+                            // For Check Edit Postion Taking
+                            if (context.targetCustId > 0 && !Fanex.ExtAcc.Customer.PTSetting.Saved) {
+                                if (!isShowPopUpSetPTMember) {
+                                    isChangeM3 = Fanex.EditPT.CheckChangeM3(oldPTSetting, customer.ptSetting);
+                                }
+                                if (isChangeM3 && !isShowPopUpSetPTMember) {
+                                    Popups.Confirm(Fanex.EditPT.MemberMaximumPT(), Language.CONFIRM_MASTER_NOT_TO_TAKE_AUTO_POSITION_TAKING);
+                                    return;
+                                }
+                                else if (isChangeM3 && isShowPopUpSetPTMember) {
+                                    Popups.Close();
+                                }
                             }
+
+                            Fanex.ExtAcc.BlockUI();
+
+                            var para = {
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.superId,
+                                txtCustomerObject: JSON.stringify(customer),
+                                isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
+                                newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
+                                isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
+                                para: updateParameters
+                            };
+
+                            Fanex.ExtAcc.Customer.PTSetting.Saved = false;
+
+                            Fanex.ExtAcc.Customer.PTSetting.SuperUpdateMasterPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-
-                    Fanex.ExtAcc.BlockUI();
-
-                    var para = {
-                        custId: Fanex.ExtAcc.Customer.UserId,
-                        parentId: Fanex.ExtAcc.Customer.superId,
-                        txtCustomerObject: JSON.stringify(customer),
-                        isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
-                        newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
-                        isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
-                        para: updateParameters
-                    };
-
-                    Fanex.ExtAcc.Customer.PTSetting.Saved = false;
-
-                    Fanex.ExtAcc.Customer.PTSetting.SuperUpdateMasterPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
+                }
+                else {
+                    $('.buttonPopup').attr('disabled', 'disabled');
                 }
             }
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -222,63 +234,75 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () {
-                    var updateParameters = '';
-                    var customer = Fanex.copy(result.customer);
+                if (!customer.statusSetting.uplineClosed) {
+                    this.saveCustomer = function () {
+                        var updateParameters = '';
+                        var customer = Fanex.copy(result.customer);
 
-                    if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
-                        if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                            updateParameters = getUpdateParamaters();
+                        if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                                updateParameters = getUpdateParamaters();
 
-                            if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
-                                return;
+                                if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                    return;
 
-                            customer.statusSetting.closed = document.getElementById("closed").checked;
-                            saveCommissionSettings(customer.commissionSetting);
-                            customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
-                            customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        }
-                        else {
-                            customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        }
+                                if (!customer.statusSetting.uplineClosed && document.getElementById('status').checked)
+                                    customer.statusSetting.closed = document.getElementById("closed").checked;
 
-                        // For Check Edit Postion Taking
-                        if (context.targetCustId > 0 && !Fanex.ExtAcc.Customer.PTSetting.Saved) {
-                            if (!isShowPopUpSetPTMember) {
-                                isChangeM2 = Fanex.EditPT.CheckChangeM2(oldPTSetting, customer.ptSetting);
+                                if (document.getElementById('commission').checked)
+                                    saveCommissionSettings(customer.commissionSetting);
+
+                                customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
-                            if (isChangeM2 && !isShowPopUpSetPTMember) {
-                                Popups.Confirm(Fanex.EditPT.AgentMemberMaximumPT(), Language.CONFIRM_AGENT_NOT_TO_TAKE_AUTO_POSITION_TAKING);
-                                return;
+                            else {
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
-                            else if (isChangeM2 && isShowPopUpSetPTMember) {
-                                Popups.Close();
+
+                            // For Check Edit Postion Taking
+                            if (context.targetCustId > 0 && !Fanex.ExtAcc.Customer.PTSetting.Saved) {
+                                if (!isShowPopUpSetPTMember) {
+                                    isChangeM2 = Fanex.EditPT.CheckChangeM2(oldPTSetting, customer.ptSetting);
+                                }
+                                if (isChangeM2 && !isShowPopUpSetPTMember) {
+                                    Popups.Confirm(Fanex.EditPT.AgentMemberMaximumPT(), Language.CONFIRM_AGENT_NOT_TO_TAKE_AUTO_POSITION_TAKING);
+                                    return;
+                                }
+                                else if (isChangeM2 && isShowPopUpSetPTMember) {
+                                    Popups.Close();
+                                }
                             }
+
+                            Fanex.ExtAcc.BlockUI();
+
+                            var text = JSON.stringify(customer);
+                            var para = {
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.masterId,
+                                txtCustomerObject: text,
+                                isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
+                                newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
+                                isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
+                                para: updateParameters
+                            };
+
+                            Fanex.ExtAcc.Customer.PTSetting.Saved = false;
+
+                            Fanex.ExtAcc.Customer.PTSetting.MasterUpdateAgentPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-
-                    Fanex.ExtAcc.BlockUI();
-
-                    var text = JSON.stringify(customer);
-                    var para = {
-                        custId: Fanex.ExtAcc.Customer.UserId,
-                        parentId: Fanex.ExtAcc.Customer.masterId,
-                        txtCustomerObject: text,
-                        isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
-                        newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
-                        isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
-                        para: updateParameters
-                    };
-
-                    Fanex.ExtAcc.Customer.PTSetting.Saved = false;
-
-                    Fanex.ExtAcc.Customer.PTSetting.MasterUpdateAgentPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
+                }
+                else {
+                    $('.buttonPopup').attr('disabled', 'disabled');
                 }
             }
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -312,48 +336,60 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () {
-                    var updateParameters = '';
-                    var customer = Fanex.copy(result.customer);
+                if (!customer.statusSetting.uplineClosed) {
+                    this.saveCustomer = function () {
+                        var updateParameters = '';
+                        var customer = Fanex.copy(result.customer);
 
-                    if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
-                        if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                            updateParameters = getUpdateParamaters();
+                        if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                                updateParameters = getUpdateParamaters();
 
-                            if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
-                                return;
+                                if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                    return;
 
-                            customer.statusSetting.closed = document.getElementById("closed").checked;
-                            saveCommissionSettings(customer.commissionSetting);
-                            customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
-                            customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
+                                if (!customer.statusSetting.uplineClosed && document.getElementById('status').checked)
+                                    customer.statusSetting.closed = document.getElementById("closed").checked;
+
+                                if (document.getElementById('commission').checked)
+                                    saveCommissionSettings(customer.commissionSetting);
+
+                                customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
+                            }
+                            else {
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
+                            }
+
+                            Fanex.ExtAcc.BlockUI();
+
+                            var text = JSON.stringify(customer);
+
+                            var para = {
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.agentId,
+                                txtCustomerObject: text,
+                                isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
+                                newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
+                                isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
+                                para: updateParameters
+                            };
+
+                            Fanex.ExtAcc.Customer.PTSetting.AgentUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
-                        else {
-                            customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        }
-
-                        Fanex.ExtAcc.BlockUI();
-
-                        var text = JSON.stringify(customer);
-
-                        var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: Fanex.ExtAcc.Customer.agentId,
-                            txtCustomerObject: text,
-                            isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
-                            newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
-                            isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
-                            para: updateParameters
-                        };
                     }
-
-                    Fanex.ExtAcc.Customer.PTSetting.AgentUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
+                }
+                else {
+                    $('.buttonPopup').attr('disabled', 'disabled');
                 }
             }
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.PTSetting.PTSettingModel());
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
             $.unblockUI(document);
@@ -386,9 +422,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
                 this.saveCustomer = function () {
-                    Fanex.ExtAcc.BlockUI();
-
                     if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                        Fanex.ExtAcc.BlockUI();
+
                         customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                         var text = JSON.stringify(customer);
 
@@ -398,46 +434,46 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             agentId: Fanex.ExtAcc.Customer.agentId,
                             txtCustomerObject: text
                         };
-                    }
 
-                    $.ajax({
-                        url: resolveClientUrl('Sportsbook/SuperEditPTMemberPost'),
-                        data: para,
-                        dataType: 'json',
-                        type: 'post'
-                    })
-                    .success(function (result) {
-                        var codes = result.ErrorCode.split('\u0007');
-                        var msgs = result.ErrorMessage.split('\u0007');
-                        var success = true;
-                        var error = '';
+                        $.ajax({
+                            url: resolveClientUrl('Sportsbook/SuperEditPTMemberPost'),
+                            data: para,
+                            dataType: 'json',
+                            type: 'post'
+                        })
+                        .success(function (result) {
+                            var codes = result.ErrorCode.split('\u0007');
+                            var msgs = result.ErrorMessage.split('\u0007');
+                            var success = true;
+                            var error = '';
 
-                        for (var i = 0; i < codes.length; i++) {
-                            if (parseInt(codes[i]) > 0) {
-                                success = false;
+                            for (var i = 0; i < codes.length; i++) {
+                                if (parseInt(codes[i]) > 0) {
+                                    success = false;
 
-                                error += msgs[i] + '<br/>';
+                                    error += msgs[i] + '<br/>';
+                                }
                             }
-                        }
 
-                        if (success) {
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
+                            if (success) {
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    $.unblockUI(document);
+
+                                    Fanex.ExtAcc.Form.Close(false);
+                                }, 2000);
+                            }
+                            else {
                                 $.unblockUI(document);
 
-                                Fanex.ExtAcc.Form.Close(false);
-                            }, 2000);
-                        }
-                        else {
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html(error.formatErrorMessage());
+                            }
+                        })
+                        .error(function (xhr, status, err) {
                             $.unblockUI(document);
-
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error.formatErrorMessage());
-                        }
-                    })
-                    .error(function (xhr, status, err) {
-                        $.unblockUI(document);
-                    });
+                        });
+                    }
                 }
             }
 
@@ -476,9 +512,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
                 this.saveCustomer = function () {
-                    Fanex.ExtAcc.BlockUI();
-
                     if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                        Fanex.ExtAcc.BlockUI();
                         customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                         var text = JSON.stringify(customer);
 
@@ -488,46 +523,46 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             agentId: Fanex.ExtAcc.Customer.agentId,
                             txtCustomerObject: text
                         };
-                    }
 
-                    $.ajax({
-                        url: resolveClientUrl('Sportsbook/MasterEditPTMemberPost'),
-                        data: para,
-                        dataType: 'json',
-                        type: 'post'
-                    })
-                    .success(function (result) {
-                        var codes = result.ErrorCode.split('\u0007');
-                        var msgs = result.ErrorMessage.split('\u0007');
-                        var success = true;
-                        var error = '';
+                        $.ajax({
+                            url: resolveClientUrl('Sportsbook/MasterEditPTMemberPost'),
+                            data: para,
+                            dataType: 'json',
+                            type: 'post'
+                        })
+                        .success(function (result) {
+                            var codes = result.ErrorCode.split('\u0007');
+                            var msgs = result.ErrorMessage.split('\u0007');
+                            var success = true;
+                            var error = '';
 
-                        for (var i = 0; i < codes.length; i++) {
-                            if (parseInt(codes[i]) > 0) {
-                                success = false;
+                            for (var i = 0; i < codes.length; i++) {
+                                if (parseInt(codes[i]) > 0) {
+                                    success = false;
 
-                                error += msgs[i] + '<br/>';
+                                    error += msgs[i] + '<br/>';
+                                }
                             }
-                        }
 
-                        if (success) {
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
+                            if (success) {
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    $.unblockUI(document);
+
+                                    Fanex.ExtAcc.Form.Close(false);
+                                }, 2000);
+                            }
+                            else {
                                 $.unblockUI(document);
 
-                                Fanex.ExtAcc.Form.Close(false);
-                            }, 2000);
-                        }
-                        else {
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html(error.formatErrorMessage());
+                            }
+                        })
+                        .error(function (xhr, status, err) {
                             $.unblockUI(document);
-
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(error.formatErrorMessage());
-                        }
-                    })
-                    .error(function (xhr, status, err) {
-                        $.unblockUI(document);
-                    });
+                        });
+                    }
                 }
             }
 
@@ -825,7 +860,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -860,7 +894,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -936,7 +969,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -971,7 +1003,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -1047,7 +1078,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
@@ -1082,7 +1112,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.IsMultiple = false;
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }

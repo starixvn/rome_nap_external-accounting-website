@@ -149,7 +149,7 @@
 			forceIframe: false,
 
 			// z-index for the blocking overlay
-			baseZ: 1000,
+			baseZ: 9999999,
 
 			// set these to true to have the message automatically centered
 			centerX: true, // <-- only effects element blocking (page block controlled via css above)
@@ -280,7 +280,7 @@
 				s = '<div class="blockUI ' + opts.blockMsgClass + ' blockElement ui-dialog ui-widget ui-corner-all" style="z-index:'+(z+10)+';display:none;position:absolute">';
 				if ( opts.title ) {
 					s += '<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">'+(opts.title || '&nbsp;')+'</div>';
-				}  
+				}
 				s += '<div class="ui-widget-content ui-dialog-content"></div>';
 				s += '</div>';
 			}
@@ -560,9 +560,7 @@
 		function sz(el, p) {
 			return parseInt($.css(el,p),10)||0;
 		}
-
 	}
-
 
 	/*global define:true */
 	if (typeof define === 'function' && define.amd && define.amd.jQuery) {
@@ -570,5 +568,4 @@
 	} else {
 		setup(jQuery);
 	}
-
 })();
