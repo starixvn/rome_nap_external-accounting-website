@@ -56,47 +56,62 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }
 
             // Render status, comm, bet setting
-            var interval = setInterval(function () {
-                if (Fanex.ExtAcc.Customer.PTSetting.customer) {
-                    clearInterval(interval);
+            if (Fanex.ExtAcc.Customer.isSuperEditMember == true || Fanex.ExtAcc.Customer.isMasterEditMember == true) {
+                var interval = setInterval(function () {
+                    if (Fanex.ExtAcc.Customer.PTSetting.customer) {
+                        clearInterval(interval);
 
-                    Fanex.ExtAcc.Customer.PTSetting.bettingLimit = new Fanex.PTEngine.BettingLimit(Fanex.ExtAcc.Customer.PTSetting.customer.bettingLimit)
-                    var bettingLimitContainer = document.getElementById('betSetting');
-                    Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Render(bettingLimitContainer);
-
-                    // Generate checkboxes
-                    Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxStatus();
-                    Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxCommission();
-                    Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimit();
-                    initBettingLimit();
-                    Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxPositionTaking();
-                    initPositionTaking();
-
-                    /* Render Commission to selected*/
-                    var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
-
-                    if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("groupD"), 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
-
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("discount1x2"), 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("discountCS"), 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
-                        Fanex.PTEngine.PT_SetSelect(document.getElementById("discountNumber"), 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+                        // Generate checkboxes
+                        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxStatus();
+                        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxPositionTaking();
+                        initPositionTaking();
                     }
-                    else {
-                        $("#textBoxDiscountAsian").val(commission.discount);
-                        $("#textBoxDiscount1x2").val(commission.discount1x2);
-                        $("#textBoxDiscountCS").val(commission.discountCS);
-                        $("#textBoxDiscountNumber").val(commission.discountNumber);
-                        Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
-                        Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
-                        Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
-                        Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
+                }, 100);
+            }
+            else {
+                var interval = setInterval(function () {
+                    if (Fanex.ExtAcc.Customer.PTSetting.customer) {
+                        clearInterval(interval);
+
+                        Fanex.ExtAcc.Customer.PTSetting.bettingLimit = new Fanex.PTEngine.BettingLimit(Fanex.ExtAcc.Customer.PTSetting.customer.bettingLimit)
+                        var bettingLimitContainer = document.getElementById('betSetting');
+                        Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Render(bettingLimitContainer);
+
+                        // Generate checkboxes
+                        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxStatus();
+                        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxCommission();
+                        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimit();
+                        initBettingLimit();
+                        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxPositionTaking();
+                        initPositionTaking();
+
+                        /* Render Commission to selected*/
+                        var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
+
+                        if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupD"), 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
+
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discount1x2"), 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountCS"), 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountNumber"), 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+                        }
+                        else {
+                            $("#textBoxDiscountAsian").val(commission.discount);
+                            $("#textBoxDiscount1x2").val(commission.discount1x2);
+                            $("#textBoxDiscountCS").val(commission.discountCS);
+                            $("#textBoxDiscountNumber").val(commission.discountNumber);
+                            Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
+                            Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
+                            Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
+                            Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
+                        }
                     }
-                }
-            }, 100);
+                }, 100);
+            }
+
         }
     },
     GetMasterPTSetting: function () {

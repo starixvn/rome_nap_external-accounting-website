@@ -522,6 +522,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult SuperEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
+            var para = Request["para"];
+            var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.Indented;
@@ -539,9 +541,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 IP = CurrentContext.Ip4Address
             };
 
-            var custSrv = new Fanex.PTEngine.Services.CustomerService();
+            if (!string.IsNullOrWhiteSpace(para))
+            {
+                for (int i = 0; i < para.Length; i++)
+                {
+                    param.Add(i, para[i]);
+                }
+            }
 
-            Fanex.PTEngine.BusinessObjects.Result result = custSrv.SuperUpdateMember(customer, requestContext);
+            var custSrv = new Fanex.PTEngine.Services.CustomerService();
+            var result = new Fanex.PTEngine.BusinessObjects.Result();
+
+            if (param.Count > 0)
+            {
+                result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
+            }
+            else
+            {
+                result = custSrv.SuperUpdateMember(customer, requestContext);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -583,6 +601,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult MasterEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
+            var para = Request["para"];
+            var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.Indented;
@@ -600,9 +620,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 IP = CurrentContext.Ip4Address
             };
 
-            var custSrv = new Fanex.PTEngine.Services.CustomerService();
+            if (!string.IsNullOrWhiteSpace(para))
+            {
+                for (int i = 0; i < para.Length; i++)
+                {
+                    param.Add(i, para[i]);
+                }
+            }
 
-            Fanex.PTEngine.BusinessObjects.Result result = custSrv.MasterUpdateMember(customer, requestContext);
+            var custSrv = new Fanex.PTEngine.Services.CustomerService();
+            var result = new Fanex.PTEngine.BusinessObjects.Result();
+
+            if (param.Count > 0)
+            {
+                result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
+            }
+            else
+            {
+                result = custSrv.MasterUpdateMember(customer, requestContext);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -613,6 +649,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditMultiplePT()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperMasterEditMultiplePTMember()
         {
             return this.PartialViewBase();
         }
