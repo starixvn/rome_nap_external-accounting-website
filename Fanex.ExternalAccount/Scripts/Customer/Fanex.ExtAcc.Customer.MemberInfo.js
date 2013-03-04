@@ -113,47 +113,47 @@ Fanex.Customer = {
 
     // Check values input: Password and Max Credit
     CheckInfoValue: function () {
-        if (!this.CheckPassword($("password"), "spnNewPwdIcon")) {
+        if (!this.CheckPassword($("#password"), "spnNewPwdIcon")) {
             return false;
         }
 
-        if ($("credit").value == "") {
-            this.ValidateMessage($("credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
+        if ($("#credit").val() == "") {
+            this.ValidateMessage($("#credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
             return false;
         }
 
-        if ($("credit") && validateExpr.test($("credit").value) == false) {
-            this.ValidateMessage($("credit"), Language.ALERT_CREDIT_INCORRECT);
+        if ($("#credit") && validateExpr.test($("#credit").val()) == false) {
+            this.ValidateMessage($("#credit"), Language.ALERT_CREDIT_INCORRECT);
             return false;
         }
 
-        if ((parseFloat($("credit").value, true) < parseFloat($("minCredit").innerHTML, true))
-			|| (parseFloat($("credit").value, true) > parseFloat($("maxCredit").innerHTML, true))) {
-            var valMin = $("minCredit") ? $("minCredit").innerHTML : 0;
+        if ((parseFloat($("#credit").val(), true) < parseFloat($("#minCredit").html(), true))
+			|| (parseFloat($("#credit").val(), true) > parseFloat($("maxCredit").html(), true))) {
+            var valMin = $("#minCredit") ? $("#minCredit").html() : 0;
             var str = Language.ALERT_CREDIT_INVALID.replace("{1}", valMin);
-            str = str.replace("{2}", $("maxCredit").innerHTML);
-            this.ValidateMessage($("credit"), str);
+            str = str.replace("{2}", $("#maxCredit").html());
+            this.ValidateMessage($("#credit"), str);
             return false;
         }
 
-        if ($("memberMaxCredit")) {
-            if (validateExpr.test($("memberMaxCredit").value) == false) {
-                this.ValidateMessage($("memberMaxCredit"), Language.ALERT_INCORRECT_MEMBER_MAX_CREDIT);
+        if ($("#memberMaxCredit")) {
+            if (validateExpr.test($("#memberMaxCredit").val()) == false) {
+                this.ValidateMessage($("#memberMaxCredit"), Language.ALERT_INCORRECT_MEMBER_MAX_CREDIT);
                 return false;
             }
 
-            if (parseFloat($("memberMaxCredit").value, true) > 0
-				&& (parseFloat($("memberMaxCredit").value, true) > parseFloat($("lblMemberMaxCredit").innerHTML, true))
-				|| parseFloat($("memberMaxCredit").value, true) < parseFloat($("lblMinCredit").innerHTML, true)) {
-                var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", $("lblMinCredit") ? $("lblMinCredit").innerHTML : 0);
-                str = str.replace("{2}", $("lblMemberMaxCredit").innerHTML);
-                this.ValidateMessage($("memberMaxCredit"), str);
+            if (parseFloat($("#memberMaxCredit").val(), true) > 0
+				&& (parseFloat($("#memberMaxCredit").val(), true) > parseFloat($("#lblMemberMaxCredit").html(), true))
+				|| parseFloat($("#memberMaxCredit").val(), true) < parseFloat($("#lblMinCredit").html(), true)) {
+                var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", $("#lblMinCredit") ? $("#lblMinCredit").html() : 0);
+                str = str.replace("{2}", $("#lblMemberMaxCredit").html());
+                this.ValidateMessage($("#memberMaxCredit"), str);
                 return false;
             }
         }
         // Only show when add new 20 Member within 1 minute
-        if ($("textBoxCaptcha") && $("textBoxCaptcha").value == "") {
-            this.ValidateMessage($("textBoxCaptcha"), Language.REQUIRE_VALIDATION_CODE);
+        if ($("#textBoxCaptcha") && $("#textBoxCaptcha").val() == "") {
+            this.ValidateMessage($("#textBoxCaptcha"), Language.REQUIRE_VALIDATION_CODE);
             return false;
         }
 
@@ -273,28 +273,28 @@ Fanex.Customer = {
 
     //Set next to userName
     SetAutoUserName: function () {
-        var selectedOne = $("selectedOne");
-        var selectedTwo = $("selectedTwo");
-        var selectedThree = $("selectedThree");
+        var selectedOne = $("#selectedOne");
+        var selectedTwo = $("#selectedTwo");
+        var selectedThree = $("#selectedThree");
 
         if (typeof (selectedThree) != 'undefined' && selectedThree != null) {
-            return selectedOne.value + selectedTwo.value + selectedThree.value;
+            return selectedOne.val() + selectedTwo.val() + selectedThree.val();
         }
         else if (typeof (selectedOne) != 'undefined' && typeof (selectedTwo) != 'undefined') {
-            return selectedOne.value + selectedTwo.value;
+            return selectedOne.val() + selectedTwo.val();
         }
         return "";
     },
 
     // Set new value commission to Object JSON
     SetValueCommissionSettings: function (commissionSettings) {
-        commissionSettings.groupA = $("groupA").value;
-        commissionSettings.groupB = $("groupB").value;
-        commissionSettings.groupC = $("groupC").value;
-        commissionSettings.groupD = $("groupD").value;
-        commissionSettings.discount1x2 = $("discount1x2").value;
-        commissionSettings.discountCS = $("discountCS").value;
-        commissionSettings.discountNumber = $("discountNumber").value;
+        commissionSettings.groupA = $("#groupA").val();
+        commissionSettings.groupB = $("#groupB").val();
+        commissionSettings.groupC = $("#groupC").val();
+        commissionSettings.groupD = $("#groupD").val();
+        commissionSettings.discount1x2 = $("#discount1x2").val();
+        commissionSettings.discountCS = $("#discountCS").val();
+        commissionSettings.discountNumber = $("#discountNumber").val();
         return commissionSettings;
     },
 
