@@ -67,10 +67,34 @@ Fanex.Customer = {
         }
     },
 
+    // Password must be at least 6 in length and at least 2 characters and 2 digits
+    IsPassword: function (str) {
+        str = str.toLowerCase();
+        numbers = "0123456789";
+        var i = 0;
+        var nCount = 0;
+        while (i < str.length) {
+            (numbers.indexOf(str.substring(i, i + 1)) >= 0) ? nCount++ : false;
+            i++;
+        }
+        var validNumber = ((nCount > (str.length - 2)) || nCount < 2 || str.length < 6) ? false : true;
+
+        letters = "abcdefghijklmnopqrstuvwxyz";
+        i = 0;
+        nCount = 0;
+        while (i < str.length) {
+            (letters.indexOf(str.substring(i, i + 1)) >= 0) ? nCount++ : false;
+            i++;
+        }
+        var validLetter = ((nCount > (str.length - 2)) || nCount < 2 || str.length < 6) ? false : true;
+
+        return validNumber & validLetter;
+    },
+
     // Check pass call in keyup event
     CheckPassword: function (pwdElement, iconElementId) {
-        if (pwdElement == null) return true;
-        var isPwd = IsPassword(pwdElement.value);
+        if (pwdElement == null || pwdElement.value == undefined) return true;
+        var isPwd = this.IsPassword(pwdElement.value);
         var iconElement = $(iconElementId);
 
         if (!iconElement) return false;
@@ -312,7 +336,7 @@ Fanex.Customer = {
         }
     },
 
-    GenerateMessage: function(ArrCodes, ArrMsgs, ArrUserName, isAdd) {
+    GenerateMessage: function (ArrCodes, ArrMsgs, ArrUserName, isAdd) {
         var isSucc = ageMsg.CheckMessageIsSucc2(ArrCodes);
 
         function getClass(errCode) {

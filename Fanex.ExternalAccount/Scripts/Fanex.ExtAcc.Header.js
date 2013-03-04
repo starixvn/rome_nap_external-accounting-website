@@ -71,7 +71,7 @@ Fanex.ExtAcc.Header = {
                                 var indexOriUrl = originalURL.split('/')[3];
                                 if (indexOriUrl.toLowerCase() == "statement") {
                                     links[i].href = originalURL + "/1539009/" + selectedGroupName;
-                                }
+                                }                             
                                 else {
                                     links[i].href = originalURL + "/" + selectedGroupName; // queryString;
                                 }

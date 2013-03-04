@@ -55,7 +55,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
                 CustId = parentId,
-                FormId = FormType.EditMinPT,
+                FormId = FormType.Add,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
@@ -89,16 +89,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
+                TargetCustId = 0,
                 RoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master,
-                FormId = FormType.EditMinPT,
+                FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En"
             };
 
-            var result = new Fanex.PTEngine.Services.CustomerService().SuperUpdateMinPTMaster(customer, requestContext);
+            int masterId = -1;
+            var result = new Fanex.PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
