@@ -653,6 +653,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.PartialViewBase();
         }
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperMasterEditMultiplePTMember()
+        {
+            return this.PartialViewBase();
+        }
+
         #endregion Multiple PT Setting
 
         #region Edit Min PT
