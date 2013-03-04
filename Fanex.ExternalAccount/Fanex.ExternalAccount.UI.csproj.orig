@@ -1499,11 +1499,12 @@
     <Content Include="Views\Sportsbook\EditPT.cshtml" />
     <Content Include="Views\Sportsbook\EditMinPT.cshtml" />
     <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
-=======
     <Content Include="Views\Sportsbook\EditCommissionMember.cshtml" />
->>>>>>> a1ec655f7ba2db7188e8f09571fc8c5eae80640e
+<<<<<<< HEAD
+    <Content Include="Views\Sportsbook\EditCommissionOther.cshtml" />
+=======
+    <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
+>>>>>>> dc2b172149df1fcf9fb6cbe97741d80625f53966
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

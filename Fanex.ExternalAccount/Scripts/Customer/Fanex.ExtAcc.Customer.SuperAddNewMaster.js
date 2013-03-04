@@ -21,7 +21,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
 
         var data = new Object();
         data.custId = 0; //Fanex.ExtAcc.Customer.UserId;
-        data.parentId = 1; //editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
+        data.parentId = $('#parentId').val(); //editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
             url: resolveClientUrl('Customer/' + editMinPTStatus + 'Get'),
@@ -72,12 +72,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 $('#closedId').css('display', 'none');
                 customer.minCreditTemp = 0;
             }
-
-
-            ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
-
-            ptGrid.Render(document.getElementById('ptContainer'));
-
+            
             var CustomerModel = function () {
 
                 var uplineUserName = customer.userName;
