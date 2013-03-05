@@ -20,8 +20,9 @@ Fanex.ExtAcc.SuperAddNewMaster = {
         Fanex.ExtAcc.BlockUI();
 
         var data = new Object();
-        data.custId = 0; //Fanex.ExtAcc.Customer.UserId;
-        data.parentId = $('#parentId').val(); //editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
+        data.custId = 0;
+        data.parentId = $('#parentId').val();
+        data.parentUsername = $('#parentUsername').val();
 
         $.ajax({
             url: resolveClientUrl('Customer/' + editMinPTStatus + 'Get'),
@@ -87,11 +88,10 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
                 customer.credit = String.prototype.FormatNumber(customer.credit);
 
-                this.saveCustomer = function () {
-                    Fanex.ExtAcc.BlockUI();
+                this.saveCustomer = function () {          
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
-
+                    
                     if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
                         customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();
                     else
@@ -121,12 +121,13 @@ Fanex.ExtAcc.SuperAddNewMaster = {
             
                         var text = JSON.stringify(customer);
                         var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId,
+                            custId: 0,
+                            parentId: $('#parentId').val(),
                             txtCustomerObject: text
                         };
                     }
 
+                    Fanex.ExtAcc.BlockUI();
                     $.ajax({
                         url: resolveClientUrl('Customer/' + editMinPTStatus + 'Post'),
                         data: para,
@@ -138,7 +139,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 $.unblockUI(document);
-
+                                document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
                                 Fanex.ExtAcc.Form.Close(false);
                             }, 2000);
                         }

@@ -38,7 +38,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () {                    
                     if (!bettingLimit.Validate()) return;
 
                     Fanex.ExtAcc.BlockUI();

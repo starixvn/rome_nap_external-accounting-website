@@ -48,11 +48,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
-        public ActionResult SuperAddNewMasterGet(int custId, int parentId)
+        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
             {
-                AdminId = CurrentSession.UserId,
+                AdminId = parentId,//CurrentSession.UserId,
                 TargetCustId = custId,
                 CustId = parentId,
                 FormId = FormType.Add,
@@ -63,7 +63,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 TargetRoleId = (int)CustomerRole.Master,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = parentUsername.ToUpper()
             };
 
             ICustomer customer = new Customer();
