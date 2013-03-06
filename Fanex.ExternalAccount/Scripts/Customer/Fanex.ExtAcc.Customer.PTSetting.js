@@ -15,6 +15,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
     CustIdIndex: 0,
 
     Init: function () {
+
+        // Extend some methods of PTEngine Core.js
+        extendPTEngine();
+
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterPTSetting();
         }
@@ -111,7 +115,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }, 100);
             }
-
         }
     },
     GetMasterPTSetting: function () {
@@ -1848,6 +1851,28 @@ function saveCommissionSettings(comm) {
 
     if (document.getElementById("groupD"))
         comm.groupD = parseFloat($("#groupD").val());
+}
+
+function extendPTEngine() {
+    Validators.utils.findPos = function (obj) {
+        var curleft = curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+        }
+
+        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
+        if (document.getElementById('windowPopup')) {
+            var parent = document.getElementById('windowPopup');
+
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        }
+
+        return [curleft, curtop];
+    }
 }
 
 $(document).ready(function () {
