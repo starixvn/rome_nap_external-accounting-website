@@ -7,6 +7,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
     customer: null,
     context: null,
     Init: function () {
+        extendPTEngine();
         this.SuperAddNewMaster();
     },
     SuperAddNewMaster: function () {

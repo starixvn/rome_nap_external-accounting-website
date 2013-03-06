@@ -417,6 +417,28 @@ if (typeof (Fanex) != 'undefined' && typeof (Fanex.PTEngine) != 'undefined') { /
     };
 }
 
+function extendPTEngine() {
+    Validators.utils.findPos = function (obj) {
+        var curleft = curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+        }
+
+        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
+        if (document.getElementById('contentSplitter')) {
+            var parent = document.getElementById('contentSplitter');
+
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        }
+
+        return [curleft, curtop];
+    }
+}
+
 //RegisterStartUp(function () {
 //    age.addEvent($('credit'), 'blur', function () {
 //        Fanex.Customer.AutoChangeMaxCredit('credit', 'lblMemberMaxCredit');
