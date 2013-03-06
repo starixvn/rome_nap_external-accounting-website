@@ -28,7 +28,7 @@ Fanex.ExtAcc.MasterAddNewAgent = {
             context = result.context;
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
-            Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
+            Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
             var isChangeM3 = false;
             var isShowPopUpSetPTMember = false;
@@ -59,11 +59,12 @@ Fanex.ExtAcc.MasterAddNewAgent = {
                 var currentStatusSuspend = customer.statusSetting.suspended;
                 $("#minCreditId").attr("class", "");
                 customer.minCreditTemp = String.prototype.FormatNumber(customer.minCredit);
-                $('#allowautoptId').css('display', 'none');
+                $("#minMemberMaxCreditId").attr("class", "");
+                customer.memberMinCredit = String.prototype.FormatNumber(customer.memberMinCredit);
             }
             else {
                 $("#minCreditId").attr("class", "hide");
-                $('#closedId').css('display', 'none');
+                $("#minMemberMaxCreditId").attr("class", "hide");
                 customer.minCreditTemp = 0;
             }
             
@@ -73,28 +74,23 @@ Fanex.ExtAcc.MasterAddNewAgent = {
 
                 // Check Transfer condition
                 displayTransferCondition = Fanex.Customer.DisplayTransferCondition(customer.transferOption);
-
-                // Super allow master using auto master PT
-                customer.statusSetting.disableAutoMPT = ko.observable(true);
-
+                
                 // Set label MaxCredit
-                customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
+                customer.maxCredit = String.prototype.FormatNumber(customer.maxCredit);
                 customer.credit = String.prototype.FormatNumber(customer.credit);
+                customer.memberMaxCredit = String.prototype.FormatNumber(customer.memberMaxCredit);
+                
 
                 this.saveCustomer = function () {          
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
                     
-                    if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
-                        customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();
-                    else
-                        customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT;
-
                     // Set value to transfer option
                     customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
                     customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
-                    customer.credit = Fanex.RoundNumber(parseFloat($("credit").value, true), 1); // Fix bug for IE7
-
+                    customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
+                    customer.memberMaxCredit = Fanex.RoundNumber(parseFloat($("#memberMaxCredit").val(), true), 1); // Fix bug for IE7
+                     
                     // For Check Edit Postion Taking
                     if (context.targetCustId == 0) {
                         // Set next to userName
