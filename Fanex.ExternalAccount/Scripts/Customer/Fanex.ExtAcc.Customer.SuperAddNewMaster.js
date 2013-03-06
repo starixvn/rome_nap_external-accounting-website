@@ -7,16 +7,9 @@ Fanex.ExtAcc.SuperAddNewMaster = {
     customer: null,
     context: null,
     Init: function () {
-        this.GetEditMinPT('SuperAddNewMaster');
-
-//        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-//            this.GetEditMinPT('SuperAddNewMaster');
-//        }
-//        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-//            this.GetEditMinPT('MasterEditMinPTAgent');
-//        }
+        this.SuperAddNewMaster();
     },
-    GetEditMinPT: function (editMinPTStatus) {
+    SuperAddNewMaster: function () {
         Fanex.ExtAcc.BlockUI();
 
         var data = new Object();
@@ -25,7 +18,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
         data.parentUsername = $('#parentUsername').val();
 
         $.ajax({
-            url: resolveClientUrl('Customer/' + editMinPTStatus + 'Get'),
+            url: resolveClientUrl('Customer/SuperAddNewMasterGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -129,7 +122,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
 
                     Fanex.ExtAcc.BlockUI();
                     $.ajax({
-                        url: resolveClientUrl('Customer/' + editMinPTStatus + 'Post'),
+                        url: resolveClientUrl('Customer/SuperAddNewMasterPost'),
                         data: para,
                         dataType: 'json',
                         type: 'post'

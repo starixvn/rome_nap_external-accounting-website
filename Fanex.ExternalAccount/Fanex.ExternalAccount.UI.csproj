@@ -658,6 +658,7 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
@@ -1501,6 +1502,8 @@
     <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
     <Content Include="Views\Sportsbook\EditCommissionMember.cshtml" />
     <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
+    <Content Include="Views\Customer\MasterAddNewAgent.cshtml" />
+    <Content Include="Views\Customer\AgentAddNewMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
