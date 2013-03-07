@@ -166,8 +166,8 @@ Fanex.Customer = {
     ValidationTransferCondition: function () {
         var transferConditionId = document.getElementsByName("transferCondition");
         if (transferConditionId != 'undefined' && transferConditionId.length > 0) {
-            if ($("rdWeekly").checked) {
-                var elements = $("alldays").getElementsByTagName("input");
+            if (document.getElementById("rdWeekly").checked) {
+                var elements = document.getElementById("alldays").getElementsByTagName("input");
                 var isSelect = false;
                 for (var i = 1; i < elements.length; i++) {
                     if (elements[i].checked) {
@@ -185,8 +185,8 @@ Fanex.Customer = {
     },
     ChooseDate: function () {
         var chkCount = 0;
-        if ($("rdWeekly").checked) {
-            var elements = $("alldays").getElementsByTagName("input");
+        if (document.getElementById("rdWeekly").checked) {
+            var elements = document.getElementById("alldays").getElementsByTagName("input");
             for (var i = 1; i < elements.length; i++) {
                 if (elements[i].checked) {
                     isSelect = true;
@@ -203,9 +203,9 @@ Fanex.Customer = {
 
     // This function is used to disable day checkboxs to edit transfer time
     SelectTransferTime: function () {
-        if ($("isTransferOption") == "0" || !$("alldays")) return;
-        var elements = $("alldays").getElementsByTagName("input");
-        var isDaily = $("rdDaily").checked;
+        if (document.getElementById("isTransferOption") == "0" || !document.getElementById("alldays")) return;
+        var elements = document.getElementById("alldays").getElementsByTagName("input");
+        var isDaily = document.getElementById("rdDaily").checked;
         for (var i = 1; i < elements.length; i++) {
             elements[i].disabled = isDaily;
         }
@@ -300,40 +300,40 @@ Fanex.Customer = {
 
     // Hide Title on top page, when open Popup.
     HideTitle: function () {
-        if ((parent.ageWnd != null) && (typeof ($('header_main')) != 'undefined')) {
-            $('header_main').style.display = 'none';
+        if ((parent.ageWnd != null) && (typeof (document.getElementById('header_main')) != 'undefined')) {
+            document.getElementById('header_main').style.display = 'none';
         }
     },
 
     // Check available username
     CheckUser: function (username, selectId, select, select2, select3, msgId) {
-        if ($(selectId)) {
-            $(selectId).onchange = function () {
-                $(msgId).className = 'loading2';
+//        if ($(selectId)) {
+//            $(selectId).onchange = function () {
+//                $(msgId).className = 'loading2';
 
-                var user = username;
+//                var user = username;
 
-                if (select && select2 && select3) {
-                    user += $(select).value + $(select2).value + $(select3).value;
-                }
-                else if (select && select2) {
-                    user += $(select).value + $(select2).value;
-                }
+//                if (select && select2 && select3) {
+//                    user += $(select).value + $(select2).value + $(select3).value;
+//                }
+//                else if (select && select2) {
+//                    user += $(select).value + $(select2).value;
+//                }
 
-                ajax.PostJSON(
-                    '../../SearchAndCopy/Handlers/CheckUser.ashx?username=' + user,
-                    '',
-                    function (result) {
-                        if (result.errCode == 101) {
-                            $(msgId).className = 'successWarning';
-                        }
-                        else {
-                            $(msgId).className = 'errorWarning';
-                        }
-                    }
-                );
-            }
-        }
+//                ajax.PostJSON(
+//                    '../../SearchAndCopy/Handlers/CheckUser.ashx?username=' + user,
+//                    '',
+//                    function (result) {
+//                        if (result.errCode == 101) {
+//                            $(msgId).className = 'successWarning';
+//                        }
+//                        else {
+//                            $(msgId).className = 'errorWarning';
+//                        }
+//                    }
+//                );
+//            }
+//        }
     },
 
     GenerateMessage: function (ArrCodes, ArrMsgs, ArrUserName, isAdd) {

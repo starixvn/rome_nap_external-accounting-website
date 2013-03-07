@@ -6,24 +6,12 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 Fanex.ExtAcc.SuperAddNewMaster = {
     customer: null,
     context: null,
+    currentStatusClose: 1,
+    currentStatusSuspend: 1,
     $this: null,
     Init: function () {
         $this = this;
         extendPTEngine();
-        
-        if (context.targetCustId > 0) {
-            $('#closed').click(function (e) {
-                $this.Closed(document.getElementById('closed'), currentStatusClose);
-            });
-
-            $('#suspended').click(function (e) {
-                $this.Suspended(document.getElementById('suspended'), currentStatusSuspend);
-            });
-        }
-
-        Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
-        Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
-
         this.SuperAddNewMaster();
     },
     SuperAddNewMaster: function () {
@@ -43,6 +31,19 @@ Fanex.ExtAcc.SuperAddNewMaster = {
         .success(function (result) {
             customer = result.customer;
             context = result.context;
+
+            if (context.targetCustId > 0) {
+                $('#closed').click(function (e) {
+                    $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
+                });
+
+                $('#suspended').click(function (e) {
+                    $this.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
+                });
+            }
+
+            Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+            Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
@@ -72,8 +73,8 @@ Fanex.ExtAcc.SuperAddNewMaster = {
 
             // For Check Edit Postion Taking
             if (context.targetCustId > 0) {
-                var currentStatusClose = customer.statusSetting.closed;
-                var currentStatusSuspend = customer.statusSetting.suspended;
+                $this.currentStatusClose = customer.statusSetting.closed;
+                $this.currentStatusSuspend = customer.statusSetting.suspended;
                 $("#minCreditId").attr("class", "");
                 customer.minCreditTemp = String.prototype.FormatNumber(customer.minCredit);
                 $('#allowautoptId').css('display', 'none');
@@ -83,7 +84,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 $('#closedId').css('display', 'none');
                 customer.minCreditTemp = 0;
             }
-            
+
             var CustomerModel = function () {
 
                 var uplineUserName = customer.userName;
@@ -98,10 +99,10 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
                 customer.credit = String.prototype.FormatNumber(customer.credit);
 
-                this.saveCustomer = function () {          
+                this.saveCustomer = function () {
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
-                    
+
                     if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
                         customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();
                     else
@@ -128,7 +129,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         customer.bettingLimit = bettingLimit.Save();
-            
+
                         var text = JSON.stringify(customer);
                         var para = {
                             custId: 0,
