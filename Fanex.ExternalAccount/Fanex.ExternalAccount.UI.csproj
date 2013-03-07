@@ -1501,6 +1501,7 @@
     <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
     <Content Include="Views\Sportsbook\EditCommissionMember.cshtml" />
     <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
+    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
