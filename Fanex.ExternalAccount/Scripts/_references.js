@@ -6,3 +6,4 @@
 /// <reference path="Fanex.ExtAcc.js" />
 /// <reference path="Fanex.ExtAcc.Form.js" />
 /// <reference path="Fanex.ExtAcc.Header.js" />
+/// <reference path="Customer/Fanex.ExtAcc.Customer.js" />
