@@ -1144,6 +1144,124 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .error(function (xhr, status, err) {
             $.unblockUI(document);
         });
+    },
+    SuperMasterUpdateMemberPT: function (custId, data, i, customer) {
+        var urlPost = '';
+        if (Fanex.ExtAcc.Customer.PTSetting.isSuperEditMember) {
+            urlPost = 'Sportsbook/SuperEditPTMemberPost';
+        }
+        else {
+            urlPost = 'Sportsbook/MasterEditPTMemberPost';
+        }
+
+        if (!i) {
+            data.custId = custId;
+        }
+        else {
+            customer.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
+            data.txtCustomerObject = JSON.stringify(customer);
+            data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
+        }
+
+        $.ajax({
+            url: resolveClientUrl(urlPost),
+            data: data,
+            dataType: 'json',
+            type: 'post'
+        })
+        .success(function (result) {
+            Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
+
+            var codes = result.ErrorCode.split('\u0007');
+            var msgs = result.ErrorMessage.split('\u0007');
+            var success = true;
+            var error = '';
+
+            for (var i = 0; i < codes.length; i++) {
+                if (parseInt(codes[i]) > 0) {
+                    success = false;
+
+                    error += msgs[i] + '<br/>';
+                    Fanex.ExtAcc.Customer.PTSetting.ErrorMessage += msgs[i].formatErrorMessage() + '<br/>';
+                }
+            }
+
+            if (success) {
+                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                        clearTimeout(timeout);
+                        $.unblockUI(document);
+
+                        Fanex.ExtAcc.Form.Close(false);
+                    }, 2000);
+                }
+                else {
+                    if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
+                        Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
+                    }
+                    else {
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            var timeout = setTimeout(function () {
+                                Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
+                            }, 2000);
+                        }
+                        else {
+                            $.unblockUI(document);
+
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                        }
+
+                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                    }
+                }
+            }
+            else {
+                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                    Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                    $.unblockUI(document);
+
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html(error.formatErrorMessage());
+                }
+                else {
+                    if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
+                        Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
+                    }
+                    else {
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            var timeout = setTimeout(function () {
+                                Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                                clearTimeout(timeout);
+                                $.unblockUI(document);
+
+                                Fanex.ExtAcc.Form.Close(false);
+                            }, 2000);
+                        }
+                        else {
+                            $.unblockUI(document);
+
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                        }
+
+                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                    }
+                }
+            }
+        })
+        .error(function (xhr, status, err) {
+            $.unblockUI(document);
+        });
     }
 };
 
