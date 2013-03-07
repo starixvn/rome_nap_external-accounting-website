@@ -658,6 +658,8 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
@@ -1499,11 +1501,17 @@
     <Content Include="Views\Sportsbook\EditPT.cshtml" />
     <Content Include="Views\Sportsbook\EditMinPT.cshtml" />
     <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
-=======
     <Content Include="Views\Sportsbook\EditCommissionMember.cshtml" />
->>>>>>> a1ec655f7ba2db7188e8f09571fc8c5eae80640e
+    <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
+=======
+    <Content Include="Views\Customer\MasterAddNewAgent.cshtml" />
+    <Content Include="Views\Customer\AgentAddNewMember.cshtml" />
+    <Content Include="Views\Sportsbook\EditCommissionDetail.cshtml" />
+    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
+    <Content Include="Views\Sportsbook\EditCommissionMemberDetail.cshtml" />
+>>>>>>> ba1aa8a14478145e6e23f359517b4168f456dd54
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
