@@ -868,6 +868,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -977,6 +979,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -1086,6 +1090,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
