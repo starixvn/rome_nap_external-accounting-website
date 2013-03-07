@@ -1689,6 +1689,8 @@ Fanex.ExtAcc.Customer = {
         else {
             menuItems = {
                 sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultiplePT(); } },
+                superEditSportbook: { name: "Supet Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(); } },
+                masterEditSportbook: { name: "Master Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(); } },
                 racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
             };
 
@@ -1792,6 +1794,54 @@ Fanex.ExtAcc.Customer = {
 
             Fanex.ExtAcc.Customer.IsMultiple = true;
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple PT Setting', 894, 600, false, false, 1);
+        }
+    },
+    ShowSuperMasterEditMultiplePT: function () {
+        var custids = [];
+        var divs = $('div');
+
+        Fanex.ExtAcc.Customer.Usernames = '';
+        Fanex.ExtAcc.Customer.CustIds = '';
+
+        for (var i = 0; i < divs.length; i++) {
+            if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
+                custids.push(divs[i].id);
+
+                Fanex.ExtAcc.Customer.CustIds += divs[i].id + ',';
+            }
+        }
+
+        Fanex.ExtAcc.Customer.UserId = parseInt(custids[0]);
+
+        if (custids.length == 1) {
+            var username = '';
+
+            for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
+                if (Fanex.ExtAcc.Customer.DataSource[i].custid == parseInt(custids[0])) {
+                    username = Fanex.ExtAcc.Customer.DataSource[i].username;
+
+                    break;
+                }
+            }
+
+            Fanex.ExtAcc.Customer.IsMultiple = false;
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 600, false, false, 1);
+        }
+        else {
+            for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
+                var row = Fanex.ExtAcc.Customer.DataSource[i];
+
+                for (var j = 0; j < custids.length; j++) {
+                    if (custids[j] == row.custid) {
+                        Fanex.ExtAcc.Customer.Usernames += row.username + ', ';
+
+                        continue;
+                    }
+                }
+            }
+
+            Fanex.ExtAcc.Customer.IsMultiple = true;
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), 'Edit Multiple PT Setting', 894, 600, false, false, 1);
         }
     }
 }
