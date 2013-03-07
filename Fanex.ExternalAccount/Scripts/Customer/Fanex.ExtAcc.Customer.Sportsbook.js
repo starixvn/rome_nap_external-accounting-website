@@ -1,4 +1,5 @@
-﻿if (typeof Fanex.ExtAcc.Customer.Sportsbook == 'undefined') {
+﻿/// <reference path="../_references.js" />
+if (typeof Fanex.ExtAcc.Customer.Sportsbook == 'undefined') {
     Fanex.ExtAcc.Customer.Sportsbook = {};
 }
 
@@ -38,7 +39,7 @@ Fanex.ExtAcc.Customer.Sportsbook = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () {                    
+                this.saveCustomer = function () {
                     if (!bettingLimit.Validate()) return;
 
                     Fanex.ExtAcc.BlockUI();
