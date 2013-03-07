@@ -6,7 +6,24 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 Fanex.ExtAcc.MasterAddNewAgent = {
     customer: null,
     context: null,
+    $this: null,
     Init: function () {
+        $this = this;
+        extendPTEngine();
+
+        if (context.targetCustId > 0) {
+            $('#closed').click(function (e) {
+                $this.Closed(document.getElementById('closed'), currentStatusClose);
+            });
+
+            $('#suspended').click(function (e) {
+                $this.Suspended(document.getElementById('suspended'), currentStatusSuspend);
+            });
+        }
+
+        Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+        Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+
         this.MasterAddNewAgent();
     },
     MasterAddNewAgent: function () {
@@ -153,6 +170,95 @@ Fanex.ExtAcc.MasterAddNewAgent = {
             $.unblockUI(document);
         });
     },
+
+    // Check or UnCheck Close Status
+    Closed: function (checkBoxClose, currentStatusClose) {
+        if (checkBoxClose.checked == true && checkBoxClose.checked != currentStatusClose) {
+            if (!confirm(Language.ALERT_CONFIRM_CLOSE)) {
+                customer.statusSetting.closed = false;
+                checkBoxClose.checked = false;
+            }
+        }
+        else if (checkBoxClose.checked == false && checkBoxClose.checked != currentStatusClose) {
+            if (!confirm(Language.ALERT_CONFIRM_OPEN)) {
+                customer.statusSetting.closed = true;
+                checkBoxClose.checked = true;
+            }
+        }
+    },
+
+    // Check or UnCheck Suspend Status
+    Suspended: function (checkBoxSuspend, currentStatusSuspend) {
+        if (checkBoxSuspend.checked == true && checkBoxSuspend.checked != currentStatusSuspend) {
+            if (!confirm(Language.ALERT_CONFIRM_SUSPEND)) {
+                customer.statusSetting.suspended = false;
+                checkBoxSuspend.checked = false;
+            }
+        }
+        else if (checkBoxSuspend.checked == false && checkBoxSuspend.checked != currentStatusSuspend) {
+            if (!confirm(Language.ALERT_CONFIRM_UNSUSPEND)) {
+                customer.statusSetting.suspended = true;
+                checkBoxSuspend.checked = true;
+            }
+        }
+    },
+
+    // We need check have any PT value change from auto to none auto. And Set new value to Member
+    CheckChangeM2: function (ptSettingOld, ptSettingNew) {
+        var sportTypes = ptSettingOld.sportTypes;
+        for (var sportTypeIndex = 0; sportTypeIndex < sportTypes.length; sportTypeIndex++) {
+            var sportTypesItem = sportTypes[sportTypeIndex]
+            var betTypeGroupSets = sportTypesItem.betTypeGroupSets;
+
+            for (var groupSetIndex = 0; groupSetIndex < betTypeGroupSets.length; groupSetIndex++) {
+                var betTypeGroupSetsItem = betTypeGroupSets[groupSetIndex];
+                var betTypeGroups = betTypeGroupSetsItem.betTypeGroups;
+
+                for (var groupIndex = 0; groupIndex < betTypeGroups.length; groupIndex++) {
+                    var betTypeGroupItem = betTypeGroups[groupIndex];
+                    var betTypes = betTypeGroupItem.betTypes;
+
+                    for (var betTypeIndex = 0; betTypeIndex < betTypes.length; betTypeIndex++) {
+                        betTypeItem = betTypes[betTypeIndex];
+                        var isAutoOld = betTypeItem.pt.im2;
+                        var isAutoNew = ptSettingNew.sportTypes[sportTypeIndex].betTypeGroupSets[groupSetIndex].betTypeGroups[groupIndex].betTypes[betTypeIndex].pt.im2;
+
+                        if (isAutoOld && !isAutoNew) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    },
+
+    // Get selected and m4 value of Soccer HdpD Master Preset
+    MemberMaximumPT: function () {
+        var ptSetting = customer.ptSetting;
+        var l3 = ptSetting.sportTypes[0].betTypeGroupSets[0].betTypeGroups[0].betTypes[0].pt.l3;
+        var a2 = ptSetting.sportTypes[0].betTypeGroupSets[0].betTypeGroups[0].betTypes[0].pt.a2;
+        return Math.max(0, Fanex.Round(l3 - a2));
+    },
+
+    // Confirm new value for all member before transfer to server
+    SetNewValueToMember: function (isUpdateAllMember) {
+        isShowPopUpSetPTMember = true;
+        if (isUpdateAllMember) {
+            var valueMemberPositionTaking = $("#selectedMemberPositionTaking").val();
+            newValueMemberPT = valueMemberPositionTaking + ";" + isUpdateAllMember;
+        }
+        var customerModel = new CustomerModel(customer);
+        customerModel.saveCustomer();
+    },
+
+    ConfirmYes: function () {
+        this.SetNewValueToMember(1);
+    },
+
+    ConfirmNo: function () {
+        this.SetNewValueToMember(0);
+    }
 }
 
 $(document).ready(function () {
