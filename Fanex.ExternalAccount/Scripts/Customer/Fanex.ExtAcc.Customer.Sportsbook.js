@@ -1,4 +1,5 @@
-﻿if (typeof Fanex.ExtAcc.Customer.Sportsbook == 'undefined') {
+﻿/// <reference path="../_references.js" />
+if (typeof Fanex.ExtAcc.Customer.Sportsbook == 'undefined') {
     Fanex.ExtAcc.Customer.Sportsbook = {};
 }
 

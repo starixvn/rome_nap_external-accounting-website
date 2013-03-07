@@ -40,7 +40,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private string cacheList = string.Empty;
         private ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
 
-        #region Add New
+        #region Super Add New Master
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
         public ActionResult SuperAddNewMaster()
         {
@@ -48,14 +48,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
-        public ActionResult SuperAddNewMasterGet(int custId, int parentId)
+        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
             {
-                AdminId = CurrentSession.UserId,
+                AdminId = parentId,
                 TargetCustId = custId,
                 CustId = parentId,
-                FormId = FormType.EditMinPT,
+                FormId = FormType.Add,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
@@ -63,7 +63,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 TargetRoleId = (int)CustomerRole.Master,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = parentUsername.ToUpper()
             };
 
             ICustomer customer = new Customer();
@@ -89,22 +89,63 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
+                TargetCustId = 0,
                 RoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master,
-                FormId = FormType.EditMinPT,
+                FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En"
             };
 
-            var result = new Fanex.PTEngine.Services.CustomerService().SuperUpdateMinPTMaster(customer, requestContext);
+            int masterId = -1;
+            var result = new Fanex.PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+        #endregion Super Add New Master
+
+        #region Master Add New Agent
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult MasterAddNewAgent()
+        {
+            return this.ViewBase();
+        }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
-        public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
+        {
+            var context = new RequestContext()
+            {
+                AdminId = parentId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.Add,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                RoleId = (int)CustomerRole.Master,
+                TargetRoleId = (int)CustomerRole.Agent,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = parentUsername.ToUpper()
+            };
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+            customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -114,20 +155,88 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
+                TargetCustId = 0,
                 RoleId = (int)CustomerRole.Master,
                 TargetRoleId = (int)CustomerRole.Agent,
-                FormId = FormType.EditMinPT,
+                FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En"
             };
 
-            var result = new Fanex.PTEngine.Services.CustomerService().MasterUpdateMinPTAgent(customer, requestContext);
+            int agentId = -1;
+            var result = new Fanex.PTEngine.Services.CustomerService().AddNewAgent(customer, requestContext, out agentId);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
-        #endregion Edit Min PT
+        #endregion Master Add New Agent
+
+        #region Agent Add New Member
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult AgentAddNewMember()
+        {
+            return this.ViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
+        {
+            var context = new RequestContext()
+            {
+                AdminId = parentId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.Add,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                RoleId = (int)CustomerRole.Agent,
+                TargetRoleId = (int)CustomerRole.Member,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = parentUsername.ToUpper()
+            };
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+            customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+
+            Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            IRequestContext requestContext = new RequestContext()
+            {
+                CustId = parentId,
+                TargetCustId = 0,
+                RoleId = (int)CustomerRole.Agent,
+                TargetRoleId = (int)CustomerRole.Member,
+                FormId = FormType.Add,
+                SubAccId = 0,
+                AdminId = CurrentSession.UserId,
+                IP = CurrentContext.Ip4Address,
+                Language = "En"
+            };
+
+            int memberId = -1;
+            var result = new Fanex.PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+        #endregion Agent Add New Member
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
         public ActionResult CustomerList()

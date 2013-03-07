@@ -15,6 +15,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
     CustIdIndex: 0,
 
     Init: function () {
+        // Extend some methods of PTEngine Core.js
+        extendPTEngine();
+
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterPTSetting();
         }
@@ -111,7 +114,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }, 100);
             }
-
         }
     },
     GetMasterPTSetting: function () {
@@ -235,7 +237,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM2 = false;
             var isShowPopUpSetPTMember = false;
             var oldPTSetting = Fanex.copy(customer.ptSetting);
@@ -340,7 +342,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
@@ -426,7 +428,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
@@ -516,7 +518,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
@@ -866,6 +868,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -975,6 +979,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -1084,6 +1090,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -1848,6 +1856,28 @@ function saveCommissionSettings(comm) {
 
     if (document.getElementById("groupD"))
         comm.groupD = parseFloat($("#groupD").val());
+}
+
+function extendPTEngine() {
+    Validators.utils.findPos = function (obj) {
+        var curleft = curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+        }
+
+        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
+        if (document.getElementById('windowPopup')) {
+            var parent = document.getElementById('windowPopup');
+
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        }
+
+        return [curleft, curtop];
+    }
 }
 
 $(document).ready(function () {

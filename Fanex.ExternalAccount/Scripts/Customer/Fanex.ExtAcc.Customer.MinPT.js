@@ -1,4 +1,5 @@
-﻿if (typeof Fanex.ExtAcc.Customer.MinPT == 'undefined') {
+﻿/// <reference path="../_references.js" />
+if (typeof Fanex.ExtAcc.Customer.MinPT == 'undefined') {
     Fanex.ExtAcc.Customer.MinPT = {};
 }
 

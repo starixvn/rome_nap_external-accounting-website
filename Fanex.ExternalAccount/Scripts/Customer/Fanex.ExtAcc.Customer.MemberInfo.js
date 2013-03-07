@@ -67,11 +67,35 @@ Fanex.Customer = {
         }
     },
 
+    // Password must be at least 6 in length and at least 2 characters and 2 digits
+    IsPassword: function (str) {
+        str = str.toLowerCase();
+        numbers = "0123456789";
+        var i = 0;
+        var nCount = 0;
+        while (i < str.length) {
+            (numbers.indexOf(str.substring(i, i + 1)) >= 0) ? nCount++ : false;
+            i++;
+        }
+        var validNumber = ((nCount > (str.length - 2)) || nCount < 2 || str.length < 6) ? false : true;
+
+        letters = "abcdefghijklmnopqrstuvwxyz";
+        i = 0;
+        nCount = 0;
+        while (i < str.length) {
+            (letters.indexOf(str.substring(i, i + 1)) >= 0) ? nCount++ : false;
+            i++;
+        }
+        var validLetter = ((nCount > (str.length - 2)) || nCount < 2 || str.length < 6) ? false : true;
+
+        return validNumber & validLetter;
+    },
+
     // Check pass call in keyup event
     CheckPassword: function (pwdElement, iconElementId) {
-        if (pwdElement == null) return true;
-        var isPwd = IsPassword(pwdElement.value);
-        var iconElement = $(iconElementId);
+        if (pwdElement == null || pwdElement.value == undefined) return true;
+        var isPwd = this.IsPassword(pwdElement.value);
+        var iconElement = document.getElementById(iconElementId);
 
         if (!iconElement) return false;
 
@@ -80,7 +104,7 @@ Fanex.Customer = {
             iconElement.className = 'PwdSuccess';
         }
         else {
-            this.ValidateMessage($("password"), Language.ALERT_PASSWORD_REQUIRE, -315, 320, true);
+            this.ValidateMessage(document.getElementById("password"), Language.ALERT_PASSWORD_REQUIRE, -315, 320, true);
             iconElement.className = 'PwdError';
         }
 
@@ -89,47 +113,47 @@ Fanex.Customer = {
 
     // Check values input: Password and Max Credit
     CheckInfoValue: function () {
-        if (!this.CheckPassword($("password"), "spnNewPwdIcon")) {
+        if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon")) {
+            return false;
+        }        
+
+        if ($("#credit").val() == "") {
+            this.ValidateMessage(document.getElementById("credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
             return false;
         }
 
-        if ($("credit").value == "") {
-            this.ValidateMessage($("credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
+        if (document.getElementById("credit") && validateExpr.test($("#credit").val()) == false) {
+            this.ValidateMessage(document.getElementById("credit"), Language.ALERT_CREDIT_INCORRECT);
             return false;
         }
 
-        if ($("credit") && validateExpr.test($("credit").value) == false) {
-            this.ValidateMessage($("credit"), Language.ALERT_CREDIT_INCORRECT);
-            return false;
-        }
-
-        if ((parseFloat($("credit").value, true) < parseFloat($("minCredit").innerHTML, true))
-			|| (parseFloat($("credit").value, true) > parseFloat($("maxCredit").innerHTML, true))) {
-            var valMin = $("minCredit") ? $("minCredit").innerHTML : 0;
+        if ((parseFloat($("#credit").val(), true) < parseFloat($("#minCredit").html(), true))
+			|| (parseFloat($("#credit").val(), true) > parseFloat($("maxCredit").html(), true))) {
+            var valMin = document.getElementById("minCredit") ? $("#minCredit").html() : 0;
             var str = Language.ALERT_CREDIT_INVALID.replace("{1}", valMin);
-            str = str.replace("{2}", $("maxCredit").innerHTML);
-            this.ValidateMessage($("credit"), str);
+            str = str.replace("{2}", $("#maxCredit").html());
+            this.ValidateMessage(document.getElementById("credit"), str);
             return false;
         }
 
-        if ($("memberMaxCredit")) {
-            if (validateExpr.test($("memberMaxCredit").value) == false) {
-                this.ValidateMessage($("memberMaxCredit"), Language.ALERT_INCORRECT_MEMBER_MAX_CREDIT);
+        if (document.getElementById('memberMaxCredit')) {
+            if (validateExpr.test($("#memberMaxCredit").val()) == false) {
+                this.ValidateMessage(document.getElementById("memberMaxCredit"), Language.ALERT_INCORRECT_MEMBER_MAX_CREDIT);
                 return false;
             }
 
-            if (parseFloat($("memberMaxCredit").value, true) > 0
-				&& (parseFloat($("memberMaxCredit").value, true) > parseFloat($("lblMemberMaxCredit").innerHTML, true))
-				|| parseFloat($("memberMaxCredit").value, true) < parseFloat($("lblMinCredit").innerHTML, true)) {
-                var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", $("lblMinCredit") ? $("lblMinCredit").innerHTML : 0);
-                str = str.replace("{2}", $("lblMemberMaxCredit").innerHTML);
-                this.ValidateMessage($("memberMaxCredit"), str);
+            if (parseFloat($("#memberMaxCredit").val(), true) > 0
+				&& (parseFloat($("#memberMaxCredit").val(), true) > parseFloat($("#lblMemberMaxCredit").html(), true))
+				|| parseFloat($("#memberMaxCredit").val(), true) < parseFloat($("#lblMinCredit").html(), true)) {
+                var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", document.getElementById("lblMinCredit") ? $("#lblMinCredit").html() : 0);
+                str = str.replace("{2}", $("#lblMemberMaxCredit").html());
+                this.ValidateMessage(document.getElementById("memberMaxCredit"), str);
                 return false;
             }
         }
         // Only show when add new 20 Member within 1 minute
-        if ($("textBoxCaptcha") && $("textBoxCaptcha").value == "") {
-            this.ValidateMessage($("textBoxCaptcha"), Language.REQUIRE_VALIDATION_CODE);
+        if (document.getElementById("textBoxCaptcha") && $("#textBoxCaptcha").val() == "") {
+            this.ValidateMessage(document.getElementById("textBoxCaptcha"), Language.REQUIRE_VALIDATION_CODE);
             return false;
         }
 
@@ -142,8 +166,8 @@ Fanex.Customer = {
     ValidationTransferCondition: function () {
         var transferConditionId = document.getElementsByName("transferCondition");
         if (transferConditionId != 'undefined' && transferConditionId.length > 0) {
-            if ($("rdWeekly").checked) {
-                var elements = $("alldays").getElementsByTagName("input");
+            if (document.getElementById("rdWeekly").checked) {
+                var elements = document.getElementById("alldays").getElementsByTagName("input");
                 var isSelect = false;
                 for (var i = 1; i < elements.length; i++) {
                     if (elements[i].checked) {
@@ -152,7 +176,7 @@ Fanex.Customer = {
                     }
                 }
                 if (!isSelect) {
-                    this.ValidateMessage($("chkMon"), Language.ALERT_CHOOSE_ONE_DAY);
+                    this.ValidateMessage(document.getElementById("chkMon"), Language.ALERT_CHOOSE_ONE_DAY);
                     return false;
                 }
             }
@@ -161,14 +185,14 @@ Fanex.Customer = {
     },
     ChooseDate: function () {
         var chkCount = 0;
-        if ($("rdWeekly").checked) {
-            var elements = $("alldays").getElementsByTagName("input");
+        if (document.getElementById("rdWeekly").checked) {
+            var elements = document.getElementById("alldays").getElementsByTagName("input");
             for (var i = 1; i < elements.length; i++) {
                 if (elements[i].checked) {
                     isSelect = true;
                     chkCount++;
                     if (chkCount == 7) {
-                        this.ValidateMessage($("rdDaily"), Language.ALERT_CHOOSE_DAILY);
+                        this.ValidateMessage(document.getElementById("rdDaily"), Language.ALERT_CHOOSE_DAILY);
                         return false;
                     }
                 }
@@ -179,9 +203,9 @@ Fanex.Customer = {
 
     // This function is used to disable day checkboxs to edit transfer time
     SelectTransferTime: function () {
-        if ($("isTransferOption") == "0" || !$("alldays")) return;
-        var elements = $("alldays").getElementsByTagName("input");
-        var isDaily = $("rdDaily").checked;
+        if (document.getElementById("isTransferOption") == "0" || !document.getElementById("alldays")) return;
+        var elements = document.getElementById("alldays").getElementsByTagName("input");
+        var isDaily = document.getElementById("rdDaily").checked;
         for (var i = 1; i < elements.length; i++) {
             elements[i].disabled = isDaily;
         }
@@ -249,9 +273,9 @@ Fanex.Customer = {
 
     //Set next to userName
     SetAutoUserName: function () {
-        var selectedOne = $("selectedOne");
-        var selectedTwo = $("selectedTwo");
-        var selectedThree = $("selectedThree");
+        var selectedOne = document.getElementById("selectedOne");
+        var selectedTwo = document.getElementById("selectedTwo");
+        var selectedThree = document.getElementById("selectedThree");
 
         if (typeof (selectedThree) != 'undefined' && selectedThree != null) {
             return selectedOne.value + selectedTwo.value + selectedThree.value;
@@ -264,55 +288,55 @@ Fanex.Customer = {
 
     // Set new value commission to Object JSON
     SetValueCommissionSettings: function (commissionSettings) {
-        commissionSettings.groupA = $("groupA").value;
-        commissionSettings.groupB = $("groupB").value;
-        commissionSettings.groupC = $("groupC").value;
-        commissionSettings.groupD = $("groupD").value;
-        commissionSettings.discount1x2 = $("discount1x2").value;
-        commissionSettings.discountCS = $("discountCS").value;
-        commissionSettings.discountNumber = $("discountNumber").value;
+        commissionSettings.groupA = $("#groupA").val();
+        commissionSettings.groupB = $("#groupB").val();
+        commissionSettings.groupC = $("#groupC").val();
+        commissionSettings.groupD = $("#groupD").val();
+        commissionSettings.discount1x2 = $("#discount1x2").val();
+        commissionSettings.discountCS = $("#discountCS").val();
+        commissionSettings.discountNumber = $("#discountNumber").val();
         return commissionSettings;
     },
 
     // Hide Title on top page, when open Popup.
     HideTitle: function () {
-        if ((parent.ageWnd != null) && (typeof ($('header_main')) != 'undefined')) {
-            $('header_main').style.display = 'none';
+        if ((parent.ageWnd != null) && (typeof (document.getElementById('header_main')) != 'undefined')) {
+            document.getElementById('header_main').style.display = 'none';
         }
     },
 
     // Check available username
     CheckUser: function (username, selectId, select, select2, select3, msgId) {
-        if ($(selectId)) {
-            $(selectId).onchange = function () {
-                $(msgId).className = 'loading2';
+//        if ($(selectId)) {
+//            $(selectId).onchange = function () {
+//                $(msgId).className = 'loading2';
 
-                var user = username;
+//                var user = username;
 
-                if (select && select2 && select3) {
-                    user += $(select).value + $(select2).value + $(select3).value;
-                }
-                else if (select && select2) {
-                    user += $(select).value + $(select2).value;
-                }
+//                if (select && select2 && select3) {
+//                    user += $(select).value + $(select2).value + $(select3).value;
+//                }
+//                else if (select && select2) {
+//                    user += $(select).value + $(select2).value;
+//                }
 
-                ajax.PostJSON(
-                    '../../SearchAndCopy/Handlers/CheckUser.ashx?username=' + user,
-                    '',
-                    function (result) {
-                        if (result.errCode == 101) {
-                            $(msgId).className = 'successWarning';
-                        }
-                        else {
-                            $(msgId).className = 'errorWarning';
-                        }
-                    }
-                );
-            }
-        }
+//                ajax.PostJSON(
+//                    '../../SearchAndCopy/Handlers/CheckUser.ashx?username=' + user,
+//                    '',
+//                    function (result) {
+//                        if (result.errCode == 101) {
+//                            $(msgId).className = 'successWarning';
+//                        }
+//                        else {
+//                            $(msgId).className = 'errorWarning';
+//                        }
+//                    }
+//                );
+//            }
+//        }
     },
 
-    GenerateMessage: function(ArrCodes, ArrMsgs, ArrUserName, isAdd) {
+    GenerateMessage: function (ArrCodes, ArrMsgs, ArrUserName, isAdd) {
         var isSucc = ageMsg.CheckMessageIsSucc2(ArrCodes);
 
         function getClass(errCode) {
@@ -391,6 +415,28 @@ if (typeof (Fanex) != 'undefined' && typeof (Fanex.PTEngine) != 'undefined') { /
         }
         return Math.round(text.length * measure);
     };
+}
+
+function extendPTEngine() {
+    Validators.utils.findPos = function (obj) {
+        var curleft = curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+        }
+
+        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
+        if (document.getElementById('contentSplitter')) {
+            var parent = document.getElementById('contentSplitter');
+
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        }
+
+        return [curleft, curtop];
+    }
 }
 
 //RegisterStartUp(function () {

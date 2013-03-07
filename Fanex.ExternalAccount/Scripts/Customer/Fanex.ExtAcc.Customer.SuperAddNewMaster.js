@@ -6,25 +6,24 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 Fanex.ExtAcc.SuperAddNewMaster = {
     customer: null,
     context: null,
+    currentStatusClose: 1,
+    currentStatusSuspend: 1,
+    $this: null,
     Init: function () {
-        this.GetEditMinPT('SuperAddNewMaster');
-
-//        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-//            this.GetEditMinPT('SuperAddNewMaster');
-//        }
-//        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-//            this.GetEditMinPT('MasterEditMinPTAgent');
-//        }
+        $this = this;
+        extendPTEngine();
+        this.SuperAddNewMaster();
     },
-    GetEditMinPT: function (editMinPTStatus) {
+    SuperAddNewMaster: function () {
         Fanex.ExtAcc.BlockUI();
 
         var data = new Object();
-        data.custId = 0; //Fanex.ExtAcc.Customer.UserId;
-        data.parentId = $('#parentId').val(); //editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
+        data.custId = 0;
+        data.parentId = $('#parentId').val();
+        data.parentUsername = $('#parentUsername').val();
 
         $.ajax({
-            url: resolveClientUrl('Customer/' + editMinPTStatus + 'Get'),
+            url: resolveClientUrl('Customer/SuperAddNewMasterGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -32,6 +31,19 @@ Fanex.ExtAcc.SuperAddNewMaster = {
         .success(function (result) {
             customer = result.customer;
             context = result.context;
+
+            if (context.targetCustId > 0) {
+                $('#closed').click(function (e) {
+                    $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
+                });
+
+                $('#suspended').click(function (e) {
+                    $this.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
+                });
+            }
+
+            Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+            Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
@@ -61,8 +73,8 @@ Fanex.ExtAcc.SuperAddNewMaster = {
 
             // For Check Edit Postion Taking
             if (context.targetCustId > 0) {
-                var currentStatusClose = customer.statusSetting.closed;
-                var currentStatusSuspend = customer.statusSetting.suspended;
+                $this.currentStatusClose = customer.statusSetting.closed;
+                $this.currentStatusSuspend = customer.statusSetting.suspended;
                 $("#minCreditId").attr("class", "");
                 customer.minCreditTemp = String.prototype.FormatNumber(customer.minCredit);
                 $('#allowautoptId').css('display', 'none');
@@ -72,7 +84,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 $('#closedId').css('display', 'none');
                 customer.minCreditTemp = 0;
             }
-            
+
             var CustomerModel = function () {
 
                 var uplineUserName = customer.userName;
@@ -88,7 +100,6 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 customer.credit = String.prototype.FormatNumber(customer.credit);
 
                 this.saveCustomer = function () {
-                    Fanex.ExtAcc.BlockUI();
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
 
@@ -100,7 +111,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                     // Set value to transfer option
                     customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
                     customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
-                    customer.credit = Fanex.RoundNumber(parseFloat($("credit").value, true), 1); // Fix bug for IE7
+                    customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                     // For Check Edit Postion Taking
                     if (context.targetCustId == 0) {
@@ -118,17 +129,18 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         customer.bettingLimit = bettingLimit.Save();
-            
+
                         var text = JSON.stringify(customer);
                         var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId,
+                            custId: 0,
+                            parentId: $('#parentId').val(),
                             txtCustomerObject: text
                         };
                     }
 
+                    Fanex.ExtAcc.BlockUI();
                     $.ajax({
-                        url: resolveClientUrl('Customer/' + editMinPTStatus + 'Post'),
+                        url: resolveClientUrl('Customer/SuperAddNewMasterPost'),
                         data: para,
                         dataType: 'json',
                         type: 'post'
@@ -138,7 +150,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 $.unblockUI(document);
-
+                                document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
                                 Fanex.ExtAcc.Form.Close(false);
                             }, 2000);
                         }
@@ -163,6 +175,95 @@ Fanex.ExtAcc.SuperAddNewMaster = {
             $.unblockUI(document);
         });
     },
+
+    // Check or UnCheck Close Status
+    Closed: function (checkBoxClose, currentStatusClose) {
+        if (checkBoxClose.checked == true && checkBoxClose.checked != currentStatusClose) {
+            if (!confirm(Language.ALERT_CONFIRM_CLOSE)) {
+                customer.statusSetting.closed = false;
+                checkBoxClose.checked = false;
+            }
+        }
+        else if (checkBoxClose.checked == false && checkBoxClose.checked != currentStatusClose) {
+            if (!confirm(Language.ALERT_CONFIRM_OPEN)) {
+                customer.statusSetting.closed = true;
+                checkBoxClose.checked = true;
+            }
+        }
+    },
+
+    // Check or UnCheck Suspend Status
+    Suspended: function (checkBoxSuspend, currentStatusSuspend) {
+        if (checkBoxSuspend.checked == true && checkBoxSuspend.checked != currentStatusSuspend) {
+            if (!confirm(Language.ALERT_CONFIRM_SUSPEND)) {
+                customer.statusSetting.suspended = false;
+                checkBoxSuspend.checked = false;
+            }
+        }
+        else if (checkBoxSuspend.checked == false && checkBoxSuspend.checked != currentStatusSuspend) {
+            if (!confirm(Language.ALERT_CONFIRM_UNSUSPEND)) {
+                customer.statusSetting.suspended = true;
+                checkBoxSuspend.checked = true;
+            }
+        }
+    },
+
+    // We need check have any PT value change from auto to none auto. And Set new value to Member
+    CheckChangeM3: function (ptSettingOld, ptSettingNew) {
+        var sportTypes = ptSettingOld.sportTypes;
+        for (var sportTypeIndex = 0; sportTypeIndex < sportTypes.length; sportTypeIndex++) {
+            var sportTypesItem = sportTypes[sportTypeIndex]
+            var betTypeGroupSets = sportTypesItem.betTypeGroupSets;
+
+            for (var groupSetIndex = 0; groupSetIndex < betTypeGroupSets.length; groupSetIndex++) {
+                var betTypeGroupSetsItem = betTypeGroupSets[groupSetIndex];
+                var betTypeGroups = betTypeGroupSetsItem.betTypeGroups;
+
+                for (var groupIndex = 0; groupIndex < betTypeGroups.length; groupIndex++) {
+                    var betTypeGroupItem = betTypeGroups[groupIndex];
+                    var betTypes = betTypeGroupItem.betTypes;
+
+                    for (var betTypeIndex = 0; betTypeIndex < betTypes.length; betTypeIndex++) {
+                        betTypeItem = betTypes[betTypeIndex];
+                        var isAutoOld = betTypeItem.pt.is3;
+                        var isAutoNew = ptSettingNew.sportTypes[sportTypeIndex].betTypeGroupSets[groupSetIndex].betTypeGroups[groupIndex].betTypes[betTypeIndex].pt.is3;
+
+                        if (isAutoOld && !isAutoNew) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    },
+
+    // Get selected and m4 value of Soccer HdpD Master Preset
+    MemberMaximumPT: function () {
+        var ptSetting = customer.ptSetting;
+        var s4 = ptSetting.sportTypes[0].betTypeGroupSets[0].betTypeGroups[0].betTypes[0].pt.s4;
+        var m3 = ptSetting.sportTypes[0].betTypeGroupSets[0].betTypeGroups[0].betTypes[0].pt.m3;
+        return Fanex.Round(s4 - m3);
+    },
+
+    // Confirm new value for all member before transfer to server
+    SetNewValueToMember: function (isUpdateAllMember) {
+        isShowPopUpSetPTMember = true;
+        if (isUpdateAllMember) {
+            var valueMemberPositionTaking = $("#selectedMemberPositionTaking").val();
+            newValueMemberPT = valueMemberPositionTaking + ";" + isUpdateAllMember;
+        }
+        var customerModel = new CustomerModel(customer);
+        customerModel.saveCustomer();
+    },
+
+    ConfirmYes: function () {
+        this.SetNewValueToMember(1);
+    },
+
+    ConfirmNo: function () {
+        this.SetNewValueToMember(0);
+    }
 }
 
 $(document).ready(function () {

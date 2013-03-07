@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
                 response.Redirect("~/Account/Login");
             }
 
-            if (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
 
@@ -162,7 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             var foundItems = policyList.Where(x => x.FuncID == functionId);
             var hasPerm = true;
 
-            if (!request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
             {
                 hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }

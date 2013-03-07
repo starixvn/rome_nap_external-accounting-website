@@ -1,0 +1,141 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.PTEngine
+@section StyleSheet{
+    <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
+}
+<div class="bgTitle titleForm">
+    <div class="wlDetail">
+        Add New Agent
+    </div>
+</div>
+<div id="mainGrid" style="margin: 0px 3px; visibility: visible;">
+    <div id="errMsg" style="display: none; width: 811px" class="errMsg">
+    </div>
+    <div class="blockBtn">
+        <input id="btnSubmit" class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+    </div>
+    <div class="customerInfo clear">
+        <div class="headerTab">
+            @ViewLang.generalInformation</div>
+        <div class="clear">
+            <div class="customerInfoBlock1 bdt0">
+                @ViewLang.Username</div>
+            <div class="customerInfoBlock2 bdt0">
+                <b><span data-bind="text: customer.userName"></span></b>
+                <select id="selectedOne" name="selectedOne">
+                </select>
+                <select id="selectedTwo" name="selectedTwo">
+                </select>
+                <span id="msgIcon">&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div class="customerInfoBlock3 bdt0">
+                @ViewLang.Password</div>
+            <div class="customerInfoBlock4 bdt0" id="divPassword" title="@ViewLang.lblPasswordRequire">
+                <div class="float_l">
+                    <input id="password" autocomplete="off" class="textBoxInfo" type="password" data-bind="value: customer.password"
+                        onkeyup="return Fanex.Customer.CheckPassword(this, 'spnNewPwdIcon');" maxlength="50" /></div>
+                <div class="float_l pt3">
+                    <span id="spnNewPwdIcon">&nbsp;</span></div>
+            </div>
+        </div>
+        <div class="clear">
+            <div class="customerInfoBlock1">
+                @ViewLang.Firstname</div>
+            <div class="customerInfoBlock2">
+                <input id="firstName" type="text" class="textBoxInfo" data-bind="value: customer.firstName"
+                    maxlength="50" /></div>
+            <div class="customerInfoBlock3">
+                @ViewLang.Lastname</div>
+            <div class="customerInfoBlock4">
+                <input id="lastName" type="text" class="textBoxInfo" data-bind="value: customer.lastName"
+                    maxlength="50" /></div>
+        </div>
+        <div class="clear">
+            <div class="customerInfoBlock1">
+                @ViewLang.Phone</div>
+            <div class="customerInfoBlock2">
+                <input id="phone" type="text" class="textBoxInfo" data-bind="value: customer.phone"
+                    maxlength="50" /></div>
+            <div class="customerInfoBlock3">
+                @ViewLang.MobilePhone</div>
+            <div class="customerInfoBlock4">
+                <input id="mobilePhone" type="text" class="textBoxInfo" data-bind="value: customer.mobilePhone"
+                    maxlength="50" /></div>
+        </div>
+        <div class="clear">
+            <div class="customerInfoBlock1">
+                @ViewLang.AgentMaxCredit</div>
+            <div class="customerInfoBlock2">
+                <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: customer.credit" />
+                <span id="minCreditId">&gt;=<span data-bind="text: customer.minCreditTemp" id="minCredit"></span>&nbsp;@ViewLang.and&nbsp;</span>
+                <= <span data-bind="text: customer.maxCredit" id="maxCredit"></span>
+            </div>
+            <div class="customerInfoBlock3">
+                @ViewLang.Fax</div>
+            <div class="customerInfoBlock4">
+                <input id="fax" type="text" class="textBoxInfo" data-bind="value: customer.fax" maxlength="50" /></div>
+        </div>
+        <div class="clear">
+            <div class="customerInfoBlock1">
+                @ViewLang.MemberMaxCredit</div>
+            <div class="customerInfoBlock2">
+                <input type="text" id="memberMaxCredit" maxlength="14" class="textBoxCredit textBoxInfo"
+                    data-bind="value: customer.memberMaxCredit" />
+                <span id="minMemberMaxCreditId">&gt;=<span data-bind="text: customer.memberMinCredit"
+                    id="lblMinCredit"></span>&nbsp;@ViewLang.and&nbsp;</span><= <span data-bind="text: customer.credit"
+                        id="lblMemberMaxCredit"></span>
+            </div>
+            <div class="customerInfoBlock3">
+                <label for="suspended">
+                    @ViewLang.Suspended</label></div>
+            <div class="customerInfoBlock4">
+                <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: (customer.statusSetting.uplineSuspended || customer.statusSetting.uplineClosed) ? false : true" /></div>
+        </div>
+        <div class="clear" style="display:none">
+            <div class="customerInfoBlock1">
+            </div>
+            <div class="customerInfoBlock2NoBorderLeft">
+            </div>
+            <div class="customerInfoBlock3">
+                <label for="closed">
+                    @ViewLang.Closed</label>
+            </div>
+            <div class="customerInfoBlock4">
+                <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: customer.statusSetting.uplineClosed ? false : true" />
+            </div>
+        </div>
+    </div>
+    @Html.Action("EditCommission", "Sportsbook")
+    <!--TransferConditionBlock-->
+    @Html.Raw(new Fanex.PTEngine.Age.Templates.TransferCondition_Template())
+    <!--/TransferConditionBlock-->
+    <div class="clear">
+    </div>
+    <br />
+    <div class="headerBetSetting">
+        @ViewLang.BetSetting</div>
+    <div id="bettingLimitContainer">
+    </div>
+    <br />
+    <div class="headerPositionTaking widthPTH">@ViewLang.PositionTaking</div>
+    <div class="positionTaking widthPTC">
+        <div id="ptContainer">
+        </div>
+    </div>
+    <div class="blockBtn">
+        <input id="btnSubmitFooter" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+    </div>
+    <input type="hidden" id="parentId" value="@Request.RequestContext.RouteData.Values["id"]" />
+    <input type="hidden" id="parentUsername" value="@Request.RequestContext.RouteData.Values["username"]" />
+</div>
+@section Scripts{
+    <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>
+    <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
+    <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.knockout-2.0.0.js")" type="text/javascript"></script>
+    <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BetTypeGroup.js")" type="text/javascript"></script>
+    <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BetType.js")" type="text/javascript"></script>
+    <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.MemberInfo.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.MasterAddNewAgent.js")" type="text/javascript"></script>
+}

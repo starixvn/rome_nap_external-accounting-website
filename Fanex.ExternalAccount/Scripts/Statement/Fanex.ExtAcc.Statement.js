@@ -89,7 +89,7 @@ Fanex.ExtAcc.Statement = {
     },
     defaultColumns: [
         { HeaderText: 'Date', Name: 'Date', Width: 110, HeaderAlign: "center", CellAlign: 'center' },
-        { HeaderText: 'Remark', Name: 'Remark', Width: 505, HeaderAlign: "center" },
+        { HeaderText: 'Remark', Name: 'Remark', Width: 502, HeaderAlign: "center" },
         { HeaderText: 'Total', Name: 'TotalAmt', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Accumulated Total', Name: 'AccumulatedTotal', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$', AllowTruncate: false }
         ],

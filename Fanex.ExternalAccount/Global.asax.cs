@@ -38,6 +38,11 @@ namespace Fanex.ExternalAccount
                 name: "Default2",
                 url: "{controller}/{action}/{id}/{groupname}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, groupname = UrlParameter.Optional });
+
+            routes.MapRoute(
+                name: "Default3",
+                url: "{controller}/{action}/{id}/{username}/{groupname}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional });
         }
 
         protected void Application_Start()

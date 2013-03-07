@@ -80,7 +80,7 @@ Fanex.ExtAcc = {
     BlockUI: function () {
         if (!$this.BlockedUI) {
             $.blockUI({
-                message: '<img src="../../Images/Loading.gif" />',
+                message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
                 onBlock: function () {
                     $this.BlockedUI = true;
                 },
@@ -181,7 +181,7 @@ Fanex.ExtAcc = {
         $('#splitterBar').height($("#footer").position().top - 30);
 
         $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
-        
+
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
         $('#splitterBar').click(function (event) {
@@ -205,10 +205,16 @@ Fanex.ExtAcc = {
         }
 
         this.LoadModule(Fanex.ExtAcc.Form);
-        this.LoadModule(Fanex.ExtAcc.Header);
+        var interval = setInterval(function () {
+            if (typeof Fanex.ExtAcc.Header != 'undefined') {
+                clearInterval(interval);
 
-        var module = this.GetCurrentModule();
-        this.LoadModule(module);
+                Fanex.ExtAcc.LoadModule(Fanex.ExtAcc.Header);
+
+                var module = Fanex.ExtAcc.GetCurrentModule();
+                Fanex.ExtAcc.LoadModule(module);
+            }
+        }, 100);
     },
 
     ToggleSpliter: function () {

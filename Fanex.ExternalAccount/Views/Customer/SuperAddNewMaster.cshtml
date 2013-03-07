@@ -7,11 +7,11 @@
 
 <div class="bgTitle titleForm">
     <div class="wlDetail">
-        ADD NEW MASTER
+        Add New Master
     </div>
 </div>
 <div id="mainGrid" style="margin: 0px 3px; visibility: visible;">
-    <div id="errMsg" style="display: none;" class="errMsg">
+    <div id="errMsg" style="display: none;width:811px" class="errMsg">
     </div>
     <div class="blockBtn">
         <input id="btnSubmit" class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
@@ -105,10 +105,8 @@
         </div>
     </div>
     @Html.Action("EditCommission", "Sportsbook")    
-
-    <!--TransferConditionBlock-->
     @Html.Raw(new Fanex.PTEngine.Age.Templates.TransferCondition_Template())
-    <!--/TransferConditionBlock-->
+
     <div class="clear"></div>
     <br />
     <div class="headerBetSetting">
@@ -125,6 +123,7 @@
         <input id="btnSubmitFooter" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     <input type="hidden" id="parentId" value="@Request.RequestContext.RouteData.Values["id"]" />
+    <input type="hidden" id="parentUsername" value="@Request.RequestContext.RouteData.Values["username"]" />
 </div>
 
 @section Scripts{
@@ -134,6 +133,6 @@
     <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BetTypeGroup.js")" type="text/javascript"></script>
     <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BetType.js")" type="text/javascript"></script>
     <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>
-    <script src="~/Scripts/Customer/Fanex.ExtAcc.Customer.MemberInfo.js" type="text/javascript"></script>
-    <script src="~/Scripts/Customer/Fanex.ExtAcc.Customer.SuperAddNewMaster.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.MemberInfo.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.SuperAddNewMaster.js")" type="text/javascript"></script>
 }

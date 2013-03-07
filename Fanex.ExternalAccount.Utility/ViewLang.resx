@@ -754,4 +754,13 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="OtherTypes" xml:space="preserve">
     <value>Other Bettypes</value>
   </data>
+  <data name="AgentMaxCredit" xml:space="preserve">
+    <value>Agent Max Credit</value>
+  </data>
+  <data name="MemberMaxCredit" xml:space="preserve">
+    <value>Member Max Credit</value>
+  </data>
+  <data name="givencredit" xml:space="preserve">
+    <value>Given Credit</value>
+  </data>
 </root>
