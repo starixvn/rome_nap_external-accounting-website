@@ -63,7 +63,7 @@ Fanex.ExtAcc.AgentAddNewMember = {
             /* Render Commission to selected*/
             var commission = customer.commissionSetting;
             if (context.targetCustId == 0) {
-                Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedTwo"), customer.newUserName);
+                Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
                 $this.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
 
