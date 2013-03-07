@@ -32,7 +32,7 @@ Fanex.ExtAcc.MasterAddNewAgent = {
             customer = result.customer;
             context = result.context;
 
-            if (this.context.targetCustId > 0) {
+            if (context.targetCustId > 0) {
                 $('#closed').click(function (e) {
                     $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
                 });
