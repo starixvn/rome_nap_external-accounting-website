@@ -466,7 +466,7 @@ Fanex.ExtAcc.Customer = {
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    CallBackCustomerList();
+                    Fanex.ExtAcc.Customer.CallBackCustomerList();
                     $.unblockUI(document);
                 }, 2000);
             }
@@ -978,7 +978,7 @@ Fanex.ExtAcc.Customer = {
             if (current == len) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    CallBackCustomerList();
+                    Fanex.ExtAcc.Customer.CallBackCustomerList();
                 }, 2000);
             }
             else {
@@ -1046,7 +1046,7 @@ Fanex.ExtAcc.Customer = {
                     if (result.IsSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
-                            CallBackCustomerList();
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
                             $.unblockUI(document);
                         }, 2000);
                     }

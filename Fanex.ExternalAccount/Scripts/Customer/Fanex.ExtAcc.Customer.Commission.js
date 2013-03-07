@@ -1,4 +1,5 @@
-﻿if (typeof Fanex.ExtAcc.Customer.Commission == 'undefined') {
+﻿/// <reference path="../_references.js" />
+if (typeof Fanex.ExtAcc.Customer.Commission == 'undefined') {
     Fanex.ExtAcc.Customer.Commission = {};
 }
 
@@ -123,7 +124,6 @@ Fanex.ExtAcc.Customer.Commission = {
                     else {
                         Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
                     }
-
 
                     $.unblockUI(document);
                     Fanex.ExtAcc.Form.Close(false);

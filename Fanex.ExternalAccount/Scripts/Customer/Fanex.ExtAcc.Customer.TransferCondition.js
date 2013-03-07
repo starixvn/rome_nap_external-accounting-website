@@ -1,4 +1,5 @@
-﻿if (typeof Fanex.ExtAcc.Customer == 'undefined') {
+﻿/// <reference path="../_references.js" />
+if (typeof Fanex.ExtAcc.Customer == 'undefined') {
     Fanex.ExtAcc.Customer = {};
 }
 
