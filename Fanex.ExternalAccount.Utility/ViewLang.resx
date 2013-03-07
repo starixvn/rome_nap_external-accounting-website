@@ -760,4 +760,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="MemberMaxCredit" xml:space="preserve">
     <value>Member Max Credit</value>
   </data>
+  <data name="givencredit" xml:space="preserve">
+    <value>Given Credit</value>
+  </data>
 </root>

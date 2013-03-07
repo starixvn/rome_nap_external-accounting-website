@@ -69,7 +69,7 @@
             <div class="customerInfoBlock2">
                 <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: customer.credit" />
                 <span id="minCreditId">&gt;=<span data-bind="text: customer.minCreditTemp" id="minCredit"></span>&nbsp;@ViewLang.and&nbsp;</span>
-                <= <span data-bind="text: customer.maxCreditTemp" id="maxCredit"></span>
+                <= <span data-bind="text: customer.maxCredit" id="maxCredit"></span>
             </div>
             <div class="customerInfoBlock3">
                 @ViewLang.Fax</div>
@@ -92,7 +92,7 @@
             <div class="customerInfoBlock4">
                 <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: (customer.statusSetting.uplineSuspended || customer.statusSetting.uplineClosed) ? false : true" /></div>
         </div>
-        <div class="clear">
+        <div class="clear" style="display:none">
             <div class="customerInfoBlock1">
             </div>
             <div class="customerInfoBlock2NoBorderLeft">

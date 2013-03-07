@@ -826,6 +826,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Given Credit.
+        /// </summary>
+        public static string givencredit {
+            get {
+                return ResourceManager.GetString("givencredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Goal.
         /// </summary>
         public static string Goal {
