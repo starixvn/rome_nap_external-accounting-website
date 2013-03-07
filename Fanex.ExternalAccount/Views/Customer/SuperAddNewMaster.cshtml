@@ -105,10 +105,8 @@
         </div>
     </div>
     @Html.Action("EditCommission", "Sportsbook")    
-
-    <!--TransferConditionBlock-->
     @Html.Raw(new Fanex.PTEngine.Age.Templates.TransferCondition_Template())
-    <!--/TransferConditionBlock-->
+
     <div class="clear"></div>
     <br />
     <div class="headerBetSetting">
@@ -135,6 +133,6 @@
     <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BetTypeGroup.js")" type="text/javascript"></script>
     <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BetType.js")" type="text/javascript"></script>
     <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>
-    <script src="~/Scripts/Customer/Fanex.ExtAcc.Customer.MemberInfo.js" type="text/javascript"></script>
-    <script src="~/Scripts/Customer/Fanex.ExtAcc.Customer.SuperAddNewMaster.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.MemberInfo.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.SuperAddNewMaster.js")" type="text/javascript"></script>
 }
