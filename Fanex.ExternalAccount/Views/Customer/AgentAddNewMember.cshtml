@@ -106,72 +106,7 @@
             </div>
         </div>
     </div>
-    <div class="commission">
-        <div class="headerTab">
-            @ViewLang.commission</div>
-        <div class="clear">
-            <div class="commissionBlock1 commissionHeader">
-            </div>
-            <div class="commissionBlock2 commissionHeader">
-                @ViewLang.CommissionForAgent
-            </div>
-            <div class="commissionBlock2 commissionHeader">
-                @ViewLang.CommissionForMember
-            </div>
-        </div>
-        <div class="clear">
-            <div class="commissionBlock1">
-                @ViewLang.AsianHDC_OU_OE
-            </div>
-            <div class="commissionBlock2">
-                <input type="text" id="textBoxDiscountAsian" name="textBoxDiscountAsian" class="textBoxComm"
-                    disabled="true" />
-            </div>
-            <div class="commissionBlock2">
-                <select id="discountAsian" name="discountAsian" class="widthGroup">
-                </select>
-            </div>
-        </div>
-        <div class="clear">
-            <div class="commissionBlock1">
-                @ViewLang.lbl1x2
-            </div>
-            <div class="commissionBlock2">
-                <input type="text" id="textBoxDiscount1x2" class="textBoxComm" disabled="true" data-bind="value: customer.commissionSetting.discount1x2" />
-            </div>
-            <div class="commissionBlock2">
-                <select id="discount1x2" name="discount1x2" class="widthGroup">
-                </select>
-            </div>
-        </div>
-        <div class="clear">
-            <div class="commissionBlock1">
-                @ViewLang.OtherTypes
-            </div>
-            <div class="commissionBlock2">
-                <input type="text" id="textBoxDiscountCS" class="textBoxComm" disabled="true" data-bind="value: customer.commissionSetting.discountCS" />
-            </div>
-            <div class="commissionBlock2">
-                <select id="discountCS" name="discountCS" class="widthGroup">
-                </select>
-            </div>
-        </div>
-        <div class="clear">
-            <div class="commissionBlock1">
-                @ViewLang.numbergamecomm
-            </div>
-            <div class="commissionBlock2">
-                <input type="text" id="textBoxDiscountNumber" class="textBoxComm" disabled="true"
-                    data-bind="value: customer.commissionSetting.discountNumber" />
-            </div>
-            <div class="commissionBlock2">
-                <select id="discountNumber" name="discountNumber" class="widthGroup">
-                </select>
-            </div>
-        </div>
-        <div class="clear">
-        </div>
-    </div>
+    @Html.Action("EditCommissionMember", "Sportsbook")
     <div class="clear">
     </div>
     <br />

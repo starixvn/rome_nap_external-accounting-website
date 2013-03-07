@@ -6,31 +6,13 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 Fanex.ExtAcc.AgentAddNewMember = {
     customer: null,
     context: null,
+    currentStatusClose: 1,
+    currentStatusSuspend: 1,
     $this: null,
     Init: function () {
         $this = this;
-        extendPTEngine();
-
-        if (context.targetCustId == 0) {
-            $('#group').change(function (e) {
-                $this.ChangeGroupCommission(document.getElementById('group'));
-            });
-        }
-        else {
-            $('#closed').click(function (e) {
-                $this.Closed(document.getElementById('closed'), currentStatusClose);
-            });
-
-            $('#suspended').click(function (e) {
-                $this.Suspended(document.getElementById('suspended'), currentStatusSuspend);
-            });
-        }
-
-        Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
-        Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
-        Fanex.Customer.CheckUser(customer.userName, 'selectedThree', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
-
-        this.AgentAddNewMember();
+        extendPTEngine();        
+        this.AgentAddNewMember();        
     },
     AgentAddNewMember: function () {
         Fanex.ExtAcc.BlockUI();
@@ -50,6 +32,25 @@ Fanex.ExtAcc.AgentAddNewMember = {
             customer = result.customer;
             context = result.context;
 
+            if (context.targetCustId == 0) {
+                $('#group').change(function (e) {
+                    $this.ChangeGroupCommission(document.getElementById('group'));
+                });
+            }
+            else {
+                $('#closed').click(function (e) {
+                    $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
+                });
+
+                $('#suspended').click(function (e) {
+                    $this.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
+                });
+            }
+
+            Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
+            Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
+            Fanex.Customer.CheckUser(customer.userName, 'selectedThree', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
+
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
@@ -62,9 +63,9 @@ Fanex.ExtAcc.AgentAddNewMember = {
             /* Render Commission to selected*/
             var commission = customer.commissionSetting;
             if (context.targetCustId == 0) {
-                Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedTwo"), customer.newUserName);
+                Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
-                Fanex.Customer.NewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
+                $this.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
 
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
@@ -78,8 +79,8 @@ Fanex.ExtAcc.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
 
-                currentStatusClose = customer.statusSetting.closed;
-                currentStatusSuspend = customer.statusSetting.suspended;
+                $this.currentStatusClose = customer.statusSetting.closed;
+                $this.currentStatusSuspend = customer.statusSetting.suspended;
             }
             
             var CustomerModel = function () {

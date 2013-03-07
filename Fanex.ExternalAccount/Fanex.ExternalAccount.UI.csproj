@@ -1505,6 +1505,9 @@
     <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
     <Content Include="Views\Customer\MasterAddNewAgent.cshtml" />
     <Content Include="Views\Customer\AgentAddNewMember.cshtml" />
+    <Content Include="Views\Sportsbook\EditCommissionDetail.cshtml" />
+    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
+    <Content Include="Views\Sportsbook\EditCommissionMemberDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
