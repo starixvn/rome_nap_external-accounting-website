@@ -1503,12 +1503,11 @@
     <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
     <Content Include="Views\Sportsbook\EditCommissionMember.cshtml" />
     <Content Include="Views\Sportsbook\EditMultiplePT.cshtml" />
-    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\MasterAddNewAgent.cshtml" />
     <Content Include="Views\Customer\AgentAddNewMember.cshtml" />
     <Content Include="Views\Sportsbook\EditCommissionDetail.cshtml" />
-    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Sportsbook\EditCommissionMemberDetail.cshtml" />
+    <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
