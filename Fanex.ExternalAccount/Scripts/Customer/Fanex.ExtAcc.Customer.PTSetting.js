@@ -15,7 +15,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
     CustIdIndex: 0,
 
     Init: function () {
-
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
 
@@ -238,7 +237,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM2 = false;
             var isShowPopUpSetPTMember = false;
             var oldPTSetting = Fanex.copy(customer.ptSetting);
@@ -343,7 +342,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
@@ -429,7 +428,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
@@ -519,7 +518,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             var context = result.context;
-            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = result.customer;
+            var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
@@ -869,6 +868,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -978,6 +979,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
@@ -1087,6 +1090,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $.unblockUI(document);
 
                                 Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }, 2000);
                         }
                         else {
