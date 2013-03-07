@@ -11,7 +11,7 @@
     </div>
 </div>
 <div id="mainGrid" style="margin: 0px 3px; visibility: visible;">
-    <div id="errMsg" style="display: none;" class="errMsg">
+    <div id="errMsg" style="display: none;width:811px" class="errMsg">
     </div>
     <div class="blockBtn">
         <input id="btnSubmit" class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
@@ -124,6 +124,7 @@
     <div class="blockBtn">
         <input id="btnSubmitFooter" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
+    <input type="hidden" id="parentUsername" value="@Request.RequestContext.RouteData.Values["username"]" />
 </div>
 
 @section Scripts{

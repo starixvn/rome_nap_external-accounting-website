@@ -7,24 +7,19 @@ Fanex.ExtAcc.SuperAddNewMaster = {
     customer: null,
     context: null,
     Init: function () {
-        this.GetEditMinPT('SuperAddNewMaster');
-
-//        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-//            this.GetEditMinPT('SuperAddNewMaster');
-//        }
-//        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-//            this.GetEditMinPT('MasterEditMinPTAgent');
-//        }
+        extendPTEngine();
+        this.SuperAddNewMaster();
     },
-    GetEditMinPT: function (editMinPTStatus) {
+    SuperAddNewMaster: function () {
         Fanex.ExtAcc.BlockUI();
 
         var data = new Object();
-        data.custId = 0; //Fanex.ExtAcc.Customer.UserId;
-        data.parentId = $('#parentId').val(); //editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
+        data.custId = 0;
+        data.parentId = $('#parentId').val();
+        data.parentUsername = $('#parentUsername').val();
 
         $.ajax({
-            url: resolveClientUrl('Customer/' + editMinPTStatus + 'Get'),
+            url: resolveClientUrl('Customer/SuperAddNewMasterGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -87,11 +82,10 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
                 customer.credit = String.prototype.FormatNumber(customer.credit);
 
-                this.saveCustomer = function () {
-                    Fanex.ExtAcc.BlockUI();
+                this.saveCustomer = function () {          
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
-
+                    
                     if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
                         customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();
                     else
@@ -100,7 +94,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                     // Set value to transfer option
                     customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
                     customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
-                    customer.credit = Fanex.RoundNumber(parseFloat($("credit").value, true), 1); // Fix bug for IE7
+                    customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                     // For Check Edit Postion Taking
                     if (context.targetCustId == 0) {
@@ -121,14 +115,15 @@ Fanex.ExtAcc.SuperAddNewMaster = {
             
                         var text = JSON.stringify(customer);
                         var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: editMinPTStatus == 'SuperAddNewMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId,
+                            custId: 0,
+                            parentId: $('#parentId').val(),
                             txtCustomerObject: text
                         };
                     }
 
+                    Fanex.ExtAcc.BlockUI();
                     $.ajax({
-                        url: resolveClientUrl('Customer/' + editMinPTStatus + 'Post'),
+                        url: resolveClientUrl('Customer/SuperAddNewMasterPost'),
                         data: para,
                         dataType: 'json',
                         type: 'post'
@@ -138,7 +133,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 $.unblockUI(document);
-
+                                document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
                                 Fanex.ExtAcc.Form.Close(false);
                             }, 2000);
                         }

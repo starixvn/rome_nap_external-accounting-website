@@ -95,7 +95,7 @@ Fanex.Customer = {
     CheckPassword: function (pwdElement, iconElementId) {
         if (pwdElement == null || pwdElement.value == undefined) return true;
         var isPwd = this.IsPassword(pwdElement.value);
-        var iconElement = $(iconElementId);
+        var iconElement = document.getElementById(iconElementId);
 
         if (!iconElement) return false;
 
@@ -104,7 +104,7 @@ Fanex.Customer = {
             iconElement.className = 'PwdSuccess';
         }
         else {
-            this.ValidateMessage($("password"), Language.ALERT_PASSWORD_REQUIRE, -315, 320, true);
+            this.ValidateMessage(document.getElementById("password"), Language.ALERT_PASSWORD_REQUIRE, -315, 320, true);
             iconElement.className = 'PwdError';
         }
 
@@ -113,47 +113,47 @@ Fanex.Customer = {
 
     // Check values input: Password and Max Credit
     CheckInfoValue: function () {
-        if (!this.CheckPassword($("#password"), "spnNewPwdIcon")) {
+        if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon")) {
             return false;
-        }
+        }        
 
         if ($("#credit").val() == "") {
-            this.ValidateMessage($("#credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
+            this.ValidateMessage(document.getElementById("credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
             return false;
         }
 
-        if ($("#credit") && validateExpr.test($("#credit").val()) == false) {
-            this.ValidateMessage($("#credit"), Language.ALERT_CREDIT_INCORRECT);
+        if (document.getElementById("credit") && validateExpr.test($("#credit").val()) == false) {
+            this.ValidateMessage(document.getElementById("credit"), Language.ALERT_CREDIT_INCORRECT);
             return false;
         }
 
         if ((parseFloat($("#credit").val(), true) < parseFloat($("#minCredit").html(), true))
 			|| (parseFloat($("#credit").val(), true) > parseFloat($("maxCredit").html(), true))) {
-            var valMin = $("#minCredit") ? $("#minCredit").html() : 0;
+            var valMin = document.getElementById("minCredit") ? $("#minCredit").html() : 0;
             var str = Language.ALERT_CREDIT_INVALID.replace("{1}", valMin);
             str = str.replace("{2}", $("#maxCredit").html());
-            this.ValidateMessage($("#credit"), str);
+            this.ValidateMessage(document.getElementById("credit"), str);
             return false;
         }
 
-        if ($("#memberMaxCredit")) {
+        if (document.getElementById('memberMaxCredit')) {
             if (validateExpr.test($("#memberMaxCredit").val()) == false) {
-                this.ValidateMessage($("#memberMaxCredit"), Language.ALERT_INCORRECT_MEMBER_MAX_CREDIT);
+                this.ValidateMessage(document.getElementById("memberMaxCredit"), Language.ALERT_INCORRECT_MEMBER_MAX_CREDIT);
                 return false;
             }
 
             if (parseFloat($("#memberMaxCredit").val(), true) > 0
 				&& (parseFloat($("#memberMaxCredit").val(), true) > parseFloat($("#lblMemberMaxCredit").html(), true))
 				|| parseFloat($("#memberMaxCredit").val(), true) < parseFloat($("#lblMinCredit").html(), true)) {
-                var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", $("#lblMinCredit") ? $("#lblMinCredit").html() : 0);
+                var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", document.getElementById("lblMinCredit") ? $("#lblMinCredit").html() : 0);
                 str = str.replace("{2}", $("#lblMemberMaxCredit").html());
-                this.ValidateMessage($("#memberMaxCredit"), str);
+                this.ValidateMessage(document.getElementById("memberMaxCredit"), str);
                 return false;
             }
         }
         // Only show when add new 20 Member within 1 minute
-        if ($("#textBoxCaptcha") && $("#textBoxCaptcha").val() == "") {
-            this.ValidateMessage($("#textBoxCaptcha"), Language.REQUIRE_VALIDATION_CODE);
+        if (document.getElementById("textBoxCaptcha") && $("#textBoxCaptcha").val() == "") {
+            this.ValidateMessage(document.getElementById("textBoxCaptcha"), Language.REQUIRE_VALIDATION_CODE);
             return false;
         }
 
@@ -176,7 +176,7 @@ Fanex.Customer = {
                     }
                 }
                 if (!isSelect) {
-                    this.ValidateMessage($("chkMon"), Language.ALERT_CHOOSE_ONE_DAY);
+                    this.ValidateMessage(document.getElementById("chkMon"), Language.ALERT_CHOOSE_ONE_DAY);
                     return false;
                 }
             }
@@ -192,7 +192,7 @@ Fanex.Customer = {
                     isSelect = true;
                     chkCount++;
                     if (chkCount == 7) {
-                        this.ValidateMessage($("rdDaily"), Language.ALERT_CHOOSE_DAILY);
+                        this.ValidateMessage(document.getElementById("rdDaily"), Language.ALERT_CHOOSE_DAILY);
                         return false;
                     }
                 }
@@ -273,15 +273,15 @@ Fanex.Customer = {
 
     //Set next to userName
     SetAutoUserName: function () {
-        var selectedOne = $("#selectedOne");
-        var selectedTwo = $("#selectedTwo");
-        var selectedThree = $("#selectedThree");
+        var selectedOne = document.getElementById("selectedOne");
+        var selectedTwo = document.getElementById("selectedTwo");
+        var selectedThree = document.getElementById("selectedThree");
 
         if (typeof (selectedThree) != 'undefined' && selectedThree != null) {
-            return selectedOne.val() + selectedTwo.val() + selectedThree.val();
+            return selectedOne.value + selectedTwo.value + selectedThree.value;
         }
         else if (typeof (selectedOne) != 'undefined' && typeof (selectedTwo) != 'undefined') {
-            return selectedOne.val() + selectedTwo.val();
+            return selectedOne.value + selectedTwo.value;
         }
         return "";
     },
@@ -415,6 +415,28 @@ if (typeof (Fanex) != 'undefined' && typeof (Fanex.PTEngine) != 'undefined') { /
         }
         return Math.round(text.length * measure);
     };
+}
+
+function extendPTEngine() {
+    Validators.utils.findPos = function (obj) {
+        var curleft = curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+        }
+
+        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
+        if (document.getElementById('contentSplitter')) {
+            var parent = document.getElementById('contentSplitter');
+
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        }
+
+        return [curleft, curtop];
+    }
 }
 
 //RegisterStartUp(function () {

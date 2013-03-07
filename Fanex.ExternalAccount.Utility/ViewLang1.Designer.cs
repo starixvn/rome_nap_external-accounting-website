@@ -124,6 +124,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent Max Credit.
+        /// </summary>
+        public static string AgentMaxCredit {
+            get {
+                return ResourceManager.GetString("AgentMaxCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
@@ -1120,6 +1129,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string MaxPayout {
             get {
                 return ResourceManager.GetString("MaxPayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member Max Credit.
+        /// </summary>
+        public static string MemberMaxCredit {
+            get {
+                return ResourceManager.GetString("MemberMaxCredit", resourceCulture);
             }
         }
         

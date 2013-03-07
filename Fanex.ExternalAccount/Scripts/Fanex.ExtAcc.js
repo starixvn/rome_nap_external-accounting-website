@@ -80,7 +80,7 @@ Fanex.ExtAcc = {
     BlockUI: function () {
         if (!$this.BlockedUI) {
             $.blockUI({
-                message: '<img src="../../Images/Loading.gif" />',
+                message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
                 onBlock: function () {
                     $this.BlockedUI = true;
                 },
