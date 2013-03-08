@@ -44,7 +44,7 @@ String.prototype.formatErrorMessage = function () {
     var preMsg = msg.substring(0, indexOfStartParenthesis);
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
-    var formatMsg = '<font color="#ff5411">- ' + preMsg + '</font>' + orgMsg +
+    var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
     '<font color="#ff5411">' + subMsg + '</font>';
 
     var msg = subMsg.indexOf(':') > 0 ? ('<div style="float: left; color: Blue; font-weight: bold">' + subMsg.substring(0, subMsg.indexOf(':')) + ':</div><br /><font color="#ff5411">' + subMsg.substring(subMsg.indexOf(':') + 1) + '</font>') : ('<font color="#ff5411">' + subMsg + '</font>');
@@ -161,9 +161,10 @@ Fanex.ExtAcc = {
 
             $.each(data, function (i) {
                 source.push(data[i].Username);
-                $("#txtUserName").autocomplete({
-                    source: source
-                });
+            });
+
+            $("#txtUserName").autocomplete({
+                source: source
             });
         })
         .error(function (err) {
