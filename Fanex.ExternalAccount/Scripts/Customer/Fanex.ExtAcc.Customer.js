@@ -57,8 +57,6 @@ Fanex.ExtAcc.Customer = {
     Init: function () {
         $this = this;
 
-        Fanex.ExtAcc.InitSuggestion();
-
         //Prevent loading group name
         var timeout = setInterval(function () {
             if ($.trim($('#selectedGroupName').html()) != '') {
@@ -94,6 +92,8 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.InitSuggestion();
             }
         });
+
+        Fanex.ExtAcc.InitSuggestion();
     },
 
     GetParams: function () {
