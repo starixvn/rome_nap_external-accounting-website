@@ -428,6 +428,7 @@ input[type="text"], input[type="password"]
 }
 .BettingLimitTextBox
 {
+    vertical-align: top;
 	width: 110px;
 }
 .BettingLimitTextBox4
