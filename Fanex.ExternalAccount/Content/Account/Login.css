@@ -124,7 +124,7 @@ tr
 	-webkit-border-radius: 5px;
 	background-image: url("../../Images/Login/warning-icn.png");
 	background-repeat: no-repeat;
-	background-position: 5px top;
+	background-position: 5px 5px;
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle;
