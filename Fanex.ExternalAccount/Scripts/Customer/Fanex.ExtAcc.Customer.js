@@ -52,11 +52,7 @@ Fanex.ExtAcc.Customer = {
     Usernames: '',
     CustIds: '',
 
-    $this: null,
-
     Init: function () {
-        $this = this;
-
         //Prevent loading group name
         var timeout = setInterval(function () {
             if ($.trim($('#selectedGroupName').html()) != '') {
