@@ -147,11 +147,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                if (!customer.statusSetting.uplineClosed) {
-                    this.saveCustomer = function () {
-                        var updateParameters = '';
-                        var customer = Fanex.copy(result.customer);
-
+                this.saveCustomer = function () {
+                    var updateParameters = '';
+                    var customer = Fanex.copy(result.customer);
+                    if (!customer.statusSetting.uplineClosed) {
                         if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                                 updateParameters = getUpdateParamaters();
@@ -203,9 +202,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperUpdateMasterPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-                }
-                else {
-                    $('.buttonPopup').attr('disabled', 'disabled');
+                    else {
+                        $('.buttonPopup').attr('disabled', 'disabled');
+                    }
                 }
             }
 
@@ -251,11 +250,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                if (!customer.statusSetting.uplineClosed) {
-                    this.saveCustomer = function () {
-                        var updateParameters = '';
-                        var customer = Fanex.copy(result.customer);
-
+                this.saveCustomer = function () {
+                    var updateParameters = '';
+                    var customer = Fanex.copy(result.customer);
+                    if (!customer.statusSetting.uplineClosed) {
                         if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                                 updateParameters = getUpdateParamaters();
@@ -308,9 +306,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.MasterUpdateAgentPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-                }
-                else {
-                    $('.buttonPopup').attr('disabled', 'disabled');
+                    else {
+                        $('.buttonPopup').attr('disabled', 'disabled');
+                    }
                 }
             }
 
@@ -353,11 +351,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                if (!customer.statusSetting.uplineClosed) {
-                    this.saveCustomer = function () {
-                        var updateParameters = '';
-                        var customer = Fanex.copy(result.customer);
-
+                this.saveCustomer = function () {
+                    var updateParameters = '';
+                    var customer = Fanex.copy(result.customer);
+                    if (!customer.statusSetting.uplineClosed) {
                         if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                                 updateParameters = getUpdateParamaters();
@@ -395,9 +392,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.AgentUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-                }
-                else {
-                    $('.buttonPopup').attr('disabled', 'disabled');
+                    else {
+                        $('.buttonPopup').attr('disabled', 'disabled');
+                    }
                 }
             }
 
@@ -438,11 +435,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                if (!customer.statusSetting.uplineClosed) {
-                    this.saveCustomer = function () {
-                        var updateParameters = '';
-                        var customer = Fanex.copy(result.customer);
-
+                this.saveCustomer = function () {
+                    var updateParameters = '';
+                    var customer = Fanex.copy(result.customer);
+                    if (!customer.statusSetting.uplineClosed) {
                         if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                                 updateParameters = getSuperMasterUpdateMemberParamaters();
@@ -472,9 +468,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-                }
-                else {
-                    $('.buttonPopup').attr('disabled', 'disabled');
+                    else {
+                        $('.buttonPopup').attr('disabled', 'disabled');
+                    }
                 }
             }
 
@@ -515,11 +511,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                if (!customer.statusSetting.uplineClosed) {
-                    this.saveCustomer = function () {
-                        var updateParameters = '';
-                        var customer = Fanex.copy(result.customer);
-
+                this.saveCustomer = function () {
+                    var updateParameters = '';
+                    var customer = Fanex.copy(result.customer);
+                    if (!customer.statusSetting.uplineClosed) {
                         if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                                 updateParameters = getSuperMasterUpdateMemberParamaters();
@@ -549,9 +544,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
                         }
                     }
-                }
-                else {
-                    $('.buttonPopup').attr('disabled', 'disabled');
+                    else {
+                        $('.buttonPopup').attr('disabled', 'disabled');
+                    }
                 }
             }
 
