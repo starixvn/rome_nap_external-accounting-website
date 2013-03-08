@@ -133,6 +133,8 @@ tr
 	padding-left: 30px;
 	margin-bottom: 5px;
 	border: 1px solid #d2a243;
+	min-height: 25px;
+	padding-top: 5px;
 }
 .currencyGroup
 {
