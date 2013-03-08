@@ -4,7 +4,9 @@ if (typeof Fanex == 'undefined') {
     Fanex = {};
 }
 
-Array.prototype.binarySearch = function (value, key) {
+Array.prototype.binarySearch = function (key) {
+    var value = this;
+
     function match(value, target) {
         return key ? value[key] === target[key] : value === target;
     }
