@@ -161,9 +161,10 @@ Fanex.ExtAcc = {
 
             $.each(data, function (i) {
                 source.push(data[i].Username);
-                $("#txtUserName").autocomplete({
-                    source: source
-                });
+            });
+
+            $("#txtUserName").autocomplete({
+                source: source
             });
         })
         .error(function (err) {
