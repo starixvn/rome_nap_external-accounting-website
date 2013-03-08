@@ -3,10 +3,16 @@ input[type="text"], input[type="password"]
 {
 	height: 20px !important;
 }
-.clear, .widthPTH
+.PTHeader
+{
+	width: 841px;
+	border-top: 1px solid #CCC !important;
+}
+.clear
 {
 	width: 841px;
 }
+
 .widthPTC
 {
 	width: 835px;
