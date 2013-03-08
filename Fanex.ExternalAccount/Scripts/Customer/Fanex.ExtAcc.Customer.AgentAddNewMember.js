@@ -65,7 +65,7 @@ Fanex.ExtAcc.AgentAddNewMember = {
             if (context.targetCustId == 0) {
                 Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
-                $this.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
+                Fanex.ExtAcc.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
 
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);

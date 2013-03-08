@@ -469,6 +469,7 @@ input[type="text"], input[type="password"]
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
 {
+    /*height: 24px;*/
 	background-color: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
