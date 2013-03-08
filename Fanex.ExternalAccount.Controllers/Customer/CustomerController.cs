@@ -385,6 +385,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult TransferCondition()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
             var model = this.masterService.GetTransferOption(custId);

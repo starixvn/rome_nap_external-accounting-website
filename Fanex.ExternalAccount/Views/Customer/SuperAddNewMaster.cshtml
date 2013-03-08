@@ -104,9 +104,8 @@
                 <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: context.targetCustId > 0 ? true : !customer.statusSetting.suspended" /></div>
         </div>
     </div>
-    @Html.Action("EditCommission", "Sportsbook")    
-    @Html.Raw(new Fanex.PTEngine.Age.Templates.TransferCondition_Template())
-
+    @Html.Action("EditCommission", "Sportsbook")
+    @Html.Action("TransferCondition", "Customer")
     <div class="clear"></div>
     <br />
     <div class="headerBetSetting">
