@@ -44,10 +44,10 @@ String.prototype.formatErrorMessage = function () {
     var preMsg = msg.substring(0, indexOfStartParenthesis);
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
-    var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
+    var formatMsg = '<font color="#ff5411">- ' + preMsg + '</font>' + orgMsg +
     '<font color="#ff5411">' + subMsg + '</font>';
 
-    var ret = preMsg.length > 0 ? formatMsg : (orgMsg + '<font color="#ff5411">' + subMsg + '</font>');
+    var ret = preMsg.length > 0 ? formatMsg : (orgMsg + '<font color="#ff5411">- ' + subMsg + '</font>');
 
     return ret;
 };
