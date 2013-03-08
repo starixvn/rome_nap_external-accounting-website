@@ -140,10 +140,10 @@ Fanex.ExtAcc.Customer = {
 
     Search: function (isFirstLoad) {
         if (isFirstLoad) {
-            this.GetSuperList();
+            Fanex.ExtAcc.Customer.GetSuperList();
         }
         else {
-            this.SearchList();
+            Fanex.ExtAcc.Customer.SearchList();
         }
     },
 
