@@ -6,9 +6,9 @@ input[type="text"], input[type="password"]
 .PTHeader
 {
 	width: 841px;
-	border-top: 1px solid #CCC;
+	border-top: 1px solid #CCC !important;
 }
-.clear, .widthPTH
+.clear
 {
 	width: 841px;
 }
