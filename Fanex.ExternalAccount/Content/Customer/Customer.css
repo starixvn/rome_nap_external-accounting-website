@@ -2,8 +2,14 @@
 {
 	font-size: 11px !important;
 }
-.floatR{float:right;}
-.btnTop{margin: 0 0 4px 0 !important;}
+.floatR
+{
+	float: right;
+}
+.btnTop
+{
+	margin: 0 0 4px 0 !important;
+}
 .enabled
 {
 	background-image: url(../../Images/Content/icon-customerlist.png);
@@ -179,9 +185,4 @@ tr.rowTransferCondition
 .formatDate
 {
 	font-size: 8px;
-}
-.BettingLimitTextBox, .BettingLimitTextBox9
-{
-	vertical-align: top !important;
-	height: 20px !important;
 }
