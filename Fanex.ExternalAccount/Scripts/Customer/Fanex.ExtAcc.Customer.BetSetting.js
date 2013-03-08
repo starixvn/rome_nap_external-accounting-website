@@ -1,9 +1,9 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex.ExtAcc.Customer.Sportsbook == 'undefined') {
-    Fanex.ExtAcc.Customer.Sportsbook = {};
+if (typeof Fanex.ExtAcc.Customer.BetSetting == 'undefined') {
+    Fanex.ExtAcc.Customer.BetSetting = {};
 }
 
-Fanex.ExtAcc.Customer.Sportsbook = {
+Fanex.ExtAcc.Customer.BetSetting = {
     Init: function () {
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterBetSetting();
@@ -241,5 +241,5 @@ Fanex.ExtAcc.Customer.Sportsbook = {
 }
 
 $(document).ready(function () {
-    Fanex.ExtAcc.Customer.Sportsbook.Init();
+    Fanex.ExtAcc.Customer.BetSetting.Init();
 });
