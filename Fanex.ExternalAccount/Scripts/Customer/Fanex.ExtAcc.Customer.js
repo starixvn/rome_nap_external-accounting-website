@@ -152,6 +152,9 @@ Fanex.ExtAcc.Customer = {
     ShowEditSuper: function (custId, title) {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        Fanex.ExtAcc.Customer.isMasterEditMember = false;
 
         $.contextMenu({
             selector: '.editInfo',
@@ -169,6 +172,8 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
         Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        Fanex.ExtAcc.Customer.isMasterEditMember = false;
 
         itemsMaster = {
             sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 600, false, false, 1); } },
@@ -257,6 +262,8 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
         Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        Fanex.ExtAcc.Customer.isMasterEditMember = false;
 
         var itemsAgent = {
             sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 600, false, false, 1); } },
@@ -345,6 +352,8 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.UserId = custId;
         Fanex.ExtAcc.Customer.TitleEditInfo = title;
         Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        Fanex.ExtAcc.Customer.isMasterEditMember = false;
 
         var itemsMember = {
             sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 600, false, false, 1); } },
