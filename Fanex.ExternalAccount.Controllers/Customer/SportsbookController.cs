@@ -560,7 +560,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count > 0)
             {
-                result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
+                result = custSrv.SuperUpdateMultipleMembers(customer, requestContext, param);
             }
             else
             {
@@ -639,7 +639,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count > 0)
             {
-                result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
+                result = custSrv.MasterUpdateMultipleMembers(customer, requestContext, param);
             }
             else
             {

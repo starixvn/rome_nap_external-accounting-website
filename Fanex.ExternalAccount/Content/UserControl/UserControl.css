@@ -196,7 +196,7 @@
 	-webkit-border-radius: 3px;
 	background-image: url("../../Images/Login/warning-icn.png");
 	background-repeat: no-repeat;
-	background-position: 5px center;
+	background-position: 5px 5px;
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle; /*color: #ff5411;*/

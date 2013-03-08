@@ -438,59 +438,43 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () {
-                    if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
-                        Fanex.ExtAcc.BlockUI();
+                if (!customer.statusSetting.uplineClosed) {
+                    this.saveCustomer = function () {
+                        var updateParameters = '';
+                        var customer = Fanex.copy(result.customer);
 
-                        customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        var text = JSON.stringify(customer);
+                        if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                                updateParameters = getSuperMasterUpdateMemberParamaters();
 
-                        var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: Fanex.ExtAcc.Customer.superId,
-                            agentId: Fanex.ExtAcc.Customer.agentId,
-                            txtCustomerObject: text
-                        };
+                                if (!customer.statusSetting.uplineClosed && document.getElementById('status').checked)
+                                    customer.statusSetting.closed = document.getElementById("closed").checked;
 
-                        $.ajax({
-                            url: resolveClientUrl('Sportsbook/SuperEditPTMemberPost'),
-                            data: para,
-                            dataType: 'json',
-                            type: 'post'
-                        })
-                        .success(function (result) {
-                            var codes = result.ErrorCode.split('\u0007');
-                            var msgs = result.ErrorMessage.split('\u0007');
-                            var success = true;
-                            var error = '';
-
-                            for (var i = 0; i < codes.length; i++) {
-                                if (parseInt(codes[i]) > 0) {
-                                    success = false;
-
-                                    error += msgs[i] + '<br/>';
-                                }
-                            }
-
-                            if (success) {
-                                var timeout = setTimeout(function () {
-                                    clearTimeout(timeout);
-                                    $.unblockUI(document);
-
-                                    Fanex.ExtAcc.Form.Close(false);
-                                }, 2000);
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
-                                $.unblockUI(document);
-
-                                $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(error.formatErrorMessage());
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
-                        })
-                        .error(function (xhr, status, err) {
-                            $.unblockUI(document);
-                        });
+
+                            Fanex.ExtAcc.BlockUI();
+
+                            var text = JSON.stringify(customer);
+
+                            var para = {
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.superId,
+                                agentId: Fanex.ExtAcc.Customer.agentId,
+                                txtCustomerObject: text,
+                                newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
+                                para: updateParameters
+                            };
+
+                            Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
+                        }
                     }
+                }
+                else {
+                    $('.buttonPopup').attr('disabled', 'disabled');
                 }
             }
 
@@ -531,58 +515,43 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () {
-                    if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
-                        Fanex.ExtAcc.BlockUI();
-                        customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
-                        var text = JSON.stringify(customer);
+                if (!customer.statusSetting.uplineClosed) {
+                    this.saveCustomer = function () {
+                        var updateParameters = '';
+                        var customer = Fanex.copy(result.customer);
 
-                        var para = {
-                            custId: Fanex.ExtAcc.Customer.UserId,
-                            parentId: Fanex.ExtAcc.Customer.masterId,
-                            agentId: Fanex.ExtAcc.Customer.agentId,
-                            txtCustomerObject: text
-                        };
+                        if (Fanex.ExtAcc.Customer.PTSetting.ptGrid) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                                updateParameters = getSuperMasterUpdateMemberParamaters();
 
-                        $.ajax({
-                            url: resolveClientUrl('Sportsbook/MasterEditPTMemberPost'),
-                            data: para,
-                            dataType: 'json',
-                            type: 'post'
-                        })
-                        .success(function (result) {
-                            var codes = result.ErrorCode.split('\u0007');
-                            var msgs = result.ErrorMessage.split('\u0007');
-                            var success = true;
-                            var error = '';
+                                if (!customer.statusSetting.uplineClosed && document.getElementById('status').checked)
+                                    customer.statusSetting.closed = document.getElementById("closed").checked;
 
-                            for (var i = 0; i < codes.length; i++) {
-                                if (parseInt(codes[i]) > 0) {
-                                    success = false;
-
-                                    error += msgs[i] + '<br/>';
-                                }
-                            }
-
-                            if (success) {
-                                var timeout = setTimeout(function () {
-                                    clearTimeout(timeout);
-                                    $.unblockUI(document);
-
-                                    Fanex.ExtAcc.Form.Close(false);
-                                }, 2000);
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
-                                $.unblockUI(document);
-
-                                $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(error.formatErrorMessage());
+                                customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
-                        })
-                        .error(function (xhr, status, err) {
-                            $.unblockUI(document);
-                        });
+
+                            Fanex.ExtAcc.BlockUI();
+
+                            var text = JSON.stringify(customer);
+
+                            var para = {
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.masterId,
+                                agentId: Fanex.ExtAcc.Customer.agentId,
+                                txtCustomerObject: text,
+                                newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
+                                para: updateParameters
+                            };
+
+                            Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(Fanex.ExtAcc.Customer.UserId, para, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 0 : null, customer);
+                        }
                     }
+                }
+                else {
+                    $('.buttonPopup').attr('disabled', 'disabled');
                 }
             }
 
@@ -1482,6 +1451,62 @@ function getUpdateParamaters() {
     }
     else {
         for (var i = 0; i < itemsPt.length; i++) {
+            if ($("positionTaking" + i).checked) {
+                paramaters += "1";
+                if (!isUpdatePositionTaking) {
+                    isUpdatePositionTaking = true;
+                }
+
+                if (!isUpdate) {
+                    isUpdate = true;
+                }
+            }
+            else {
+                paramaters += "0";
+            }
+        }
+    }
+
+    return paramaters;
+}
+
+function getSuperMasterUpdateMemberParamaters(paramaters) {
+    var paramaters = "";
+
+    if ($("status").checked) {
+        paramaters += "1";
+        if (!isUpdate) {
+            isUpdate = true;
+        }
+    }
+    else {
+        paramaters += "0";
+    }
+
+    var itemsPt = Fanex.ExtAcc.Customer.PTSetting.ptGrid.items;
+    var cloneFromSoccer = itemsPt[0].cloneButton;
+    var cloneFromBasketball = itemsPt[1].cloneButton;
+    if ($("positionTaking0").checked && cloneFromSoccer.firstChild.checked) {
+        isUpdatePositionTaking = true;
+        for (var i = 0; i < 10; i++) {
+            paramaters += "1";
+            if (!isUpdate) {
+                isUpdate = true;
+            }
+        }
+    }
+    else if ($("positionTaking1").checked && cloneFromBasketball.firstChild.checked) {
+        $("positionTaking0").checked ? paramaters += "1" : paramaters += "0";
+        isUpdatePositionTaking = true;
+        for (var i = 1; i < 10; i++) {
+            paramaters += "1";
+            if (!isUpdate) {
+                isUpdate = true;
+            }
+        }
+    }
+    else {
+        for (var i = 0; i < 10; i++) {
             if ($("positionTaking" + i).checked) {
                 paramaters += "1";
                 if (!isUpdatePositionTaking) {
