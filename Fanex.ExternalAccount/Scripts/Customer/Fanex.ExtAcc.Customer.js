@@ -1059,7 +1059,7 @@ Fanex.ExtAcc.Customer = {
                     }
                     else {
                         $.unblockUI(document);
-                        alert(result.ErrorMessage);
+                        alert(result.ErrorMessage + result.ErrorCode == "600" ? "This account was disabled" : "");
                     }
                 })
                 .error(function (xhr) {
