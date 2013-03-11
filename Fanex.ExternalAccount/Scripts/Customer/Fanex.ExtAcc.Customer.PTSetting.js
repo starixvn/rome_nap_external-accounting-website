@@ -129,7 +129,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTMasterGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var context = result.context;
@@ -232,7 +233,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTAgentGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var context = result.context;
@@ -336,7 +338,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTMemberGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var context = result.context;
@@ -421,7 +424,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/SuperEditPTMemberGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var context = result.context;
@@ -497,7 +501,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/MasterEditPTMemberGet'),
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var context = result.context;
