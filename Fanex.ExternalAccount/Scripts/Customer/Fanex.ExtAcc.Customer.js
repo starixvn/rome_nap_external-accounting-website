@@ -1615,6 +1615,9 @@ Fanex.ExtAcc.Customer = {
     EditMultiple: function (div) {
         var menuItems = {};
 
+        Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
             menuItems = {
                 doubleComm: { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
