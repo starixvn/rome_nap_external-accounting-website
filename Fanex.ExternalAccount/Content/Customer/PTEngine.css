@@ -95,7 +95,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock1
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	background: #FFF;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -109,7 +109,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock2
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
@@ -124,7 +124,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock2NoBorderLeft
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
@@ -137,7 +137,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock3
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
@@ -152,7 +152,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock4
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	background: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
@@ -166,7 +166,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock5
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	border-left: 1px solid #CCC;
 	float: left;
@@ -178,7 +178,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock6
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	font-weight: bold;
 	text-align: center;
 	float: left;
@@ -187,7 +187,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock7
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
@@ -198,7 +198,7 @@ input[type="text"], input[type="password"]
 }
 .customerInfoBlock4NoBorderLeft
 {
-	font-size: 10px;
+	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
@@ -315,7 +315,7 @@ input[type="text"], input[type="password"]
 	text-align: right;
 	width: 80px;
 	padding-right: 5px;
-	font-size: 10px !important;
+	font-size: 11px !important;
 }
 .widthGroup
 {
@@ -345,6 +345,7 @@ input[type="text"], input[type="password"]
 }
 .transferCondition div label
 {
+    font-size: 11px !important;
 	padding-left: 10px;
 	line-height: 25px;
 }
@@ -391,19 +392,31 @@ input[type="text"], input[type="password"]
 	width: 841px;
 }
 .PTSport
-{
+{    
 	background-color: #D4E3EB;
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
-.PTSportLabel, .PTSportLabel2
+.PTSportLabel2
 {
+    width: 90px;
+    font-family: Tahoma,Arial,helvetica,sans-serif;
 	color: #464646;
 	border-left: 1px solid #CCC;
 	border-top: 0 none;
 	text-indent: 1px !important;
-	font-size: 10px !important;
+	font-size: 11px !important;
+}
+.PTSportLabel
+{
+    width: 122px;
+    font-family: Tahoma,Arial,helvetica,sans-serif;
+	color: #464646;
+	border-left: 1px solid #CCC;
+	border-top: 0 none;
+	text-indent: 1px !important;
+	font-size: 11px !important;
 }
 
 .PTSportEditCopied
@@ -461,18 +474,20 @@ input[type="text"], input[type="password"]
 }
 .GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
 {
+    font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-color: #E7F7FF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
-	font-size: 10px !important;
+	font-size: 11px !important;
 	text-indent: 1px !important;
 }
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
 {
+    font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-position: 100px 2px;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
-	font-size: 10px !important;
+	font-size: 11px !important;
 	text-indent: 1px !important;
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
@@ -526,4 +541,5 @@ input[type="text"], input[type="password"]
 input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, div.BettingLimitItem92
 {
 	font-size: 11px !important;
+	font-family: Tahoma,Arial,helvetica,sans-serif;
 }
