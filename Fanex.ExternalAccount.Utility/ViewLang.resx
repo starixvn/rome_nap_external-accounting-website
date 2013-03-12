@@ -763,4 +763,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="givencredit" xml:space="preserve">
     <value>Given Credit</value>
   </data>
+  <data name="notExist" xml:space="preserve">
+    <value>This user does not exist</value>
+  </data>
 </root>

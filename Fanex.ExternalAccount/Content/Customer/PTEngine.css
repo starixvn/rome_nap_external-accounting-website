@@ -320,7 +320,7 @@ input[type="text"], input[type="password"]
 .widthGroup
 {
 	width: 70px;
-	font-size: 10px !important;
+	font-size: 11px !important;
 }
 .headerTab
 {
@@ -401,6 +401,8 @@ input[type="text"], input[type="password"]
 .PTSportLabel2
 {
     width: 90px;
+    height: 20px;
+    line-height: 20px;
     font-family: Tahoma,Arial,helvetica,sans-serif;
 	color: #464646;
 	border-left: 1px solid #CCC;
@@ -411,6 +413,8 @@ input[type="text"], input[type="password"]
 .PTSportLabel
 {
     width: 122px;
+    height: 20px;
+    line-height: 20px;
     font-family: Tahoma,Arial,helvetica,sans-serif;
 	color: #464646;
 	border-left: 1px solid #CCC;
@@ -542,4 +546,8 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 {
 	font-size: 11px !important;
 	font-family: Tahoma,Arial,helvetica,sans-serif;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+	background-color: #FFF;
 }

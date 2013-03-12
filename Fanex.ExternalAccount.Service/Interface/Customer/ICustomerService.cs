@@ -17,6 +17,8 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
     /// </summary>
     public interface ICustomerService
     {
+        bool IsUsernameBelong(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId);
+
         Customer UserInfo(int custId);
 
         Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,

@@ -14,6 +14,8 @@ namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
     /// </summary>
     public interface ICustomerDao
     {
+        bool IsUsernameBelong(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId);
+
         Customer UserInfo(int custId);
 
         Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,

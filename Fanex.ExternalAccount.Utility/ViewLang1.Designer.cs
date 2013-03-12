@@ -1304,6 +1304,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This user does not exist.
+        /// </summary>
+        public static string notExist {
+            get {
+                return ResourceManager.GetString("notExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number Game.
         /// </summary>
         public static string NumberGame {

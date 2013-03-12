@@ -27,6 +27,42 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     {
         #region ICustomerDao Members
 
+        #region Search&Copy
+        /// <summary>
+        /// Check if userName is belong to uplineId.
+        /// Author: Jeff
+        /// Task: Search&Copy
+        /// </summary>
+        /// <param name="userId">int-userid want to check his permission</param>
+        /// <param name="funcId">int-functionid</param>
+        /// <returns>bool</returns>
+        public bool IsUsernameBelong(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
+        {
+            custId = 0;
+            isSubAcc = false;
+            roleId = 0;
+            if (string.IsNullOrEmpty(userName))
+            {
+                return false;
+            }
+            
+            Hashtable parameters = new Hashtable();
+            parameters.Add("uplineid", uplineId);
+            parameters.Add("username", userName);
+            parameters.Add("custid", 0);
+            parameters.Add("issubacc", isSubAcc);
+            parameters.Add("roleid", 0);
+
+            var result = DbHelper.ExecuteDbResult("Age_CustomerSelCheckBelonging_ByUsername", parameters);
+            
+            isSubAcc = (bool)result.Outputs["issubacc"];
+            roleId = (int)result.Outputs["roleid"];
+            custId = (int)result.Outputs["custid"];
+
+            return custId > 0;
+        }
+        #endregion
+
         public Customer UserInfo(int custId)
         {
             var param = new Hashtable();

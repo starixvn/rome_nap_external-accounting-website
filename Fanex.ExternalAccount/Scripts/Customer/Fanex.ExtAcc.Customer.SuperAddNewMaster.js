@@ -42,8 +42,8 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                 });
             }
 
-            Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
-            Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+            Fanex.Customer.CheckUser(4, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+            Fanex.Customer.CheckUser(4, customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;

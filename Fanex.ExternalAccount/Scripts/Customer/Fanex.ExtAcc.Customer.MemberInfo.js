@@ -306,34 +306,40 @@ Fanex.Customer = {
     },
 
     // Check available username
-    CheckUser: function (username, selectId, select, select2, select3, msgId) {
-//        if ($(selectId)) {
-//            $(selectId).onchange = function () {
-//                $(msgId).className = 'loading2';
+    CheckUser: function (parentRoleId, username, selectId, select, select2, select3, msgId) {
+        if (document.getElementById(selectId)) {
+            document.getElementById(selectId).onchange = function () {
+                document.getElementById(msgId).className = 'loading2';
 
-//                var user = username;
+                var user = username;
 
-//                if (select && select2 && select3) {
-//                    user += $(select).value + $(select2).value + $(select3).value;
-//                }
-//                else if (select && select2) {
-//                    user += $(select).value + $(select2).value;
-//                }
+                if (select && select2 && select3) {
+                    user += document.getElementById(select).value + document.getElementById(select2).value + document.getElementById(select3).value;
+                }
+                else if (select && select2) {
+                    user += document.getElementById(select).value + document.getElementById(select2).value;
+                }
 
-//                ajax.PostJSON(
-//                    '../../SearchAndCopy/Handlers/CheckUser.ashx?username=' + user,
-//                    '',
-//                    function (result) {
-//                        if (result.errCode == 101) {
-//                            $(msgId).className = 'successWarning';
-//                        }
-//                        else {
-//                            $(msgId).className = 'errorWarning';
-//                        }
-//                    }
-//                );
-//            }
-//        }
+                var data = new Object();
+                data.username = username;
+                data.parentRoleId = parentRoleId;
+
+                $.ajax({
+                    url: resolveClientUrl('Customer/CheckUsername'),
+                    data: data,
+                    dataType: 'json',
+                    type: 'post'
+                })
+                .success(function (result) {
+                    if (result.errCode == 101) {
+                        document.getElementById(msgId).className = 'successWarning';
+                    }
+                    else {
+                        document.getElementById(msgId).className = 'errorWarning';
+                    }
+                });
+            }
+        }
     },
 
     GenerateMessage: function (ArrCodes, ArrMsgs, ArrUserName, isAdd) {

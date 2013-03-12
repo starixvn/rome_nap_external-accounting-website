@@ -40,6 +40,36 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private string cacheList = string.Empty;
         private ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
 
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult CheckUsername(string username, int parentRoleId)
+        {
+            int errCode = 0;
+            string errMsg = string.Empty;
+            int roleId = 0;
+            bool isSubAccount = false;
+            int customerId = -1;
+
+            bool isValidUser = customerService.IsUsernameBelong(username.Trim(), CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
+
+            if (isValidUser && CurrentSession.UserName.Trim().ToLower() != username.Trim().ToLower() && (parentRoleId - 1) == roleId)
+            {
+                errMsg = customerId.ToString();
+                errCode = 999;
+            }
+            else
+            {
+                errCode = 101;
+                errMsg = ViewLang.notExist;
+            }
+            
+            return this.JsonBase(new { errCode = errCode, errMsg = errCode }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+        }
+
         #region Super Add New Master
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
         public ActionResult SuperAddNewMaster()

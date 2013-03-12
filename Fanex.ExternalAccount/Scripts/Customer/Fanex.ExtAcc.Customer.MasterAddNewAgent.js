@@ -42,8 +42,8 @@ Fanex.ExtAcc.MasterAddNewAgent = {
                 });
             }
 
-            Fanex.Customer.CheckUser(customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
-            Fanex.Customer.CheckUser(customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+            Fanex.Customer.CheckUser(3, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+            Fanex.Customer.CheckUser(3, customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
