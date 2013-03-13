@@ -3,7 +3,15 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
-Fanex.ExtAcc.AgentAddNewMember = {
+if (typeof Fanex.ExtAcc.Customer == 'undefined') {
+    Fanex.ExtAcc.Customer = {};
+}
+
+if (typeof Fanex.ExtAcc.Customer.AgentAddNewMember == 'undefined') {
+    Fanex.ExtAcc.Customer.AgentAddNewMember = {};
+}
+
+Fanex.ExtAcc.Customer.AgentAddNewMember = {
     customer: null,
     context: null,
     currentStatusClose: 1,
@@ -11,8 +19,8 @@ Fanex.ExtAcc.AgentAddNewMember = {
     $this: null,
     Init: function () {
         $this = this;
-        extendPTEngine();        
-        this.AgentAddNewMember();        
+        extendPTEngine();
+        this.AgentAddNewMember();
     },
     AgentAddNewMember: function () {
         Fanex.ExtAcc.BlockUI();
@@ -82,9 +90,8 @@ Fanex.ExtAcc.AgentAddNewMember = {
                 $this.currentStatusClose = customer.statusSetting.closed;
                 $this.currentStatusSuspend = customer.statusSetting.suspended;
             }
-            
-            var CustomerModel = function () {
 
+            var CustomerModel = function () {
                 var uplineUserName = customer.userName;
 
                 // Set label MaxCredit
@@ -92,10 +99,10 @@ Fanex.ExtAcc.AgentAddNewMember = {
                 customer.credit = String.prototype.FormatNumber(customer.credit);
                 customer.agentMaxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
 
-                this.saveCustomer = function () {          
+                this.saveCustomer = function () {
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
-                    
+
                     // For Check Edit Postion Taking
                     if (context.targetCustId == 0) {
                         // Re-set value for customer object
@@ -109,7 +116,7 @@ Fanex.ExtAcc.AgentAddNewMember = {
                     customer.commissionSetting.playerDiscountNumber = $("#discountNumber").val();
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
-                    // EscapeHTML String                     
+                    // EscapeHTML String
                     customer.firstName = customer.firstName.escapeHtml();
                     customer.lastName = customer.lastName.escapeHtml();
                     customer.phone = customer.phone.escapeHtml();
@@ -119,7 +126,7 @@ Fanex.ExtAcc.AgentAddNewMember = {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         customer.bettingLimit = bettingLimit.Save();
-            
+
                         var text = JSON.stringify(customer);
                         var para = {
                             custId: 0,
@@ -148,7 +155,7 @@ Fanex.ExtAcc.AgentAddNewMember = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
+                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -250,5 +257,5 @@ Fanex.ExtAcc.AgentAddNewMember = {
 }
 
 $(document).ready(function () {
-    Fanex.ExtAcc.AgentAddNewMember.Init();    
+    Fanex.ExtAcc.Customer.AgentAddNewMember.Init();
 });

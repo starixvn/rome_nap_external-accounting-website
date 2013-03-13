@@ -73,7 +73,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
+                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -148,7 +148,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
+                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -221,7 +221,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
+                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {

@@ -133,7 +133,7 @@ Fanex.ExtAcc.Customer.Commission = {
                 $.unblockUI(document);
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(result.ErrorMessage);
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
             }
         })
         .error(function (xhr, status, err) {

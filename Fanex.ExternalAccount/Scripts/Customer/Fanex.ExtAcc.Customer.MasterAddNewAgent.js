@@ -3,7 +3,15 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
-Fanex.ExtAcc.MasterAddNewAgent = {
+if (typeof Fanex.ExtAcc.Customer == 'undefined') {
+    Fanex.ExtAcc.Customer = {};
+}
+
+if (typeof Fanex.ExtAcc.Customer.MasterAddNewAgent == 'undefined') {
+    Fanex.ExtAcc.Customer.MasterAddNewAgent = {};
+}
+
+Fanex.ExtAcc.Customer.MasterAddNewAgent = {
     customer: null,
     context: null,
     currentStatusClose: 1,
@@ -11,8 +19,8 @@ Fanex.ExtAcc.MasterAddNewAgent = {
     $this: null,
     Init: function () {
         $this = this;
-        extendPTEngine();        
-        this.MasterAddNewAgent();        
+        extendPTEngine();
+        this.MasterAddNewAgent();
     },
     MasterAddNewAgent: function () {
         Fanex.ExtAcc.BlockUI();
@@ -85,37 +93,35 @@ Fanex.ExtAcc.MasterAddNewAgent = {
                 $("#minMemberMaxCreditId").attr("class", "hide");
                 customer.minCreditTemp = 0;
             }
-            
-            var CustomerModel = function () {
 
+            var CustomerModel = function () {
                 var uplineUserName = customer.userName;
 
                 // Check Transfer condition
                 displayTransferCondition = Fanex.Customer.DisplayTransferCondition(customer.transferOption);
-                
+
                 // Set label MaxCredit
                 customer.maxCredit = String.prototype.FormatNumber(customer.maxCredit);
                 customer.credit = String.prototype.FormatNumber(customer.credit);
                 customer.memberMaxCredit = String.prototype.FormatNumber(customer.memberMaxCredit);
-                
 
-                this.saveCustomer = function () {          
+                this.saveCustomer = function () {
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
-                    
+
                     // Set value to transfer option
                     customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
                     customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
                     customer.memberMaxCredit = Fanex.RoundNumber(parseFloat($("#memberMaxCredit").val(), true), 1); // Fix bug for IE7
-                     
+
                     // For Check Edit Postion Taking
                     if (context.targetCustId == 0) {
                         // Set next to userName
                         customer.userName = uplineUserName + Fanex.Customer.SetAutoUserName();
                     }
 
-                    // EscapeHTML String                     
+                    // EscapeHTML String
                     customer.firstName = customer.firstName.escapeHtml();
                     customer.lastName = customer.lastName.escapeHtml();
                     customer.phone = customer.phone.escapeHtml();
@@ -125,7 +131,7 @@ Fanex.ExtAcc.MasterAddNewAgent = {
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         customer.bettingLimit = bettingLimit.Save();
-            
+
                         var text = JSON.stringify(customer);
                         var para = {
                             custId: 0,
@@ -154,7 +160,7 @@ Fanex.ExtAcc.MasterAddNewAgent = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
+                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -263,5 +269,5 @@ Fanex.ExtAcc.MasterAddNewAgent = {
 }
 
 $(document).ready(function () {
-    Fanex.ExtAcc.MasterAddNewAgent.Init();
+    Fanex.ExtAcc.Customer.MasterAddNewAgent.Init();
 });

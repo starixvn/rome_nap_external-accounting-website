@@ -3,7 +3,15 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
-Fanex.ExtAcc.SuperAddNewMaster = {
+if (typeof Fanex.ExtAcc.Customer == 'undefined') {
+    Fanex.ExtAcc.Customer = {};
+}
+
+if (typeof Fanex.ExtAcc.Customer.SuperAddNewMaster == 'undefined') {
+    Fanex.ExtAcc.Customer.SuperAddNewMaster = {};
+}
+
+Fanex.ExtAcc.Customer.SuperAddNewMaster = {
     customer: null,
     context: null,
     currentStatusClose: 1,
@@ -86,7 +94,6 @@ Fanex.ExtAcc.SuperAddNewMaster = {
             }
 
             var CustomerModel = function () {
-
                 var uplineUserName = customer.userName;
 
                 // Check Transfer condition
@@ -119,7 +126,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                         customer.userName = uplineUserName + Fanex.Customer.SetAutoUserName();
                     }
 
-                    // EscapeHTML String                     
+                    // EscapeHTML String
                     customer.firstName = customer.firstName.escapeHtml();
                     customer.lastName = customer.lastName.escapeHtml();
                     customer.phone = customer.phone.escapeHtml();
@@ -158,7 +165,7 @@ Fanex.ExtAcc.SuperAddNewMaster = {
                             $.unblockUI(document);
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage);
+                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -267,5 +274,5 @@ Fanex.ExtAcc.SuperAddNewMaster = {
 }
 
 $(document).ready(function () {
-    Fanex.ExtAcc.SuperAddNewMaster.Init();
+    Fanex.ExtAcc.Customer.SuperAddNewMaster.Init();
 });

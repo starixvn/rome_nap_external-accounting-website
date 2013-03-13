@@ -119,7 +119,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
                 }
                 else {
                     $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(result.ErrorMessage);
+                    $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                 }
             })
             .error(function (xhr, status, err) {
