@@ -1,4 +1,7 @@
-﻿var validateExpr = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.?\d*)?$/;
+﻿if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+    alert("Fanex.ExtAcc.js module is required!")
+}
+var validateExpr = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.?\d*)?$/;
 Fanex.Customer = {
     SetNextCustomer: function (selectOne, selectTwo, selectThree, currentValue) {
         if (selectOne == null || selectTwo == null) return;
@@ -323,14 +326,14 @@ Fanex.Customer = {
                 var data = new Object();
                 data.username = user;
                 data.parentRoleId = parentRoleId;
-                
+
                 $.ajax({
                     url: resolveClientUrl('Customer/CheckUsername'),
                     data: data,
                     dataType: 'json',
                     type: 'post'
                 })
-                .success(function (result) {                    
+                .success(function (result) {
                     if (result.errCode == 101) {
                         document.getElementById(msgId).className = 'successWarning';
                     }

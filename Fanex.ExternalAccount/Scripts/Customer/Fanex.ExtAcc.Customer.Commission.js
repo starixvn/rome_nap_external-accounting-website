@@ -1,6 +1,6 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex.ExtAcc.Customer.Commission == 'undefined') {
-    Fanex.ExtAcc.Customer.Commission = {};
+if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+    alert("Fanex.ExtAcc.js module is required!")
 }
 
 Fanex.ExtAcc.Customer.Commission = {

@@ -1,7 +1,7 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex.ExtAcc.Customer.PTSetting == 'undefined') {
-    Fanex.ExtAcc.Customer.PTSetting = {};
-};
+if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+    alert("Fanex.ExtAcc.js module is required!")
+}
 
 Fanex.ExtAcc.Customer.PTSetting = {
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,

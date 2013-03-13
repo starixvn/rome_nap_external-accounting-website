@@ -1,6 +1,6 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex.ExtAcc.Customer.BetSetting == 'undefined') {
-    Fanex.ExtAcc.Customer.BetSetting = {};
+if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+    alert("Fanex.ExtAcc.js module is required!")
 }
 
 Fanex.ExtAcc.Customer.BetSetting = {
