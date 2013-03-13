@@ -115,7 +115,7 @@ Fanex.Customer = {
     CheckInfoValue: function () {
         if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon")) {
             return false;
-        }        
+        }
 
         if ($("#credit").val() == "") {
             this.ValidateMessage(document.getElementById("credit"), Language.ALERT_INCORRECT_MASTER_CREDIT);
@@ -321,16 +321,16 @@ Fanex.Customer = {
                 }
 
                 var data = new Object();
-                data.username = username;
+                data.username = user;
                 data.parentRoleId = parentRoleId;
-
+                
                 $.ajax({
                     url: resolveClientUrl('Customer/CheckUsername'),
                     data: data,
                     dataType: 'json',
                     type: 'post'
                 })
-                .success(function (result) {
+                .success(function (result) {                    
                     if (result.errCode == 101) {
                         document.getElementById(msgId).className = 'successWarning';
                     }
