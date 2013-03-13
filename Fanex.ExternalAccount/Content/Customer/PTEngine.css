@@ -551,3 +551,5 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 .ui-dialog .ui-dialog-titlebar-close span {
 	background-color: #FFF;
 }
+.BtnPTDown, .BtnPTUp, .BtnPTSub, .BtnPTAdd { vertical-align: top; margin-top: 2px;}
+.PTSelect {height: 18px}
