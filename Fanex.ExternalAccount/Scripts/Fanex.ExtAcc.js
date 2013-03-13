@@ -177,7 +177,7 @@ Fanex.ExtAcc = {
     Init: function () {
         $this = this;
 
-        $.blockUI.defaults.css.border = '0px solid #aaa',
+        $.blockUI.defaults.css.border = '0px solid #aaa';
         $.blockUI.defaults.css.backgroundColor = "transparent";
         $.blockUI.defaults.overlayCSS.backgroundColor = "transparent";
 
