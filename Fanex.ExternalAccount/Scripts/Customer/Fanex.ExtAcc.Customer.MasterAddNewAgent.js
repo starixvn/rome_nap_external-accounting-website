@@ -7,10 +7,6 @@ if (typeof Fanex.ExtAcc.Customer == 'undefined') {
     Fanex.ExtAcc.Customer = {};
 }
 
-if (typeof Fanex.ExtAcc.Customer.MasterAddNewAgent == 'undefined') {
-    Fanex.ExtAcc.Customer.MasterAddNewAgent = {};
-}
-
 Fanex.ExtAcc.Customer.MasterAddNewAgent = {
     customer: null,
     context: null,
