@@ -1803,7 +1803,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             Fanex.ExtAcc.Customer.IsMultiple = true;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple PT Setting', 894, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
         }
     },
     ShowSuperMasterEditMultiplePT: function () {
@@ -1851,7 +1851,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             Fanex.ExtAcc.Customer.IsMultiple = true;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), 'Edit Multiple PT Setting', 894, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
         }
     }
 }

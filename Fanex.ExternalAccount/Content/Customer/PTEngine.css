@@ -345,7 +345,7 @@ input[type="text"], input[type="password"]
 }
 .transferCondition div label
 {
-    font-size: 11px !important;
+	font-size: 11px !important;
 	padding-left: 30px;
 	line-height: 25px;
 }
@@ -395,7 +395,7 @@ input[type="text"], input[type="password"]
 	width: 841px;
 }
 .PTSport
-{    
+{
 	background-color: #D4E3EB;
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
@@ -403,10 +403,10 @@ input[type="text"], input[type="password"]
 }
 .PTSportLabel2
 {
-    width: 90px;
-    height: 20px;
-    line-height: 20px;
-    font-family: Tahoma,Arial,helvetica,sans-serif;
+	width: 90px;
+	height: 20px;
+	line-height: 20px;
+	font-family: Tahoma,Arial,helvetica,sans-serif;
 	color: #464646;
 	border-left: 1px solid #CCC;
 	border-top: 0 none;
@@ -415,10 +415,10 @@ input[type="text"], input[type="password"]
 }
 .PTSportLabel
 {
-    width: 122px;
-    height: 20px;
-    line-height: 20px;
-    font-family: Tahoma,Arial,helvetica,sans-serif;
+	width: 122px;
+	height: 20px;
+	line-height: 20px;
+	font-family: Tahoma,Arial,helvetica,sans-serif;
 	color: #464646;
 	border-left: 1px solid #CCC;
 	border-top: 0 none;
@@ -481,7 +481,7 @@ input[type="text"], input[type="password"]
 }
 .GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
 {
-    font-family: Tahoma,Arial,helvetica,sans-serif;
+	font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-color: #E7F7FF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
@@ -490,7 +490,7 @@ input[type="text"], input[type="password"]
 }
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
 {
-    font-family: Tahoma,Arial,helvetica,sans-serif;
+	font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-position: 100px 2px;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
@@ -551,8 +551,60 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 	font-family: Tahoma,Arial,helvetica,sans-serif;
 }
 
-.ui-dialog .ui-dialog-titlebar-close span {
+.ui-dialog .ui-dialog-titlebar-close span
+{
 	background-color: #FFF;
 }
-.BtnPTDown, .BtnPTUp, .BtnPTSub, .BtnPTAdd { vertical-align: top; margin-top: 2px;}
-.PTSelect {height: 18px}
+.BtnPTDown, .BtnPTUp, .BtnPTSub, .BtnPTAdd
+{
+	vertical-align: top;
+	margin-top: 2px;
+}
+.PTSelect
+{
+	height: 18px;
+}
+#idConfirm_popupBody, #idConfirm_popupFooter
+{
+	background-color: #fff !important;
+}
+#idConfirm_yesButton, #idConfirm_noButton
+{
+	background: url(../../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center;
+	border: 1px solid #5897C3;
+	color: #fff;
+	cursor: pointer;
+	width: 80px;
+	height: 30px !important;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-align: center;
+	vertical-align: text-top;
+	padding-bottom: 2px;
+	text-indent: 0 !important;
+}
+#idConfirm_yesButton:hover, #idConfirm_noButton:hover
+{
+	background: url(../../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
+	border: 1px solid #5897C3;
+	color: #fff;
+	cursor: pointer;
+	width: 80px;
+	height: 30px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+#idConfirm_popupFooter
+{
+	text-align: right !important;
+}
+#idConfirm_popup, #idConfirm_shadow
+{
+	height: 124px !important;
+}
+#idConfirm_popupTitle
+{
+	height: 22px !important;
+}
