@@ -33,7 +33,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             type: 'post'
         })
         .success(function (result) {
-            customer = result.customer;
+            customer = $this.customer = result.customer;
             context = result.context;
 
             if (context.targetCustId > 0) {
@@ -89,7 +89,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                 customer.minCreditTemp = 0;
             }
 
-            var CustomerModel = function () {
+            var CustomerModel = function (customer) {
                 var uplineUserName = customer.userName;
 
                 // Check Transfer condition
@@ -170,7 +170,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                 }
             }
 
-            ko.applyBindings(new CustomerModel());
+            ko.applyBindings(new CustomerModel(customer));
 
             $.unblockUI(document);
         })
@@ -183,13 +183,13 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
     Closed: function (checkBoxClose, currentStatusClose) {
         if (checkBoxClose.checked == true && checkBoxClose.checked != currentStatusClose) {
             if (!confirm(Language.ALERT_CONFIRM_CLOSE)) {
-                customer.statusSetting.closed = false;
+                $this.customer.statusSetting.closed = false;
                 checkBoxClose.checked = false;
             }
         }
         else if (checkBoxClose.checked == false && checkBoxClose.checked != currentStatusClose) {
             if (!confirm(Language.ALERT_CONFIRM_OPEN)) {
-                customer.statusSetting.closed = true;
+                $this.customer.statusSetting.closed = true;
                 checkBoxClose.checked = true;
             }
         }
@@ -199,13 +199,13 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
     Suspended: function (checkBoxSuspend, currentStatusSuspend) {
         if (checkBoxSuspend.checked == true && checkBoxSuspend.checked != currentStatusSuspend) {
             if (!confirm(Language.ALERT_CONFIRM_SUSPEND)) {
-                customer.statusSetting.suspended = false;
+                $this.customer.statusSetting.suspended = false;
                 checkBoxSuspend.checked = false;
             }
         }
         else if (checkBoxSuspend.checked == false && checkBoxSuspend.checked != currentStatusSuspend) {
             if (!confirm(Language.ALERT_CONFIRM_UNSUSPEND)) {
-                customer.statusSetting.suspended = true;
+                $this.customer.statusSetting.suspended = true;
                 checkBoxSuspend.checked = true;
             }
         }
@@ -243,7 +243,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
 
     // Get selected and m4 value of Soccer HdpD Master Preset
     MemberMaximumPT: function () {
-        var ptSetting = customer.ptSetting;
+        var ptSetting = $this.customer.ptSetting;
         var s4 = ptSetting.sportTypes[0].betTypeGroupSets[0].betTypeGroups[0].betTypes[0].pt.s4;
         var m3 = ptSetting.sportTypes[0].betTypeGroupSets[0].betTypeGroups[0].betTypes[0].pt.m3;
         return Fanex.Round(s4 - m3);
@@ -256,7 +256,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             var valueMemberPositionTaking = $("#selectedMemberPositionTaking").val();
             newValueMemberPT = valueMemberPositionTaking + ";" + isUpdateAllMember;
         }
-        var customerModel = new CustomerModel(customer);
+        var customerModel = new CustomerModel($this.customer);
         customerModel.saveCustomer();
     },
 
