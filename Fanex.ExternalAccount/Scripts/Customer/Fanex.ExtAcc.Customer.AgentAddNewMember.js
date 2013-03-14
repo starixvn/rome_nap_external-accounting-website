@@ -10,6 +10,7 @@ if (typeof Fanex.ExtAcc.Customer == 'undefined') {
 Fanex.ExtAcc.Customer.AgentAddNewMember = {
     customer: null,
     context: null,
+    commission: null,
     currentStatusClose: 1,
     currentStatusSuspend: 1,
     $this: null,
@@ -33,21 +34,21 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             type: 'post'
         })
         .success(function (result) {
-            customer = result.customer;
+            customer = $this.customer = result.customer;
             context = result.context;
 
             if (context.targetCustId == 0) {
                 $('#group').change(function (e) {
-                    $this.ChangeGroupCommission(document.getElementById('group'));
+                    Fanex.ExtAcc.Customer.AgentAddNewMember.ChangeGroupCommission(document.getElementById('group'));
                 });
             }
             else {
                 $('#closed').click(function (e) {
-                    $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
+                    Fanex.ExtAcc.Customer.AgentAddNewMember.Closed(document.getElementById('closed'), $this.currentStatusClose);
                 });
 
                 $('#suspended').click(function (e) {
-                    $this.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
+                    Fanex.ExtAcc.Customer.AgentAddNewMember.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
                 });
             }
 
@@ -65,7 +66,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             bettingLimit.Render(document.getElementById('bettingLimitContainer'));
 
             /* Render Commission to selected*/
-            var commission = customer.commissionSetting;
+            var commission = $this.commission = customer.commissionSetting;
             if (context.targetCustId == 0) {
                 Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
@@ -87,7 +88,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 $this.currentStatusSuspend = customer.statusSetting.suspended;
             }
 
-            var CustomerModel = function () {
+            var CustomerModel = function (customer) {
                 var uplineUserName = customer.userName;
 
                 // Set label MaxCredit
@@ -160,7 +161,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 }
             }
 
-            ko.applyBindings(new CustomerModel());
+            ko.applyBindings(new CustomerModel(customer));
 
             $.unblockUI(document);
         })
@@ -173,13 +174,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     Closed: function (checkBoxClose, currentStatusClose) {
         if (checkBoxClose.checked == true && checkBoxClose.checked != currentStatusClose) {
             if (!confirm(Language.ALERT_CONFIRM_CLOSE_MEMBER)) {
-                customer.statusSetting.closed = false;
+                $this.customer.statusSetting.closed = false;
                 checkBoxClose.checked = false;
             }
         }
         else if (checkBoxClose.checked == false && checkBoxClose.checked != currentStatusClose) {
             if (!confirm(Language.ALERT_CONFIRM_CLOSE_MEMBER)) {
-                customer.statusSetting.closed = true;
+                $this.customer.statusSetting.closed = true;
                 checkBoxClose.checked = true;
             }
         }
@@ -189,13 +190,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     Suspended: function (checkBoxSuspend, currentStatusSuspend) {
         if (checkBoxSuspend.checked == true && checkBoxSuspend.checked != currentStatusSuspend) {
             if (!confirm(Language.ALERT_CONFIRM_SUSPEND_MEMBER)) {
-                customer.statusSetting.suspended = false;
+                $this.customer.statusSetting.suspended = false;
                 checkBoxSuspend.checked = false;
             }
         }
         else if (checkBoxSuspend.checked == false && checkBoxSuspend.checked != currentStatusSuspend) {
             if (!confirm(Language.ALERT_CONFIRM_UNSUSPEND_MEMBER)) {
-                customer.statusSetting.suspended = true;
+                $this.customer.statusSetting.suspended = true;
                 checkBoxSuspend.checked = true;
             }
         }
@@ -231,23 +232,23 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     ChangeGroupCommission: function (group) {
         if ((group.options[group.selectedIndex].text == "a") || (group.options[group.selectedIndex].text == "hka")
 		|| (group.options[group.selectedIndex].text == "indoa") || (group.options[group.selectedIndex].text == "dea")) {
-            $("#textBoxDiscountAsian").val(commission.groupA);
-            this.SelectedAsianCommissionMember(commission.groupA)
+            $("#textBoxDiscountAsian").val($this.commission.groupA);
+            this.SelectedAsianCommissionMember($this.commission.groupA)
         }
         if ((group.options[group.selectedIndex].text == "b") || (group.options[group.selectedIndex].text == "hkb")
 		|| (group.options[group.selectedIndex].text == "indob") || (group.options[group.selectedIndex].text == "deb")) {
-            $("#textBoxDiscountAsian").val(commission.groupB);
-            this.SelectedAsianCommissionMember(commission.groupB)
+            $("#textBoxDiscountAsian").val($this.commission.groupB);
+            this.SelectedAsianCommissionMember($this.commission.groupB)
         }
         if ((group.options[group.selectedIndex].text == "c") || (group.options[group.selectedIndex].text == "hkc")
 		|| (group.options[group.selectedIndex].text == "indoc") || (group.options[group.selectedIndex].text == "dec")) {
-            $("#textBoxDiscountAsian").val(commission.groupC);
-            this.SelectedAsianCommissionMember(commission.groupC)
+            $("#textBoxDiscountAsian").val($this.commission.groupC);
+            this.SelectedAsianCommissionMember($this.commission.groupC)
         }
         if ((group.options[group.selectedIndex].text == "d") || (group.options[group.selectedIndex].text == "hkd")
 		|| (group.options[group.selectedIndex].text == "indod") || (group.options[group.selectedIndex].text == "ded")) {
-            $("#textBoxDiscountAsian").val(commission.groupD);
-            this.SelectedAsianCommissionMember(commission.groupD)
+            $("#textBoxDiscountAsian").val($this.commission.groupD);
+            this.SelectedAsianCommissionMember($this.commission.groupD)
         }
     }
 }

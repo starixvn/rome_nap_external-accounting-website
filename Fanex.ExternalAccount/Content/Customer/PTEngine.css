@@ -346,8 +346,11 @@ input[type="text"], input[type="password"]
 .transferCondition div label
 {
     font-size: 11px !important;
-	padding-left: 10px;
+	padding-left: 30px;
 	line-height: 25px;
+}
+#rdWeekly, #rdDaily{
+	margin-right: 3px;
 }
 .headerPositionTaking
 {
