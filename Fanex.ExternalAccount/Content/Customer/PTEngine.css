@@ -551,10 +551,6 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 	font-family: Tahoma,Arial,helvetica,sans-serif;
 }
 
-.ui-dialog .ui-dialog-titlebar-close span
-{
-	background-color: #FFF;
-}
 .BtnPTDown, .BtnPTUp, .BtnPTSub, .BtnPTAdd
 {
 	vertical-align: top;
