@@ -13,6 +13,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
     NewPtTaking: 0.0,
     ErrorMessage: '',
     CustIdIndex: 0,
+    BetSettings: ['min bet', 'max bet', 'max per match', 'max per ball'],
 
     Init: function () {
         // Extend some methods of PTEngine Core.js
@@ -864,8 +865,22 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     $.unblockUI(document);
 
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(error.formatErrorMessage());
+                    var hasBetSettingError = false;
+
+                    for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                            hasBetSettingError = true;
+                            break;
+                        }
+                    }
+
+                    if (hasBetSettingError) {
+                        Fanex.ExtAcc.Form.Close(false);
+                    }
+                    else {
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                    }
                 }
                 else {
                     if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -975,8 +990,22 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     $.unblockUI(document);
 
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(error.formatErrorMessage());
+                    var hasBetSettingError = false;
+
+                    for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                            hasBetSettingError = true;
+                            break;
+                        }
+                    }
+
+                    if (hasBetSettingError) {
+                        Fanex.ExtAcc.Form.Close(false);
+                    }
+                    else {
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                    }
                 }
                 else {
                     if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1086,8 +1115,22 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     $.unblockUI(document);
 
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(error.formatErrorMessage());
+                    var hasBetSettingError = false;
+
+                    for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                            hasBetSettingError = true;
+                            break;
+                        }
+                    }
+
+                    if (hasBetSettingError) {
+                        Fanex.ExtAcc.Form.Close(false);
+                    }
+                    else {
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                    }
                 }
                 else {
                     if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1204,8 +1247,22 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     $.unblockUI(document);
 
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(error.formatErrorMessage());
+                    var hasBetSettingError = false;
+
+                    for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                            hasBetSettingError = true;
+                            break;
+                        }
+                    }
+
+                    if (hasBetSettingError) {
+                        Fanex.ExtAcc.Form.Close(false);
+                    }
+                    else {
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                    }
                 }
                 else {
                     if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
