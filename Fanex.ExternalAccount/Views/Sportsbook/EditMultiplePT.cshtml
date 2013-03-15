@@ -18,21 +18,21 @@
         <div class="customerInfoBlock1">
             First Name</div>
         <div class="customerInfoBlock2">
-            <input id="firstName" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.firstName" maxlength="50" /></div>
+            <input id="firstName" type="text" class="textBoxInfo" data-bind="value: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.firstName)" maxlength="50" /></div>
         <div class="customerInfoBlock3">
             Last Name</div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input id="lastName" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.lastName" maxlength="50" /></div>
+            <input id="lastName" type="text" class="textBoxInfo" data-bind="value: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.lastName)" maxlength="50" /></div>
     </div>
     <div style="width: 850px">
         <div class="customerInfoBlock1">
             Phone</div>
         <div class="customerInfoBlock2">
-            <input id="phone" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.phone" maxlength="50" /></div>
+            <input id="phone" type="text" class="textBoxInfo" data-bind="value: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.phone)" maxlength="50" /></div>
         <div class="customerInfoBlock3">
             Mobile Phone</div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input id="mobilePhone" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone" maxlength="50" /></div>
+            <input id="mobilePhone" type="text" class="textBoxInfo" data-bind="value: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone)" maxlength="50" /></div>
     </div>
     <div id="masterSection" style="width: 850px">
         <div class="customerInfoBlock1">
@@ -44,7 +44,7 @@
         <div class="customerInfoBlock3">
             Fax</div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input id="fax" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.fax" maxlength="50" /></div>
+            <input id="fax" type="text" class="textBoxInfo" data-bind="value: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.fax)" maxlength="50" /></div>
     </div>
     <div id="masterStatus" style="width: 850px">
         <div id="closedId">

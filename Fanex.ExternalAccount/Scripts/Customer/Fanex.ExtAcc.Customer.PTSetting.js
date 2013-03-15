@@ -292,6 +292,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
+                                    if (!Validators.validateNumber($('#credit').val())) {
+                                        Validators.show($('#credit').get(0), 'Please input number!');
+                                        return;
+                                    }
+
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
@@ -430,6 +435,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
+                                    if (!Validators.validateNumber($('#credit').val())) {
+                                        Validators.show($('#credit').get(0), 'Please input number!');
+                                        return;
+                                    }
+
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
@@ -564,6 +574,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                         customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
+                                    }
+
+                                    if (!Validators.validateNumber($('#credit').val())) {
+                                        Validators.show($('#credit').get(0), 'Please input number!');
+                                        return;
                                     }
 
                                     customer.firstName = $('#firstName').val().escapeHtml();

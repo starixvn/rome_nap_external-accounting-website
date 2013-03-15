@@ -35,6 +35,15 @@ Array.prototype.binarySearch = function (key) {
     return (!match(this[middle], value)) ? -1 : middle;
 };
 
+String.prototype.decodeHtml = function () {
+    var str = this;
+    return $("<div/>").html(str).text();
+};
+
+Fanex.decodeHtml = function (str) {
+    return $("<div/>").html(str).text();
+};
+
 String.prototype.formatErrorMessage = function () {
     var msg = this;
 

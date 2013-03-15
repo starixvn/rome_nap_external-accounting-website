@@ -18,24 +18,24 @@
         <div class="customerInfoBlock1">
             First Name</div>
         <div class="customerInfoBlock2">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.firstName"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.firstName)"></span>
         </div>
         <div class="customerInfoBlock3">
             Last Name</div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.lastName"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.lastName)"></span>
         </div>
     </div>
     <div style="width: 850px">
         <div class="customerInfoBlock1">
             Phone</div>
         <div class="customerInfoBlock2">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.phone"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.phone)"></span>
         </div>
         <div class="customerInfoBlock3">
             Mobile Phone</div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone)"></span>
         </div>
     </div>
     <div id="memberSection" style="width: 850px">
@@ -47,7 +47,7 @@
         <div class="customerInfoBlock3">
             Fax</div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.fax"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.fax)"></span>
         </div>
     </div>
     <div id="memberSection2" style="width: 850px">
