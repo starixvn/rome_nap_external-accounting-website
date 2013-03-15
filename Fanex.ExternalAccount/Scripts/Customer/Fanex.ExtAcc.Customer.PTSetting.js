@@ -326,7 +326,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             var para = {
                                 custId: Fanex.ExtAcc.Customer.UserId,
                                 parentId: Fanex.ExtAcc.Customer.superId,
-                                txtCustomerObject: JSON.stringify(customer),
+                                txtCustomerObject: JSON.stringify(customer).escapeHtml(),
                                 isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
                                 newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
                                 isMult: Fanex.ExtAcc.Customer.PTSetting.IsMultiple,
@@ -461,7 +461,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                             Fanex.ExtAcc.BlockUI();
 
-                            var text = JSON.stringify(customer);
+                            var text = JSON.stringify(customer).escapeHtml();
                             var para = {
                                 custId: Fanex.ExtAcc.Customer.UserId,
                                 parentId: Fanex.ExtAcc.Customer.masterId,
@@ -583,7 +583,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                             Fanex.ExtAcc.BlockUI();
 
-                            var text = JSON.stringify(customer);
+                            var text = JSON.stringify(customer).escapeHtml();
 
                             var para = {
                                 custId: Fanex.ExtAcc.Customer.UserId,
@@ -669,7 +669,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                             Fanex.ExtAcc.BlockUI();
 
-                            var text = JSON.stringify(customer);
+                            var text = JSON.stringify(customer).escapeHtml();
 
                             var para = {
                                 custId: Fanex.ExtAcc.Customer.UserId,
@@ -760,7 +760,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                             Fanex.ExtAcc.BlockUI();
 
-                            var text = JSON.stringify(customer);
+                            var text = JSON.stringify(customer).escapeHtml();
 
                             var para = {
                                 custId: Fanex.ExtAcc.Customer.UserId,
@@ -1025,7 +1025,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
         else {
             customer.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
-            data.txtCustomerObject = JSON.stringify(customer);
+            data.txtCustomerObject = JSON.stringify(customer).escapeHtml();
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
@@ -1154,7 +1154,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
         else {
             customer.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
-            data.txtCustomerObject = JSON.stringify(customer);
+            data.txtCustomerObject = JSON.stringify(customer).escapeHtml();
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
@@ -1283,7 +1283,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
         else {
             customer.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
-            data.txtCustomerObject = JSON.stringify(customer);
+            data.txtCustomerObject = JSON.stringify(customer).escapeHtml();
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
@@ -1420,7 +1420,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
         else {
             customer.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
-            data.txtCustomerObject = JSON.stringify(customer);
+            data.txtCustomerObject = JSON.stringify(customer).escapeHtml();
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
