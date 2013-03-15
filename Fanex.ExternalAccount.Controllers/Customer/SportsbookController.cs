@@ -252,6 +252,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperMasterEditSB()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
             var ptSetting = new Fanex.PTEngine.Services.CustomerService();

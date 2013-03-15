@@ -11,9 +11,139 @@
 <div class="floatR">
     <input class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
+<div id="custInfo" class="customerInfo" style="width: 850px">
+    <div class="headerTab" style="border-bottom: 0px">
+        General Information</div>
+    <div style="width: 850px">
+        <div class="customerInfoBlock1">
+            First Name</div>
+        <div class="customerInfoBlock2">
+            <input id="firstName" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.firstName" maxlength="50" /></div>
+        <div class="customerInfoBlock3">
+            Last Name</div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input id="lastName" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.lastName" maxlength="50" /></div>
+    </div>
+    <div style="width: 850px">
+        <div class="customerInfoBlock1">
+            Phone</div>
+        <div class="customerInfoBlock2">
+            <input id="phone" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.phone" maxlength="50" /></div>
+        <div class="customerInfoBlock3">
+            Mobile Phone</div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input id="mobilePhone" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone" maxlength="50" /></div>
+    </div>
+    <div id="masterSection" style="width: 850px">
+        <div class="customerInfoBlock1">
+            Master Max Credit</div>
+        <div class="customerInfoBlock2">
+            <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.credit" />
+            <span id="minCreditId">&gt;=<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" />0</span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
+        </div>
+        <div class="customerInfoBlock3">
+            Fax</div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input id="fax" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.fax" maxlength="50" /></div>
+    </div>
+    <div id="masterStatus" style="width: 850px">
+        <div id="closedId">
+            <div class="customerInfoBlock1">
+                <label for="closed">
+                    Closed</label>
+            </div>
+            <div class="customerInfoBlock2">
+                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+            </div>
+        </div>
+        <div class="customerInfoBlock3">
+            <label for="suspended">
+                Suspended</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" /></div>
+    </div>
+    <div id="agentSection" style="width: 850px">
+        <div class="customerInfoBlock1">
+            Agent Max Credit</div>
+        <div class="customerInfoBlock2">
+            <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.credit" />
+            <span id="minCreditId">&gt;=<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" />0</span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
+        </div>
+        <div class="customerInfoBlock3">
+            Fax</div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input id="fax" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.fax" maxlength="50" /></div>
+    </div>
+    <div id="agentSection2" style="width: 850px">
+        <div class="customerInfoBlock1">
+            Member Max Credit</div>
+        <div class="customerInfoBlock2">
+            <input type="text" id="memberCredit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.memberMaxCredit" />
+            <span id="minCreditId">&gt;=<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMinCredit)" id="minCredit" />0</span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMaxCredit)" id="maxCredit"></span>
+        </div>
+        <div class="customerInfoBlock3">
+            <label for="suspended">
+                Suspended</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" /></div>
+    </div>
+    <div id="agentSection3" style="width: 850px">
+        <div class="customerInfoBlock1">
+        </div>
+        <div class="customerInfoBlock2">
+        </div>
+        <div class="customerInfoBlock3">
+            <label for="suspended">
+                Closed</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+        </div>
+    </div>
+    <div id="memberSection" style="width: 850px">
+        <div class="customerInfoBlock1">
+            Given Credit</div>
+        <div class="customerInfoBlock2">
+            <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.credit" />
+            <span id="minCreditId" class="hide">&gt;=<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" />0</span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
+        </div>
+        <div class="customerInfoBlock3">
+            Fax</div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input id="fax" type="text" class="textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.fax" maxlength="50" /></div>
+    </div>
+    <div id="memberSection2" style="width: 850px">
+        <div class="customerInfoBlock1">
+            Group</div>
+        <div class="customerInfoBlock2">
+            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.group"></span>
+        </div>
+        <div class="customerInfoBlock3">
+            <label for="suspended">
+                Closed</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+        </div>
+    </div>
+    <div id="memberSection3" style="width: 850px">
+        <div class="customerInfoBlock1">
+        </div>
+        <div class="customerInfoBlock2">
+        </div>
+        <div class="customerInfoBlock3">
+            <label for="suspended">
+                Suspended</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 210px">
+            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" /></div>
+    </div>
+</div>
 <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
     Status</div>
-<div class="positionTaking" style="padding: 0">
+<div id="statusSection" class="positionTaking" style="padding: 0">
     <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-color: #CCC; border-collapse: collapse">
         <tbody>
             <tr style="height: 22px">
@@ -126,7 +256,7 @@
                 <tr>
                     <td>
                         <div class="commission">
-                            <div class="clear">
+                            <div>
                                 <div class="commissionBlock1 commissionHeader">
                                     &nbsp;
                                 </div>

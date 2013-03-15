@@ -5,7 +5,9 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 
 Fanex.ExtAcc.Customer.PTSetting = {
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
+    IsFullInfo: Fanex.ExtAcc.Customer.IsFullInfo,
     ptGrid: null,
+    context: null,
     customer: null,
     bettingLimit: null,
     Saved: false,
@@ -19,25 +21,119 @@ Fanex.ExtAcc.Customer.PTSetting = {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
 
+        if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+            $('#arrowUpDown').remove();
+        }
+
+        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+            var interval = setInterval(function () {
+                if (Fanex.ExtAcc.Customer.PTSetting.customer) {
+                    clearInterval(interval);
+
+                    Fanex.ExtAcc.Customer.PTSetting.bettingLimit = new Fanex.PTEngine.BettingLimit(Fanex.ExtAcc.Customer.PTSetting.customer.bettingLimit)
+                    var bettingLimitContainer = document.getElementById('betSetting');
+
+                    /* Render Commission && bet setting*/
+                    if (!Fanex.ExtAcc.Customer.isSuperEditMember && !Fanex.ExtAcc.Customer.isMasterEditMember) {
+                        var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
+
+                        if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupD"), 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
+
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discount1x2"), 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountCS"), 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountNumber"), 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+                        }
+                        else {
+                            $("#textBoxDiscountAsian").val(commission.discount);
+                            $("#textBoxDiscount1x2").val(commission.discount1x2);
+                            $("#textBoxDiscountCS").val(commission.discountCS);
+                            $("#textBoxDiscountNumber").val(commission.discountNumber);
+                            Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
+                            Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
+                            Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
+                            Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
+                        }
+
+                        Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Render(bettingLimitContainer);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Render(bettingLimitContainer, true);
+                    }
+                }
+            }, 100);
+        }
+
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                $('#agentSection').remove();
+                $('#agentSection2').remove();
+                $('#agentSection3').remove();
+
+                $('#memberSection').remove();
+                $('#memberSection2').remove();
+                $('#memberSection3').remove();
+            }
+
             this.GetMasterPTSetting();
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                $('#masterSection').remove();
+                $('#masterStatus').remove();
+
+                $('#memberSection').remove();
+                $('#memberSection2').remove();
+                $('#memberSection3').remove();
+            }
+
             this.GetAgentPTSetting();
         }
         else {
             if (Fanex.ExtAcc.Customer.isSuperEditMember == true) {
+                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                    $('#masterSection').remove();
+                    $('#masterStatus').remove();
+
+                    $('#agentSection').remove();
+                    $('#agentSection2').remove();
+                    $('#agentSection3').remove();
+                }
+
                 this.SuperGetMemberPTSetting();
             }
             else if (Fanex.ExtAcc.Customer.isMasterEditMember == true) {
+                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                    $('#masterSection').remove();
+                    $('#masterStatus').remove();
+
+                    $('#agentSection').remove();
+                    $('#agentSection2').remove();
+                    $('#agentSection3').remove();
+                }
+
                 this.MasterGetMemberPTSetting();
             }
             else {
+                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                    $('#masterSection').remove();
+                    $('#masterStatus').remove();
+
+                    $('#agentSection').remove();
+                    $('#agentSection2').remove();
+                    $('#agentSection3').remove();
+                }
+
                 this.GetMemberPTSetting();
             }
         }
 
         if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+            $('#custInfo').remove();
+
             $('#arrowUpDown').bind('click', function () {
                 Fanex.ExtAcc.Customer.PTSetting.ToogleUsernames();
             });
@@ -116,7 +212,12 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 }, 100);
             }
         }
+        else {
+            $('#statusHeader').remove();
+            $('#statusSection').remove();
+        }
     },
+
     GetMasterPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
@@ -134,7 +235,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            var context = result.context;
+            var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM3 = false;
             var isShowPopUpSetPTMember = false;
@@ -170,6 +271,39 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
+                                if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
+                                        customer.commissionSetting.discount = parseFloat($("#textBoxDiscountAsian").val());
+                                        customer.commissionSetting.discount1x2 = parseFloat($("#textBoxDiscount1x2").val());
+                                        customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
+                                        customer.commissionSetting.discountNumber = parseFloat($("#textBoxDiscountNumber").val());
+                                    }
+                                    else {
+                                        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+                                            customer.memberMaxCredit = parseFloat($('#memberCredit').val());
+                                        }
+
+                                        customer.commissionSetting.groupA = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupB = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
+                                        customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
+                                        customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
+                                    }
+
+                                    customer.firstName = $('#firstName').val().escapeHtml();
+                                    customer.lastName = $('#lastName').val().escapeHtml();
+                                    customer.phone = $('#phone').val().escapeHtml();
+                                    customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
+                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.fax = $('#fax').val().escapeHtml();
+                                    customer.statusSetting.closed = document.getElementById('closed').checked;
+                                    customer.statusSetting.suspended = document.getElementById('suspended').checked;
+
+                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                }
+
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
 
@@ -221,6 +355,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $.unblockUI(document);
         });
     },
+
     GetAgentPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
@@ -238,7 +373,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            var context = result.context;
+            var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM2 = false;
             var isShowPopUpSetPTMember = false;
@@ -274,6 +409,39 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
+                                if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
+                                        customer.commissionSetting.discount = parseFloat($("#textBoxDiscountAsian").val());
+                                        customer.commissionSetting.discount1x2 = parseFloat($("#textBoxDiscount1x2").val());
+                                        customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
+                                        customer.commissionSetting.discountNumber = parseFloat($("#textBoxDiscountNumber").val());
+                                    }
+                                    else {
+                                        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+                                            customer.memberMaxCredit = parseFloat($('#memberCredit').val());
+                                        }
+
+                                        customer.commissionSetting.groupA = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupB = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
+                                        customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
+                                        customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
+                                    }
+
+                                    customer.firstName = $('#firstName').val().escapeHtml();
+                                    customer.lastName = $('#lastName').val().escapeHtml();
+                                    customer.phone = $('#phone').val().escapeHtml();
+                                    customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
+                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.fax = $('#fax').val().escapeHtml();
+                                    customer.statusSetting.closed = document.getElementById('closed').checked;
+                                    customer.statusSetting.suspended = document.getElementById('suspended').checked;
+
+                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                }
+
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
 
@@ -326,6 +494,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $.unblockUI(document);
         });
     },
+
     GetMemberPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
@@ -343,7 +512,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            var context = result.context;
+            var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
@@ -376,6 +545,39 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
+                                if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
+                                        customer.commissionSetting.discount = parseFloat($("#textBoxDiscountAsian").val());
+                                        customer.commissionSetting.discount1x2 = parseFloat($("#textBoxDiscount1x2").val());
+                                        customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
+                                        customer.commissionSetting.discountNumber = parseFloat($("#textBoxDiscountNumber").val());
+                                    }
+                                    else {
+                                        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+                                            customer.memberMaxCredit = parseFloat($('#memberCredit').val());
+                                        }
+
+                                        customer.commissionSetting.groupA = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupB = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
+                                        customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
+                                        customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
+                                    }
+
+                                    customer.firstName = $('#firstName').val().escapeHtml();
+                                    customer.lastName = $('#lastName').val().escapeHtml();
+                                    customer.phone = $('#phone').val().escapeHtml();
+                                    customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
+                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.fax = $('#fax').val().escapeHtml();
+                                    customer.statusSetting.closed = document.getElementById('closed').checked;
+                                    customer.statusSetting.suspended = document.getElementById('suspended').checked;
+
+                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                }
+
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
 
@@ -413,6 +615,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $.unblockUI(document);
         });
     },
+
     SuperGetMemberPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
@@ -429,7 +632,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            var context = result.context;
+            var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
@@ -454,6 +657,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
+                                if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                                    customer.statusSetting.closed = document.getElementById('closed').checked;
+                                    customer.statusSetting.suspended = document.getElementById('suspended').checked;
+
+                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                }
+
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
 
@@ -490,8 +700,15 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $.unblockUI(document);
         });
     },
+
     MasterGetMemberPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
+
+        $('#masterComm').remove();
+        $('#masterComm2').remove();
+        $('#masterComm3').remove();
+        $('#masterComm4').remove();
+        $('#masterComm5').remove();
 
         var data = new Object();
 
@@ -506,7 +723,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            var context = result.context;
+            var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
@@ -531,6 +748,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
                             else {
+                                if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                                    customer.statusSetting.closed = document.getElementById('closed').checked;
+                                    customer.statusSetting.suspended = document.getElementById('suspended').checked;
+
+                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
+                                }
+
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
                             }
 
@@ -567,6 +791,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $.unblockUI(document);
         });
     },
+
     ToogleUsernames: function () {
         if ($('#arrowUpDown').hasClass('collapse')) {
             $('#arrowUpDown').attr('class', 'expand');
@@ -579,6 +804,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
         }
     },
+
     GenerateCheckBoxStatus: function () {
         document.getElementById('closed').disabled = true;
 
@@ -598,6 +824,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         header.insertBefore(checkBox, header.firstChild);
     },
+
     GenerateCheckBoxCommission: function () {
         Fanex.ExtAcc.Customer.PTSetting.DisableCommission(true);
 
@@ -618,6 +845,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         header.insertBefore(checkBoxHeader, header.firstChild);
     },
+
     DisableCommission: function (isDisable) {
         if (document.getElementById("groupA")) {
             document.getElementById("groupA").disabled = isDisable;
@@ -647,6 +875,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             document.getElementById("discountNumber").disabled = isDisable;
         }
     },
+
     GenerateCheckBoxBettingLimit: function () {
         var items = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.items;
 
@@ -715,6 +944,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             items[i].element.childNodes[0].insertBefore(checkBox, items[i].element.childNodes[0].firstChild);
         }
     },
+
     GenerateCheckBoxPositionTaking: function () {
         var j = 0;
         var timeout = setTimeout(function () {
@@ -828,6 +1058,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         clearTimeout(timeout);
                         $.unblockUI(document);
+
+                        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        }
 
                         Fanex.ExtAcc.Form.Close(false);
                     }, 2000);
@@ -954,6 +1188,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         clearTimeout(timeout);
                         $.unblockUI(document);
 
+                        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        }
+
                         Fanex.ExtAcc.Form.Close(false);
                     }, 2000);
                 }
@@ -1079,6 +1317,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         clearTimeout(timeout);
                         $.unblockUI(document);
 
+                        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        }
+
                         Fanex.ExtAcc.Form.Close(false);
                     }, 2000);
                 }
@@ -1163,6 +1405,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $.unblockUI(document);
         });
     },
+
     SuperMasterUpdateMemberPT: function (custId, data, i, customer) {
         var urlPost = '';
         if (Fanex.ExtAcc.Customer.PTSetting.isSuperEditMember) {
@@ -1210,6 +1453,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         clearTimeout(timeout);
                         $.unblockUI(document);
+
+                        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        }
 
                         Fanex.ExtAcc.Form.Close(false);
                     }, 2000);

@@ -76,6 +76,7 @@ input[type="text"], input[type="password"]
 	margin: 0;
 	padding: 0;
 	width: 120px;
+	vertical-align: top;
 }
 .textBoxCredit
 {
@@ -349,7 +350,8 @@ input[type="text"], input[type="password"]
 	padding-left: 30px;
 	line-height: 25px;
 }
-#rdWeekly, #rdDaily{
+#rdWeekly, #rdDaily
+{
 	margin-right: 3px;
 }
 .headerPositionTaking
@@ -603,4 +605,8 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 #idConfirm_popupTitle
 {
 	height: 22px !important;
+}
+.BettingLimitLabel, .BettingLimitLabel1
+{
+	background-color: #fff !important;
 }
