@@ -675,8 +675,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
-
-                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
                                 }
 
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
@@ -766,8 +764,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
-
-                                    customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
                                 }
 
                                 customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
