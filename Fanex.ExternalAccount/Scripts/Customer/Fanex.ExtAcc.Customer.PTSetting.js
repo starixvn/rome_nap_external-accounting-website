@@ -93,40 +93,21 @@ Fanex.ExtAcc.Customer.PTSetting = {
             this.GetAgentPTSetting();
         }
         else {
+            if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
+                $('#masterSection').remove();
+                $('#masterStatus').remove();
+
+                $('#agentSection').remove();
+                $('#agentSection2').remove();
+                $('#agentSection3').remove();
+            }
             if (Fanex.ExtAcc.Customer.isSuperEditMember == true) {
-                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                    $('#masterSection').remove();
-                    $('#masterStatus').remove();
-
-                    $('#agentSection').remove();
-                    $('#agentSection2').remove();
-                    $('#agentSection3').remove();
-                }
-
                 this.SuperGetMemberPTSetting();
             }
             else if (Fanex.ExtAcc.Customer.isMasterEditMember == true) {
-                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                    $('#masterSection').remove();
-                    $('#masterStatus').remove();
-
-                    $('#agentSection').remove();
-                    $('#agentSection2').remove();
-                    $('#agentSection3').remove();
-                }
-
                 this.MasterGetMemberPTSetting();
             }
             else {
-                if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                    $('#masterSection').remove();
-                    $('#masterStatus').remove();
-
-                    $('#agentSection').remove();
-                    $('#agentSection2').remove();
-                    $('#agentSection3').remove();
-                }
-
                 this.GetMemberPTSetting();
             }
         }
