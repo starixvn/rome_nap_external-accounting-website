@@ -1522,7 +1522,6 @@
     <Content Include="Views\LiveCasino\EditMaster.cshtml" />
     <Content Include="Views\LiveCasino\EditAgent.cshtml" />
     <Content Include="Views\LiveCasino\EditMember.cshtml" />
-    <Content Include="Views\LiveCasino\EditSuper.cshtml" />
     <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
     <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
   </ItemGroup>
