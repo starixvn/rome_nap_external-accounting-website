@@ -257,6 +257,7 @@
     <Content Include="bootstrap\winlossdetail\images\icon-right.png" />
     <Content Include="bootstrap\winlossdetail\images\spindown-closed.png" />
     <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Customer\LiveCasino.css" />
     <Content Include="Content\Customer\PTEngine.css" />
     <Content Include="Content\Customer\Customer.css" />
     <Content Include="Content\Images\ajax-loader.png" />
@@ -656,6 +657,7 @@
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.LiveCasino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
@@ -1506,6 +1508,12 @@
     <Content Include="Views\Sportsbook\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\TransferCondition.cshtml" />
     <Content Include="Views\Sportsbook\SuperMasterEditSB.cshtml" />
+    <Content Include="Views\LiveCasino\EditMaster.cshtml" />
+    <Content Include="Views\LiveCasino\EditAgent.cshtml" />
+    <Content Include="Views\LiveCasino\EditMember.cshtml" />
+    <Content Include="Views\LiveCasino\EditSuper.cshtml" />
+    <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
+    <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

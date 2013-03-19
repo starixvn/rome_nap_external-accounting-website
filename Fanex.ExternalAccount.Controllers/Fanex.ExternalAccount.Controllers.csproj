@@ -44,12 +44,18 @@
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.LiveCasinoSetting">
+      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine">
       <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\Dependencies\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
       <HintPath>..\Dependencies\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
@@ -108,6 +114,7 @@
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="Customer\LiveCasinoController.cs" />
     <Compile Include="Customer\SportsbookController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
