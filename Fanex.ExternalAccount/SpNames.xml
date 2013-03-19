@@ -11,12 +11,10 @@
     <Setting Key="Acc_AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="archive" Plain="0" />
   </Function>
   <Function Name="Report">
-
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="archive" Plain="0" />
     <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="checkin" Plain="0" />
     <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="checkin" Plain="0" />
     <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="checkin" Plain="0" />
-
     <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="checkin" Plain="0" />
@@ -25,12 +23,10 @@
     <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="checkin" Plain="0" />
-
     <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="checkin" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="checkin" Plain="0" />
-
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="checkin" Plain="0" />
   </Function>
   <Function Name="Group">
@@ -120,7 +116,7 @@
     <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="main" Plain="0" />
     <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="main" Plain="0" />
   </Function>
-  <Function Name="Live Casino - GET PT Setting">
+  <Function Name="Live Casino - Get PT Setting">
     <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="archive"/>
     <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="archive"  />
     <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="archive"  />
@@ -129,18 +125,23 @@
     <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="archive"  />
     <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="archive"  />
   </Function>
-  <Function Name="Live Casino - update PT Setting">
+  <Function Name="Live Casino - Update PT Setting">
     <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="main"  />
     <Setting Key="Acc_CustomerUpdMasterLiveCS_All" SpName="Acc_CustomerUpdMasterLiveCS_All" DbName="main"  />
     <Setting Key="Acc_CustomerUpdAgentLiveCS_All" SpName="Acc_CustomerUpdAgentLiveCS_All" DbName="main"  />
     <Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="main"  />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master" DbName="main"  />
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="main"  />
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="main"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS" DbName="main"  />
+    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main"  />
   </Function>
-  <Function Name="Live Casino - Stake Level Settingc">
+  <Function Name="Live Casino - Stake Level Setting">
     <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
     <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin"  />
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LiveCasinoAdmin"  />
     <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LiveCasinoAdmin"  />
     <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LiveCasinoAdmin"  />
+    <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LiveCasinoAdmin"  />
+    <Setting Key="TP_User_Customer_AutoInsertAccountFromExisting" SpName="TP_User_Customer_AutoInsertAccountFromExisting" DbName="LiveCasinoAdmin"  />
   </Function>
-
 </Functions>
