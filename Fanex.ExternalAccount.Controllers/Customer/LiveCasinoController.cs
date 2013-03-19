@@ -9,6 +9,7 @@
 
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
 
     /// <summary>
@@ -16,5 +17,54 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     /// </summary>
     public class LiveCasinoController : BaseController
     {
+        public ActionResult EditMaster()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult EditAgent()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult EditMember()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult SuperEditMember()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult MasterEditMember()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult EditMultipleMasters()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult EditMultipleAgents()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult EditMultipleMembers()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult SuperEditMultipleMembers()
+        {
+            return this.PartialViewBase();
+        }
+
+        public ActionResult MasterEditMultipleMembers()
+        {
+            return this.PartialViewBase();
+        }
     }
 }
