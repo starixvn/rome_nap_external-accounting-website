@@ -44,12 +44,12 @@ namespace Fanex.ExternalAccount.Controllers.Context
             var response = filterContext.HttpContext.Response;
             var request = filterContext.HttpContext.Request;
 
-            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
             {
                 response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
 
@@ -82,7 +82,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
             catch (Exception ex)
             {
-                this.ProcessException(ex, filterContext.HttpContext.Response);
+                this.ProcessException(ex, response);
             }
         }
 

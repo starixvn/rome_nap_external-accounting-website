@@ -1526,6 +1526,11 @@
     <Content Include="Views\LiveCasino\EditMember.cshtml" />
     <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
     <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
+    <Content Include="Views\LiveCasino\EditMultipleAgents.cshtml" />
+    <Content Include="Views\LiveCasino\SuperEditMultipleMembers.cshtml" />
+    <Content Include="Views\LiveCasino\EditMultipleMasters.cshtml" />
+    <Content Include="Views\LiveCasino\EditMultipleMembers.cshtml" />
+    <Content Include="Views\LiveCasino\MasterEditMultipleMembers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
