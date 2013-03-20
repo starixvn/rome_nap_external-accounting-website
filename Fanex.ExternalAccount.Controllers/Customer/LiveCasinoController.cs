@@ -17,7 +17,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     /// <summary>
     /// Controller for processing live casino setting
     /// </summary>
-    public class LiveCasinoController : BaseController
+    public class LiveCasinoController : LiveCasinoBase
     {
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditMaster()
