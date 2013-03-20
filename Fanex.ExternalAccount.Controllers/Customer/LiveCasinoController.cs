@@ -78,5 +78,65 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             return this.PartialViewBase();
         }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMasterPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditAgentPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMemberPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperEditMemberPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult MasterEditMemberPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMultipleMastersPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMultipleAgentsPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult EditMultipleMembersPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult SuperEditMultipleMembersPost()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult MasterEditMultipleMembersPost()
+        {
+            return this.PartialViewBase();
+        }
     }
 }
