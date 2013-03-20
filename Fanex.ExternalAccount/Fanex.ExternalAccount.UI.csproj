@@ -677,6 +677,8 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.TransferCondition.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MemberInfo.js" />
+    <Content Include="Scripts\Customer\LiveCasino\Fanex.ExtAcc.Customer.LiveCasino.js" />
+    <Content Include="Scripts\Customer\LiveCasino\Fanex.ExtAcc.Customer.LiveCasino.SuperEditMember.js" />
     <Content Include="Scripts\Fanex.ExtAcc.Form.js" />
     <Content Include="Scripts\Fanex.ExtAcc.Header.js" />
     <Content Include="Scripts\Fanex.ExtAcc.js" />
