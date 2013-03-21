@@ -11,6 +11,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
 {
     using System.Collections.Generic;
     using System.ComponentModel;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.LiveCasinoSetting.Business;
     using Fanex.LiveCasinoSetting.Model;
     using Fanex.LiveCasinoSetting.Model.Log;
@@ -29,6 +31,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
             // Inits base properties
             this.GameSetting = new GameSettingService();
             this.PtSetting = new SettingService();
+            this.MemberWinLimit = new MemberWinLimitService();
+            this.ReportService = new ReportService();
             this.GameTypes = new List<GameType>();
             this.GameResult = new Dictionary<int, Dictionary<int, Result>>();
             this.WrongPtIds = new List<int>();
@@ -102,7 +106,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <summary>
         /// Gets or sets property
         /// </summary>
-        protected SettingService PtSetting
+        protected ISettingService PtSetting
         {
             get;
             set;
@@ -111,7 +115,25 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <summary>
         /// Gets or sets property
         /// </summary>
-        protected GameSettingService GameSetting
+        protected IGameSettingService GameSetting
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property
+        /// </summary>
+        protected IMemberWinLimitService MemberWinLimit
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property
+        /// </summary>
+        protected IReportService ReportService
         {
             get;
             set;
@@ -249,7 +271,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <summary>
         /// Gets property
         /// </summary>
-        private LogActions LogActionManual
+        protected LogActions LogActionManual
         {
             get
             {
