@@ -28,6 +28,26 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     GetMasterSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        var data = new Object();
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.uplineId = Fanex.ExtAcc.Customer.superId;
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/EditMasterPost'),
+            dataType: 'json',
+            type: 'post',
+            data: data
+        })
+        .success(function(data){
+            if (typeof console != 'undefined') console.log(data);
+            $.unblockUI(document);
+        })
+        .error(function(data){
+            if (typeof console != 'undefined') console.log(data.responseText);
+            $.unblockUI(document);
+        });
     },
 
     GetAgentSetting: function () {

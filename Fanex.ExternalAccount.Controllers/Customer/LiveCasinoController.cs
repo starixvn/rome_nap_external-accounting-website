@@ -80,9 +80,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMasterPost()
+        public ActionResult EditMasterPost(int custId, int uplineId)
         {
-            return this.PartialViewBase();
+            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var gs = this.GameSetting.GetByCustomerId(custId);
+            var mw = this.MemberWinLimit.GetMemberWinLimit(custId);
+            var gi = this.ReportService.GetCustomerInfo(CurrentSession.CurrencyGroup, custId, string.Empty, true);
+
+            return this.JsonBase(new { pt = pt, gameSetting = gs, memberWinLimit = mw, custInfo = gi });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]

@@ -10,6 +10,7 @@ Fanex.ExtAcc.Customer = {
     superId: 0,
     masterId: 0,
     agentId: 0,
+    UserId: 0,
 
     directSuperId: null,
     directMasterId: null,
