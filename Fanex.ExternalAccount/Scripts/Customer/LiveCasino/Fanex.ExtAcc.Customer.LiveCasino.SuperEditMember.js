@@ -1,7 +1,4 @@
-﻿/*
-Super edits member
-*/
-function editMemberPTCommBySuper() {
+﻿function editMemberPTCommBySuper() {
     var upPreset = $('pt_1');
     var upAutoPreset = $('pt_2');
     var isAuto = $('chkAutoPT') && $('chkAutoPT').checked;
