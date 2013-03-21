@@ -140,6 +140,17 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
+        /// JSON base method to render JSON to output stream
+        /// </summary>
+        /// <param name="data">Data need to render JSON object</param>
+        /// <param name="settings">Allow Get method by default</param>
+        /// <returns>ActionResult object</returns>
+        public virtual ActionResult JsonBase2(object data, JsonRequestBehavior settings = JsonRequestBehavior.AllowGet)
+        {
+            return this.Json(data, settings);
+        }
+
+        /// <summary>
         /// Returns Partial View associated with model object
         /// </summary>
         /// <param name="objModel">Model object</param>

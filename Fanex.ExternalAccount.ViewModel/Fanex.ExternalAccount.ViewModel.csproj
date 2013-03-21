@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.LiveCasinoSetting">
+      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -55,7 +58,10 @@
     <Compile Include="Account\Login.cs" />
     <Compile Include="Account\LoginModel.cs" />
     <Compile Include="Account\UserModel.cs" />
+    <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\IPInfo.cs" />
+    <Compile Include="Customer\LiveCasinoModel.cs" />
+    <Compile Include="Customer\PTModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
     <Compile Include="Extension\MaxStringLengthAttribute.cs" />
     <Compile Include="Extension\MinStringLengthAttribute.cs" />

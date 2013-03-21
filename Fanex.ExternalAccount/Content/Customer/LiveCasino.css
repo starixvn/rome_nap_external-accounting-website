@@ -1,2 +1,11 @@
-﻿body {
+﻿.save
+{
+	float: right;
+	margin-right: 5px;
+	background-image: url(../../Images/Content/icon-customerlist.png);
+	background-repeat: no-repeat;
+	background-position: -72px -59px;
+	width: 16px;
+	height: 16px;
+	border: none;
 }
