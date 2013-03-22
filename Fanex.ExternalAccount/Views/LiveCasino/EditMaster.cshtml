@@ -4,31 +4,169 @@
 <div class="floatR" style="margin-bottom: 5px">
     <input class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
-<div class="headerPositionTaking" style="border-top: 1px solid #CCC">
-    General Information
-    <div class="save">
+<div id="custInfo" class="customerInfo" style="width: 861px">
+    <div class="headerTab" style="border-bottom: 0px">
+        General Information</div>
+    <div id="masterStatus">
+        <div id="closedId">
+            <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+                <label>
+                    Username</label>
+            </div>
+            <div class="customerInfoBlock2" style="width: 240px">
+                <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.userName"></span>
+            </div>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            <label>
+                Nickname</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.nickName"></span>
+        </div>
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            First Name</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.firstName)"></span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            Last Name</div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.lastName)"></span>
+        </div>
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Phone</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.phone)"></span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            Mobile Phone</div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.mobile)"></span>
+        </div>
+    </div>
+    <div id="masterSection">
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Fax</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.fax"></span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px">
+        </div>
+        <div class="customerInfoBlock4" style="width: 246px">
+        </div>
     </div>
 </div>
-<div class="positionTaking">
-    <div id="userInfo">
+<div class="customerInfo" style="width: 861px; border-bottom: 1px solid #ccc">
+    <div class="headerTab" style="border-bottom: 0px">
+        <div class="save" title="Save Position Taking/Commission">
+        </div>
+        Postition Taking/Commission
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold; width: 165px; text-align: center">
+            Super Preset PT</div>
+        <div class="customerInfoBlock2" style="font-weight: bold; width: 180px; text-align: center">
+            Super Auto PT
+        </div>
+        <div class="customerInfoBlock3" style="font-weight: bold; width: 165px; text-align: center">
+            Master Max PT</div>
+        <div class="customerInfoBlock4" style="font-weight: bold; width: 165px; text-align: center">
+            Master Min PT
+        </div>
+        <div class="customerInfoBlock4" style="font-weight: bold; width: 168px; text-align: center">
+            Master Commission
+        </div>
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold; width: 165px; text-align: center">
+            <span class="spanPT">
+                <select id="pt_1" name="pt_1" onchange="PTChanging(this)" style="position: relative;">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1', 10);" />
+            </span>
+        </div>
+        <div class="customerInfoBlock2" style="font-weight: bold; width: 180px; text-align: center;">
+            <span class="spanPT">
+                <input type="checkbox" name="chkAutoPT" id="chkAutoPT" onclick="checkPT(this);" style="vertical-align: middle;" />
+                <select id="pt_2" name="pt_2">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_2', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('pt_2', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_2', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_2', 10);" />
+            </span>
+        </div>
+        <div class="customerInfoBlock3" style="font-weight: bold; width: 165px; text-align: center">
+            <span class="spanPT">
+                <select id="pt_3" name="pt_3">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_3', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('pt_3', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_3', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_3', 10);" />
+            </span>
+        </div>
+        <div class="customerInfoBlock4" style="font-weight: bold; width: 165px; text-align: center">
+            <span class="spanPT">
+                <select id="pt_4" name="pt_4">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_4', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('pt_4', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_4', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_4', 10);" />
+            </span>
+        </div>
+        <div class="customerInfoBlock4" style="font-weight: bold; width: 168px; text-align: center">
+            <span class="spanPT">
+                <select id="comm_5" name="comm_5">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_5', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('comm_5', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_5', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_5', 10);" />
+            </span>
+        </div>
     </div>
 </div>
-<div class="headerPositionTaking" style="border-top: 1px solid #CCC">
-    Postition Taking/Commission</div>
-<div class="positionTaking">
-    <div id="ptContainer">
+<div class="customerInfo" style="width: 861px; border-top: 0px">
+    <div class="headerTab" style="border-bottom: 0px">
+        <div class="save" title="Save Member Win Limit">
+        </div>
+        Member Win Limit</div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Maximum Win</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <select id="maximumWinLimit" style="width: 80px">
+            </select>
+            <span>&nbsp;on given credit</span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 431px; text-align: left;">
+            <input type="checkbox" id="dailyAutoReset" style="vertical-align: middle; margin-bottom: 3px;" />
+            <label for="dailyAutoReset">
+                Daily auto reset limit (at 12 noon GMT+8)</label>
+        </div>
     </div>
 </div>
-<div class="headerPositionTaking" style="border-top: 1px solid #CCC">
-    Member Win Limit</div>
-<div class="positionTaking">
-    <div id="memberWinLimit">
-    </div>
-</div>
-<div class="headerPositionTaking" style="border-top: 1px solid #CCC">
-    Game Setting</div>
-<div class="positionTaking">
+<div class="customerInfo" style="width: 861px; border-bottom: 1px solid #ccc">
+    <div class="headerTab" style="border-bottom: 0px">
+        <div class="save" title="Save Game Setting">
+        </div>
+        Game Setting</div>
     <div id="gameSetting">
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Game Type</div>
+        <div class="customerInfoBlock2" style="width: 675px; font-weight: bold">
+            Betting Limit
+        </div>
     </div>
 </div>
 <div class="floatR">
