@@ -134,7 +134,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
                 settings.Formatting = Formatting.Indented;
-                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             }
 
             return this.JsonExt(data, settings);

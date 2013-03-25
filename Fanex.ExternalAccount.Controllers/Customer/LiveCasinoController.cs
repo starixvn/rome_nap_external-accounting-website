@@ -85,8 +85,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditMasterPost(int custId, int uplineId)
         {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             var settingModel = this.PtSetting.GetMasterSetting(custId, uplineId);
-            var memberWinLimit = this.MemberWinLimit.GetMemberWinLimit(custId);
             var liveCasinoModel = new LiveCasinoModel()
             {
                 SuperPTSetting = new PTModel
@@ -128,7 +132,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     UserName = settingModel.CustomerInfo.UserName
                 },
                 GameSetting = settingModel.GameSetting,
-                MemberWinLimit = memberWinLimit,
                 MasterPTSetting = new PTModel
                 {
                     AutoPresetPT = settingModel.PTSetting.AutoPresetPT,
@@ -155,7 +158,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 PresetPT_Items = settingModel.PresetPT_Items
             };
 
-            return this.JsonBase(new { userInfo = liveCasinoModel.CustomerInfo, uplinePt = liveCasinoModel.SuperPTSetting, pt = liveCasinoModel.MasterPTSetting, gameSetting = liveCasinoModel.GameSetting, memberWinLimit = liveCasinoModel.MemberWinLimit });
+            return this.JsonBase(new { userInfo = liveCasinoModel.CustomerInfo, uplinePt = liveCasinoModel.SuperPTSetting, pt = liveCasinoModel.MasterPTSetting, gameSetting = liveCasinoModel.GameSetting }, settings);
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
