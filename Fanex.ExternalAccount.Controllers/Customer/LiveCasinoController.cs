@@ -209,7 +209,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     MinPT = settingModel.PTSetting.MinPT,
                     NewMemberPT = settingModel.PTSetting.NewMemberPT,
                     PresetPT = settingModel.PTSetting.PresetPT
-                }
+                },
+                CustIds = new System.Collections.Generic.List<int>()
             };
 
             return this.JsonBase(liveCasinoModel, settings);
