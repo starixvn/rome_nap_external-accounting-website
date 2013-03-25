@@ -17,17 +17,11 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
     /// </summary>
     public class LiveCasinoModel
     {
-        public List<decimal> AutoPT_Items { get; set; }
-
         public CustomerInfo CustomerInfo { get; set; }
 
         public List<GameType> GameSetting { get; set; }
 
-        public List<decimal> MaxPT_Items { get; set; }
-
-        public List<decimal> MinPT_Items { get; set; }
-
-        public List<decimal> PresetPT_Items { get; set; }
+        public List<int> CustIds { get; set; }
 
         public virtual PTModel SuperPTSetting { get; set; }
 
@@ -37,6 +31,6 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
 
         public virtual PTModel MemberPTSetting { get; set; }
 
-        public virtual IMemberWinLimit MemberWinLimit { get; set; }
+        public bool IsMultiple { get; set; }
     }
 }

@@ -14,7 +14,7 @@
                     Username</label>
             </div>
             <div class="customerInfoBlock2" style="width: 240px">
-                <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.userName"></span>
+                <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName"></span>
             </div>
         </div>
         <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
@@ -22,38 +22,38 @@
                 Nickname</label>
         </div>
         <div class="customerInfoBlock4" style="width: 246px">
-            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.nickName"></span>
+            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.nickName"></span>
         </div>
     </div>
     <div>
         <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
             First Name</div>
         <div class="customerInfoBlock2" style="width: 240px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.firstName)"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.firstName)"></span>
         </div>
         <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
             Last Name</div>
         <div class="customerInfoBlock4" style="width: 246px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.lastName)"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.lastName)"></span>
         </div>
     </div>
     <div>
         <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
             Phone</div>
         <div class="customerInfoBlock2" style="width: 240px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.phone)"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.phone)"></span>
         </div>
         <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
             Mobile Phone</div>
         <div class="customerInfoBlock4" style="width: 246px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.mobile)"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.mobile)"></span>
         </div>
     </div>
     <div id="masterSection">
         <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
             Fax</div>
         <div class="customerInfoBlock2" style="width: 240px">
-            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.userInfo.fax"></span>
+            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.fax"></span>
         </div>
         <div class="customerInfoBlock3" style="width: 180px">
         </div>
@@ -63,7 +63,7 @@
 </div>
 <div class="customerInfo" style="width: 861px; border-bottom: 1px solid #ccc">
     <div class="headerTab" style="border-bottom: 0px">
-        <div class="save" title="Save Position Taking/Commission">
+        <div class="save" title="Save Position Taking/Commission" data-bind="click: savePtComm">
         </div>
         Postition Taking/Commission
     </div>
@@ -138,7 +138,7 @@
 </div>
 <div class="customerInfo" style="width: 861px; border-top: 0px">
     <div class="headerTab" style="border-bottom: 0px">
-        <div class="save" title="Save Member Win Limit">
+        <div class="save" title="Save Member Win Limit" data-bind="click: saveMemberWinLimit">
         </div>
         Member Win Limit</div>
     <div>
@@ -158,7 +158,7 @@
 </div>
 <div class="customerInfo" style="width: 861px; border-bottom: 1px solid #ccc">
     <div class="headerTab" style="border-bottom: 0px">
-        <div class="save" title="Save Game Setting">
+        <div class="save" title="Save Game Setting" data-bind="click: saveGameSetting">
         </div>
         Game Setting</div>
     <div id="gameSetting">

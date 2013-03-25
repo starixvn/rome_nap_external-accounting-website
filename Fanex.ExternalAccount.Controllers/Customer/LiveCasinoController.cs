@@ -9,11 +9,14 @@
 
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.ComponentModel;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.ViewModel.Customer;
+    using Fanex.LiveCasinoSetting.Model;
+    using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -168,7 +171,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     NewMemberPT = settingModel.PTSetting.Upline.NewMemberPT,
                     PresetPT = settingModel.PTSetting.Upline.PresetPT
                 },
-                CustomerInfo = new CustomerInfo
+                CustomerInfo = new Fanex.ExternalAccount.ViewModel.Customer.CustomerInfo
                 {
                     CustomerId = settingModel.CustomerInfo.CustomerId,
                     DisableLiveCasino = settingModel.CustomerInfo.DisableLiveCasino,
@@ -206,14 +209,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     MinPT = settingModel.PTSetting.MinPT,
                     NewMemberPT = settingModel.PTSetting.NewMemberPT,
                     PresetPT = settingModel.PTSetting.PresetPT
-                },
-                AutoPT_Items = settingModel.AutoPT_Items,
-                MaxPT_Items = settingModel.MaxPT_Items,
-                MinPT_Items = settingModel.MinPT_Items,
-                PresetPT_Items = settingModel.PresetPT_Items
+                }
             };
 
-            return this.JsonBase(new { userInfo = liveCasinoModel.CustomerInfo, uplinePt = liveCasinoModel.SuperPTSetting, pt = liveCasinoModel.MasterPTSetting, gameSetting = liveCasinoModel.GameSetting }, settings);
+            return this.JsonBase(liveCasinoModel, settings);
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
@@ -268,6 +267,73 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult MasterEditMultipleMembersPost()
         {
             return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateMasterPTPost(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en-US",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var isMultiple = model.IsMultiple;
+
+            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("MaxPT");
+                pt.PropertiesChangedList.Add("MinPT");
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("AutoPresetPT");
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("IsAutoPresetPT");
+            }
+            else
+            {
+                //Handles Master values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                //Handles Super values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((SuperPTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            //Super values
+            ((SuperPTSetting)pt.Upline).PresetPT = model.SuperPTSetting.PresetPT;
+            ((SuperPTSetting)pt.Upline).AutoPresetPT = model.SuperPTSetting.AutoPresetPT;
+            ((SuperPTSetting)pt.Upline).IsAutoPresetPT = model.SuperPTSetting.IsAutoPresetPT;
+            ((SuperPTSetting)pt.Upline).IsUpdateAllMember = model.SuperPTSetting.IsUpdateAllMember;
+            ((SuperPTSetting)pt.Upline).NewMemberPT = model.SuperPTSetting.NewMemberPT;
+
+            //Master values
+            pt.MaxPT = model.MasterPTSetting.MaxPT;
+            pt.MinPT = model.MasterPTSetting.MinPT;
+            pt.Comm = model.MasterPTSetting.Comm;
+
+            var result = this.PtSetting.UpdateMasterPTSetting(context, pt);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
     }
 }

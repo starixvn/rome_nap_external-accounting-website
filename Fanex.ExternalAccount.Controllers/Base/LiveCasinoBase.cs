@@ -31,31 +31,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
             // Inits base properties
             this.GameSetting = new GameSettingService();
             this.PtSetting = new SettingService();
-            this.MemberWinLimit = new MemberWinLimitService();
-            this.ReportService = new ReportService();
-            this.GameTypes = new List<GameType>();
             this.GameResult = new Dictionary<int, Dictionary<int, Result>>();
             this.WrongPtIds = new List<int>();
             this.UnsyncIds = new List<int>();
-            this.Custids = new List<int>();
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether up-line live casino is disabled or not
-        /// </summary>
-        protected bool DisableCheckBox
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether live casino is enabled or not
-        /// </summary>
-        protected bool EnableLiveCS
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -71,24 +49,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// Gets or sets property
         /// </summary>
         protected List<int> UnsyncIds
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected List<int> Custids
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected List<GameType> GameTypes
         {
             get;
             set;
@@ -122,126 +82,18 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected IMemberWinLimitService MemberWinLimit
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected IReportService ReportService
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected decimal PresetPT
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected decimal AutoPresetPT
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected decimal MinPT
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected decimal MaxPT
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected decimal Comm
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected decimal NewMemberPT
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected int RequestCustRoleId
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets property
-        /// </summary>
-        protected int RequestCustId
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether live casino is synced
-        /// </summary>
-        protected bool IsSyncLiveCasino
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether update all member or not
-        /// </summary>
-        protected bool IsUpdateAllMember
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether is auto preset position taking
-        /// </summary>
-        protected bool IsAutoPresetPT
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the request is submit button clicked
         /// </summary>
         protected bool IsSubmit
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property for current role id of editted user
+        /// </summary>
+        protected int RequestCustRoleId
         {
             get;
             set;

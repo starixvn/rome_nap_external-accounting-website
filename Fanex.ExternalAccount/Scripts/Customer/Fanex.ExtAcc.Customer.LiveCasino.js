@@ -44,39 +44,38 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         .success(function (data) {
             if (typeof console != 'undefined') console.log(data);
 
+            //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
             //PT Renderring
             //PT values
-            var uplineMin = data.uplinePt.minPT;
-            var uplineMax = data.uplinePt.maxPT;
-            var uplinePreset = data.uplinePt.presetPT;
-            var uplineAutoPreset = data.uplinePt.autoPresetPT;
-
-            var max = data.pt.maxPT;
+            var uplineMin = data.superPTSetting.minPT;
+            var uplineMax = data.superPTSetting.maxPT;
+            var uplinePreset = data.superPTSetting.presetPT;
+            var uplineAutoPreset = data.superPTSetting.autoPresetPT;
+            var max = data.masterPTSetting.maxPT;
 
             //Render super preset pt
             PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
             //Render super auto preset pt
             PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
-            if (!data.uplinePt.isAutoPresetPT) {
+            if (!data.superPTSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
             else {
                 $('#pt_1').attr('disabled', 'disabled');
             }
-
-            $('#chkAutoPT').attr('checked', data.uplinePt.isAutoPresetPT);
+            $('#chkAutoPT').attr('checked', data.superPTSetting.isAutoPresetPT);
 
             //Render Master Max PT
             PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, max);
 
             //Render Master Min PT
-            PT_RenderCombo(document.getElementById('pt_4'), 0, data.pt.maxPT, 0.01, data.pt.minPT);
+            PT_RenderCombo(document.getElementById('pt_4'), 0, data.masterPTSetting.maxPT, 0.01, data.masterPTSetting.minPT);
 
             //Render Master Commission
-            Comm_RenderCombo(document.getElementById('comm_5'), 0, data.uplinePt.comm, 0.0005, data.pt.comm);
+            Comm_RenderCombo(document.getElementById('comm_5'), 0, data.superPTSetting.comm, 0.0005, data.masterPTSetting.comm);
 
             //Render member win limit block
             Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimit(data);
@@ -84,10 +83,25 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //Render game setting
             Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
 
+            //Add event for changing Min/Max PT
             checkMinMaxPT();
 
+            //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
                 this.saveCustomer = function () {
+                    alert('Submit');
+                },
+
+                this.savePtComm = function () {
+                    alert('Save PT/Comm');
+                },
+
+                this.saveMemberWinLimit = function () {
+                    alert('Save Member Win Limit');
+                },
+
+                this.saveGameSetting = function () {
+                    alert('Save Game Setting');
                 }
             };
 
@@ -129,10 +143,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     RenderMemberWinLimit: function (data) {
-        var limits = data.userInfo.limit.limits;
-        var selectedItem = data.userInfo.limit.currentWinLimit;
+        var limits = data.customerInfo.limit.limits;
+        var selectedItem = data.customerInfo.limit.currentWinLimit;
 
-        if (data.userInfo.limit.maxWinLimitUpline == 0) {
+        if (data.customerInfo.limit.maxWinLimitUpline == 0) {
             for (var i = 0; i < limits.length; i++) {
                 var value = limits[i];
                 var text = limits[i] + 'X';
@@ -149,7 +163,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $("#maximumWinLimit").append('<option value="' + value + '" ' + select + '>' + text + '</option>');
             }
         }
-        else if (data.userInfo.limit.maxWinLimitUpline == 10) {
+        else if (data.customerInfo.limit.maxWinLimitUpline == 10) {
             for (var i = 0; i < limits.length - 1; i++) {
                 var value = limits[i];
                 var text = limits[i] + 'X';
@@ -166,7 +180,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $("#maximumWinLimit").append('<option value="' + value + '" ' + select + '>' + text + '</option>');
             }
         }
-        else if (data.userInfo.limit.maxWinLimitUpline == 5) {
+        else if (data.customerInfo.limit.maxWinLimitUpline == 5) {
             for (var i = 0; i < limits.length - 2; i++) {
                 var value = limits[i];
                 var text = limits[i] + 'X';
@@ -201,7 +215,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
         }
 
-        if (!data.userInfo.limit.isDailyAutoResetUpline) {
+        if (!data.customerInfo.limit.isDailyAutoResetUpline) {
             $('#dailyAutoReset').attr('disabled', 'disabled');
         }
 
@@ -346,7 +360,7 @@ function checkPT(el) {
         var pt4 = document.getElementById("pt_4");
 
         if (pt3)
-            PT_RenderCombo(pt3, 0, (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePt.maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
+            PT_RenderCombo(pt3, 0, (Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting.maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
         if (pt4)
             PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
     }
@@ -381,7 +395,7 @@ function PTChanging(el) {
     var sel = parseFloat(el.value);
     if (document.getElementById("pt_3")) {
         var cur = parseFloat(document.getElementById("pt_3").value);
-        var uplinePT = Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePt;
+        var uplinePT = Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting;
 
         if (cur == 'undefined' || cur == 'NaN') {
             cur = 0;
