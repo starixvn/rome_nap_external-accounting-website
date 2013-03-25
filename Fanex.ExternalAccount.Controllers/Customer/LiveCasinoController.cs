@@ -9,6 +9,7 @@
 
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
@@ -180,7 +181,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     FirstName = settingModel.CustomerInfo.FirstName,
                     IsSyncLiveCasino = settingModel.CustomerInfo.IsSyncLiveCasino,
                     LastName = settingModel.CustomerInfo.LastName,
-                    Limit = settingModel.CustomerInfo.Limit,
+                    Limit = settingModel.CustomerInfo.Limit as MemberWinLimit,
                     Mobile = settingModel.CustomerInfo.Mobile,
                     NickName = settingModel.CustomerInfo.NickName,
                     Phone = settingModel.CustomerInfo.Phone,
@@ -210,7 +211,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     NewMemberPT = settingModel.PTSetting.NewMemberPT,
                     PresetPT = settingModel.PTSetting.PresetPT
                 },
-                CustIds = new System.Collections.Generic.List<int>()
+                CustIds = new List<int>()
             };
 
             return this.JsonBase(liveCasinoModel, settings);

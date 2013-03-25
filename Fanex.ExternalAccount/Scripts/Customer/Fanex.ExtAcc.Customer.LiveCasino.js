@@ -93,7 +93,56 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 },
 
                 this.savePtComm = function () {
-                    alert('Save PT/Comm');
+                    Fanex.ExtAcc.BlockUI();
+
+                    $('#errMsg').html('');
+
+                    var isChecked = document.getElementById('chkAutoPT').checked;
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting.isAutoPresetPT = isChecked;
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting.autoPresetPT = $('#pt_2').val();
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.masterPTSetting.maxPT = $('#pt_3').val();
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.masterPTSetting.minPT = $('#pt_4').val();
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.masterPTSetting.comm = $('#comm_5').val();
+
+                    var data = {
+                        custId: Fanex.ExtAcc.Customer.UserId,
+                        uplineId: Fanex.ExtAcc.Customer.superId,
+                        customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+                    };
+
+                    $.ajax({
+                        url: resolveClientUrl('LiveCasino/UpdateMasterPTPost'),
+                        data: data,
+                        type: 'post',
+                        dataType: 'json'
+                    })
+                    .success(function (result) {
+                        var codes = result.ErrorCode.split('\u0007');
+                        var msgs = result.ErrorMessage.split('\u0007');
+                        var error = '';
+
+                        for (var i = 0; i < codes.length; i++) {
+                            if (parseInt(codes[i]) > 0) {
+                                error += msgs[i] + '<br/>';
+                            }
+                            else {
+                                error += '<font color="Blue">Updated successfully</font><br/>';
+                            }
+                        }
+
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(error);
+
+                        $.unblockUI(document);
+                    })
+                    .error(function (data) {
+                        if (typeof console != 'undefined') {
+                            console.log(data);
+                        }
+
+                        $.unblockUI(document);
+                    })
                 },
 
                 this.saveMemberWinLimit = function () {

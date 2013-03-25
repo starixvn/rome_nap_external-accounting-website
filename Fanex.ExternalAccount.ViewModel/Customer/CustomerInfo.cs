@@ -37,7 +37,7 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
 
         public string LastName { get; set; }
 
-        public IMemberWinLimit Limit { get; set; }
+        public MemberWinLimit Limit { get; set; }
 
         public string Mobile { get; set; }
 
