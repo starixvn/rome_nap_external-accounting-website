@@ -91,6 +91,62 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             var settingModel = this.PtSetting.GetMasterSetting(custId, uplineId);
+
+            #region For testing render game setting
+
+            if (settingModel.GameSetting.Count == 0)
+            {
+                settingModel.GameSetting.Add(new LiveCasinoSetting.Model.GameType
+                {
+                    BettingLimit = new System.Collections.Generic.List<LiveCasinoSetting.Model.StakeLevel>()
+                    {
+                        new Fanex.LiveCasinoSetting.Model.StakeLevel
+                        {
+                            Id = 1,
+                            IsDirty = true,
+                            IsSelected = true,
+                            Text = "10-100"
+                        },
+                        new Fanex.LiveCasinoSetting.Model.StakeLevel
+                        {
+                            Id = 2,
+                            IsDirty = true,
+                            IsSelected = false,
+                            Text = "100-1000"
+                        }
+                    },
+                    BetTypeId = 1101,
+                    Id = 1,
+                    Name = "Baccarat"
+                });
+
+                settingModel.GameSetting.Add(new LiveCasinoSetting.Model.GameType
+                {
+                    BettingLimit = new System.Collections.Generic.List<LiveCasinoSetting.Model.StakeLevel>()
+                    {
+                        new Fanex.LiveCasinoSetting.Model.StakeLevel
+                        {
+                            Id = 3,
+                            IsDirty = true,
+                            IsSelected = true,
+                            Text = "20-100"
+                        },
+                        new Fanex.LiveCasinoSetting.Model.StakeLevel
+                        {
+                            Id = 4,
+                            IsDirty = true,
+                            IsSelected = false,
+                            Text = "500-1000"
+                        }
+                    },
+                    BetTypeId = 1102,
+                    Id = 1,
+                    Name = "Roulette"
+                });
+            }
+
+            #endregion For testing render game setting
+
             var liveCasinoModel = new LiveCasinoModel()
             {
                 SuperPTSetting = new PTModel
@@ -106,7 +162,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     IsMinPTChanged = settingModel.PTSetting.Upline.IsMinPTChanged,
                     IsPresetPTChanged = settingModel.PTSetting.Upline.IsPresetPTChanged,
                     IsUpdateAllMember = settingModel.PTSetting.Upline.IsUpdateAllMember,
-                    //IsValid = settingModel.PTSetting.Upline.IsValid,
                     MaxAutoPresetPT = settingModel.PTSetting.Upline.MaxAutoPresetPT,
                     MaxPT = settingModel.PTSetting.Upline.MaxPT,
                     MinPT = settingModel.PTSetting.Upline.MinPT,

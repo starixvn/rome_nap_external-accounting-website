@@ -43,7 +43,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
         .success(function (data) {
             if (typeof console != 'undefined') console.log(data);
-            $.unblockUI(document);
 
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -64,6 +63,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (!data.uplinePt.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
+            else {
+                $('#pt_1').attr('disabled', 'disabled');
+            }
+
+            $('#chkAutoPT').attr('checked', data.uplinePt.isAutoPresetPT);
 
             //Render Master Max PT
             PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, max);
@@ -78,14 +82,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimit(data);
 
             //Render game setting
-            if (data.gameSetting.length > 0) {
-                var row = '<div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">' +
-                '' +
-                '</div>' +
-                '<div class="customerInfoBlock2" style="width: 675px; font-weight: bold">' +
-                '' +
-                '</div>';
-            }
+            Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
 
             checkMinMaxPT();
 
@@ -95,6 +92,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             };
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
+
+            $.unblockUI(document);
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
@@ -207,6 +206,28 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         $('#dailyAutoReset').attr('checked', 'checked');
+    },
+
+    RenderGameSetting: function (data) {
+        var gameSetting = data.gameSetting;
+
+        for (var i = 0; i < gameSetting.length; i++) {
+            var bettingLimitItem = '';
+
+            for (var j = 0; j < gameSetting[i].bettingLimit.length; j++) {
+                var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
+                bettingLimitItem += '<input style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="checkbox" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
+            }
+
+            var row = '<div class="customerInfoBlock1" style="margin: 0px">' +
+                gameSetting[i].name +
+                '</div>' +
+                '<div class="customerInfoBlock2" style="width: 675px">' +
+                bettingLimitItem +
+                '</div>';
+
+            $('#gameSetting').append(row);
+        }
     }
 }
 
