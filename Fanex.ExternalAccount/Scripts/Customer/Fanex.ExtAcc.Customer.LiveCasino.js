@@ -128,7 +128,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     .success(function (result) {
                         Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
 
-                        $.unblockUI(document);
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+                            $.unblockUI(document);
+                        }, 2000);
                     })
                     .error(function (data) {
                         if (typeof console != 'undefined') {
@@ -283,7 +286,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             $('#errMsg').css('display', 'block');
             $('#errMsg').html(error);
 
-            $.unblockUI(document);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $.unblockUI(document);
+            }, 2000);
         })
         .error(function (data) {
             if (typeof console != undefined) {
