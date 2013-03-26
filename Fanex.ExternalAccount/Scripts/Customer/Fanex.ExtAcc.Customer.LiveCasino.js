@@ -154,7 +154,43 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 },
 
                 this.saveMemberWinLimit = function () {
-                    alert('Save Member Win Limit');
+                    Fanex.ExtAcc.BlockUI();
+
+                    $('#errMsg').html('');
+
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
+
+                    var data = {
+                        custId: Fanex.ExtAcc.Customer.UserId,
+                        customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+                    };
+
+                    $.ajax({
+                        url: resolveClientUrl('LiveCasino/UpdateMasterWinLimit'),
+                        type: 'post',
+                        dataType: 'json',
+                        data: data
+                    })
+                    .success(function (result) {
+                        var error = '<font color="Blue">Member Win Limit: Updated successfully</font>';
+
+                        if (result.ErrorCode != "0") {
+                            error = result.ErrorMessage.formatErrorMessage();
+                        }
+
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(error);
+
+                        $.unblockUI(document);
+                    })
+                    .error(function (data) {
+                        if (typeof console != undefined) {
+                            console.log(data);
+                        }
+
+                        $.unblockUI(document);
+                    });
                 },
 
                 this.saveGameSetting = function () {
@@ -201,7 +237,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
     RenderMemberWinLimit: function (data) {
         var limits = data.customerInfo.limit.limits;
-        var selectedItem = data.customerInfo.limit.currentWinLimit;
+        var selectedItem = data.customerInfo.limit.maxWinLimit;
 
         if (data.customerInfo.limit.maxWinLimitUpline == 0) {
             for (var i = 0; i < limits.length; i++) {
@@ -264,7 +300,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             $('#dailyAutoReset').attr('disabled', 'disabled');
         }
 
-        $('#dailyAutoReset').attr('checked', 'checked');
+        $('#dailyAutoReset').attr('checked', data.customerInfo.limit.isDailyAutoReset);
     },
 
     RenderGameSetting: function (data) {

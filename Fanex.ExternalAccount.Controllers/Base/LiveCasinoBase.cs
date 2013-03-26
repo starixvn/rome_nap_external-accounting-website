@@ -31,6 +31,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             // Inits base properties
             this.GameSetting = new GameSettingService();
             this.PtSetting = new SettingService();
+            this.MemberWinLimit = new MemberWinLimitService();
             this.GameResult = new Dictionary<int, Dictionary<int, Result>>();
             this.WrongPtIds = new List<int>();
             this.UnsyncIds = new List<int>();
@@ -76,6 +77,15 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// Gets or sets property
         /// </summary>
         protected IGameSettingService GameSetting
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property
+        /// </summary>
+        protected IMemberWinLimitService MemberWinLimit
         {
             get;
             set;

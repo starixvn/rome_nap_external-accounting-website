@@ -337,5 +337,29 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateMasterWinLimit(int custId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            var memberWinLimit = new MemberWinLimit()
+            {
+                IsDailyAutoReset = model.CustomerInfo.Limit.IsDailyAutoReset,
+                MaxWinLimit = model.CustomerInfo.Limit.MaxWinLimit
+            };
+
+            var context = new RequestContext()
+            {
+                CustId = custId,
+                Language = "en-US",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var result = this.MemberWinLimit.UpdateMemberWinLimit(memberWinLimit, context);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
     }
 }
