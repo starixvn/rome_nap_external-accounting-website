@@ -26,6 +26,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 this.GetMemberSetting();
             }
         }
+
+        // Set events for checkboxes
+        var interval = setInterval(function () {
+            if (typeof Fanex.ExtAcc.Customer.LiveCasino.customer != 'undefined') {
+                clearInterval(interval);
+                setEventForCheckbox();
+            }
+        }, 100);
     },
 
     GetMasterSetting: function () {
@@ -267,7 +275,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             for (var j = 0; j < gameSetting[i].bettingLimit.length; j++) {
                 var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
-                bettingLimitItem += '<input style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="checkbox" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
+                bettingLimitItem += '<input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="checkbox" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
             }
 
             var row = '<div class="customerInfoBlock1" style="margin: 0px">' +
@@ -494,7 +502,8 @@ function PT_RenderCombo2(combo, min, max, step) {
 }
 
 function onchangeCheckbox() {
-    for (var i = 0; i < _page.gameRows; i++) {
+    var gameRows = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length;
+    for (var i = 0; i < gameRows; i++) {
         var uncheckCount = 0;
         var items = document.getElementsByName('gameRow' + i);
         if (items[0].type == 'checkbox') {
@@ -505,8 +514,9 @@ function onchangeCheckbox() {
         }
 
         if (uncheckCount == items.length) {
-            document.getElementById('warningMsg').innerHTML = _page.warningMsg;
+            document.getElementById('warningMsg').innerHTML = '<font color="Red">Unchecking all stake levels will affect and apply to all downlines</font>';
             document.getElementById('warningMsg').style.display = 'block';
+
             break;
         }
         else {
@@ -516,7 +526,8 @@ function onchangeCheckbox() {
 }
 
 function setEventForCheckbox() {
-    for (var i = 0; i < _page.gameRows; i++) {
+    var gameRows = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length;
+    for (var i = 0; i < gameRows; i++) {
         var items = document.getElementsByName('gameRow' + i);
         if (items[0].type == 'checkbox') {
             for (var j = 0; j < items.length; j++) {
