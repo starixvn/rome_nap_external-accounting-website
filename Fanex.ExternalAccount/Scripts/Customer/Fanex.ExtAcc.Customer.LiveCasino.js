@@ -103,8 +103,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 this.savePtComm = function () {
                     Fanex.ExtAcc.BlockUI();
 
-                    $('#errMsg').html('');
-
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
                     Fanex.ExtAcc.Customer.LiveCasino.customer.superPTSetting.isAutoPresetPT = isChecked;
@@ -126,10 +124,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         dataType: 'json'
                     })
                     .success(function (result) {
-                        Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
+                            Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
                             $.unblockUI(document);
                         }, 2000);
                     })
@@ -259,8 +256,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     UpdateMemberWinLimit: function () {
         Fanex.ExtAcc.BlockUI();
 
-        $('#errMsg').html('');
-
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
 
@@ -277,17 +272,16 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (result) {
-            var error = '<font color="Blue">Member Win Limit: Updated successfully</font>';
-
-            if (result.ErrorCode != "0") {
-                error = result.ErrorMessage.formatErrorMessage();
-            }
-
-            $('#errMsg').css('display', 'block');
-            $('#errMsg').html(error);
-
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
+                var error = '<font color="Blue">Member Win Limit: Updated successfully</font>';
+
+                if (result.ErrorCode != "0") {
+                    error = result.ErrorMessage.formatErrorMessage();
+                }
+
+                $('#errMsg').css('display', 'block');
+                $('#errMsg').html(error);
                 $.unblockUI(document);
             }, 2000);
         })
