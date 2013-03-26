@@ -140,43 +140,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 },
 
                 this.saveMemberWinLimit = function () {
-                    Fanex.ExtAcc.BlockUI();
-
-                    $('#errMsg').html('');
-
-                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
-                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
-
-                    var data = {
-                        custId: Fanex.ExtAcc.Customer.UserId,
-                        customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
-                    };
-
-                    $.ajax({
-                        url: resolveClientUrl('LiveCasino/UpdateMasterWinLimit'),
-                        type: 'post',
-                        dataType: 'json',
-                        data: data
-                    })
-                    .success(function (result) {
-                        var error = '<font color="Blue">Member Win Limit: Updated successfully</font>';
-
-                        if (result.ErrorCode != "0") {
-                            error = result.ErrorMessage.formatErrorMessage();
-                        }
-
-                        $('#errMsg').css('display', 'block');
-                        $('#errMsg').html(error);
-
-                        $.unblockUI(document);
-                    })
-                    .error(function (data) {
-                        if (typeof console != undefined) {
-                            console.log(data);
-                        }
-
-                        $.unblockUI(document);
-                    });
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit();
                 },
 
                 this.saveGameSetting = function () {
@@ -289,6 +253,47 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         $('#dailyAutoReset').attr('checked', data.customerInfo.limit.isDailyAutoReset);
     },
 
+    UpdateMemberWinLimit: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        $('#errMsg').html('');
+
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
+
+        var data = {
+            custId: Fanex.ExtAcc.Customer.UserId,
+            isDailyAutoReset: document.getElementById('dailyAutoReset').checked,
+            maxWinLimit: $('#maximumWinLimit').val()
+        };
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/UpdatMemberWinLimit'),
+            type: 'post',
+            dataType: 'json',
+            data: data
+        })
+        .success(function (result) {
+            var error = '<font color="Blue">Member Win Limit: Updated successfully</font>';
+
+            if (result.ErrorCode != "0") {
+                error = result.ErrorMessage.formatErrorMessage();
+            }
+
+            $('#errMsg').css('display', 'block');
+            $('#errMsg').html(error);
+
+            $.unblockUI(document);
+        })
+        .error(function (data) {
+            if (typeof console != undefined) {
+                console.log(data);
+            }
+
+            $.unblockUI(document);
+        });
+    },
+
     RenderGameSetting: function (data) {
         var gameSetting = data.gameSetting;
 
@@ -317,33 +322,36 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var error = '';
 
         for (var i = 0; i < codes.length - 1; i++) {
-            if (parseInt(codes[i]) > 0) {
-                error += msgs[i].formatErrorMessage() + '<br/>';
+            var code = parseInt(codes[i]);
+            var updatePart = '';
+
+            switch (code) {
+                case -101:
+                    updatePart = 'Commission: ';
+                    break;
+                case -102:
+                    updatePart = 'Min Position Taking: ';
+                    break;
+                case -103:
+                case 100:
+                case 101:
+                case 102:
+                    updatePart = 'Position Taking: ';
+                    break;
+                default:
+                    break;
+            }
+
+            if (code > 0) {
+                error += '<font color="Red">' + updatePart + '</font>' + msgs[i].formatErrorMessage() + '<br/>';
             }
             else {
-                var code = parseInt(codes[i]);
-                var updatePart = '';
-
-                switch (code) {
-                    case -101:
-                        updatePart = 'Commission: ';
-                        break;
-                    case -102:
-                        updatePart = 'Min Position taking: ';
-                        break;
-                    case -103:
-                        updatePart = 'Position taking: ';
-                        break;
-                    default:
-                        break;
-                }
-
                 error += '<font color="Blue">' + updatePart + 'Updated successfully</font><br/>';
             }
         }
 
         $('#errMsg').css('display', 'block');
-        $('#errMsg').html(error == '' ? '<font color="Blue">Updated successfully</font>' : error);
+        $('#errMsg').html(error == '' ? '<font color="Blue">Position Taking/Commission: Updated successfully</font>' : error);
     }
 }
 

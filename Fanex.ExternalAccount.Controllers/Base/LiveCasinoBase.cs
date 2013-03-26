@@ -11,6 +11,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
 {
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Web.Mvc;
+    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.LiveCasinoSetting.Business;
@@ -32,7 +35,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             this.GameSetting = new GameSettingService();
             this.PtSetting = new SettingService();
             this.MemberWinLimit = new MemberWinLimitService();
-            this.GameResult = new Dictionary<int, Dictionary<int, Result>>();
+            this.GameResult = new Dictionary<int, Dictionary<int, LiveCasinoSetting.Model.Result>>();
             this.WrongPtIds = new List<int>();
             this.UnsyncIds = new List<int>();
         }
@@ -101,7 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
-        /// Gets or sets property for current role id of editted user
+        /// Gets or sets property for current role id of edited user
         /// </summary>
         protected int RequestCustRoleId
         {
@@ -149,6 +152,35 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
                 return LogActions.ManualInsert_Super;
             }
+        }
+
+        /// <summary>
+        /// Updates member win limit setting
+        /// </summary>
+        /// <param name="custId">Updated customer id</param>
+        /// <param name="isDailyAutoReset">Is daily auto reset</param>
+        /// <param name="maxWinLimit">Maximum win limit</param>
+        /// <returns>ActionResult object</returns>
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdatMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
+        {
+            var memberWinLimit = new MemberWinLimit()
+            {
+                IsDailyAutoReset = isDailyAutoReset,
+                MaxWinLimit = maxWinLimit
+            };
+
+            var context = new RequestContext()
+            {
+                CustId = custId,
+                Language = "en-US",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var result = this.MemberWinLimit.UpdateMemberWinLimit(memberWinLimit, context);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
     }
 }
