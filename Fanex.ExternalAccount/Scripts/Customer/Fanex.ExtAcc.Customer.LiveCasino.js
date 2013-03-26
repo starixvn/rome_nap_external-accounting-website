@@ -126,21 +126,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         dataType: 'json'
                     })
                     .success(function (result) {
-                        var codes = result.ErrorCode.split('\u0007');
-                        var msgs = result.ErrorMessage.split('\u0007');
-                        var error = '';
-
-                        for (var i = 0; i < codes.length; i++) {
-                            if (parseInt(codes[i]) > 0) {
-                                error += msgs[i] + '<br/>';
-                            }
-                            else {
-                                error += '<font color="Blue">Updated successfully</font><br/>';
-                            }
-                        }
-
-                        $('#errMsg').css('display', 'block');
-                        $('#errMsg').html(error);
+                        Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
 
                         $.unblockUI(document);
                     })
@@ -323,6 +309,41 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             $('#gameSetting').append(row);
         }
+    },
+
+    RenderPtCommErrorMessage: function (data) {
+        var codes = data.ErrorCode.split('\u0007');
+        var msgs = data.ErrorMessage.split('\u0007');
+        var error = '';
+
+        for (var i = 0; i < codes.length - 1; i++) {
+            if (parseInt(codes[i]) > 0) {
+                error += msgs[i].formatErrorMessage() + '<br/>';
+            }
+            else {
+                var code = parseInt(codes[i]);
+                var updatePart = '';
+
+                switch (code) {
+                    case -101:
+                        updatePart = 'Commission: ';
+                        break;
+                    case -102:
+                        updatePart = 'Min Position taking: ';
+                        break;
+                    case -103:
+                        updatePart = 'Position taking: ';
+                        break;
+                    default:
+                        break;
+                }
+
+                error += '<font color="Blue">' + updatePart + 'Updated successfully</font><br/>';
+            }
+        }
+
+        $('#errMsg').css('display', 'block');
+        $('#errMsg').html(error == '' ? '<font color="Blue">Updated successfully</font>' : error);
     }
 }
 
