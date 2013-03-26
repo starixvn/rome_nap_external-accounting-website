@@ -95,15 +95,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the request is submit button clicked
-        /// </summary>
-        protected bool IsSubmit
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets property for current role id of edited user
         /// </summary>
         protected int RequestCustRoleId

@@ -32,5 +32,7 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
         public virtual PTModel MemberPTSetting { get; set; }
 
         public bool IsMultiple { get; set; }
+
+        public bool IsSubmit { get; set; }
     }
 }
