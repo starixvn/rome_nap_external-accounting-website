@@ -222,10 +222,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     select = 'selected = "selected"';
                 }
 
-                if (i == limits.length - 1) {
-                    text = 'Unlimited';
-                }
-
                 $("#maximumWinLimit").append('<option value="' + value + '" ' + select + '>' + text + '</option>');
             }
         }
@@ -239,10 +235,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     select = 'selected = "selected"';
                 }
 
-                if (i == limits.length - 1) {
-                    text = 'Unlimited';
-                }
-
                 $("#maximumWinLimit").append('<option value="' + value + '" ' + select + '>' + text + '</option>');
             }
         }
@@ -254,10 +246,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                 if (value == selectedItem) {
                     select = 'selected = "selected"';
-                }
-
-                if (i == limits.length - 1) {
-                    text = 'Unlimited';
                 }
 
                 $("#maximumWinLimit").append('<option value="' + value + '" ' + select + '>' + text + '</option>');
