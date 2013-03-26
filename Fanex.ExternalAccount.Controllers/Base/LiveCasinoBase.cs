@@ -162,7 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="maxWinLimit">Maximum win limit</param>
         /// <returns>ActionResult object</returns>
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult UpdatMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
+        public ActionResult UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
         {
             var memberWinLimit = new MemberWinLimit()
             {

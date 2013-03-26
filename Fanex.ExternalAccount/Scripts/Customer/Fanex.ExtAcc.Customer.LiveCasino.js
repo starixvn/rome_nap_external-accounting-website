@@ -268,7 +268,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         };
 
         $.ajax({
-            url: resolveClientUrl('LiveCasino/UpdatMemberWinLimit'),
+            url: resolveClientUrl('LiveCasino/UpdateMemberWinLimit'),
             type: 'post',
             dataType: 'json',
             data: data
