@@ -20,6 +20,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using RemotingRef;
 
     /// <summary>
     /// Controller for processing live casino setting
@@ -151,6 +152,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             #endregion For testing render game setting
 
+            var gameSetting = settingModel.GameSetting;
+
+            foreach (var item in gameSetting)
+            {
+                item.Name = RefData.GetBetTypeName(item.BetTypeId.ToString(), "ch", string.Empty);
+            }
+
             var liveCasinoModel = new LiveCasinoModel()
             {
                 SuperPTSetting = new PTModel
@@ -190,7 +198,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     UplineDisableLiveCasino = settingModel.CustomerInfo.UplineDisableLiveCasino,
                     UserName = settingModel.CustomerInfo.UserName
                 },
-                GameSetting = settingModel.GameSetting,
+                GameSetting = gameSetting,
                 MasterPTSetting = new PTModel
                 {
                     AutoPresetPT = settingModel.PTSetting.AutoPresetPT,
@@ -336,6 +344,39 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.PtSetting.UpdateMasterPTSetting(context, pt);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateGameSetting(int uplineRoleId, int custId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
+            var gameTypes = model.GameSetting;
+            var custInfo = this.GetInsertAccountRequest(custId, "ACCINDO");
+
+            var req = new InsertAccountRequest
+            {
+                AgentId = (int)custInfo["recommend"],
+                MasterId = (int)custInfo["mrecommend"],
+                SuperId = (int)custInfo["srecommend"],
+                CustId = custId,
+                RoleId = uplineRoleId - 1,
+                IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
+                IsEnableDownline = true,
+                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino
+            };
+
+            gameTypes.ForEach(o =>
+            {
+                o.BettingLimit.ForEach(s =>
+                {
+                    s.IsDirty = true;
+                });
+            });
+
+            var result = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
+
+            return null;
         }
     }
 }

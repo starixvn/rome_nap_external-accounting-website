@@ -29,7 +29,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         // Set events for checkboxes
         var interval = setInterval(function () {
-            if (typeof Fanex.ExtAcc.Customer.LiveCasino.customer != 'undefined') {
+            if (typeof Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting != 'undefined') {
                 clearInterval(interval);
                 setEventForCheckbox();
             }
@@ -314,6 +314,13 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             $('#gameSetting').append(row);
         }
+    },
+
+    UpdateGameSetting: function (data) {
+        Fanex.ExtAcc.BlockUI();
+
+        var data = {
+        };
     },
 
     RenderPtCommErrorMessage: function (data) {

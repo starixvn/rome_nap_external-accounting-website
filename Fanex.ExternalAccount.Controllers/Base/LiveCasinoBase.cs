@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 {
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Data;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
@@ -172,6 +173,16 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var result = this.MemberWinLimit.UpdateMemberWinLimit(memberWinLimit, context);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public DataRow GetInsertAccountRequest(int custId, string groupName)
+        {
+            var report = new ReportService();
+            var custInfo = report.GetCustomerInfo(groupName, custId, string.Empty, true);
+            var item = custInfo.Rows[0];
+
+            return item;
         }
     }
 }
