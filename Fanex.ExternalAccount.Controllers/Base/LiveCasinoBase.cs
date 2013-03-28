@@ -68,46 +68,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
-        /// Gets log action update stake level
-        /// </summary>
-        /// <param name="roleId">Role id of customer</param>
-        /// <returns>LogActions object</returns>
-        protected LogActions LogActionUpdateStakeLevel(int roleId)
-        {
-            switch (roleId)
-            {
-                case 3:
-                    return LogActions.UpdateStakeLevel_Master;
-                case 2:
-                    return LogActions.UpdateStakeLevel_Agent;
-                case 1:
-                    return LogActions.UpdateStakeLevel_Member;
-            }
-
-            return LogActions.UpdateStakeLevel_Super;
-        }
-
-        /// <summary>
-        /// Gets log action manual insert account
-        /// </summary>
-        /// <param name="roleId">Role id of customer</param>
-        /// <returns>LogActions object</returns>
-        protected LogActions LogActionManual(int roleId)
-        {
-            switch (roleId)
-            {
-                case 1:
-                    return LogActions.ManualInsert_Member;
-                case 2:
-                    return LogActions.ManualInsert_Agent;
-                case 3:
-                    return LogActions.ManualInsert_Master;
-            }
-
-            return LogActions.ManualInsert_Super;
-        }
-
-        /// <summary>
         /// Updates member win limit setting
         /// </summary>
         /// <param name="custId">Updated customer id</param>
@@ -115,7 +75,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="maxWinLimit">Maximum win limit</param>
         /// <returns>ActionResult object</returns>
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        protected ActionResult UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
+        public ActionResult UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
         {
             var memberWinLimit = new MemberWinLimit()
             {
@@ -137,22 +97,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         /// <summary>
-        /// Gets customer info
-        /// </summary>
-        /// <param name="custId">Customer Id</param>
-        /// <param name="groupName">Group Name that user belongs to</param>
-        /// <returns>DataRow object</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        protected DataRow GetCustomerInfo(int custId, string groupName)
-        {
-            var report = new ReportService();
-            var custInfo = report.GetCustomerInfo(groupName, custId, string.Empty, true);
-            var item = custInfo.Rows[0];
-
-            return item;
-        }
-
-        /// <summary>
         /// Updates game setting info
         /// </summary>
         /// <param name="uplineRoleId">Role id of up-line</param>
@@ -160,7 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="customer">Customer string object</param>
         /// <returns>JSON string object</returns>
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        protected ActionResult UpdateGameSetting(int uplineRoleId, int custId, string customer)
+        public ActionResult UpdateGameSetting(int uplineRoleId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
@@ -198,6 +142,62 @@ namespace Fanex.ExternalAccount.Controllers.Base
             }
 
             return this.JsonBase(result);
+        }
+
+        /// <summary>
+        /// Gets customer info
+        /// </summary>
+        /// <param name="custId">Customer Id</param>
+        /// <param name="groupName">Group Name that user belongs to</param>
+        /// <returns>DataRow object</returns>
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        protected DataRow GetCustomerInfo(int custId, string groupName)
+        {
+            var report = new ReportService();
+            var custInfo = report.GetCustomerInfo(groupName, custId, string.Empty, true);
+            var item = custInfo.Rows[0];
+
+            return item;
+        }
+
+        /// <summary>
+        /// Gets log action update stake level
+        /// </summary>
+        /// <param name="roleId">Role id of customer</param>
+        /// <returns>LogActions object</returns>
+        protected LogActions LogActionUpdateStakeLevel(int roleId)
+        {
+            switch (roleId)
+            {
+                case 3:
+                    return LogActions.UpdateStakeLevel_Master;
+                case 2:
+                    return LogActions.UpdateStakeLevel_Agent;
+                case 1:
+                    return LogActions.UpdateStakeLevel_Member;
+            }
+
+            return LogActions.UpdateStakeLevel_Super;
+        }
+
+        /// <summary>
+        /// Gets log action manual insert account
+        /// </summary>
+        /// <param name="roleId">Role id of customer</param>
+        /// <returns>LogActions object</returns>
+        protected LogActions LogActionManual(int roleId)
+        {
+            switch (roleId)
+            {
+                case 1:
+                    return LogActions.ManualInsert_Member;
+                case 2:
+                    return LogActions.ManualInsert_Agent;
+                case 3:
+                    return LogActions.ManualInsert_Master;
+            }
+
+            return LogActions.ManualInsert_Super;
         }
     }
 }

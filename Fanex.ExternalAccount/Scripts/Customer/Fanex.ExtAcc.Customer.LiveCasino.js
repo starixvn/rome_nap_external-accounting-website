@@ -29,7 +29,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         // Set events for checkboxes
         var interval = setInterval(function () {
-            if (typeof Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting != 'undefined') {
+            if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting != null) {
                 clearInterval(interval);
                 setEventForCheckbox();
             }
@@ -144,7 +144,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 },
 
                 this.saveGameSetting = function () {
-                    alert('Save Game Setting');
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
                 }
             };
 
@@ -319,8 +319,60 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     UpdateGameSetting: function (data) {
         Fanex.ExtAcc.BlockUI();
 
+        var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
+
+        for (var i = 0; i < gameSettings.length; i++) {
+            var game = gameSettings[i];
+            var limits = game.bettingLimit;
+            var items = document.getElementsByName('gameRow' + i);
+
+            for (var j = 0; j < limits.length; j++) {
+                var limit = limits[j];
+
+                limit.isSelected = items[j].checked;
+            }
+        }
+
         var data = {
+            uplineRoleId: Fanex.ExtAcc.Customer.CurrentLevel + 1,
+            custId: Fanex.ExtAcc.Customer.UserId,
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/UpdateGameSetting'),
+            data: data,
+            type: 'post',
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+
+                var error = '';
+
+                for (var i = 0; i < result.length; i++) {
+                    if (parseInt(result[i].ErrorCode) != 0) {
+                        error += '<font color="Red">Game Setting: </font>' + result[i].ErrorMessage.formatErrorMessage() + '<br />';
+                    }
+                    else {
+                        error += '<font color="Blue">Game Setting: Updated successfully</font><br />';
+                    }
+                }
+
+                $('#errMsg').show();
+                $('#errMsg').html(error);
+
+                $.unblockUI(document);
+            }, 2000);
+        })
+        .error(function (data) {
+            $('#errMsg').show();
+            $('#errMsg').html(data.statusText.formatErrorMessage());
+
+            $.unblockUI(document);
+        })
     },
 
     RenderPtCommErrorMessage: function (data) {

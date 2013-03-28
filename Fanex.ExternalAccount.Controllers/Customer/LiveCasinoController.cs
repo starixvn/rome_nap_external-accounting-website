@@ -156,7 +156,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             foreach (var item in gameSetting)
             {
-                item.Name = RefData.GetBetTypeName(item.BetTypeId.ToString(), "ch", string.Empty);
+                item.Name = RefData.GetBetTypeName(item.BetTypeId.ToString(), "en", string.Empty);
             }
 
             var liveCasinoModel = new LiveCasinoModel()
