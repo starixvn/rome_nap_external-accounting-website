@@ -176,7 +176,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public DataRow GetInsertAccountRequest(int custId, string groupName)
+        public DataRow GetCustomerInfo(int custId, string groupName)
         {
             var report = new ReportService();
             var custInfo = report.GetCustomerInfo(groupName, custId, string.Empty, true);

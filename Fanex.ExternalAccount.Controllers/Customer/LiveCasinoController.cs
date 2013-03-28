@@ -352,7 +352,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
             var gameTypes = model.GameSetting;
-            var custInfo = this.GetInsertAccountRequest(custId, "ACCINDO");
+            var custInfo = this.GetCustomerInfo(custId, "ACCINDO");
 
             var req = new InsertAccountRequest
             {
