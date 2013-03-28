@@ -354,15 +354,12 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                 for (var i = 0; i < result.length; i++) {
                     if (parseInt(result[i].ErrorCode) != 0) {
-                        error += '<font color="Red">Game Setting: </font>' + result[i].ErrorMessage.formatErrorMessage() + '<br />';
-                    }
-                    else {
-                        error += '<font color="Blue">Game Setting: Updated successfully</font><br />';
+                        error += result[i].ErrorMessage.formatErrorMessage() + '<br />';
                     }
                 }
 
                 $('#errMsg').show();
-                $('#errMsg').html(error);
+                $('#errMsg').html(error != '' ? '<font color="Red">Game Setting: </font>' + error : '<font color="Blue">Game Setting: Updated successfully</font><br />');
 
                 $.unblockUI(document);
             }, 2000);
