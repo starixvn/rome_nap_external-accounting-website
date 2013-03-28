@@ -125,13 +125,22 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 SignUpForm = 3 // External accounting
             };
 
-            gameTypes.ForEach(o =>
+            oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
             {
-                o.BettingLimit.ForEach(s =>
+                gameTypes.ForEach(q =>
                 {
-                    s.IsDirty = true;
+                    if (q.BetTypeId == o.BetTypeId)
+                    {
+                        q.BettingLimit.ForEach(r =>
+                        {
+                            if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
+                            {
+                                r.IsDirty = true;
+                            }
+                        });
+                    }
                 });
-            });
+            }));
 
             var result = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
             var results = new List<object>();

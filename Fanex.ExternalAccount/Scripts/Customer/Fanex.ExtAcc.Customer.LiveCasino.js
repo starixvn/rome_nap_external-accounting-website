@@ -296,13 +296,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
     RenderGameSetting: function (data) {
         var gameSetting = data.gameSetting;
+        var type = Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member ? 'radio' : 'checkbox';
 
         for (var i = 0; i < gameSetting.length; i++) {
             var bettingLimitItem = '';
 
             for (var j = 0; j < gameSetting[i].bettingLimit.length; j++) {
                 var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
-                bettingLimitItem += '<input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="checkbox" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
+                bettingLimitItem += '<input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="' + type + '" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
             }
 
             var row = '<div class="customerInfoBlock1" style="margin: 0px">' +
@@ -365,8 +366,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }, 2000);
         })
         .error(function (data) {
-            $('#errMsg').show();
-            $('#errMsg').html(data.statusText.formatErrorMessage());
+            if (typeof console != 'undefined') {
+                console.log(data);
+            }
 
             $.unblockUI(document);
         })
