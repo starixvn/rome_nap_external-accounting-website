@@ -176,7 +176,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 RoleId = uplineRoleId - 1,
                 IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
                 IsEnableDownline = true,
-                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino
+                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
+                SignUpIp = this.CurrentContext.Ip4Address,
+                SignUpForm = 3 // External accounting
             };
 
             gameTypes.ForEach(o =>
