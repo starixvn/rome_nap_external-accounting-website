@@ -345,38 +345,5 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult UpdateGameSetting(int uplineRoleId, int custId, string customer)
-        {
-            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
-            var gameTypes = model.GameSetting;
-            var custInfo = this.GetCustomerInfo(custId, "ACCINDO");
-
-            var req = new InsertAccountRequest
-            {
-                AgentId = (int)custInfo["recommend"],
-                MasterId = (int)custInfo["mrecommend"],
-                SuperId = (int)custInfo["srecommend"],
-                CustId = custId,
-                RoleId = uplineRoleId - 1,
-                IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
-                IsEnableDownline = true,
-                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino
-            };
-
-            gameTypes.ForEach(o =>
-            {
-                o.BettingLimit.ForEach(s =>
-                {
-                    s.IsDirty = true;
-                });
-            });
-
-            var result = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
-
-            return null;
-        }
     }
 }
