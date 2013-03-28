@@ -21,8 +21,6 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
 
         public List<GameType> GameSetting { get; set; }
 
-        public List<int> CustIds { get; set; }
-
         public virtual PTModel SuperPTSetting { get; set; }
 
         public virtual PTModel MasterPTSetting { get; set; }
