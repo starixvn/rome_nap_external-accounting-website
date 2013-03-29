@@ -324,14 +324,23 @@ Fanex.ExtAcc.Customer = {
         if (masterSyncLiveCasino) {
             if (syncLiveCasino) {
                 if (disableLiveCasino) {
-                    itemsAgent.liveCasino = { name: "Live Casino", className: "iconDisableEdit" };
+                    itemsAgent.liveCasino = { name: "Live Casino", className: "iconDisableEdit", callback: function () {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditAgent'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
+                    }
+                    };
                 }
                 else {
-                    itemsAgent.liveCasino = { name: "Live Casino", className: "iconEnableEdit" };
+                    itemsAgent.liveCasino = { name: "Live Casino", className: "iconEnableEdit", callback: function () {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditAgent'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
+                    }
+                    };
                 }
             }
             else {
-                itemsAgent.liveCasino = { name: "Live Casino", className: "iconUnsyncEdit" };
+                itemsAgent.liveCasino = { name: "Live Casino", className: "iconUnsyncEdit", callback: function () {
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditAgent'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
+                }
+                };
             }
         }
 

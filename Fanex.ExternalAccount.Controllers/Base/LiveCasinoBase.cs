@@ -481,7 +481,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             };
 
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var pt = this.PtSetting.GetAgentPTSetting(custId, uplineId);
             var isMultiple = model.IsMultiple;
 
             if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
@@ -554,7 +554,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             };
 
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var pt = this.PtSetting.GetMemberPTSetting(custId, uplineId);
             var isMultiple = model.IsMultiple;
 
             if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
