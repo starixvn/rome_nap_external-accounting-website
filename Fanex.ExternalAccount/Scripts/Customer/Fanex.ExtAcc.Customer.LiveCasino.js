@@ -543,7 +543,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var error = '';
 
         for (var i = 0; i < data.length; i++) {
-            if (data[i].ErrorCode != '' && parseInt(data[i].ErrorCode) != 0) {
+            if (data[i].ErrorCode != '' && data[i].ErrorCode != 'GS0000' && parseInt(data[i].ErrorCode) != 0) {
                 error += data[i].ErrorMessage.formatErrorMessage() + '<br />';
             }
         }

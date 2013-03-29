@@ -44,6 +44,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             this.GameSetting = new GameSettingService();
             this.PtSetting = new SettingService();
             this.MemberWinLimit = new MemberWinLimitService();
+            this.LogWriter = new LogWriterService();
         }
 
         /// <summary>
@@ -68,6 +69,15 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// Gets or sets property
         /// </summary>
         protected IMemberWinLimitService MemberWinLimit
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property
+        /// </summary>
+        protected ILogWriterService LogWriter
         {
             get;
             set;
@@ -217,56 +227,67 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// Synchronizes account manually
         /// </summary>
         /// <param name="custId">Customer id to synchronize</param>
-        protected void SyncManually(int uplineRoleId, int uplineId, int custId, string customer, string groupName = "ACCINDO", bool isUpdateGameSetting = false)
+        protected Fanex.LiveCasinoSetting.Model.Result SyncManually(int uplineRoleId, int uplineId, int custId, string customer, string groupName = "ACCINDO", bool isUpdateGameSetting = false)
         {
             lock (locker)
             {
                 var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
                 var gameTypes = model.GameSetting;
+                var result = new Fanex.LiveCasinoSetting.Model.Result();
+                var custInfo = this.PtSetting.GetCustomerInfo(custId);
+                var userInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
 
                 // Update game setting in case of not sync live casino
-                if (isUpdateGameSetting && !model.CustomerInfo.IsSyncLiveCasino)
+                if (isUpdateGameSetting && !custInfo.IsSyncLiveCasino)
                 {
                     // Update PT first
                     if (uplineRoleId == 4) // Update master PT
                     {
-                        this.UpdateMasterPT(custId, uplineId, customer);
+                        result = this.UpdateMasterPT(custId, uplineId, customer);
                     }
                     else if (uplineRoleId == 3) // Update agent PT
                     {
+                        result = this.UpdateAgentPT(custId, uplineId, customer);
                     }
                     else // Update member PT
                     {
+                        result = this.UpdateMemberPT(custId, uplineId, customer);
                     }
                 }
-                else if (!model.CustomerInfo.IsSyncLiveCasino) // Sync live casino when updated PT
+                else if (!custInfo.IsSyncLiveCasino) // Sync live casino when updated PT
                 {
-                    var custInfo = this.GetCustomerInfo(custId, groupName);
                     var req = new InsertAccountRequest
                     {
-                        AgentId = (int)custInfo["recommend"],
-                        MasterId = (int)custInfo["mrecommend"],
-                        SuperId = (int)custInfo["srecommend"],
+                        AgentId = (int)userInfo["recommend"],
+                        MasterId = (int)userInfo["mrecommend"],
+                        SuperId = (int)userInfo["srecommend"],
                         CustId = custId,
                         RoleId = uplineRoleId - 1,
                         IsEnableDownline = true,
                         SignUpIp = this.CurrentContext.Ip4Address,
-                        SignUpForm = 3 // External accounting,
+                        SignUpForm = 3, // External accounting
+                        UserId = this.CurrentSession.UserId,
+                        CustUserName = model.CustomerInfo.UserName,
+                        UserName = this.CurrentSession.UserName,
+                        ExchangeId = model.CustomerInfo.ExChangeId,
+                        Language = "en"
                     };
 
                     // Manually insert account first
-                    var result = this.GameSetting.InsertAccount(req);
+                    result = this.GameSetting.InsertAccount(req);
 
-                    // Insert account success
+                    // Insert account success then update game setting
                     if (string.IsNullOrWhiteSpace(result.ErrorCode) && gameTypes.Count > 0)
                     {
                         var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
 
+                        // Dont have game setting then get by upline
                         if (oldGameTypes == null || oldGameTypes.Count == 0)
                         {
                             oldGameTypes = this.GameSetting.GetByCustomerId(uplineId);
                         }
 
+                        // Force settings changed
                         oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
                         {
                             gameTypes.ForEach(q =>
@@ -285,19 +306,19 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         }));
 
                         // Update game settings
-                        var resultList = new GameSettingService().UpdateStakeLevel(custId, uplineId - 1, gameTypes);
+                        var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineId - 1, gameTypes);
 
-                        // Update game settings successfully
+                        // Update game settings successfully then sync live casino
                         if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))
                         {
                             // Update sync status for acc
-                            new GameSettingService().UpdateSyncLiveCasinoInfo(req);
+                            ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
 
                             // Write log manual insert account
                             var custList = new List<KeyValuePair<int, string>>();
                             custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
 
-                            new LogWriterService().WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
+                            this.LogWriter.WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
                             {
                                 Action = this.LogActionManual(uplineRoleId - 1),
                                 AgentId = req.AgentId,
@@ -318,9 +339,25 @@ namespace Fanex.ExternalAccount.Controllers.Base
                                 ErrorMessage = result.ErrorMessage,
                                 CustomerList = custList
                             });
+
+                            // Write log stake level
+                            this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+                                            {
+                                                Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
+                                                ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
+                                                ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
+                                                RoleId = uplineRoleId - 1,
+                                                SubAccId = req.SubAccId,
+                                                CustId = custId,
+                                                SignUpIp = this.CurrentContext.Ip4Address,
+                                                Language = "en",
+                                                UserId = req.UserId
+                                            });
                         }
                     }
                 }
+
+                return result;
             }
         }
 
