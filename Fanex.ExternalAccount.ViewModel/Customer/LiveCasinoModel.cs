@@ -21,13 +21,9 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
 
         public List<GameType> GameSetting { get; set; }
 
-        public virtual PTModel SuperPTSetting { get; set; }
+        public virtual PTModel UplinePtSetting { get; set; }
 
-        public virtual PTModel MasterPTSetting { get; set; }
-
-        public virtual PTModel AgentPTSetting { get; set; }
-
-        public virtual PTModel MemberPTSetting { get; set; }
+        public virtual PTModel PtSetting { get; set; }
 
         public bool IsMultiple { get; set; }
 

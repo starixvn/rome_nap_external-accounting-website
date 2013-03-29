@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
@@ -29,6 +30,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
     /// </summary>
     public class LiveCasinoBase : BaseController
     {
+        /// <summary>
+        /// Lock object for synchronization
+        /// </summary>
+        private static object locker = new object();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LiveCasinoBase"/> class
         /// </summary>
@@ -74,8 +80,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="isDailyAutoReset">Is daily auto reset</param>
         /// <param name="maxWinLimit">Maximum win limit</param>
         /// <returns>ActionResult object</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
         {
             var memberWinLimit = new MemberWinLimit()
             {
@@ -93,7 +98,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             var result = this.MemberWinLimit.UpdateMemberWinLimit(memberWinLimit, context);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return result;
         }
 
         /// <summary>
@@ -103,8 +108,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="custId">Customer id</param>
         /// <param name="customer">Customer string object</param>
         /// <returns>JSON string object</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
-        public ActionResult UpdateGameSetting(int uplineRoleId, int custId, string customer)
+        protected List<object> UpdateGameSetting(int uplineRoleId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
@@ -150,7 +154,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 results.Add(new { BettypeId = item.Key, ErrorCode = item.Value.ErrorCode, ErrorMessage = item.Value.ErrorMessage });
             }
 
-            return this.JsonBase(result);
+            return results;
         }
 
         /// <summary>
@@ -207,6 +211,305 @@ namespace Fanex.ExternalAccount.Controllers.Base
             }
 
             return LogActions.ManualInsert_Super;
+        }
+
+        /// <summary>
+        /// Synchronizes account manually
+        /// </summary>
+        /// <param name="custId">Customer id to synchronize</param>
+        protected void SyncManually(int uplineRoleId, int uplineId, int custId, string customer, string groupName = "ACCINDO", bool isUpdateGameSetting = false)
+        {
+            lock (locker)
+            {
+                var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+                var gameTypes = model.GameSetting;
+
+                // Update game setting in case of not sync live casino
+                if (isUpdateGameSetting && !model.CustomerInfo.IsSyncLiveCasino)
+                {
+                    // Update PT first
+                    if (uplineRoleId == 4) // Update master PT
+                    {
+                        this.UpdateMasterPT(custId, uplineId, customer);
+                    }
+                    else if (uplineRoleId == 3) // Update agent PT
+                    {
+                    }
+                    else // Update member PT
+                    {
+                    }
+                }
+                else if (!model.CustomerInfo.IsSyncLiveCasino) // Sync live casino when updated PT
+                {
+                    var custInfo = this.GetCustomerInfo(custId, groupName);
+                    var req = new InsertAccountRequest
+                    {
+                        AgentId = (int)custInfo["recommend"],
+                        MasterId = (int)custInfo["mrecommend"],
+                        SuperId = (int)custInfo["srecommend"],
+                        CustId = custId,
+                        RoleId = uplineRoleId - 1,
+                        IsEnableDownline = true,
+                        SignUpIp = this.CurrentContext.Ip4Address,
+                        SignUpForm = 3 // External accounting,
+                    };
+
+                    // Manually insert account first
+                    var result = this.GameSetting.InsertAccount(req);
+
+                    // Insert account success
+                    if (string.IsNullOrWhiteSpace(result.ErrorCode) && gameTypes.Count > 0)
+                    {
+                        var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
+
+                        if (oldGameTypes == null || oldGameTypes.Count == 0)
+                        {
+                            oldGameTypes = this.GameSetting.GetByCustomerId(uplineId);
+                        }
+
+                        oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
+                        {
+                            gameTypes.ForEach(q =>
+                            {
+                                if (q.BetTypeId == o.BetTypeId)
+                                {
+                                    q.BettingLimit.ForEach(r =>
+                                    {
+                                        if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
+                                        {
+                                            r.IsDirty = true;
+                                        }
+                                    });
+                                }
+                            });
+                        }));
+
+                        // Update game settings
+                        var resultList = new GameSettingService().UpdateStakeLevel(custId, uplineId - 1, gameTypes);
+
+                        // Update game settings successfully
+                        if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))
+                        {
+                            // Update sync status for acc
+                            new GameSettingService().UpdateSyncLiveCasinoInfo(req);
+
+                            // Write log manual insert account
+                            var custList = new List<KeyValuePair<int, string>>();
+                            custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
+
+                            new LogWriterService().WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
+                            {
+                                Action = this.LogActionManual(uplineRoleId - 1),
+                                AgentId = req.AgentId,
+                                CustId = req.CustId,
+                                CustUserName = req.CustUserName,
+                                ExchangeId = req.ExchangeId,
+                                SignUpIp = req.SignUpIp,
+                                Language = req.Language,
+                                MasterId = req.MasterId,
+                                RoleId = req.RoleId,
+                                SignUpForm = req.SignUpForm,
+                                SubAccId = req.SubAccId,
+                                SubAccName = req.SubAccName,
+                                SuperId = req.SuperId,
+                                UserId = req.UserId,
+                                UserName = req.UserName,
+                                ErrorCode = result.ErrorCode,
+                                ErrorMessage = result.ErrorMessage,
+                                CustomerList = custList
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMasterPT(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en-US",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var isMultiple = model.IsMultiple;
+
+            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("MaxPT");
+                pt.PropertiesChangedList.Add("MinPT");
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("AutoPresetPT");
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("IsAutoPresetPT");
+            }
+            else
+            {
+                // Handles Master values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                // Handles Super values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((SuperPTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            // Super values
+            ((SuperPTSetting)pt.Upline).PresetPT = model.UplinePtSetting.PresetPT;
+            ((SuperPTSetting)pt.Upline).AutoPresetPT = model.UplinePtSetting.AutoPresetPT;
+            ((SuperPTSetting)pt.Upline).IsAutoPresetPT = model.UplinePtSetting.IsAutoPresetPT;
+            ((SuperPTSetting)pt.Upline).IsUpdateAllMember = model.UplinePtSetting.IsUpdateAllMember;
+            ((SuperPTSetting)pt.Upline).NewMemberPT = model.UplinePtSetting.NewMemberPT;
+
+            // Master values
+            pt.MaxPT = model.PtSetting.MaxPT;
+            pt.MinPT = model.PtSetting.MinPT;
+            pt.Comm = model.PtSetting.Comm;
+
+            var result = this.PtSetting.UpdateMasterPTSetting(context, pt);
+
+            return result;
+        }
+
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateAgentPT(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en-US",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var isMultiple = model.IsMultiple;
+
+            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("MaxPT");
+                pt.PropertiesChangedList.Add("MinPT");
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("AutoPresetPT");
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("IsAutoPresetPT");
+            }
+            else
+            {
+                // Handles Agent values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                // Handles Master values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((SuperPTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            // Master values
+            ((PTSetting)pt.Upline).PresetPT = model.UplinePtSetting.PresetPT;
+            ((PTSetting)pt.Upline).AutoPresetPT = model.UplinePtSetting.AutoPresetPT;
+            ((PTSetting)pt.Upline).IsAutoPresetPT = model.UplinePtSetting.IsAutoPresetPT;
+            ((PTSetting)pt.Upline).IsUpdateAllMember = model.UplinePtSetting.IsUpdateAllMember;
+            ((PTSetting)pt.Upline).NewMemberPT = model.UplinePtSetting.NewMemberPT;
+
+            // Agent values
+            pt.MaxPT = model.PtSetting.MaxPT;
+            pt.MinPT = model.PtSetting.MinPT;
+            pt.Comm = model.PtSetting.Comm;
+
+            var result = this.PtSetting.UpdateAgentPTSetting(context, pt);
+
+            return result;
+        }
+
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberPT(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en-US",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var isMultiple = model.IsMultiple;
+
+            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+            }
+            else
+            {
+                // Handles Member values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                // Handles Agent values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((PTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((PTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            // Agent values
+            ((PTSetting)pt.Upline).PresetPT = model.UplinePtSetting.PresetPT;
+
+            // Member values
+            pt.Comm = model.PtSetting.Comm;
+
+            var result = this.PtSetting.UpdateMemberPTSetting(context, pt);
+
+            return result;
         }
     }
 }

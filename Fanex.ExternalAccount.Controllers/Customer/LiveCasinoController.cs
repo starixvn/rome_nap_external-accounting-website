@@ -161,7 +161,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var liveCasinoModel = new LiveCasinoModel()
             {
-                SuperPTSetting = new PTModel
+                UplinePtSetting = new PTModel
                 {
                     AutoPresetPT = settingModel.PTSetting.Upline.AutoPresetPT,
                     Comm = settingModel.PTSetting.Upline.Comm,
@@ -199,7 +199,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     UserName = settingModel.CustomerInfo.UserName
                 },
                 GameSetting = gameSetting,
-                MasterPTSetting = new PTModel
+                PtSetting = new PTModel
                 {
                     AutoPresetPT = settingModel.PTSetting.AutoPresetPT,
                     Comm = settingModel.PTSetting.Comm,
@@ -281,68 +281,57 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult UpdateMasterPTPost(int custId, int uplineId, string customer)
         {
-            var context = new RequestContext
-            {
-                CustId = custId,
-                IsSyncLiveCasino = true,
-                Language = "en-US",
-                SignUpIp = this.CurrentContext.Ip4Address,
-                UplineId = uplineId,
-                UserId = this.CurrentSession.UserId
-            };
-
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
-            var isMultiple = model.IsMultiple;
+            var result = this.UpdateMasterPT(custId, uplineId, customer);
 
-            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
-            {
-                pt.PropertiesChangedList.Add("MaxPT");
-                pt.PropertiesChangedList.Add("MinPT");
-                pt.PropertiesChangedList.Add("Comm");
-
-                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
-                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("AutoPresetPT");
-                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("IsAutoPresetPT");
-            }
-            else
-            {
-                //Handles Master values changed
-                ((INotifyPropertyChanged)pt).PropertyChanged
-                                 += (o, arg) =>
-                                 {
-                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
-                                     {
-                                         pt.PropertiesChangedList.Add(arg.PropertyName);
-                                     }
-                                 };
-
-                //Handles Super values changed
-                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
-                                 += (o, arg) =>
-                                 {
-                                     if (!((SuperPTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
-                                     {
-                                         ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
-                                     }
-                                 };
-            }
-
-            //Super values
-            ((SuperPTSetting)pt.Upline).PresetPT = model.SuperPTSetting.PresetPT;
-            ((SuperPTSetting)pt.Upline).AutoPresetPT = model.SuperPTSetting.AutoPresetPT;
-            ((SuperPTSetting)pt.Upline).IsAutoPresetPT = model.SuperPTSetting.IsAutoPresetPT;
-            ((SuperPTSetting)pt.Upline).IsUpdateAllMember = model.SuperPTSetting.IsUpdateAllMember;
-            ((SuperPTSetting)pt.Upline).NewMemberPT = model.SuperPTSetting.NewMemberPT;
-
-            //Master values
-            pt.MaxPT = model.MasterPTSetting.MaxPT;
-            pt.MinPT = model.MasterPTSetting.MinPT;
-            pt.Comm = model.MasterPTSetting.Comm;
-
-            var result = this.PtSetting.UpdateMasterPTSetting(context, pt);
+            // Process manually sync
+            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateMemberWinLimitPost(int uplineId, int custId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var result = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+
+            // Do not process manually sync in this case
+            // this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateGameSettingPost(int uplineRoleId, int uplineId, int custId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
+
+            // Process manually sync
+            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
+
+            return this.JsonBase(result);
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateMasterLiveCasinoPost(int custId, int uplineId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var result = this.UpdateMasterPT(custId, uplineId, customer);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultGS = this.UpdateGameSetting(4, custId, customer);
+
+            // Process manually sync
+            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
+
+            var results = new List<object>();
+
+            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(resultGS);
+
+            return this.JsonBase(results);
         }
     }
 }
