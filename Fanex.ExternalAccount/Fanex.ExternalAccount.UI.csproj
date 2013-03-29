@@ -325,6 +325,10 @@
     <Content Include="Images\Content\bg-popuptittle.png" />
     <Content Include="Images\Content\btn-bgsubmit-hover.png" />
     <Content Include="Images\Content\btn-bgsubmit-original.png" />
+    <Content Include="Images\Content\b_add.jpg" />
+    <Content Include="Images\Content\b_down.jpg" />
+    <Content Include="Images\Content\b_sub.jpg" />
+    <Content Include="Images\Content\b_up.jpg" />
     <Content Include="Images\Content\checkbox.png" />
     <Content Include="Images\Content\close-icn.png" />
     <Content Include="Images\Content\delete-icn.png" />

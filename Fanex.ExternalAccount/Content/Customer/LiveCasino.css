@@ -11,7 +11,7 @@
 }
 .btnPTDown
 {
-	background: url(../../Images/b_down.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/Content/b_down.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
@@ -22,7 +22,7 @@
 
 .btnPTUp
 {
-	background: url(../../Images/b_up.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/Content/b_up.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
@@ -33,7 +33,7 @@
 
 .btnPTSub
 {
-	background: url(../../Images/b_sub.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/Content/b_sub.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
@@ -44,7 +44,7 @@
 
 .btnPTAdd
 {
-	background: url(../../Images/b_add.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/Content/b_add.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
