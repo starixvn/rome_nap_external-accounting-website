@@ -526,14 +526,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
         }
 
-        return error == '' ? '<font color="Blue">Position Taking/Commission: Updated successfully</font>' : error;
+        return error == '' ? '<font color="Blue">Position Taking/Commission: Updated successfully</font><br />' : error;
     },
 
     RenderMemberWinLimitMessage: function (data) {
         var error = '<font color="Blue">Member Win Limit: Updated successfully</font><br />';
 
         if (data.ErrorCode != "0") {
-            error = data.ErrorMessage.formatErrorMessage();
+            error = data.ErrorMessage.formatErrorMessage() + '<br />';
         }
 
         return error;
