@@ -167,19 +167,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
 
                         // Member win limit messages
-                        mwMsg = '<font color="Blue">Member Win Limit: Updated successfully</font><br />';
-                        if (mw.ErrorCode != "0") {
-                            mwMsg = mw.ErrorMessage.formatErrorMessage();
-                        }
+                        mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
 
                         // Game setting messages
-                        for (var i = 0; i < gs.length; i++) {
-                            if (gs[i].ErrorCode != '' && parseInt(gs[i].ErrorCode) != 0) {
-                                gsMsg += gs[i].ErrorMessage.formatErrorMessage() + '<br />';
-                            }
-                        }
-
-                        gsMsg = gsMsg != '' ? '<font color="Red">Game Setting: </font>' + gsMsg : '<font color="Blue">Game Setting: Updated successfully</font><br />';
+                        gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
 
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
@@ -393,11 +384,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         .success(function (result) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                var error = '<font color="Blue">Member Win Limit: Updated successfully</font>';
-
-                if (result.ErrorCode != "0") {
-                    error = result.ErrorMessage.formatErrorMessage();
-                }
+                var error = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(result);
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(error);
@@ -486,16 +473,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         .success(function (result) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                var error = '';
-
-                for (var i = 0; i < result.length; i++) {
-                    if (result[i].ErrorCode != '' && parseInt(result[i].ErrorCode) != 0) {
-                        error += result[i].ErrorMessage.formatErrorMessage() + '<br />';
-                    }
-                }
+                var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
 
                 $('#errMsg').show();
-                $('#errMsg').html(error != '' ? '<font color="Red">Game Setting: </font>' + error : '<font color="Blue">Game Setting: Updated successfully</font><br />');
+                $('#errMsg').html(error);
 
                 $.unblockUI(document);
             }, 2000);
@@ -529,6 +510,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 case 100:
                 case 101:
                 case 102:
+                case 103:
                     updatePart = 'Position Taking: ';
                     break;
                 default:
@@ -544,6 +526,28 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         return error == '' ? '<font color="Blue">Position Taking/Commission: Updated successfully</font>' : error;
+    },
+
+    RenderMemberWinLimitMessage: function (data) {
+        var error = '<font color="Blue">Member Win Limit: Updated successfully</font><br />';
+
+        if (data.ErrorCode != "0") {
+            error = data.ErrorMessage.formatErrorMessage();
+        }
+
+        return error;
+    },
+
+    RenderGameSettingMessage: function (data) {
+        var error = '';
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].ErrorCode != '' && parseInt(data[i].ErrorCode) != 0) {
+                error += data[i].ErrorMessage.formatErrorMessage() + '<br />';
+            }
+        }
+
+        return error != '' ? '<font color="Red">Game Setting: </font>' + error : '<font color="Blue">Game Setting: Updated successfully</font><br />';
     }
 }
 
