@@ -514,7 +514,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     updatePart = 'Position Taking: ';
                     break;
                 default:
-                    updatePart = 'Position Taking: ';
+                    updatePart = 'Position Taking/Commission: ';
                     break;
             }
 
