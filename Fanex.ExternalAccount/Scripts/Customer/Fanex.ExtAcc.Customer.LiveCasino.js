@@ -50,8 +50,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
-            if (typeof console != 'undefined') console.log(data);
-
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -183,7 +181,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             false,
                             function () {
                                 Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT($('#memberPT').val());
-                                console.log($('#memberPT').val());
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
