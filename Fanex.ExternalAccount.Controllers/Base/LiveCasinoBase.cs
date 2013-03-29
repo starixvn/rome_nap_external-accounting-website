@@ -243,7 +243,13 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <summary>
         /// Synchronizes account manually
         /// </summary>
-        /// <param name="custId">Customer id to synchronize</param>
+        /// <param name="uplineRoleId">Role id of up-line</param>
+        /// <param name="uplineId">Id of up-line</param>
+        /// <param name="custId">Customer id</param>
+        /// <param name="customer">Customer JSON string</param>
+        /// <param name="groupName">Group name that user belongs to</param>
+        /// <param name="isUpdateGameSetting">Boolean value</param>
+        /// <returns>Result object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result SyncManually(int uplineRoleId, int uplineId, int custId, string customer, string groupName = "ACCINDO", bool isUpdateGameSetting = false)
         {
             lock (locker)
@@ -258,21 +264,25 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 if (isUpdateGameSetting && !custInfo.IsSyncLiveCasino)
                 {
                     // Update PT first
-                    if (uplineRoleId == 4) // Update master PT
+                    if (uplineRoleId == 4)
                     {
+                        // Update master PT
                         result = this.UpdateMasterPT(custId, uplineId, customer);
                     }
-                    else if (uplineRoleId == 3) // Update agent PT
+                    else if (uplineRoleId == 3)
                     {
+                        // Update agent PT
                         result = this.UpdateAgentPT(custId, uplineId, customer);
                     }
-                    else // Update member PT
+                    else
                     {
+                        // Update member PT
                         result = this.UpdateMemberPT(custId, uplineId, customer);
                     }
                 }
-                else if (!custInfo.IsSyncLiveCasino) // Sync live casino when updated PT
+                else if (!custInfo.IsSyncLiveCasino)
                 {
+                    // Sync live casino when updated PT
                     var req = new InsertAccountRequest
                     {
                         AgentId = (int)userInfo["recommend"],
@@ -378,6 +388,13 @@ namespace Fanex.ExternalAccount.Controllers.Base
             }
         }
 
+        /// <summary>
+        /// Update PT
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <param name="uplineId">Up-line id</param>
+        /// <param name="customer">Customer JSON string</param>
+        /// <returns>Result object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMasterPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -444,6 +461,13 @@ namespace Fanex.ExternalAccount.Controllers.Base
             return result;
         }
 
+        /// <summary>
+        /// Update PT
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <param name="uplineId">Up-line id</param>
+        /// <param name="customer">Customer JSON string</param>
+        /// <returns>Result object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateAgentPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -510,6 +534,13 @@ namespace Fanex.ExternalAccount.Controllers.Base
             return result;
         }
 
+        /// <summary>
+        /// Update PT
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <param name="uplineId">Up-line id</param>
+        /// <param name="customer">Customer JSON string</param>
+        /// <returns>Result object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
