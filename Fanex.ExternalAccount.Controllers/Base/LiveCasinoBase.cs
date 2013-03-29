@@ -132,11 +132,14 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 SuperId = (int)custInfo["srecommend"],
                 CustId = custId,
                 RoleId = uplineRoleId - 1,
-                IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
                 IsEnableDownline = true,
-                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
                 SignUpIp = this.CurrentContext.Ip4Address,
-                SignUpForm = 3 // External accounting
+                SignUpForm = 3, // External accounting
+                UserId = this.CurrentSession.UserId,
+                CustUserName = model.CustomerInfo.UserName,
+                UserName = this.CurrentSession.UserName,
+                ExchangeId = model.CustomerInfo.ExChangeId,
+                Language = "en"
             };
 
             oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
@@ -156,13 +159,27 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 });
             }));
 
-            var result = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
+            var resultList = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
             var results = new List<object>();
 
-            foreach (var item in result)
+            foreach (var item in resultList)
             {
                 results.Add(new { BettypeId = item.Key, ErrorCode = item.Value.ErrorCode, ErrorMessage = item.Value.ErrorMessage });
             }
+
+            // Write log stake level
+            this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+            {
+                Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
+                ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
+                ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
+                RoleId = uplineRoleId - 1,
+                SubAccId = req.SubAccId,
+                CustId = custId,
+                SignUpIp = this.CurrentContext.Ip4Address,
+                Language = "en",
+                UserId = req.UserId
+            });
 
             return results;
         }
