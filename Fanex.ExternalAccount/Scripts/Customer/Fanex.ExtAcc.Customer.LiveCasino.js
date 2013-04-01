@@ -233,7 +233,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                 this.saveGameSetting = function () {
                     if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, i);
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, 0);
                     }
                 }
             };
