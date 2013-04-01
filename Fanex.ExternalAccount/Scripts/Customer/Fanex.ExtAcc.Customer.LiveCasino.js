@@ -28,12 +28,12 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         // Set events for checkboxes
-        var interval = setInterval(function () {
-            if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting != null) {
-                clearInterval(interval);
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            if (Fanex.ExtAcc.Customer.LiveCasino.customer != null && Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting != null) {
                 setEventForCheckbox();
             }
-        }, 100);
+        }, 200);
     },
 
     GetMasterSetting: function () {
@@ -200,7 +200,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 },
 
                 this.saveGameSetting = function () {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                    }
                 }
             };
 
@@ -219,7 +221,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
-        data.uplineId = Fanex.ExtAcc.Customer.superId;
+        data.uplineId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/EditAgentPost'),
@@ -378,7 +380,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 },
 
                 this.saveGameSetting = function () {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                    }
                 }
             };
 
@@ -393,6 +397,95 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     GetMemberSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        var data = new Object();
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.uplineId = Fanex.ExtAcc.Customer.agentId;
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/EditMemberPost'),
+            dataType: 'json',
+            type: 'post',
+            data: data
+        })
+        .success(function (data) {
+            //Assign data for global variable
+            Fanex.ExtAcc.Customer.LiveCasino.customer = data;
+
+            //PT Renderring
+            //PT values
+            var uplineMin = data.uplinePtSetting.minPT;
+            var uplineMax = data.uplinePtSetting.maxPT;
+            var uplinePreset = data.uplinePtSetting.presetPT;
+            var uplineAutoPreset = data.uplinePtSetting.autoPresetPT;
+            var max = data.ptSetting.maxPT;
+
+            //Render agent preset pt
+            PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+            //Render Master Commission
+            Comm_RenderCombo(document.getElementById('comm_2'), 0, data.uplinePtSetting.comm, 0.0005, data.ptSetting.comm);
+
+            //Render member win limit block
+            Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimit(data);
+
+            //Render game setting
+            Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
+
+            //Model for binding events on form
+            Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
+                this.saveCustomer = function () {
+                    // Set PT values
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = $('#pt_1').val();
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_2').val();
+
+                    // Set member win limit values
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
+
+                    // Set game setting values
+                    var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
+                    Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
+
+                    for (var i = 0; i < gameSettings.length; i++) {
+                        var game = gameSettings[i];
+                        var limits = game.bettingLimit;
+                        var items = document.getElementsByName('gameRow' + i);
+
+                        for (var j = 0; j < limits.length; j++) {
+                            var limit = limits[j];
+
+                            limit.isSelected = items[j].checked;
+                        }
+                    }
+
+                    Fanex.ExtAcc.Customer.LiveCasino.SubmitMemberPT();
+                },
+
+                this.savePtComm = function () {
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberPT();
+                },
+
+                this.saveMemberWinLimit = function () {
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit();
+                },
+
+                this.saveGameSetting = function () {
+                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                    }
+                }
+            };
+
+            ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
+
+            $.unblockUI(document);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') console.log(data.responseText);
+            $.unblockUI(document);
+        });
     },
 
     SuperGetMemberSetting: function () {
@@ -546,7 +639,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             for (var j = 0; j < gameSetting[i].bettingLimit.length; j++) {
                 var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
-                bettingLimitItem += '<input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="' + type + '" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
+                bettingLimitItem += '&nbsp;<input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="' + type + '" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
             }
 
             var row = '<div class="customerInfoBlock1" style="margin: 0px">' +
@@ -736,54 +829,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
     },
 
-    UpdateAgentPT: function (newMemberPT) {
-        Fanex.ExtAcc.BlockUI();
-        var isChecked = document.getElementById('chkAutoPT').checked;
-        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
-        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
-        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.autoPresetPT = $('#pt_2').val();
-        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.maxPT = $('#pt_3').val();
-        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.minPT = $('#pt_4').val();
-        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_5').val();
-
-        if (newMemberPT) {
-            Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.newMemberPT = $('#memberPT').val();
-        }
-
-        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
-
-        var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
-            uplineId: Fanex.ExtAcc.Customer.superId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
-        };
-
-        $.ajax({
-            url: resolveClientUrl('LiveCasino/UpdateAgentPTPost'),
-            data: data,
-            type: 'post',
-            dataType: 'json'
-        })
-        .success(function (result) {
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
-                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-
-                $('#errMsg').show();
-                $('#errMsg').html(msg);
-
-                $.unblockUI(document);
-            }, 2000);
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') {
-                console.log(data);
-            }
-
-            $.unblockUI(document);
-        })
-    },
-
     SubmitMasterPT: function (newMemberPT) {
         Fanex.ExtAcc.BlockUI();
 
@@ -833,7 +878,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
 
             // Game setting messages
-            gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+            if (gs[0].BettypeId != 0) {
+                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+            }
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
@@ -851,6 +898,54 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             $.unblockUI(document);
         });
+    },
+
+    UpdateAgentPT: function (newMemberPT) {
+        Fanex.ExtAcc.BlockUI();
+        var isChecked = document.getElementById('chkAutoPT').checked;
+        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
+        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
+        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.autoPresetPT = $('#pt_2').val();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.maxPT = $('#pt_3').val();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.minPT = $('#pt_4').val();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_5').val();
+
+        if (newMemberPT) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.newMemberPT = $('#memberPT').val();
+        }
+
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
+
+        var data = {
+            custId: Fanex.ExtAcc.Customer.UserId,
+            uplineId: Fanex.ExtAcc.Customer.masterId,
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+        };
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/UpdateAgentPTPost'),
+            data: data,
+            type: 'post',
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+
+                $('#errMsg').show();
+                $('#errMsg').html(msg);
+
+                $.unblockUI(document);
+            }, 2000);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data);
+            }
+
+            $.unblockUI(document);
+        })
     },
 
     SubmitAgentPT: function (newMemberPT) {
@@ -902,7 +997,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
 
             // Game setting messages
-            gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+            if (gs[0].BettypeId != 0) {
+                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+            }
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
@@ -920,6 +1017,116 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             $.unblockUI(document);
         });
+    },
+
+    UpdateMemberPT: function () {
+        Fanex.ExtAcc.BlockUI();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = $('#pt_1').val();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_2').val();
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
+
+        var data = {
+            custId: Fanex.ExtAcc.Customer.UserId,
+            uplineId: Fanex.ExtAcc.Customer.agentId,
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+        };
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/UpdateMemberPTPost'),
+            data: data,
+            type: 'post',
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+
+                $('#errMsg').show();
+                $('#errMsg').html(msg);
+
+                $.unblockUI(document);
+            }, 2000);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data);
+            }
+
+            $.unblockUI(document);
+        })
+    },
+
+    SubmitMemberPT: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        // Set params
+        var uplineId = 0;
+
+        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
+            case 3:
+                uplineId = Fanex.ExtAcc.Customer.superId;
+                break;
+            case 2:
+                uplineId = Fanex.ExtAcc.Customer.masterId;
+                break;
+            case 1:
+                uplineId = Fanex.ExtAcc.Customer.agentId;
+                break;
+            default:
+                break;
+        }
+
+        var data = {
+            custId: Fanex.ExtAcc.Customer.UserId,
+            uplineId: uplineId,
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+        };
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/UpdateMemberLiveCasinoPost'),
+            type: 'post',
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            var pt = result[0];
+            var mw = result[1];
+            var gs = result[2];
+            var ptMsg = '', mwMsg = '', gsMsg = '';
+
+            // PT messages
+            ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
+
+            // Member win limit messages
+            mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
+
+            // Game setting messages
+            if (gs[0].BettypeId != 0) {
+                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+            }
+
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+
+                $('#errMsg').show();
+                $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+
+                $.unblockUI(document);
+            }, 2000);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data);
+            }
+
+            $.unblockUI(document);
+        });
+    },
+
+    ShowCurrentWinLimit: function () {
+        $('#showWinLimit').hide();
+        $('#winLimit').show();
     }
 }
 

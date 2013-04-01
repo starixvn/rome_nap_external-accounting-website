@@ -142,46 +142,56 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 Language = "en"
             };
 
-            oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
+            if (oldGameTypes == null || oldGameTypes.Count == 0)
             {
-                gameTypes.ForEach(q =>
-                {
-                    if (q.BetTypeId == o.BetTypeId)
-                    {
-                        q.BettingLimit.ForEach(r =>
-                        {
-                            if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
-                            {
-                                r.IsDirty = true;
-                            }
-                        });
-                    }
-                });
-            }));
-
-            var resultList = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
-            var results = new List<object>();
-
-            foreach (var item in resultList)
-            {
-                results.Add(new { BettypeId = item.Key, ErrorCode = item.Value.ErrorCode, ErrorMessage = item.Value.ErrorMessage });
+                oldGameTypes = this.GameSetting.GetByCustomerId(uplineRoleId == 4 ? req.SuperId : uplineRoleId == 3 ? req.MasterId : req.AgentId);
             }
 
-            // Write log stake level
-            this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+            if (oldGameTypes != null && oldGameTypes.Count > 0 && gameTypes.Count > 0)
             {
-                Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
-                ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
-                ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
-                RoleId = uplineRoleId - 1,
-                SubAccId = req.SubAccId,
-                CustId = custId,
-                SignUpIp = this.CurrentContext.Ip4Address,
-                Language = "en",
-                UserId = req.UserId
-            });
+                oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
+                {
+                    gameTypes.ForEach(q =>
+                    {
+                        if (q.BetTypeId == o.BetTypeId)
+                        {
+                            q.BettingLimit.ForEach(r =>
+                            {
+                                if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
+                                {
+                                    r.IsDirty = true;
+                                }
+                            });
+                        }
+                    });
+                }));
 
-            return results;
+                var resultList = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypes, req);
+                var results = new List<object>();
+
+                foreach (var item in resultList)
+                {
+                    results.Add(new { BettypeId = item.Key, ErrorCode = item.Value.ErrorCode, ErrorMessage = item.Value.ErrorMessage });
+                }
+
+                // Write log stake level
+                this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+                {
+                    Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
+                    ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
+                    ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
+                    RoleId = uplineRoleId - 1,
+                    SubAccId = req.SubAccId,
+                    CustId = custId,
+                    SignUpIp = this.CurrentContext.Ip4Address,
+                    Language = "en",
+                    UserId = req.UserId
+                });
+
+                return results;
+            }
+
+            return new List<object> { new { BettypeId = 0, ErrorCode = 0, ErrorMessage = string.Empty } };
         }
 
         /// <summary>

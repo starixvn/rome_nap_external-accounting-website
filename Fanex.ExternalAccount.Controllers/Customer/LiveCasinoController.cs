@@ -97,61 +97,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var settingModel = this.PtSetting.GetMasterSetting(custId, uplineId);
 
-            #region For testing render game setting
-
-            if (settingModel.GameSetting.Count == 0)
-            {
-                settingModel.GameSetting.Add(new LiveCasinoSetting.Model.GameType
-                {
-                    BettingLimit = new System.Collections.Generic.List<LiveCasinoSetting.Model.StakeLevel>()
-                    {
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 1,
-                            IsDirty = true,
-                            IsSelected = true,
-                            Text = "10-100"
-                        },
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 2,
-                            IsDirty = true,
-                            IsSelected = false,
-                            Text = "100-1000"
-                        }
-                    },
-                    BetTypeId = 1101,
-                    Id = 1,
-                    Name = "Baccarat"
-                });
-
-                settingModel.GameSetting.Add(new LiveCasinoSetting.Model.GameType
-                {
-                    BettingLimit = new System.Collections.Generic.List<LiveCasinoSetting.Model.StakeLevel>()
-                    {
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 3,
-                            IsDirty = true,
-                            IsSelected = true,
-                            Text = "20-100"
-                        },
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 4,
-                            IsDirty = true,
-                            IsSelected = false,
-                            Text = "500-1000"
-                        }
-                    },
-                    BetTypeId = 1102,
-                    Id = 1,
-                    Name = "Roulette"
-                });
-            }
-
-            #endregion For testing render game setting
-
             var gameSetting = settingModel.GameSetting;
 
             foreach (var item in gameSetting)
@@ -234,61 +179,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var settingModel = this.PtSetting.GetAgentSetting(custId, uplineId);
 
-            #region For testing render game setting
-
-            if (settingModel.GameSetting.Count == 0)
-            {
-                settingModel.GameSetting.Add(new LiveCasinoSetting.Model.GameType
-                {
-                    BettingLimit = new System.Collections.Generic.List<LiveCasinoSetting.Model.StakeLevel>()
-                    {
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 1,
-                            IsDirty = true,
-                            IsSelected = true,
-                            Text = "10-100"
-                        },
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 2,
-                            IsDirty = true,
-                            IsSelected = false,
-                            Text = "100-1000"
-                        }
-                    },
-                    BetTypeId = 1101,
-                    Id = 1,
-                    Name = "Baccarat"
-                });
-
-                settingModel.GameSetting.Add(new LiveCasinoSetting.Model.GameType
-                {
-                    BettingLimit = new System.Collections.Generic.List<LiveCasinoSetting.Model.StakeLevel>()
-                    {
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 3,
-                            IsDirty = true,
-                            IsSelected = true,
-                            Text = "20-100"
-                        },
-                        new Fanex.LiveCasinoSetting.Model.StakeLevel
-                        {
-                            Id = 4,
-                            IsDirty = true,
-                            IsSelected = false,
-                            Text = "500-1000"
-                        }
-                    },
-                    BetTypeId = 1102,
-                    Id = 1,
-                    Name = "Roulette"
-                });
-            }
-
-            #endregion For testing render game setting
-
             var gameSetting = settingModel.GameSetting;
 
             foreach (var item in gameSetting)
@@ -362,9 +252,85 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMemberPost()
+        public ActionResult EditMemberPost(int custId, int uplineId)
         {
-            return this.PartialViewBase();
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            var settingModel = this.PtSetting.GetMemberSetting(custId, uplineId);
+
+            var gameSetting = settingModel.GameSetting;
+
+            foreach (var item in gameSetting)
+            {
+                item.Name = RefData.GetBetTypeName(item.BetTypeId.ToString(), "en", string.Empty);
+            }
+
+            var liveCasinoModel = new LiveCasinoModel()
+            {
+                UplinePtSetting = new PTModel
+                {
+                    AutoPresetPT = settingModel.PTSetting.Upline.AutoPresetPT,
+                    Comm = settingModel.PTSetting.Upline.Comm,
+                    IsAutoPresetPT = settingModel.PTSetting.Upline.IsAutoPresetPT,
+                    IsAutoPresetPTChanged = settingModel.PTSetting.Upline.IsAutoPresetPTChanged,
+                    IsCommChanged = settingModel.PTSetting.Upline.IsCommChanged,
+                    IsDirty = settingModel.PTSetting.Upline.IsDirty,
+                    IsIsAutoPresetPTChanged = settingModel.PTSetting.Upline.IsIsAutoPresetPTChanged,
+                    IsMaxPTChanged = settingModel.PTSetting.Upline.IsMaxPTChanged,
+                    IsMinPTChanged = settingModel.PTSetting.Upline.IsMinPTChanged,
+                    IsPresetPTChanged = settingModel.PTSetting.Upline.IsPresetPTChanged,
+                    IsUpdateAllMember = settingModel.PTSetting.Upline.IsUpdateAllMember,
+                    MaxAutoPresetPT = settingModel.PTSetting.Upline.MaxAutoPresetPT,
+                    MaxPT = settingModel.PTSetting.Upline.MaxPT,
+                    MinPT = settingModel.PTSetting.Upline.MinPT,
+                    NewMemberPT = settingModel.PTSetting.Upline.NewMemberPT,
+                    PresetPT = settingModel.PTSetting.Upline.PresetPT
+                },
+                CustomerInfo = new Fanex.ExternalAccount.ViewModel.Customer.CustomerInfo
+                {
+                    CustomerId = settingModel.CustomerInfo.CustomerId,
+                    DisableLiveCasino = settingModel.CustomerInfo.DisableLiveCasino,
+                    ExChangeId = settingModel.CustomerInfo.ExChangeId,
+                    Fax = settingModel.CustomerInfo.Fax,
+                    FirstName = settingModel.CustomerInfo.FirstName,
+                    IsSyncLiveCasino = settingModel.CustomerInfo.IsSyncLiveCasino,
+                    LastName = settingModel.CustomerInfo.LastName,
+                    Limit = settingModel.CustomerInfo.Limit as MemberWinLimit,
+                    Mobile = settingModel.CustomerInfo.Mobile,
+                    NickName = settingModel.CustomerInfo.NickName,
+                    Phone = settingModel.CustomerInfo.Phone,
+                    RoleId = settingModel.CustomerInfo.RoleId,
+                    Site = settingModel.CustomerInfo.Site,
+                    UplineDisableLiveCasino = settingModel.CustomerInfo.UplineDisableLiveCasino,
+                    UserName = settingModel.CustomerInfo.UserName
+                },
+                GameSetting = gameSetting,
+                PtSetting = new PTModel
+                {
+                    AutoPresetPT = settingModel.PTSetting.AutoPresetPT,
+                    Comm = settingModel.PTSetting.Comm,
+                    IsAutoPresetPT = settingModel.PTSetting.IsAutoPresetPT,
+                    IsAutoPresetPTChanged = settingModel.PTSetting.IsAutoPresetPTChanged,
+                    IsCommChanged = settingModel.PTSetting.IsCommChanged,
+                    IsDirty = settingModel.PTSetting.IsDirty,
+                    IsIsAutoPresetPTChanged = settingModel.PTSetting.IsIsAutoPresetPTChanged,
+                    IsMaxPTChanged = settingModel.PTSetting.IsMaxPTChanged,
+                    IsMinPTChanged = settingModel.PTSetting.IsMinPTChanged,
+                    IsPresetPTChanged = settingModel.PTSetting.IsPresetPTChanged,
+                    IsUpdateAllMember = settingModel.PTSetting.IsUpdateAllMember,
+                    IsValid = settingModel.PTSetting.IsValid,
+                    MaxAutoPresetPT = settingModel.PTSetting.MaxAutoPresetPT,
+                    MaxPT = settingModel.PTSetting.MaxPT,
+                    MinPT = settingModel.PTSetting.MinPT,
+                    NewMemberPT = settingModel.PTSetting.NewMemberPT,
+                    PresetPT = settingModel.PTSetting.PresetPT
+                }
+            };
+
+            return this.JsonBase(liveCasinoModel, settings);
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
@@ -486,6 +452,26 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var result = this.UpdateMemberPT(custId, uplineId, customer);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultGS = this.UpdateGameSetting(3, custId, customer);
+
+            // Process manually sync
+            this.SyncManually(2, uplineId, custId, customer, model.CustomerInfo.GroupName);
+
+            var results = new List<object>();
+
+            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(resultGS);
+
+            return this.JsonBase(results);
+        }
+
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult UpdateMemberWinLimitPost(int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -501,10 +487,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult UpdateGameSettingPost(int uplineRoleId, int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
-
             // Process manually sync
             this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
+
+            var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
 
             return this.JsonBase(result);
         }
