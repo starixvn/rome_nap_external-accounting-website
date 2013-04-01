@@ -116,7 +116,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $('#custInfo').remove();
 
             $('#arrowUpDown').bind('click', function () {
-                Fanex.ExtAcc.Customer.PTSetting.ToogleUsernames();
+                Fanex.ExtAcc.Customer.ToogleUsernames();
             });
 
             $('#names').css('display', 'block');
@@ -129,7 +129,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             else {
                 $('#names').css('cursor', 'pointer');
                 $('#names').bind('click', function () {
-                    Fanex.ExtAcc.Customer.PTSetting.ToogleUsernames();
+                    Fanex.ExtAcc.Customer.ToogleUsernames();
                 });
                 $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
                 $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
@@ -782,19 +782,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
         .error(function (xhr, status, err) {
             $.unblockUI(document);
         });
-    },
-
-    ToogleUsernames: function () {
-        if ($('#arrowUpDown').hasClass('collapse')) {
-            $('#arrowUpDown').attr('class', 'expand');
-            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-            $('#names').attr('title', '');
-        }
-        else {
-            $('#arrowUpDown').attr('class', 'collapse');
-            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
-            $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-        }
     },
 
     GenerateCheckBoxStatus: function () {
