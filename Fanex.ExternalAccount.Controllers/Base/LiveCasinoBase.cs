@@ -623,5 +623,39 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             return result;
         }
+
+        /// <summary>
+        /// Gets insert account request
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <param name="customer">JSON object string</param>
+        /// <returns>InsertAccountRequest object</returns>
+        protected InsertAccountRequest GetInsertAccountRequest(int custId, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var custInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
+
+            var result = new InsertAccountRequest()
+            {
+                AgentId = (int)custInfo["recommend"],
+                CustId = custId,
+                CustUserName = custInfo["username"].ToString(),
+                ExchangeId = model.CustomerInfo.ExChangeId,
+                SignUpIp = this.CurrentContext.Ip4Address,
+                IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
+                IsEnableDownline = false,
+                Language = "en",
+                MasterId = (int)custInfo["mrecommend"],
+                RoleId = 1,
+                SignUpForm = 3, // External acc system
+                SuperId = (int)custInfo["srecommend"],
+                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
+                UserId = CurrentSession.UserId,
+                UserName = CurrentSession.UserName,
+                IsAutoInsert = false // Manually insert account
+            };
+
+            return result;
+        }
     }
 }

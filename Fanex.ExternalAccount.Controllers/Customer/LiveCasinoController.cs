@@ -458,6 +458,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(3, custId, customer);
+            var resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, customer)));
 
             // Process manually sync
             this.SyncManually(2, uplineId, custId, customer, model.CustomerInfo.GroupName);
@@ -467,6 +468,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
             results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
             results.Add(resultGS);
+            results.Add(new { ErrorCode = resultStatus.ErrorCode, ErrorMessage = resultStatus.ErrorMessage });
 
             return this.JsonBase(results);
         }

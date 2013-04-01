@@ -1074,6 +1074,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.BlockUI();
 
         // Set params
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.disableLiveCasino = !document.getElementById('chkEnable').checked;
         var uplineId = 0;
 
         switch (Fanex.ExtAcc.Customer.CurrentLevel) {
@@ -1106,7 +1107,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             var pt = result[0];
             var mw = result[1];
             var gs = result[2];
-            var ptMsg = '', mwMsg = '', gsMsg = '';
+            var st = result[3];
+            var ptMsg = '', mwMsg = '', gsMsg = '', stMsg = '';
 
             // PT messages
             ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
@@ -1119,11 +1121,18 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
             }
 
+            if (st.ErrorCode == '' || st.ErrorCode == '0' || st.ErrorCode == "0") {
+                stMsg = '<font color="Blue">Enable: Updated successfully</font><br />';
+            }
+            else {
+                stMsg = st.ErrorMessage.formatErrorMessage() + '<br />'
+            }
+
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
 
                 $('#errMsg').show();
-                $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+                $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
 
                 $.unblockUI(document);
             }, 2000);
