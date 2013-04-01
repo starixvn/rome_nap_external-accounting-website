@@ -24,6 +24,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using Fanex.LiveCasinoSetting.Model.Log;
     using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// Base controller for live casino setting
@@ -81,6 +82,22 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets member win limit value
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <returns>MemberWinLimit object</returns>
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult GetMemberWinLimit(int custId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            return this.JsonBase(this.MemberWinLimit.GetMemberWinLimit(custId), settings);
         }
 
         /// <summary>

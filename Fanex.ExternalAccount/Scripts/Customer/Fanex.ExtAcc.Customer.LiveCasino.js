@@ -6,6 +6,7 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 
 Fanex.ExtAcc.Customer.LiveCasino = {
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
+    IsUncheckWinLimitMember: true,
     customer: null,
 
     Init: function () {
@@ -433,6 +434,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //Render game setting
             Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
 
+            //Check if all game setting is unchecked
+            if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0 && Fanex.ExtAcc.Customer.LiveCasino.IsUncheckWinLimitMember) {
+                $('#warningMsg').show();
+                $('#warningMsg').html('Your downline has uncheck all stake levels, by default, the system checked the lowest level. Please check and update.'.formatErrorMessage());
+
+                document.getElementsByName('gameRow0')[0].checked = true;
+            }
+
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
                 this.saveCustomer = function () {
@@ -638,6 +647,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             var bettingLimitItem = '';
 
             for (var j = 0; j < gameSetting[i].bettingLimit.length; j++) {
+                if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member && gameSetting[i].bettingLimit[j].isSelected) {
+                    Fanex.ExtAcc.Customer.LiveCasino.IsUncheckWinLimitMember = false;
+                }
+
                 var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
                 bettingLimitItem += '&nbsp;<input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="' + type + '" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span>';
             }
@@ -1126,7 +1139,45 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
     ShowCurrentWinLimit: function () {
         $('#showWinLimit').hide();
-        $('#winLimit').show();
+
+        Fanex.ExtAcc.BlockUI();
+
+        var data = {
+            custId: Fanex.ExtAcc.Customer.UserId
+        };
+
+        $.ajax({
+            url: resolveClientUrl('LiveCasino/GetMemberWinLimit'),
+            type: 'post',
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            console.log(result);
+
+            if (result.currentWinLimit == 0 && result.maxWinLimit == 0 && result.totalWinLimit == 0) {
+                $('#currentWinLimit').html('Unlimited');
+                $('#ofMaxCredit').html('');
+            }
+            else {
+                var value = result.currentWinLimit >= 100 ? '<font color="Red">' + String.prototype.FormatNumber(result.currentWinLimit) + '%</font>' : String.prototype.FormatNumber(result.currentWinLimit) + '%';
+                var ofTotal = '&nbsp;of ' + String.prototype.FormatNumber(result.totalWinLimit);
+
+                $('#currentWinLimit').html(value);
+                $('#ofMaxCredit').html(ofTotal);
+            }
+
+            $('#winLimit').show();
+
+            $.unblockUI(document);
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data);
+            }
+
+            $.unblockUI(document)
+        });
     }
 }
 
