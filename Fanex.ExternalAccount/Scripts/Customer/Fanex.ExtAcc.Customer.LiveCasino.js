@@ -1350,7 +1350,7 @@ function PTChanging(el) {
             cur = uplinePT.maxPT - sel;
         }
 
-        PT_RenderCombo(document.getElementById("pt_3"), 0, uplinePT.maxPT - sel, 0.01, cur != 0 ? ((cur * 100) / 100).toFixed(2) : 0);
+        PT_RenderCombo(document.getElementById("pt_3"), 0, uplinePT.maxPT - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
     }
     if (document.getElementById("pt_4")) {
         PT_RenderCombo2(document.getElementById("pt_4"), 0, uplinePT.maxPT - sel, 0.01);
