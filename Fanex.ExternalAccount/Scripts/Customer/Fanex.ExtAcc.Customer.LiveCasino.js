@@ -177,11 +177,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT($('#memberPT').val(), 0);
+                                Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, 0);
+                                Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             'confirmAutoMember'
@@ -190,7 +190,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     else {
                         Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
 
-                        Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, 0);
+                        Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 },
 
@@ -212,28 +212,28 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT($('#memberPT').val(), 0);
+                                Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, 0);
+                                Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             'confirmAutoMember'
                         );
                     }
                     else {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, 0);
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 },
 
                 this.saveMemberWinLimit = function () {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit(0);
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit(Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                 },
 
                 this.saveGameSetting = function () {
                     if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, 0);
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 }
             };
@@ -774,7 +774,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
     },
 
-    UpdateGameSetting: function (data, i) {
+    UpdateGameSetting: function (data, idx) {
         Fanex.ExtAcc.BlockUI();
 
         var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
@@ -808,9 +808,12 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 break;
         }
 
+        console.log(idx);
+        console.log(Fanex.ExtAcc.Customer.UserId);
+
         var data = {
             uplineRoleId: Fanex.ExtAcc.Customer.CurrentLevel + 1,
-            custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
+            custId: idx == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[idx]),
             uplineId: uplineId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
