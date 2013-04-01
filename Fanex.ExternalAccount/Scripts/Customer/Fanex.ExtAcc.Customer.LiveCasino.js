@@ -711,7 +711,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
         .success(function (result) {
             var error = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error;
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error + '<br />';
 
             if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
                 var timeout = setTimeout(function () {
@@ -823,7 +823,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
         .success(function (result) {
             var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error;
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error + '<br />';
 
             if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
                 var timeout = setTimeout(function () {
@@ -951,7 +951,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
         .success(function (result) {
             var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg;
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
 
             if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
                 var timeout = setTimeout(function () {
@@ -1041,7 +1041,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
             }
 
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg;
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
 
             if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
                 var timeout = setTimeout(function () {
