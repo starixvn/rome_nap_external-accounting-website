@@ -10,7 +10,12 @@
 <div class="floatR" style="margin-bottom: 5px">
     <input class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
-<div id="custInfo" class="customerInfo" style="width: 861px">
+<div id="enableSection">        
+        <div class="customerInfoBlock3" style="width: 859px; font-weight: bold;float:right;border-right:1px solid #ccc;">
+            Enable:&nbsp;<input style="vertical-align: middle; margin-bottom: 3px;" type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.disableLiveCasino && !Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.uplineDisableLiveCasino, enable: !Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.uplineDisableLiveCasino" />
+        </div>
+    </div>
+<div id="custInfo" class="customerInfo" style="width: 860px">
     <div class="headerTab" style="border-bottom: 0px">
         General Information</div>
     <div id="masterStatus">

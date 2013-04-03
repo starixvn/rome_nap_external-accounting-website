@@ -386,11 +386,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT($('#memberPT').val());
+                                Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT();
+                                Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             'confirmAutoMember'
@@ -399,7 +399,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     else {
                         Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
 
-                        Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT();
+                        Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 },
 
@@ -421,28 +421,28 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT($('#memberPT').val());
+                                Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
-                                Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT();
+                                Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             'confirmAutoMember'
                         );
                     }
                     else {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT();
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 },
 
                 this.saveMemberWinLimit = function () {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit();
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit(Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                 },
 
                 this.saveGameSetting = function () {
                     if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 }
             };
@@ -462,6 +462,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
             $('#arrowUpDown').remove();
+            $('#enableSection').remove();
         }
 
         if (Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
@@ -558,20 +559,20 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         }
                     }
 
-                    Fanex.ExtAcc.Customer.LiveCasino.SubmitMemberPT();
+                    Fanex.ExtAcc.Customer.LiveCasino.SubmitMemberPT(Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                 },
 
                 this.savePtComm = function () {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberPT();
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberPT(Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                 },
 
                 this.saveMemberWinLimit = function () {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit();
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit(Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                 },
 
                 this.saveGameSetting = function () {
                     if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0) {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data);
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                     }
                 }
             };
@@ -590,21 +591,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     MasterGetMemberSetting: function () {
-    },
-
-    UpdateMasterSetting: function () {
-    },
-
-    UpdateAgentSetting: function () {
-    },
-
-    UpdateMemberSetting: function () {
-    },
-
-    SuperUpdateMemberSetting: function () {
-    },
-
-    MasterUpdateMemberSetting: function () {
     },
 
     RenderMemberWinLimit: function (data) {
@@ -1081,7 +1067,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         });
     },
 
-    UpdateAgentPT: function (newMemberPT) {
+    UpdateAgentPT: function (newMemberPT, i) {
         Fanex.ExtAcc.BlockUI();
         var isChecked = document.getElementById('chkAutoPT').checked;
         Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
@@ -1098,7 +1084,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
         var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
+            custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
@@ -1110,15 +1096,35 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
-                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
 
-                $('#errMsg').show();
-                $('#errMsg').html(msg);
+            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
 
-                $.unblockUI(document);
-            }, 2000);
+
+                    $('#errMsg').show();
+                    $('#errMsg').html(msg);
+
+                    $.unblockUI(document);
+                }, 2000);
+            }
+            else {
+                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                }
+                else {
+                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+
+                    $('#errMsg').show();
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+
+                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+
+                    $.unblockUI(document);
+                }
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
@@ -1129,7 +1135,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
     },
 
-    SubmitAgentPT: function (newMemberPT) {
+    SubmitAgentPT: function (newMemberPT, i) {
         Fanex.ExtAcc.BlockUI();
 
         if (newMemberPT) {
@@ -1154,7 +1160,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
+            custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: uplineId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
@@ -1182,14 +1188,33 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
             }
 
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
 
-                $('#errMsg').show();
-                $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
 
-                $.unblockUI(document);
-            }, 2000);
+                    $('#errMsg').show();
+                    $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+
+                    $.unblockUI(document);
+                }, 2000);
+            }
+            else {
+                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                    Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                }
+                else {
+                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+
+                    $('#errMsg').show();
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+
+                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+
+                    $.unblockUI(document);
+                }
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
@@ -1200,14 +1225,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         });
     },
 
-    UpdateMemberPT: function () {
+    UpdateMemberPT: function (i) {
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = $('#pt_1').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_2').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
         var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
+            custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.agentId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
@@ -1219,15 +1244,35 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
-                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
 
-                $('#errMsg').show();
-                $('#errMsg').html(msg);
+            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
 
-                $.unblockUI(document);
-            }, 2000);
+
+                    $('#errMsg').show();
+                    $('#errMsg').html(msg);
+
+                    $.unblockUI(document);
+                }, 2000);
+            }
+            else {
+                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                }
+                else {
+                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+
+                    $('#errMsg').show();
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+
+                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+
+                    $.unblockUI(document);
+                }
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
@@ -1238,7 +1283,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
     },
 
-    SubmitMemberPT: function () {
+    SubmitMemberPT: function (i) {
         Fanex.ExtAcc.BlockUI();
 
         // Set params
@@ -1260,7 +1305,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         var data = {
-            custId: Fanex.ExtAcc.Customer.UserId,
+            custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: uplineId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
@@ -1296,14 +1341,33 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 stMsg = st.ErrorMessage.formatErrorMessage() + '<br />'
             }
 
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + stMsg + '<br />';
 
-                $('#errMsg').show();
-                $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
+            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
 
-                $.unblockUI(document);
-            }, 2000);
+                    $('#errMsg').show();
+                    $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
+
+                    $.unblockUI(document);
+                }, 2000);
+            }
+            else {
+                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                    Fanex.ExtAcc.Customer.LiveCasino.SubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                }
+                else {
+                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+
+                    $('#errMsg').show();
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+
+                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+
+                    $.unblockUI(document);
+                }
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
