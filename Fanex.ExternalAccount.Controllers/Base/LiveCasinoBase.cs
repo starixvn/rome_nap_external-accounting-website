@@ -624,6 +624,13 @@ namespace Fanex.ExternalAccount.Controllers.Base
             return result;
         }
 
+        /// <summary>
+        /// Update PT
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <param name="uplineId">Up-line id</param>
+        /// <param name="customer">Customer JSON string</param>
+        /// <returns>Result object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result SuperUpdateMemberPT(int custId, int uplineId, string customer)
         {
             var pt = this.PtSetting.SuperGetMemberPTSetting(custId, uplineId);
@@ -642,7 +649,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
             ((SuperPTSetting)pt.Upline.Upline.Upline).AutoPresetPT = model.SuperPtSetting.AutoPresetPT;
             ((SuperPTSetting)pt.Upline.Upline.Upline).IsAutoPresetPT = model.SuperPtSetting.IsAutoPresetPT;
 
-            var result = this.PtSetting.UpdateMemberPTSettingBySuper(new RequestContext()
+            var result = this.PtSetting.UpdateMemberPTSettingBySuper(
+                new RequestContext()
                 {
                     CustId = custId,
                     SignUpIp = this.CurrentContext.Ip4Address,
@@ -650,12 +658,18 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     UplineId = uplineId,
                     UserId = this.CurrentSession.UserId
                 },
-                pt
-            );
+                pt);
 
             return result;
         }
 
+        /// <summary>
+        /// Update PT
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <param name="uplineId">Up-line id</param>
+        /// <param name="customer">Customer JSON string</param>
+        /// <returns>Result object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result MasterUpdateMemberPT(int custId, int uplineId, string customer)
         {
             var pt = this.PtSetting.MasterGetMemberPTSetting(custId, uplineId);
@@ -674,7 +688,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
             ((PTSetting)pt.Upline.Upline).AutoPresetPT = model.MasterPtSetting.AutoPresetPT;
             ((PTSetting)pt.Upline.Upline).IsAutoPresetPT = model.MasterPtSetting.IsAutoPresetPT;
 
-            var result = this.PtSetting.UpdateMemberPTSettingByMaster(new RequestContext()
+            var result = this.PtSetting.UpdateMemberPTSettingByMaster(
+                new RequestContext()
                 {
                     CustId = custId,
                     SignUpIp = this.CurrentContext.Ip4Address,
@@ -682,8 +697,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     UplineId = uplineId,
                     UserId = this.CurrentSession.UserId
                 },
-                pt
-            );
+                pt);
 
             return result;
         }
