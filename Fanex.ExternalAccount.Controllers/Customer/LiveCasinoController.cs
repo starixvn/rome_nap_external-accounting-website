@@ -394,7 +394,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(3, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -406,7 +406,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(2, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -490,7 +490,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             // Process manually sync
-            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
+            this.SyncManually(uplineRoleId, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
 
             var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
 
