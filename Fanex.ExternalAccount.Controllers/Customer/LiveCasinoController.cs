@@ -58,36 +58,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMultipleMasters()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMultipleAgents()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMultipleMembers()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult SuperEditMultipleMembers()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult MasterEditMultipleMembers()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult EditMasterPost(int custId, int uplineId)
         {
             var settings = new JsonSerializerSettings();
@@ -343,37 +313,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult MasterEditMemberPost()
         {
             return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMultipleMastersPost()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMultipleAgentsPost()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult EditMultipleMembersPost()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult SuperEditMultipleMembersPost()
-        {
-            return this.PartialViewBase();
-        }
-
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult MasterEditMultipleMembersPost()
-        {
-            return this.PartialViewBase();
-        }
+        }       
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
         public ActionResult UpdateMasterPTPost(int custId, int uplineId, string customer)
