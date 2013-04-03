@@ -826,7 +826,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         })
         .success(function (result) {
             var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error + '<br />';
+            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[idx] + '</font><br />' + error + '<br />';
 
             if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
                 var timeout = setTimeout(function () {
