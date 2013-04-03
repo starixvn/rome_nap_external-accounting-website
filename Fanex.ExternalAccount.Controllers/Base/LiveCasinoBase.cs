@@ -624,6 +624,70 @@ namespace Fanex.ExternalAccount.Controllers.Base
             return result;
         }
 
+        protected Fanex.LiveCasinoSetting.Model.Result SuperUpdateMemberPT(int custId, int uplineId, string customer)
+        {
+            var pt = this.PtSetting.SuperGetMemberPTSetting(custId, uplineId);
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            ((INotifyPropertyChanged)pt.Upline.Upline.Upline).PropertyChanged
+                        += (o, arg) =>
+                        {
+                            if (!((SuperPTSetting)pt.Upline.Upline.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                            {
+                                ((SuperPTSetting)pt.Upline.Upline.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                            }
+                        };
+
+            ((SuperPTSetting)pt.Upline.Upline.Upline).PresetPT = model.SuperPtSetting.PresetPT;
+            ((SuperPTSetting)pt.Upline.Upline.Upline).AutoPresetPT = model.SuperPtSetting.AutoPresetPT;
+            ((SuperPTSetting)pt.Upline.Upline.Upline).IsAutoPresetPT = model.SuperPtSetting.IsAutoPresetPT;
+
+            var result = this.PtSetting.UpdateMemberPTSettingBySuper(new RequestContext()
+                {
+                    CustId = custId,
+                    SignUpIp = this.CurrentContext.Ip4Address,
+                    Language = "en",
+                    UplineId = uplineId,
+                    UserId = this.CurrentSession.UserId
+                },
+                pt
+            );
+
+            return result;
+        }
+
+        protected Fanex.LiveCasinoSetting.Model.Result MasterUpdateMemberPT(int custId, int uplineId, string customer)
+        {
+            var pt = this.PtSetting.MasterGetMemberPTSetting(custId, uplineId);
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            ((INotifyPropertyChanged)pt.Upline.Upline).PropertyChanged
+                        += (o, arg) =>
+                        {
+                            if (!((SuperPTSetting)pt.Upline.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                            {
+                                ((SuperPTSetting)pt.Upline.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                            }
+                        };
+
+            ((PTSetting)pt.Upline.Upline).PresetPT = model.MasterPtSetting.PresetPT;
+            ((PTSetting)pt.Upline.Upline).AutoPresetPT = model.MasterPtSetting.AutoPresetPT;
+            ((PTSetting)pt.Upline.Upline).IsAutoPresetPT = model.MasterPtSetting.IsAutoPresetPT;
+
+            var result = this.PtSetting.UpdateMemberPTSettingByMaster(new RequestContext()
+                {
+                    CustId = custId,
+                    SignUpIp = this.CurrentContext.Ip4Address,
+                    Language = "en",
+                    UplineId = uplineId,
+                    UserId = this.CurrentSession.UserId
+                },
+                pt
+            );
+
+            return result;
+        }
+
         /// <summary>
         /// Gets insert account request
         /// </summary>

@@ -1,17 +1,172 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>EditAgent</title>
-</head>
-<body>
-    <div>
-        
+﻿<link href="@Url.Content("~/Content/Customer/LiveCasino.css")" rel="stylesheet" type="text/css" />
+<div id="warningMsg" style="display: none;" class="errMsg">
+</div>
+<div id="errMsg" style="display: none;" class="errMsg">
+</div>
+<div id="arrowUpDown" class="collapse">
+</div>
+<div id="names" style="display: none;" class="names">
+</div>
+<div class="floatR" style="margin-bottom: 5px">
+    <input class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+</div>
+<div id="custInfo" class="customerInfo" style="width: 860px">
+    <div class="headerTab" style="border-bottom: 0px">
+        General Information</div>
+    <div id="masterStatus">
+        <div id="closedId">
+            <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+                <label>
+                    Username</label>
+            </div>
+            <div class="customerInfoBlock2" style="width: 240px">
+                <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName"></span>
+            </div>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            <label>
+                Nickname</label>
+        </div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.nickName"></span>
+        </div>
     </div>
-</body>
-</html>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            First Name</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.firstName)"></span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            Last Name</div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.lastName)"></span>
+        </div>
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Phone</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.phone)"></span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            Mobile Phone</div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.mobile)"></span>
+        </div>
+    </div>
+    <div id="masterSection">
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Fax</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.fax"></span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
+            
+        </div>
+        <div class="customerInfoBlock4" style="width: 246px">
+            
+        </div>
+    </div>
+</div>
+<div class="customerInfo" style="width: 861px; border-bottom: 1px solid #ccc">
+    <div class="headerTab" style="border-bottom: 0px">
+        <div class="save" title="Save Position Taking/Commission" data-bind="click: savePtComm">
+        </div>
+        Postition Taking/Commission
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold; width: 180px; text-align: center">
+            Super Preset PT</div>
+        <div class="customerInfoBlock2" style="font-weight: bold; width: 241px; text-align: center">
+            Super Auto PT
+        </div>
+        <div class="customerInfoBlock3" style="margin: 0px; font-weight: bold; width: 180px; text-align: center">
+            Master Preset PT</div>
+        <div class="customerInfoBlock4" style="font-weight: bold; width: 247px; text-align: center">
+            Agent Preset PT
+        </div>
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold; width: 180px; text-align: center">
+            <span class="spanPT">
+                <select id="pt_1" name="pt_1" onchange="PTChanging(this)" style="position: relative;">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1', 10);" />
+            </span>
+        </div>
+        <div class="customerInfoBlock2" style="font-weight: bold; width: 241px; text-align: center;">
+            <span class="spanPT">
+                <input type="checkbox" name="chkAutoPT" id="chkAutoPT" onclick="checkPT(this);" style="vertical-align: middle;" />
+                <select id="pt_2" name="pt_2">
+                </select>
+                <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_2', 1);" />
+                <input type="button" class="btnPTUp" onclick="PT_Increase('pt_2', 1);" />
+                <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_2', 10);" />
+                <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_2', 10);" />
+            </span>
+        </div>
+        <div id="masterPT" class="customerInfoBlock3" style="margin: 0px; width: 180px; text-align: center">
+            
+        </div>
+        <div id="agentPT" class="customerInfoBlock4" style="width: 247px; text-align: center;">
+            
+        </div>
+    </div>
+</div>
+<div class="customerInfo" style="width: 861px; border-top: 0px">
+    <div class="headerTab" style="border-bottom: 0px">
+        <div class="save" title="Save Member Win Limit" data-bind="click: saveMemberWinLimit">
+        </div>
+        Member Win Limit</div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Maximum Win</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <select id="maximumWinLimit" style="width: 80px">
+            </select>
+            <span>&nbsp;on given credit</span>
+        </div>
+        <div class="customerInfoBlock3" style="width: 431px; text-align: left;">
+            <input type="checkbox" id="dailyAutoReset" style="vertical-align: middle; margin-bottom: 3px;" />
+            <label for="dailyAutoReset">
+                Daily auto reset limit (at 12 noon GMT+8)</label>
+        </div>
+    </div>
+    <div>
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Current Win Limit</div>
+        <div class="customerInfoBlock2" style="width: 240px">
+            <div id="showWinLimit" style="cursor: pointer; color: Blue" onclick="Fanex.ExtAcc.Customer.LiveCasino.ShowCurrentWinLimit()">
+                Click to view Current Win Limit
+            </div>
+            <div id="winLimit" style="display: none">
+                <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit">
+                </div>
+                <span id="ofMaxCredit"></span>
+            </div>
+        </div>
+        <div class="customerInfoBlock3" style="width: 431px; text-align: left;">
+        </div>
+    </div>
+</div>
+<div class="customerInfo" style="width: 861px; border-bottom: 1px solid #ccc">
+    <div class="headerTab" style="border-bottom: 0px">
+        <div class="save" title="Save Game Setting" data-bind="click: saveGameSetting">
+        </div>
+        Game Setting</div>
+    <div id="gameSetting">
+        <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
+            Game Type</div>
+        <div class="customerInfoBlock2" style="width: 675px; font-weight: bold">
+            Betting Limit
+        </div>
+    </div>
+</div>
+<div class="floatR">
+    <input class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+</div>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.LiveCasino.js")" type="text/javascript"></script>
