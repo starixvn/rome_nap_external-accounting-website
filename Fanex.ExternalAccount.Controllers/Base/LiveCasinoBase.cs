@@ -360,7 +360,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         }));
 
                         // Update game settings
-                        var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineId - 1, gameTypes);
+                        var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineRoleId - 1, gameTypes);
 
                         // Update game settings successfully then sync live casino
                         if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))

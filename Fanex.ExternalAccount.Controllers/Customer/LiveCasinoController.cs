@@ -419,9 +419,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(4, custId, customer);
 
-            // Process manually sync
-            this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
-
             var results = new List<object>();
 
             results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -438,9 +435,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateAgentPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(3, custId, customer);
-
-            // Process manually sync
-            this.SyncManually(3, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             var results = new List<object>();
 
@@ -460,9 +454,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var resultGS = this.UpdateGameSetting(3, custId, customer);
             var resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, customer)));
 
-            // Process manually sync
-            this.SyncManually(2, uplineId, custId, customer, model.CustomerInfo.GroupName);
-
             var results = new List<object>();
 
             results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -479,9 +470,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
 
-            // Do not process manually sync in this case
-            // this.SyncManually(4, uplineId, custId, customer, model.CustomerInfo.GroupName);
-
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
@@ -489,8 +477,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult UpdateGameSettingPost(int uplineRoleId, int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            // Process manually sync
-            this.SyncManually(uplineRoleId, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
 
             var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
 
