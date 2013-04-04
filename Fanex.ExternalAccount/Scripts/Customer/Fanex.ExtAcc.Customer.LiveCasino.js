@@ -647,7 +647,13 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render Super preset pt
-            PT_RenderCombo(document.getElementById('pt_1'), min, max, 0.01, uplinePreset);
+            if (!data.masterPtSetting.isAutoPresetPT) {
+                PT_RenderCombo(document.getElementById('pt_1'), min, max, 0.01, uplinePreset);
+            }
+            else {
+                $('#pt1').remove();
+                $('#pt1Section').html(data.superPtSetting.presetPT);
+            }
 
             //Render Super auto preset pt
             PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
@@ -795,10 +801,16 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 min = max = uplinePreset;
             }
 
-            //Render Super preset pt
-            PT_RenderCombo(document.getElementById('pt_1'), min, max, 0.01, uplinePreset);
+            //Render master preset pt
+            if (!data.uplinePtSetting.isAutoPresetPT) {
+                PT_RenderCombo(document.getElementById('pt_1'), min, max, 0.01, uplinePreset);
+            }
+            else {
+                $('#pt1').remove();
+                $('#pt1Section').html(data.masterPtSetting.presetPT);
+            }
 
-            //Render Super auto preset pt
+            //Render master auto preset pt
             PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
             if (!data.masterPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
