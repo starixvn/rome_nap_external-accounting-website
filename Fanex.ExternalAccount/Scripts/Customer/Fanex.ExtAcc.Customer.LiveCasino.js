@@ -2031,6 +2031,9 @@ function PT_Increase(id, f) {
 }
 
 function PT_RenderCombo(combo, min, max, step, selectedValue) {
+    min = min > max ? max : min;
+    selectedValue = selectedValue > max ? max : selectedValue;
+
     var index = 0;
     var itemIndex = 0;
 
@@ -2069,6 +2072,9 @@ function PT_RenderCombo(combo, min, max, step, selectedValue) {
 }
 
 function Comm_RenderCombo(combo, min, max, step, selectedValue) {
+    min = min > max ? max : min;
+    selectedValue = selectedValue > max ? max : selectedValue;
+
     var index = 0;
     var itemIndex = 0;
 
@@ -2171,6 +2177,8 @@ function PTChanging(el) {
 }
 
 function PT_RenderCombo2(combo, min, max, step) {
+    min = min > max ? max : min;
+
     var index = 0;
     var itemIndex = 0;
     var selectedValue = combo.value;
