@@ -161,7 +161,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         }
                     }
 
-                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT && !isChecked) {
+                    if ((Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT || Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) && !isChecked) {
                         var items = '';
                         Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
 
@@ -197,7 +197,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 this.savePtComm = function () {
                     var isChecked = document.getElementById('chkAutoPT').checked;
 
-                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT && !isChecked) {
+                    if ((Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT || Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) && !isChecked) {
                         var items = '';
 
                         for (var i = (uplineMax - parent.document.getElementById('pt_1').value); i.toFixed(2) >= 0.00; i -= 0.01) {
@@ -370,7 +370,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         }
                     }
 
-                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT && !isChecked) {
+                    if ((Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT || Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) && !isChecked) {
                         var items = '';
                         Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
 
@@ -406,7 +406,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 this.savePtComm = function () {
                     var isChecked = document.getElementById('chkAutoPT').checked;
 
-                    if (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT && !isChecked) {
+                    if ((Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT || Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) && !isChecked) {
                         var items = '';
 
                         for (var i = (uplineMax - parent.document.getElementById('pt_1').value); i.toFixed(2) >= 0.00; i -= 0.01) {
