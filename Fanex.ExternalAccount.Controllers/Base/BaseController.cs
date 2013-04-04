@@ -28,37 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     public class BaseController : Controller
     {
         #region Constant
-
-        /// <summary>
-        /// Constant object
-        /// </summary>
-        protected const string VALID = "valid";
-
-        /// <summary>
-        /// Constant object
-        /// </summary>
-        protected const string ACTIVE = "active";
-
-        /// <summary>
-        /// Constant object
-        /// </summary>
-        protected const string INACTIVE = "inactive";
-
-        /// <summary>
-        /// Constant object
-        /// </summary>
-        protected const string TRUE = "true";
-
-        /// <summary>
-        /// Constant object
-        /// </summary>
-        protected const string FALSE = "false";
-
-        /// <summary>
-        /// Constant object
-        /// </summary>
-        protected const string OK = "OK";
-
+        
         /// <summary>
         /// Constant object
         /// </summary>
