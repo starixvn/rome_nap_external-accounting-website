@@ -232,7 +232,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="custId">Customer Id</param>
         /// <param name="groupName">Group Name that user belongs to</param>
         /// <returns>DataRow object</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         protected DataRow GetCustomerInfo(int custId, string groupName)
         {
             var report = new ReportService();
