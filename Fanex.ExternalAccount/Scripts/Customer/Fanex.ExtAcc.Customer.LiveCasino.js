@@ -2032,7 +2032,12 @@ function PT_Increase(id, f) {
 
 function PT_RenderCombo(combo, min, max, step, selectedValue) {
     min = min > max ? max : min;
-    selectedValue = selectedValue > max ? max : selectedValue;
+    
+    if (selectedValue > max) {
+        var opt = document.createElement("option");
+        opt.text = opt.value = (selectedValue.toFixed(2) * 100)/100;
+        combo.options.add(opt);
+    }
 
     var index = 0;
     var itemIndex = 0;
@@ -2063,7 +2068,8 @@ function PT_RenderCombo(combo, min, max, step, selectedValue) {
         itemIndex++;
     }
 
-    if (selectedValue) {
+
+    if (selectedValue && selectedValue <= max) {
         if (document.all)
             combo.options[index].selected = true;
         else
