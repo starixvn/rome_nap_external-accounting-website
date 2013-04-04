@@ -32,6 +32,21 @@ namespace Fanex.ExternalAccount.Controllers.Base
     public class LiveCasinoBase : BaseController
     {
         /// <summary>
+        /// Role super
+        /// </summary>
+        public const int RoleSuper = 4;
+
+        /// <summary>
+        /// Role master
+        /// </summary>
+        public const int RoleMaster = 3;
+
+        /// <summary>
+        /// Role agent
+        /// </summary>
+        public const int RoleAgent = 2;
+
+        /// <summary>
         /// Lock object for synchronization
         /// </summary>
         private static object locker = new object();
