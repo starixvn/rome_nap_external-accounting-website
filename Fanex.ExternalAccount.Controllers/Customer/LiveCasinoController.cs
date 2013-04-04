@@ -635,7 +635,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
-            var resultGS = this.UpdateGameSetting(3, custId, customer);
+            var resultGS = this.UpdateGameSetting(4, custId, customer);
 
             var results = new List<object>();
 

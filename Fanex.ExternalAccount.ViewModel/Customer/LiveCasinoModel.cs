@@ -28,9 +28,5 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
         public virtual PTModel UplinePtSetting { get; set; }
 
         public virtual PTModel PtSetting { get; set; }
-
-        public bool IsMultiple { get; set; }
-
-        public bool IsSubmit { get; set; }
     }
 }

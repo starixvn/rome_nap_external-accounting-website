@@ -118,7 +118,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var context = new RequestContext()
             {
                 CustId = custId,
-                Language = "en-US",
+                Language = "en",
                 SignUpIp = this.CurrentContext.Ip4Address,
                 UserId = this.CurrentSession.UserId
             };
@@ -428,7 +428,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             {
                 CustId = custId,
                 IsSyncLiveCasino = true,
-                Language = "en-US",
+                Language = "en",
                 SignUpIp = this.CurrentContext.Ip4Address,
                 UplineId = uplineId,
                 UserId = this.CurrentSession.UserId
@@ -436,9 +436,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
-            var isMultiple = model.IsMultiple;
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
 
-            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            if (!custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("MaxPT");
                 pt.PropertiesChangedList.Add("MinPT");
@@ -501,7 +501,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             {
                 CustId = custId,
                 IsSyncLiveCasino = true,
-                Language = "en-US",
+                Language = "en",
                 SignUpIp = this.CurrentContext.Ip4Address,
                 UplineId = uplineId,
                 UserId = this.CurrentSession.UserId
@@ -509,9 +509,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var pt = this.PtSetting.GetAgentPTSetting(custId, uplineId);
-            var isMultiple = model.IsMultiple;
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
 
-            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            if (!custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("MaxPT");
                 pt.PropertiesChangedList.Add("MinPT");
@@ -574,17 +574,17 @@ namespace Fanex.ExternalAccount.Controllers.Base
             {
                 CustId = custId,
                 IsSyncLiveCasino = true,
-                Language = "en-US",
+                Language = "en",
                 SignUpIp = this.CurrentContext.Ip4Address,
                 UplineId = uplineId,
                 UserId = this.CurrentSession.UserId
             };
 
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var pt = this.PtSetting.GetMemberPTSetting(custId, uplineId);
-            var isMultiple = model.IsMultiple;
+            var pt = this.PtSetting.GetMemberPTSetting(custId, uplineId);            
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
 
-            if (isMultiple || !model.CustomerInfo.IsSyncLiveCasino)
+            if (!custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("Comm");
 
