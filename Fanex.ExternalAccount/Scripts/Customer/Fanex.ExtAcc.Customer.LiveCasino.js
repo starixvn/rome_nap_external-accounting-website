@@ -846,8 +846,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.autoPresetPT = $('#pt_2').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.isAutoPresetPT = isChecked;
 
-                    console.log(Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT);
-
                     // Set member win limit values
                     Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
