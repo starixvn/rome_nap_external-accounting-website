@@ -350,17 +350,33 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult ViewIP(string ip)
         {
-            var info = IpUtils.LocationFromIP(ip);
-            var ipinfo = new IPInfo()
+            try
             {
-                IP = ip,
-                City = info.City,
-                Country = info.CountryLong,
-                Flag = info.CountryShort + ".gif",
-                Info = string.Format(ViewLang.IPNote, ip)
-            };
+                var info = IpUtils.LocationFromIP(ip);
+                var ipinfo = new IPInfo()
+                {
+                    IP = ip,
+                    City = info.City,
+                    Country = info.CountryLong,
+                    Flag = info.CountryShort + ".gif",
+                    Info = string.Format(ViewLang.IPNote, ip)
+                };         
+                
+                return this.PartialViewBase(ipinfo);
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
 
-            return this.PartialViewBase(ipinfo);
+                return this.PartialViewBase(new IPInfo
+                {
+                    City = string.Empty,
+                    Country = string.Empty,
+                    Flag = "-.gif",
+                    Info = string.Empty,
+                    IP = ip
+                });
+            }
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
