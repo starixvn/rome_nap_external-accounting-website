@@ -176,7 +176,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             if (oldGameTypes == null || oldGameTypes.Count == 0)
             {
-                oldGameTypes = this.GameSetting.GetByCustomerId(uplineRoleId == 4 ? req.SuperId : uplineRoleId == 3 ? req.MasterId : req.AgentId);
+                oldGameTypes = this.GameSetting.GetByCustomerId(uplineRoleId == RoleSuper ? req.SuperId : uplineRoleId == RoleMaster ? req.MasterId : req.AgentId);
             }
 
             if (oldGameTypes != null && oldGameTypes.Count > 0 && gameTypes.Count > 0)
@@ -305,12 +305,12 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 if (isUpdateGameSetting && !custInfo.IsSyncLiveCasino)
                 {
                     // Update PT first
-                    if (uplineRoleId == 4)
+                    if (uplineRoleId == RoleSuper)
                     {
                         // Update master PT
                         result = this.UpdateMasterPT(custId, uplineId, customer);
                     }
-                    else if (uplineRoleId == 3)
+                    else if (uplineRoleId == RoleMaster)
                     {
                         // Update agent PT
                         result = this.UpdateAgentPT(custId, uplineId, customer);
@@ -355,72 +355,75 @@ namespace Fanex.ExternalAccount.Controllers.Base
                             oldGameTypes = this.GameSetting.GetByCustomerId(uplineId);
                         }
 
-                        // Force settings changed
-                        oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
+                        if (oldGameTypes != null || oldGameTypes.Count > 0)
                         {
-                            gameTypes.ForEach(q =>
+                            // Force settings changed
+                            oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
                             {
-                                if (q.BetTypeId == o.BetTypeId)
+                                gameTypes.ForEach(q =>
                                 {
-                                    q.BettingLimit.ForEach(r =>
+                                    if (q.BetTypeId == o.BetTypeId)
                                     {
-                                        if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
+                                        q.BettingLimit.ForEach(r =>
                                         {
-                                            r.IsDirty = true;
-                                        }
-                                    });
-                                }
-                            });
-                        }));
-
-                        // Update game settings
-                        var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineRoleId - 1, gameTypes);
-
-                        // Update game settings successfully then sync live casino
-                        if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))
-                        {
-                            // Update sync status for acc
-                            ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
-
-                            // Write log manual insert account
-                            var custList = new List<KeyValuePair<int, string>>();
-                            custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
-
-                            this.LogWriter.WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
-                            {
-                                Action = this.LogActionManual(uplineRoleId - 1),
-                                AgentId = req.AgentId,
-                                CustId = req.CustId,
-                                CustUserName = req.CustUserName,
-                                ExchangeId = req.ExchangeId,
-                                SignUpIp = req.SignUpIp,
-                                Language = req.Language,
-                                MasterId = req.MasterId,
-                                RoleId = req.RoleId,
-                                SignUpForm = req.SignUpForm,
-                                SubAccId = req.SubAccId,
-                                SubAccName = req.SubAccName,
-                                SuperId = req.SuperId,
-                                UserId = req.UserId,
-                                UserName = req.UserName,
-                                ErrorCode = result.ErrorCode,
-                                ErrorMessage = result.ErrorMessage,
-                                CustomerList = custList
-                            });
-
-                            // Write log stake level
-                            this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+                                            if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
                                             {
-                                                Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
-                                                ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
-                                                ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
-                                                RoleId = uplineRoleId - 1,
-                                                SubAccId = req.SubAccId,
-                                                CustId = custId,
-                                                SignUpIp = this.CurrentContext.Ip4Address,
-                                                Language = "en",
-                                                UserId = req.UserId
-                                            });
+                                                r.IsDirty = true;
+                                            }
+                                        });
+                                    }
+                                });
+                            }));
+
+                            // Update game settings
+                            var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineRoleId - 1, gameTypes);
+
+                            // Update game settings successfully then sync live casino
+                            if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))
+                            {
+                                // Update sync status for acc
+                                ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+
+                                // Write log manual insert account
+                                var custList = new List<KeyValuePair<int, string>>();
+                                custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
+
+                                this.LogWriter.WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
+                                {
+                                    Action = this.LogActionManual(uplineRoleId - 1),
+                                    AgentId = req.AgentId,
+                                    CustId = req.CustId,
+                                    CustUserName = req.CustUserName,
+                                    ExchangeId = req.ExchangeId,
+                                    SignUpIp = req.SignUpIp,
+                                    Language = req.Language,
+                                    MasterId = req.MasterId,
+                                    RoleId = req.RoleId,
+                                    SignUpForm = req.SignUpForm,
+                                    SubAccId = req.SubAccId,
+                                    SubAccName = req.SubAccName,
+                                    SuperId = req.SuperId,
+                                    UserId = req.UserId,
+                                    UserName = req.UserName,
+                                    ErrorCode = result.ErrorCode,
+                                    ErrorMessage = result.ErrorMessage,
+                                    CustomerList = custList
+                                });
+
+                                // Write log stake level
+                                this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+                                                {
+                                                    Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
+                                                    ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
+                                                    ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
+                                                    RoleId = uplineRoleId - 1,
+                                                    SubAccId = req.SubAccId,
+                                                    CustId = custId,
+                                                    SignUpIp = this.CurrentContext.Ip4Address,
+                                                    Language = "en",
+                                                    UserId = req.UserId
+                                                });
+                            }
                         }
                     }
                 }
