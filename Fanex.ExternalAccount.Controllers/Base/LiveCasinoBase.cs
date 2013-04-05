@@ -168,7 +168,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 SignUpIp = this.CurrentContext.Ip4Address,
                 SignUpForm = 3, // External accounting
                 UserId = this.CurrentSession.UserId,
-                CustUserName = model.CustomerInfo.UserName,
+                CustUserName = custInfo["username"].ToString(),
                 UserName = this.CurrentSession.UserName,
                 ExchangeId = model.CustomerInfo.ExChangeId,
                 Language = "en"
@@ -335,7 +335,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         SignUpIp = this.CurrentContext.Ip4Address,
                         SignUpForm = 3, // External accounting
                         UserId = this.CurrentSession.UserId,
-                        CustUserName = model.CustomerInfo.UserName,
+                        CustUserName = userInfo["username"].ToString(),
                         UserName = this.CurrentSession.UserName,
                         ExchangeId = model.CustomerInfo.ExChangeId,
                         Language = "en"
