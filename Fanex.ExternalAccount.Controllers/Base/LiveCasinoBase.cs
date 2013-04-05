@@ -25,6 +25,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using System;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// Base controller for live casino setting
@@ -253,12 +255,12 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 AgentId = (int)item["recommend"],
                 MasterId = (int)item["mrecommend"],
                 SuperId = (int)item["srecommend"],
-                AgentName = (string)item["agentname"],
-                MasterName = (string)item["mastername"],
-                SuperName = (string)item["supername"],
+                AgentName = item["agentname"] is DBNull ? string.Empty : item["agentname"].ToString(),
+                MasterName = item["mastername"] is DBNull ? string.Empty : item["mastername"].ToString(),
+                SuperName = item["supername"] is DBNull ? string.Empty : item["supername"].ToString(),
                 CustId = (int)item["custid"],
                 Username = (string)item["username"],
-                RoleId = (int)item["roleid"]
+                RoleId = Utils.ToInt32(item["roleid"])
             };
 
             return info;
