@@ -47,7 +47,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         public const int RoleAgent = 2;
 
         /// <summary>
-        /// Role agent
+        /// Role member
         /// </summary>
         public const int RoleMember = 1;
 
