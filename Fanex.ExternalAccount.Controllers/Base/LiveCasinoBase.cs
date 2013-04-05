@@ -9,15 +9,15 @@
 
 namespace Fanex.ExternalAccount.Controllers.Base
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Data;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Interface.Report;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.LiveCasinoSetting.Business;
     using Fanex.LiveCasinoSetting.Model;
@@ -25,8 +25,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using System;
-    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// Base controller for live casino setting

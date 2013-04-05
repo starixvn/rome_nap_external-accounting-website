@@ -13,13 +13,10 @@
 namespace Fanex.ExternalAccount.Controllers.Base
 {
     using System.IO;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Fanex.ExternalAccount.Controllers.Context;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// Base controller for controller to inherit

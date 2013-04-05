@@ -10,7 +10,6 @@
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
