@@ -36,7 +36,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (Fanex.ExtAcc.Customer.LiveCasino.customer != null && Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting != null) {
                 setEventForCheckbox();
             }
-        }, 200);
+        }, 2000);
     },
 
     GetMasterSetting: function () {
@@ -621,7 +621,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
-        data.uplineId = Fanex.ExtAcc.Customer.agentId;
+        data.uplineId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/SuperEditMemberPost'),
@@ -776,7 +776,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
-        data.uplineId = Fanex.ExtAcc.Customer.agentId;
+        data.uplineId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/MasterEditMemberPost'),
@@ -1283,25 +1283,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         // Set params
-        var uplineId = 0;
-
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case 3:
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                break;
-            case 2:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                break;
-            case 1:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                break;
-            default:
-                break;
-        }
-
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: uplineId,
+            uplineId: Fanex.ExtAcc.Customer.superId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
@@ -1441,25 +1425,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         // Set params
-        var uplineId = 0;
-
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case 3:
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                break;
-            case 2:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                break;
-            case 1:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                break;
-            default:
-                break;
-        }
-
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: uplineId,
+            uplineId: Fanex.ExtAcc.Customer.masterId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
@@ -1586,25 +1554,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         // Set params
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.disableLiveCasino = !document.getElementById('chkEnable').checked;
-        var uplineId = 0;
-
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case 3:
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                break;
-            case 2:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                break;
-            case 1:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                break;
-            default:
-                break;
-        }
-
+       
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: uplineId,
+            uplineId: Fanex.ExtAcc.Customer.agentId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
@@ -1688,7 +1641,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: Fanex.ExtAcc.Customer.agentId,
+            uplineId: Fanex.ExtAcc.Customer.superId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
@@ -1742,25 +1695,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.BlockUI();
 
         // Set params
-        var uplineId = 0;
-
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case 3:
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                break;
-            case 2:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                break;
-            case 1:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                break;
-            default:
-                break;
-        }
-
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: uplineId,
+            uplineId: Fanex.ExtAcc.Customer.superId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
@@ -1835,7 +1772,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: Fanex.ExtAcc.Customer.agentId,
+            uplineId: Fanex.ExtAcc.Customer.masterId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
@@ -1889,25 +1826,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.BlockUI();
 
         // Set params
-        var uplineId = 0;
-
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case 3:
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                break;
-            case 2:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                break;
-            case 1:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                break;
-            default:
-                break;
-        }
-
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            uplineId: uplineId,
+            uplineId: Fanex.ExtAcc.Customer.masterId,
             customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
         };
 
