@@ -47,6 +47,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         public const int RoleAgent = 2;
 
         /// <summary>
+        /// Role agent
+        /// </summary>
+        public const int RoleMember = 1;
+
+        /// <summary>
         /// Lock object for synchronization
         /// </summary>
         private static object locker = new object();
@@ -250,11 +255,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             switch (roleId)
             {
-                case 3:
+                case RoleMaster:
                     return LogActions.UpdateStakeLevel_Master;
-                case 2:
+                case RoleAgent:
                     return LogActions.UpdateStakeLevel_Agent;
-                case 1:
+                case RoleMember:
                     return LogActions.UpdateStakeLevel_Member;
             }
 
@@ -270,11 +275,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             switch (roleId)
             {
-                case 1:
+                case RoleMember:
                     return LogActions.ManualInsert_Member;
-                case 2:
+                case RoleAgent:
                     return LogActions.ManualInsert_Agent;
-                case 3:
+                case RoleMaster:
                     return LogActions.ManualInsert_Master;
             }
 
