@@ -109,6 +109,7 @@
     <Compile Include="Authentication\AccountController.cs" />
     <Compile Include="Authentication\CaptchaResult.cs" />
     <Compile Include="Base\BaseController.cs" />
+    <Compile Include="Base\ControllerExtentions.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Base\LiveCasinoBase.cs" />
     <Compile Include="Context\AuthorizationAttribute.cs" />
