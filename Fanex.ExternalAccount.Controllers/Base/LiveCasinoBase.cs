@@ -164,16 +164,16 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             var req = new InsertAccountRequest
             {
-                AgentId = (int)custInfo["recommend"],
-                MasterId = (int)custInfo["mrecommend"],
-                SuperId = (int)custInfo["srecommend"],
+                AgentId = custInfo.AgentId,
+                MasterId = custInfo.MasterId,
+                SuperId = custInfo.SuperId,
                 CustId = custId,
                 RoleId = uplineRoleId - 1,
                 IsEnableDownline = true,
                 SignUpIp = this.CurrentContext.Ip4Address,
                 SignUpForm = 3, // External accounting
                 UserId = this.CurrentSession.UserId,
-                CustUserName = custInfo["username"].ToString(),
+                CustUserName = custInfo.Username,
                 UserName = this.CurrentSession.UserName,
                 ExchangeId = model.CustomerInfo.ExChangeId,
                 Language = "en"
@@ -236,14 +236,32 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// </summary>
         /// <param name="custId">Customer Id</param>
         /// <param name="groupName">Group Name that user belongs to</param>
-        /// <returns>DataRow object</returns>
-        protected DataRow GetCustomerInfo(int custId, string groupName)
+        /// <returns>CustInfo object</returns>
+        protected CustInfo GetCustomerInfo(int custId, string groupName)
         {
             var report = new ReportService();
             var custInfo = report.GetCustomerInfo(groupName, custId, string.Empty, true);
-            var item = custInfo.Rows[0];
 
-            return item;
+            if (custInfo == null || custInfo.Rows.Count == 0)
+            {
+                return new CustInfo();
+            }
+
+            var item = custInfo.Rows[0];
+            var info = new CustInfo
+            {
+                AgentId = (int)item["recommend"],
+                MasterId = (int)item["mrecommend"],
+                SuperId = (int)item["srecommend"],
+                AgentName = (string)item["agentname"],
+                MasterName = (string)item["mastername"],
+                SuperName = (string)item["supername"],
+                CustId = (int)item["custid"],
+                Username = (string)item["username"],
+                RoleId = (int)item["roleid"]
+            };
+
+            return info;
         }
 
         /// <summary>
@@ -331,16 +349,16 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     // Sync live casino when updated PT
                     var req = new InsertAccountRequest
                     {
-                        AgentId = (int)userInfo["recommend"],
-                        MasterId = (int)userInfo["mrecommend"],
-                        SuperId = (int)userInfo["srecommend"],
+                        AgentId = userInfo.AgentId,
+                        MasterId = userInfo.MasterId,
+                        SuperId = userInfo.SuperId,
                         CustId = custId,
                         RoleId = uplineRoleId - 1,
                         IsEnableDownline = true,
                         SignUpIp = this.CurrentContext.Ip4Address,
                         SignUpForm = 3, // External accounting
                         UserId = this.CurrentSession.UserId,
-                        CustUserName = userInfo["username"].ToString(),
+                        CustUserName = userInfo.Username,
                         UserName = this.CurrentSession.UserName,
                         ExchangeId = model.CustomerInfo.ExChangeId,
                         Language = "en"
@@ -737,18 +755,18 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             var result = new InsertAccountRequest()
             {
-                AgentId = (int)custInfo["recommend"],
+                AgentId = custInfo.AgentId,
                 CustId = custId,
-                CustUserName = custInfo["username"].ToString(),
+                CustUserName = custInfo.Username,
                 ExchangeId = model.CustomerInfo.ExChangeId,
                 SignUpIp = this.CurrentContext.Ip4Address,
                 IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
                 IsEnableDownline = false,
                 Language = "en",
-                MasterId = (int)custInfo["mrecommend"],
+                MasterId = custInfo.MasterId,
                 RoleId = 1,
                 SignUpForm = 3, // External acc system
-                SuperId = (int)custInfo["srecommend"],
+                SuperId = custInfo.SuperId,
                 SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
                 UserId = CurrentSession.UserId,
                 UserName = CurrentSession.UserName,

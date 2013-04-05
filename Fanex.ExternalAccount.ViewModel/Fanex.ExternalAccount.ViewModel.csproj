@@ -58,6 +58,7 @@
     <Compile Include="Account\Login.cs" />
     <Compile Include="Account\LoginModel.cs" />
     <Compile Include="Account\UserModel.cs" />
+    <Compile Include="Customer\CustInfo.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\IPInfo.cs" />
     <Compile Include="Customer\LiveCasinoModel.cs" />
