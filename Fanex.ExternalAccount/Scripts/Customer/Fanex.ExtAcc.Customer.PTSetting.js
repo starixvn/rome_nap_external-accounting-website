@@ -1387,7 +1387,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
     SuperMasterUpdateMemberPT: function (custId, data, i, customer) {
         var urlPost = '';
-        if (Fanex.ExtAcc.Customer.PTSetting.isSuperEditMember) {
+
+        if (Fanex.ExtAcc.Customer.isSuperEditMember) {
             urlPost = 'Sportsbook/SuperEditPTMemberPost';
         }
         else {
