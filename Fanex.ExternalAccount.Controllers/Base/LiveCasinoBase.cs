@@ -737,8 +737,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 SignUpForm = 3, // External acc system
                 SuperId = custInfo.SuperId,
                 SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
-                UserId = CurrentSession.UserId,
-                UserName = CurrentSession.UserName,
+                UserId = this.CurrentSession.UserId,
+                UserName = this.CurrentSession.UserName,
                 IsAutoInsert = false // Manually insert account
             };
 
