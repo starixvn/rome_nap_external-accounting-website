@@ -160,24 +160,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
             var gameTypes = model.GameSetting;
-            var custInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
 
-            var req = new InsertAccountRequest
-            {
-                AgentId = custInfo.AgentId,
-                MasterId = custInfo.MasterId,
-                SuperId = custInfo.SuperId,
-                CustId = custId,
-                RoleId = uplineRoleId - 1,
-                IsEnableDownline = true,
-                SignUpIp = this.CurrentContext.Ip4Address,
-                SignUpForm = 3, // External accounting
-                UserId = this.CurrentSession.UserId,
-                CustUserName = custInfo.Username,
-                UserName = this.CurrentSession.UserName,
-                ExchangeId = model.CustomerInfo.ExChangeId,
-                Language = "en"
-            };
+            var req = this.GetInsertAccountRequest(custId, customer);
 
             if (oldGameTypes == null || oldGameTypes.Count == 0)
             {
@@ -347,22 +331,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 else if (!custInfo.IsSyncLiveCasino)
                 {
                     // Sync live casino when updated PT
-                    var req = new InsertAccountRequest
-                    {
-                        AgentId = userInfo.AgentId,
-                        MasterId = userInfo.MasterId,
-                        SuperId = userInfo.SuperId,
-                        CustId = custId,
-                        RoleId = uplineRoleId - 1,
-                        IsEnableDownline = true,
-                        SignUpIp = this.CurrentContext.Ip4Address,
-                        SignUpForm = 3, // External accounting
-                        UserId = this.CurrentSession.UserId,
-                        CustUserName = userInfo.Username,
-                        UserName = this.CurrentSession.UserName,
-                        ExchangeId = model.CustomerInfo.ExChangeId,
-                        Language = "en"
-                    };
+                    var req = this.GetInsertAccountRequest(custId, customer);
 
                     // Manually insert account first
                     result = this.GameSetting.InsertAccount(req);
@@ -761,10 +730,10 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 ExchangeId = model.CustomerInfo.ExChangeId,
                 SignUpIp = this.CurrentContext.Ip4Address,
                 IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
-                IsEnableDownline = false,
+                IsEnableDownline = true,
                 Language = "en",
                 MasterId = custInfo.MasterId,
-                RoleId = 1,
+                RoleId = custInfo.RoleId,
                 SignUpForm = 3, // External acc system
                 SuperId = custInfo.SuperId,
                 SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
