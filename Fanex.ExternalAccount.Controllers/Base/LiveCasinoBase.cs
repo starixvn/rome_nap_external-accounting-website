@@ -220,7 +220,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// </summary>
         /// <param name="custId">Customer Id</param>
         /// <param name="groupName">Group Name that user belongs to</param>
-        /// <returns>CustInfo object</returns>
+        /// <returns>CUSTINFO object</returns>
         protected CustInfo GetCustomerInfo(int custId, string groupName)
         {
             var report = new ReportService();
