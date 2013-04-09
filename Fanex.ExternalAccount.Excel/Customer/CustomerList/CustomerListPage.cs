@@ -148,7 +148,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 
         private static string SetBackgroundRow(ISheet templateSheet, ISheet resultSheet, int rowId, int colId, int lastColumnIndex, string custStatus, DataRow items)
         {
-            custStatus = Convert.ToBoolean(items["closed"]) ? "Closed" : (Convert.ToBoolean(items["suspended"]) ? "Suspended" : (Convert.ToBoolean(items["enabled"]) ? "Open" : "Disabled"));
+            custStatus = !Convert.ToBoolean(items["enabled"]) ? "Disabled" : Convert.ToBoolean(items["closed"]) ? "Closed" : Convert.ToBoolean(items["suspended"]) ? "Suspended" : "Open";
             if (custStatus.ToLower() == "open")
             {
                 resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
