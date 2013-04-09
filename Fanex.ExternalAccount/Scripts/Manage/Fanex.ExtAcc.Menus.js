@@ -253,7 +253,7 @@ Fanex.ExtAcc.Menus = {
                 $.unblockUI(document);
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -322,7 +322,7 @@ Fanex.ExtAcc.Menus = {
                 $.unblockUI(document);
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {

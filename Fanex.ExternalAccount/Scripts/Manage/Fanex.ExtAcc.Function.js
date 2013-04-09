@@ -421,7 +421,7 @@ Fanex.ExtAcc.Function = {
                 $.unblockUI(document);
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(true, 2000);
@@ -491,7 +491,7 @@ Fanex.ExtAcc.Function = {
                 $.unblockUI(document);
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(true, 2000);
@@ -528,7 +528,7 @@ Fanex.ExtAcc.Function = {
         .done(function (data) {
             if (!data.IsSuccess) {
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(true);
