@@ -525,7 +525,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             string status = string.Empty;
             if (enabled != null || closed != null || suspended != null)
             {
-                status = Convert.ToBoolean(closed) ? "Closed" : (Convert.ToBoolean(suspended) ? "Suspended" : (Convert.ToBoolean(enabled) ? "Open" : "Disabled"));
+                status = !Convert.ToBoolean(enabled) ? "Disabled" : Convert.ToBoolean(closed) ? "Closed" : Convert.ToBoolean(suspended) ? "Suspended" : "Open";
             }
 
             var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(this.cache.Get<DataTable>(this.cacheList), false, status, Convert.ToInt32(currentLevel));
