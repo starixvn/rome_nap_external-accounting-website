@@ -268,7 +268,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
         #endregion Agent Add New Member
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult CustomerList()
         {
             return this.ViewBase();
