@@ -1892,7 +1892,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             Fanex.ExtAcc.Customer.IsMultiple = true;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
         }
     },
 
