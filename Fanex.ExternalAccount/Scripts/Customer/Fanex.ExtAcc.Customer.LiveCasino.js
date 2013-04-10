@@ -162,8 +162,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     }
 
                     if ((Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT || Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) && !isChecked) {
-                        var items = '';
-                        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
+                        var items = '';                        
 
                         for (var i = (uplineMax - parent.document.getElementById('pt_1').value); i.toFixed(2) >= 0.00; i -= 0.01) {
                             items += '<option>' + (((i != 0 ? i.toFixed(2) : i) * 100) / 100) + '</option>';
@@ -177,10 +176,12 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
+                                Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
                                 Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
+                                Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
                                 Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
@@ -212,10 +213,12 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
+                                Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
                                 Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
+                                Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
                                 Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
@@ -372,8 +375,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                     if ((Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT || Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) && !isChecked) {
                         var items = '';
-                        Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
-
+                        
                         for (var i = (uplineMax - parent.document.getElementById('pt_1').value); i.toFixed(2) >= 0.00; i -= 0.01) {
                             items += '<option>' + (((i != 0 ? i.toFixed(2) : i) * 100) / 100) + '</option>';
                         }
@@ -386,10 +388,12 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             140,
                             false,
                             function () {
+                                Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
                                 Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT($('#memberPT').val(), Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
                             function () {
+                                Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.isAutoPresetPT = isChecked;
                                 Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT(null, Fanex.ExtAcc.Customer.LiveCasino.IsMultiple ? 0 : null);
                                 Fanex.ExtAcc.Form.Close(false, null, 'confirmAutoMember');
                             },
