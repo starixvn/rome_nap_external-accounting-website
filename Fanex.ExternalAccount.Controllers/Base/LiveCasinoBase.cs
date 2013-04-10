@@ -332,7 +332,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 else if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
                     // Sync live casino when updated PT
-                    var req = this.GetInsertAccountRequest(custId, uplineRoleId, customer);
+                    var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
 
                     // Manually insert account first
                     result = this.GameSetting.InsertAccount(req);
