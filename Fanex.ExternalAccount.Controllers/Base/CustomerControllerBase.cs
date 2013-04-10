@@ -25,6 +25,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
     /// </summary>
     public class CustomerControllerBase : BaseController
     {
+        private const int RoleSuper = 4;
+        private const int RoleMaster = 3;
+        private const int RoleAgent = 2;
+        private const int RoleMember = 1;
+
         private readonly ISettingService setting = new SettingService();
         private readonly IGameSettingService gameSetting = new GameSettingService();
         private readonly ILogWriterService logWriter = new LogWriterService();
@@ -46,7 +51,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
                     this.logWriter.WriteLog(new LogAutoInsertAccount
                     {
-                        Action = uplineRoleId == 4 ? LogActions.AutoInsert_Master : uplineRoleId == 3 ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
+                        Action = uplineRoleId == RoleSuper ? LogActions.AutoInsert_Master : uplineRoleId == RoleMaster ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
                         AgentId = custInfo.AgentId,
                         CustId = custId,
                         CustUserName = custInfo.Username,
@@ -75,12 +80,13 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// Gets insert account request
         /// </summary>
         /// <param name="custId">Customer id</param>
+        /// <param name="uplineRoleId">Up-line role id</param>
         /// <param name="groupName">Group name</param>
         /// <returns>InsertAccountRequest object</returns>
         private InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
             var custInfo = this.GetCustomerInfo(custId, groupName);
-            var uplineInfo = this.setting.GetCustomerInfo(uplineRoleId == 4 ? custInfo.SuperId : uplineRoleId == 3 ? custInfo.MasterId : custInfo.AgentId);
+            var uplineInfo = this.setting.GetCustomerInfo(uplineRoleId == RoleSuper ? custInfo.SuperId : uplineRoleId == RoleMaster ? custInfo.MasterId : custInfo.AgentId);
 
             var result = new InsertAccountRequest()
             {
