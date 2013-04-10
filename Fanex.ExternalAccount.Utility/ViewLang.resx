@@ -746,7 +746,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
     <value>1x2 Comm</value>
   </data>
   <data name="numbergamecomm" xml:space="preserve">
-    <value>Game Comm</value>
+    <value>Number Game Comm</value>
   </data>
   <data name="OtherComm" xml:space="preserve">
     <value>Others Comm</value>

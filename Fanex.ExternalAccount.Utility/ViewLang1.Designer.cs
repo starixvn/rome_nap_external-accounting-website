@@ -1322,7 +1322,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game Comm.
+        ///   Looks up a localized string similar to Number Game Comm.
         /// </summary>
         public static string numbergamecomm {
             get {

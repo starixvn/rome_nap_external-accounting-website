@@ -287,6 +287,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
 
+                                    if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                        return;
+
                                     customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
                                 }
 
@@ -430,6 +433,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
 
+                                    if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                        return;
+
                                     customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
                                 }
 
@@ -570,6 +576,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
+
+                                    if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                        return;
 
                                     customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
                                 }
