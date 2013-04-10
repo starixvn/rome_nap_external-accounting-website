@@ -64,7 +64,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         SuperId = custInfo.SuperId,
                         UserId = this.CurrentSession.UserId,
                         UserName = this.CurrentSession.UserName,
-                        ErrorCode = result.ErrorCode.ToString(),
+                        ErrorCode = result.ErrorCode,
                         ErrorMessage = result.ErrorMessage,
                         dataResult = table
                     });
