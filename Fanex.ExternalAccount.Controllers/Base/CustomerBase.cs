@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="CustomerControllerBase.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="CustomerBase.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -23,7 +23,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     /// <summary>
     /// Base class for customer controller
     /// </summary>
-    public class CustomerControllerBase : BaseController
+    public class CustomerBase : BaseController
     {
         private const int RoleSuper = 4;
         private const int RoleMaster = 3;
