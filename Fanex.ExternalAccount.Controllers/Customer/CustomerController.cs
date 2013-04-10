@@ -30,7 +30,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CustomerController : BaseController
+    public class CustomerController : CustomerControllerBase
     {
         private readonly SuperService superService = new SuperService();
         private readonly MasterService masterService = new MasterService();

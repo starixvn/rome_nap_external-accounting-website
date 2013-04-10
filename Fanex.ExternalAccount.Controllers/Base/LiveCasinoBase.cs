@@ -161,7 +161,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
             var gameTypes = model.GameSetting;
 
-            var req = this.GetInsertAccountRequest(custId, customer);
+            var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
 
             if (oldGameTypes == null || oldGameTypes.Count == 0)
             {
@@ -306,10 +306,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 var gameTypes = model.GameSetting;
                 var result = new Fanex.LiveCasinoSetting.Model.Result();
                 var custInfo = this.PtSetting.GetCustomerInfo(custId);
+                var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
                 var userInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
 
                 // Update game setting in case of not sync live casino
-                if (isUpdateGameSetting && !custInfo.IsSyncLiveCasino)
+                if (isUpdateGameSetting && uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
                     // Update PT first
                     if (uplineRoleId == RoleSuper)
@@ -328,10 +329,10 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         result = this.UpdateMemberPT(custId, uplineId, customer);
                     }
                 }
-                else if (!custInfo.IsSyncLiveCasino)
+                else if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
                     // Sync live casino when updated PT
-                    var req = this.GetInsertAccountRequest(custId, customer);
+                    var req = this.GetInsertAccountRequest(custId, uplineRoleId, customer);
 
                     // Manually insert account first
                     result = this.GameSetting.InsertAccount(req);
@@ -717,26 +718,26 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="custId">Customer id</param>
         /// <param name="customer">JSON object string</param>
         /// <returns>InsertAccountRequest object</returns>
-        protected InsertAccountRequest GetInsertAccountRequest(int custId, string customer)
+        protected InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
-            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var custInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
+            var custInfo = this.GetCustomerInfo(custId, groupName);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineRoleId == RoleSuper ? custInfo.SuperId : uplineRoleId == RoleMaster ? custInfo.MasterId : custInfo.AgentId);
 
             var result = new InsertAccountRequest()
             {
                 AgentId = custInfo.AgentId,
                 CustId = custId,
                 CustUserName = custInfo.Username,
-                ExchangeId = model.CustomerInfo.ExChangeId,
+                ExchangeId = uplineInfo.ExChangeId,
                 SignUpIp = this.CurrentContext.Ip4Address,
-                IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino,
+                IsDisabledLiveCasino = uplineInfo.DisableLiveCasino,
                 IsEnableDownline = true,
                 Language = "en",
                 MasterId = custInfo.MasterId,
                 RoleId = custInfo.RoleId,
                 SignUpForm = 3, // External acc system
                 SuperId = custInfo.SuperId,
-                SyncLiveCasino = model.CustomerInfo.IsSyncLiveCasino,
+                SyncLiveCasino = uplineInfo.IsSyncLiveCasino,
                 UserId = this.CurrentSession.UserId,
                 UserName = this.CurrentSession.UserName,
                 IsAutoInsert = false // Manually insert account

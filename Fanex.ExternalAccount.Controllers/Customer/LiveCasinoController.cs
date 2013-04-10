@@ -616,7 +616,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleAgent, custId, customer);
-            var resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, customer)));
+            var resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, customer)));
 
             var results = new List<object>();
 
