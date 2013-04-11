@@ -15,12 +15,12 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
         {
         }
 
-        public GameKindDetail(int _CodeID, string _CodeNo, string _CodeName, string _CodeSName)
+        public GameKindDetail(int codeID, string codeNo, string codeName, string codeSName)
         {
-            this.CodeID = _CodeID;
-            this.CodeNo = _CodeNo;
-            this.CodeName = _CodeName;
-            this.CodeSName = _CodeSName;
+            this.CodeID = codeID;
+            this.CodeNo = codeNo;
+            this.CodeName = codeName;
+            this.CodeSName = codeSName;
         }
 
         public int CodeID

@@ -23,8 +23,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
     /// </summary>
     public class CasinoManager
     {
-        private readonly CasinoDao casino = new CasinoDao();
         private static CasinoManager instance = null;
+        private readonly CasinoDao casino = new CasinoDao();
         
         public static CasinoManager Instance
         {
@@ -34,110 +34,108 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             }
         }
 
+        public static string Lang(string original)
+        {
+            return original + "_En";
+        }
+
         public List<GameKindDetail> GetGameKinds()
         {
-            List<GameKindDetail> lsGameKind = new List<GameKindDetail>();
-            BasicInfo _csBasicInfo = new BasicInfo();
-            DataTable dtGameKind = _csBasicInfo.GetGameKind(null);
-            foreach (DataRow row in dtGameKind.Rows)
+            List<GameKindDetail> gameKinds = new List<GameKindDetail>();
+            BasicInfo basicInfo = new BasicInfo();
+            DataTable dt = basicInfo.GetGameKind(null);
+            foreach (DataRow row in dt.Rows)
             {
                 GameKindDetail gameKind = new GameKindDetail(Utils.ToInt32(row["CodeID"]), Utils.ToString(row["CodeNo"]), Utils.ToString(row[Lang("CodeName")]), Utils.ToString(row["CodeSName"]));
-                lsGameKind.Add(gameKind);
+                gameKinds.Add(gameKind);
             }
 
-            return lsGameKind;
+            return gameKinds;
         }
 
         public bool GetCasinoStatus(int custid)
         {
-            return casino.GetCasinoStatus(custid);
+            return this.casino.GetCasinoStatus(custid);
         }
 
-        public bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, int userId, string ip, int subAccId, string lang, string username, string subUsername)
+        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, int userId, string ip, int subAccId, string lang, string username, string subUsername)
         {
-            return casino.UpdateCSStatus(custid, bSyncCS, bDisabledCS, userId, ip, subAccId, lang, username, subUsername);
+            return this.casino.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang, username, subUsername);
         }
 
-        public bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, string username, string subUsername)
+        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, string username, string subUsername)
         {
-            string errMsg = "";
-            return this.UpdateCSStatus(custid, bSyncCS, bDisabledCS, isUpdDownline, userId, ip, subAccId, lang, username, subUsername, out errMsg);
+            string errMsg = string.Empty;
+            return this.UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username, subUsername, out errMsg);
         }
 
-        public bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, string username, string subUsername, out string errMsg)
+        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, string username, string subUsername, out string errMsg)
         {
-            bool status = this.DoUpdateCSStatusWithoutSync(custid, bSyncCS, bDisabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
-            if (!status) return false;
+            bool status = this.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
+            if (!status)
+            {
+                return false;
+            }
 
             Customer cust = new Customer();
-            return cust.UpdateCustEnableCasino(custid, !bDisabledCS, isUpdDownline, ip, custid, subAccId == 0 ? username : subUsername, 2);
+            return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, custid, subAccId == 0 ? username : subUsername, 2);
         }
 
-        public bool UpdateCSStatusWithoutSync(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang)
+        public bool UpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang)
         {
-            string errMsg = "";
-            return DoUpdateCSStatusWithoutSync(custid, bSyncCS, bDisabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
+            string errMsg = string.Empty;
+            return this.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
         }
 
-        private bool DoUpdateCSStatusWithoutSync(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
-        {
-            return casino.DoUpdateCSStatusWithoutSync(custid, bSyncCS, bDisabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
-        }
-
-        /// <summary>
-        /// Initialize basics property of an object from posted values of a form. Be used in new customer function.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
         public CasinoCustomer GetCustInfoIBC(int custid, int roleId, int currencyId, string currency, Hashtable r)
         {
-            CasinoCustomer _custSetting = new CasinoCustomer();
+            CasinoCustomer custSetting = new CasinoCustomer();
 
-            _custSetting.UserName = Utils.ToString(r["username"]);
-            _custSetting.UserPwd = Utils.ToString(r["userpwd"]);
-            _custSetting.FirstName = Utils.ToString(r["firstname"]);
-            _custSetting.LastName = Utils.ToString(r["lastname"]);
-            _custSetting.Phone = Utils.ToString(r["phone"]);
-            _custSetting.MobilePhone = Utils.ToString(r["mobilephone"]);
-            _custSetting.Fax = Utils.ToString(r["fax"]);
-            _custSetting.Email = Utils.ToString(r["email"]);
-            _custSetting.RoleId = roleId - 1;
-            _custSetting.Currency = currencyId;
-            _custSetting.CurrencyName = currency;
-            _custSetting.Closed = Utils.ToBoolean(r["closed"]);
-            _custSetting.Suspend = Utils.ToBoolean(r["suspend"]);
+            custSetting.UserName = Utils.ToString(r["username"]);
+            custSetting.UserPwd = Utils.ToString(r["userpwd"]);
+            custSetting.FirstName = Utils.ToString(r["firstname"]);
+            custSetting.LastName = Utils.ToString(r["lastname"]);
+            custSetting.Phone = Utils.ToString(r["phone"]);
+            custSetting.MobilePhone = Utils.ToString(r["mobilephone"]);
+            custSetting.Fax = Utils.ToString(r["fax"]);
+            custSetting.Email = Utils.ToString(r["email"]);
+            custSetting.RoleId = roleId - 1;
+            custSetting.Currency = currencyId;
+            custSetting.CurrencyName = currency;
+            custSetting.Closed = Utils.ToBoolean(r["closed"]);
+            custSetting.Suspend = Utils.ToBoolean(r["suspend"]);
 
-            _custSetting.SIBCCustID = roleId == 4 ? custid : 0;
-            _custSetting.MIBCCustID = roleId == 3 ? custid : 0;
-            _custSetting.AIBCCustID = roleId == 2 ? custid : 0;
+            custSetting.SIBCCustID = roleId == 4 ? custid : 0;
+            custSetting.MIBCCustID = roleId == 3 ? custid : 0;
+            custSetting.AIBCCustID = roleId == 2 ? custid : 0;
 
-            _custSetting.CasinoSync = false;
-            _custSetting.CasinoDisabled = false;
-            _custSetting.IBCCustID = custid;
+            custSetting.CasinoSync = false;
+            custSetting.CasinoDisabled = false;
+            custSetting.IBCCustID = custid;
 
-            return _custSetting;
+            return custSetting;
         }
 
         public List<GameKindDetail> GetGameKinds(string casinoNo)
         {
-            List<GameKindDetail> lsGameKind = new List<GameKindDetail>();
-            BasicInfo _csBasicInfo = new BasicInfo();
-            DataTable dtGameKind = _csBasicInfo.GetGameKind(casinoNo);
-            foreach (DataRow row in dtGameKind.Rows)
+            List<GameKindDetail> gameKinds = new List<GameKindDetail>();
+            BasicInfo basicInfo = new BasicInfo();
+            DataTable dt = basicInfo.GetGameKind(casinoNo);
+            foreach (DataRow row in dt.Rows)
             {
                 GameKindDetail gameKind = new GameKindDetail(Utils.ToInt32(row["CodeID"]), Utils.ToString(row["CodeNo"]), Utils.ToString(row[Lang("CodeName")]), Utils.ToString(row["CodeSName"]));
-                lsGameKind.Add(gameKind);
+                gameKinds.Add(gameKind);
             }
 
-            return lsGameKind;
+            return gameKinds;
         }
 
         public List<GameKindDetail> GetGameKinds(int custId)
         {
-            List<GameKindDetail> lsGameKind = new List<GameKindDetail>();
-            Customer _cust = new Customer();
-            DataTable dtGameKind = _cust.GetCustGameKind(custId);
-            foreach (DataRow row in dtGameKind.Rows)
+            List<GameKindDetail> gameKinds = new List<GameKindDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustGameKind(custId);
+            foreach (DataRow row in dt.Rows)
             {
                 GameKindDetail gameKind = new GameKindDetail();
                 gameKind.CodeID = Utils.ToInt32(row["GameKind"]);
@@ -149,7 +147,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameKind.MAgentRollingRate = Utils.ToDouble(row["MAgentRollingRate"]);
                 gameKind.MaxPositionTaking = Utils.ToDouble(row["MaxPositionTaking"]);
                 gameKind.MemberRollingRate = Utils.ToDouble(row["MemberRollingRate"]);
-                // gameKind.MinMPositionTaking = Utils.ToDouble(row["MinMPositionTaking"]);
                 gameKind.MinPositionTaking = Utils.ToDouble(row["MinPositionTaking"]);
                 gameKind.MPositionTaking = Utils.ToDouble(row["MPositionTaking"]);
                 gameKind.SMAgentRollingRate = Utils.ToDouble(row["SMAgentRollingRate"]);
@@ -163,29 +160,23 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameKind.MAgentRollingRateUpline = Utils.ToDouble(row["UplineMAgentRollingRate"]);
                 gameKind.MaxPositionTakingUpline = Utils.ToDouble(row["UplineMaxPositionTaking"]);
                 gameKind.MemberRollingRateUpline = Utils.ToDouble(row["UplineMemberRollingRate"]);
-                // gameKind.MinMPositionTakingUpline = Utils.ToDouble(row["MinMPositionTaking"]);
                 gameKind.MinPositionTakingUpline = Utils.ToDouble(row["UplineMinPositionTaking"]);
                 gameKind.MPositionTakingUpline = Utils.ToDouble(row["UplineMPositionTaking"]);
                 gameKind.SMAgentRollingRateUpline = Utils.ToDouble(row["UplineSMAgentRollingRate"]);
                 gameKind.SPositionTakingUpline = Utils.ToDouble(row["UplineSPositionTaking"]);
 
-                lsGameKind.Add(gameKind);
+                gameKinds.Add(gameKind);
             }
 
-            return lsGameKind;
+            return gameKinds;
         }
 
-        /// <summary>
-        /// Get customer PT when super edit member
-        /// </summary>
-        /// <param name="memberId"></param>
-        /// <returns></returns>
         public List<GameKindDetail> GetGameKinds_EditMember(int memberId)
         {
-            List<GameKindDetail> lsGameKind = new List<GameKindDetail>();
-            Customer _cust = new Customer();
-            DataTable dtGameKind = _cust.GetCustGameKind_EditMember(memberId);
-            foreach (DataRow row in dtGameKind.Rows)
+            List<GameKindDetail> gameKinds = new List<GameKindDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustGameKind_EditMember(memberId);
+            foreach (DataRow row in dt.Rows)
             {
                 GameKindDetail gameKind = new GameKindDetail();
                 gameKind.CodeID = Utils.ToInt32(row["GameKind"]);
@@ -198,19 +189,18 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameKind.SuperMaxPositionTaking = Utils.ToDouble(row["SuperMaxPositionTaking"]);
                 gameKind.SuperMinPositionTaking = Utils.ToDouble(row["SuperMinPositionTaking"]);
 
-                lsGameKind.Add(gameKind);
+                gameKinds.Add(gameKind);
             }
 
-            return lsGameKind;
+            return gameKinds;
         }
 
-        //Get customer PT by game type when super edit member
         public List<GameTypeDetail> GetGameTypes_EditMember(int memberId, int gameKindID)
         {
-            List<GameTypeDetail> lsGameType = new List<GameTypeDetail>();
-            Customer _cust = new Customer();
-            DataTable dtGameType = _cust.GetCustGameType_EditMember(memberId, gameKindID);
-            foreach (DataRow row in dtGameType.Rows)
+            List<GameTypeDetail> gameTypes = new List<GameTypeDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustGameType_EditMember(memberId, gameKindID);
+            foreach (DataRow row in dt.Rows)
             {
                 GameTypeDetail gameType = new GameTypeDetail();
 
@@ -224,22 +214,18 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameType.SuperMaxPositionTaking = Utils.ToDouble(row["SuperMaxPositionTaking"]);
                 gameType.SuperMinPositionTaking = Utils.ToDouble(row["SuperMinPositionTaking"]);
 
-                lsGameType.Add(gameType);
+                gameTypes.Add(gameType);
             }
-            return lsGameType;
+
+            return gameTypes;
         }
 
-        /// <summary>
-        /// Get game type list of a certain game kind
-        /// </summary>
-        /// <param name="gameKindID">ID of game kind</param>
-        /// <returns>List GameTypeDetail</returns>
         public List<GameTypeDetail> GetGameType(int gameKindID)
         {
-            List<GameTypeDetail> lsGameType = new List<GameTypeDetail>();
-            BasicInfo _csBasicInfo = new BasicInfo();
-            DataTable dtGameType = _csBasicInfo.GetGameType(gameKindID);
-            foreach (DataRow row in dtGameType.Rows)
+            List<GameTypeDetail> gameTypes = new List<GameTypeDetail>();
+            BasicInfo basicInfo = new BasicInfo();
+            DataTable dt = basicInfo.GetGameType(gameKindID);
+            foreach (DataRow row in dt.Rows)
             {
                 GameTypeDetail gameType = new GameTypeDetail();
                 gameType.CasinoID = Utils.ToInt32(row["CasinoID"]);
@@ -252,17 +238,18 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameType.AlertMaxIdle = Utils.ToInt32(row["AlertMaxIdle"]);
                 gameType.IsTrialTime = Utils.ToBoolean(row["IsTrialTime"]);
                 gameType.MaxIdle = Utils.ToInt32(row["MaxIdle"]);
-                lsGameType.Add(gameType);
+                gameTypes.Add(gameType);
             }
-            return lsGameType;
+
+            return gameTypes;
         }
 
         public List<GameTypeDetail> GetGameType(int custId, int gameKindID)
         {
-            List<GameTypeDetail> lsGameType = new List<GameTypeDetail>();
-            Customer _cust = new Customer();
-            DataTable dtGameType = _cust.GetCustGameType(custId, gameKindID);
-            foreach (DataRow row in dtGameType.Rows)
+            List<GameTypeDetail> gameTypes = new List<GameTypeDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustGameType(custId, gameKindID);
+            foreach (DataRow row in dt.Rows)
             {
                 GameTypeDetail gameType = new GameTypeDetail();
 
@@ -275,7 +262,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameType.MAgentRollingRate = Utils.ToDouble(row["MAgentRollingRate"]);
                 gameType.MaxPositionTaking = Utils.ToDouble(row["MaxPositionTaking"]);
                 gameType.MemberRollingRate = Utils.ToDouble(row["MemberRollingRate"]);
-                //gameType.MinMPositionTaking = Utils.ToDouble(row["MinMPositionTaking"]);
                 gameType.MinPositionTaking = Utils.ToDouble(row["MinPositionTaking"]);
                 gameType.MPositionTaking = Utils.ToDouble(row["MPositionTaking"]);
                 gameType.SMAgentRollingRate = Utils.ToDouble(row["SMAgentRollingRate"]);
@@ -288,29 +274,23 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameType.MAgentRollingRateUpline = Utils.ToDouble(row["UplineMAgentRollingRate"]);
                 gameType.MaxPositionTakingUpline = Utils.ToDouble(row["UplineMaxPositionTaking"]);
                 gameType.MemberRollingRateUpline = Utils.ToDouble(row["UplineMemberRollingRate"]);
-                //gameType.MinMPositionTaking = Utils.ToDouble(row["MinMPositionTaking"]);
                 gameType.MinPositionTakingUpline = Utils.ToDouble(row["UplineMinPositionTaking"]);
                 gameType.MPositionTakingUpline = Utils.ToDouble(row["UplineMPositionTaking"]);
                 gameType.SMAgentRollingRateUpline = Utils.ToDouble(row["UplineSMAgentRollingRate"]);
                 gameType.SPositionTakingUpline = Utils.ToDouble(row["UplineSPositionTaking"]);
 
-                lsGameType.Add(gameType);
+                gameTypes.Add(gameType);
             }
-            return lsGameType;
-        }
 
-        /// <summary>
-        /// Get Game Kind of Master Edit Member
-        /// </summary>
-        /// <param name="memberid"></param>
-        /// <returns></returns>
+            return gameTypes;
+        }
 
         public List<GameKindDetail> GetGameKinds_MasterEditMember(int memberid)
         {
-            List<GameKindDetail> lsGameKind = new List<GameKindDetail>();
-            Customer _cust = new Customer();
-            DataTable dtGameKind = _cust.GetCustGameKind(memberid);
-            foreach (DataRow row in dtGameKind.Rows)
+            List<GameKindDetail> gameKinds = new List<GameKindDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustGameKind(memberid);
+            foreach (DataRow row in dt.Rows)
             {
                 GameKindDetail gameKind = new GameKindDetail();
                 gameKind.CodeID = Utils.ToInt32(row["GameKind"]);
@@ -327,24 +307,18 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameKind.IsAutoPositionTaking = Utils.ToBoolean(row["IsAutoPositionTaking"]);
                 gameKind.IsAutoPositionTakingUpline = Utils.ToBoolean(row["SuperIsAutoPositionTaking"]);
 
-                lsGameKind.Add(gameKind);
+                gameKinds.Add(gameKind);
             }
 
-            return lsGameKind;
+            return gameKinds;
         }
 
-        /// <summary>
-        /// Get Game Types of Master Edit Member
-        /// </summary>
-        /// <param name="memberid"></param>
-        /// <param name="gameKindID"></param>
-        /// <returns></returns>
         public List<GameTypeDetail> GetGameTypes_MasterEditMember(int memberid, int gameKindID)
         {
-            List<GameTypeDetail> lsGameType = new List<GameTypeDetail>();
-            Customer _cust = new Customer();
-            DataTable dtGameType = _cust.GetCustGameType(memberid, gameKindID);
-            foreach (DataRow row in dtGameType.Rows)
+            List<GameTypeDetail> gameTypes = new List<GameTypeDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustGameType(memberid, gameKindID);
+            foreach (DataRow row in dt.Rows)
             {
                 GameTypeDetail gameType = new GameTypeDetail();
 
@@ -361,136 +335,122 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 gameType.SuperSPositionTaking = Utils.ToDouble(row["SuperSPositionTaking"]);
                 gameType.IsAutoPositionTaking = Utils.ToBoolean(row["IsAutoPositionTaking"]);
                 gameType.IsAutoPositionTakingUpline = Utils.ToBoolean(row["SuperIsAutoPositionTaking"]);
-                lsGameType.Add(gameType);
+                gameTypes.Add(gameType);
             }
-            return lsGameType;
+
+            return gameTypes;
         }
 
         public List<StakeLevelDetail> GetCustStakeLevels(int custId, int gameTypeID)
         {
-            List<StakeLevelDetail> lsStakeLevel = new List<StakeLevelDetail>();
-            Customer _cust = new Customer();
-            DataTable dtStakeList = _cust.GetCustStakeLevel(custId, gameTypeID);
-            foreach (DataRow row in dtStakeList.Rows)
+            List<StakeLevelDetail> stakeLevels = new List<StakeLevelDetail>();
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustStakeLevel(custId, gameTypeID);
+            foreach (DataRow row in dt.Rows)
             {
                 StakeLevelDetail stake = new StakeLevelDetail();
                 stake.StakeLevelID = Utils.ToInt32(row["StakeLevelID"]);
                 stake.StakeLevelName = Utils.ToString(row["StakeLevelName"]);
                 stake.IsChecked = Utils.ToBoolean(row["IsChecked"]);
-                lsStakeLevel.Add(stake);
+                stakeLevels.Add(stake);
             }
-            return lsStakeLevel;
+
+            return stakeLevels;
         }
 
         public List<StakeLevelDetail> GetGameTypeStakeLevels(int gameTypeID, int currencyId)
         {
-            //int custId = 1267168;
-            List<StakeLevelDetail> lsStakeLevel = new List<StakeLevelDetail>();
+            List<StakeLevelDetail> stakeLevels = new List<StakeLevelDetail>();
             BasicInfo bi = new BasicInfo();
-            DataTable dtStakeList = bi.GetGameTypeStakeLevel(gameTypeID, currencyId);
-            foreach (DataRow row in dtStakeList.Rows)
+            DataTable dt = bi.GetGameTypeStakeLevel(gameTypeID, currencyId);
+            foreach (DataRow row in dt.Rows)
             {
                 StakeLevelDetail stake = new StakeLevelDetail();
                 stake.StakeLevelID = Utils.ToInt32(row["StakeLevelID"]);
                 stake.StakeLevelName = Utils.ToString(row["StakeLevelName"]);
                 stake.IsChecked = true;
-                lsStakeLevel.Add(stake);
+                stakeLevels.Add(stake);
             }
-            return lsStakeLevel;
-        }
 
-        public List<StakeLevelDetail> GetGameTypeStakeLevels(int gameTypeID, string currencyName)
-        {
-            throw new NotImplementedException();
+            return stakeLevels;
         }
 
         public CasinoCustomer GetCustSettingCS(int custId)
         {
-            Customer _cust = new Customer();
-            DataTable dtCustomer = _cust.GetCustSetting(custId);
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustSetting(custId);
             DataRow row = null;
-            CasinoCustomer _custSetting = new CasinoCustomer();
-            if (dtCustomer.Rows.Count > 0)
+            CasinoCustomer custSetting = new CasinoCustomer();
+            if (dt.Rows.Count > 0)
             {
-                row = dtCustomer.Rows[0];
-                _custSetting.IsEnablePT = Utils.ToBoolean(row["IsEnablePT"]);
-                _custSetting.TotalWinLoss = Utils.ToDouble(row["ActualMaxTransfer"]);
-                _custSetting.MaxWin = Utils.ToDouble(row["MaxWin"]);
-                _custSetting.MaxLose = Utils.ToDouble(row["MaxLose"]);
-                _custSetting.MaxTransferCredit = Utils.ToDouble(row["MaxTransferCredit"]);
-                _custSetting.IsMaxWin = Utils.ToBoolean(row["IsMaxWin"]);
-                _custSetting.IsMaxLose = Utils.ToBoolean(row["IsMaxLose"]);
-                _custSetting.PTByGameType = Utils.ToBoolean(row["PTByGameType"]);
-                _custSetting.RoleId = Utils.ToInt32(row["RoleId"]);
-                _custSetting.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
-                _custSetting.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
+                row = dt.Rows[0];
+                custSetting.IsEnablePT = Utils.ToBoolean(row["IsEnablePT"]);
+                custSetting.TotalWinLoss = Utils.ToDouble(row["ActualMaxTransfer"]);
+                custSetting.MaxWin = Utils.ToDouble(row["MaxWin"]);
+                custSetting.MaxLose = Utils.ToDouble(row["MaxLose"]);
+                custSetting.MaxTransferCredit = Utils.ToDouble(row["MaxTransferCredit"]);
+                custSetting.IsMaxWin = Utils.ToBoolean(row["IsMaxWin"]);
+                custSetting.IsMaxLose = Utils.ToBoolean(row["IsMaxLose"]);
+                custSetting.PTByGameType = Utils.ToBoolean(row["PTByGameType"]);
+                custSetting.RoleId = Utils.ToInt32(row["RoleId"]);
+                custSetting.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
+                custSetting.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
 
                 // Get max transfer information
-                if (_custSetting.UpperCustID != 0)
+                if (custSetting.UpperCustID != 0)
                 {
-                    DataTable dt = _cust.GetDefaultMaxTransfer(_custSetting.UpperCustID, 0, false);
-                    _custSetting.MaxTransferCreditLimit = Utils.ToDouble((dt.Rows[0]["MaxLimit"]));
-                    _custSetting.MinTransferCreditLimit = Utils.ToDouble((dt.Rows[0]["MinLimit"]));
+                    DataTable dt2 = cust.GetDefaultMaxTransfer(custSetting.UpperCustID, 0, false);
+                    custSetting.MaxTransferCreditLimit = Utils.ToDouble(dt2.Rows[0]["MaxLimit"]);
+                    custSetting.MinTransferCreditLimit = Utils.ToDouble(dt2.Rows[0]["MinLimit"]);
 
-                    _custSetting.DefaultTransferCredit = Utils.ToDouble((dt.Rows[0]["DefMaxTransferCredit"]));
+                    custSetting.DefaultTransferCredit = Utils.ToDouble(dt2.Rows[0]["DefMaxTransferCredit"]);
                 }
 
-                _custSetting.NoCSData = false;
+                custSetting.NoCSData = false;
             }
-            return _custSetting;
+
+            return custSetting;
         }
 
-        //get customer setting from Casino and add to AGE customer info
-        public void GetCustSettingCS(ref CasinoCustomer _custIBC)
+        public void GetCustSettingCS(ref CasinoCustomer custIBC)
         {
-            Customer _cust = new Customer();
-            DataTable dtCustomer = _cust.GetCustSetting(_custIBC.IBCCustID);
+            Customer cust = new Customer();
+            DataTable dt = cust.GetCustSetting(custIBC.IBCCustID);
             DataRow row = null;
-            if (dtCustomer != null && dtCustomer.Rows.Count > 0)
+            if (dt != null && dt.Rows.Count > 0)
             {
-                row = dtCustomer.Rows[0];
-                _custIBC.IsEnablePT = Utils.ToBoolean(row["IsEnablePT"]);
-                _custIBC.TotalWinLoss = Utils.ToDouble(row["ActualMaxTransfer"]);
-                _custIBC.MaxWin = Utils.ToDouble(row["MaxWin"]);
-                _custIBC.MaxLose = Utils.ToDouble(row["MaxLose"]);
+                row = dt.Rows[0];
+                custIBC.IsEnablePT = Utils.ToBoolean(row["IsEnablePT"]);
+                custIBC.TotalWinLoss = Utils.ToDouble(row["ActualMaxTransfer"]);
+                custIBC.MaxWin = Utils.ToDouble(row["MaxWin"]);
+                custIBC.MaxLose = Utils.ToDouble(row["MaxLose"]);
 
-                _custIBC.MaxTransferCredit = Utils.ToDouble(row["MaxTransferCredit"]);
+                custIBC.MaxTransferCredit = Utils.ToDouble(row["MaxTransferCredit"]);
 
-                _custIBC.IsMaxWin = Utils.ToBoolean(row["IsMaxWin"]);
-                _custIBC.IsMaxLose = Utils.ToBoolean(row["IsMaxLose"]);
-                _custIBC.PTByGameType = Utils.ToBoolean(row["PTByGameType"]);
-                _custIBC.RoleId = Utils.ToInt32(row["RoleId"]);
-                _custIBC.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
-                _custIBC.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
+                custIBC.IsMaxWin = Utils.ToBoolean(row["IsMaxWin"]);
+                custIBC.IsMaxLose = Utils.ToBoolean(row["IsMaxLose"]);
+                custIBC.PTByGameType = Utils.ToBoolean(row["PTByGameType"]);
+                custIBC.RoleId = Utils.ToInt32(row["RoleId"]);
+                custIBC.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
+                custIBC.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
 
                 // Get max transfer information
-                if (_custIBC.UpperCustID != 0)
+                if (custIBC.UpperCustID != 0)
                 {
-                    DataTable dt = _cust.GetDefaultMaxTransfer(_custIBC.UpperCustID, 0, false);
-                    _custIBC.MaxTransferCreditLimit = Utils.ToDouble((dt.Rows[0]["MaxLimit"]));
-                    _custIBC.MinTransferCreditLimit = Utils.ToDouble((dt.Rows[0]["MinLimit"]));
+                    DataTable dt2 = cust.GetDefaultMaxTransfer(custIBC.UpperCustID, 0, false);
+                    custIBC.MaxTransferCreditLimit = Utils.ToDouble(dt2.Rows[0]["MaxLimit"]);
+                    custIBC.MinTransferCreditLimit = Utils.ToDouble(dt2.Rows[0]["MinLimit"]);
 
-                    _custIBC.DefaultTransferCredit = Utils.ToDouble((dt.Rows[0]["DefMaxTransferCredit"]));
+                    custIBC.DefaultTransferCredit = Utils.ToDouble(dt2.Rows[0]["DefMaxTransferCredit"]);
                 }
 
-                _custIBC.NoCSData = false;
+                custIBC.NoCSData = false;
             }
         }
 
-        public static string Lang(string original)
+        private bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
         {
-            //switch (CurrentSession.Instance.Language)
-            //{
-            //    case "en-US": return original + "_En";
-            //    case "ja-JP": return original + "_Jp";
-            //    case "zh-TW": return original + "_Ct"; // Traditional
-            //    case "zh-CN": return original + "_Cs"; // Simplified
-            //    case "th-TH": return original + "_Th";
-            //    case "ko-KR": return original + "_Ko";
-            //}
-
-            return original + "_En";
+            return this.casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
         }
-
     }
 }
