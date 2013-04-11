@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CasinoLibrary">
+      <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="DNAide">
+      <HintPath>..\Dependencies\DNAide.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
@@ -52,6 +58,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Libraries.AOP">
+      <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Base\DAOBase.cs" />
+    <Compile Include="Impl\Customer\Casino\CasinoDao.cs" />
     <Compile Include="Impl\Customer\CommissionDao.cs" />
     <Compile Include="Impl\Customer\CustomerDao.cs" />
     <Compile Include="Impl\Customer\MemberDao.cs" />

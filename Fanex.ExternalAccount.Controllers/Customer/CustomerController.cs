@@ -132,7 +132,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int masterId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
         }
         #endregion Super Add New Master
 

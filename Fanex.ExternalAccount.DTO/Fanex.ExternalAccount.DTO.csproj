@@ -49,7 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customer\Commission.cs" />
+    <Compile Include="Customer\Casino\CasinoCustomer.cs" />
     <Compile Include="Customer\Customer.cs" />
+    <Compile Include="Customer\Casino\GameKindDetail.cs" />
+    <Compile Include="Customer\Casino\GameTypeDetail.cs" />
+    <Compile Include="Customer\Casino\StakeLevelDetail.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="StatusKickedOut.cs" />
