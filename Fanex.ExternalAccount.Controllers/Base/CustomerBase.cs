@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using System;
     using System.Data;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
@@ -34,6 +35,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
         private readonly IGameSettingService gameSetting = new GameSettingService();
         private readonly ILogWriterService logWriter = new LogWriterService();
         private readonly IReportService report = new ReportService();
+
+        #region Live Casino
 
         public ActionResult AutoInsertLiveCasinoPost(int custId, int parentId, int uplineRoleId, string groupName)
         {
@@ -76,6 +79,97 @@ namespace Fanex.ExternalAccount.Controllers.Base
             return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
         }
 
+        #endregion
+
+        #region Casino
+
+        public ActionResult AutoInsertCasinoPost(int custId, int parentId, int uplineRoleId)
+        {
+            var custInfo = CasinoManager.Instance.GetCustSettingCS(custId);
+
+            if (custId != null && !custInfo.CasinoSync)
+            {
+                var isSuccess = false;
+                var customer = new CasinoLibrary.SBAgent.Customer();
+                try
+                {
+                    isSuccess = customer.AutoInsertAccount(
+                        "01",
+                        custInfo.IBCCustID,
+                        custInfo.UserName,
+                        custInfo.UserName2,
+                        custInfo.FirstName,
+                        custInfo.LastName,
+                        custInfo.UserPwd,
+                        custInfo.Phone,
+                        custInfo.MobilePhone,
+                        custInfo.Currency,
+                        custInfo.Fax,
+                        custInfo.Closed,
+                        custInfo.Suspend,
+                        custInfo.IsEnablePT,
+                        custInfo.SIBCCustID,
+                        custInfo.MIBCCustID,
+                        custInfo.AIBCCustID,
+                        custInfo.RoleId.ToString(),
+                        DateTime.Now,
+                        CurrentContext.Ip4Address,
+                        CurrentSession.CustId,
+                        CurrentSession.UserName,
+                        3);
+                }
+                catch (Exception ex)
+                {
+                    Logs.Error(ex.Message, "ExternalAccount", ex);
+                }
+
+                if (isSuccess)
+                {
+                    CasinoManager.Instance.UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "En", string.Empty, string.Empty);
+                }
+                else
+                {
+                    customer.RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address, CurrentSession.CustId, CurrentSession.UserName, 3);
+                }
+            }
+
+            return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets customer info
+        /// </summary>
+        /// <param name="custId">Customer Id</param>
+        /// <param name="groupName">Group Name that user belongs to</param>
+        /// <returns>CUSTINFO object</returns>
+        private CustInfo GetCustomerInfo(int custId, string groupName)
+        {
+            var custInfo = this.report.GetCustomerInfo(groupName, custId, string.Empty, true);
+
+            if (custInfo == null || custInfo.Rows.Count == 0)
+            {
+                return new CustInfo();
+            }
+
+            var item = custInfo.Rows[0];
+            var info = new CustInfo
+            {
+                AgentId = (int)item["recommend"],
+                MasterId = (int)item["mrecommend"],
+                SuperId = (int)item["srecommend"],
+                AgentName = item["agentname"] is DBNull ? string.Empty : item["agentname"].ToString(),
+                MasterName = item["mastername"] is DBNull ? string.Empty : item["mastername"].ToString(),
+                SuperName = item["supername"] is DBNull ? string.Empty : item["supername"].ToString(),
+                CustId = (int)item["custid"],
+                Username = (string)item["username"],
+                RoleId = Utils.ToInt32(item["roleid"])
+            };
+
+            return info;
+        }
+
         /// <summary>
         /// Gets insert account request
         /// </summary>
@@ -109,38 +203,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
             };
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets customer info
-        /// </summary>
-        /// <param name="custId">Customer Id</param>
-        /// <param name="groupName">Group Name that user belongs to</param>
-        /// <returns>CUSTINFO object</returns>
-        private CustInfo GetCustomerInfo(int custId, string groupName)
-        {            
-            var custInfo = this.report.GetCustomerInfo(groupName, custId, string.Empty, true);
-
-            if (custInfo == null || custInfo.Rows.Count == 0)
-            {
-                return new CustInfo();
-            }
-
-            var item = custInfo.Rows[0];
-            var info = new CustInfo
-            {
-                AgentId = (int)item["recommend"],
-                MasterId = (int)item["mrecommend"],
-                SuperId = (int)item["srecommend"],
-                AgentName = item["agentname"] is DBNull ? string.Empty : item["agentname"].ToString(),
-                MasterName = item["mastername"] is DBNull ? string.Empty : item["mastername"].ToString(),
-                SuperName = item["supername"] is DBNull ? string.Empty : item["supername"].ToString(),
-                CustId = (int)item["custid"],
-                Username = (string)item["username"],
-                RoleId = Utils.ToInt32(item["roleid"])
-            };
-
-            return info;
         }
     }
 }

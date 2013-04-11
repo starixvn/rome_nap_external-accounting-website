@@ -131,9 +131,6 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="-915261145">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="CasinoManager.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/01/11 11:37:58.000</styleCop>
@@ -157,4 +154,7 @@
     </timestamps>
     <violations />
   </sourcecode>
+  <project key="-915261145">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
 </stylecopresultscache>
