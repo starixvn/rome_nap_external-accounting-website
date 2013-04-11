@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             var custInfo = CasinoManager.Instance.GetCustSettingCS(custId);
 
-            if (custId != null && !custInfo.CasinoSync)
+            if (custInfo != null && !custInfo.CasinoSync)
             {
                 var isSuccess = false;
                 var customer = new CasinoLibrary.SBAgent.Customer();
