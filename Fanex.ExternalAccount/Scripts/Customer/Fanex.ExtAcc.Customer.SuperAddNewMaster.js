@@ -157,8 +157,13 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                                 Fanex.ExtAcc.AutoInsertCasino(result.CustId, parseInt($('#parentId').val()));
                                 Fanex.ExtAcc.AutoInsertBingo(result.CustId, parseInt($('#parentId').val()));
                                 Fanex.ExtAcc.AutoInsertLiveCasino(result.CustId, parseInt($('#parentId').val()), 4, $('#selectedGroupName').html());
-                                
-                                document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
+
+                                timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                        
+                                    document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
+                                }, 3000);
+
                             }, 2000);
                         }
                         else {
