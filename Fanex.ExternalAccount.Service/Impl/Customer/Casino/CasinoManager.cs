@@ -23,9 +23,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
     /// </summary>
     public class CasinoManager
     {
-        private static CasinoManager instance = null;
+        private static CasinoManager instance = new CasinoManager();
         private readonly CasinoDao casino = new CasinoDao();
-        
+
         public static CasinoManager Instance
         {
             get
@@ -87,33 +87,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return this.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
         }
 
-        public CasinoCustomer GetCustInfoIBC(int custid, int roleId, int currencyId, string currency, Hashtable r)
-        {
-            CasinoCustomer custSetting = new CasinoCustomer();
-
-            custSetting.UserName = Utils.ToString(r["username"]);
-            custSetting.UserPwd = Utils.ToString(r["userpwd"]);
-            custSetting.FirstName = Utils.ToString(r["firstname"]);
-            custSetting.LastName = Utils.ToString(r["lastname"]);
-            custSetting.Phone = Utils.ToString(r["phone"]);
-            custSetting.MobilePhone = Utils.ToString(r["mobilephone"]);
-            custSetting.Fax = Utils.ToString(r["fax"]);
-            custSetting.Email = Utils.ToString(r["email"]);
-            custSetting.RoleId = roleId - 1;
-            custSetting.Currency = currencyId;
-            custSetting.CurrencyName = currency;
-            custSetting.Closed = Utils.ToBoolean(r["closed"]);
-            custSetting.Suspend = Utils.ToBoolean(r["suspend"]);
-
-            custSetting.SIBCCustID = roleId == 4 ? custid : 0;
-            custSetting.MIBCCustID = roleId == 3 ? custid : 0;
-            custSetting.AIBCCustID = roleId == 2 ? custid : 0;
-
-            custSetting.CasinoSync = false;
-            custSetting.CasinoDisabled = false;
-            custSetting.IBCCustID = custid;
-
-            return custSetting;
+        public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
+        {            
+            return this.casino.GetCustInfoIBC(custid, uplineId);
         }
 
         public List<GameKindDetail> GetGameKinds(string casinoNo)

@@ -336,6 +336,54 @@ Fanex.ExtAcc = {
         }
 
         return src;
+    },
+
+    AutoInsertCasino: function (custId, uplineId) {
+        $.ajax({
+            url: resolveClientUrl('Customer/AutoInsertCasinoPost'),
+            type: 'post',
+            data: { custId: custId, uplineId: uplineId },
+            dataType: 'json'
+        })
+        .success(function (result) {
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data.responseText);
+            }
+        });
+    },
+
+    AutoInsertBingo: function (custId, uplineId) {
+        $.ajax({
+            url: resolveClientUrl('Customer/AutoInsertBingoPost'),
+            type: 'post',
+            data: { custId: custId, uplineId: uplineId },
+            dataType: 'json'
+        })
+        .success(function (result) {
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data.responseText);
+            }
+        });
+    },
+
+    AutoInsertLiveCasino: function (custId, parentId, uplineRoleId, groupName) {
+        $.ajax({
+            url: resolveClientUrl('Customer/AutoInsertLiveCasinoPost'),
+            type: 'post',
+            data: { custId: custId, parentId: parentId, uplineRoleId: uplineRoleId, groupName: groupName },
+            dataType: 'json'
+        })
+        .success(function (result) {
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data.responseText);
+            }
+        });
     }
 };
 

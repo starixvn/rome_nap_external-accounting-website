@@ -31,6 +31,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// </summary>
         protected const string SiteName = "ExtAcc";
 
+        /// <summary>
+        /// Constant object
+        /// </summary>
+        protected const int FromSystem = 4;
+
         #endregion Constant
 
         /// <summary>

@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using System;
     using System.Data;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Bingo;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
@@ -30,6 +31,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
         private const int RoleMaster = 3;
         private const int RoleAgent = 2;
         private const int RoleMember = 1;
+
+        private const string CasinoNo = "01";
 
         private readonly ISettingService setting = new SettingService();
         private readonly IGameSettingService gameSetting = new GameSettingService();
@@ -63,7 +66,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         Language = "en",
                         MasterId = custInfo.MasterId,
                         RoleId = custInfo.RoleId,
-                        SignUpForm = 3,
+                        SignUpForm = BaseController.FromSystem,
                         SuperId = custInfo.SuperId,
                         UserId = this.CurrentSession.UserId,
                         UserName = this.CurrentSession.UserName,
@@ -83,14 +86,15 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
         #region Casino
 
-        public ActionResult AutoInsertCasinoPost(int custId, int parentId, int uplineRoleId)
+        public ActionResult AutoInsertCasinoPost(int custId, int uplineId)
         {
-            var custInfo = CasinoManager.Instance.GetCustSettingCS(custId);
+            var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
             if (custInfo != null && !custInfo.CasinoSync)
             {
                 var isSuccess = false;
                 var customer = new CasinoLibrary.SBAgent.Customer();
+
                 try
                 {
                     isSuccess = customer.AutoInsertAccount(
@@ -114,9 +118,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         custInfo.RoleId.ToString(),
                         DateTime.Now,
                         CurrentContext.Ip4Address,
-                        CurrentSession.CustId,
-                        CurrentSession.UserName,
-                        3);
+                        uplineId,
+                        "B17T",
+                        BaseController.FromSystem);
                 }
                 catch (Exception ex)
                 {
@@ -134,6 +138,50 @@ namespace Fanex.ExternalAccount.Controllers.Base
             }
 
             return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+        }
+
+        #endregion
+
+        #region Bingo
+
+        public ActionResult AutoInsertBingoPost(int custId, int uplineId)
+        {
+            var isSuccess = false;
+            var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId); 
+
+            LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
+
+            try
+            {
+                isSuccess = customer.AutoInsertAccount(
+                    CasinoNo,
+                    custInfo.IBCCustID,
+                    custInfo.UserName,
+                    custInfo.SIBCCustID,
+                    custInfo.MIBCCustID,
+                    custInfo.AIBCCustID,
+                    custInfo.RoleId.ToString(),
+                    custInfo.Currency,
+                    DateTime.Now,
+                    this.CurrentContext.Ip4Address,
+                    uplineId,
+                    "B17T",
+                    BaseController.FromSystem);
+            }
+            catch (Exception e)
+            {                
+                Logs.Error(e.Message, "ExternalAccount", e);
+            }
+
+            if (isSuccess)
+            {
+                var err = string.Empty;
+                var result = BingoManager.Instance.UpdateBingoStatus(custId, this.CurrentSession.UserId, 0, true, custInfo.BingoDisabled, true, this.CurrentContext.Ip4Address, "En", ref err);
+
+                return this.JsonBase(new { ErrorCode = result, ErrorMessage = err });
+            }
+
+            return this.JsonBase(new { ErrorCode = 999, ErrorMessage = string.Empty });
         }
 
         #endregion
@@ -194,7 +242,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 Language = "en",
                 MasterId = custInfo.MasterId,
                 RoleId = custInfo.RoleId,
-                SignUpForm = 3, // External acc system
+                SignUpForm = BaseController.FromSystem, // External acc system
                 SuperId = custInfo.SuperId,
                 SyncLiveCasino = uplineInfo.IsSyncLiveCasino,
                 UserId = this.CurrentSession.UserId,

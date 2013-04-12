@@ -19,6 +19,12 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
     /// </summary>
     public class CasinoCustomer
     {
+        public int GivenCredit
+        {
+            get;
+            set;
+        }
+
         public double MinTransferCreditLimit
         {
             get;

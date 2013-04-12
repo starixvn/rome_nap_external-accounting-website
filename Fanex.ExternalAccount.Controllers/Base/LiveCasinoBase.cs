@@ -735,7 +735,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 Language = "en",
                 MasterId = custInfo.MasterId,
                 RoleId = custInfo.RoleId,
-                SignUpForm = 3, // External acc system
+                SignUpForm = BaseController.FromSystem, // External acc system
                 SuperId = custInfo.SuperId,
                 SyncLiveCasino = uplineInfo.IsSyncLiveCasino,
                 UserId = this.CurrentSession.UserId,

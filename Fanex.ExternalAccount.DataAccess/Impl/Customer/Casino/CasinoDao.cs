@@ -10,8 +10,10 @@
 namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
 {
     using System.Collections;
+    using System.Data;
     using CasinoLibrary.SBAgent;
     using Fanex.Data.DNAide;
+    using Fanex.ExternalAccount.DTO.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
@@ -19,6 +21,64 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
     /// </summary>
     public class CasinoDao
     {
+        public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
+        {
+            Hashtable param = new Hashtable();
+            param.Add("custid", ibcCustId);
+
+            DbResult dr = DNAide.Data.DbHelper.Execute("Age_CustomerSelUserInfo", param, 300);
+            DataRow row = null;
+            CasinoCustomer customerDetail = new CasinoCustomer();
+            if (dr.ResultSet.Tables[0].Rows.Count > 0)
+            {
+                row = dr.ResultSet.Tables[0].Rows[0];
+                customerDetail.UserName = Utils.ToString(row["username"]);
+                customerDetail.UserName2 = Utils.ToString(row["username2"]);
+                customerDetail.FirstName = Utils.ToString(row["firstname"]);
+                customerDetail.LastName = Utils.ToString(row["lastname"]);
+                customerDetail.Phone = Utils.ToString(row["phone"]);
+                customerDetail.MobilePhone = Utils.ToString(row["mobilephone"]);
+                customerDetail.Fax = Utils.ToString(row["fax"]);
+                customerDetail.Email = Utils.ToString(row["email"]);
+                customerDetail.RoleId = Utils.ToInt32(row["roleid"]);
+                customerDetail.Currency = Utils.ToInt32(row["currency"]);
+                customerDetail.Closed = Utils.ToBoolean(row["closed"]);
+                customerDetail.Suspend = Utils.ToBoolean(row["suspend"]);
+                customerDetail.SIBCCustID = Utils.ToInt32(row["superid"]);
+                customerDetail.MIBCCustID = Utils.ToInt32(row["masterid"]);
+                customerDetail.AIBCCustID = Utils.ToInt32(row["agentid"]);
+
+                customerDetail.GivenCredit = Utils.ToInt32(row["credit"]);
+
+                customerDetail.CasinoSync = Utils.ToBoolean(row["synccasino"]);
+                customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
+
+                customerDetail.LiveCasinoSync = Utils.ToBoolean(row["synclivecasino"]);
+                customerDetail.LiveCasinoDisabled = Utils.ToBoolean(row["disablelivecasino"]);
+
+                customerDetail.IBCCustID = Utils.ToInt32(row["custid"]);
+                customerDetail.UserPwd = Utils.ToString(row["userpwd"]);
+                customerDetail.UpperCustID = uplineId;
+                customerDetail.NoCSData = true;
+                customerDetail.IsEnablePT = true;
+
+                // Get max transfer information
+                CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();                
+                DataTable dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, false);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxLimit"]);
+                    customerDetail.MinTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MinLimit"]);
+                    customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["DefMaxTransferCredit"]);
+                }
+
+                customerDetail.NoIBCData = false;
+            }
+                        
+            return customerDetail;
+        }
+
         public bool GetCasinoStatus(int custid)
         {
             Hashtable param = new Hashtable();

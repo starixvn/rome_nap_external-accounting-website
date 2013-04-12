@@ -42,6 +42,13 @@
     <Reference Include="CasinoLibrary">
       <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\CasinoSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="CasinoUtility">
+      <HintPath>..\Dependencies\CasinoUtility.dll</HintPath>
+    </Reference>
     <Reference Include="DNAide">
       <HintPath>..\Dependencies\DNAide.dll</HintPath>
     </Reference>
@@ -53,6 +60,24 @@
     </Reference>
     <Reference Include="Fanex.PTEngine">
       <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCCrypt">
+      <HintPath>..\Dependencies\IBCCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDBLibrary">
+      <HintPath>..\Dependencies\IBCDBLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDLL">
+      <HintPath>..\Dependencies\IBCDLL.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCFile">
+      <HintPath>..\Dependencies\IBCFile.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCMessage">
+      <HintPath>..\Dependencies\IBCMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCUtils">
+      <HintPath>..\Dependencies\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Base\DAOBase.cs" />
+    <Compile Include="Impl\Customer\Bingo\BingoDao.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoDao.cs" />
     <Compile Include="Impl\Customer\CommissionDao.cs" />
     <Compile Include="Impl\Customer\CustomerDao.cs" />

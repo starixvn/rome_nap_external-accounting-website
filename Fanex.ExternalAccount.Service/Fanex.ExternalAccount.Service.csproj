@@ -42,6 +42,14 @@
     <Reference Include="CasinoLibrary">
       <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\CasinoSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\CasinoUtility.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
@@ -54,6 +62,40 @@
     <Reference Include="Fanex.PTEngine, Version=1.0.4787.16346, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="GotDotNet.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\IBCCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDBLibrary">
+      <HintPath>..\Dependencies\IBCDBLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDLL">
+      <HintPath>..\Dependencies\IBCDLL.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCFile">
+      <HintPath>..\Dependencies\IBCFile.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCMessage">
+      <HintPath>..\Dependencies\IBCMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCUtils">
+      <HintPath>..\Dependencies\IBCUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ILogger">
+      <HintPath>..\Dependencies\ILogger.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Dependencies\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NetUtility">
+      <HintPath>..\Dependencies\NetUtility.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,6 +111,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\Customer\Bingo\BingoManager.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoManager.cs" />
     <Compile Include="Impl\Customer\CommissionService.cs" />
     <Compile Include="Impl\Statement\StatementService.cs" />
