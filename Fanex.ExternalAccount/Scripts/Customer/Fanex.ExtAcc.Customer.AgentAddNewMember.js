@@ -143,9 +143,16 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                         if (result.ErrorCode == 0) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
-                                $.unblockUI(document);
-                                document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
-                                Fanex.ExtAcc.Form.Close(false);
+
+                                Fanex.ExtAcc.AutoInsertCasino(result.CustId, parseInt($('#parentId').val()), $('#parentUsername').val());
+                                Fanex.ExtAcc.AutoInsertBingo(result.CustId, parseInt($('#parentId').val()), $('#parentUsername').val());
+                                Fanex.ExtAcc.AutoInsertLiveCasino(result.CustId, parseInt($('#parentId').val()), 2, $('#selectedGroupName').html());
+
+                                timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+
+                                    document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
+                                }, 3000);
                             }, 2000);
                         }
                         else {

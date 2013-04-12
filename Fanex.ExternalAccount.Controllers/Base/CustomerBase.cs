@@ -86,7 +86,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
         #region Casino
 
-        public ActionResult AutoInsertCasinoPost(int custId, int uplineId)
+        public ActionResult AutoInsertCasinoPost(int custId, int uplineId, string uplineName)
         {
             var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
@@ -119,7 +119,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                         DateTime.Now,
                         CurrentContext.Ip4Address,
                         uplineId,
-                        "B17T",
+                        uplineName,
                         BaseController.FromSystem);
                 }
                 catch (Exception ex)
@@ -144,7 +144,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
         #region Bingo
 
-        public ActionResult AutoInsertBingoPost(int custId, int uplineId)
+        public ActionResult AutoInsertBingoPost(int custId, int uplineId, string uplineName)
         {
             var isSuccess = false;
             var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId); 
@@ -165,7 +165,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     DateTime.Now,
                     this.CurrentContext.Ip4Address,
                     uplineId,
-                    "B17T",
+                    uplineName,
                     BaseController.FromSystem);
             }
             catch (Exception e)

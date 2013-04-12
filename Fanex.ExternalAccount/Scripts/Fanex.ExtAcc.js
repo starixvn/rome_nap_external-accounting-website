@@ -338,11 +338,11 @@ Fanex.ExtAcc = {
         return src;
     },
 
-    AutoInsertCasino: function (custId, uplineId) {
+    AutoInsertCasino: function (custId, uplineId, uplineName) {
         $.ajax({
             url: resolveClientUrl('Customer/AutoInsertCasinoPost'),
             type: 'post',
-            data: { custId: custId, uplineId: uplineId },
+            data: { custId: custId, uplineId: uplineId, uplineName: uplineName },
             dataType: 'json'
         })
         .success(function (result) {
@@ -354,11 +354,11 @@ Fanex.ExtAcc = {
         });
     },
 
-    AutoInsertBingo: function (custId, uplineId) {
+    AutoInsertBingo: function (custId, uplineId, uplineName) {
         $.ajax({
             url: resolveClientUrl('Customer/AutoInsertBingoPost'),
             type: 'post',
-            data: { custId: custId, uplineId: uplineId },
+            data: { custId: custId, uplineId: uplineId, uplineName: uplineName },
             dataType: 'json'
         })
         .success(function (result) {
