@@ -447,8 +447,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
             var custInfo = this.PtSetting.GetCustomerInfo(custId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
 
-            if (!custInfo.IsSyncLiveCasino)
+            if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("MaxPT");
                 pt.PropertiesChangedList.Add("MinPT");
@@ -520,8 +521,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var pt = this.PtSetting.GetAgentPTSetting(custId, uplineId);
             var custInfo = this.PtSetting.GetCustomerInfo(custId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
 
-            if (!custInfo.IsSyncLiveCasino)
+            if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("MaxPT");
                 pt.PropertiesChangedList.Add("MinPT");
@@ -593,8 +595,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var pt = this.PtSetting.GetMemberPTSetting(custId, uplineId);            
             var custInfo = this.PtSetting.GetCustomerInfo(custId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
 
-            if (!custInfo.IsSyncLiveCasino)
+            if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("Comm");
 
