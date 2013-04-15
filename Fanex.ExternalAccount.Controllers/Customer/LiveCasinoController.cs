@@ -580,6 +580,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMasterPT(custId, uplineId, customer);
+
+            // Process manually sync
+            this.SyncManually(LiveCasinoBase.RoleSuper, uplineId, custId, customer, model.CustomerInfo.GroupName);
+
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleSuper, custId, customer);
 
@@ -597,6 +601,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateAgentPT(custId, uplineId, customer);
+
+            // Process manually sync
+            this.SyncManually(LiveCasinoBase.RoleMaster, uplineId, custId, customer, model.CustomerInfo.GroupName);
+
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleMaster, custId, customer);
 
@@ -614,6 +622,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberPT(custId, uplineId, customer);
+
+            // Process manually sync
+            this.SyncManually(LiveCasinoBase.RoleAgent, uplineId, custId, customer, model.CustomerInfo.GroupName);
+
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleAgent, custId, customer);
             var resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, model.CustomerInfo.GroupName)));
@@ -675,6 +687,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult UpdateGameSettingPost(int uplineRoleId, int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            // Process manually sync
+            this.SyncManually(uplineRoleId, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
 
             var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
 
