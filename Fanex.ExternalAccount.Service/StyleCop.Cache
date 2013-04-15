@@ -131,11 +131,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <sourcecode name="CasinoManager.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="BingoManager.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/01/11 11:37:58.000</styleCop>
       <settingsFile>2013/04/02 11:06:36.633</settingsFile>
-      <sourceFile>2013/04/12 16:14:37.511</sourceFile>
+      <sourceFile>2013/04/12 16:38:08.363</sourceFile>
       <parser>2013/01/11 11:37:58.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -157,11 +157,11 @@
   <project key="-915261145">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <sourcecode name="BingoManager.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="CasinoManager.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/01/11 11:37:58.000</styleCop>
       <settingsFile>2013/04/02 11:06:36.633</settingsFile>
-      <sourceFile>2013/04/12 16:38:08.363</sourceFile>
+      <sourceFile>2013/04/12 16:37:49.934</sourceFile>
       <parser>2013/01/11 11:37:58.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/01/11 11:37:58.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-193664310</StyleCop.CSharp.DocumentationRules.FilesHashCode>

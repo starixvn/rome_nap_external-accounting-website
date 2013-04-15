@@ -337,6 +337,9 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     // Manually insert account first
                     result = this.GameSetting.InsertAccount(req);
 
+                    // Update sync status for acc
+                    ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+
                     // Insert account success then update game setting
                     if (string.IsNullOrWhiteSpace(result.ErrorCode) && gameTypes.Count > 0)
                     {
@@ -374,9 +377,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
                             // Update game settings successfully then sync live casino
                             if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))
                             {
-                                // Update sync status for acc
-                                ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
-
                                 // Write log manual insert account
                                 var custList = new List<KeyValuePair<int, string>>();
                                 custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
