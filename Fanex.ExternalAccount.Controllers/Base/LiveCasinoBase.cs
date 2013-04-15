@@ -719,7 +719,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// Gets insert account request
         /// </summary>
         /// <param name="custId">Customer id</param>
-        /// <param name="customer">JSON object string</param>
+        /// <param name="uplineRoleId">Up-line role id</param>
+        /// <param name="groupName">Group name</param>
         /// <returns>InsertAccountRequest object</returns>
         protected InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
