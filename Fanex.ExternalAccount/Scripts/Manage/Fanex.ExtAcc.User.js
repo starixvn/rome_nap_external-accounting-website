@@ -109,7 +109,8 @@ Fanex.ExtAcc.User = {
         try {
             $.ajax({
                 url: Fanex.ExtAcc.User.URL,
-                dataType: 'json'
+                dataType: 'json',
+                type: 'post'
             })
             .success(function (data) {
                 Fanex.ExtAcc.User.DataSource = data;

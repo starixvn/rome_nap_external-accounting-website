@@ -88,7 +88,8 @@ Fanex.ExtAcc.Menus = {
 
         $.ajax({
             url: $this.URL,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (data) {
             $this.DataSource = data;
