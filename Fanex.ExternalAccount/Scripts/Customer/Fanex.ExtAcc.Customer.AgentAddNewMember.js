@@ -151,7 +151,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                                 timeout = setTimeout(function () {
                                     clearTimeout(timeout);
 
-                                    document.location.href = resolveClientUrl("Customer/CustomerList/ACCTHAI");
+                                    document.location.href = resolveClientUrl("Customer/Settings/1/" + result.CustId + "/" + $('#parentId').val() + "/" + customer.userName + "/ACCTHAI");
                                 }, 3000);
                             }, 2000);
                         }

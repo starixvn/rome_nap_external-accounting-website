@@ -7,10 +7,10 @@ Fanex.ExtAcc.Customer.MinPT = {
     customer: null,
     Init: function () {
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            this.GetEditMinPT('SuperEditMinPTMaster');
+            Fanex.ExtAcc.Customer.MinPT.GetEditMinPT('SuperEditMinPTMaster');
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            this.GetEditMinPT('MasterEditMinPTAgent');
+            Fanex.ExtAcc.Customer.MinPT.GetEditMinPT('MasterEditMinPTAgent');
         }
     },
 
@@ -71,9 +71,13 @@ Fanex.ExtAcc.Customer.MinPT = {
                     })
                     .success(function (result) {
                         if (result.ErrorCode == 0) {
+
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 $.unblockUI(document);
+
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html('<font color="Blue">Updated successfully</font>');
 
                                 Fanex.ExtAcc.Form.Close(false);
                             }, 2000);

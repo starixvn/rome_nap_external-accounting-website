@@ -129,11 +129,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
                 if (isSuccess)
                 {
-                    CasinoManager.Instance.UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "En", string.Empty, string.Empty);
+                    CasinoManager.Instance.UpdateCSStatus(custId, true, custInfo.CasinoDisabled, this.CurrentSession.UserId, this.CurrentContext.Ip4Address, 0, "En", string.Empty, string.Empty);
                 }
                 else
                 {
-                    customer.RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address, CurrentSession.CustId, CurrentSession.UserName, 3);
+                    customer.RemoveAccount(custInfo.UserName, this.CurrentContext.Ip4Address, this.CurrentSession.CustId, this.CurrentSession.UserName, 3);
                 }
             }
 

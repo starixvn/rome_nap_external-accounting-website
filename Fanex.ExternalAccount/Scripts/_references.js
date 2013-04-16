@@ -1,4 +1,5 @@
 ﻿/// <reference path="jquery-1.8.3-vsdoc.js" />
+/// <reference path="Lib/jquery-ui-1.9.1/ui/jquery-ui.js" />
 /// <reference path="numeral.js" />
 /// <reference path="cookie.js" />
 /// <reference path="jquery.blockUI.js" />

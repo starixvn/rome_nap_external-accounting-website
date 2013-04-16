@@ -49,9 +49,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool isSubAccount = false;
             int customerId = -1;
 
-            bool isValidUser = customerService.IsUsernameBelong(username.Trim(), CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
+            bool isValidUser = this.customerService.IsUsernameBelong(username.Trim(), this.CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
 
-            if (isValidUser && CurrentSession.UserName.Trim().ToLower() != username.Trim().ToLower() && (parentRoleId - 1) == roleId)
+            if (isValidUser && this.CurrentSession.UserName.Trim().ToLower() != username.Trim().ToLower() && (parentRoleId - 1) == roleId)
             {
                 errMsg = customerId.ToString();
                 errCode = 999;
@@ -62,12 +62,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 errMsg = ViewLang.notExist;
             }
             
-            return this.JsonBase(new { errCode = errCode, errMsg = errCode }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            });
+            return this.JsonBase(
+                new { errCode = errCode, errMsg = errCode }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Formatting = Formatting.Indented
+                });
         }
 
         #region Super Add New Master
@@ -100,12 +102,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             customer.PtSetting = new PTGrid();
             customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Formatting = Formatting.Indented
+                });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
@@ -166,12 +170,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             customer.PtSetting = new PTGrid();
             customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Formatting = Formatting.Indented
+                });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
@@ -232,12 +238,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             customer.PtSetting = new PTGrid();
             customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Formatting = Formatting.Indented
+                });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
@@ -271,6 +279,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult CustomerList()
         {
+            return this.ViewBase();
+        }
+                
+        public ActionResult Settings(int id, int custId, int uplineId)
+        {
+            ViewBag.CurrentLevel = id;
+            ViewBag.UserId = custId;
+            ViewBag.UplineId = uplineId;
+
             return this.ViewBase();
         }
 
