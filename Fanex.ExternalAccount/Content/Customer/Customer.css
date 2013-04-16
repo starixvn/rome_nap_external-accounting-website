@@ -185,7 +185,8 @@ tr.rowTransferCondition
 .tabs
 {
     background-image: none !important; 
-    background-color: #ececec !important
+    background-color: #ececec !important;
+    font-size:12px;
 }
 .divTab
 {
