@@ -88,6 +88,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditMinPT')
         }).success(function (result) {
+            $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);
         }).error(function (data) {
             if (typeof console != 'undefined') {
@@ -127,6 +128,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $.ajax({
             url: resolveClientUrl('LiveCasino/' + action)
         }).success(function (result) {
+            $('#tabs-7').css('display', 'block');
             $('#tabs-7').html(result);
         }).error(function (data) {
             if (typeof console != 'undefined') {
@@ -147,6 +149,15 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-6').html('');
         $('#tabs-7').html('');
         $('#tabs-8').html('');
+
+        $('#tabs-1').css('display', 'none');
+        $('#tabs-2').css('display', 'none');
+        $('#tabs-3').css('display', 'none');
+        $('#tabs-4').css('display', 'none');
+        $('#tabs-5').css('display', 'none');
+        $('#tabs-6').css('display', 'none');
+        $('#tabs-7').css('display', 'none');
+        $('#tabs-8').css('display', 'none');
     }
 };
 
