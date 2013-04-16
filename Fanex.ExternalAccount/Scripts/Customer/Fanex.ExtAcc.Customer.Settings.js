@@ -18,6 +18,18 @@ Fanex.ExtAcc.Customer.Settings = {
     Init: function () {
         $('#tabs').tabs();
 
+        $('#tab4').css('display', Fanex.ExtAcc.Customer.DisableCasino == 'True' ? 'none' : 'block');
+        $('#tab5').css('display', Fanex.ExtAcc.Customer.DisableBingo == 'True' ? 'none' : 'block');
+        $('#tab6').css('display', Fanex.ExtAcc.Customer.DisablePoker == 'True' ? 'none' : 'block');
+        $('#tab7').css('display', Fanex.ExtAcc.Customer.DisableLiveCasino == 'True' ? 'none' : 'block');
+        $('#tab8').css('display', Fanex.ExtAcc.Customer.DisableVirtualSports == 'True' ? 'none' : 'block');
+
+        $('#tabs-4').css('display', Fanex.ExtAcc.Customer.DisableCasino == 'True' ? 'none' : 'block');
+        $('#tabs-5').css('display', Fanex.ExtAcc.Customer.DisableBingo == 'True' ? 'none' : 'block');
+        $('#tabs-6').css('display', Fanex.ExtAcc.Customer.DisablePoker == 'True' ? 'none' : 'block');
+        $('#tabs-7').css('display', Fanex.ExtAcc.Customer.DisableLiveCasino == 'True' ? 'none' : 'block');
+        $('#tabs-8').css('display', Fanex.ExtAcc.Customer.DisableVirtualSports == 'True' ? 'none' : 'block');
+
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
             Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
@@ -29,7 +41,6 @@ Fanex.ExtAcc.Customer.Settings = {
 
             $('#tab3').hide();
             $('#tabs-3').hide();
-            $('#tabs').tabs({ selected: 1 });
         }
 
         $('#tab1').bind('click', function () {
@@ -59,10 +70,15 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tab6').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetLiveCasinoSetting();
+            Fanex.ExtAcc.Customer.Settings.GetPokerSetting();
         });
 
         $('#tab7').bind('click', function () {
+            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
+            Fanex.ExtAcc.Customer.Settings.GetLiveCasinoSetting();
+        });
+
+        $('#tab8').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetVirtualSportSetting();
         });
@@ -92,6 +108,9 @@ Fanex.ExtAcc.Customer.Settings = {
     GetBingoSetting: function () {
     },
 
+    GetPokerSetting: function () {
+    },
+
     GetLiveCasinoSetting: function () {
         var action = '';
 
@@ -108,7 +127,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $.ajax({
             url: resolveClientUrl('LiveCasino/' + action)
         }).success(function (result) {
-            $('#tabs-6').html(result);
+            $('#tabs-7').html(result);
         }).error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
@@ -127,6 +146,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-5').html('');
         $('#tabs-6').html('');
         $('#tabs-7').html('');
+        $('#tabs-8').html('');
     }
 };
 

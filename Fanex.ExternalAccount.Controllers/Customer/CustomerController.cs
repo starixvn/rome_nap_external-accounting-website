@@ -282,11 +282,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.ViewBase();
         }
                 
-        public ActionResult Settings(int id, int custId, int uplineId)
+        public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
+            var result = new DataTable();
+            var srecommend = 0;
+            var mrecommend = 0;
+            var recommend = 0;
+            var roleId = 0;
+            var userId = 0;
+            
+            this.GetDataResult(groupName, null, null, null, userName, out result, out srecommend, out mrecommend, out recommend, out userId, out roleId);
+            
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
+            ViewBag.DisableCasino = (bool)result.Rows[0]["DisableCasino"];
+            ViewBag.DisableBingo = (bool)result.Rows[0]["DisableBingo"];
+            ViewBag.DisablePoker = (bool)result.Rows[0]["DisableP2P"];
+            ViewBag.DisableLiveCasino = (bool)result.Rows[0]["DisableLiveCasino"];
+            ViewBag.DisableVirtualSports = (bool)result.Rows[0]["DisableVirtualSports"];
 
             return this.ViewBase();
         }
