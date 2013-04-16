@@ -26,6 +26,10 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tab1').hide();
             $('#tabs-1').hide();
             $('#tabs').tabs({ selected: 1 });
+
+            $('#tab3').hide();
+            $('#tabs-3').hide();
+            $('#tabs').tabs({ selected: 1 });
         }
 
         $('#tab1').bind('click', function () {
