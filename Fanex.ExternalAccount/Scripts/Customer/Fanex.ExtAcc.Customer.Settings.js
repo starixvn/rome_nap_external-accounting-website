@@ -18,17 +18,16 @@ Fanex.ExtAcc.Customer.Settings = {
     Init: function () {
         $('#tabs').tabs();
 
-        $('#tab4').css('display', Fanex.ExtAcc.Customer.DisableCasino == 'True' ? 'none' : 'block');
-        $('#tab5').css('display', Fanex.ExtAcc.Customer.DisableBingo == 'True' ? 'none' : 'block');
-        $('#tab6').css('display', Fanex.ExtAcc.Customer.DisablePoker == 'True' ? 'none' : 'block');
-        $('#tab7').css('display', Fanex.ExtAcc.Customer.DisableLiveCasino == 'True' ? 'none' : 'block');
-        $('#tab8').css('display', Fanex.ExtAcc.Customer.DisableVirtualSports == 'True' ? 'none' : 'block');
+        $('#tab4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
+        $('#tab5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
+        $('#tab6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
+        $('#tab7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');
 
-        $('#tabs-4').css('display', Fanex.ExtAcc.Customer.DisableCasino == 'True' ? 'none' : 'block');
-        $('#tabs-5').css('display', Fanex.ExtAcc.Customer.DisableBingo == 'True' ? 'none' : 'block');
-        $('#tabs-6').css('display', Fanex.ExtAcc.Customer.DisablePoker == 'True' ? 'none' : 'block');
-        $('#tabs-7').css('display', Fanex.ExtAcc.Customer.DisableLiveCasino == 'True' ? 'none' : 'block');
-        $('#tabs-8').css('display', Fanex.ExtAcc.Customer.DisableVirtualSports == 'True' ? 'none' : 'block');
+
+        $('#tabs-4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
+        $('#tabs-5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
+        $('#tabs-6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
+        $('#tabs-7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)

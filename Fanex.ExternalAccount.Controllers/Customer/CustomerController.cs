@@ -296,11 +296,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.DisableCasino = (bool)result.Rows[0]["DisableCasino"];
-            ViewBag.DisableBingo = (bool)result.Rows[0]["DisableBingo"];
-            ViewBag.DisablePoker = (bool)result.Rows[0]["DisableP2P"];
-            ViewBag.DisableLiveCasino = (bool)result.Rows[0]["DisableLiveCasino"];
-            ViewBag.DisableVirtualSports = (bool)result.Rows[0]["DisableVirtualSports"];
+            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
+            ViewBag.SyncBingo = (bool)result.Rows[0]["SyncBingo"];
+            ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
+            ViewBag.DisableP2P = (bool)result.Rows[0]["DisableP2P"];
 
             return this.ViewBase();
         }

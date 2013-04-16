@@ -160,7 +160,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                                 timeout = setTimeout(function () {
                                     clearTimeout(timeout);
 
-                                    document.location.href = resolveClientUrl("Customer/Settings/3/" + result.CustId + "/" + $('#parentId').val() + "/" + customer.userName + "/ACCTHAI");
+                                    document.location.href = resolveClientUrl("Customer/Settings/3/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val() + "/ACCTHAI");
                                 }, 3000);
 
                             }, 2000);
