@@ -630,7 +630,8 @@ Fanex.ExtAcc.Customer = {
             $.ajax({
                 url: url,
                 data: data,
-                dataType: 'json'
+                dataType: 'json',
+                type: 'post'
             })
             .success(function (result) {
                 Fanex.ExtAcc.Customer.RenderSuperList(result);
@@ -734,7 +735,8 @@ Fanex.ExtAcc.Customer = {
             $.ajax({
                 url: url,
                 data: data,
-                dataType: 'json'
+                dataType: 'json',
+                type: 'post'
             })
             .success(function (result) {
                 Fanex.ExtAcc.Customer.RenderMasterList(result);
@@ -838,7 +840,8 @@ Fanex.ExtAcc.Customer = {
             $.ajax({
                 url: url,
                 data: data,
-                dataType: 'json'
+                dataType: 'json',
+                type: 'post'
             })
             .success(function (result) {
                 Fanex.ExtAcc.Customer.RenderAgentList(result);
@@ -941,7 +944,8 @@ Fanex.ExtAcc.Customer = {
             $.ajax({
                 url: url,
                 data: data,
-                dataType: 'json'
+                dataType: 'json',
+                type: 'post'
             })
             .success(function (result) {
                 Fanex.ExtAcc.Customer.RenderMemberList(result);
@@ -1243,7 +1247,8 @@ Fanex.ExtAcc.Customer = {
         $.ajax({
             url: url,
             data: data,
-            dataType: 'json'
+            dataType: 'json',
+            type: 'post'
         })
         .success(function (result) {
             var rows = $.parseJSON(result.rows);
