@@ -12,10 +12,12 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Data;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
@@ -25,8 +27,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using System.Data;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
 
     /// <summary>
     /// Base controller for live casino setting
@@ -106,6 +106,28 @@ namespace Fanex.ExternalAccount.Controllers.Base
             set;
         }
 
+        /// <summary>
+        /// Gets member win limit value
+        /// </summary>
+        /// <param name="custId">Customer id</param>
+        /// <returns>MemberWinLimit object</returns>
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        public ActionResult GetMemberWinLimit(int custId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            return this.JsonBase(this.MemberWinLimit.GetMemberWinLimit(custId), settings);
+        }
+
+        /// <summary>
+        /// Checks whether an account is disabled or not
+        /// </summary>
+        /// <param name="username">Username to check</param>
+        /// <param name="groupName">Group name that user belongs to</param>
+        /// <returns>Boolean value</returns>
         protected bool IsDisableAccount(string username, string groupName)
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
@@ -130,7 +152,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 }
                 else if (roleId == 3)
                 {
-                    result = new MasterService().GetData(srecommend, custId, null, null, null);                    
+                    result = new MasterService().GetData(srecommend, custId, null, null, null);
                 }
                 else if (roleId == 2)
                 {
@@ -138,27 +160,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 }
                 else
                 {
-                    result = new MemberService().GetData(recommend, custId, null, null, null);                    
+                    result = new MemberService().GetData(recommend, custId, null, null, null);
                 }
             }
 
             return !(bool)result.Rows[0]["enabled"];
-        }
-
-        /// <summary>
-        /// Gets member win limit value
-        /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <returns>MemberWinLimit object</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        public ActionResult GetMemberWinLimit(int custId)
-        {
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            return this.JsonBase(this.MemberWinLimit.GetMemberWinLimit(custId), settings);
         }
 
         /// <summary>
@@ -167,6 +173,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="custId">Updated customer id</param>
         /// <param name="isDailyAutoReset">Is daily auto reset</param>
         /// <param name="maxWinLimit">Maximum win limit</param>
+        /// <param name="customer">JSON customer string</param>
         /// <returns>ActionResult object</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit, string customer)
         {
