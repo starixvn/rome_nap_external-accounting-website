@@ -532,7 +532,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleSuper, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -544,7 +544,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleMaster, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -556,7 +556,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleAgent, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -564,7 +564,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -572,7 +572,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -584,13 +584,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleSuper, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleSuper, custId, customer);
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -605,13 +605,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleMaster, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleMaster, custId, customer);
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -626,16 +626,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleAgent, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleAgent, custId, customer);
-            var resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, model.CustomerInfo.GroupName)));
+            var resultStatus = new Fanex.LiveCasinoSetting.Model.Result();
+
+            if (result != null)
+            {
+                resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, model.CustomerInfo.GroupName)));
+            }
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
             results.Add(resultGS);
-            results.Add(new { ErrorCode = resultStatus.ErrorCode, ErrorMessage = resultStatus.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage =  result == null ? "Account was disabled" : resultStatus.ErrorMessage });
 
             return this.JsonBase(results);
         }
@@ -645,13 +650,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
-            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleSuper, custId, customer);
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -662,13 +667,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
-            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleMaster, custId, customer);
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL.ErrorCode, ErrorMessage = resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -678,9 +683,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult UpdateMemberWinLimitPost(int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
-            var result = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit);
+            var result = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled" : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]

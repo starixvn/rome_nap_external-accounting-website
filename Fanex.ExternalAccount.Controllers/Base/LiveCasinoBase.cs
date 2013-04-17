@@ -25,6 +25,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using Fanex.LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using System.Data;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
 
     /// <summary>
     /// Base controller for live casino setting
@@ -104,6 +106,45 @@ namespace Fanex.ExternalAccount.Controllers.Base
             set;
         }
 
+        protected bool IsDisableAccount(string username, string groupName)
+        {
+            var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
+            var result = new DataTable();
+            var srecommend = 0;
+            var mrecommend = 0;
+            var recommend = 0;
+            var custId = 0;
+            var roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+
+                if (roleId == 4)
+                {
+                    result = new SuperService().GetData(null, custId, null, null, null, groupName);
+                }
+                else if (roleId == 3)
+                {
+                    result = new MasterService().GetData(srecommend, custId, null, null, null);                    
+                }
+                else if (roleId == 2)
+                {
+                    result = new AgentService().GetData(mrecommend, custId, null, null, null);
+                }
+                else
+                {
+                    result = new MemberService().GetData(recommend, custId, null, null, null);                    
+                }
+            }
+
+            return !(bool)result.Rows[0]["enabled"];
+        }
+
         /// <summary>
         /// Gets member win limit value
         /// </summary>
@@ -127,8 +168,15 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// <param name="isDailyAutoReset">Is daily auto reset</param>
         /// <param name="maxWinLimit">Maximum win limit</param>
         /// <returns>ActionResult object</returns>
-        protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit)
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit, string customer)
         {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
             var memberWinLimit = new MemberWinLimit()
             {
                 IsDailyAutoReset = isDailyAutoReset,
@@ -160,6 +208,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
             var gameTypes = model.GameSetting;
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return new List<object> { new { BettypeId = 1101, ErrorCode = 1, ErrorMessage = "Account was disabled" } };
+            }
 
             var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
 
@@ -309,6 +362,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
                 var userInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
 
+                if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+                {
+                    return null;
+                }
+
                 // Update game setting in case of not sync live casino
                 if (isUpdateGameSetting && uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
@@ -449,6 +507,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var custInfo = this.PtSetting.GetCustomerInfo(custId);
             var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
 
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
             if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("MaxPT");
@@ -522,6 +585,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var pt = this.PtSetting.GetAgentPTSetting(custId, uplineId);
             var custInfo = this.PtSetting.GetCustomerInfo(custId);
             var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
 
             if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
             {
@@ -597,6 +665,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var custInfo = this.PtSetting.GetCustomerInfo(custId);
             var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
 
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
             if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
             {
                 pt.PropertiesChangedList.Add("Comm");
@@ -649,6 +722,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
             var pt = this.PtSetting.SuperGetMemberPTSetting(custId, uplineId);
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
 
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
             ((INotifyPropertyChanged)pt.Upline.Upline.Upline).PropertyChanged
                         += (o, arg) =>
                         {
@@ -687,6 +765,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             var pt = this.PtSetting.MasterGetMemberPTSetting(custId, uplineId);
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {                
+                return null;
+            }
 
             ((INotifyPropertyChanged)pt.Upline.Upline).PropertyChanged
                         += (o, arg) =>
