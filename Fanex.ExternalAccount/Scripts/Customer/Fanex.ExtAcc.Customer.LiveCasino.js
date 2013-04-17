@@ -990,6 +990,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 break;
         }
 
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             uplineId: uplineId,
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
@@ -1099,6 +1103,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 break;
             default:
                 break;
+        }
+
+        if (idx != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[idx];
         }
 
         var data = {
@@ -1230,6 +1238,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.CustIds.split(',')[i],
             uplineId: Fanex.ExtAcc.Customer.superId,
@@ -1289,6 +1301,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         // Set params
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.superId,
@@ -1371,6 +1387,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
@@ -1431,6 +1451,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         }
 
         // Set params
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
@@ -1503,6 +1527,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_2').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.agentId,
@@ -1560,6 +1588,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         // Set params
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.disableLiveCasino = !document.getElementById('chkEnable').checked;
+
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
 
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
@@ -1646,6 +1678,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.superId,
@@ -1702,6 +1738,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.BlockUI();
 
         // Set params
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.superId,
@@ -1778,6 +1818,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.isAutoPresetPT = isChecked;
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
@@ -1834,6 +1878,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         Fanex.ExtAcc.BlockUI();
 
         // Set params
+        if (i != null) {
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[i];
+        }
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
