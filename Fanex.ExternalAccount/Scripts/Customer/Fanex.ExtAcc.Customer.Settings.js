@@ -84,6 +84,8 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetSportsbookMinPT: function () {
+        Fanex.ExtAcc.BlockUI();
+
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditMinPT')
         }).success(function (result) {
@@ -112,6 +114,8 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetLiveCasinoSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
         var action = '';
 
         if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
