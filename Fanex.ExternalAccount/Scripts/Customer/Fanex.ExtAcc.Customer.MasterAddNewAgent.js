@@ -156,7 +156,7 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                                     clearTimeout(timeout);
 
                                     document.location.href = resolveClientUrl("Customer/Settings/2/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val() + "/ACCTHAI");
-                                }, 3000);
+                                }, 6000);
                             }, 2000);
                         }
                         else {
