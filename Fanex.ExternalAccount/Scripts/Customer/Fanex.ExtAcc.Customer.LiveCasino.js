@@ -1205,15 +1205,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     RenderGameSettingMessage: function (data) {
         var error = '';
 
-        console.log(data);
-
         for (var i = 0; i < data.length; i++) {
             if (data[i].ErrorCode != '' && data[i].ErrorCode != 'GS0000' && parseInt(data[i].ErrorCode) != 0) {
                 error += data[i].ErrorMessage.formatErrorMessage() + '<br />';
             }
         }
-
-        
 
         return error != '' ? '<font color="Red">Game Setting: </font>' + error : '<font color="Blue">Game Setting: Updated successfully</font><br />';
     },
