@@ -450,9 +450,10 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+            if (!data.IsSuccess) { console.log($('#errMsg'));
+                $('table tr td div#errMsg').css('display', 'block');
+                $('table tr td div#errMsg').html(data.ErrorMessage.formatErrorMessage());
+               
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
