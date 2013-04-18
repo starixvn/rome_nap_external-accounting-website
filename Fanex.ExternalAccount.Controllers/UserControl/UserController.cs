@@ -176,7 +176,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.Reports, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
         public ActionResult ResetPassword(int id)
         {
             var model = this.userService.GetUserById(id);
@@ -185,6 +185,26 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
             return this.PartialViewBase(model);
         }
+
+        #region Reset password for current logging in user
+                
+        public ActionResult ResetPwdOwner(int userId, string pwd)
+        {
+            var result = this.userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
+
+            return this.JsonBase(result);
+        }
+
+        public ActionResult ResetPasswordOwner(int id)
+        {
+            var model = this.userService.GetUserById(id);
+
+            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, (int)eFunctions.ExternalGroup, eFunctions.ExternalGroup.ToString());
+
+            return this.PartialViewBase(model);
+        }
+
+        #endregion
 
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
         public ActionResult GrantPermission(int userId, string username, string groupName)

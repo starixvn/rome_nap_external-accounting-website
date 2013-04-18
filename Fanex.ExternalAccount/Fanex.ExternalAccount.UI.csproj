@@ -1515,6 +1515,7 @@
     <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
     <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
+    <Content Include="Views\User\ResetPasswordOwner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

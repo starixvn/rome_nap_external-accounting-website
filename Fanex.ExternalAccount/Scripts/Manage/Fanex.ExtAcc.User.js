@@ -218,14 +218,14 @@ Fanex.ExtAcc.User = {
             });
     },
 
-    ShowResetPwd: function (userId) {
+    ShowResetPwd: function (userId, isOwner) {
         Fanex.ExtAcc.User.UserId = userId;
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.ResetPwd;
 
         Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('User/ResetPassword/' + userId),
+            resolveClientUrl('User/' + (isOwner ? 'ResetPasswordOwner' : 'ResetPassword') + '/' + userId),
             title,
             420,
             230,
@@ -425,7 +425,7 @@ Fanex.ExtAcc.User = {
         });
     },
 
-    ResetPwd: function () {
+    ResetPwd: function (isOwner) {
         if (!Validators.validateInput($('#Password').val())) {
             $('#Password').focus();
             Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
@@ -448,7 +448,7 @@ Fanex.ExtAcc.User = {
         params.userId = $('#UserID').val();
         params.pwd = $('#Password').val();
 
-        $.ajax({ url: resolveClientUrl('User/ResetPwd'), data: params, type: 'POST' })
+        $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
                 $('#errMsg').css('display', 'block');
