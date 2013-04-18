@@ -1007,31 +1007,39 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (result) {
-            var error = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(error);
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var error = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + '</font><br />' + error + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(error);
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberWinLimit(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1123,32 +1131,40 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[idx] + '</font><br />' + error + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(error);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[idx] + '</font><br />' + error + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(error);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1195,6 +1211,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             else {
                 error += '<font color="Blue">' + updatePart + 'Updated successfully</font><br/>';
             }
+        }
+
+        if (error == '' && data.ErrorMessage != '') {
+            error = data.ErrorMessage.formatErrorMessage() + '<br />';
         }
 
         return error == '' ? '<font color="Blue">Position Taking/Commission: Updated successfully</font><br />' : error;
@@ -1255,32 +1275,40 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(msg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(msg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateMasterPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1318,47 +1346,55 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var pt = result[0];
-            var mw = result[1];
-            var gs = result[2];
-            var ptMsg = '', mwMsg = '', gsMsg = '';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-            // PT messages
-            ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
-
-            // Member win limit messages
-            mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
-
-            // Game setting messages
-            if (gs[0].BettypeId != 0) {
-                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
-            }
-
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
-
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(ptMsg + mwMsg + gsMsg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var pt = result[0];
+                var mw = result[1];
+                var gs = result[2];
+                var ptMsg = '', mwMsg = '', gsMsg = '';
+
+                // PT messages
+                ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
+
+                // Member win limit messages
+                mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
+
+                // Game setting messages
+                if (gs[0].BettypeId != 0) {
+                    gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+                }
+
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.SubmitMasterPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1404,33 +1440,41 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(msg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(msg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateAgentPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1468,47 +1512,55 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var pt = result[0];
-            var mw = result[1];
-            var gs = result[2];
-            var ptMsg = '', mwMsg = '', gsMsg = '';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-            // PT messages
-            ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
-
-            // Member win limit messages
-            mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
-
-            // Game setting messages
-            if (gs[0].BettypeId != 0) {
-                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
-            }
-
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
-
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(ptMsg + mwMsg + gsMsg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var pt = result[0];
+                var mw = result[1];
+                var gs = result[2];
+                var ptMsg = '', mwMsg = '', gsMsg = '';
+
+                // PT messages
+                ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
+
+                // Member win limit messages
+                mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
+
+                // Game setting messages
+                if (gs[0].BettypeId != 0) {
+                    gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+                }
+
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.SubmitAgentPT(null, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1544,33 +1596,41 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(msg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(msg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.UpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1606,55 +1666,63 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var pt = result[0];
-            var mw = result[1];
-            var gs = result[2];
-            var st = result[3];
-            var ptMsg = '', mwMsg = '', gsMsg = '', stMsg = '';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-            // PT messages
-            ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
-
-            // Member win limit messages
-            mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
-
-            // Game setting messages
-            if (gs[0].BettypeId != 0) {
-                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
-            }
-
-            if (st.ErrorCode == '' || st.ErrorCode == '0' || st.ErrorCode == "0") {
-                stMsg = '<font color="Blue">Enable: Updated successfully</font><br />';
+                $.unblockUI(document);
             }
             else {
-                stMsg = '<font color="Red">Enable: ' + st.ErrorMessage.formatErrorMessage() + '</font><br />'
-            }
+                var pt = result[0];
+                var mw = result[1];
+                var gs = result[2];
+                var st = result[3];
+                var ptMsg = '', mwMsg = '', gsMsg = '', stMsg = '';
 
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + stMsg + '<br />';
+                // PT messages
+                ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
+                // Member win limit messages
+                mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
+                // Game setting messages
+                if (gs[0].BettypeId != 0) {
+                    gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+                }
 
-                    $.unblockUI(document);
-                }, 2000);
-            }
-            else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.SubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                if (st.ErrorCode == '' || st.ErrorCode == '0' || st.ErrorCode == "0") {
+                    stMsg = '<font color="Blue">Enable: Updated successfully</font><br />';
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    stMsg = '<font color="Red">Enable: ' + st.ErrorMessage.formatErrorMessage() + '</font><br />'
+                }
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + stMsg + '<br />';
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
 
-                    $.unblockUI(document);
+                        $('#errMsg').show();
+                        $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
+
+                        $.unblockUI(document);
+                    }, 2000);
+                }
+                else {
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.SubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1695,33 +1763,41 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(msg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.SuperUpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(msg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.SuperUpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1755,47 +1831,55 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var pt = result[0];
-            var mw = result[1];
-            var gs = result[2];
-            var ptMsg = '', mwMsg = '', gsMsg = '';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-            // PT messages
-            ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
-
-            // Member win limit messages
-            mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
-
-            // Game setting messages
-            if (gs[0].BettypeId != 0) {
-                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
-            }
-
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
-
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(ptMsg + mwMsg + gsMsg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.SuperSubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var pt = result[0];
+                var mw = result[1];
+                var gs = result[2];
+                var ptMsg = '', mwMsg = '', gsMsg = '';
+
+                // PT messages
+                ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
+
+                // Member win limit messages
+                mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
+
+                // Game setting messages
+                if (gs[0].BettypeId != 0) {
+                    gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+                }
+
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.SuperSubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1835,33 +1919,41 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(msg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.MasterUpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + msg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(msg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.MasterUpdateMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })
@@ -1895,47 +1987,55 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            var pt = result[0];
-            var mw = result[1];
-            var gs = result[2];
-            var ptMsg = '', mwMsg = '', gsMsg = '';
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                $('#errMsg').show();
+                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-            // PT messages
-            ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
-
-            // Member win limit messages
-            mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
-
-            // Game setting messages
-            if (gs[0].BettypeId != 0) {
-                gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
-            }
-
-            Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
-
-            if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    $('#errMsg').show();
-                    $('#errMsg').html(ptMsg + mwMsg + gsMsg);
-
-                    $.unblockUI(document);
-                }, 2000);
+                $.unblockUI(document);
             }
             else {
-                if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                    Fanex.ExtAcc.Customer.LiveCasino.MasterSubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                var pt = result[0];
+                var mw = result[1];
+                var gs = result[2];
+                var ptMsg = '', mwMsg = '', gsMsg = '';
+
+                // PT messages
+                ptMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(pt);
+
+                // Member win limit messages
+                mwMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(mw);
+
+                // Game setting messages
+                if (gs[0].BettypeId != 0) {
+                    gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
+                }
+
+                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + '<br />';
+
+                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        $('#errMsg').show();
+                        $('#errMsg').html(ptMsg + mwMsg + gsMsg);
+
+                        $.unblockUI(document);
+                    }, 2000);
                 }
                 else {
-                    Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                        Fanex.ExtAcc.Customer.LiveCasino.MasterSubmitMemberPT(++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                    $('#errMsg').show();
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                        $('#errMsg').show();
+                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                    Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                    $.unblockUI(document);
+                        $.unblockUI(document);
+                    }
                 }
             }
         })

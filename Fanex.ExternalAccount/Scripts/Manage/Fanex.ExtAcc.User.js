@@ -229,9 +229,7 @@ Fanex.ExtAcc.User = {
             title,
             420,
             230,
-            false,
-            null,
-            20
+            false
             );
     },
 

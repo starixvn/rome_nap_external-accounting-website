@@ -769,4 +769,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="DisabledAccount" xml:space="preserve">
     <value>Account was disabled</value>
   </data>
+  <data name="DontHavePermission" xml:space="preserve">
+    <value>You don't have permission</value>
+  </data>
 </root>

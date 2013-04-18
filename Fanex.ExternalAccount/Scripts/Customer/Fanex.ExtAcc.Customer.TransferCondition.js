@@ -120,10 +120,13 @@ Fanex.ExtAcc.Customer.TransferCondition = {
                 else {
                     $('#errMsg').css('display', 'block');
                     $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                    $.unblockUI(document);
+                    Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                 }
             })
             .error(function (xhr, status, err) {
                 $.unblockUI(document);
+                Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(err);
             });

@@ -159,7 +159,7 @@ Fanex.ExtAcc.Customer = {
         $.contextMenu({
             selector: '.editInfo',
             items: {
-                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 310, false); } },
+                editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } },
                 changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
             },
             trigger: "left",
@@ -181,7 +181,7 @@ Fanex.ExtAcc.Customer = {
             ptSportbook: { name: "PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMinPT'), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 500, false, false, 1); } },
-            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionDetail'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
+            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionDetail'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 225, false, false, 1); } },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
             minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
@@ -251,7 +251,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         itemsMaster.separator2 = "-----";
-        itemsMaster.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 310, false); } };
+        itemsMaster.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
         itemsMaster.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
 
         if (transferCondition == false) {
@@ -282,7 +282,7 @@ Fanex.ExtAcc.Customer = {
             ptSportbook: { name: "PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMinPT'), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 500, false, false, 1); } },
-            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionDetail'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 200, false, false, 1); } },
+            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionDetail'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 225, false, false, 1); } },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
             minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
@@ -352,7 +352,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         itemsAgent.separator2 = "-----";
-        itemsAgent.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 310, false); } };
+        itemsAgent.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
         itemsAgent.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
 
         if (transferCondition == false) {
@@ -386,7 +386,7 @@ Fanex.ExtAcc.Customer = {
             superEditPT: { name: "Super Edit PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Super Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             masterEditPT: { name: "Master Edit PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Master Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 500, false, false, 1); } },
-            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionMemberDetail'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 300, false, false, 1); } },
+            commission: { name: "Commission", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditCommissionMemberDetail'), 'Edit ' + '<font color="#6dcff6">' + title + '</font>', 871, 305, false, false, 1); } },
             separator: "-----",
             racing: { name: "Racing", className: "iconEnableEdit" },
             separator1: "-----"
@@ -483,7 +483,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         itemsMember.separator2 = "-----";
-        itemsMember.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 410, 310, false); } };
+        itemsMember.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
         itemsMember.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
 
         $.contextMenu('destroy');
@@ -526,14 +526,14 @@ Fanex.ExtAcc.Customer = {
             fax: Fanex.ExtAcc.EscapeHtml(fax)
         };
 
-        Fanex.ExtAcc.Form.Close(false);
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({ url: resolveClientUrl(editUrl), data: data, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                alert(data.ErrorMessage);
-                $.unblockUI(document);
+                $('#errMsg').show();
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());  
+                 $.unblockUI(document);              
             }
             else {
                 var timeout = setTimeout(function () {
@@ -993,7 +993,7 @@ Fanex.ExtAcc.Customer = {
         .done(function (data) {
             if (!data.IsSuccess) {
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage);
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);

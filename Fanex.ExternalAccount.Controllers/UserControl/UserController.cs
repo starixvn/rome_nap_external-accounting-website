@@ -176,7 +176,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Reports, Policy = ePolicy.Read)]
         public ActionResult ResetPassword(int id)
         {
             var model = this.userService.GetUserById(id);

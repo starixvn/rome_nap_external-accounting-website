@@ -14,7 +14,6 @@ namespace Fanex.ExternalAccount.Controllers.Context
 {
     using System;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.DTO;
@@ -22,6 +21,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
 
     public class AuthorizationAttribute : AuthorizeAttribute
@@ -110,7 +110,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
                 {
                     response.StatusCode = 200;
                     response.ContentType = "application/json";
-                    response.Write("{\"IsSuccess\":false, \"ErrorMessage\":\"You don't have permission\"}");
+                    response.Write("{\"IsSuccess\":false, \"ErrorCode\":\"1\", \"ErrorMessage\":\"" + ViewLang.DontHavePermission + "\"}");
                     response.Flush();
                     response.End();
                 }
