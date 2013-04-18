@@ -1051,20 +1051,27 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .success(function (result) {
-            if (current == len) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Customer.CallBackCustomerList();
-                }, 2000);
+            if (result.ErrorCode && result.ErrorCode == '1') {                
+                $.unblockUI(document);    
+                alert(result.ErrorMessage);
+                Fanex.ExtAcc.Form.Close();
             }
             else {
-                Fanex.ExtAcc.Customer.MultipleDblCommError += result.ErrorMessage + '<br/>';
-            }
+                if (current == len) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+                    }, 2000);
+                }
+                else {
+                    Fanex.ExtAcc.Customer.MultipleDblCommError += result.ErrorMessage + '<br/>';
+                }
 
-            current++;
+                current++;
 
-            if (current <= len) {
-                Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
+                if (current <= len) {
+                    Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
+                }
             }
         })
         .error(function (xhr, status, err) {
@@ -1838,8 +1845,7 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    UpdateMultipleDoubleComm: function (allow) {
-        Fanex.ExtAcc.Form.Close(false);
+    UpdateMultipleDoubleComm: function (allow) {        
         var custids = [];
         var divs = $('div');
 
