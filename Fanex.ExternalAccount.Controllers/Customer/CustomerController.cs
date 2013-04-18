@@ -73,13 +73,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         #region Super Add New Master
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult SuperAddNewMaster()
         {
             return this.ViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -141,13 +141,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         #endregion Super Add New Master
 
         #region Master Add New Agent
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MasterAddNewAgent()
         {
             return this.ViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -209,13 +209,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         #endregion Master Add New Agent
 
         #region Agent Add New Member
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult AgentAddNewMember()
         {
             return this.ViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
