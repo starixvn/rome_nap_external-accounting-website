@@ -218,7 +218,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
             {
-                return new List<object> { new { BettypeId = 1101, ErrorCode = 1, ErrorMessage = "Account was disabled" } };
+                return new List<object> { new { BettypeId = 1101, ErrorCode = 1, ErrorMessage = ViewLang.DisabledAccount } };
             }
 
             var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);

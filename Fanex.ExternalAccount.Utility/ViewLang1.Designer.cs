@@ -583,6 +583,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account was disabled.
+        /// </summary>
+        public static string DisabledAccount {
+            get {
+                return ResourceManager.GetString("DisabledAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Draw.
         /// </summary>
         public static string Draw {

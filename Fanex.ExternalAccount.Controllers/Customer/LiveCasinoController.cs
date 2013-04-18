@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.LiveCasinoSetting.Model;
     using Fanex.LiveCasinoSetting.Request;
@@ -532,7 +533,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleSuper, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -544,7 +545,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleMaster, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -556,7 +557,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             // Process manually sync
             this.SyncManually(LiveCasinoBase.RoleAgent, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
-            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -564,7 +565,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
 
-            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -572,7 +573,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
 
-            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
@@ -589,8 +590,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -610,8 +611,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -637,10 +638,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
-            results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage =  result == null ? "Account was disabled" : resultStatus.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage =  result == null ? ViewLang.DisabledAccount : resultStatus.ErrorMessage });
 
             return this.JsonBase(results);
         }
@@ -655,8 +656,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -672,8 +673,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var results = new List<object>();
 
-            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled\u0007" : result.ErrorMessage });
-            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? "Account was disabled" : resultMWL.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
+            results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
 
             return this.JsonBase(results);
@@ -685,7 +686,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
 
-            return this.JsonBase(new { ErrorCode = result == null ? "1" : result.ErrorCode, ErrorMessage = result == null ? "Account was disabled" : result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = result == null ? "1" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]

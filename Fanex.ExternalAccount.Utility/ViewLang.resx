@@ -766,4 +766,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="notExist" xml:space="preserve">
     <value>This user does not exist</value>
   </data>
+  <data name="DisabledAccount" xml:space="preserve">
+    <value>Account was disabled</value>
+  </data>
 </root>
