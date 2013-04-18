@@ -83,6 +83,8 @@ Fanex.ExtAcc = {
     BlockedUI: false,
     theme: 'classic',
     leftMenuWidth: Cookie.get('layout_1') ? parseInt(Cookie.get('layout_1')) : 300,
+    AutoInsertCompleted: false,
+    AutoInsertCount: 0,
 
     EscapeHtml: function (string) {
         var result = '';
@@ -269,7 +271,7 @@ Fanex.ExtAcc = {
         $('body').height($("#footer").position().top);
         $('#container').height($("#footer").position().top);
         $('#splitterBar').height($("#footer").position().top - 30);
-                
+
         $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
@@ -354,10 +356,25 @@ Fanex.ExtAcc = {
             dataType: 'json'
         })
         .success(function (result) {
+            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+                ++Fanex.ExtAcc.AutoInsertCount;
+            }
+            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+                Fanex.ExtAcc.AutoInsertCount = 0;
+                Fanex.ExtAcc.AutoInsertCompleted = true;
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
+            }
+
+            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+                ++Fanex.ExtAcc.AutoInsertCount;
+            }
+            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+                Fanex.ExtAcc.AutoInsertCount = 0;
+                Fanex.ExtAcc.AutoInsertCompleted = true;
             }
         });
     },
@@ -370,10 +387,25 @@ Fanex.ExtAcc = {
             dataType: 'json'
         })
         .success(function (result) {
+            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+                ++Fanex.ExtAcc.AutoInsertCount;
+            }
+            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+                Fanex.ExtAcc.AutoInsertCount = 0;
+                Fanex.ExtAcc.AutoInsertCompleted = true;
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
+            }
+
+            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+                ++Fanex.ExtAcc.AutoInsertCount;
+            }
+            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+                Fanex.ExtAcc.AutoInsertCount = 0;
+                Fanex.ExtAcc.AutoInsertCompleted = true;
             }
         });
     },
@@ -386,10 +418,25 @@ Fanex.ExtAcc = {
             dataType: 'json'
         })
         .success(function (result) {
+            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+                ++Fanex.ExtAcc.AutoInsertCount;
+            }
+            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+                Fanex.ExtAcc.AutoInsertCount = 0;
+                Fanex.ExtAcc.AutoInsertCompleted = true;
+            }
         })
         .error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
+            }
+
+            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+                ++Fanex.ExtAcc.AutoInsertCount;
+            }
+            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+                Fanex.ExtAcc.AutoInsertCount = 0;
+                Fanex.ExtAcc.AutoInsertCompleted = true;
             }
         });
     }
