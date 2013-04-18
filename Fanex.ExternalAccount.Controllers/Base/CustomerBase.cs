@@ -88,56 +88,65 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
         public ActionResult AutoInsertCasinoPost(int custId, int uplineId, string uplineName)
         {
-            var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-
-            if (custInfo != null && !custInfo.CasinoSync)
+            try
             {
-                var isSuccess = false;
-                var customer = new CasinoLibrary.SBAgent.Customer();
+                var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
-                try
+                if (custInfo != null && !custInfo.CasinoSync)
                 {
-                    isSuccess = customer.AutoInsertAccount(
-                        "01",
-                        custInfo.IBCCustID,
-                        custInfo.UserName,
-                        custInfo.UserName2,
-                        custInfo.FirstName,
-                        custInfo.LastName,
-                        custInfo.UserPwd,
-                        custInfo.Phone,
-                        custInfo.MobilePhone,
-                        custInfo.Currency,
-                        custInfo.Fax,
-                        custInfo.Closed,
-                        custInfo.Suspend,
-                        custInfo.IsEnablePT,
-                        custInfo.SIBCCustID,
-                        custInfo.MIBCCustID,
-                        custInfo.AIBCCustID,
-                        custInfo.RoleId.ToString(),
-                        DateTime.Now,
-                        CurrentContext.Ip4Address,
-                        uplineId,
-                        uplineName,
-                        BaseController.FromSystem);
-                }
-                catch (Exception ex)
-                {
-                    Logs.Error(ex.Message, "ExternalAccount", ex);
+                    var isSuccess = false;
+                    var customer = new CasinoLibrary.SBAgent.Customer();
+
+                    try
+                    {
+                        isSuccess = customer.AutoInsertAccount(
+                            "01",
+                            custInfo.IBCCustID,
+                            custInfo.UserName,
+                            custInfo.UserName2,
+                            custInfo.FirstName,
+                            custInfo.LastName,
+                            custInfo.UserPwd,
+                            custInfo.Phone,
+                            custInfo.MobilePhone,
+                            custInfo.Currency,
+                            custInfo.Fax,
+                            custInfo.Closed,
+                            custInfo.Suspend,
+                            custInfo.IsEnablePT,
+                            custInfo.SIBCCustID,
+                            custInfo.MIBCCustID,
+                            custInfo.AIBCCustID,
+                            custInfo.RoleId.ToString(),
+                            DateTime.Now,
+                            CurrentContext.Ip4Address,
+                            uplineId,
+                            uplineName,
+                            BaseController.FromSystem);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logs.Error(ex.Message, "ExternalAccount", ex);
+                    }
+
+                    if (isSuccess)
+                    {
+                        CasinoManager.Instance.UpdateCSStatus(custId, true, custInfo.CasinoDisabled, this.CurrentSession.UserId, this.CurrentContext.Ip4Address, 0, "En", string.Empty, string.Empty);
+                    }
+                    else
+                    {
+                        customer.RemoveAccount(custInfo.UserName, this.CurrentContext.Ip4Address, this.CurrentSession.CustId, this.CurrentSession.UserName, 3);
+                    }
                 }
 
-                if (isSuccess)
-                {
-                    CasinoManager.Instance.UpdateCSStatus(custId, true, custInfo.CasinoDisabled, this.CurrentSession.UserId, this.CurrentContext.Ip4Address, 0, "En", string.Empty, string.Empty);
-                }
-                else
-                {
-                    customer.RemoveAccount(custInfo.UserName, this.CurrentContext.Ip4Address, this.CurrentSession.CustId, this.CurrentSession.UserName, 3);
-                }
+                return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
             }
 
-            return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+            return this.JsonBase(new { ErrorCode = 999, ErrorMessage = string.Empty });
         }
 
         #endregion
@@ -146,41 +155,48 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
         public ActionResult AutoInsertBingoPost(int custId, int uplineId, string uplineName)
         {
-            var isSuccess = false;
-            var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId); 
-
-            LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
-
             try
             {
-                isSuccess = customer.AutoInsertAccount(
-                    CasinoNo,
-                    custInfo.IBCCustID,
-                    custInfo.UserName,
-                    custInfo.SIBCCustID,
-                    custInfo.MIBCCustID,
-                    custInfo.AIBCCustID,
-                    custInfo.RoleId.ToString(),
-                    custInfo.Currency,
-                    DateTime.Now,
-                    this.CurrentContext.Ip4Address,
-                    uplineId,
-                    uplineName,
-                    BaseController.FromSystem);
-            }
-            catch (Exception e)
-            {                
-                Logs.Error(e.Message, "ExternalAccount", e);
-            }
+                var isSuccess = false;
+                var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
-            if (isSuccess)
+                LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
+
+                try
+                {
+                    isSuccess = customer.AutoInsertAccount(
+                        CasinoNo,
+                        custInfo.IBCCustID,
+                        custInfo.UserName,
+                        custInfo.SIBCCustID,
+                        custInfo.MIBCCustID,
+                        custInfo.AIBCCustID,
+                        custInfo.RoleId.ToString(),
+                        custInfo.Currency,
+                        DateTime.Now,
+                        this.CurrentContext.Ip4Address,
+                        uplineId,
+                        uplineName,
+                        BaseController.FromSystem);
+                }
+                catch (Exception e)
+                {
+                    Logs.Error(e.Message, "ExternalAccount", e);
+                }
+
+                if (isSuccess)
+                {
+                    var err = string.Empty;
+                    var result = BingoManager.Instance.UpdateBingoStatus(custId, this.CurrentSession.UserId, 0, true, custInfo.BingoDisabled, true, this.CurrentContext.Ip4Address, "En", ref err);
+
+                    return this.JsonBase(new { ErrorCode = result, ErrorMessage = err });
+                }
+            }
+            catch (Exception ex)
             {
-                var err = string.Empty;
-                var result = BingoManager.Instance.UpdateBingoStatus(custId, this.CurrentSession.UserId, 0, true, custInfo.BingoDisabled, true, this.CurrentContext.Ip4Address, "En", ref err);
-
-                return this.JsonBase(new { ErrorCode = result, ErrorMessage = err });
+                Logs.Error(ex.Message, "ExternalAccount", ex);
             }
-
+            
             return this.JsonBase(new { ErrorCode = 999, ErrorMessage = string.Empty });
         }
 
