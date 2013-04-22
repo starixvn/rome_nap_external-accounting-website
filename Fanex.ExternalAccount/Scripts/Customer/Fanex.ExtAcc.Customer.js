@@ -540,6 +540,7 @@ Fanex.ExtAcc.Customer = {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Customer.CallBackCustomerList();
                     $.unblockUI(document);
+                    Fanex.ExtAcc.Form.Close();
                 }, 2000);
             }
         })
