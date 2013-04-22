@@ -45,7 +45,6 @@ Fanex.ExtAcc.Customer = {
     isSuperEditMember: false,
     isMasterEditMember: false,
 
-    BlockedUI: false,
     IsMultiple: false,
     IsFullInfo: false,
 
