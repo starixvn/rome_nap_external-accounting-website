@@ -156,7 +156,7 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                                     if (Fanex.ExtAcc.AutoInsertCompleted) {
                                         clearInterval(timeout);
 
-                                        document.location.href = resolveClientUrl("Customer/Settings/2/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val() + "/ACCTHAI");
+                                        document.location.href = resolveClientUrl("Customer/Settings/2/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val() + "/" + $('#selectedGroupName').html());
                                     }
                                 }, 100);
                             }, 2000);

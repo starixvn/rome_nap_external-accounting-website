@@ -641,7 +641,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
             results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
-            results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage =  result == null ? ViewLang.DisabledAccount : resultStatus.ErrorMessage });
+            results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : resultStatus.ErrorMessage });
 
             return this.JsonBase(results);
         }
