@@ -971,6 +971,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     UpdateMemberWinLimit: function (i) {
         Fanex.ExtAcc.BlockUI();
 
+        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.maxWinLimit = $('#maximumWinLimit').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.limit.isDailyAutoReset = document.getElementById('dailyAutoReset').checked;
 
