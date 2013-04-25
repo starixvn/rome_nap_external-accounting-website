@@ -1,0 +1,57 @@
+﻿<link href="@Url.Content("~/Content/Customer/Casino.css")" rel="stylesheet" type="text/css" />
+<div id="errMsg" style="display: none;" class="errMsg">
+</div>
+<div id="arrowUpDown" class="collapse">
+</div>
+<div id="names" style="display: none;" class="names">
+</div>
+<div style="text-align: right">
+    <input class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+</div>
+<div id="custInfo" style="border: 1px solid #ccc; border-bottom: none">
+    <div class="headerPositionTaking noneBorderLR" style="border-bottom: 0;">
+        General Information</div>
+    <table border="1" cellpadding="4" cellspacing="0" class="tableInfo">
+        <tr>
+            <td class="tdTitleLeft">Username</td>
+            <td style="width: 30%"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.userName"></span></td>
+            <td class="tdTitleRight">Nickname</td>
+            <td style="border-right: none"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.userName2"></span></td>
+        </tr>
+        <tr>
+            <td class="tdTitleLeft">First Name</td>
+            <td><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.firstName"></span></td>
+            <td class="tdTitleRight">Phone</td>
+            <td style="border-right: none"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.phone"></span></td>
+        </tr>
+        <tr>
+            <td class="tdTitleLeft">Last Name</td>
+            <td><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.lastName"></span></td>
+            <td class="tdTitleRight">Mobile Phone</td>
+            <td style="border-right: none"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.mobilePhone"></span></td>
+        </tr>
+        <tr>
+            <td class="tdTitleLeft">Fax</td>
+            <td><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.fax"></span></td>
+            <td class="tdTitleRight">Enable Casino</td>
+            <td style="border-right: none">
+                <input type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled" style="margin-top: 3px" /></td>
+        </tr>         
+    </table>
+    <div class="headerPositionTaking noneBorderLR">
+        Bet Setting</div>
+    <div class="positionTaking noneBorderLR">
+        <div id="betSetting"  class="noneBorderLR">
+        </div>
+    </div>
+    <div class="headerPositionTaking noneBorderLR">
+        Postition Taking</div>
+    <div class="positionTaking noneBorderLR">
+        <div id="ptContainer"  class="noneBorderLR">
+        </div>
+    </div>    
+</div>
+<div class="floatR">
+    <input class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+</div>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.Casino.js")" type="text/javascript"></script>

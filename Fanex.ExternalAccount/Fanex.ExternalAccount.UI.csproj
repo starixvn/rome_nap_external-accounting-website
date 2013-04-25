@@ -251,6 +251,7 @@
     <Content Include="bootstrap\winlossdetail\images\icon-right.png" />
     <Content Include="bootstrap\winlossdetail\images\spindown-closed.png" />
     <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Customer\Casino.css" />
     <Content Include="Content\Customer\LiveCasino.css" />
     <Content Include="Content\Customer\PTEngine.css" />
     <Content Include="Content\Customer\Customer.css" />
@@ -1431,7 +1432,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
-    <Folder Include="Views\Casino\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1516,6 +1516,7 @@
     <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
+    <Content Include="Views\Casino\EditCasino.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

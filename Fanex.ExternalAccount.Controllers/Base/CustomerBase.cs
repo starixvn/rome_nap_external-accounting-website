@@ -160,28 +160,31 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 var isSuccess = false;
                 var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
-                LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
+                if (custInfo != null && !custInfo.BingoSync)
+                {
+                    LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
 
-                try
-                {
-                    isSuccess = customer.AutoInsertAccount(
-                        CasinoNo,
-                        custInfo.IBCCustID,
-                        custInfo.UserName,
-                        custInfo.SIBCCustID,
-                        custInfo.MIBCCustID,
-                        custInfo.AIBCCustID,
-                        custInfo.RoleId.ToString(),
-                        custInfo.Currency,
-                        DateTime.Now,
-                        this.CurrentContext.Ip4Address,
-                        uplineId,
-                        uplineName,
-                        BaseController.FromSystem);
-                }
-                catch (Exception e)
-                {
-                    Logs.Error(e.Message, "ExternalAccount", e);
+                    try
+                    {
+                        isSuccess = customer.AutoInsertAccount(
+                            CasinoNo,
+                            custInfo.IBCCustID,
+                            custInfo.UserName,
+                            custInfo.SIBCCustID,
+                            custInfo.MIBCCustID,
+                            custInfo.AIBCCustID,
+                            custInfo.RoleId.ToString(),
+                            custInfo.Currency,
+                            DateTime.Now,
+                            this.CurrentContext.Ip4Address,
+                            uplineId,
+                            uplineName,
+                            BaseController.FromSystem);
+                    }
+                    catch (Exception e)
+                    {
+                        Logs.Error(e.Message, "ExternalAccount", e);
+                    }
                 }
 
                 if (isSuccess)

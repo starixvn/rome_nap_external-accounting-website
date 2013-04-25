@@ -1,0 +1,26 @@
+﻿.tableInfo
+{
+    border: 1px;
+    border-color: #ccc; 
+    border-collapse: collapse; 
+    border-style: none;
+    width: 100%;    
+}
+.tdTitleLeft
+{
+    width: 20%;
+    text-align: right;
+    font-weight:bold;
+    border-left: none;
+}
+.tdTitleRight
+{
+    width: 20%;
+    text-align: right;
+    font-weight:bold;
+}
+.noneBorderLR
+{
+    border-left: none;
+    border-right: none;
+}
