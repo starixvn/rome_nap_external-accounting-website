@@ -1,4 +1,8 @@
-﻿.floatR
+﻿div#product
+{
+    font-size: 11px !important;
+}
+.floatR
 {
 	float: right;
 }

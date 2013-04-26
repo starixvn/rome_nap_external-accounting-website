@@ -27,37 +27,37 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     /// </summary>
     public class LiveCasinoController : LiveCasinoBase
     {
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult EditMaster()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult EditAgent()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult EditMember()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult SuperEditMember()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult MasterEditMember()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult EditMasterPost(int custId, int uplineId)
         {
             var settings = new JsonSerializerSettings();
@@ -139,7 +139,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(liveCasinoModel, settings);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult EditAgentPost(int custId, int uplineId)
         {
             var settings = new JsonSerializerSettings();
@@ -221,7 +221,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(liveCasinoModel, settings);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult EditMemberPost(int custId, int uplineId)
         {
             var settings = new JsonSerializerSettings();
@@ -303,7 +303,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(liveCasinoModel, settings);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult SuperEditMemberPost(int custId, int uplineId)
         {
             var settings = new JsonSerializerSettings();
@@ -423,7 +423,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(liveCasinoModel, settings);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult MasterEditMemberPost(int custId, int uplineId)
         {
             var settings = new JsonSerializerSettings();
@@ -524,7 +524,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(liveCasinoModel, settings);
         }       
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateMasterPTPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -536,7 +536,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateAgentPTPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -548,7 +548,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateMemberPTPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -560,7 +560,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult SuperUpdateMemberPTPost(int custId, int uplineId, string customer)
         {
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
@@ -568,7 +568,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult MasterUpdateMemberPTPost(int custId, int uplineId, string customer)
         {
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
@@ -576,7 +576,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateMasterLiveCasinoPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -597,7 +597,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(results);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateAgentLiveCasinoPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -618,7 +618,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(results);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -646,7 +646,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(results);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult SuperUpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -663,7 +663,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(results);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult MasterUpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -680,7 +680,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(results);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateMemberWinLimitPost(int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -689,7 +689,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result == null ? "1" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Update)]
         public ActionResult UpdateGameSettingPost(int uplineRoleId, int uplineId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);

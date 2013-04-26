@@ -111,7 +111,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         /// </summary>
         /// <param name="custId">Customer id</param>
         /// <returns>MemberWinLimit object</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult GetMemberWinLimit(int custId)
         {
             var settings = new JsonSerializerSettings();

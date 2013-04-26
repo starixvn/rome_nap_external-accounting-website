@@ -359,7 +359,7 @@ Fanex.ExtAcc = {
             if (Fanex.ExtAcc.AutoInsertCount < 3) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -372,7 +372,7 @@ Fanex.ExtAcc = {
             if (Fanex.ExtAcc.AutoInsertCount < 3) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -390,7 +390,7 @@ Fanex.ExtAcc = {
             if (Fanex.ExtAcc.AutoInsertCount < 3) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -403,7 +403,7 @@ Fanex.ExtAcc = {
             if (Fanex.ExtAcc.AutoInsertCount < 3) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -421,7 +421,7 @@ Fanex.ExtAcc = {
             if (Fanex.ExtAcc.AutoInsertCount < 3) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -434,11 +434,29 @@ Fanex.ExtAcc = {
             if (Fanex.ExtAcc.AutoInsertCount < 3) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3){
+            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
         });
+    },
+
+    CheckNumber: function (evt, ele) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        else {
+            if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
+                ele.value = ele.value.substring(1);
+            }
+            else if(ele && ele.value.length == 0){
+                ele.value = '0';
+            }
+
+            return true;
+        }
     }
 };
 

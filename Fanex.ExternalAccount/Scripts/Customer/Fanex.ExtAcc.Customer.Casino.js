@@ -16,6 +16,8 @@ Fanex.ExtAcc.Customer.Casino = {
     },
 
     LoadData: function () {
+        Fanex.ExtAcc.BlockUI();
+
         var uplineId = 0;
 
         switch (Fanex.ExtAcc.Customer.CurrentLevel) {
@@ -47,11 +49,16 @@ Fanex.ExtAcc.Customer.Casino = {
             }
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.Casino.CasinoModel());
+
+            $.unblockUI(document);
         })
-        .error(function (data) {
-            if (typeof console != undefined) {
+        .error(function (data, status, err) {
+            if (typeof console != 'undefined') {
                 console.log(data.responseText);
             }
+
+            $('#windowPopup').html('<font color="Red">Not casino\'s customer</font>');
+            $.unblockUI(document);
         });
     }
 }
