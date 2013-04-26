@@ -39,7 +39,13 @@ Fanex.ExtAcc.Form = {
         }
 
         $.ajax({ url: url, data: data }).done(function (data) {
-            DivContent.innerHTML = data;
+            if (data.ErrorCode && data.ErrorCode == "1") {
+                DivContent.innerHTML = data.ErrorMessage.formatErrorMessage();
+            }
+            else {
+                DivContent.innerHTML = data;
+            }
+
             document.body.appendChild(Form);
             $('#' + id).dialog({
                 title: title,
