@@ -38,7 +38,7 @@
         <div class="customerInfoBlock1">
             Master Max Credit</div>
         <div class="customerInfoBlock2">
-            <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.credit" />
+            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.Customer.PTSetting.customer.credit" />
             <span id="minCreditId">&gt;=<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" />0</span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
         </div>
         <div class="customerInfoBlock3">
