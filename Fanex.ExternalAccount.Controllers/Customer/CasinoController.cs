@@ -64,32 +64,32 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             if (casinoGame != null && casinoGame.Count > 0 && custInfo.CasinoSync)
             {
-                foreach (var item in casinoGame)
+                casinoGame.ForEach(item =>
                 {
                     casinoStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) });
-                }
+                });
             }
             else if (casinoGame != null && casinoGame.Count > 0 && !custInfo.CasinoSync)
             {
-                foreach (var item in casinoGame)
+                casinoGame.ForEach(item =>
                 {
                     casinoStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) });
-                }
+                });
             }
 
             if (miniGame != null && miniGame.Count > 0 && custInfo.CasinoSync)
             {
-                foreach (var item in miniGame)
+                miniGame.ForEach(item =>
                 {
                     miniStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) });
-                }
+                });
             }
             else if (miniGame != null && miniGame.Count > 0 && !custInfo.CasinoSync)
             {
-                foreach (var item in miniGame)
+                miniGame.ForEach(item =>
                 {
                     miniStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) });
-                }
+                });
             }
 
             return this.JsonBase(

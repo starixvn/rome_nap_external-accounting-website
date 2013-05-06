@@ -6,6 +6,8 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 
 Fanex.ExtAcc.Customer.Casino = {
     customer: null,
+    colspan: 1,
+    uplineId: 0,
 
     Init: function () {
         if (!Fanex.ExtAcc.Customer.IsMultiple) {
@@ -23,14 +25,28 @@ Fanex.ExtAcc.Customer.Casino = {
         switch (Fanex.ExtAcc.Customer.CurrentLevel) {
             case Fanex.ExtAcc.Customer.Master:
                 uplineId = Fanex.ExtAcc.Customer.superId;
+                $('#downline').html('Master');
+                $('#member').remove();
+                $('#agent').remove();
+                this.colspan = 5;
                 break;
             case Fanex.ExtAcc.Customer.Agent:
                 uplineId = Fanex.ExtAcc.Customer.masterId;
+                $('#downline').html('Agent');
+                $('#member').remove();
+                $('#master').remove();
+                this.colspan = 4;
                 break;
             case Fanex.ExtAcc.Customer.Member:
                 uplineId = Fanex.ExtAcc.Customer.agentId;
+                $('#downline').html('Member');
+                $('#master').remove();
+                $('#agent').remove();
+                this.colspan = 2;
                 break;
         }
+
+        this.uplineId = uplineId;
 
         $.ajax({
             url: resolveClientUrl('Casino/EditCasinoPost'),
@@ -41,6 +57,10 @@ Fanex.ExtAcc.Customer.Casino = {
         .success(function (result) {
             console.log(result);
             Fanex.ExtAcc.Customer.Casino.customer = result;
+
+            Fanex.ExtAcc.Customer.Casino.RenderSetting(result);
+
+            Fanex.ExtAcc.Customer.Casino.RenderPT(result.pts);
 
             Fanex.ExtAcc.Customer.Casino.CasinoModel = function () {
                 this.saveCustomer = function () {
@@ -60,7 +80,432 @@ Fanex.ExtAcc.Customer.Casino = {
             $('#windowPopup').html('<font color="Red">Not casino\'s customer</font>');
             $.unblockUI(document);
         });
+    },
+
+    RenderSetting: function (result) {
+        // Renders casino game setting
+        if (result && result.casinoGame.length > 0) {
+            for (var i = 0; i < result.casinoGame.length; i++) {
+                var gameName = result.casinoGame[i].gameTypeName;
+                var stakeLevels = '';
+
+                for (var j = 0; j < result.casinoGame[i].stakeLevels.length; j++) {
+                    var checked = '';
+
+                    if (result.casinoGame[i].stakeLevels[j].isChecked) {
+                        checked = 'checked="checked"';
+                    }
+
+                    stakeLevels += '<input ' + checked + ' type="checkbox" id="' + result.casinoGame[i].stakeLevels[j].stakeLevelID + '" />' + result.casinoGame[i].stakeLevels[j].stakeLevelName;
+                }
+
+                var row = '<tr>' +
+                                    '<td class="R">' + gameName + '</td>' +
+                                    '<td colspan="' + Fanex.ExtAcc.Customer.Casino.colspan + '" style="border-right: none">Betting limit:<span id="bettingLimit">' + stakeLevels + '</span></td>' +
+                                '</tr>';
+
+                $('#casinoGame').append(row);
+            }
+
+            $('#rowspanCasino').attr('rowspan', result.casinoGame.length + 1);
+            $('#rowspanCasino').html(result.pts[0].codeName);
+        }
+
+        // Renders mini game setting
+        if (result && result.miniGame.length > 0) {
+            for (var i = 0; i < result.miniGame.length; i++) {
+                var gameName = result.miniGame[i].gameTypeName;
+                var stakeLevels = '';
+
+                for (var j = 0; j < result.miniGame[i].stakeLevels.length; j++) {
+                    var checked = '';
+
+                    if (result.miniGame[i].stakeLevels[j].isChecked) {
+                        checked = 'checked="checked"';
+                    }
+
+                    stakeLevels += '<input ' + checked + ' type="checkbox" id="' + result.miniGame[i].stakeLevels[j].stakeLevelID + '" />' + result.miniGame[i].stakeLevels[j].stakeLevelName;
+                }
+
+                var row = '<tr>' +
+                                    '<td class="R">' + gameName + '</td>' +
+                                    '<td colspan="' + Fanex.ExtAcc.Customer.Casino.colspan + '" style="border-right: none">Betting limit:<span id="bettingLimit">' + stakeLevels + '</span></td>' +
+                                '</tr>';
+
+                $('#miniGame').append(row);
+            }
+
+            $('#rowspanMini').attr('rowspan', result.miniGame.length + 1);
+            $('#rowspanMini').html(result.pts[1].codeName);
+        }
+    },
+
+    RenderPT: function (pts) {
+        var casinoGamePT = pts[0];
+        var miniGamePT = pts[1];
+
+        // Renders Master-Agent PT
+        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            //PT Renderring for Casino Game
+            //PT values
+            var uplineMin = casinoGamePT.minPositionTakingUpline;
+            var uplineMax = casinoGamePT.maxPositionTakingUpline;
+            var uplinePreset = casinoGamePT.superMaxPositionTaking;
+            var uplineAutoPreset = casinoGamePT.autoPositionTaking;
+
+            //Render super preset pt
+            PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+            //Render super auto preset pt
+            PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+            if (!casinoGamePT.isAutoPositionTaking) {
+                $('#pt_2').attr('disabled', 'disabled');
+            }
+            else {
+                $('#pt_1').attr('disabled', 'disabled');
+            }
+            $('#chkAutoPT').attr('checked', casinoGamePT.isAutoPositionTaking);
+
+            //Render Master Max PT
+            PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, casinoGamePT.maxPositionTaking);
+
+            //Render Master Min PT
+            PT_RenderCombo(document.getElementById('pt_4'), 0, casinoGamePT.maxPositionTaking, 0.01, casinoGamePT.minPositionTaking);
+
+            //Render Master Commission
+            Comm_RenderCombo(document.getElementById('comm_5'), 0, casinoGamePT.sMAgentRollingRateUpline, 0.0005, casinoGamePT.mAgentRollingRate);
+
+            //PT Renderring for Mini Game
+            //PT values
+            var uplineMin = miniGamePT.minPositionTakingUpline;
+            var uplineMax = miniGamePT.maxPositionTakingUpline;
+            var uplinePreset = miniGamePT.superMaxPositionTaking;
+            var uplineAutoPreset = miniGamePT.autoPositionTaking;
+
+            //Render super preset pt
+            PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+            //Render super auto preset pt
+            PT_RenderCombo(document.getElementById('pt_2_1'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+            if (!miniGamePT.isAutoPositionTaking) {
+                $('#pt_2_1').attr('disabled', 'disabled');
+            }
+            else {
+                $('#pt_1_1').attr('disabled', 'disabled');
+            }
+            $('#chkAutoPT_1').attr('checked', miniGamePT.isAutoPositionTaking);
+
+            //Render Master Max PT
+            PT_RenderCombo(document.getElementById('pt_3_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.maxPositionTaking);
+
+            //Render Master Min PT
+            PT_RenderCombo(document.getElementById('pt_4_1'), 0, miniGamePT.maxPositionTaking, 0.01, miniGamePT.minPositionTaking);
+
+            //Render Master Commission
+            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.sMAgentRollingRateUpline, 0.0005, miniGamePT.mAgentRollingRate);
+        }
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            //PT Renderring for Casino Game
+            //PT values
+            var uplineMin = casinoGamePT.minPositionTakingUpline;
+            var uplineMax = casinoGamePT.maxPositionTakingUpline;
+            var uplinePreset = casinoGamePT.mPositionTaking;
+
+            //Render Master preset pt
+            PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+            //Render Agent Max PT
+            PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, casinoGamePT.aPositionTaking);
+
+            //Render Agent Min PT
+            PT_RenderCombo(document.getElementById('pt_4'), 0, casinoGamePT.aPositionTaking, 0.01, casinoGamePT.minPositionTaking);
+
+            //Render Agent Commission
+            Comm_RenderCombo(document.getElementById('comm_5'), 0, casinoGamePT.mAgentRollingRateUpline, 0.0005, casinoGamePT.agentRollingRate);
+
+            //PT Renderring for Mini Game
+            //PT values
+            var uplineMin = miniGamePT.minPositionTakingUpline;
+            var uplineMax = miniGamePT.maxPositionTakingUpline;
+            var uplinePreset = miniGamePT.mPositionTaking;
+
+            //Render Master preset pt
+            PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+            //Render Agent Max PT
+            PT_RenderCombo(document.getElementById('pt_3_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.aPositionTaking);
+
+            //Render Agent Min PT
+            PT_RenderCombo(document.getElementById('pt_4_1'), 0, miniGamePT.aPositionTaking, 0.01, miniGamePT.minPositionTaking);
+
+            //Render Agent Commission
+            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.mAgentRollingRateUpline, 0.0005, miniGamePT.agentRollingRate);
+        }
+        else {
+            // Renders member PT
+            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
+            }
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
+            }
+            else {
+                //PT Renderring for Casino Game
+                //PT values
+                var uplineMin = casinoGamePT.minPositionTakingUpline;
+                var uplineMax = casinoGamePT.maxPositionTakingUpline;
+                var uplinePreset = casinoGamePT.aPositionTaking;
+
+                //Render Master preset pt
+                PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+                //Render Agent Commission
+                Comm_RenderCombo(document.getElementById('comm_2'), 0, casinoGamePT.agentRollingRateUpline, 0.0005, casinoGamePT.memberRollingRate);
+
+                //PT Renderring for Mini Game
+                //PT values
+                var uplineMin = miniGamePT.minPositionTakingUpline;
+                var uplineMax = miniGamePT.maxPositionTakingUpline;
+                var uplinePreset = miniGamePT.aPositionTaking;
+
+                //Render Master preset pt
+                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+                //Render Agent Commission
+                Comm_RenderCombo(document.getElementById('comm_2_1'), 0, miniGamePT.agentRollingRateUpline, 0.0005, miniGamePT.memberRollingRate);
+            }
+        }
+    },
+
+    UpdateSetting: function (i) {
+        var data = {
+            custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.CustIds.split(',')[i],
+            uplineId: this.uplineId
+        };
     }
+}
+
+function PT_Reduce(id, f) {
+    var combo = document.getElementById(id);
+    if (combo.disabled) return;
+
+    var selectedIndex = combo.selectedIndex;
+
+    var newSelectedIndex = selectedIndex + f;
+    if (newSelectedIndex >= combo.options.length) newSelectedIndex = combo.options.length - 1;
+
+    combo.selectedIndex = newSelectedIndex;
+
+    if (combo.onchange) combo.onchange();
+}
+
+function PT_Increase(id, f) {
+    var combo = document.getElementById(id);
+    if (combo.disabled) return;
+
+    var selectedIndex = combo.selectedIndex;
+
+    var newSelectedIndex = selectedIndex - f;
+    if (newSelectedIndex <= 0) newSelectedIndex = 0;
+
+    combo.selectedIndex = newSelectedIndex;
+    if (combo.onchange) combo.onchange();
+}
+
+function PT_RenderCombo(combo, min, max, step, selectedValue) {
+    min = min > max ? max : min;
+
+    if (selectedValue > max) {
+        var opt = document.createElement("option");
+        opt.text = opt.value = (selectedValue.toFixed(2) * 100) / 100;
+        combo.options.add(opt);
+    }
+
+    var index = 0;
+    var itemIndex = 0;
+
+    if (!combo) return;
+    combo.options.length = 0;
+
+    var c = Math.round((max * 100 - min * 100) / (step * 100));
+
+    if (c <= 0) {
+        var opt = document.createElement("option");
+        opt.text = opt.value = Math.round(min * 100) / 100;
+        combo.options.add(opt);
+        return;
+    }
+
+    for (var i = c; i >= 0; i--) {
+        var f = Math.round(min * 100 + (i * step * 100)) / 100;
+        var opt = document.createElement("option");
+
+        if (selectedValue == f) {
+            index = itemIndex;
+            opt.selected = true;
+        }
+
+        opt.text = opt.value = f;
+        combo.options.add(opt);
+        itemIndex++;
+    }
+
+
+    if (selectedValue && selectedValue <= max) {
+        if (document.all)
+            combo.options[index].selected = true;
+        else
+            combo.value = selectedValue;
+    }
+}
+
+function Comm_RenderCombo(combo, min, max, step, selectedValue) {
+    min = min > max ? max : min;
+    selectedValue = selectedValue > max ? max : selectedValue;
+
+    var index = 0;
+    var itemIndex = 0;
+
+    if (!combo) return;
+    combo.options.length = 0;
+
+    var c = Math.round((max * 10000 - min * 10000) / (step * 10000));
+
+    if (c <= 0) {
+        var opt = document.createElement("option");
+        opt.text = opt.value = Math.round(min * 10000) / 10000;
+        combo.options.add(opt);
+        return;
+    }
+
+    for (var i = c; i >= 0; i--) {
+        var f = Math.round(min * 10000 + (i * step * 10000)) / 10000;
+        var opt = document.createElement("option");
+
+        if (selectedValue == f) {
+            index = itemIndex;
+            opt.selected = true;
+        }
+
+        opt.text = opt.value = f;
+        combo.options.add(opt);
+        itemIndex++;
+    }
+
+    if (selectedValue) {
+        if (document.all)
+            combo.options[index].selected = true;
+        else
+            combo.value = selectedValue;
+    }
+}
+
+function checkPT(el, pre_id) {
+    if (el.checked) {
+        if (document.getElementById('pt_1' + pre_id))
+            document.getElementById('pt_1' + pre_id).disabled = true;
+        if (document.getElementById('pt_2' + pre_id))
+            document.getElementById('pt_2' + pre_id).disabled = false;
+
+        var pt1 = document.getElementById('pt_1' + pre_id);
+        var pt3 = document.getElementById("pt_3" + pre_id);
+        var pt4 = document.getElementById("pt_4" + pre_id);
+
+        if (pt3)
+            PT_RenderCombo(pt3, 0, (Fanex.ExtAcc.Customer.Casino.customer.uplinePtSetting.maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
+        if (pt4)
+            PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
+    }
+    else {
+        if (document.getElementById('pt_1' + pre_id)) {
+            document.getElementById('pt_1' + pre_id).disabled = false;
+            PTChanging(document.getElementById('pt_1' + pre_id));
+        }
+        if (document.getElementById('pt_2' + pre_id))
+            document.getElementById('pt_2' + pre_id).disabled = true;
+    }
+}
+
+function checkMaxPT(pre_id) {
+    if (document.getElementById('pt_3' + pre_id) && document.getElementById('pt_4' + pre_id)) {
+        PT_RenderCombo2(document.getElementById("pt_4" + pre_id), 0, document.getElementById('pt_3' + pre_id).value, 0.01, pre_id);
+        if (parseFloat(document.getElementById('pt_3' + pre_id).value) < parseFloat(document.getElementById('pt_4' + pre_id).value)) {
+            document.getElementById('pt_4' + pre_id).value = document.getElementById('pt_3' + pre_id).value;
+        }
+    }
+
+    return true;
+}
+
+function checkMinMaxPT(pre_id) {
+    if (document.getElementById('pt_3' + pre_id) && document.getElementById('pt_4' + pre_id)) {
+        document.getElementById('pt_3' + pre_id).onchange = checkMaxPT(pre_id);
+    }
+}
+
+function PTChanging(el, pre_id) {
+    var sel = parseFloat(el.value);
+    if (document.getElementById("pt_3" + pre_id)) {
+        var cur = parseFloat(document.getElementById("pt_3" + pre_id).value);
+        var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.uplinePtSetting;
+
+        if (cur == 'undefined' || cur == 'NaN') {
+            cur = 0;
+        }
+
+        if (cur > uplinePT.maxPT - sel) {
+            cur = uplinePT.maxPT - sel;
+        }
+
+        PT_RenderCombo(document.getElementById("pt_3" + pre_id), 0, uplinePT.maxPT - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
+    }
+    if (document.getElementById("pt_4" + pre_id)) {
+        PT_RenderCombo2(document.getElementById("pt_4" + pre_id), 0, uplinePT.maxPT - sel, 0.01, pre_id);
+    }
+}
+
+function PT_RenderCombo2(combo, min, max, step, pre_id) {
+    min = min > max ? max : min;
+
+    var index = 0;
+    var itemIndex = 0;
+    var selectedValue = combo.value;
+
+    if (!combo) return;
+    combo.options.length = 0;
+
+    if (combo.id == 'pt_4' + pre_id)
+        max = document.getElementById('pt_3' + pre_id).value;
+
+    if (selectedValue > max) {
+        selectedValue = max;
+    }
+
+    var c = Math.round((max * 100 - min * 100) / (step * 100));
+
+    if (c <= 0) {
+        var opt = document.createElement("option");
+        opt.text = opt.value = Math.round(min * 100) / 100;
+        combo.options.add(opt);
+        return;
+    }
+
+    for (var i = c; i >= 0; i--) {
+        var f = Math.round(min * 100 + (i * step * 100)) / 100;
+        var opt = document.createElement("option");
+
+        if (parseFloat(selectedValue) == parseFloat(f)) {
+            index = itemIndex;
+            opt.selected = true;
+        }
+
+        opt.text = opt.value = f;
+        combo.options.add(opt);
+        itemIndex++;
+    }
+
+    if (document.all)
+        combo.options[index].selected = true;
+    else
+        combo.value = selectedValue;
 }
 
 $(document).ready(function () {

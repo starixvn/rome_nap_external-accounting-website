@@ -197,3 +197,62 @@ tr.rowTransferCondition
     border:none;
     padding-left: 0 !important;
 }
+.btnPTDown
+{
+	background: url(../../Images/Content/b_down.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.btnPTUp
+{
+	background: url(../../Images/Content/b_up.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.btnPTSub
+{
+	background: url(../../Images/Content/b_sub.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.btnPTAdd
+{
+	background: url(../../Images/Content/b_add.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.spanPT > select
+{
+	width: 60px;
+	vertical-align: middle;
+}
+span.spanPT
+{
+	padding: 0px !important;
+	margin: 0px !important;
+	line-height: 20px;
+	height: 20px;
+	display: block;
+	overflow: hidden;
+	vertical-align: middle;
+}
