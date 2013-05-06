@@ -408,9 +408,10 @@ function checkPT(el, pre_id) {
         var pt1 = document.getElementById('pt_1' + pre_id);
         var pt3 = document.getElementById("pt_3" + pre_id);
         var pt4 = document.getElementById("pt_4" + pre_id);
+        var maxPT = Fanex.ExtAcc.Customer.Casino.customer.pts[pre_id != '' ? 1 : 0].maxPositionTakingUpline;
 
         if (pt3)
-            PT_RenderCombo(pt3, 0, (Fanex.ExtAcc.Customer.Casino.customer.uplinePtSetting.maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
+            PT_RenderCombo(pt3, 0, (maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
         if (pt4)
             PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
     }
@@ -445,20 +446,20 @@ function PTChanging(el, pre_id) {
     var sel = parseFloat(el.value);
     if (document.getElementById("pt_3" + pre_id)) {
         var cur = parseFloat(document.getElementById("pt_3" + pre_id).value);
-        var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.uplinePtSetting;
+        var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.pts[pre_id != '' ? 1 : 0];
 
         if (cur == 'undefined' || cur == 'NaN') {
             cur = 0;
         }
 
-        if (cur > uplinePT.maxPT - sel) {
-            cur = uplinePT.maxPT - sel;
+        if (cur > uplinePT.maxPositionTakingUpline - sel) {
+            cur = uplinePT.maxPositionTakingUpline - sel;
         }
 
-        PT_RenderCombo(document.getElementById("pt_3" + pre_id), 0, uplinePT.maxPT - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
+        PT_RenderCombo(document.getElementById("pt_3" + pre_id), 0, uplinePT.maxPositionTakingUpline - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
     }
     if (document.getElementById("pt_4" + pre_id)) {
-        PT_RenderCombo2(document.getElementById("pt_4" + pre_id), 0, uplinePT.maxPT - sel, 0.01, pre_id);
+        PT_RenderCombo2(document.getElementById("pt_4" + pre_id), 0, uplinePT.maxPositionTakingUpline - sel, 0.01, pre_id);
     }
 }
 
