@@ -21,7 +21,7 @@
         {
             get
             {
-                return string.IsNullOrWhiteSpace(this.ErrorCode) || Convert.ToInt32(this.ErrorCode) == 0;
+                return string.IsNullOrWhiteSpace(this.ErrorCode) || Convert.ToInt32(this.ErrorCode) <= 0;
             }
         }
     }

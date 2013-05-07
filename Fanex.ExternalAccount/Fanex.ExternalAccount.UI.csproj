@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTEngine.Age.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\Fanex.PTVirtualSports.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -255,6 +258,7 @@
     <Content Include="Content\Customer\LiveCasino.css" />
     <Content Include="Content\Customer\PTEngine.css" />
     <Content Include="Content\Customer\Customer.css" />
+    <Content Include="Content\Customer\VirtualSports.css" />
     <Content Include="Content\Images\ajax-loader.png" />
     <Content Include="Content\Images\balance.png" />
     <Content Include="Content\Images\bg-top.png" />
@@ -281,6 +285,7 @@
     <Content Include="Content\Images\pointericon.png" />
     <Content Include="Content\Images\Refresh.png" />
     <Content Include="Content\Images\report.png" />
+    <Content Include="Content\Images\save.png" />
     <Content Include="Content\Images\scoremap.png" />
     <Content Include="Content\Images\success.png" />
     <Content Include="Content\Images\transfer.png" />
@@ -667,6 +672,7 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.TransferCondition.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MemberInfo.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.VirtualSports.js" />
     <Content Include="Scripts\Fanex.ExtAcc.Form.js" />
     <Content Include="Scripts\Fanex.ExtAcc.Header.js" />
     <Content Include="Scripts\Fanex.ExtAcc.js" />
@@ -1517,6 +1523,7 @@
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\Casino\EditCasino.cshtml" />
+    <Content Include="Views\VirtualSports\EditSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

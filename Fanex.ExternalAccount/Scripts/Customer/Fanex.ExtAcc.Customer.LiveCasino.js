@@ -243,11 +243,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -453,11 +453,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -583,11 +583,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -739,11 +739,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -892,11 +892,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1012,7 +1012,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var error = Fanex.ExtAcc.Customer.LiveCasino.RenderMemberWinLimitMessage(result);
@@ -1024,7 +1024,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         $('#errMsg').css('display', 'block');
                         $('#errMsg').html(error);
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1039,7 +1039,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1049,7 +1049,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1136,7 +1136,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
@@ -1149,7 +1149,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(error);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1164,7 +1164,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1174,7 +1174,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
     },
 
@@ -1280,7 +1280,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
@@ -1293,7 +1293,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1308,7 +1308,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1318,7 +1318,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
     },
 
@@ -1351,7 +1351,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var pt = result[0];
@@ -1379,7 +1379,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1394,7 +1394,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1404,7 +1404,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1445,7 +1445,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
@@ -1459,7 +1459,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1474,7 +1474,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1484,7 +1484,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
     },
 
@@ -1517,7 +1517,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var pt = result[0];
@@ -1545,7 +1545,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1560,7 +1560,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1570,7 +1570,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1601,7 +1601,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
@@ -1615,7 +1615,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1630,7 +1630,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1640,7 +1640,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
     },
 
@@ -1671,7 +1671,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var pt = result[0];
@@ -1707,7 +1707,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1722,7 +1722,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1732,7 +1732,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1768,7 +1768,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
@@ -1782,7 +1782,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1797,7 +1797,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1807,7 +1807,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
     },
 
@@ -1836,7 +1836,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var pt = result[0];
@@ -1864,7 +1864,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1879,7 +1879,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1889,7 +1889,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1924,7 +1924,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
@@ -1938,7 +1938,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -1953,7 +1953,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -1963,7 +1963,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
     },
 
@@ -1992,7 +1992,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var pt = result[0];
@@ -2020,7 +2020,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg);
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
                 else {
@@ -2035,7 +2035,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     }
                 }
             }
@@ -2045,7 +2045,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 console.log(data);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -2079,7 +2079,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             $('#winLimit').show();
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') {

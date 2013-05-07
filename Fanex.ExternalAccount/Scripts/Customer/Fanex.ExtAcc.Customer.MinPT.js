@@ -74,7 +74,7 @@ Fanex.ExtAcc.Customer.MinPT = {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html('<font color="Blue">Updated successfully</font>');
@@ -83,24 +83,24 @@ Fanex.ExtAcc.Customer.MinPT = {
                             }, 2000);
                         }
                         else {
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     });
                 }
             }
 
             ko.applyBindings(new CustomerModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 }

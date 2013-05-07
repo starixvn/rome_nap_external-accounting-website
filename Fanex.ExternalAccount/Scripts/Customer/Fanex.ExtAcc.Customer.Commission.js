@@ -64,10 +64,10 @@ Fanex.ExtAcc.Customer.Commission = {
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -125,19 +125,19 @@ Fanex.ExtAcc.Customer.Commission = {
                         Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
                     }
 
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close(false);
                 }, 2000);
             }
             else {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
             }
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     }
 }

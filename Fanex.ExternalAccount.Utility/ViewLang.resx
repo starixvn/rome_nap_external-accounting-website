@@ -772,4 +772,40 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="DontHavePermission" xml:space="preserve">
     <value>You don't have permission</value>
   </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
+  <data name="SaveStatus" xml:space="preserve">
+    <value>SaveStatus</value>
+  </data>
+  <data name="Downlines" xml:space="preserve">
+    <value>Downlines</value>
+  </data>
+  <data name="SaveBetSetting" xml:space="preserve">
+    <value>Save Bet Setting</value>
+  </data>
+  <data name="SavePositionTaking" xml:space="preserve">
+    <value>Save Position Taking</value>
+  </data>
+  <data name="MaxBet" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MaxPerMatch" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="MinBet" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="MinPT" xml:space="preserve">
+    <value>Minimum Position Taking</value>
+  </data>
+  <data name="NoChangeToUpdate" xml:space="preserve">
+    <value>There is no change to update</value>
+  </data>
+  <data name="UpdatedSuccessfully" xml:space="preserve">
+    <value>Updated successfully</value>
+  </data>
 </root>

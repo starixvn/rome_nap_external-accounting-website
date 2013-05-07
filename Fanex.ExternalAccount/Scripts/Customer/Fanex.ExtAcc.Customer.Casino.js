@@ -70,7 +70,7 @@ Fanex.ExtAcc.Customer.Casino = {
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.Casino.CasinoModel());
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data, status, err) {
             if (typeof console != 'undefined') {
@@ -78,7 +78,7 @@ Fanex.ExtAcc.Customer.Casino = {
             }
 
             $('#windowPopup').html('<font color="Red">Not casino\'s customer</font>');
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -446,9 +446,13 @@ function checkMinMaxPT(sub_id) {
 
 function PTChanging(el, sub_id) {
     var sel = parseFloat(el.value);
-    if (document.getElementById("pt_3" + sub_id)) {        
+    if (document.getElementById("pt_3" + sub_id)) {
         var cur = parseFloat(document.getElementById("pt_3" + sub_id).value);
         var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0];
+
+        if (document.getElementById("pt_1" + sub_id)) {
+            sel = document.getElementById("pt_1" + sub_id).value;
+        }
 
         if (cur == 'undefined' || cur == 'NaN') {
             cur = 0;

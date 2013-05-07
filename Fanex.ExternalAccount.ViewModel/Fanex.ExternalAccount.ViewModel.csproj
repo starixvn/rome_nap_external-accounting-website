@@ -63,6 +63,8 @@
     <Compile Include="Customer\IPInfo.cs" />
     <Compile Include="Customer\LiveCasinoModel.cs" />
     <Compile Include="Customer\PTModel.cs" />
+    <Compile Include="Customer\PTVirtualSportsModel.cs" />
+    <Compile Include="Customer\PTVirtualSportsUpdateModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
     <Compile Include="Extension\MaxStringLengthAttribute.cs" />
     <Compile Include="Extension\MinStringLengthAttribute.cs" />

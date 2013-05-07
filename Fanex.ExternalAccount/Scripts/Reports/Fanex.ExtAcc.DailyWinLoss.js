@@ -413,10 +413,10 @@ Fanex.ExtAcc.DailyWinLoss = {
                     $("#jqgrid").fanexGrid($this.gridOptions);
                 }
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             },
             error: function () {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
         })
     }
