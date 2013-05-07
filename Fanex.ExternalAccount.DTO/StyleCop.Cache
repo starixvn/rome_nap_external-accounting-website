@@ -1080,9 +1080,6 @@
       </violation>
     </violations>
   </sourcecode>
-  <project key="1308790022">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="User.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/01/11 11:37:58.000</styleCop>
@@ -1162,4 +1159,7 @@
       </violation>
     </violations>
   </sourcecode>
+  <project key="1308790022">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
 </stylecopresultscache>

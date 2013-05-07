@@ -150,7 +150,7 @@ Fanex.ExtAcc.Customer.Casino = {
             //PT values
             var uplineMin = casinoGamePT.minPositionTakingUpline;
             var uplineMax = casinoGamePT.maxPositionTakingUpline;
-            var uplinePreset = casinoGamePT.superMaxPositionTaking;
+            var uplinePreset = casinoGamePT.sPositionTaking;
             var uplineAutoPreset = casinoGamePT.autoPositionTaking;
 
             //Render super preset pt
@@ -179,7 +179,7 @@ Fanex.ExtAcc.Customer.Casino = {
             //PT values
             var uplineMin = miniGamePT.minPositionTakingUpline;
             var uplineMax = miniGamePT.maxPositionTakingUpline;
-            var uplinePreset = miniGamePT.superMaxPositionTaking;
+            var uplinePreset = miniGamePT.sPositionTaking;
             var uplineAutoPreset = miniGamePT.autoPositionTaking;
 
             //Render super preset pt
@@ -398,17 +398,17 @@ function Comm_RenderCombo(combo, min, max, step, selectedValue) {
     }
 }
 
-function checkPT(el, pre_id) {
+function checkPT(el, sub_id) {
     if (el.checked) {
-        if (document.getElementById('pt_1' + pre_id))
-            document.getElementById('pt_1' + pre_id).disabled = true;
-        if (document.getElementById('pt_2' + pre_id))
-            document.getElementById('pt_2' + pre_id).disabled = false;
+        if (document.getElementById('pt_1' + sub_id))
+            document.getElementById('pt_1' + sub_id).disabled = true;
+        if (document.getElementById('pt_2' + sub_id))
+            document.getElementById('pt_2' + sub_id).disabled = false;
 
-        var pt1 = document.getElementById('pt_1' + pre_id);
-        var pt3 = document.getElementById("pt_3" + pre_id);
-        var pt4 = document.getElementById("pt_4" + pre_id);
-        var maxPT = Fanex.ExtAcc.Customer.Casino.customer.pts[pre_id != '' ? 1 : 0].maxPositionTakingUpline;
+        var pt1 = document.getElementById('pt_1' + sub_id);
+        var pt3 = document.getElementById("pt_3" + sub_id);
+        var pt4 = document.getElementById("pt_4" + sub_id);
+        var maxPT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTakingUpline;
 
         if (pt3)
             PT_RenderCombo(pt3, 0, (maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
@@ -416,37 +416,39 @@ function checkPT(el, pre_id) {
             PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
     }
     else {
-        if (document.getElementById('pt_1' + pre_id)) {
-            document.getElementById('pt_1' + pre_id).disabled = false;
-            PTChanging(document.getElementById('pt_1' + pre_id));
+        if (document.getElementById('pt_1' + sub_id)) {
+            document.getElementById('pt_1' + sub_id).disabled = false;
+            PTChanging(document.getElementById('pt_1' + sub_id));
         }
-        if (document.getElementById('pt_2' + pre_id))
-            document.getElementById('pt_2' + pre_id).disabled = true;
+        if (document.getElementById('pt_2' + sub_id))
+            document.getElementById('pt_2' + sub_id).disabled = true;
     }
 }
 
-function checkMaxPT(pre_id) {
-    if (document.getElementById('pt_3' + pre_id) && document.getElementById('pt_4' + pre_id)) {
-        PT_RenderCombo2(document.getElementById("pt_4" + pre_id), 0, document.getElementById('pt_3' + pre_id).value, 0.01, pre_id);
-        if (parseFloat(document.getElementById('pt_3' + pre_id).value) < parseFloat(document.getElementById('pt_4' + pre_id).value)) {
-            document.getElementById('pt_4' + pre_id).value = document.getElementById('pt_3' + pre_id).value;
+function checkMaxPT(sub_id) {
+    if (document.getElementById('pt_3' + sub_id) && document.getElementById('pt_4' + sub_id)) {
+        PT_RenderCombo2(document.getElementById("pt_4" + sub_id), 0, document.getElementById('pt_3' + sub_id).value, 0.01, sub_id);
+        if (parseFloat(document.getElementById('pt_3' + sub_id).value) < parseFloat(document.getElementById('pt_4' + sub_id).value)) {
+            document.getElementById('pt_4' + sub_id).value = document.getElementById('pt_3' + sub_id).value;
         }
     }
 
     return true;
 }
 
-function checkMinMaxPT(pre_id) {
-    if (document.getElementById('pt_3' + pre_id) && document.getElementById('pt_4' + pre_id)) {
-        document.getElementById('pt_3' + pre_id).onchange = checkMaxPT(pre_id);
+function checkMinMaxPT(sub_id) {
+    if (document.getElementById('pt_3' + sub_id) && document.getElementById('pt_4' + sub_id)) {
+        document.getElementById('pt_3' + sub_id).onchange = function () {
+            checkMaxPT(sub_id);
+        }
     }
 }
 
-function PTChanging(el, pre_id) {
+function PTChanging(el, sub_id) {
     var sel = parseFloat(el.value);
-    if (document.getElementById("pt_3" + pre_id)) {
-        var cur = parseFloat(document.getElementById("pt_3" + pre_id).value);
-        var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.pts[pre_id != '' ? 1 : 0];
+    if (document.getElementById("pt_3" + sub_id)) {        
+        var cur = parseFloat(document.getElementById("pt_3" + sub_id).value);
+        var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0];
 
         if (cur == 'undefined' || cur == 'NaN') {
             cur = 0;
@@ -456,14 +458,14 @@ function PTChanging(el, pre_id) {
             cur = uplinePT.maxPositionTakingUpline - sel;
         }
 
-        PT_RenderCombo(document.getElementById("pt_3" + pre_id), 0, uplinePT.maxPositionTakingUpline - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
+        PT_RenderCombo(document.getElementById("pt_3" + sub_id), 0, uplinePT.maxPositionTakingUpline - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
     }
-    if (document.getElementById("pt_4" + pre_id)) {
-        PT_RenderCombo2(document.getElementById("pt_4" + pre_id), 0, uplinePT.maxPositionTakingUpline - sel, 0.01, pre_id);
+    if (document.getElementById("pt_4" + sub_id)) {
+        PT_RenderCombo2(document.getElementById("pt_4" + sub_id), 0, uplinePT.maxPositionTakingUpline - sel, 0.01, sub_id);
     }
 }
 
-function PT_RenderCombo2(combo, min, max, step, pre_id) {
+function PT_RenderCombo2(combo, min, max, step, sub_id) {
     min = min > max ? max : min;
 
     var index = 0;
@@ -473,8 +475,8 @@ function PT_RenderCombo2(combo, min, max, step, pre_id) {
     if (!combo) return;
     combo.options.length = 0;
 
-    if (combo.id == 'pt_4' + pre_id)
-        max = document.getElementById('pt_3' + pre_id).value;
+    if (combo.id == 'pt_4' + sub_id)
+        max = document.getElementById('pt_3' + sub_id).value;
 
     if (selectedValue > max) {
         selectedValue = max;
