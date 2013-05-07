@@ -35,8 +35,11 @@
             <td class="tdTitleLeft">Fax</td>
             <td><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.fax"></span></td>
             <td class="tdTitleRight">Enable Casino</td>
-            <td style="border-right: none">
-                <input type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled" style="margin-top: 3px" /></td>
+            <td style="border-right: none">                
+                <div style="float: left; height: 24px">
+                    <input type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled" style="margin-top: 5px" />                    
+                </div><div style="margin-top: 3px"><label for="chkEnable" id="downline"></label></div>
+            </td>
         </tr>         
     </table>
     <div style="border-bottom: none" class="headerPositionTaking noneBorderLR">
@@ -58,11 +61,311 @@
             <td style="border-right: none">(<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.minTransferCreditLimit)"></span>&nbsp;-&nbsp;<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.maxTransferCreditLimit)"></span>)</td>                    
         </tr>
     </table>
-    <div class="headerPositionTaking noneBorderLR">
+    <div class="headerPositionTaking noneBorderLR"  style="border-bottom: none">
         Postition Taking</div>
-    <div class="positionTaking noneBorderLR">
-        <div id="ptContainer"  class="noneBorderLR">
-        </div>
+    <div id="master">
+        <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL">&nbsp;</td>
+                <td class="ptTitle">Super Preset PT</td>
+                <td class="ptTitle">Super Auto PT</td>
+                <td class="ptTitle">Master Max PT</td>
+                <td class="ptTitle">Master Min PT</td>
+                <td class="ptTitle noneBorderR">Master Commission</td>
+            </tr>
+            <tr>
+                <td id="rowspanCasino" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1" name="pt_1" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <input type="checkbox" name="chkAutoPT" id="chkAutoPT" onclick="checkPT(this, '');" style="vertical-align: middle;" />
+                        <select id="pt_2" name="pt_2" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_2', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_2', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_2', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_2', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_3" name="pt_3" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_3', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_3', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_3', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_3', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_4" name="pt_4" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_4', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_4', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_4', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_4', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR">
+                    <span class="spanPT">
+                        <select id="comm_5" name="comm_5" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_5', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('comm_5', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_5', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_5', 10);" />
+                    </span>
+                </td>
+            </tr>            
+        </table>
+        <table id="miniGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL noneBorderT">&nbsp;</td>
+                <td class="ptTitle noneBorderT">Super Preset PT</td>
+                <td class="ptTitle noneBorderT">Super Auto PT</td>
+                <td class="ptTitle noneBorderT">Master Max PT</td>
+                <td class="ptTitle noneBorderT">Master Min PT</td>
+                <td class="ptTitle noneBorderR noneBorderT">Master Commission</td>
+            </tr>
+            <tr>
+                <td id="rowspanMini" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1_1" name="pt_1_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1_1', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <input type="checkbox" name="chkAutoPT" id="chkAutoPT_1" onclick="checkPT(this, '_1');" style="vertical-align: middle;" />
+                        <select id="pt_2_1" name="pt_2_1" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_2_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_2_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_2_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_2_1', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_3_1" name="pt_3_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_3_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_3_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_3_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_3_1', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_4_1" name="pt_4_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_4_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_4_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_4_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_4_1', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR">
+                    <span class="spanPT">
+                        <select id="comm_5_1" name="comm_5_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_5_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('comm_5_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_5_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_5_1', 10);" />
+                    </span>
+                </td>
+            </tr>            
+        </table>
+    </div>
+        <div id="agent">
+        <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL">&nbsp;</td>
+                <td class="ptTitle">Master Preset PT</td>
+                <td class="ptTitle">Agent Max PT</td>
+                <td class="ptTitle">Agent Min PT</td>
+                <td class="ptTitle noneBorderR">Agent Commission</td>
+            </tr>
+            <tr>
+                <td id="rowspanCasino" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1" name="pt_1" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1', 10);" />
+                    </span>
+                </td>                
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_3" name="pt_3" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_3', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_3', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_3', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_3', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_4" name="pt_4" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_4', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_4', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_4', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_4', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR">
+                    <span class="spanPT">
+                        <select id="comm_5" name="comm_5" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_5', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('comm_5', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_5', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_5', 10);" />
+                    </span>
+                </td>
+            </tr>            
+        </table>
+        <table id="miniGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL noneBorderT">&nbsp;</td>
+                <td class="ptTitle noneBorderT">Master Preset PT</td>
+                <td class="ptTitle noneBorderT">Agent Max PT</td>
+                <td class="ptTitle noneBorderT">Agent Min PT</td>
+                <td class="ptTitle noneBorderR noneBorderT">Agent Commission</td>
+            </tr>
+            <tr>
+                <td id="rowspanMini" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1_1" name="pt_1_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1_1', 10);" />
+                    </span>
+                </td>                
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_3_1" name="pt_3_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_3_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_3_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_3_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_3_1', 10);" />
+                    </span>
+                </td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_4_1" name="pt_4_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_4_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_4_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_4_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_4_1', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR">
+                    <span class="spanPT">
+                        <select id="comm_5_1" name="comm_5_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_5_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('comm_5_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_5_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_5_1', 10);" />
+                    </span>
+                </td>
+            </tr>            
+        </table>
+    </div>
+    <div id="member">
+        <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL">&nbsp;</td>
+                <td class="ptTitle">Agent Preset PT</td>
+                <td class="ptTitle noneBorderR">Member Commission</td>
+            </tr>
+            <tr>
+                <td id="rowspanCasino" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1" name="pt_1" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR C">
+                    <span class="spanPT">
+                        <select id="comm_2" name="comm_2" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_2', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('comm_2', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_2', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_2', 10);" />
+                    </span>
+                </td>
+            </tr>            
+        </table>
+        <table id="miniGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL noneBorderT">&nbsp;</td>
+                <td class="ptTitle noneBorderT">Agent Preset PT</td>
+                <td class="ptTitle noneBorderR noneBorderT">Member Commission</td>
+            </tr>
+            <tr>
+                <td id="rowspanMini" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1_1" name="pt_1_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1_1', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR C">
+                    <span class="spanPT">
+                        <select id="comm_2_1" name="comm_2_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('comm_2_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('comm_2_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('comm_2_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('comm_2_1', 10);" />
+                    </span>
+                </td>
+            </tr>            
+        </table>
     </div>    
 </div>
 <div class="floatR">

@@ -121,6 +121,10 @@ Fanex.ExtAcc = {
         }
     },
 
+    UnBlockUI: function () {
+        $.unblockUI(document);
+    },
+
     modules: [
         {
             url: 'DailyWinloss/Index',
@@ -451,12 +455,40 @@ Fanex.ExtAcc = {
             if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
                 ele.value = ele.value.substring(1);
             }
-            else if(ele && ele.value.length == 0){
+            else if (ele && ele.value.length == 0) {
                 ele.value = '0';
             }
 
             return true;
         }
+    },
+
+    FormatErrorMessage: function (obj) {
+        var msgs = obj;
+        var msg = '';
+
+        if (msgs instanceof Array) {
+            for (var i = 0; i < msgs.length; i++) {
+                if (msgs[i].errorCode == "" || msgs[i].errorCode == "0" || parseInt(msgs[i].errorCode) <= 0 || (msgs[i].isSuccess && msgs[i].isSuccess == true)) {
+                    msg += '<font color="Blue">' + msgs[i].errorMessage + '</font><br />';
+                }
+                else {
+                    msg += '<font color="Red">' + msgs[i].errorMessage + '</font><br />';
+                }
+            }
+
+            return msg;
+        }
+        else if (msgs instanceof Object) {
+            if (msgs.errorCode == "" || msgs.errorCode == "0" || parseInt(msgs.errorCode) <= 0 || (msgs.isSuccess && msgs.isSuccess == true)) {
+                return '<font color="Blue">' + msgs.errorMessage + '</font><br />';
+            }
+            else {
+                return '<font color="Red">' + msgs.errorMessage + '</font><br />';
+            }
+        }
+
+        return '';
     }
 };
 
