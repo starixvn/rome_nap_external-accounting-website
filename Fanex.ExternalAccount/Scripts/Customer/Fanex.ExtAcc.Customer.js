@@ -549,20 +549,20 @@ Fanex.ExtAcc.Customer = {
             if (!data.IsSuccess) {
                 $('#errMsg').show();
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());  
-                 $.unblockUI(document);              
+                 Fanex.ExtAcc.UnBlockUI();              
             }
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Customer.CallBackCustomerList();
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close();
                 }, 2000);
             }
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -654,7 +654,7 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.Customer.RenderSuperList(result);
             })
             .error(function (xhr, status, err) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             });
         }
     },
@@ -759,7 +759,7 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.Customer.RenderMasterList(result);
             })
             .error(function (xhr, status, err) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             });
         }
     },
@@ -864,7 +864,7 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.Customer.RenderAgentList(result);
             })
             .error(function (xhr, status, err) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             });
         }
     },
@@ -968,7 +968,7 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.Customer.RenderMemberList(result);
             })
             .error(function (xhr, status, err) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             });
         }
     },
@@ -1016,11 +1016,11 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.Form.Close(false);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1029,7 +1029,7 @@ Fanex.ExtAcc.Customer = {
 
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             },
             2);
     },
@@ -1069,7 +1069,7 @@ Fanex.ExtAcc.Customer = {
         })
         .success(function (result) {
             if (result.ErrorCode && result.ErrorCode == '1') {                
-                $.unblockUI(document);    
+                Fanex.ExtAcc.UnBlockUI();    
                 alert(result.ErrorMessage);
                 Fanex.ExtAcc.Form.Close();
             }
@@ -1105,7 +1105,7 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1150,11 +1150,11 @@ Fanex.ExtAcc.Customer = {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             Fanex.ExtAcc.Customer.CallBackCustomerList();
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
                         }, 2000);
                     }
                     else {
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                         alert(result.ErrorCode == "600" ? "This account was disabled" : result.ErrorMessage);
                     }
                 })
@@ -1244,14 +1244,14 @@ Fanex.ExtAcc.Customer = {
             $('#editMult').attr('onclick', '');
             $('#editMult').contextMenu(false);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         }
         catch (e) {
             if (typeof console != 'undefined') {
                 console.log(e);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         }
     },
 
@@ -1310,7 +1310,7 @@ Fanex.ExtAcc.Customer = {
                 $('#exporttoexcel').css('display', 'none');
                 $('#breadcrumbs').css('display', 'none');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
         });
     },

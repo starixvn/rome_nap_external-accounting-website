@@ -115,17 +115,17 @@ Fanex.ExtAcc.Customer.TransferCondition = {
                 if (result.IsSuccess) {
                     Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                     Fanex.ExtAcc.Form.Close(false);
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
                 }
                 else {
                     $('#errMsg').css('display', 'block');
                     $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                 }
             })
             .error(function (xhr, status, err) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(err);

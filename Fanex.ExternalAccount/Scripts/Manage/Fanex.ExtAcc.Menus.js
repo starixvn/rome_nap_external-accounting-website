@@ -125,7 +125,7 @@ Fanex.ExtAcc.Menus = {
             $this.RenderGrid(options);
         })
         .error(function (xhr) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -145,7 +145,7 @@ Fanex.ExtAcc.Menus = {
         try {
             // Init Grid jqgrid
             $('#jqgrid').fanexGrid(options);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
         }
@@ -154,7 +154,7 @@ Fanex.ExtAcc.Menus = {
                 console.log(e);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         }
     },
 
@@ -251,7 +251,7 @@ Fanex.ExtAcc.Menus = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -267,7 +267,7 @@ Fanex.ExtAcc.Menus = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -320,7 +320,7 @@ Fanex.ExtAcc.Menus = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -336,7 +336,7 @@ Fanex.ExtAcc.Menus = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -346,7 +346,7 @@ Fanex.ExtAcc.Menus = {
         $.ajax({ url: resolveClientUrl('Menu/UpdateStatus/?menuId=' + menuId + '&isActive=' + isActive), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 alert(data.ErrorMessage);
             }
@@ -361,7 +361,7 @@ Fanex.ExtAcc.Menus = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -371,7 +371,7 @@ Fanex.ExtAcc.Menus = {
         $.ajax({ url: resolveClientUrl('Menu/Delete/?menuId=' + menuId), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 alert(data.ErrorMessage);
             }
@@ -386,7 +386,7 @@ Fanex.ExtAcc.Menus = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     }
 }

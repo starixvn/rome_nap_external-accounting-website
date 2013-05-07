@@ -99,7 +99,7 @@ Fanex.ExtAcc.Group = {
             $this.RenderGrid(options);
         })
         .error(function (xhr) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -119,7 +119,7 @@ Fanex.ExtAcc.Group = {
         try {
             // Init Grid jqgrid
             $('#jqgrid').fanexGrid(options);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
         }
@@ -128,7 +128,7 @@ Fanex.ExtAcc.Group = {
                 console.log(e);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         }
     },
 
@@ -206,7 +206,7 @@ Fanex.ExtAcc.Group = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -251,7 +251,7 @@ Fanex.ExtAcc.Group = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -261,7 +261,7 @@ Fanex.ExtAcc.Group = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
 
                     $this.Init();
                 }, 2000);
@@ -293,7 +293,7 @@ Fanex.ExtAcc.Group = {
         $.ajax({ url: resolveClientUrl('Group/Delete/?groupId=' + groupId), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 alert(data.ErrorMessage);
             }
