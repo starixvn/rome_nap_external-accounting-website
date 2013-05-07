@@ -488,7 +488,7 @@ Fanex.ExtAcc = {
             }
         }
 
-        return '';
+        return "";
     }
 };
 
