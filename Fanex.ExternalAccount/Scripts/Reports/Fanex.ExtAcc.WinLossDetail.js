@@ -772,10 +772,10 @@ Fanex.ExtAcc.WinLossDetail = {
                     $("#jqgrid").fanexGrid($this.Render());
                 }
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             },
             error: function () {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
         })
     }

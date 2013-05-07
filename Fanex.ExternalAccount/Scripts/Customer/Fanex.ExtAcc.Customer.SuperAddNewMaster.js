@@ -168,24 +168,24 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                             }, 2000);
                         }
                         else {
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
                     });
                 }
             }
 
             ko.applyBindings(new CustomerModel(customer));
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 

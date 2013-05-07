@@ -178,7 +178,7 @@ Fanex.ExtAcc.User = {
                     $('#mainGrid').css('visibility', 'visible');
                 }
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             });
         }
         catch (e) {
@@ -186,7 +186,7 @@ Fanex.ExtAcc.User = {
                 console.log(e);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         }
     },
 
@@ -293,7 +293,7 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -302,7 +302,7 @@ Fanex.ExtAcc.User = {
                 Fanex.ExtAcc.Form.Close(false);
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
 
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
@@ -311,7 +311,7 @@ Fanex.ExtAcc.User = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -336,7 +336,7 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -346,7 +346,7 @@ Fanex.ExtAcc.User = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
 
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
@@ -355,7 +355,7 @@ Fanex.ExtAcc.User = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -376,7 +376,7 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -386,7 +386,7 @@ Fanex.ExtAcc.User = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
 
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
@@ -395,7 +395,7 @@ Fanex.ExtAcc.User = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -405,7 +405,7 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl('User/UpdateStatus/?userId=' + userId + '&isActive=' + isActive), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 alert(data.ErrorMessage);
             }
@@ -414,7 +414,7 @@ Fanex.ExtAcc.User = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    $.unblockUI(document);
+                    Fanex.ExtAcc.UnBlockUI();
 
                     Fanex.ExtAcc.User.Search();
                 }, 2000);

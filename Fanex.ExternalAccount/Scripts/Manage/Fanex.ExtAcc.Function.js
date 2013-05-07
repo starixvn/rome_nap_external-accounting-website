@@ -113,7 +113,7 @@ Fanex.ExtAcc.Function = {
             $this.RenderGrid(options);
         })
         .error(function (xhr) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -133,7 +133,7 @@ Fanex.ExtAcc.Function = {
         try {
             // Init Grid jqgrid
             $('#jqgrid').fanexGrid(options);
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
         }
@@ -142,7 +142,7 @@ Fanex.ExtAcc.Function = {
                 console.log(e);
             }
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         }
     },
 
@@ -419,7 +419,7 @@ Fanex.ExtAcc.Function = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -431,7 +431,7 @@ Fanex.ExtAcc.Function = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -489,7 +489,7 @@ Fanex.ExtAcc.Function = {
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
@@ -501,7 +501,7 @@ Fanex.ExtAcc.Function = {
         .error(function (data) {
             if (typeof console != 'undefined') console.log(data.responseText);
 
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -511,7 +511,7 @@ Fanex.ExtAcc.Function = {
         $.ajax({ url: resolveClientUrl('Function/UpdateStatus/?funcId=' + funcId + '&isTest=' + isActive), type: 'POST' })
         .done(function (data) {
             if (!data.IsSuccess) {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
 
                 alert(data.ErrorMessage);
             }

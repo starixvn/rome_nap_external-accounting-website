@@ -337,11 +337,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -484,11 +484,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -613,11 +613,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -696,11 +696,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -785,11 +785,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1028,7 +1028,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
@@ -1052,7 +1052,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var timeout = setTimeout(function () {
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                             clearTimeout(timeout);
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
 
                             if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                 Fanex.ExtAcc.Customer.CallBackCustomerList();
@@ -1070,7 +1070,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
 
@@ -1078,7 +1078,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1092,7 +1092,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 else {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
 
                         var hasBetSettingError = false;
 
@@ -1120,13 +1120,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1140,7 +1140,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1165,7 +1165,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
@@ -1189,7 +1189,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var timeout = setTimeout(function () {
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                             clearTimeout(timeout);
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
 
                             if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                 Fanex.ExtAcc.Customer.CallBackCustomerList();
@@ -1207,7 +1207,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
 
@@ -1215,7 +1215,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1229,7 +1229,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 else {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
 
                         var hasBetSettingError = false;
 
@@ -1257,13 +1257,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1277,7 +1277,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1302,7 +1302,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
@@ -1326,7 +1326,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var timeout = setTimeout(function () {
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                             clearTimeout(timeout);
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
 
                             if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                 Fanex.ExtAcc.Customer.CallBackCustomerList();
@@ -1344,7 +1344,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
 
@@ -1352,7 +1352,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1366,7 +1366,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 else {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
 
                         var hasBetSettingError = false;
 
@@ -1394,13 +1394,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1414,7 +1414,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1448,7 +1448,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
 
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
@@ -1472,7 +1472,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var timeout = setTimeout(function () {
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                             clearTimeout(timeout);
-                            $.unblockUI(document);
+                            Fanex.ExtAcc.UnBlockUI();
 
                             if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                 Fanex.ExtAcc.Customer.CallBackCustomerList();
@@ -1490,7 +1490,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
 
@@ -1498,7 +1498,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1512,7 +1512,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 else {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                        $.unblockUI(document);
+                        Fanex.ExtAcc.UnBlockUI();
 
                         var hasBetSettingError = false;
 
@@ -1540,13 +1540,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    $.unblockUI(document);
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     Fanex.ExtAcc.Form.Close(false);
                                 }, 2000);
                             }
                             else {
-                                $.unblockUI(document);
+                                Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
                                 $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
@@ -1560,7 +1560,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }
         })
         .error(function (xhr, status, err) {
-            $.unblockUI(document);
+            Fanex.ExtAcc.UnBlockUI();
         });
     }
 };
