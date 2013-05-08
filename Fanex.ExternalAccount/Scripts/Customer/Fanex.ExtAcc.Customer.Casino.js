@@ -57,7 +57,7 @@ Fanex.ExtAcc.Customer.Casino = {
                     $('#smember').remove();
                     $('#member').remove();
 
-                    this.colspan = 3;
+                    this.colspan = 2;
                 }
                 else {
                     $('#smember').remove();
