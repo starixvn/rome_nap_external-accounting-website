@@ -1914,13 +1914,19 @@ Fanex.ExtAcc.Customer = {
 
     ShowSuperMasterEditMultiplePT: function () {
         var ret = this.IdsAndNames();
+        var levelText = '';
+
+        if (Fanex.ExtAcc.Customer.isSuperEditMember) {
+            levelText = 'Super ';
+        }
+        else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
+            levelText = 'Master ';
+        }
 
         if (!Fanex.ExtAcc.Customer.IsMultiple) {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), levelText + 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 600, false, false, 1);
         }
         else {
-            var levelText = Fanex.ExtAcc.Customer.isSuperEditMember ? 'Super ' : 'Master ';
-
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), levelText + 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
         }
     },
