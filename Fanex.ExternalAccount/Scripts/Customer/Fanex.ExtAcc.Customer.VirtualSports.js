@@ -283,6 +283,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         this.UpdateCustSettings(0);
     },
     UpdateCustSettings: function (id) {
+        var object = this;
         var custid = this.custids[id];
         var username = this.usernames[id];
         var isMulti = false;
@@ -314,7 +315,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                         ArrCodes.push(item.errCode);
                         ArrMsgs.push(item.errMsg);
                         if (item.errCode >= 0) {
-                            isSuccess = false;
+                            object.isSuccess = false;
                         }
                         else if (item.errCode == -2) { // update status successfully
                             this.ReloadCheckboxes();
@@ -325,19 +326,20 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                     ArrCodes.push(result.errCode);
                     ArrMsgs.push(result.errMsg);
                     if (result.errCode >= 0) {
-                        isSuccess = false;
+                        object.isSuccess = false;
                     }
                 }
 
+                $('#errMsg').css('display', 'block');
                 $('#errMsg').html(ArrUserName + Fanex.ExtAcc.FormatErrorMessage(result));
 
                 id++;
-                if (id < this.custids.length) {
+                if (id < object.custids.length) {
                     updateCustSettings(id);
                 }
                 else {
-                    if (isSuccess) {
-                        this.oldCustomer = this.newCustomer;
+                    if (object.isSuccess) {
+                        object.oldCustomer = object.newCustomer;
                     }
                     $.unblockUI(document);
                     window.scroll(0, 0);

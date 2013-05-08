@@ -8,22 +8,27 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.Caching;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTVirtualSports.Services;
+    using Fanex.PTVirtualSports.Utilities;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class VirtualSportsController : BaseController
     {
+        private bool isChanged = false;
+        private List<Fanex.ExternalAccount.DTO.Result> uiResult = new List<Fanex.ExternalAccount.DTO.Result>();
+
         [Authorization(Function = eFunctions.VirtualSports, Policy = ePolicy.Read)]
         [HttpGet]
         public ActionResult EditSingle(PTVirtualSportsModel model)
@@ -104,8 +109,258 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             };
 
             var customerService = new CustomerService();
+            ICustomer oldCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[0]);
+            ICustomer newCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[1]);
+            Hashtable otherSetting = JsonConvert.DeserializeObject<Hashtable>(Request.Form[2]);
+            if (model.IsMulti)
+            {
+                oldCustomer = customerService.GetCustomer(currentContext);
+            }
 
-            return this.PartialViewBase();
+            switch (model.UpdateType)
+            {
+                case 0:
+                    break;
+
+                case 1: // status
+                    oldCustomer.BettingLimit = newCustomer.BettingLimit;
+                    oldCustomer.PtSetting = newCustomer.PtSetting;
+                    break;
+
+                case 2: // bet setting
+                    oldCustomer.StatusSetting = newCustomer.StatusSetting;
+                    oldCustomer.PtSetting = newCustomer.PtSetting;
+                    break;
+
+                case 3: // position taking
+                    oldCustomer.StatusSetting = newCustomer.StatusSetting;
+                    oldCustomer.BettingLimit = newCustomer.BettingLimit;
+                    break;
+            }
+
+            if (newCustomer != null)
+            {
+                var results = customerService.SaveCustomer(oldCustomer, newCustomer, currentContext, otherSetting);
+                this.UpdateStatusMessages(currentContext, results.ResultStatus);
+                this.UpdateBettingLimitMessages(currentContext, results.ResultBetSetting);
+                this.UpdatePTMessages(currentContext, results.ResultPT);
+
+                if (!this.isChanged)
+                {
+                    return this.JsonBase(new { errorCode = 50, errorMessage = ViewLang.NoChangeToUpdate });
+                }
+
+                var settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+                settings.Formatting = Formatting.Indented;
+                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+                var responseContent = JsonConvert.SerializeObject(uiResult, settings);
+                return this.Content(responseContent);
+            }
+
+            return this.ViewBase("Error");
+        }
+
+        [NonAction]
+        private void UpdateStatusMessages(IRequestContext currentContext, IList<Fanex.PTEngine.BusinessObjects.Result> results)
+        {
+            if (results.Count > 0)
+            {
+                isChanged = true;
+                string msg = ViewLang.Status + ": ";
+
+                foreach (var r in results)
+                {
+                    int errCode = Convert.ToInt32(r.ErrorCode);
+                    if (errCode == 0)
+                    {
+                        errCode = -2;
+                        r.ErrorMessage = msg + ViewLang.UpdatedSuccessfully;
+                    }
+                    else if (errCode == 101 || errCode == 102 || errCode == 103 || errCode == 104)
+                    {
+                        r.ErrorMessage = msg + r.ErrorMessage;
+                    }
+
+                    uiResult.Add(new Fanex.ExternalAccount.DTO.Result(errCode, r.ErrorMessage));
+                }
+            }
+        }
+
+        [NonAction]
+        private void UpdateBettingLimitMessages(IRequestContext currentContext, IList<Fanex.PTVirtualSports.BusinessObjects.Result> results)
+        {
+            if (results.Count > 0)
+            {
+                isChanged = true;
+                foreach (var r in results)
+                {
+                    int errCode = Convert.ToInt32(r.ErrorCode);
+                    string msg1 = ViewLang.MinBet + "/" + ViewLang.MaxBet + ": ";
+                    string msg2 = ViewLang.MaxPerMatch + ": ";
+
+                    switch (errCode)
+                    {
+                        case -101:
+                            r.ErrorMessage = msg1 + ViewLang.UpdatedSuccessfully;
+                            break;
+
+                        case -102:
+                            r.ErrorMessage = msg2 + ViewLang.UpdatedSuccessfully;
+                            break;
+
+                        default:
+                            switch (currentContext.TargetRoleId)
+                            {
+                                case Constant.MASTER_ROLEID:
+                                    if (errCode == 147)
+                                    {
+                                        r.ErrorMessage = msg1 + r.ErrorMessage;
+                                    }
+                                    else if (errCode == 115)
+                                    {
+                                        r.ErrorMessage = msg2 + r.ErrorMessage;
+                                    }
+                                    break;
+
+                                case Constant.AGENT_ROLEID:
+                                    if (errCode == 105)
+                                    {
+                                        r.ErrorMessage = msg1 + r.ErrorMessage;
+                                    }
+                                    else if (errCode == 115)
+                                    {
+                                        r.ErrorMessage = msg2 + r.ErrorMessage;
+                                    }
+                                    break;
+
+                                case Constant.MEMBER_ROLEID:
+                                    if (errCode == 106)
+                                    {
+                                        r.ErrorMessage = msg1 + r.ErrorMessage;
+                                    }
+                                    else if (errCode == 115)
+                                    {
+                                        r.ErrorMessage = msg2 + r.ErrorMessage;
+                                    }
+                                    break;
+                            }
+
+                            break;
+                    }
+
+                    string sportName = CacheRef.GetSportName(r.SportTypeId);
+                    uiResult.Add(new Fanex.ExternalAccount.DTO.Result(errCode, sportName + " - " + r.ErrorMessage));
+                }
+            }
+        }
+
+        [NonAction]
+        private void UpdatePTMessages(IRequestContext currentContext, IList<Fanex.PTVirtualSports.BusinessObjects.Result> results)
+        {
+            if (results.Count > 0)
+            {
+                isChanged = true;
+                foreach (var r in results)
+                {
+                    int errCode = Convert.ToInt32(r.ErrorCode);
+                    string msg1 = ViewLang.PositionTaking + ": ";
+                    string msg2 = ViewLang.MinPT + ": ";
+
+                    switch (errCode)
+                    {
+                        case -101:
+                            r.ErrorMessage = msg1 + ViewLang.UpdatedSuccessfully;
+                            break;
+
+                        case -102:
+                            r.ErrorMessage = msg2 + ViewLang.UpdatedSuccessfully;
+                            break;
+
+                        case -103:
+                            r.ErrorMessage = msg1 + ViewLang.NoChangeToUpdate;
+                            break;
+
+                        default:
+                            switch (currentContext.TargetRoleId)
+                            {
+                                case Constant.MASTER_ROLEID:
+                                    if (errCode == 147)
+                                    {
+                                        r.ErrorMessage = msg1 + r.ErrorMessage;
+                                    }
+                                    else if (errCode == 115)
+                                    {
+                                        r.ErrorMessage = msg2 + r.ErrorMessage;
+                                    }
+                                    break;
+
+                                case Constant.AGENT_ROLEID:
+                                    if (errCode == 105)
+                                    {
+                                        r.ErrorMessage = msg1 + r.ErrorMessage;
+                                    }
+                                    else if (errCode == 115)
+                                    {
+                                        r.ErrorMessage = msg2 + r.ErrorMessage;
+                                    }
+                                    break;
+
+                                case Constant.MEMBER_ROLEID:
+                                    switch (currentContext.RoleId)
+                                    {
+                                        case Constant.SUPER_ROLEID:
+                                            if (errCode == 106)
+                                            {
+                                                r.ErrorMessage = msg1 + r.ErrorMessage;
+                                            }
+                                            else if (errCode == 115)
+                                            {
+                                                r.ErrorMessage = msg2 + r.ErrorMessage;
+                                            }
+                                            else if (errCode == 99)
+                                            {
+                                                r.ErrorMessage = msg1 + r.ErrorMessage;
+                                            }
+                                            break;
+
+                                        case Constant.MASTER_ROLEID:
+                                            if (errCode == 106)
+                                            {
+                                                r.ErrorMessage = msg1;
+                                            }
+                                            else if (errCode == 115)
+                                            {
+                                                r.ErrorMessage = msg2;
+                                            }
+                                            else if (errCode == 98)
+                                            {
+                                                r.ErrorMessage = msg1 + r.ErrorMessage;
+                                            }
+                                            break;
+
+                                        case Constant.AGENT_ROLEID:
+                                            if (errCode == 106)
+                                            {
+                                                r.ErrorMessage = msg1 + r.ErrorMessage;
+                                            }
+                                            else if (errCode == 115)
+                                            {
+                                                r.ErrorMessage = msg2 + r.ErrorMessage;
+                                            }
+                                            break;
+                                    }
+                                    break;
+                            }
+
+                            break;
+                    }
+
+                    string sportName = CacheRef.GetSportName(r.SportTypeId);
+                    uiResult.Add(new Fanex.ExternalAccount.DTO.Result(errCode, sportName + " - " + r.ErrorMessage));
+                }
+            }
         }
     }
 }
