@@ -1,0 +1,61 @@
+﻿.headerTab
+{
+	border-bottom: 0px;
+}
+.headerPositionTaking
+{
+	border-bottom: 0px;
+	width: 841px;
+}
+.clearBlock
+{
+	border: 0px;
+}
+.save
+{
+	border-style: none;
+	border-color: inherit;
+	border-width: medium;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	background-image: url(../Images/save.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	position: relative;
+}
+.saveDiv
+{
+	float: right;
+}
+.BettingLimitHeader, .BettingLimitHeaderTop, .BetTypeHeader
+{
+	font-family: Tahoma,Arial,helvetica,sans-serif;
+	background-color: #E7F7FF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	font-size: 11px !important;
+	text-indent: 1px !important;
+}
+.BettingLimit, .BettingLimit4
+{
+	background-color: #F7F0E4;
+	border-bottom: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+}
+.BettingLimitItem2
+{
+	background-color: #FFF;
+	border-top: 1px solid #CCC;
+}
+.BettingLimitItem, .BetTypeCheckbox, .BetTypeSelect
+{
+	background-color: #FFF;
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	font-size: 11px;
+}
+.BettingLimitTextBox
+{
+	vertical-align: top;
+}
