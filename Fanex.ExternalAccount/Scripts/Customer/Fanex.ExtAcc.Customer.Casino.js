@@ -28,20 +28,36 @@ Fanex.ExtAcc.Customer.Casino = {
                 $('#downline').html('Master');
                 $('#member').remove();
                 $('#agent').remove();
+                $('#sagent').remove();
+                $('#smember').remove();
+                $('#mmember').remove();
                 this.colspan = 5;
                 break;
             case Fanex.ExtAcc.Customer.Agent:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
+                uplineId = Fanex.ExtAcc.Customer.isSuperEditAgent ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
                 $('#downline').html('Agent');
                 $('#member').remove();
+
+                if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
+                    $('#sagent').remove();
+                }
+                else {
+                    $('#agent').remove();
+                }
+
                 $('#master').remove();
+                $('#smember').remove();
+                $('#mmember').remove();
                 this.colspan = 4;
                 break;
             case Fanex.ExtAcc.Customer.Member:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
+                uplineId = Fanex.ExtAcc.Customer.isSuperEditMember ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.isMasterEditMember ? Fanex.ExtAcc.Customer.masterId : Fanex.ExtAcc.Customer.agentId;
                 $('#downline').html('Member');
                 $('#master').remove();
                 $('#agent').remove();
+                $('#sagent').remove();
+                $('#smember').remove();
+                $('#mmember').remove();
                 this.colspan = 2;
                 break;
         }
@@ -177,10 +193,10 @@ Fanex.ExtAcc.Customer.Casino = {
 
             //PT Renderring for Mini Game
             //PT values
-            var uplineMin = miniGamePT.minPositionTakingUpline;
-            var uplineMax = miniGamePT.maxPositionTakingUpline;
-            var uplinePreset = miniGamePT.sPositionTaking;
-            var uplineAutoPreset = miniGamePT.autoPositionTaking;
+            uplineMin = miniGamePT.minPositionTakingUpline;
+            uplineMax = miniGamePT.maxPositionTakingUpline;
+            uplinePreset = miniGamePT.sPositionTaking;
+            uplineAutoPreset = miniGamePT.autoPositionTaking;
 
             //Render super preset pt
             PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -211,35 +227,53 @@ Fanex.ExtAcc.Customer.Casino = {
             var uplineMax = casinoGamePT.maxPositionTakingUpline;
             var uplinePreset = casinoGamePT.mPositionTaking;
 
-            //Render Master preset pt
-            PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+            if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
+                //Render Master preset pt
+                PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
-            //Render Agent Max PT
-            PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, casinoGamePT.aPositionTaking);
+                //Render Agent Max PT
+                PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, casinoGamePT.aPositionTaking);
 
-            //Render Agent Min PT
-            PT_RenderCombo(document.getElementById('pt_4'), 0, casinoGamePT.aPositionTaking, 0.01, casinoGamePT.minPositionTaking);
+                //Render Agent Min PT
+                PT_RenderCombo(document.getElementById('pt_4'), 0, casinoGamePT.aPositionTaking, 0.01, casinoGamePT.minPositionTaking);
 
-            //Render Agent Commission
-            Comm_RenderCombo(document.getElementById('comm_5'), 0, casinoGamePT.mAgentRollingRateUpline, 0.0005, casinoGamePT.agentRollingRate);
+                //Render Agent Commission
+                Comm_RenderCombo(document.getElementById('comm_5'), 0, casinoGamePT.mAgentRollingRateUpline, 0.0005, casinoGamePT.agentRollingRate);
+            }
+            else {
+                //Render Master preset pt
+                PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, casinoGamePT.sPositionTaking);
+
+                //Render Agent Max PT
+                PT_RenderCombo(document.getElementById('pt_2'), 0, (uplineMax - casinoGamePT.sPositionTaking), 0.01, casinoGamePT.sPositionTaking);
+            }
 
             //PT Renderring for Mini Game
             //PT values
-            var uplineMin = miniGamePT.minPositionTakingUpline;
-            var uplineMax = miniGamePT.maxPositionTakingUpline;
-            var uplinePreset = miniGamePT.mPositionTaking;
+            uplineMin = miniGamePT.minPositionTakingUpline;
+            uplineMax = miniGamePT.maxPositionTakingUpline;
+            uplinePreset = miniGamePT.mPositionTaking;
 
-            //Render Master preset pt
-            PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+            if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
+                //Render Master preset pt
+                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
-            //Render Agent Max PT
-            PT_RenderCombo(document.getElementById('pt_3_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.aPositionTaking);
+                //Render Agent Max PT
+                PT_RenderCombo(document.getElementById('pt_3_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.aPositionTaking);
 
-            //Render Agent Min PT
-            PT_RenderCombo(document.getElementById('pt_4_1'), 0, miniGamePT.aPositionTaking, 0.01, miniGamePT.minPositionTaking);
+                //Render Agent Min PT
+                PT_RenderCombo(document.getElementById('pt_4_1'), 0, miniGamePT.aPositionTaking, 0.01, miniGamePT.minPositionTaking);
 
-            //Render Agent Commission
-            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.mAgentRollingRateUpline, 0.0005, miniGamePT.agentRollingRate);
+                //Render Agent Commission
+                Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.mAgentRollingRateUpline, 0.0005, miniGamePT.agentRollingRate);
+            }
+            else {
+                //Render Master preset pt
+                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+
+                //Render Agent Max PT
+                PT_RenderCombo(document.getElementById('pt_2_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.aPositionTaking);
+            }
         }
         else {
             // Renders member PT
@@ -262,9 +296,9 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 //PT Renderring for Mini Game
                 //PT values
-                var uplineMin = miniGamePT.minPositionTakingUpline;
-                var uplineMax = miniGamePT.maxPositionTakingUpline;
-                var uplinePreset = miniGamePT.aPositionTaking;
+                uplineMin = miniGamePT.minPositionTakingUpline;
+                uplineMax = miniGamePT.maxPositionTakingUpline;
+                uplinePreset = miniGamePT.aPositionTaking;
 
                 //Render Master preset pt
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -277,7 +311,7 @@ Fanex.ExtAcc.Customer.Casino = {
 
     UpdateSetting: function (i) {
         var data = {
-            custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.CustIds.split(',')[i],
+            custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.Ids()[i],
             uplineId: this.uplineId
         };
     }
