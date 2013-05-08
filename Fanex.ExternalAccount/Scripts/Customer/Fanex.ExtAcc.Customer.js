@@ -1866,70 +1866,22 @@ Fanex.ExtAcc.Customer = {
     },
 
     UpdateMultipleDoubleComm: function (allow) {
-        var custids = [];
-        var divs = $('div');
+        var ret = this.IdsAndNames();
 
-        for (var i = 0; i < divs.length; i++) {
-            if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
-                custids.push(divs[i].id);
-            }
-        }
-
-        Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, 0);
+        Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(ret.Ids, allow, 0);
     },
 
     ShowEditMultiplePT: function () {
-        var custids = [];
-        var divs = $('div');
+        this.IdsAndNames();
 
-        Fanex.ExtAcc.Customer.Usernames = '';
-        Fanex.ExtAcc.Customer.CustIds = '';
-
-        for (var i = 0; i < divs.length; i++) {
-            if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
-                custids.push(divs[i].id);
-
-                Fanex.ExtAcc.Customer.CustIds += divs[i].id + ',';
-            }
-        }
-
-        Fanex.ExtAcc.Customer.UserId = parseInt(custids[0]);
-
-        if (custids.length == 1) {
-            var username = '';
-
-            for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
-                if (Fanex.ExtAcc.Customer.DataSource[i].custid == parseInt(custids[0])) {
-                    username = Fanex.ExtAcc.Customer.DataSource[i].username;
-
-                    break;
-                }
-            }
-
-            Fanex.ExtAcc.Customer.IsMultiple = false;
+        if (!Fanex.ExtAcc.Customer.IsMultiple)
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 700, false, false, 1);
-        }
-        else {
-            for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
-                var row = Fanex.ExtAcc.Customer.DataSource[i];
-
-                for (var j = 0; j < custids.length; j++) {
-                    if (custids[j] == row.custid) {
-                        Fanex.ExtAcc.Customer.Usernames += row.username + ', ';
-
-                        continue;
-                    }
-                }
-            }
-
-            Fanex.ExtAcc.Customer.IsMultiple = true;
+        else
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
-        }
     },
 
     ShowEditMultipleLiveCasino: function () {
-        var custids = [];
-        var divs = $('div');
+        this.IdsAndNames();
 
         var actionName = '';
         var levelText = '';
@@ -1954,53 +1906,39 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        Fanex.ExtAcc.Customer.Usernames = '';
-        Fanex.ExtAcc.Customer.CustIds = '';
-
-        for (var i = 0; i < divs.length; i++) {
-            if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
-                custids.push(divs[i].id);
-
-                Fanex.ExtAcc.Customer.CustIds += divs[i].id + ',';
-            }
-        }
-
-        Fanex.ExtAcc.Customer.UserId = parseInt(custids[0]);
-
-        if (custids.length == 1) {
-            var username = '';
-
-            for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
-                if (Fanex.ExtAcc.Customer.DataSource[i].custid == parseInt(custids[0])) {
-                    username = Fanex.ExtAcc.Customer.DataSource[i].username;
-
-                    break;
-                }
-            }
-
-            Fanex.ExtAcc.Customer.IsMultiple = false;
-
+        if (!Fanex.ExtAcc.Customer.IsMultiple)
             Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/' + actionName), levelText + 'Edit Live Casino Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 700, false, false, 1);
-        }
-        else {
-            for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
-                var row = Fanex.ExtAcc.Customer.DataSource[i];
-
-                for (var j = 0; j < custids.length; j++) {
-                    if (custids[j] == row.custid) {
-                        Fanex.ExtAcc.Customer.Usernames += row.username + ', ';
-
-                        continue;
-                    }
-                }
-            }
-
-            Fanex.ExtAcc.Customer.IsMultiple = true;
+        else
             Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/' + actionName), levelText + 'Edit Multiple Live Casino Setting', 888, 700, false, false, 1);
-        }
     },
 
     ShowSuperMasterEditMultiplePT: function () {
+        this.IdsAndNames();
+
+        if (!Fanex.ExtAcc.Customer.IsMultiple) {
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 600, false, false, 1);
+        }
+        else {
+            var levelText = Fanex.ExtAcc.Customer.isSuperEditMember ? 'Super ' : 'Master ';
+
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), levelText + 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
+        }
+    },
+
+    ToogleUsernames: function () {
+        if ($('#arrowUpDown').hasClass('collapse')) {
+            $('#arrowUpDown').attr('class', 'expand');
+            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
+            $('#names').attr('title', '');
+        }
+        else {
+            $('#arrowUpDown').attr('class', 'collapse');
+            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
+            $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
+        }
+    },
+
+    IdsAndNames: function () {
         var custids = [];
         var divs = $('div');
 
@@ -2029,7 +1967,6 @@ Fanex.ExtAcc.Customer = {
             }
 
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 600, false, false, 1);
         }
         else {
             for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
@@ -2044,24 +1981,10 @@ Fanex.ExtAcc.Customer = {
                 }
             }
 
-            var levelText = Fanex.ExtAcc.Customer.isSuperEditMember ? 'Super ' : 'Master ';
-
             Fanex.ExtAcc.Customer.IsMultiple = true;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), levelText + 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
         }
-    },
 
-    ToogleUsernames: function () {
-        if ($('#arrowUpDown').hasClass('collapse')) {
-            $('#arrowUpDown').attr('class', 'expand');
-            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-            $('#names').attr('title', '');
-        }
-        else {
-            $('#arrowUpDown').attr('class', 'collapse');
-            $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
-            $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-        }
+        return { Ids: this.Ids(), Names: this.Names() };
     },
 
     Ids: function () {
