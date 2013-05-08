@@ -190,14 +190,14 @@ Fanex.ExtAcc.Customer = {
         if (superSyncCasino) {
             if (syncCasino) {
                 if (disableCasino) {
-                    itemsMaster.casino = { name: "Casino", className: "iconDisableEdit", callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
+                    itemsMaster.casino = { name: "Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
                 }
                 else {
-                    itemsMaster.casino = { name: "Casino", className: "iconEnableEdit" , callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
+                    itemsMaster.casino = { name: "Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
                 }
             }
             else {
-                itemsMaster.casino = { name: "Casino", className: "iconUnsyncEdit" , callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
+                itemsMaster.casino = { name: "Casino", className: "iconUnsyncEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
             }
         }
 
@@ -263,7 +263,7 @@ Fanex.ExtAcc.Customer = {
             itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit" };
         }
         else {
-            itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+            itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
         }
 
         itemsMaster.separator2 = "-----";
@@ -308,14 +308,14 @@ Fanex.ExtAcc.Customer = {
         if (masterSyncCasino) {
             if (syncCasino) {
                 if (disableCasino) {
-                    itemsAgent.casino = { name: "Casino", className: "iconDisableEdit", callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
+                    itemsAgent.casino = { name: "Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
                 }
                 else {
-                    itemsAgent.casino = { name: "Casino", className: "iconEnableEdit" , callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
+                    itemsAgent.casino = { name: "Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
                 }
             }
             else {
-                itemsAgent.casino = { name: "Casino", className: "iconUnsyncEdit" , callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
+                itemsAgent.casino = { name: "Casino", className: "iconUnsyncEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1024, 700, false, null, 1); } };
             }
         }
 
@@ -411,14 +411,14 @@ Fanex.ExtAcc.Customer = {
         if (agentSyncCasino) {
             if (syncCasino) {
                 if (disableCasino) {
-                    itemsMember.casino = { name: "Casino", className: "iconDisableEdit", callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+                    itemsMember.casino = { name: "Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
                 }
                 else {
-                    itemsMember.casino = { name: "Casino", className: "iconEnableEdit" , callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+                    itemsMember.casino = { name: "Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
                 }
             }
             else {
-                itemsMember.casino = { name: "Casino", className: "iconUnsyncEdit" , callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+                itemsMember.casino = { name: "Casino", className: "iconUnsyncEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
             }
         }
 
@@ -443,7 +443,7 @@ Fanex.ExtAcc.Customer = {
         if (agentSyncLiveCasino) {
             if (syncLiveCasino) {
                 if (disableLiveCasino) {
-                    itemsMember.liveCasino = { name: "Live Casino", className: "iconDisableEdit", callback: function () {                        
+                    itemsMember.liveCasino = { name: "Live Casino", className: "iconDisableEdit", callback: function () {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMember'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
                     }
                     };
@@ -548,8 +548,8 @@ Fanex.ExtAcc.Customer = {
         .done(function (data) {
             if (!data.IsSuccess) {
                 $('#errMsg').show();
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());  
-                 Fanex.ExtAcc.UnBlockUI();              
+                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 var timeout = setTimeout(function () {
@@ -1068,8 +1068,8 @@ Fanex.ExtAcc.Customer = {
             }
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {                
-                Fanex.ExtAcc.UnBlockUI();    
+            if (result.ErrorCode && result.ErrorCode == '1') {
+                Fanex.ExtAcc.UnBlockUI();
                 alert(result.ErrorMessage);
                 Fanex.ExtAcc.Form.Close();
             }
@@ -1835,7 +1835,7 @@ Fanex.ExtAcc.Customer = {
                 menuItems.liveCasinoMaster = { name: "Master Edit Multiple Live Casino", className: "iconEnableEdit", callback: function () {
                     Fanex.ExtAcc.Customer.isSuperEditMember = false;
                     Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                    
+
                     Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino();
                 }
                 };
@@ -1865,7 +1865,7 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    UpdateMultipleDoubleComm: function (allow) {        
+    UpdateMultipleDoubleComm: function (allow) {
         var custids = [];
         var divs = $('div');
 
@@ -2063,4 +2063,12 @@ Fanex.ExtAcc.Customer = {
             $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
         }
     },
+
+    Ids: function () {
+        return this.CustIds.substring(0, this.CustIds.length - 1).split(',');
+    },
+
+    Names: function () {
+        return this.Usernames.substring(0, this.Usernames.length - 2).split(', ');
+    }
 }
