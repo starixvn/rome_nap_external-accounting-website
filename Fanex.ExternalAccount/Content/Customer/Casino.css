@@ -1,6 +1,6 @@
 ﻿.tableInfo
 {
-    border: 1px;
+    border: none;
     border-color: #ccc; 
     border-collapse: collapse; 
     border-style: none;
@@ -9,6 +9,10 @@
 .tableInfo tr
 {
     height: 26px;
+}
+td
+{
+    border: 1px solid #ccc;
 }
 .tdTitleLeft
 {
