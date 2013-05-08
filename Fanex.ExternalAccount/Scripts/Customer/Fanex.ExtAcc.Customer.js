@@ -2065,10 +2065,16 @@ Fanex.ExtAcc.Customer = {
     },
 
     Ids: function () {
-        return this.CustIds.substring(0, this.CustIds.length - 1).split(',');
+        if (this.CustIds.length > 0 && this.CustIds.indexOf(',') != -1)
+            return this.CustIds.substring(0, this.CustIds.length - 1).split(',');
+
+        return [];
     },
 
     Names: function () {
-        return this.Usernames.substring(0, this.Usernames.length - 2).split(', ');
+        if (this.Usernames.length > 0 && this.Usernames.indexOf(',') != -1)
+            return this.Usernames.substring(0, this.Usernames.length - 2).split(', ');
+
+        return [];
     }
 }
