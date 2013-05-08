@@ -1,0 +1,125 @@
+﻿@using Fanex.PTVirtualSports
+@using Fanex.ExternalAccount.Utilities
+@model Fanex.ExternalAccount.ViewModel.Customer.PTVirtualSportsModel
+@{
+    Layout = null;
+}
+<link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.css")"
+        rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Customer/VirtualSports.css")"
+        rel="stylesheet" type="text/css" />
+<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Languages.en.js")" type="text/javascript"></script>
+<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.js")" type="text/javascript"></script>
+<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BetType.js")" type="text/javascript"></script>
+<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.GridHeader.js")" type="text/javascript"></script>
+<script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BettingLimit.js")" type="text/javascript"></script>
+<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.knockout-2.0.0.js")" type="text/javascript"></script>
+<script src="@Url.Content(string.Format("~/VirtualSports/DataSource?custid={0}&roleid={1}&targetcustid={2}&targetroleid={3}", Model.CustId, Model.RoleId, Model.TargetCustId, Model.TargetRoleId))"
+        type="text/javascript"></script>
+<div id="errMsg" style="display: none;" class="errMsg">
+</div>
+<div class="minWidthCustomer">
+    <div class="customerInfo">
+        <div class="headerTab">
+            <div id="saveStatus" class="saveDiv">
+                <input id='btnSaveStatus' type="button" class="save" title="@ViewLang.SaveStatus" data-bind="click: saveStatus" />
+            </div>
+            <div>
+                @ViewLang.generalInformation
+            </div>
+        </div>
+        <div class="clearBlock">
+            <div class="customerInfoBlock1 b">
+                @ViewLang.Username
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: customer.userName"></span>
+            </div>
+            <div class="customerInfoBlock3 b">
+                @ViewLang.Nickname
+            </div>
+            <div class="customerInfoBlock4">
+                <span data-bind="text: customer.userName2"></span>
+            </div>
+        </div>
+        <div class="clearBlock">
+            <div class="customerInfoBlock1 b">
+                @ViewLang.Firstname
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: customer.firstName"></span>
+            </div>
+            <div class="customerInfoBlock3 b">
+                @ViewLang.Phone
+            </div>
+            <div class="customerInfoBlock4">
+                <span data-bind="text: customer.phone"></span>
+            </div>
+        </div>
+        <div class="clearBlock">
+            <div class="customerInfoBlock1 b">
+                @ViewLang.Lastname
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: customer.lastName"></span>
+            </div>
+            <div class="customerInfoBlock3 b">
+                @ViewLang.MobilePhone
+            </div>
+            <div class="customerInfoBlock4">
+                <span data-bind="text: customer.mobilePhone"></span>
+            </div>
+        </div>
+        <div class="clearBlock">
+            <div class="customerInfoBlock1 b">
+                @ViewLang.Fax
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: customer.fax"></span>
+            </div>
+            <div class="customerInfoBlock3 b" id="lblEnabled">
+                @ViewLang.Enable
+            </div>
+            <div class="customerInfoBlock4">
+                <div id="divEnabled" style="float: left; padding-right: 5px;">
+                    <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports" />
+                </div>
+                <div id="divDownline" class="b">
+                    <input id="chkDownline" type="checkbox" data-bind="checked: !customer.statusSetting.disableDownlinesVirtualSports" />@ViewLang.Downlines
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearBlock">
+    </div>
+    <div class="headerBetSetting">
+        <div id="saveBetSetting" class="saveDiv">
+            <input id='btnSaveBetSetting' type="button" class="save"
+                    title="@ViewLang.SaveBetSetting" data-bind="click: saveBettingLimit" />
+        </div>
+        <div>
+            @ViewLang.BetSetting
+        </div>
+    </div>
+    <div id="bettingLimitContainer">
+    </div>
+    <div class="clearBlock">
+    </div>
+    <div class="headerPositionTaking">
+        <div id="savePositionTaking" class="saveDiv">
+            <input id='btnSavePositionTaking' type="button" class="save"
+                    title="@ViewLang.SavePositionTaking" data-bind="click: savePositionTaking" />
+        </div>
+        <div>
+            @ViewLang.PositionTaking
+        </div>
+    </div>
+    <div id="positionTaking">
+    </div>
+    <div class="clearBlock">
+    </div>
+    <div style="float: right;">
+        <input id="btnSubmit" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.VirtualSports.js")" type="text/javascript"></script>
