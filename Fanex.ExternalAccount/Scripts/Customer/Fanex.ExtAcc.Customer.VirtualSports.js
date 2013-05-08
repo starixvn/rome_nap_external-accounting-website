@@ -331,7 +331,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                 }
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(ArrUserName + Fanex.ExtAcc.FormatErrorMessage(result));
+                $('#errMsg').html(Fanex.ExtAcc.FormatErrorMessage(ArrUserName, result));
 
                 id++;
                 if (id < object.custids.length) {

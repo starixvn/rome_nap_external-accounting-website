@@ -363,7 +363,7 @@ Fanex.ExtAcc.Customer = {
             itemsAgent.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit" };
         }
         else {
-            itemsAgent.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit" };
+            itemsAgent.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
         }
 
         itemsAgent.separator2 = "-----";
