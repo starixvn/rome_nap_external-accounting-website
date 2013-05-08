@@ -242,10 +242,10 @@ Fanex.ExtAcc.Customer.Casino = {
             }
             else {
                 //Render Master preset pt
-                PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, casinoGamePT.sPositionTaking);
+                PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, casinoGamePT.sPositionTakingUpline);
 
                 //Render Agent Max PT
-                PT_RenderCombo(document.getElementById('pt_2'), 0, (uplineMax - casinoGamePT.sPositionTaking), 0.01, casinoGamePT.sPositionTaking);
+                PT_RenderCombo(document.getElementById('pt_2'), 0, (uplineMax - casinoGamePT.sPositionTaking), 0.01, casinoGamePT.autoPositionTakingUpline);
             }
 
             //PT Renderring for Mini Game
@@ -268,11 +268,11 @@ Fanex.ExtAcc.Customer.Casino = {
                 Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.mAgentRollingRateUpline, 0.0005, miniGamePT.agentRollingRate);
             }
             else {
-                //Render Master preset pt
-                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
+                //Render Super preset pt
+                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, miniGamePT.sPositionTakingUpline);
 
-                //Render Agent Max PT
-                PT_RenderCombo(document.getElementById('pt_2_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.aPositionTaking);
+                //Render Super auto pt
+                PT_RenderCombo(document.getElementById('pt_2_1'), 0, (uplineMax - uplinePreset), 0.01, miniGamePT.autoPositionTakingUpline);
             }
         }
         else {

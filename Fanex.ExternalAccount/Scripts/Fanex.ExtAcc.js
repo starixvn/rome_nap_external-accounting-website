@@ -477,14 +477,14 @@ Fanex.ExtAcc = {
                 }
             }
 
-            return '<font color="Blue">' + username + ':</font><br />' + msg;
+            return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + msg;
         }
         else if (msgs instanceof Object) {
             if (msgs.errorCode == "" || msgs.errorCode == "0" || parseInt(msgs.errorCode) <= 0 || (msgs.isSuccess && msgs.isSuccess == true)) {
-                return '<font color="Blue">' + username + ':</font><br />' + '<font color="Blue">' + msgs.errorMessage + '</font><br />';
+                return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + '<font color="Blue">' + msgs.errorMessage + '</font><br />';
             }
             else {
-                return '<font color="Blue">' + username + ':</font><br />' + '<font color="Red">' + msgs.errorMessage + '</font><br />';
+                return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + '<font color="Red">' + msgs.errorMessage + '</font><br />';
             }
         }
 

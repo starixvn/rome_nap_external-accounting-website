@@ -261,7 +261,7 @@ Fanex.ExtAcc.Customer = {
             itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit" };
         }
         else {
-            itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function() { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
+            itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
         }
 
         itemsMaster.separator2 = "-----";
@@ -2008,5 +2008,31 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.isMasterEditMember = false;
         Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         Fanex.ExtAcc.Customer.IsFullInfo = false;
+    },
+
+    CustomerInfo: function () {
+        var uplineId = 0;
+        var uplineRoleId = 0;
+
+        switch (this.CurrentLevel) {
+            case this.Master:
+                uplineId = this.superId;
+                uplineRoleId = this.Super;
+                break;
+            case this.Agent:
+                uplineId = this.isSuperEditAgent ? this.superId : this.masterId;
+                uplineRoleId = this.isSuperEditAgent ? this.Super : this.Master;
+                break;
+            case this.Member:
+                uplineId = this.isSuperEditMember ? this.superId : this.isMasterEditMember ? this.masterId : this.agentId;
+                uplineRoleId = this.isSuperEditMember ? this.Super : this.isMasterEditMember ? this.Master : this.Agent;
+                break;
+            default:
+                uplineId = 0;
+                uplineRoleId = 5;
+                break;
+        }
+
+        return { id: this.UserId, roleId: this.CurrentLevel, uplineId: uplineId, uplineRoleId: uplineRoleId };
     }
 }
