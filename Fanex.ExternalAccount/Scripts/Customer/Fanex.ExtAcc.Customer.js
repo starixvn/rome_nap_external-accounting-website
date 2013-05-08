@@ -2010,7 +2010,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.IsFullInfo = false;
     },
 
-    UplineInfo: function () {
+    CustomerInfo: function () {
         var uplineId = 0;
         var uplineRoleId = 0;
 
@@ -2033,6 +2033,6 @@ Fanex.ExtAcc.Customer = {
                 break;
         }
 
-        return { uplineId: uplineId, uplineRoleId: uplineRoleId };
+        return { id: this.UserId, roleId: this.CurrentLevel, uplineId: uplineId, uplineRoleId: uplineRoleId };
     }
 }
