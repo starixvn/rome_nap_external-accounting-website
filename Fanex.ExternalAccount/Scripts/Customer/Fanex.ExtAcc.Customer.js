@@ -1872,16 +1872,16 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowEditMultiplePT: function () {
-        this.IdsAndNames();
+        var ret = this.IdsAndNames();
 
         if (!Fanex.ExtAcc.Customer.IsMultiple)
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 700, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 700, false, false, 1);
         else
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditMultiplePT'), 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
     },
 
     ShowEditMultipleLiveCasino: function () {
-        this.IdsAndNames();
+        var ret = this.IdsAndNames();
 
         var actionName = '';
         var levelText = '';
@@ -1907,16 +1907,16 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!Fanex.ExtAcc.Customer.IsMultiple)
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/' + actionName), levelText + 'Edit Live Casino Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 700, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/' + actionName), levelText + 'Edit Live Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 700, false, false, 1);
         else
             Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/' + actionName), levelText + 'Edit Multiple Live Casino Setting', 888, 700, false, false, 1);
     },
 
     ShowSuperMasterEditMultiplePT: function () {
-        this.IdsAndNames();
+        var ret = this.IdsAndNames();
 
         if (!Fanex.ExtAcc.Customer.IsMultiple) {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + username + '</font>', 888, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 600, false, false, 1);
         }
         else {
             var levelText = Fanex.ExtAcc.Customer.isSuperEditMember ? 'Super ' : 'Master ';
@@ -1956,11 +1956,9 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.UserId = parseInt(custids[0]);
 
         if (custids.length == 1) {
-            var username = '';
-
             for (var i = 0; i < Fanex.ExtAcc.Customer.DataSource.length; i++) {
                 if (Fanex.ExtAcc.Customer.DataSource[i].custid == parseInt(custids[0])) {
-                    username = Fanex.ExtAcc.Customer.DataSource[i].username;
+                    Fanex.ExtAcc.Customer.Usernames = Fanex.ExtAcc.Customer.DataSource[i].username + ', ';
 
                     break;
                 }
