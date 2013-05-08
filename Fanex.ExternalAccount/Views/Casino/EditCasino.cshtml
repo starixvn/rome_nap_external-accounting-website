@@ -52,7 +52,7 @@
         <tr>
             <td style="border-left: none" class="tdTitleRight">Member Max Transfer Credit</td>
             <td>
-                <div style="float: left; height: 24px"><input  style="height: 20px !important" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="13" type="text" data-bind="value: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.maxTransferCredit" /></div>
+                <div style="float: left; height: 24px"><input id="maxTransfer" style="height: 20px !important" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="13" type="text" data-bind="value: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.maxTransferCredit" /></div>
                 <div style="float: left; height: 24px;"><input style="margin-top: 5px" id="isAutoReset" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.isAutoReset" /><label for="isAutoReset">Daily auto reset limit (at 12 noon GMT+8)</label></div>
             </td>           
         </tr>
@@ -307,6 +307,46 @@
         <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
             <tr>
                 <td colspan="2" class="noneBorderL">&nbsp;</td>
+                <td class="ptTitle">Master Preset PT</td>
+                <td class="ptTitle noneBorderR">Agent Preset PT</td>
+            </tr>
+            <tr>
+                <td id="rowspanCasino" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT" id="mPT">                        
+                    </span>
+                </td>
+                <td class="noneBorderR C">
+                    <span class="spanPT" id="aPT">                        
+                    </span>
+                </td>
+            </tr>            
+        </table>
+        <table id="miniGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL noneBorderT">&nbsp;</td>
+                <td class="ptTitle noneBorderT">Master Preset PT</td>
+                <td class="ptTitle noneBorderR noneBorderT">Agent Preset PT</td>
+            </tr>
+            <tr>
+                <td id="rowspanMini" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT" id="mPT_1">                        
+                    </span>
+                </td>
+                <td class="noneBorderR C">
+                    <span class="spanPT" id="aPT_1">                        
+                    </span>
+                </td>
+            </tr>            
+        </table>
+    </div>
+    <div id="smember">
+        <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL">&nbsp;</td>
                 <td class="ptTitle">Super Preset PT</td>
                 <td class="ptTitle">Super Auto PT</td>
                 <td class="ptTitle">Master Preset PT</td>
@@ -340,7 +380,7 @@
                     <span class="spanPT" id="mPT">                        
                     </span>
                 </td>
-                <td class="noneBorderR">
+                <td class="noneBorderR C">
                     <span class="spanPT" id="aPT">                        
                     </span>
                 </td>
@@ -382,13 +422,65 @@
                     <span class="spanPT" id="mPT_1">                        
                     </span>
                 </td>
-                <td class="noneBorderR">
+                <td class="noneBorderR C">
                     <span class="spanPT" id="aPT_1">                        
                     </span>
                 </td>
             </tr>            
         </table>
     </div>
+    <div id="mmember">
+        <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL">&nbsp;</td>
+                <td class="ptTitle">Master Preset PT</td>
+                <td class="ptTitle noneBorderR">Agent Preset PT</td>
+            </tr>
+            <tr>
+                <td id="rowspanCasino" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1" name="pt_1" onchange="PTChanging(this, '')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR C">
+                    <span class="spanPT" id="aPT">                        
+                    </span>
+                </td>
+            </tr>            
+        </table>
+        <table id="miniGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
+            <tr>
+                <td colspan="2" class="noneBorderL noneBorderT">&nbsp;</td>
+                <td class="ptTitle noneBorderT">Master Preset PT</td>
+                <td class="ptTitle noneBorderR noneBorderT">Agent Preset PT</td>
+            </tr>
+            <tr>
+                <td id="rowspanMini" rowspan="1" class="gameTitle"></td>                
+                <td class="ptTitle R" style="width: 135px">Group Setting</td>
+                <td class="C">
+                    <span class="spanPT">
+                        <select id="pt_1_1" name="pt_1_1" onchange="PTChanging(this, '_1')" style="position: relative;">
+                        </select>
+                        <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_1_1', 1);" />
+                        <input type="button" class="btnPTUp" onclick="PT_Increase('pt_1_1', 1);" />
+                        <input type="button" class="btnPTSub" onclick="PT_Reduce('pt_1_1', 10);" />
+                        <input type="button" class="btnPTAdd" onclick="PT_Increase('pt_1_1', 10);" />
+                    </span>
+                </td>
+                <td class="noneBorderR C">
+                    <span class="spanPT" id="aPT_1">
+                    </span>
+                </td>
+            </tr>            
+        </table>
+    </div> 
     <div id="member">
         <table id="casinoGame"  class="tableInfo" border="1" cellpadding="1" cellspacing="2">
             <tr>
