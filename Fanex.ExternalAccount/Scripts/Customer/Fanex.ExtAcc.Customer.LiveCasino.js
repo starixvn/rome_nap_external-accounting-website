@@ -1081,10 +1081,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     UpdateGameSetting: function (data, idx) {
+        var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
+
         if (gameSettings.length > 0) {
             Fanex.ExtAcc.BlockUI();
 
-            var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
             Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
             for (var i = 0; i < gameSettings.length; i++) {
