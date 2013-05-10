@@ -447,20 +447,23 @@ Fanex.ExtAcc = {
 
     CheckNumber: function (evt, ele) {
         var charCode = (evt.which) ? evt.which : event.keyCode;
+        var ret = true;
 
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
+            ret = false;
         }
-        else {
-            if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
-                ele.value = ele.value.substring(1);
-            }
-            else if (ele && ele.value.length == 0) {
-                ele.value = '0';
-            }
 
-            return true;
+        if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
+            while (ele.value.indexOf('0') == 0 && ele.value.length > 1) {
+                ele.value = ele.value.substring(1);
+                console.log(ele.value);
+            }
         }
+        else if (ele && ele.value.length == 0) {
+            ele.value = '0';
+        }
+
+        return ret;
     },
 
     FormatErrorMessage: function (username, obj) {
