@@ -1081,69 +1081,70 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     UpdateGameSetting: function (data, idx) {
-        Fanex.ExtAcc.BlockUI();
+        if (gameSettings.length > 0) {
+            Fanex.ExtAcc.BlockUI();
 
-        var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
-        Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
+            var gameSettings = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting;
+            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
 
-        for (var i = 0; i < gameSettings.length; i++) {
-            var game = gameSettings[i];
-            var limits = game.bettingLimit;
-            var items = document.getElementsByName('gameRow' + i);
+            for (var i = 0; i < gameSettings.length; i++) {
+                var game = gameSettings[i];
+                var limits = game.bettingLimit;
+                var items = document.getElementsByName('gameRow' + i);
 
-            for (var j = 0; j < limits.length; j++) {
-                var limit = limits[j];
+                for (var j = 0; j < limits.length; j++) {
+                    var limit = limits[j];
 
-                limit.isSelected = items[j].checked;
+                    limit.isSelected = items[j].checked;
+                }
             }
-        }
 
-        var uplineId = 0;
+            var uplineId = 0;
 
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case 3:
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                break;
-            case 2:
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                break;
-            case 1:
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                break;
-            default:
-                break;
-        }
-
-        if (idx != null) {
-            Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[idx];
-        }
-
-        var data = {
-            uplineRoleId: Fanex.ExtAcc.Customer.CurrentLevel + 1,
-            custId: idx == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[idx]),
-            uplineId: uplineId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
-        };
-
-        $.ajax({
-            url: resolveClientUrl('LiveCasino/UpdateGameSettingPost'),
-            data: data,
-            type: 'post',
-            dataType: 'json'
-        })
-        .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
-                $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
-
-                Fanex.ExtAcc.UnBlockUI();
+            switch (Fanex.ExtAcc.Customer.CurrentLevel) {
+                case 3:
+                    uplineId = Fanex.ExtAcc.Customer.superId;
+                    break;
+                case 2:
+                    uplineId = Fanex.ExtAcc.Customer.masterId;
+                    break;
+                case 1:
+                    uplineId = Fanex.ExtAcc.Customer.agentId;
+                    break;
+                default:
+                    break;
             }
-            else {
-                var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
-                Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[idx] + '</font><br />' + error + '<br />';
 
-                if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                    var timeout = setTimeout(function () {
+            if (idx != null) {
+                Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.userName = Fanex.ExtAcc.Customer.Usernames.split(', ')[idx];
+            }
+
+            var data = {
+                uplineRoleId: Fanex.ExtAcc.Customer.CurrentLevel + 1,
+                custId: idx == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[idx]),
+                uplineId: uplineId,
+                customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            };
+
+            $.ajax({
+                url: resolveClientUrl('LiveCasino/UpdateGameSettingPost'),
+                data: data,
+                type: 'post',
+                dataType: 'json'
+            })
+            .success(function (result) {
+                if (result.ErrorCode && result.ErrorCode == '1') {
+                    $('#errMsg').show();
+                    $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+
+                    Fanex.ExtAcc.UnBlockUI();
+                }
+                else {
+                    var error = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(result);
+                    Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[idx] + '</font><br />' + error + '<br />';
+
+                    if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
+                                            var timeout = setTimeout(function () {
                         clearTimeout(timeout);
 
                         $('#errMsg').show();
@@ -1151,31 +1152,32 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
-                }
-                else {
-                    if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
-                        Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
                     }
                     else {
-                        Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
+                        if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
+                            Fanex.ExtAcc.Customer.LiveCasino.UpdateGameSetting(data, ++Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex);
+                        }
+                        else {
+                            Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex = 0;
 
-                        $('#errMsg').show();
-                        $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
+                            $('#errMsg').show();
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.LiveCasino.Error);
 
-                        Fanex.ExtAcc.Customer.LiveCasino.Error = '';
+                            Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                            Fanex.ExtAcc.UnBlockUI();
+                        }
                     }
                 }
-            }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') {
+            })
+            .error(function (data) {
+                        if (typeof console != 'undefined') {
                 console.log(data);
             }
 
-            Fanex.ExtAcc.UnBlockUI();
-        })
+                Fanex.ExtAcc.UnBlockUI();
+            })
+        }
     },
 
     RenderPtCommErrorMessage: function (data) {

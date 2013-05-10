@@ -456,7 +456,6 @@ Fanex.ExtAcc = {
         if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
             while (ele.value.indexOf('0') == 0 && ele.value.length > 1) {
                 ele.value = ele.value.substring(1);
-                console.log(ele.value);
             }
         }
         else if (ele && ele.value.length == 0) {
