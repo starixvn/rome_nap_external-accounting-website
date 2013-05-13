@@ -199,7 +199,7 @@ Fanex.ExtAcc.Customer.Casino = {
             PT_RenderCombo(document.getElementById('pt_4'), 0, casinoGamePT.maxPositionTaking, 0.01, casinoGamePT.minPositionTaking);
 
             //Render Master Commission
-            Comm_RenderCombo(document.getElementById('comm_5'), 0, casinoGamePT.sMAgentRollingRateUpline, 0.0005, casinoGamePT.mAgentRollingRate);
+            Comm_RenderCombo(document.getElementById('comm_5'), 0, this.customer.customerInfo.casinoSync ? casinoGamePT.sMAgentRollingRateUpline : casinoGamePT.sMAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? casinoGamePT.mAgentRollingRate : casinoGamePT.sMAgentRollingRate);
 
             //PT Renderring for Mini Game
             //PT values
@@ -228,7 +228,7 @@ Fanex.ExtAcc.Customer.Casino = {
             PT_RenderCombo(document.getElementById('pt_4_1'), 0, miniGamePT.maxPositionTaking, 0.01, miniGamePT.minPositionTaking);
 
             //Render Master Commission
-            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.sMAgentRollingRateUpline, 0.0005, miniGamePT.mAgentRollingRate);
+            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, this.customer.customerInfo.casinoSync ? miniGamePT.sMAgentRollingRateUpline : miniGamePT.sMAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? miniGamePT.mAgentRollingRate : miniGamePT.sMAgentRollingRate);
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             //PT Renderring for Casino Game
@@ -248,7 +248,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 PT_RenderCombo(document.getElementById('pt_4'), 0, casinoGamePT.aPositionTaking, 0.01, casinoGamePT.minPositionTaking);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_5'), 0, casinoGamePT.mAgentRollingRateUpline, 0.0005, casinoGamePT.agentRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_5'), 0, this.customer.customerInfo.casinoSync ? casinoGamePT.mAgentRollingRateUpline : casinoGamePT.mAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? casinoGamePT.agentRollingRate : casinoGamePT.mAgentRollingRate);
             }
             else {
                 $('#chkEnable').attr('disabled', true);
@@ -278,7 +278,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 PT_RenderCombo(document.getElementById('pt_4_1'), 0, miniGamePT.aPositionTaking, 0.01, miniGamePT.minPositionTaking);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_5_1'), 0, miniGamePT.mAgentRollingRateUpline, 0.0005, miniGamePT.agentRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_5_1'), 0, this.customer.customerInfo.casinoSync ? miniGamePT.mAgentRollingRateUpline : miniGamePT.mAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? miniGamePT.agentRollingRate : miniGamePT.mAgentRollingRate);
             }
             else {
                 $('#chkEnable').attr('disabled', true);
@@ -390,7 +390,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_2'), 0, casinoGamePT.agentRollingRateUpline, 0.0005, casinoGamePT.memberRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_2'), 0, this.customer.customerInfo.casinoSync ? casinoGamePT.agentRollingRateUpline : casinoGamePT.agentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? casinoGamePT.memberRollingRate : casinoGamePT.agentRollingRate);
 
                 //PT Renderring for Mini Game
                 //PT values
@@ -402,7 +402,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_2_1'), 0, miniGamePT.agentRollingRateUpline, 0.0005, miniGamePT.memberRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_2_1'), 0, this.customer.customerInfo.casinoSync ? miniGamePT.agentRollingRateUpline : miniGamePT.agentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? miniGamePT.memberRollingRate : miniGamePT.agentRollingRate);
             }
         }
     },
