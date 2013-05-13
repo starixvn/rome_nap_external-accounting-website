@@ -161,6 +161,14 @@ tr.rowDisabled td
 	height: 16px;
 	font-size: 12px;
 }
+.iconViewEdit
+{
+	background-image: url(../../Images/Content/view.png);
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	height: 16px;
+	font-size: 12px;
+}
 .headerTransferCondition
 {
 	background-color: #D4E3EB;

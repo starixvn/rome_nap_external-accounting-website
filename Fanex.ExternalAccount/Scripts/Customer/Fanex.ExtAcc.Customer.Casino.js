@@ -150,7 +150,7 @@ Fanex.ExtAcc.Customer.Casino = {
                         checked = 'checked="checked"';
                     }
 
-                    stakeLevels += '<input ' + checked + ' type="checkbox" id="' + result.miniGame[i].stakeLevels[j].stakeLevelID + '" />' + result.miniGame[i].stakeLevels[j].stakeLevelName;
+                    stakeLevels += '<input name="gameRow' + i + '" ' + checked + ' type="checkbox" id="' + result.miniGame[i].stakeLevels[j].stakeLevelID + '" />' + result.miniGame[i].stakeLevels[j].stakeLevelName;
                 }
 
                 var row = '<tr>' +
@@ -174,8 +174,8 @@ Fanex.ExtAcc.Customer.Casino = {
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             //PT Renderring for Casino Game
             //PT values
-            var uplineMin = casinoGamePT.minPositionTakingUpline;
-            var uplineMax = casinoGamePT.maxPositionTakingUpline;
+            var uplineMin = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking;
+            var uplineMax = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
             var uplinePreset = casinoGamePT.sPositionTaking;
             var uplineAutoPreset = casinoGamePT.autoPositionTaking;
 
@@ -203,8 +203,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
             //PT Renderring for Mini Game
             //PT values
-            uplineMin = miniGamePT.minPositionTakingUpline;
-            uplineMax = miniGamePT.maxPositionTakingUpline;
+            uplineMin = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking;
+            uplineMax = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
             uplinePreset = miniGamePT.sPositionTaking;
             uplineAutoPreset = miniGamePT.autoPositionTaking;
 
@@ -233,8 +233,8 @@ Fanex.ExtAcc.Customer.Casino = {
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             //PT Renderring for Casino Game
             //PT values
-            var uplineMin = casinoGamePT.minPositionTakingUpline;
-            var uplineMax = casinoGamePT.maxPositionTakingUpline;
+            var uplineMin = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking;
+            var uplineMax = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
             var uplinePreset = casinoGamePT.mPositionTaking;
 
             if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
@@ -263,8 +263,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
             //PT Renderring for Mini Game
             //PT values
-            uplineMin = miniGamePT.minPositionTakingUpline;
-            uplineMax = miniGamePT.maxPositionTakingUpline;
+            uplineMin = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking;
+            uplineMax = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
             uplinePreset = miniGamePT.mPositionTaking;
 
             if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
@@ -302,12 +302,13 @@ Fanex.ExtAcc.Customer.Casino = {
                 var uplineMax = casinoGamePT.superSPositionTaking - casinoGamePT.mPositionTaking - casinoGamePT.aPositionTaking;
                 var uplinePreset = casinoGamePT.sPositionTaking;
                 var uplineAutoPreset = casinoGamePT.autoPositionTaking;
+                var max = casinoGamePT.superSPositionTaking;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render super auto preset pt
-                PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+                PT_RenderCombo(document.getElementById('pt_2'), uplineMin, max, 0.01, uplineAutoPreset);
                 if (!casinoGamePT.isAutoPositionTaking) {
                     $('#pt_2').attr('disabled', 'disabled');
                 }
@@ -328,12 +329,13 @@ Fanex.ExtAcc.Customer.Casino = {
                 uplineMax = miniGamePT.superSPositionTaking - miniGamePT.mPositionTaking - miniGamePT.aPositionTaking;
                 uplinePreset = miniGamePT.sPositionTaking;
                 uplineAutoPreset = miniGamePT.autoPositionTaking;
+                max = miniGamePT.superSPositionTaking;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render super auto preset pt
-                PT_RenderCombo(document.getElementById('pt_2_1'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+                PT_RenderCombo(document.getElementById('pt_2_1'), uplineMin, max, 0.01, uplineAutoPreset);
                 if (!miniGamePT.isAutoPositionTaking) {
                     $('#pt_2_1').attr('disabled', 'disabled');
                 }
@@ -356,23 +358,23 @@ Fanex.ExtAcc.Customer.Casino = {
                 //PT Renderring for Casino Game
                 //PT values
                 var uplineMin = 0;
-                var uplineMax = casinoGamePT.superSPositionTaking - casinoGamePT.sPositionTaking - casinoGamePT.mPositionTakingUpline;
+                var uplineMax = casinoGamePT.superSPositionTaking - casinoGamePT.sPositionTaking - casinoGamePT.aPositionTaking;
                 var uplinePreset = casinoGamePT.mPositionTaking;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
-                
+
                 //Render agent preset PT
                 $('#aPT').html(casinoGamePT.aPositionTaking);
 
                 //PT Renderring for Mini Game
                 //PT values
                 uplineMin = 0;
-                uplineMax = miniGamePT.superSPositionTaking - miniGamePT.sPositionTaking - miniGamePT.mPositionTakingUpline;
+                uplineMax = miniGamePT.superSPositionTaking - miniGamePT.sPositionTaking - miniGamePT.aPositionTaking;
                 uplinePreset = miniGamePT.mPositionTaking;
 
                 //Render Super preset pt
-                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);                
+                PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render agent preset PT
                 $('#aPT_1').html(miniGamePT.aPositionTaking);
@@ -380,8 +382,8 @@ Fanex.ExtAcc.Customer.Casino = {
             else {
                 //PT Renderring for Casino Game
                 //PT values
-                var uplineMin = casinoGamePT.minPositionTakingUpline;
-                var uplineMax = casinoGamePT.maxPositionTakingUpline;
+                var uplineMin = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking;
+                var uplineMax = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
                 var uplinePreset = casinoGamePT.aPositionTaking;
 
                 //Render Master preset pt
@@ -392,8 +394,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 //PT Renderring for Mini Game
                 //PT values
-                uplineMin = miniGamePT.minPositionTakingUpline;
-                uplineMax = miniGamePT.maxPositionTakingUpline;
+                uplineMin = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking;
+                uplineMax = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
                 uplinePreset = miniGamePT.aPositionTaking;
 
                 //Render Master preset pt
