@@ -101,8 +101,8 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                 customer.credit = String.prototype.FormatNumber(customer.credit);
                 customer.memberMaxCredit = String.prototype.FormatNumber(customer.memberMaxCredit);
 
-                this.saveCustomer = function () { 
-                    $('#windowPopup').scrollTop(0);
+                this.saveCustomer = function () {
+                    $('#contentSplitter').scrollTop(0);
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
 
