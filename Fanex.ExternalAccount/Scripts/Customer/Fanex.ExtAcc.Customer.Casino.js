@@ -82,7 +82,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 $('#sagent').remove();
 
                 break;
-        }        
+        }
 
         $.ajax({
             url: resolveClientUrl('Casino/EditCasinoPost'),
@@ -173,6 +173,14 @@ Fanex.ExtAcc.Customer.Casino = {
 
             $('#rowspanMini').attr('rowspan', result.miniGame.length + 1);
             $('#rowspanMini').html(result.pts[1].codeName);
+        }
+
+        if (Fanex.ExtAcc.Customer.isSuperEditAgent) {
+            var checkboxes = $('input[type=checkbox]');
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].disabled = true;
+            }
         }
     },
 
