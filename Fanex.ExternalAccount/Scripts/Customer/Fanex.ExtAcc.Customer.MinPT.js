@@ -38,11 +38,12 @@ Fanex.ExtAcc.Customer.MinPT = {
             ptGrid.Render(document.getElementById('ptContainer'));
 
             var CustomerModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     // EscapeHTML String
                      Fanex.ExtAcc.BlockUI();
 
-                   customer.firstName = customer.firstName.escapeHtml();
+                    customer.firstName = customer.firstName.escapeHtml();
                     customer.lastName = customer.lastName.escapeHtml();
                     customer.phone = customer.phone.escapeHtml();
                     customer.mobilePhone = customer.mobilePhone.escapeHtml();

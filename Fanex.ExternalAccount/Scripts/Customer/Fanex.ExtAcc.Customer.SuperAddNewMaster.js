@@ -102,7 +102,8 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                 customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
                 customer.credit = String.prototype.FormatNumber(customer.credit);
 
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
 

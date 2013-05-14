@@ -113,7 +113,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
@@ -325,7 +326,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = !isChecked ? $('#pt_1').val() : 0;
@@ -519,7 +521,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     // Set PT values
                     Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = $('#pt_1').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.ptSetting.comm = $('#comm_2').val();
@@ -672,7 +675,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     if (document.getElementById('pt_1'))
@@ -825,7 +829,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     if (document.getElementById('pt_1'))

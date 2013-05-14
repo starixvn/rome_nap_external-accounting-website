@@ -99,7 +99,8 @@ Fanex.ExtAcc.Customer.Casino = {
             Fanex.ExtAcc.Customer.Casino.RenderPT(result.pts);
 
             Fanex.ExtAcc.Customer.Casino.CasinoModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     alert('Submit');
                 }
             }

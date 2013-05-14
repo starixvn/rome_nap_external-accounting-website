@@ -49,27 +49,32 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         customer.userNames = Fanex.ExtAcc.Customer.VirtualSports.usernames.join(", ");
         var updateType;
 
-        this.saveCustomer = function () {
+        this.saveCustomer = function () { 
+            $('#windowPopup').scrollTop(0);
             updateType = Fanex.ExtAcc.Customer.VirtualSports.UpdateType.All;
             this.save.call(Fanex.ExtAcc.Customer.VirtualSports);
         }
 
         this.saveStatus = function () {
+            $('#windowPopup').scrollTop(0);
             updateType = Fanex.ExtAcc.Customer.VirtualSports.UpdateType.Status;
             this.save.call(Fanex.ExtAcc.Customer.VirtualSports);
         }
 
         this.saveBettingLimit = function () {
+            $('#windowPopup').scrollTop(0);
             updateType = Fanex.ExtAcc.Customer.VirtualSports.UpdateType.BetSetting;
             this.save.call(Fanex.ExtAcc.Customer.VirtualSports);
         }
 
         this.savePositionTaking = function () {
+            $('#windowPopup').scrollTop(0);
             updateType = Fanex.ExtAcc.Customer.VirtualSports.UpdateType.PositionTaking;
             this.save.call(Fanex.ExtAcc.Customer.VirtualSports);
         }
 
         this.save = function () {
+            $('#windowPopup').scrollTop(0);
             this.updateType = updateType;
             this.newCustomer = Fanex.copy(this.oldCustomer);
             if (this.ptGrid != null) {
@@ -342,7 +347,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                         object.oldCustomer = object.newCustomer;
                     }
                     $.unblockUI(document);
-                    window.scroll(0, 0);
+                    $('#windowPopup').scrollTop(0);
                 }
             },
             error: function () {

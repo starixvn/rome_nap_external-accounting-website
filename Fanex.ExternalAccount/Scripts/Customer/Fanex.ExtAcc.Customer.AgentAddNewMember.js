@@ -96,7 +96,8 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 customer.credit = String.prototype.FormatNumber(customer.credit);
                 customer.agentMaxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
 
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
 

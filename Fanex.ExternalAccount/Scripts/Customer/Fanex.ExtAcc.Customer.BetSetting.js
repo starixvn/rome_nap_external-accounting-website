@@ -39,7 +39,8 @@ Fanex.ExtAcc.Customer.BetSetting = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     if (!bettingLimit.Validate()) return;
 
                     Fanex.ExtAcc.BlockUI();
@@ -114,7 +115,8 @@ Fanex.ExtAcc.Customer.BetSetting = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     if (!bettingLimit.Validate()) return;
 
                     Fanex.ExtAcc.BlockUI();
@@ -187,7 +189,8 @@ Fanex.ExtAcc.Customer.BetSetting = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () {
+                this.saveCustomer = function () { 
+                    $('#windowPopup').scrollTop(0);
                     if (!bettingLimit.Validate()) return;
 
                     Fanex.ExtAcc.BlockUI();
