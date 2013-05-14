@@ -49,26 +49,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         if (Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
             $('#custInfo').remove();
 
-            $('#arrowUpDown').bind('click', function () {
-                Fanex.ExtAcc.Customer.ToogleUsernames();
-            });
-
-            $('#names').css('display', 'block');
-
-            if (Fanex.ExtAcc.Customer.Usernames.length < 98) {
-                $('#names').css('cursor', 'default');
-                $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-                $('#arrowUpDown').css('display', 'none');
-            }
-            else {
-                $('#names').css('cursor', 'pointer');
-                $('#names').bind('click', function () {
-                    Fanex.ExtAcc.Customer.ToogleUsernames();
-                });
-                $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
-                $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-                $('#arrowUpDown').css('display', 'block');
-            }
+            Fanex.ExtAcc.Customer.ProcessDisplayMultiple();
         }
 
         var data = new Object();
@@ -1145,14 +1126,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[idx] + '</font><br />' + error + '<br />';
 
                     if (!Fanex.ExtAcc.Customer.LiveCasino.IsMultiple) {
-                                            var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
 
-                        $('#errMsg').show();
-                        $('#errMsg').html(error);
+                            $('#errMsg').show();
+                            $('#errMsg').html(error);
 
-                        Fanex.ExtAcc.UnBlockUI();
-                    }, 2000);
+                            Fanex.ExtAcc.UnBlockUI();
+                        }, 2000);
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.LiveCasino.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 2) {
@@ -1172,9 +1153,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 }
             })
             .error(function (data) {
-                        if (typeof console != 'undefined') {
-                console.log(data);
-            }
+                if (typeof console != 'undefined') {
+                    console.log(data);
+                }
 
                 Fanex.ExtAcc.UnBlockUI();
             })

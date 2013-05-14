@@ -115,26 +115,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
             $('#custInfo').remove();
 
-            $('#arrowUpDown').bind('click', function () {
-                Fanex.ExtAcc.Customer.ToogleUsernames();
-            });
-
-            $('#names').css('display', 'block');
-
-            if (Fanex.ExtAcc.Customer.Usernames.length < 98) {
-                $('#names').css('cursor', 'default');
-                $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-                $('#arrowUpDown').css('display', 'none');
-            }
-            else {
-                $('#names').css('cursor', 'pointer');
-                $('#names').bind('click', function () {
-                    Fanex.ExtAcc.Customer.ToogleUsernames();
-                });
-                $('#names').html(Fanex.ExtAcc.Customer.Usernames.substring(0, 98) + '...');
-                $('#names').attr('title', Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2));
-                $('#arrowUpDown').css('display', 'block');
-            }
+            Fanex.ExtAcc.Customer.ProcessDisplayMultiple();
 
             // Render status, comm, bet setting
             if (Fanex.ExtAcc.Customer.isSuperEditMember == true || Fanex.ExtAcc.Customer.isMasterEditMember == true) {

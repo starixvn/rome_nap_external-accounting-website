@@ -8,6 +8,7 @@ Fanex.ExtAcc.Customer.Casino = {
     customer: null,
     colspan: 1,
     uplineId: Fanex.ExtAcc.Customer.CustomerInfo().uplineId,
+    IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
 
     Init: function () {
         if (!Fanex.ExtAcc.Customer.IsMultiple) {
@@ -19,6 +20,15 @@ Fanex.ExtAcc.Customer.Casino = {
 
     LoadData: function () {
         Fanex.ExtAcc.BlockUI();
+
+        if (this.IsMultiple) {
+            $('#custInfo').remove();
+            Fanex.ExtAcc.Customer.ProcessDisplayMultiple();
+        }
+        else {
+            $('#arrowUpDown').remove();
+            $('#statusInfo').remove();
+        }
 
         switch (Fanex.ExtAcc.Customer.CurrentLevel) {
             case Fanex.ExtAcc.Customer.Master:
@@ -72,7 +82,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 $('#sagent').remove();
 
                 break;
-        }
+        }        
 
         $.ajax({
             url: resolveClientUrl('Casino/EditCasinoPost'),

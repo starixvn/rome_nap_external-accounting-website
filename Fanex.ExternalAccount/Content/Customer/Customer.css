@@ -264,3 +264,7 @@ span.spanPT
 	overflow: hidden;
 	vertical-align: middle;
 }
+.statusInfo
+{
+    border: 1px solid #ccc; border-left: none; border-right: none; font-weight: bold; height: 26px; vertical-align: middle; text-align: right
+}

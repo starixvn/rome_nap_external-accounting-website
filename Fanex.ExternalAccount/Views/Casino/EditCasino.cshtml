@@ -9,9 +9,10 @@
 <div style="text-align: right">
     <input class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
-<div id="custInfo" style="border: 1px solid #ccc; border-bottom: none">
+<div style="border: 1px solid #ccc; border-bottom: none">
     <div class="headerPositionTaking noneBorderLR" style="border-bottom: 0;">
         General Information</div>
+    <div id="custInfo">
     <table border="1" cellpadding="1" cellspacing="2" class="tableInfo">
         <tr>
             <td class="tdTitleLeft">Username</td>
@@ -42,6 +43,13 @@
             </td>
         </tr>         
     </table>
+    </div>
+    <div id="statusInfo" class="statusInfo">Enable Casino:
+        <span style="font-weight: normal">
+            <input type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled && Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync" style="margin-top: 5px" />
+            <label for="chkEnable" id="downline"></label>
+        </span>
+    </div>
     <div style="border-bottom: none" class="headerPositionTaking noneBorderLR">
         Bet Setting</div>
     <table border="1" cellpadding="1" cellspacing="2" class="tableInfo">
