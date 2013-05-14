@@ -1360,7 +1360,7 @@ Fanex.ExtAcc.Customer = {
                 }]
 
         options = {
-            columns: Fanex.ExtAcc.Customer.DataFields,
+            columns: this.DataFields,
             bodyRows: bodyRows,
             gridExpandHeight: 165,
             numberOfFrozenColumn: 6,
@@ -1454,7 +1454,7 @@ Fanex.ExtAcc.Customer = {
             ]
 
         options = {
-            columns: Fanex.ExtAcc.Customer.DataFields,
+            columns: this.DataFields,
             bodyRows: bodyRows,
             gridExpandHeight: 165,
             numberOfFrozenColumn: 6,
@@ -1553,7 +1553,7 @@ Fanex.ExtAcc.Customer = {
             ]
 
         options = {
-            columns: Fanex.ExtAcc.Customer.DataFields,
+            columns: this.DataFields,
             bodyRows: bodyRows,
             gridExpandHeight: 165,
             numberOfFrozenColumn: 6,
@@ -1655,7 +1655,7 @@ Fanex.ExtAcc.Customer = {
             ]
 
         options = {
-            columns: Fanex.ExtAcc.Customer.DataFields,
+            columns: this.DataFields,
             bodyRows: bodyRows,
             gridExpandHeight: 165,
             numberOfFrozenColumn: 6,
@@ -1757,7 +1757,7 @@ Fanex.ExtAcc.Customer = {
             };
 
             if (this.masterSyncCasino) {
-                menuItems.casino = { name: "Edit Multiple Casino", className: "iconEnableEdit" };
+                menuItems.casino = { name: "Edit Multiple Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultipleCasino(); } };
             }
 
             if (this.masterSyncBingo) {
@@ -1796,7 +1796,9 @@ Fanex.ExtAcc.Customer = {
             };
 
             if (this.agentSyncCasino) {
-                menuItems.casino = { name: "Edit Multiple Casino", className: "iconEnableEdit" };
+                menuItems.casino = { name: "Edit Multiple Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultipleCasino(); } };
+                menuItems.scasino = { name: "Super Edit Multiple Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Customer.ShowEditMultipleCasino(); } };
+                menuItems.mcasino = { name: "Master Edit Multiple Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Customer.ShowEditMultipleCasino(); } };
             }
 
             if (this.agentSyncBingo) {
@@ -1921,11 +1923,19 @@ Fanex.ExtAcc.Customer = {
     ShowEditMultipleCasino: function () {
         var ret = this.IdsAndNames();
         var data = this.CustomerInfo();
+        var levelText = '';
+
+        if (this.isSuperEditMember) {
+            levelText = 'Super ';
+        }
+        else if (this.isMasterEditMember) {
+            levelText = 'Master ';
+        }
 
         if (!this.IsMultiple)
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino'), 'Edit Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1024, 700, false, false, 1, null, data);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino'), levelText + 'Edit Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1024, 700, false, false, 1, null, data);
         else
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino'), 'Edit Multiple Casino Setting', 1024, 700, false, false, 1, null, data);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino'), levelText + 'Edit Multiple Casino Setting', 1024, 700, false, false, 1, null, data);
     },
 
     ToogleUsernames: function () {
