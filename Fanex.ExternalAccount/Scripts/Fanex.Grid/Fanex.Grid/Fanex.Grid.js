@@ -574,7 +574,7 @@
                                     Sort: currentRow.Columns[colIndex].Sort,
                                     CellColumnName: currentCol.Name,
                                     HeaderText: currentCol.HeaderText,
-                                    CustomAttr: me.columnsHastable[currentCol.Name].CustomAttr,
+                                    CustomAttr: (currentGroupHeader.length > 1 && rowIndex == (currentGroupHeader.length - 1)) ? me.columnsHastable[currentCol.Name].CustomAttr : undefined,
                                     CustomHeaderRender: currentCol.CustomHeaderRender || me.columnsHastable[currentCol.Name].CustomHeaderRender,
                                     SortDirection: currentRow.Columns[colIndex].SortDirection || '',
                                     CanShowHide: (me.columnsHastable[currentCol.Name].CanShowHide && (!options.showColumnsShowHide) && showHeaderMergeCol),
