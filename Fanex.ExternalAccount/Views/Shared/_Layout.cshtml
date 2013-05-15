@@ -57,7 +57,7 @@
                                     <div class="sf-menu divLI" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</div>
                                 </li>
                                 <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true)">@ViewLang.ResetPassword</div>
+                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</div>
                                 </li>
                             </ul>
                         </li>

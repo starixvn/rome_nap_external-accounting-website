@@ -40,8 +40,17 @@ String.prototype.decodeHtml = function () {
     return $("<div/>").html(str).text();
 };
 
+String.prototype.encodeHtml = function(){
+    var str = this;
+    return $('<div/>').text(str).html();    
+};
+
 Fanex.decodeHtml = function (str) {
     return $("<div/>").html(str).text();
+};
+
+Fanex.encodeHtml = function(str){
+    return $('<div/>').text(str).html();
 };
 
 String.prototype.formatErrorMessage = function () {
@@ -185,7 +194,7 @@ Fanex.ExtAcc = {
     InitSuggestion: function () {
         var groupName = $('#selectedGroupName').html();
 
-        $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + $("#txtUserName").val() + "&groupname=" + groupName))
+        $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($("#txtUserName").val()) + "&groupname=" + groupName))
         .success(function (data) {
             var source = [];
 

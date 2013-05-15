@@ -136,7 +136,7 @@ Fanex.ExtAcc.Customer = {
         data.enabled = enabled;
         data.closed = closed;
         data.suspended = suspended;
-        data.username = $('#txtUserName').val();
+        data.username = Fanex.encodeHtml($('#txtUserName').val());
 
         return data;
     },
@@ -160,7 +160,7 @@ Fanex.ExtAcc.Customer = {
             selector: '.editInfo',
             items: {
                 editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } }
+                changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -252,7 +252,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsMaster.separator2 = "-----";
         itemsMaster.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
-        itemsMaster.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
+        itemsMaster.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } };
 
         if (transferCondition == false) {
             itemsMaster.transferCondition = { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } };
@@ -353,7 +353,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsAgent.separator2 = "-----";
         itemsAgent.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
-        itemsAgent.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
+        itemsAgent.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } };
 
         if (transferCondition == false) {
             itemsAgent.transferCondition = { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } };
@@ -487,7 +487,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsMember.separator2 = "-----";
         itemsMember.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
-        itemsMember.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password', 420, 230, false); } };
+        itemsMember.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } };
 
         $.contextMenu('destroy');
         $.contextMenu({
@@ -612,13 +612,13 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
                     { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
-                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center' },
-                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of 1x2 bettype" ', },
+                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' },
+                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center', CustomAttr: ' title="Number Game" ' },
                     { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
@@ -717,13 +717,13 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
                     { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
-                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center' },
-                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of 1x2 bettype" ', },
+                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' },
+                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center', CustomAttr: ' title="Number Game" ' },
                     { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
@@ -822,13 +822,13 @@ Fanex.ExtAcc.Customer = {
                     },
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
                     { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
-                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center' },
-                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center' },
-                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center' },
+                    { HeaderText: 'Group A', Name: 'groupa', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of 1x2 bettype" ', },
+                    { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' },
+                    { HeaderText: 'Game', Name: 'discountnumber', Width: 60, CellAlign: 'center', CustomAttr: ' title="Number Game" ' },
                     { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {
@@ -925,14 +925,14 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'First Name', Name: 'firstname', Width: 120 },
                     { HeaderText: 'Last Name', Name: 'lastname', Width: 120 },
                     { HeaderText: 'User Group', Name: 'ugroup', CellAlign: 'center', Width: 50 },
-                    { HeaderText: 'Group', Name: 'discount', CellAlign: 'center', Width: 60 },
-                    { HeaderText: '1X2', Name: 'discount1x2', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Others', Name: 'discountcs', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Game', Name: 'discountnumber', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Group', Name: 'playerdiscount', CellAlign: 'center', Width: 60 },
-                    { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60 },
-                    { HeaderText: 'Game', Name: 'playerdiscountnumber', CellAlign: 'center', Width: 60 },
+                    { HeaderText: 'Group', Name: 'discount', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: '1X2', Name: 'discount1x2', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of 1x2 bettype" ' },
+                    { HeaderText: 'Others', Name: 'discountcs', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all other bettypes" ' },
+                    { HeaderText: 'Game', Name: 'discountnumber', CellAlign: 'center', Width: 60, CustomAttr: ' title="Number Game" ' },
+                    { HeaderText: 'Group', Name: 'playerdiscount', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' },
+                    { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of 1x2 bettype" ' },
+                    { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all other bettypes" ' },
+                    { HeaderText: 'Game', Name: 'playerdiscountnumber', CellAlign: 'center', Width: 60, CustomAttr: ' title="Number Game" ' },
                     { HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' },
                     { HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
                         CustomCellRender: function (cell) {

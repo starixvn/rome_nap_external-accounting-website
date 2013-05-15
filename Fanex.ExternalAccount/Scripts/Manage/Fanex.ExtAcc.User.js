@@ -70,7 +70,7 @@ Fanex.ExtAcc.User = {
                 CustomCellRender: function (cell) {
                     var style = "menuResetPwd";
                     var userId = cell.Value.UserID;
-                    var onclick = "javascript:Fanex.ExtAcc.User.ShowResetPwd(" + userId + ")";
+                    var onclick = "javascript:Fanex.ExtAcc.User.ShowResetPwd(" + userId + ", false, '" + cell.Value.Username + "')";
 
                     return '<div class="' + style + '" onclick="' + onclick + '"></div>';
                 }
@@ -105,12 +105,13 @@ Fanex.ExtAcc.User = {
         }
     },
 
-    RenderGrid: function () {
+    RenderGrid: function (params) {
         try {
             $.ajax({
                 url: Fanex.ExtAcc.User.URL,
                 dataType: 'json',
-                type: 'post'
+                type: 'post',
+                data: params
             })
             .success(function (data) {
                 Fanex.ExtAcc.User.DataSource = data;
@@ -218,7 +219,7 @@ Fanex.ExtAcc.User = {
             });
     },
 
-    ShowResetPwd: function (userId, isOwner) {
+    ShowResetPwd: function (userId, isOwner, username) {
         Fanex.ExtAcc.User.UserId = userId;
 
         var titles = $.parseJSON(menuTitles);
@@ -226,9 +227,9 @@ Fanex.ExtAcc.User = {
 
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('User/' + (isOwner ? 'ResetPasswordOwner' : 'ResetPassword') + '/' + userId),
-            title,
-            420,
-            230,
+            title + ': <font color="#6dcff6">' + username + '</font>',
+            415,
+            190,
             false
             );
     },
@@ -450,10 +451,11 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) { console.log($('#errMsg'));
+            if (!data.IsSuccess) {
+                console.log($('#errMsg'));
                 $('table tr td div#errMsg').css('display', 'block');
                 $('table tr td div#errMsg').html(data.ErrorMessage.formatErrorMessage());
-               
+
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
@@ -494,10 +496,12 @@ Fanex.ExtAcc.User = {
             groupId = $('#GroupIDs').val() == '-1' ? null : $('#GroupIDs').val();
         }
 
-        Fanex.ExtAcc.User.URL = resolveClientUrl("User/UserListPost/?username=" + username + "&groupId=" + groupId);
+        var params = { username: username.encodeHtml(), groupId: groupId };
+
+        Fanex.ExtAcc.User.URL = resolveClientUrl("User/UserListPost");
 
         if (this.dataTexts) {
-            this.RenderGrid();
+            this.RenderGrid(params);
         }
     }
 };
