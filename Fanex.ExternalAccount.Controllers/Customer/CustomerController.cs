@@ -409,7 +409,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = this.superService.ConfigDoubleComm(
@@ -431,7 +431,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
         public ActionResult EditInfo(int custId)
         {
             var model = this.customerService.UserInfo(custId);
@@ -445,7 +445,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
         public ActionResult EditInfoPost(int custId, string firstName, string lastName, string homePhone, string mobilePhone, string email, string fax)
         {
             var result = this.customerService.EditUserInfo(custId, firstName, lastName, homePhone, mobilePhone, email, fax, CurrentContext.Ip4Address, CurrentSession.CustId, 0, "E");
@@ -453,20 +453,20 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id)
         {
             ViewBag.RoleId = id;
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
         public ActionResult TransferCondition()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
             var model = this.masterService.GetTransferOption(custId);
@@ -474,7 +474,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
             var result = this.masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
@@ -482,14 +482,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
         public ActionResult ResetPassword(int custId)
         {
             var user = this.customerService.UserInfo(custId);
             return this.PartialViewBase(user);
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
         public ActionResult UpdatePassword(int custId, string password)
         {
             var result = this.customerService.ResetPassword(
