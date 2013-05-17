@@ -73,7 +73,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     return;
                 }
 
-                if (!this.FunctionAuthorization(currentSession.UserId, (string)this.Function.ToString(), request))
+                if (!this.FunctionAuthorization(currentSession.UserId, this.Function, request))
                 {
                     this.CloseConnection(filterContext);
                     return;
