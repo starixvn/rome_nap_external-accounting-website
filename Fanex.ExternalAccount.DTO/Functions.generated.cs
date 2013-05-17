@@ -1,25 +1,25 @@
 ﻿
-public enum eFunctions : int
+public static class eFunctions
 {
-		Administration = 1,
-			SystemConfiguration = 4,
-			Reports = 7,
-			ManageCustomer = 10,
-			ExternalGroup = 11,
-			ManageGroup = 2,
-			ManageUser = 3,
-			ManageFunction = 5,
-			ManageMenu = 6,
-			DailyWinloss = 8,
-			WinlossDetail = 9,
-			Statement = 27,
-			Sportsbook = 49,
-			Racing = 50,
-			Casino = 44,
-			Bingo = 45,
-			Poker = 46,
-			LiveCasino = 47,
-			VirtualSports = 48,
-			CreateNew = 51,
-			EditCustomer = 52
+		public const string Administration = "Administration";
+			public const string SystemConfiguration = "SystemConfiguration";
+			public const string Reports = "Reports";
+			public const string ManageCustomer = "ManageCustomer";
+			public const string ExternalGroup = "ExternalGroup";
+			public const string ManageGroup = "ManageGroup";
+			public const string ManageUser = "ManageUser";
+			public const string ManageFunction = "ManageFunction";
+			public const string ManageMenu = "ManageMenu";
+			public const string DailyWinloss = "DailyWinloss";
+			public const string WinlossDetail = "WinlossDetail";
+			public const string Statement = "Statement";
+			public const string Sportsbook = "Sportsbook";
+			public const string Racing = "Racing";
+			public const string Casino = "Casino";
+			public const string Bingo = "Bingo";
+			public const string Poker = "Poker";
+			public const string LiveCasino = "LiveCasino";
+			public const string VirtualSports = "VirtualSports";
+			public const string CreateNew = "CreateNew";
+			public const string EditCustomer = "EditCustomer";
 		}

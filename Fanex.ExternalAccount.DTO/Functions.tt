@@ -7,7 +7,7 @@
 <#
 	string connectionString = "Persist Security Info=False;User ID=bodbExtAccNet;Password=%bodbExtAccNetLogin6534;Initial Catalog=bodb_EAS;Data Source=10.18.200.215";
 #>
-public enum eFunctions : int
+public static class eFunctions
 {
 <#
 	
@@ -21,7 +21,7 @@ public enum eFunctions : int
 	while (loop)
 	{
 #>
-		<#= reader["FuncKey"].ToString() #> = <#= reader["FuncID"].ToString() #><#loop = reader.Read();#><#=loop ? "," : "" #>
+		public const string <#= reader["FuncKey"].ToString() #> = "<#= reader["FuncKey"].ToString() #>"<#loop = reader.Read();#><#=loop ? ";" : ";" #>
 	<#}#>
 	<#
 	reader.Close();

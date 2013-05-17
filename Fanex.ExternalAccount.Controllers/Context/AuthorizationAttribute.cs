@@ -33,7 +33,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
         {
         }
 
-        public eFunctions Function { get; set; }
+        public string Function { get; set; }
 
         public ePolicy Policy { get; set; }
 
@@ -73,7 +73,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     return;
                 }
 
-                if (!this.FunctionAuthorization(currentSession.UserId, (int)this.Function, request))
+                if (!this.FunctionAuthorization(currentSession.UserId, (string)this.Function.ToString(), request))
                 {
                     this.CloseConnection(filterContext);
                     return;
@@ -149,7 +149,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             response.Redirect("~/Account/Login", true);
         }
 
-        private bool FunctionAuthorization(int userId, int functionId, HttpRequestBase request)
+        private bool FunctionAuthorization(int userId, string functionKey, HttpRequestBase request)
         {
             if (userId <= 0)
             {
@@ -159,7 +159,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
             var userCache = this.cachingService.GetUserCache(userId);
             var policyList = userCache.PolicyList;
             var menuList = userCache.MenuList;
-            var foundItems = policyList.Where(x => x.FuncID == functionId);
+            var foundItems = policyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
             if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())

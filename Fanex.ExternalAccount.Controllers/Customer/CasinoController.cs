@@ -16,6 +16,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
     /// <summary>
@@ -37,8 +38,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var positionTaking = new List<GameKindDetail>(); 
             var casinoGame = new List<GameTypeDetail>();
             var miniGame = new List<GameTypeDetail>();
-            var casinoStakes = new List<object>();
-            var miniStakes = new List<object>();
+            var casinoStakes = new List<Stakes>();
+            var miniStakes = new List<Stakes>();
 
             if (!custInfo.CasinoSync)
             {
@@ -66,14 +67,23 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             {
                 casinoGame.ForEach(item =>
                 {
-                    casinoStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) });
+                    casinoStakes.Add(
+                        new Stakes 
+                        { 
+                            GameTypeName = item.GameTypeName, 
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) 
+                        });
                 });
             }
             else if (casinoGame != null && casinoGame.Count > 0 && !custInfo.CasinoSync)
             {
                 casinoGame.ForEach(item =>
                 {
-                    casinoStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) });
+                    casinoStakes.Add(
+                        new Stakes { 
+                            GameTypeName = item.GameTypeName, 
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) 
+                        });
                 });
             }
 
@@ -81,30 +91,45 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             {
                 miniGame.ForEach(item =>
                 {
-                    miniStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) });
+                    miniStakes.Add(
+                        new Stakes { 
+                            GameTypeName = item.GameTypeName, 
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) 
+                        });
                 });
             }
             else if (miniGame != null && miniGame.Count > 0 && !custInfo.CasinoSync)
             {
                 miniGame.ForEach(item =>
                 {
-                    miniStakes.Add(new { gameTypeName = item.GameTypeName, stakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) });
+                    miniStakes.Add(
+                        new Stakes { GameTypeName = item.GameTypeName, 
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) 
+                        });
                 });
             }
 
             return this.JsonBase(
-                new
+                new CasinoObject
                 {
-                    customerInfo = custInfo,
-                    casinoInfo = casinoSetting,
-                    casinoGame = casinoStakes,
-                    miniGame = miniStakes,
-                    pts = positionTaking
+                    CustomerInfo = custInfo,
+                    CasinoInfo = casinoSetting,
+                    CasinoGame = casinoStakes,
+                    MiniGame = miniStakes,
+                    Pts = positionTaking
                 },
                 new Newtonsoft.Json.JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 });
+        }
+
+        [Authorization(Function = eFunctions.Casino, Policy = ePolicy.Update)]
+        public ActionResult UpdateCasinoPost(int custId, int roleId, int uplineId, int uplineRoleId, string customer)
+        {
+            var ret = CasinoManager.Instance.Update(custId, roleId, uplineId, uplineRoleId, CurrentContext.Ip4Address, CurrentSession.UserName, FromSystem, JsonConvert.DeserializeObject<CasinoObject>(customer));
+
+            return this.JsonBase(new { ErrorCode = ret.IsSuccess ? 0 : 1, ErrorMessage = ret.ErrorMessage });
         }
     }
 }

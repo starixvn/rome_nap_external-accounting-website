@@ -499,12 +499,19 @@ input[type="text"], input[type="password"]
 	font-size: 11px !important;
 	text-indent: 1px !important;
 }
-.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem92, .BettingLimitItem
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem
 {
 	/*height: 24px;*/
 	background-color: #FFF;
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
+}
+.BettingLimitItem92
+{
+    background-color: #FFF;
+	border-left: none;
+	border-top: 1px solid #CCC;
+	padding-left: 3px;
 }
 /* START: Base on MemberInfo.css */
 .names

@@ -55,22 +55,22 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {
                 // Is Internal admin logged in
-                funcs = funcs.Where(o => o.FuncID != (int)eFunctions.ManageMenu &&
-                    o.FuncID != (int)eFunctions.ManageFunction);
+                funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu &&
+                    o.FuncKey != eFunctions.ManageFunction);
 
-                parents = parents.Where(o => o.FuncID != (int)eFunctions.SystemConfiguration);
+                parents = parents.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
             else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
             {
                 // Is External admin logged in
-                funcs = funcs.Where(o => o.FuncID != (int)eFunctions.ManageMenu &&
-                    o.FuncID != (int)eFunctions.ManageFunction &&
-                    o.FuncID != (int)eFunctions.ManageGroup &&
-                    o.FuncID != (int)eFunctions.ManageUser);
+                funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu &&
+                    o.FuncKey != eFunctions.ManageFunction &&
+                    o.FuncKey != eFunctions.ManageGroup &&
+                    o.FuncKey != eFunctions.ManageUser);
 
-                parents = parents.Where(o => o.FuncID != (int)eFunctions.Administration &&
-                    o.FuncID != (int)eFunctions.SystemConfiguration &&
-                    o.FuncID != (int)eFunctions.ExternalGroup);
+                parents = parents.Where(o => o.FuncKey != eFunctions.Administration &&
+                    o.FuncKey != eFunctions.SystemConfiguration &&
+                    o.FuncKey != eFunctions.ExternalGroup);
             }
 
             foreach (var item in parents)
@@ -107,14 +107,14 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {
                 // Is Internal admin logged in
-                parent = parent.Where(o => o.FuncID != (int)eFunctions.SystemConfiguration);
+                parent = parent.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
             else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
             {
                 // Is External admin logged in
-                parent = parent.Where(o => o.FuncID != (int)eFunctions.Administration &&
-                    o.FuncID != (int)eFunctions.SystemConfiguration &&
-                    o.FuncID != (int)eFunctions.ExternalGroup);
+                parent = parent.Where(o => o.FuncKey != eFunctions.Administration &&
+                    o.FuncKey != eFunctions.SystemConfiguration &&
+                    o.FuncKey != eFunctions.ExternalGroup);
 
                 groups = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }
@@ -155,14 +155,14 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {
                 // Is Internal admin logged in
-                parent = parent.Where(o => o.FuncID != (int)eFunctions.SystemConfiguration);
+                parent = parent.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
             else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
             {
                 // Is External admin logged in
-                parent = parent.Where(o => o.FuncID != (int)eFunctions.Administration &&
-                    o.FuncID != (int)eFunctions.SystemConfiguration &&
-                    o.FuncID != (int)eFunctions.ExternalGroup);
+                parent = parent.Where(o => o.FuncKey != eFunctions.Administration &&
+                    o.FuncKey != eFunctions.SystemConfiguration &&
+                    o.FuncKey != eFunctions.ExternalGroup);
 
                 groups = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }

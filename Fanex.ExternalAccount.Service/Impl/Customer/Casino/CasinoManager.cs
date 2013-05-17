@@ -9,15 +9,14 @@
 
 namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using CasinoLibrary.SBAgent;
     using Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
-
+    
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -424,9 +423,162 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             }
         }
 
+        public Result Update(int custId, int roleId, int uplineId, int uplineRoleId, string ip, string modifiedBy, int fromSystem, CasinoObject casino)
+        {
+            var errMsg = string.Empty;
+            var customer = new Customer();
+            var pts = casino.Pts;
+            var casinoGame = casino.CasinoGame;
+            var miniGame = casino.MiniGame;
+            var casinoInfo = casino.CasinoInfo;
+            var message = string.Empty;
+
+            // Update Status
+            var status = this.UpdateCSStatus(custId, true, false, true, uplineId, string.Empty, 0, "en", casinoInfo.UserName, string.Empty, out errMsg);
+
+            // Update Max Transfer
+            var maxTransfer = customer.UpdateMaxTransfer(custId, true, (decimal)casinoInfo.MaxTransferCredit, casinoInfo.IsAutoReset, ip, uplineId, modifiedBy, fromSystem);
+
+            // Update PT Casino Game
+            
+            // Update Betting Limit Casino Game
+
+            // Update PT Mini Game
+
+            // Update Betting Limit Mini Game
+
+            message += errMsg;
+
+            return new Result(null, message);
+        }
+
         private bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
         {
             return this.casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
+        }
+
+        private DataTable GameKindsDataTableMember()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(
+                new DataColumn[] 
+                {
+                    new DataColumn("IBCCustID"),
+                    new DataColumn("GameKind"),
+                    new DataColumn("SPositionTaking"),
+                    new DataColumn("MPositionTaking"),
+                    new DataColumn("IsAutoPositionTaking"),
+                    new DataColumn("AutoPositionTaking"),
+                    new DataColumn("RoleId"),
+                    new DataColumn("FromIP"),
+                    new DataColumn("ModifyBy"), 
+                    new DataColumn("ModifyUserName"), 
+                    new DataColumn("FromSystem")
+                });
+
+            return dt;
+        }
+
+        private DataTable GameTypesDataTableMember()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(
+                new DataColumn[] 
+                {
+                    new DataColumn("IBCCustID"),
+                    new DataColumn("GameTypeID"),
+                    new DataColumn("SPositionTaking"),
+                    new DataColumn("MPositionTaking"),
+                    new DataColumn("IsAutoPositionTaking"),
+                    new DataColumn("AutoPositionTaking"),
+                    new DataColumn("RoleId"),
+                    new DataColumn("FromIP"),
+                    new DataColumn("ModifyBy"), 
+                    new DataColumn("ModifyUserName"), 
+                    new DataColumn("FromSystem")
+                });
+
+            return dt;
+        }
+
+        private DataTable GameKindsDataTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(
+                new DataColumn[] 
+                {
+                    new DataColumn("IBCCustID"),
+                    new DataColumn("GameKind"),
+                    new DataColumn("HPositionTaking"),
+                    new DataColumn("SPositionTaking"),
+                    new DataColumn("MPositionTaking"),
+                    new DataColumn("APositionTaking"),
+                    new DataColumn("IsAutoPositionTaking"),
+                    new DataColumn("AutoPositionTaking"),
+                    new DataColumn("MinPositionTaking"),
+                    new DataColumn("MaxPositionTaking"),
+                    new DataColumn("SMAgentRollingRate"),
+                    new DataColumn("MAgentRollingRate"),
+                    new DataColumn("AgentRollingRate"),
+                    new DataColumn("MemberRollingRate"),
+                    new DataColumn("RoleId"),
+                    new DataColumn("FromIP"),
+                    new DataColumn("ModifyBy"), 
+                    new DataColumn("ModifyUserName"), 
+                    new DataColumn("FromSystem")
+                });
+
+            return dt;
+        }
+
+        private DataTable GameTypesDataTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(
+                new DataColumn[]
+                {
+                    new DataColumn("IBCCustID"),
+                    new DataColumn("GameTypeID"),
+                    new DataColumn("HPositionTaking"),
+                    new DataColumn("SPositionTaking"),
+                    new DataColumn("MPositionTaking"),
+                    new DataColumn("APositionTaking"),
+                    new DataColumn("IsAutoPositionTaking"),
+                    new DataColumn("AutoPositionTaking"),
+                    new DataColumn("MinPositionTaking"),
+                    new DataColumn("MaxPositionTaking"),
+                    new DataColumn("SMAgentRollingRate"),
+                    new DataColumn("MAgentRollingRate"),
+                    new DataColumn("AgentRollingRate"),
+                    new DataColumn("MemberRollingRate"),
+                    new DataColumn("StakeLevelList"),
+                    new DataColumn("RoleId"),
+                    new DataColumn("FromIP"),
+                    new DataColumn("ModifyBy"), 
+                    new DataColumn("ModifyUserName"), 
+                    new DataColumn("FromSystem")
+                });
+
+            return dt;
+        }
+
+        private DataTable GameTypesStakesDataTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(
+                new DataColumn[] 
+                {
+                    new DataColumn("IBCCustID"),
+                    new DataColumn("GameTypeID"),
+                    new DataColumn("StakeLevelList"),
+                    new DataColumn("RoleId"),
+                    new DataColumn("FromIP"),
+                    new DataColumn("ModifyBy"), 
+                    new DataColumn("ModifyUserName"), 
+                    new DataColumn("FromSystem")
+                });
+
+            return dt;
         }
     }
 }

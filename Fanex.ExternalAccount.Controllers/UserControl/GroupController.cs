@@ -144,43 +144,43 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             if (isEditExtGroup)
             {
                 ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
-                    x.FuncID != (int)eFunctions.ManageFunction &&
-                    x.FuncID != (int)eFunctions.ManageGroup &&
-                    x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.ManageUser &&
-                    x.FuncID != (int)eFunctions.Administration &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageGroup &&
+                    x.FuncKey != eFunctions.ManageMenu &&
+                    x.FuncKey != eFunctions.ManageUser &&
+                    x.FuncKey != eFunctions.Administration &&
+                    x.FuncKey != eFunctions.SystemConfiguration &&
+                    x.FuncKey != eFunctions.ExternalGroup);
 
                 ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncID != (int)eFunctions.ManageFunction &&
-                    x.FuncID != (int)eFunctions.ManageGroup &&
-                    x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.ManageUser &&
-                    x.FuncID != (int)eFunctions.Administration &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageGroup &&
+                    x.FuncKey != eFunctions.ManageMenu &&
+                    x.FuncKey != eFunctions.ManageUser &&
+                    x.FuncKey != eFunctions.Administration &&
+                    x.FuncKey != eFunctions.SystemConfiguration &&
+                    x.FuncKey != eFunctions.ExternalGroup);
             }
             else if (groupId != 1)
             {
                 ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
-                        x.FuncID != (int)eFunctions.ManageFunction &&
-                        x.FuncID != (int)eFunctions.ManageMenu &&
-                        x.FuncID != (int)eFunctions.SystemConfiguration &&
-                        x.FuncID != (int)eFunctions.ExternalGroup);
+                        x.FuncKey != eFunctions.ManageFunction &&
+                        x.FuncKey != eFunctions.ManageMenu &&
+                        x.FuncKey != eFunctions.SystemConfiguration &&
+                        x.FuncKey != eFunctions.ExternalGroup);
 
                 ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncID != (int)eFunctions.ManageFunction &&
-                    x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageMenu &&
+                    x.FuncKey != eFunctions.SystemConfiguration &&
+                    x.FuncKey != eFunctions.ExternalGroup);
             }
             else
             {
                 ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ExternalGroup);
                 ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ExternalGroup);
             }
 
             return this.PartialViewBase();

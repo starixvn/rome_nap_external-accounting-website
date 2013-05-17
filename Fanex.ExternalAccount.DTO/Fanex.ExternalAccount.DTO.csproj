@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\Casino\CasinoObject.cs" />
+    <Compile Include="Customer\Casino\Stakes.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
     <Compile Include="Customer\Customer.cs" />

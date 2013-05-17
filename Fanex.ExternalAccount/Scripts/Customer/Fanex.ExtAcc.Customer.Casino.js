@@ -468,7 +468,7 @@ function PT_RenderCombo(combo, min, max, step, selectedValue) {
 
     if (selectedValue > max) {
         var opt = document.createElement("option");
-        opt.text = opt.value = (selectedValue.toFixed(2) * 100) / 100;
+        opt.text = opt.value = (selectedValue * 100) / 100;
         combo.options.add(opt);
     }
 

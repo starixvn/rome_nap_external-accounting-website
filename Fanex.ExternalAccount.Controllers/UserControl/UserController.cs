@@ -181,7 +181,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var model = this.userService.GetUserById(id);
 
-            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, (int)eFunctions.ExternalGroup, eFunctions.ExternalGroup.ToString());
+            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, 0, eFunctions.ExternalGroup.ToString());
 
             return this.PartialViewBase(model);
         }
@@ -199,7 +199,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var model = this.userService.GetUserById(id);
 
-            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, (int)eFunctions.ExternalGroup, eFunctions.ExternalGroup.ToString());
+            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, 0, eFunctions.ExternalGroup.ToString());
 
             return this.PartialViewBase(model);
         }
@@ -231,34 +231,34 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             if (isEditExtGroup)
             {
                 ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 &&
-                    x.FuncID != (int)eFunctions.ManageFunction &&
-                    x.FuncID != (int)eFunctions.ManageGroup &&
-                    x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.ManageUser &&
-                    x.FuncID != (int)eFunctions.Administration &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageGroup &&
+                    x.FuncKey != eFunctions.ManageMenu &&
+                    x.FuncKey != eFunctions.ManageUser &&
+                    x.FuncKey != eFunctions.Administration &&
+                    x.FuncKey != eFunctions.SystemConfiguration &&
+                    x.FuncKey != eFunctions.ExternalGroup);
 
                 ViewBag.UserSubFunc = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncID != (int)eFunctions.ManageFunction &&
-                    x.FuncID != (int)eFunctions.ManageGroup &&
-                    x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.ManageUser &&
-                    x.FuncID != (int)eFunctions.Administration &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration &&
-                    x.FuncID != (int)eFunctions.ExternalGroup);
+                    x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageGroup &&
+                    x.FuncKey != eFunctions.ManageMenu &&
+                    x.FuncKey != eFunctions.ManageUser &&
+                    x.FuncKey != eFunctions.Administration &&
+                    x.FuncKey != eFunctions.SystemConfiguration &&
+                    x.FuncKey != eFunctions.ExternalGroup);
             }
             else if (groupId != 1)
             {
                 ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 &&
-                        x.FuncID != (int)eFunctions.ManageFunction &&
-                        x.FuncID != (int)eFunctions.ManageMenu &&
-                        x.FuncID != (int)eFunctions.SystemConfiguration);
+                        x.FuncKey != eFunctions.ManageFunction &&
+                        x.FuncKey != eFunctions.ManageMenu &&
+                        x.FuncKey != eFunctions.SystemConfiguration);
 
                 ViewBag.UserSubFunc = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncID != (int)eFunctions.ManageFunction &&
-                    x.FuncID != (int)eFunctions.ManageMenu &&
-                    x.FuncID != (int)eFunctions.SystemConfiguration);
+                    x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageMenu &&
+                    x.FuncKey != eFunctions.SystemConfiguration);
             }
             else
             {
