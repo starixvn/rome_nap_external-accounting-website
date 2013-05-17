@@ -33,11 +33,11 @@
                         result.Add(new Group()
                         {
                             GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.To<string>("GroupName"),
+                            GroupName = reader.ToString("GroupName"),
                             NoUsers = reader.ToInt("NoUsers"),
-                            Description = reader.To<string>("Description"),
-                            Creator = reader.To<string>("Creator"),
-                            CreatedDate = reader.To<string>("CreatedDate")
+                            Description = reader.ToString("Description"),
+                            Creator = reader.ToString("Creator"),
+                            CreatedDate = reader.ToString("CreatedDate")
                         });
                     }
                 }
@@ -63,7 +63,7 @@
                         result.Add(new Group()
                         {
                             GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.To<string>("GroupName")
+                            GroupName = reader.ToString("GroupName")
                         });
                     }
                 }
@@ -92,10 +92,11 @@
                         result.Add(new Function()
                         {
                             FuncID = reader.ToInt("FuncID"),
-                            FuncName = reader.To<string>("FuncName"),
+                            FuncKey = reader.ToString("FuncKey"),
+                            FuncName = reader.ToString("FuncName"),
                             DisplayOrder = reader.ToInt("DisplayOrder"),
                             ParentID = reader.ToInt("ParentID"),
-                            ParentName = reader.To<string>("ParentName"),
+                            ParentName = reader.ToString("ParentName"),
                             GroupPolicy = (ePolicy)Convert.ToInt32(reader["Policy"])
                         });
                     }
@@ -125,8 +126,8 @@
                         return new Group()
                         {
                             GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.To<string>("GroupName"),
-                            Description = reader.To<string>("Description")
+                            GroupName = reader.ToString("GroupName"),
+                            Description = reader.ToString("Description")
                         };
                     }
                 }
