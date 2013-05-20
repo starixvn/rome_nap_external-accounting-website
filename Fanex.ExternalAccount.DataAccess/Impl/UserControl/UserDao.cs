@@ -265,6 +265,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
                             {
                                 FuncID = reader.ToInt("FuncID"),
                                 FuncName = reader.ToString("FuncName"),
+                                FuncKey = reader.ToString("FuncKey"),
                                 DisplayOrder = reader.ToInt("DisplayOrder"),
                                 ParentID = reader.ToInt("ParentID"),
                                 ParentName = reader.ToString("ParentName"),

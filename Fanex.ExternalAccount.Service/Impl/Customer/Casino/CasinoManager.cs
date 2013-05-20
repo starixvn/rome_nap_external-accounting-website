@@ -432,7 +432,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             var miniGame = casino.MiniGame;
             var casinoInfo = casino.CasinoInfo;
             var message = string.Empty;
-
+            
             // Update Status
             var status = this.UpdateCSStatus(custId, true, false, true, uplineId, string.Empty, 0, "en", casinoInfo.UserName, string.Empty, out errMsg);
 

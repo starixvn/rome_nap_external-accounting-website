@@ -113,7 +113,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
@@ -326,7 +326,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
@@ -521,7 +521,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     // Set PT values
                     Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.presetPT = $('#pt_1').val();
@@ -675,7 +675,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
@@ -829,7 +829,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
@@ -1680,11 +1680,13 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     gsMsg = Fanex.ExtAcc.Customer.LiveCasino.RenderGameSettingMessage(gs);
                 }
 
-                if (st.ErrorCode == '' || st.ErrorCode == '0' || st.ErrorCode == "0") {
-                    stMsg = '<font color="Blue">Enable: Updated successfully</font><br />';
-                }
-                else {
-                    stMsg = '<font color="Red">Enable: ' + st.ErrorMessage.formatErrorMessage() + '</font><br />'
+                if (result.length == 4) {
+                    if (st.ErrorCode == '' || st.ErrorCode == '0' || st.ErrorCode == "0") {
+                        stMsg = '<font color="Blue">Enable: Updated successfully</font><br />';
+                    }
+                    else {
+                        stMsg = '<font color="Red">Enable: ' + st.ErrorMessage.formatErrorMessage() + '</font><br />'
+                    }
                 }
 
                 Fanex.ExtAcc.Customer.LiveCasino.Error += '<font color="Blue" style="font-weight: bold;">' + Fanex.ExtAcc.Customer.Usernames.split(', ')[i] + ':</font><br />' + ptMsg + mwMsg + gsMsg + stMsg + '<br />';
