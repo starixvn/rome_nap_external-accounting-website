@@ -630,20 +630,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
             var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleAgent, custId, customer);
             var resultStatus = new Fanex.LiveCasinoSetting.Model.Result();
-
-            if (result != null && model.GameSetting.Count > 0)
-            {
-                resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, model.CustomerInfo.GroupName)));
-            }
-
             var results = new List<object>();
 
             results.Add(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
             results.Add(new { ErrorCode = resultMWL == null ? "1" : resultMWL.ErrorCode, ErrorMessage = resultMWL == null ? ViewLang.DisabledAccount : resultMWL.ErrorMessage });
             results.Add(resultGS);
-            
+
             if (result != null && model.GameSetting.Count > 0)
             {
+                resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, model.CustomerInfo.GroupName)));
                 results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : resultStatus.ErrorMessage });
             }
 

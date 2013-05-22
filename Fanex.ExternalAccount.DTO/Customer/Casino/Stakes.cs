@@ -16,6 +16,12 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
     /// </summary>
     public class Stakes
     {
+        public int GameTypeID
+        {
+            get;
+            set;
+        }
+
         public string GameTypeName
         {
             get;

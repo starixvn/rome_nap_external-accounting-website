@@ -1914,10 +1914,10 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!this.IsMultiple) {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), levelText + 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/EditPT'), levelText + 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 700, false, false, 1);
         }
         else {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), levelText + 'Edit Multiple Sportsbook Setting', 894, 600, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Sportsbook/SuperMasterEditMultiplePTMember'), levelText + 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
         }
     },
 

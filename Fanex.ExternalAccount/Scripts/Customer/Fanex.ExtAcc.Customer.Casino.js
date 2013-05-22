@@ -9,6 +9,7 @@ Fanex.ExtAcc.Customer.Casino = {
     colspan: 1,
     uplineId: Fanex.ExtAcc.Customer.CustomerInfo().uplineId,
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
+    ErrorMessage: '',
 
     Init: function () {
         this.LoadData();
@@ -97,7 +98,13 @@ Fanex.ExtAcc.Customer.Casino = {
             Fanex.ExtAcc.Customer.Casino.CasinoModel = function () {
                 this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
-                    alert('Submit');
+
+                    if (Fanex.ExtAcc.Customer.Casino.IsMultiple) {
+                        Fanex.ExtAcc.Customer.Casino.UpdateSetting(0);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.Casino.UpdateSetting(null);
+                    }
                 }
             }
 
@@ -429,10 +436,82 @@ Fanex.ExtAcc.Customer.Casino = {
     },
 
     UpdateSetting: function (i) {
+        Fanex.ExtAcc.BlockUI();
+
+        var custInfo = Fanex.ExtAcc.Customer.CustomerInfo();
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.Ids()[i],
-            uplineId: this.uplineId
+            roleId: custInfo.roleId,
+            uplineId: this.uplineId,
+            uplineRoleId: custInfo.uplineRoleId,
+            customer: JSON.stringify(this.customer)
         };
+
+        $.ajax({
+            url: resolveClientUrl('Casino/UpdateCasinoPost'),
+            type: 'post',
+            data: data,
+            dataType: 'json'
+        })
+        .success(function (result) {
+            if (result.ErrorCode != 0) {
+                if (!Fanex.ExtAcc.Customer.Casino.IsMultiple) {
+                    Fanex.ExtAcc.Customer.Casino.ErrorMessage += result.ErrorMessage.formatErrorMessage() + '<br />';
+                }
+                else {
+                    Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[i] + ":</font><br />" + result.ErrorMessage.formatErrorMessage() + '<br /><br />';
+                }
+            }
+
+            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (i != null && i == Fanex.ExtAcc.Customer.Ids().length - 1)) {
+                if (Fanex.ExtAcc.Customer.Casino.ErrorMessage != '') {
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.ErrorMessage);
+                    $('#errMsg').show();
+
+                    Fanex.ExtAcc.Customer.Casino.ErrorMessage = '';
+                }
+                else {
+                    Fanex.ExtAcc.Form.Close();
+                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                }
+
+                Fanex.ExtAcc.UnBlockUI();
+            }
+            else if (Fanex.ExtAcc.Customer.Casino.IsMultiple && i < Fanex.ExtAcc.Customer.Ids().length - 1) {
+                Fanex.ExtAcc.Customer.Casino.UpdateSetting(++i);
+            }
+        })
+        .error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data.responseText);
+            }
+
+            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple) {
+                Fanex.ExtAcc.Customer.Casino.ErrorMessage += "Not Casino\'s customer<br />".formatErrorMessage() + '<br />';
+            }
+            else {
+                Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[i] + ":</font><br />" + " Not Casino\'s customer<br /><br />".formatErrorMessage();
+            }
+
+            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (i != null && i == Fanex.ExtAcc.Customer.Ids().length - 1)) {
+                if (Fanex.ExtAcc.Customer.Casino.ErrorMessage != '') {
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.ErrorMessage);
+                    $('#errMsg').show();
+
+
+                    Fanex.ExtAcc.Customer.Casino.ErrorMessage = '';
+                }
+                else {
+                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                }
+
+                Fanex.ExtAcc.UnBlockUI();
+            }
+            else if (Fanex.ExtAcc.Customer.Casino.IsMultiple && i < Fanex.ExtAcc.Customer.Ids().length - 1) {
+                Fanex.ExtAcc.Customer.Casino.UpdateSetting(++i);
+            }
+        });
     }
 }
 
