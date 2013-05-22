@@ -440,6 +440,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
         var custInfo = Fanex.ExtAcc.Customer.CustomerInfo();
 
+        this.customer.customerInfo.casinoDisabled = !document.getElementById('chkEnable').checked;
+
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.Ids()[i],
             roleId: custInfo.roleId,

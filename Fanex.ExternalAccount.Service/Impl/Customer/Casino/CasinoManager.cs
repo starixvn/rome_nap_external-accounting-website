@@ -456,7 +456,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             // Update Status
             if ((inserted && !customerInfo.CasinoSync) || customerInfo.CasinoSync)
             {                
-                status = this.UpdateCSStatus(custId, true, casinoInfo.CasinoDisabled, true, uplineId, string.Empty, 0, "en", casinoInfo.UserName, string.Empty, out errMsg);
+                status = this.UpdateCSStatus(custId, true, customerInfo.CasinoDisabled, true, uplineId, string.Empty, 0, "en", customerInfo.UserName, string.Empty, out errMsg);
             }
 
             // Enable PT
@@ -470,10 +470,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 // Update all settings
                 casinoPT = this.UpdateSettings(custId, roleId, uplineId, uplineRoleId, ip, modifiedId, modifiedBy, fromSystem, casino);
 
-                message += errMsg + "<br />" + casinoPT.ErrorMessage;
+                message += string.IsNullOrWhiteSpace(errMsg) ? string.Empty : errMsg + "<br />" + casinoPT.ErrorMessage;
             }
 
-            return new Result(message == string.Empty ? 0 : 1, message);
+            return new Result(message == string.Empty || message == "<br />" ? 0 : 1, message);
         }
 
         private bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
