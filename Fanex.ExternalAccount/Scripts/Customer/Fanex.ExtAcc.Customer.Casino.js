@@ -20,7 +20,7 @@ Fanex.ExtAcc.Customer.Casino = {
 
         if (this.IsMultiple) {
             $('#custInfo').remove();
-            Fanex.ExtAcc.Customer.ProcessDisplayMultiple();
+            Fanex.ExtAcc.Customer.ProcessDisplayMultiple(125);
         }
         else {
             $('#arrowUpDown').remove();

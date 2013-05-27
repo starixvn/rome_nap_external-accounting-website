@@ -1939,7 +1939,7 @@ Fanex.ExtAcc.Customer = {
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino'), levelText + 'Edit Multiple Casino Setting', 1024, 700, false, false, 1, null, data);
     },
 
-    ToogleUsernames: function () {
+    ToogleUsernames: function (length) {
         if ($('#arrowUpDown').hasClass('collapse')) {
             $('#arrowUpDown').attr('class', 'expand');
             $('#names').html(this.Usernames.substring(0, this.Usernames.length - 2));
@@ -1947,7 +1947,7 @@ Fanex.ExtAcc.Customer = {
         }
         else {
             $('#arrowUpDown').attr('class', 'collapse');
-            $('#names').html(this.Usernames.substring(0, 98) + '...');
+            $('#names').html(this.Usernames.substring(0, (length ? length : 98)) + '...');
             $('#names').attr('title', this.Usernames.substring(0, this.Usernames.length - 2));
         }
     },
@@ -2047,14 +2047,14 @@ Fanex.ExtAcc.Customer = {
         return { custId: this.UserId, roleId: this.CurrentLevel, uplineId: uplineId, uplineRoleId: uplineRoleId };
     },
 
-    ProcessDisplayMultiple: function () {
+    ProcessDisplayMultiple: function (length) {
         $('#arrowUpDown').bind('click', function () {
-            Fanex.ExtAcc.Customer.ToogleUsernames();
+            Fanex.ExtAcc.Customer.ToogleUsernames(length);
         });
 
         $('#names').css('display', 'block');
 
-        if (this.Usernames.length < 98) {
+        if (this.Usernames.length < (length ? length : 98)) {
             $('#names').css('cursor', 'default');
             $('#names').html(this.Usernames.substring(0, this.Usernames.length - 2));
             $('#arrowUpDown').css('display', 'none');
@@ -2062,9 +2062,9 @@ Fanex.ExtAcc.Customer = {
         else {
             $('#names').css('cursor', 'pointer');
             $('#names').bind('click', function () {
-                Fanex.ExtAcc.Customer.ToogleUsernames();
+                Fanex.ExtAcc.Customer.ToogleUsernames(length);
             });
-            $('#names').html(this.Usernames.substring(0, 98) + '...');
+            $('#names').html(this.Usernames.substring(0, (length ? length : 98)) + '...');
             $('#names').attr('title', this.Usernames.substring(0, this.Usernames.length - 2));
             $('#arrowUpDown').css('display', 'block');
         }
