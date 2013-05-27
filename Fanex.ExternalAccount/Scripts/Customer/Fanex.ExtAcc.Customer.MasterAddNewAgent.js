@@ -119,11 +119,11 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                     }
 
                     // EscapeHTML String
-                    customer.firstName = customer.firstName.escapeHtml();
-                    customer.lastName = customer.lastName.escapeHtml();
-                    customer.phone = customer.phone.escapeHtml();
-                    customer.mobilePhone = customer.mobilePhone.escapeHtml();
-                    customer.fax = customer.fax.escapeHtml();
+                    customer.firstName = customer.firstName.escapeHtml().encodeHtml();
+                    customer.lastName = customer.lastName.escapeHtml().encodeHtml();
+                    customer.phone = customer.phone.escapeHtml().encodeHtml();
+                    customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
+                    customer.fax = customer.fax.escapeHtml().encodeHtml();
 
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();

@@ -867,6 +867,5 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 
             return dt;
         }
-
     }
 }
