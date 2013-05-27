@@ -1500,7 +1500,6 @@
     <Content Include="Views\Shared\_SettingBox.cshtml" />
     <Content Include="Views\Shared\_SearchBox.cshtml" />
     <Content Include="Views\Shared\_BalanceBox.cshtml" />
-    <Content Include="Views\Shared\Copy of _LeftMenu.cshtml" />
     <Content Include="Views\Sportsbook\EditBetSetting.cshtml" />
     <Content Include="Views\Sportsbook\EditCommission.cshtml" />
     <Content Include="Views\Sportsbook\EditPT.cshtml" />
