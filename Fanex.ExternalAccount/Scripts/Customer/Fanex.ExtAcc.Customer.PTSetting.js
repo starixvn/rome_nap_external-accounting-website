@@ -247,9 +247,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         }
 
                                         customer.commissionSetting.groupA = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupB = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupC = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupD = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupB = parseFloat($("#groupB").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupC").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupD").val());
                                         customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                         customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
@@ -394,9 +394,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         }
 
                                         customer.commissionSetting.groupA = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupB = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupC = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupD = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupB = parseFloat($("#groupB").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupC").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupD").val());
                                         customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                         customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
@@ -539,9 +539,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         }
 
                                         customer.commissionSetting.groupA = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupB = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupC = parseFloat($("#groupA").val());
-                                        customer.commissionSetting.groupD = parseFloat($("#groupA").val());
+                                        customer.commissionSetting.groupB = parseFloat($("#groupB").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupC").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupD").val());
                                         customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                         customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
