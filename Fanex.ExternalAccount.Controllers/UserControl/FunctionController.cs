@@ -93,7 +93,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult EditFunction(int id)
         {
             var funcs = this.funcService.GetAllFunctions();
-            var parent = funcs.Where(o => o.ParentID == 0);
+            var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = this.funcService.GetFunctionPolicy(id);
             var groups = new GroupService().GetAllGroup();
             var tmp = string.Empty;
@@ -148,7 +148,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult AddFunction()
         {
             var funcs = this.funcService.GetAllFunctions();
-            var parent = funcs.Where(o => o.ParentID == 0);
+            var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = new Function();
             var groups = new GroupService().GetAllGroup();
 
