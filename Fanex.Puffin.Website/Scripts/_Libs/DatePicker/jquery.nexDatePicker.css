@@ -1,0 +1,53 @@
+﻿/* File Created: November 14, 2012 */
+.ui_nexdatepicker
+{
+    display: inline;
+    float: left;
+    width: 100%;
+}
+.ui_nexdatepicker_datetextbox
+{
+    background: url("images/icon-calendar.png") no-repeat scroll 96% 50% white;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.ui_nexdatepicker_lbl_field
+{
+    display: inline;
+    float: left;
+    text-align: right;
+    margin: 0;
+    padding: 2px 6px 2px 0px;
+}
+
+.ui_nexdatepicker_edit_field
+{
+    display: inline;
+    float: left;
+    margin: 0;
+}
+
+#dropDownListId
+{
+    border-radius: 2px;
+}
+
+#filter-bar .filter-form .ui_nexdatepicker_datetextbox
+{
+    border-radius: 2px;
+}
+
+.ui-datepicker select.ui-datepicker-month, 
+.ui-datepicker select.ui-datepicker-year {
+    width: 42%;
+}
+
+.ui_nexdatepicker_edit_field select 
+{
+    cursor: pointer;
+}
+
+#ui-datepicker-div .ui-datepicker-prev, #ui-datepicker-div .ui-datepicker-next {
+	cursor: pointer;
+}

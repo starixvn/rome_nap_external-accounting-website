@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agency_Turnover" xml:space="preserve">
+    <value>Agency Turnover</value>
+  </data>
+  <data name="Agency_Win_Loss" xml:space="preserve">
+    <value>Agency Win Loss</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="AmountDueTo" xml:space="preserve">
+    <value>Amount Due To</value>
+  </data>
+  <data name="AmountDueToInspired" xml:space="preserve">
+    <value>Amount Due To Inspired</value>
+  </data>
+  <data name="BA" xml:space="preserve">
+    <value>BA</value>
+  </data>
+  <data name="BAComm" xml:space="preserve">
+    <value>BA Comm</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="BaseRM" xml:space="preserve">
+    <value>Base (RM)</value>
+  </data>
+  <data name="Base_Currency" xml:space="preserve">
+    <value>Base Currency</value>
+  </data>
+  <data name="BetCount" xml:space="preserve">
+    <value>Bet Count</value>
+  </data>
+  <data name="Betteam" xml:space="preserve">
+    <value>Bet team</value>
+  </data>
+  <data name="Bettype" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="BetTypeSuffix" xml:space="preserve">
+    <value>(Virtual Sports)</value>
+  </data>
+  <data name="Bet_Status" xml:space="preserve">
+    <value>Bet Status</value>
+  </data>
+  <data name="Bet_Type" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="ChangedPassword" xml:space="preserve">
+    <value>Your Password has been changed successfully !</value>
+  </data>
+  <data name="ChangedProfile" xml:space="preserve">
+    <value>Your Profile has been changed successfully !</value>
+  </data>
+  <data name="CheckTime" xml:space="preserve">
+    <value>Check Time</value>
+  </data>
+  <data name="Comm" xml:space="preserve">
+    <value>Comm</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Company_Stake" xml:space="preserve">
+    <value>Company Stake</value>
+  </data>
+  <data name="Company_Turnover" xml:space="preserve">
+    <value>Company Turnover</value>
+  </data>
+  <data name="Company_Win_Loss" xml:space="preserve">
+    <value>Company Win Loss</value>
+  </data>
+  <data name="ConfirmPasswordCannotEmpty" xml:space="preserve">
+    <value>Confirm Password cannot empty</value>
+  </data>
+  <data name="ConvertFiguresTo" xml:space="preserve">
+    <value>Convert figures to</value>
+  </data>
+  <data name="Created_By" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="Created_Date" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="Creator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="CurrentMonth" xml:space="preserve">
+    <value>Current Month</value>
+  </data>
+  <data name="CurrentWeek" xml:space="preserve">
+    <value>Current Week</value>
+  </data>
+  <data name="CustomerWinLoss" xml:space="preserve">
+    <value>Customer Win Loss</value>
+  </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
+  <data name="Direct_Agent" xml:space="preserve">
+    <value>Direct Agent</value>
+  </data>
+  <data name="Direct_Master" xml:space="preserve">
+    <value>Direct Master</value>
+  </data>
+  <data name="DistributorRevenue" xml:space="preserve">
+    <value>Distributor's revenue</value>
+  </data>
+  <data name="Draw" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="DrawFilter" xml:space="preserve">
+    <value>Draw Filter</value>
+  </data>
+  <data name="EmptyReportMessage" xml:space="preserve">
+    <value>There is no data.</value>
+  </data>
+  <data name="EUR" xml:space="preserve">
+    <value>EUR</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Event_Date" xml:space="preserve">
+    <value>EVENT DATE</value>
+  </data>
+  <data name="Exchange" xml:space="preserve">
+    <value>Exchange</value>
+  </data>
+  <data name="Filter_By" xml:space="preserve">
+    <value>Filter By</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="GrossIncome" xml:space="preserve">
+    <value>Gross Income</value>
+  </data>
+  <data name="GrossWin" xml:space="preserve">
+    <value>Gross Win</value>
+  </data>
+  <data name="Group_By" xml:space="preserve">
+    <value>Group By</value>
+  </data>
+  <data name="House_Turnover" xml:space="preserve">
+    <value>House Turnover</value>
+  </data>
+  <data name="House_Win_Loss" xml:space="preserve">
+    <value>House Win Loss</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid Email!</value>
+  </data>
+  <data name="LastMonth" xml:space="preserve">
+    <value>Last Month</value>
+  </data>
+  <data name="LastWeek" xml:space="preserve">
+    <value>Last Week</value>
+  </data>
+  <data name="LC" xml:space="preserve">
+    <value>LC</value>
+  </data>
+  <data name="League" xml:space="preserve">
+    <value>League</value>
+  </data>
+  <data name="Licensee" xml:space="preserve">
+    <value>Licensee</value>
+  </data>
+  <data name="LicenseeWinLoss" xml:space="preserve">
+    <value>Licensee Win Loss</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="LiveCasino" xml:space="preserve">
+    <value>Live Casino</value>
+  </data>
+  <data name="Live_Casino" xml:space="preserve">
+    <value>Live Casino</value>
+  </data>
+  <data name="Live_Score" xml:space="preserve">
+    <value>Live Score</value>
+  </data>
+  <data name="Live_Status" xml:space="preserve">
+    <value>Live Status</value>
+  </data>
+  <data name="Lose" xml:space="preserve">
+    <value>Lose</value>
+  </data>
+  <data name="Margin_Percent" xml:space="preserve">
+    <value>Margin %</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="Match_ID" xml:space="preserve">
+    <value>Match ID</value>
+  </data>
+  <data name="Match_Code" xml:space="preserve">
+    <value>CODE</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="Member_Turnover" xml:space="preserve">
+    <value>Member Turnover</value>
+  </data>
+  <data name="Member_Win_Loss" xml:space="preserve">
+    <value>Member Win Loss</value>
+  </data>
+  <data name="Misc" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="Mix_Parlay" xml:space="preserve">
+    <value>Mix Parlay</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Most_Visited_Pages" xml:space="preserve">
+    <value>Most Visited Pages</value>
+  </data>
+  <data name="MYR" xml:space="preserve">
+    <value>MYR</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="NewLine" xml:space="preserve">
+    <value>
+</value>
+  </data>
+  <data name="NewPasswordConnotEmpty" xml:space="preserve">
+    <value>New Password cannot empty !</value>
+  </data>
+  <data name="New_Accounting_Portal" xml:space="preserve">
+    <value>New Accounting Portal</value>
+  </data>
+  <data name="NG" xml:space="preserve">
+    <value>NG</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NoneLicensee" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="None_live" xml:space="preserve">
+    <value>None-live</value>
+  </data>
+  <data name="NormalTicket" xml:space="preserve">
+    <value>Normal Tickets</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="NumberGame" xml:space="preserve">
+    <value>Number Game</value>
+  </data>
+  <data name="Number_Game" xml:space="preserve">
+    <value>Number Game</value>
+  </data>
+  <data name="Odds" xml:space="preserve">
+    <value>Odds</value>
+  </data>
+  <data name="Old" xml:space="preserve">
+    <value>Old/</value>
+  </data>
+  <data name="OldPasswordCannotEmpty" xml:space="preserve">
+    <value>Old Password cannot empty !</value>
+  </data>
+  <data name="ONEworkIncome" xml:space="preserve">
+    <value>ONEWorks' Income</value>
+  </data>
+  <data name="Optional_Filters" xml:space="preserve">
+    <value>Optional Filters</value>
+  </data>
+  <data name="Original_Currency" xml:space="preserve">
+    <value>Original Currency</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Other_Sports" xml:space="preserve">
+    <value>Other Sports</value>
+  </data>
+  <data name="PasswordDoesNotMatch" xml:space="preserve">
+    <value>Confirm Password and New Password do not match.</value>
+  </data>
+  <data name="PassWordMinLengthError" xml:space="preserve">
+    <value>NewPass connot less than 5 characters.</value>
+  </data>
+  <data name="PinToDashboard" xml:space="preserve">
+    <value>Pin to Dashboard</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Racing" xml:space="preserve">
+    <value>Racing</value>
+  </data>
+  <data name="RacingRevenue" xml:space="preserve">
+    <value>Racing Revenue</value>
+  </data>
+  <data name="RefNo" xml:space="preserve">
+    <value>Ref No</value>
+  </data>
+  <data name="Ref_No" xml:space="preserve">
+    <value>Ref No</value>
+  </data>
+  <data name="RejectTicket" xml:space="preserve">
+    <value>Void/Reject Tickets</value>
+  </data>
+  <data name="Report_by" xml:space="preserve">
+    <value>Report by</value>
+  </data>
+  <data name="SavedChanges" xml:space="preserve">
+    <value>Your change(s) were saved!</value>
+  </data>
+  <data name="SB" xml:space="preserve">
+    <value>SB</value>
+  </data>
+  <data name="Selection" xml:space="preserve">
+    <value>Selection</value>
+  </data>
+  <data name="SelectMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="SendMailFail" xml:space="preserve">
+    <value>Send Mail Fail .</value>
+  </data>
+  <data name="SeperateChar" xml:space="preserve">
+    <value>,</value>
+  </data>
+  <data name="SinceLastMonth" xml:space="preserve">
+    <value>Since Last Month</value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="SMA_Turnover" xml:space="preserve">
+    <value>SMA Turnover</value>
+  </data>
+  <data name="SMA_Winloss" xml:space="preserve">
+    <value>SMA Winloss</value>
+  </data>
+  <data name="SMA_Win_Loss" xml:space="preserve">
+    <value>SMA Win Loss</value>
+  </data>
+  <data name="Soccer" xml:space="preserve">
+    <value>Soccer</value>
+  </data>
+  <data name="Special" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="SpecificDate" xml:space="preserve">
+    <value>Specific Date</value>
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="Sportsbook" xml:space="preserve">
+    <value>Sportsbook</value>
+  </data>
+  <data name="Stake" xml:space="preserve">
+    <value>Stake</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>Super</value>
+  </data>
+  <data name="Symbol_Index" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="System_Parlay" xml:space="preserve">
+    <value>System Parlay</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="TotalPT" xml:space="preserve">
+    <value>Total Position Taking</value>
+  </data>
+  <data name="TotalTrans" xml:space="preserve">
+    <value>Total Trans</value>
+  </data>
+  <data name="TotalTransactions" xml:space="preserve">
+    <value>Total Transactions</value>
+  </data>
+  <data name="Total_Turnover" xml:space="preserve">
+    <value>Total Turnover</value>
+  </data>
+  <data name="TransDate" xml:space="preserve">
+    <value>Trans Date</value>
+  </data>
+  <data name="Trans_Date_GMT8" xml:space="preserve">
+    <value>Trans Date (GMT+ 8)</value>
+  </data>
+  <data name="Turnover" xml:space="preserve">
+    <value>Turnover</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="USD" xml:space="preserve">
+    <value>USD</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="VirtualSports" xml:space="preserve">
+    <value>Virtual Sports</value>
+  </data>
+  <data name="Virtual_Sports" xml:space="preserve">
+    <value>Virtual Sports</value>
+  </data>
+  <data name="WinLoss" xml:space="preserve">
+    <value>Win Loss</value>
+  </data>
+  <data name="Win_Loss" xml:space="preserve">
+    <value>Win Loss</value>
+  </data>
+  <data name="Win_Odds" xml:space="preserve">
+    <value>Win Odds</value>
+  </data>
+  <data name="Won" xml:space="preserve">
+    <value>Won</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="You_have_no_authorization" xml:space="preserve">
+    <value>You have no authorization on this system</value>
+  </data>
+  <data name="You_have_no_menu_permission" xml:space="preserve">
+    <value>You have no permission on any Menu</value>
+  </data>
+  <data name="TicketList" xml:space="preserve">
+    <value>TicketList {0}</value>
+  </data>
+  <data name="Tickets_Listing_for_MatchID_Bettype" xml:space="preserve">
+    <value>Tickets Listing for - Match ID: {0} - Bet type: {1}</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>CODE</value>
+  </data>
+  <data name="EventDate" xml:space="preserve">
+    <value>EVENT DATE</value>
+  </data>
+  <data name="Match_Event" xml:space="preserve">
+    <value>MATCH EVENT</value>
+  </data>
+  <data name="BetID" xml:space="preserve">
+    <value>BetID</value>
+  </data>
+  <data name="Choice" xml:space="preserve">
+    <value>Choice</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="SA" xml:space="preserve">
+    <value>S.A</value>
+  </data>
+  <data name="There_is_no_data" xml:space="preserve">
+    <value>There is no data.</value>
+  </data>
+  <data name="Advanced_mode" xml:space="preserve">
+    <value>Advanced mode</value>
+  </data>
+  <data name="Chinese_Cantonese" xml:space="preserve">
+    <value>Chinese (Cantonese)</value>
+  </data>
+  <data name="Chinese_Mandarin" xml:space="preserve">
+    <value>Chinese (Mandarin)</value>
+  </data>
+  <data name="Collapse_Filter" xml:space="preserve">
+    <value>Collapse Filter</value>
+  </data>
+  <data name="Confirm_Delete" xml:space="preserve">
+    <value>Confirm Delete</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="English_and_Mandarin_are_required" xml:space="preserve">
+    <value>English and Mandarin are required.</value>
+  </data>
+  <data name="Es" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="Event_Type" xml:space="preserve">
+    <value>Event Type</value>
+  </data>
+  <data name="From_BetID" xml:space="preserve">
+    <value>From BetID</value>
+  </data>
+  <data name="From_Trans_Date" xml:space="preserve">
+    <value>From Trans Date</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="It" xml:space="preserve">
+    <value>Italian</value>
+  </data>
+  <data name="Jp" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="Ko" xml:space="preserve">
+    <value>Korean</value>
+  </data>
+  <data name="Live_Away_Score" xml:space="preserve">
+    <value>Live Away Score</value>
+  </data>
+  <data name="Live_Home_Score" xml:space="preserve">
+    <value>Live Home Score</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="More_Messages" xml:space="preserve">
+    <value>More Messages</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Please_inlude_at_in_message_for_replacing_ticket_numbers" xml:space="preserve">
+    <value>Please include "@@" in your message for replacing ticket numbers.</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Optional Filters</value>
+  </data>
+  <data name="Th" xml:space="preserve">
+    <value>Thai</value>
+  </data>
+  <data name="Ticket_Listing" xml:space="preserve">
+    <value>Ticket Listing</value>
+  </data>
+  <data name="Ticket_Type" xml:space="preserve">
+    <value>Ticket Type</value>
+  </data>
+  <data name="To_BetID" xml:space="preserve">
+    <value>To BetID</value>
+  </data>
+  <data name="To_Trans_Date" xml:space="preserve">
+    <value>To Trans Date</value>
+  </data>
+  <data name="Void_Bet" xml:space="preserve">
+    <value>Void Bet</value>
+  </data>
+  <data name="Void_Single_Ticket" xml:space="preserve">
+    <value>Void Single Ticket</value>
+  </data>
+  <data name="You_only_void_Unsettled_or_Refunded_tickets" xml:space="preserve">
+    <value>You can only void "Unsettled" or "Refunded" tickets.</value>
+  </data>
+  <data name="Update_Batch_Message" xml:space="preserve">
+    <value>Update Batch Message</value>
+  </data>
+</root>

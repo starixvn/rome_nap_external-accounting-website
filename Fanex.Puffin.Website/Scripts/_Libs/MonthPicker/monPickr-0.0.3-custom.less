@@ -1,0 +1,163 @@
+
+.monpickr-arrows input.monpickr-input {
+	text-align: center!important;
+	margin: 0!important;
+	padding: 1px 2px !important;
+	border-radius: 2px!important;
+	cursor: pointer;
+	.monpickr-selected-month {
+		height: 23px!important;
+	}
+}
+
+.monpickr-wrap-parent {
+	height: 24px !important;
+	cursor: pointer;
+	.monpickr-wrap {
+		z-index: 99!important;
+		.ui-widget {
+			font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif;
+			font-size: 1em;
+		}
+		.monpickr-dropdown {
+			background: none repeat scroll 0 0 #FFFFFF;
+			border: 1px solid #DDDDDD;
+			box-shadow: 0 0 10px #DDDDDD;
+			margin-left: 1px !important;
+			ul {
+				
+				li:not(.year) {
+					a {
+						font-size: 100%!important;
+					}
+				}
+
+				.ui-state-active {
+					border-radius: 2px!important;
+					background: none!important;
+					border: 1px solid #FFFFFF!important;
+					a {
+						color: #0062ad!important;
+						font-size: 100%!important;
+						font-weight: bold!important;
+					}
+				}
+				.ui-state-hover:not(.year) {
+					a {
+						font-size:  100%!important;
+					}
+				}
+
+				.ui-state-hover {
+					border-radius: 2px!important;
+					background: none!important;
+					border: 1px solid #FFFFFF!important;
+					a {
+						color: #0062ad!important;
+						font-weight: bold!important;
+					}
+				}
+			}
+
+		}
+		.monpickr {
+			background: none!important;
+			border: none!important;
+			border-radius: 2px !important;
+			vertical-align: center;
+
+			.ui-state-focus, & .ui-state-hover {
+				background: none!important;
+				border: none!important;
+			}
+			.prev {	
+				.ui-icon-circle-triangle-w {
+					background-image: url("images/icon-left.png")!important;
+					background-position: 0!important;
+					height: 15px;
+					width: 15px;
+				}
+			}
+			.next {
+				.ui-icon-circle-triangle-e {
+					background-image: url("images/icon-right.png")!important;
+					background-position: 0!important;
+					height: 15px;
+					width: 15px;
+				}
+			}
+		}	
+	
+	}	
+	
+}
+
+.daypickr-wrap-parent{
+	&:hover {
+		box-shadow: 0 0 5px  #AAAAAA;
+	}
+	.daypickr {
+		border-radius: 2px!important;
+		background: none!important;
+		border: 0px solid #CECCCD!important;
+		
+		.monpickr-down {
+			margin-right:-2px;
+		}		
+
+		.ui-state-hover {
+			background: none!important;
+			border:none!important;
+		}
+
+		.daypickr-selected-day {
+			width: 46px !important;
+			text-align: left !important;
+			padding-left:6px!important;
+			
+		}
+	}
+
+	.daypickr-dropdown {
+		background: none repeat scroll 0 0 #FFFFFF;
+		border: 1px solid #DDDDDD;
+		box-shadow: 0 0 10px #DDDDDD;
+
+		.ui-state-hover {
+			background: none repeat scroll 0 0 #FFFFFF;
+			border: solid 1px transparent!important;
+			> a {
+				color: #0062AD !important;
+				font-weight:bold;
+			}
+			
+		}
+	}
+
+	.ui-widget-header .ui-icon {
+		background-image: url("images/dropdown-icon.png")!important;	
+		background-position: 39px 6px !important;
+		width: 47px !important;
+	}	
+
+	.ui-state-hover .ui-icon {
+		background-position: 40px 5px !important;
+	}
+}
+
+.monpickr-arrows 
+{
+	padding: 0!important;
+	.monpickr-prev, .monpickr-next, .monpickr-down {
+		top: 3px;
+	}
+	.monpickr-next, .monpickr-down {		
+		right: 5px;
+	}
+}
+
+.monpickr-super-wrapper .monpickr-label {
+    font-size: 100%!important;
+	text-shadow: 0 0 0.023em black;
+	
+}

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    @RenderSection("Head", false)
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles")
+    }
+    else
+    {
+        <link href="~/content/base/style.less" rel="stylesheet" type="text/css" />
+    }
+</head>
+<body onload="window.setTimeout(function() {window.print();}, 200);">
+        @RenderBody()
+</body>
+</html>

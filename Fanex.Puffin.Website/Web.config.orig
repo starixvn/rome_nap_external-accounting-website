@@ -1,0 +1,119 @@
+﻿<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>  
+  <configSections>
+    <section name="Fanex.Data.DbSettingProvider" type="Fanex.Data.Configuration.DbSettingProviderConfigurationSection, Fanex.Data"/>
+    <section name="Fanex.Logging" type="Fanex.Logging.Configuration.LoggingSettings, Fanex.Logging"/>
+    <section name="dotless" type="dotless.Core.configuration.DotlessConfigurationSectionHandler, dotless.Core"/>
+    <section name="couchbase" type="Couchbase.Configuration.CouchbaseClientSection, Couchbase"/>
+    <section name="NapSettings" type="Fanex.NAP.Core.Configuration.NapSettings, Fanex.NAP.Core"/>
+  </configSections>
+<<<<<<< HEAD
+  <NapSettings Environment="LIVE" IsSiteLogin="1" SiteId="73" LBUrl="tcp://10.40.40.200:8989/LoadBalancerInterface" UM="false" UnauthorizeUrl="~/UserLogin/Common/AccessDenied" ReCheckin="false">
+=======
+  <NapSettings Environment="UAT" IsSiteLogin="1" SiteId="81" LBUrl="tcp://10.40.40.200:8989/LoadBalancerInterface" UM="false" UnauthorizeUrl="~/UserLogin/Common/AccessDenied" ReCheckin="false">
+>>>>>>> 01067b54633886dda5f48faab0fda7ecd00b2858
+    <Domain>
+      <add Name="http://10.19.10.15/ims" Path="/"/>
+    </Domain>
+  </NapSettings>
+  <Fanex.Data.DbSettingProvider default="XmlDbSettingProvider">
+    <providers>
+      <add name="XmlDbSettingProvider" type="Fanex.Data.Configuration.XmlDbSettingProvider2,Fanex.Data" resourcePath="~/App_Data/" enableWatching="1"/>
+    </providers>
+  </Fanex.Data.DbSettingProvider>
+  <Fanex.Logging msmqPath="FormatName:DIRECT=tcp:10.18.200.201\private$\entlib" defaultCategory="Accounting"/>
+  <couchbase>
+    <servers bucket="Accounting" bucketPassword="">
+      <add uri="http://10.18.200.202:8091/pools/default"/>
+      <add uri="http://10.18.200.207:8091/pools/default"/>
+      <add uri="http://10.18.200.210:8091/pools/default"/>
+    </servers>
+  </couchbase>
+  <connectionStrings configSource="Web.ConnectionString.config"/>
+  <appSettings file="Web.AppSettings.config">
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true"/>
+    <add key="webpages:Version" value="2.0.0.0"/>
+    <add key="webpages:Enabled" value="false"/>
+    <add key="PreserveLoginUrl" value="true"/>
+    <add key="ClientValidationEnabled" value="true"/>
+    <add key="UnobtrusiveJavaScriptEnabled" value="true"/>
+     
+    <!-- Bingo Settings -->
+    <add key="MaxBall" value="75" />
+    <add key="MaxCommission" value="0.9" />
+    <add key="MaxPt" value="0.9" />
+    <add key="MinPt" value="0.0" />
+    
+  </appSettings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.0"/>
+    <authentication mode="Forms">
+      <forms ticketCompatibilityMode="Framework40" loginUrl="~/UserLogin/Login" timeout="2880" defaultUrl="~/Home"/>
+    </authentication>
+    <authorization>
+      <allow users="*"/>
+    </authorization>
+    <!--<customErrors mode="Off" defaultRedirect="~/Common/Error/">
+      <error statusCode="403" redirect="~/Common/Unauthorize/"/>
+      <error statusCode="404" redirect="~/Common/NotFound/"/>
+    </customErrors>-->
+    <pages>
+      <namespaces>
+        <add namespace="System.Web.Helpers"/>
+        <add namespace="System.Web.Mvc"/>
+        <add namespace="System.Web.Mvc.Ajax"/>
+        <add namespace="System.Web.Mvc.Html"/>
+        <add namespace="System.Web.Optimization"/>
+        <add namespace="System.Web.Routing"/>
+        <add namespace="System.Web.WebPages"/>
+      </namespaces>
+    </pages>
+    <profile defaultProvider="DefaultProfileProvider">
+      <providers>
+        <add name="DefaultProfileProvider" type="System.Web.Providers.DefaultProfileProvider, System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" connectionStringName="DefaultConnection" applicationName="/"/>
+      </providers>
+    </profile>
+    <membership defaultProvider="DefaultMembershipProvider">
+      <providers>
+        <add name="DefaultMembershipProvider" type="System.Web.Providers.DefaultMembershipProvider, System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" connectionStringName="DefaultConnection" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" maxInvalidPasswordAttempts="5" minRequiredPasswordLength="6" minRequiredNonalphanumericCharacters="0" passwordAttemptWindow="10" applicationName="/"/>
+      </providers>
+    </membership>
+    <roleManager defaultProvider="DefaultRoleProvider">
+      <providers>
+        <add name="DefaultRoleProvider" type="System.Web.Providers.DefaultRoleProvider, System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" connectionStringName="DefaultConnection" applicationName="/"/>
+      </providers>
+    </roleManager>
+    <sessionState mode="StateServer" cookieless="false" timeout="20000"/>
+    <httpHandlers>
+      <add path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler, dotless.Core"/>
+    </httpHandlers>
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false"/>
+    <modules runAllManagedModulesForAllRequests="true"/>
+    <handlers>
+      <add name="dotless" path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler,dotless.Core" resourceType="File" preCondition=""/>
+    </handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect oldVersion="1.0.0.0-4.0.0.0" newVersion="4.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <dotless minifyCss="true" cache="true" web="false"/>
+</configuration>

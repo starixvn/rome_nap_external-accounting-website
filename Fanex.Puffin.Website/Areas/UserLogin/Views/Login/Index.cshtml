@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en"><![endif]-->
+<!--[if (IE 9)&!(IEMobile)]><html class="no-js ie9" lang="en"><![endif]-->
+<!--[if (gt IE 9)|(gt IEMobile 7)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>Sign In</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/areas/userlogin/themes/login.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/_Libs/jQuery/classList.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id='not-supported-browser-panel' style="display: none">
+        Your browser is no longer supported. Some parts will not work and you may experience
+        problems.<br />
+        If you are having problems, try <a href='http://browsehappy.com/'>this</a> for full
+        browsing experience. Thank you!
+    </div>
+    @using (Html.BeginForm())
+ {
+        <div class="center">
+		    <div id="login-box">
+			    <div id="msg">
+				    <span id="inner-msg">@ViewBag.Message</span>
+			    </div>
+			    <div class="header">
+				    <div class="welcome">
+				    </div>
+				    <div class="secure">
+				    </div>
+			    </div>
+			    <div class="auth">
+				    <input type="text" id="username" name="username" autocomplete="off" />
+				    <input type="password" id="password" name="password" />
+				    <input type="submit" id="submit" value="Sign In" />
+                    <div class="bestview">
+                        <span>Best view in </span><span class="ff4">Firefox 4</span><span class="ie8">IE8</span>
+                    </div>
+			    </div>
+               
+		    </div>
+        </div>
+ }
+</body>
+</html>
+@*<script type="text/javascript">
+	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 4,2,6,v;o.M=f(){N(\'o.O.P()\',0);4=7.g(\'4\');w=7.g(\'Q-4\');2=7.g(\'2\');6=7.g(\'6\');v=7.g(\'R\');x();d(w.S.p>0){4.e.h=\'y\';k(\'4\',5,q)}r{4.e.h=\'t\'}};7.T[0].U=f(){4.e.h=\'t\';3 a=V;2.l=2.l.z();d(2.l.p==0){2.m.A(\'n\');a=B;k(\'2\',5,q)}r{2.m.C(\'n\')}d(6.l.p==0){6.m.A(\'n\');a=B;k(\'6\',5,q)}r{6.m.C(\'n\')}u a};W.X.z=f(){u Y.D(/^\\s*/,"").D(/\\s*$/,"")};f k(a,b,c){Z(3 i=b,j=0;i>=0;i--){E(a+".e.F = \'-"+i+"G\'",j++*c);E(a+".e.F = \'"+i+"G\'",j++*c)}}f x(){3 a=H();d(a!=-1&&a<8.0){3 b=7.g(\'10-11-12-13\');d(b.e.h==\'t\'){b.e.h=\'y\'}}};f H(){3 a=-1;d(o.I.J.14("K")>0){3 b=I.J;3 c=15 L("K ([0-9]{1,}[\\.0-9]{0,})");d(c.16(b)!=17)a=18(L.$1)}u a};',62,71,'||username|var|msg||password|document||||||if|style|function|getElementById|display|||shake|value|classList|err|window|length|100|else||none|return|btnSubmit|innerMsg|checkBrowser|block|trim|add|false|remove|replace|setTimeout|left|0px|getIeVersion|navigator|userAgent|MSIE|RegExp|onload|setInterval|history|forward|inner|submit|innerHTML|forms|onsubmit|true|String|prototype|this|for|not|supported|browser|panel|indexOf|new|exec|null|parseFloat'.split('|'),0,{}))
+</script>*@
+<script type="text/javascript">
+
+    var msg, username, password, btnSubmit;
+
+    window.onload = function () {
+        setInterval('window.history.forward()', 0);
+
+        msg = document.getElementById('msg');
+        innerMsg = document.getElementById('inner-msg');
+        username = document.getElementById('username');
+        password = document.getElementById('password');
+        btnSubmit = document.getElementById('submit');
+
+        checkBrowser(); // check if the client's browser is supported
+        username.focus();
+        if (innerMsg.innerHTML.length > 0) {
+            msg.style.display = 'block';
+            shake('msg', 0, 100);
+        }
+        else {
+            msg.style.display = 'none';
+        }
+    };
+
+    document.forms[0].onsubmit = function () {
+        msg.style.display = 'none';
+
+        var isValid = true;
+
+        username.value = username.value.trim();
+
+        if (username.value.length == 0) {
+            username.classList.add('err');
+            isValid = false;
+            shake('username', 0, 100);
+        } else {
+            username.classList.remove('err');
+        }
+
+        if (password.value.length == 0) {
+            password.classList.add('err');
+            isValid = false;
+            shake('password', 0, 100);
+        } else {
+            password.classList.remove('err');
+        }
+
+        //		if (isValid) {
+        //			btnSubmit.value = 'Signing In';
+        //			btnSubmit.disabled = true;
+        //		}
+
+        return isValid;
+    };
+
+    String.prototype.trim = function () {
+        return this.replace(/^\s*/, "").replace(/\s*$/, "");
+    };
+
+    function shake(target, times, duration) {
+        for (var i = times, j = 0; i >= 0; i--) {
+            setTimeout(target + ".style.left = '-" + i + "0px'", j++ * duration);
+            setTimeout(target + ".style.left = '" + i + "0px'", j++ * duration);
+        }
+    }
+
+    function checkBrowser() {
+        var msieVersion = getIeVersion();
+
+        if (msieVersion != -1 && msieVersion < 8.0) {
+            var warnPnl = document.getElementById('not-supported-browser-panel');
+            if (warnPnl.style.display == 'none') { warnPnl.style.display = 'block' }
+        }
+    };
+
+    // Returns the version of Internet Explorer or -1
+    // (indicating the use of another browser).
+    function getIeVersion() {
+        var version = -1; // Return value assumes failure.
+
+        if (window.navigator.userAgent.indexOf("MSIE") > 0) {
+            var usrAgent = navigator.userAgent;
+            var reg = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+
+            if (reg.exec(usrAgent) != null) version = parseFloat(RegExp.$1);
+        }
+
+        return version;
+    };
+
+</script>

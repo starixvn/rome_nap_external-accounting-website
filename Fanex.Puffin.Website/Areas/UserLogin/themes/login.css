@@ -1,0 +1,211 @@
+
+body {
+	font-family: 'Lucida Sans', Tahoma, Arial, Helvetica, sans-serif;
+	background:#D8D6D8 url(img/pattern6.png);
+	margin: 0;
+	padding: 0;
+}
+
+.center {
+   width: 456px;
+   height: 294px;
+   position: absolute;
+   left: 50%;
+   top: 50%; 
+   margin-left: -232px;
+   margin-top: -175px;
+}
+
+.msgbox {
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+}
+
+#login-box {
+	position: relative;
+	padding: 0;
+	width: 456px;
+	color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+#msg {
+	display: none;
+	position: absolute;
+	top: -60px;
+	width: 454px;
+	height: 30px;
+	padding: 14px 0 4px;
+	border-radius: 5px;
+	background: #e26661;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+}
+
+#login-box .header {
+	/*background: url(img/header_bg.jpg);*/
+	background-color:#6c8ccd;
+	background: -moz-linear-gradient(#6c8ccd, #5c7cbe);
+	background: -webkit-linear-gradient(#6c8ccd, #5c7cbe);
+	border-radius: 5px 5px 0 0;
+	padding: 0 45px;
+	height: 54px;
+}
+
+#login-box .header .welcome {
+	/*background: url(img/logo.png) no-repeat center left;*/
+	width: 313px;
+	height: 22px;
+	display: inline-block;
+	float: left;
+	margin-top: 18px;
+}
+
+#login-box .header .secure {
+	background: url(img/lock.png) no-repeat center right;
+	width: 46px;
+	height: 53px;
+	display: inline-block;
+	float: right;
+}
+
+#login-box .auth {
+	/*background: url(img/auth-bg.png);*/
+	background-color: #3b5998 !important;
+	border-radius: 0 0 5px 5px;
+	padding: 40px 46px 20px 46px;
+}
+
+#username, #password, #submit {
+	font-family: 'Lucida Sans', Tahoma, Arial, Helvetica, sans-serif;
+}
+
+#username, #password {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 16px;
+	text-indent: 60px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	color: #666;
+	font-size: 14px;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+}
+
+#password 
+{
+    font-size: 12px !important;
+    }
+
+.ie9 #username, .ie9 #password, .ie8 #username, .ie8 #password {
+	text-transform: lowercase;
+	line-height: 40px;
+}
+
+#username:active, #username:focus, #password:active, #password:focus {
+	border: 1px solid #ccc;
+	box-shadow: 0 0 1px #ccc;
+}
+
+#username.err, #password.err {
+	border: 1px solid #CF4742;
+}
+
+#username {
+	background: #fff url(img/username.png) no-repeat left center;
+}
+
+#password {
+	background: #fff url(img/password.png) no-repeat left center;
+}
+
+#submit {
+	display: block;
+	width: 366px;
+	height: 40px;
+    background-color : #E7EAEB;
+    border: 1px solid #B5B6B3;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 0 #FFFFFF inset;
+    color: #5C5C5C;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.1px;
+    padding: 6px 11px;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    text-transform: uppercase;
+}
+
+#submit:hover {
+	background-color : #E7EAEB;
+}
+
+#submit:active, #submit:focus {
+	background-color : #E7EAEB;
+}
+
+#submit:disabled {
+	border: solid 1px #999;
+	background: #aaa;
+	background: -moz-linear-gradient(#bbb, #aaa) #aaa;
+	background: -webkit-linear-gradient(#bbb, #aaa) #aaa;
+	cursor: default;
+}
+
+/* --- NOT SUPPORTED BROWSERS --- */
+
+#not-supported-browser-panel {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	left: 0px;
+	background-color: #f9edbe;
+	text-align: center;
+	padding: 20px;
+	z-index: 9999;
+}
+
+#not-supported-browser-panel a {
+	font-size: 1.6em;
+	text-decoration: none;
+	color: #222;
+	background-color: #E8DCAD;
+	padding: 0 10px;
+}
+
+#not-supported-browser-panel a:hover {
+	background-color: #0c0;
+	color: #fff;
+}
+
+.bestview
+{
+    margin-top:16px;
+    font-size:0.8em;
+    text-shadow: 0 0 0.1em #000;
+    padding: 1px;
+    }
+    
+.bestview .ff4
+{
+    background:url(img/firefox_original.png) 0 0 no-repeat;
+	padding:1px 1px 1px 18px;
+	margin-left:6px;
+}
+
+.bestview .ie8
+{
+    margin-left:6px;
+    background:url(img/ie.png) 0 0 no-repeat;
+    padding:1px 18px;
+}

@@ -1,0 +1,174 @@
+@font-face {
+	font-family: 'Abel';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Abel'), local('Abel-Regular'), url(fonts/Abel.woff) format('woff');
+}
+
+body {
+	font-family: Abel, 'Segoe UI', Tahoma, Arial, sans-serif;
+	background: url(img/bg.png);
+	margin: 0;
+	padding: 0;
+}
+
+.msgbox {
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+}
+
+#login-box {
+	position: relative;
+	margin: 180px auto 0;
+	padding: 0;
+	width: 456px;
+	color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+}
+
+#msg {
+	display: none;
+	position: absolute;
+	top: -60px;
+	width: 454px;
+	height: 30px;
+	padding: 12px 0 4px;
+	border-radius: 5px;
+	background: #CF4742;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+}
+
+#login-box .header {
+	background: url(img/title-bg.jpg);
+	border-radius: 5px 5px 0 0;
+	padding: 0 50px;
+	height: 54px;
+}
+
+#login-box .header .welcome {
+	background: url(img/welcome.png) no-repeat center left;
+	width: 178px;
+	height: 54px;
+	display: inline-block;
+}
+
+#login-box .header .secure {
+	background: url(img/lock.png) no-repeat center right;
+	width: 174px;
+	height: 54px;
+	display: inline-block;
+}
+
+#login-box .auth {
+	background: url(img/auth-bg.png);
+	border-radius: 0 0 5px 5px;
+	padding: 40px 46px 30px;
+}
+
+#username, #password, #submit {
+	font-family: Abel, 'Segoe UI', Tahoma, Arial, sans-serif;
+}
+
+#username, #password {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 16px;
+	text-indent: 60px;
+	
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	color: #666;
+	font-size: 16px;
+	transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+}
+
+.ie9 #username, .ie9 #password, .ie8 #username, .ie8 #password {
+	text-transform: lowercase;
+}
+
+#username:active, #username:focus, #password:active, #password:focus {
+	border: 1px solid #549cba;
+	box-shadow: 0 0 1px #64B4D6;
+}
+
+#username.err, #password.err {
+	border: 1px solid #CF4742;
+}
+
+#username {
+	background: #fff url(img/username.png) no-repeat left center;
+}
+
+#password {
+	background: #fff url(img/password.png) no-repeat left center;
+}
+
+#submit {
+	display: block;
+	width: 366px;
+	height: 40px;
+	border: solid 1px #549cba;
+	border-radius: 3px;
+	background: #549cba;
+	background: -moz-linear-gradient(#64B4D6, #549cba) #549cba;
+	background: -webkit-linear-gradient(#64B4D6, #549cba) #549cba;
+	font-size: 21px;
+	color: #fff;
+	cursor: pointer;
+}
+
+#submit:hover {
+	background: #59A1BF;
+	background: -moz-linear-gradient(#69B9DB, #59A1BF) #59A1BF;
+	background: -webkit-linear-gradient(#69B9DB, #59A1BF) #59A1BF;
+}
+
+#submit:active, #submit:focus {
+	background: #64B4D6;
+	background: -moz-linear-gradient(#549cba, #64B4D6) #64B4D6;
+	background: -webkit-linear-gradient(#549cba, #64B4D6) #64B4D6;
+}
+
+#submit:disabled {
+	border: solid 1px #999;
+	background: #aaa;
+	background: -moz-linear-gradient(#bbb, #aaa) #aaa;
+	background: -webkit-linear-gradient(#bbb, #aaa) #aaa;
+	cursor: default;
+}
+
+/* --- NOT SUPPORTED BROWSERS --- */
+
+#not-supported-browser-panel {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	left: 0px;
+	background-color: #f9edbe;
+	text-align: center;
+	padding: 20px;
+	z-index: 9999;
+}
+
+#not-supported-browser-panel a {
+	font-size: 1.6em;
+	text-decoration: none;
+	color: #222;
+	background-color: #E8DCAD;
+	padding: 0 10px;
+}
+
+#not-supported-browser-panel a:hover {
+	background-color: #0c0;
+	color: #fff;
+}

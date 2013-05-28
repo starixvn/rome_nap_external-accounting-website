@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../../themes/base/jquery/jquery.ui.all.css" type="text/css" rel="Stylesheet" />
+    <link href="jquery.nexDatePicker.css" type="text/css" rel="Stylesheet" />
+    <style type="text/css">
+        .demo
+        {
+            margin: 10px 10px;
+        }
+    </style>
+    <script type="text/javascript" src="../jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../jquery-ui-1.9.1.js"></script>
+    <script type="text/javascript" src="jquery.nexDatePicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+//            $('#nexDatePicker').nexDatePicker({
+//                nexDatePickerType: "quickchoose",
+//                firstDatePicker: {
+//                    Id: "firstDatePickerId10",
+//                    Label: "From: ",
+//                    InitDate: "3/2/2012"
+//                },
+//                secondDatePicker: {
+//                    Id: "secondDatePickerId11",
+//                    Label: "To: ",
+//                    InitDate: "3/4/2012"
+//                },
+//                dropDownListId: "dropDownListId1"
+//            });
+
+            $('#nexDatePicker3').nexDatePicker({
+                nexDatePickerType: "quickchoose",
+                firstDatePicker: {
+                    Id: "firstDatePickerId",
+                    Label: "From: ",
+                    InitDate: "12/1/2012"
+                },
+                secondDatePicker: {
+                    Id: "secondDatePickerId",
+                    Label: "To: ",
+                    InitDate: "12/2/2012"
+                },
+                selectedItem: 0,
+                dropDownListId: "dropDownListId3",
+                minDate: new Date("11/1/2012")
+            });
+
+//            $('#nexDatePicker1').nexDatePicker({
+//                nexDatePickerType: "single",
+//                firstDatePicker: {
+//                    Id: "firstDatePickerId1",
+//                    Label: "From: ",
+//                    InitDate: ""
+//                },
+//                dropDownListId: "dropDownListId1"
+//            });
+
+//            $('#nexDatePicker2').nexDatePicker({
+//                nexDatePickerType: "daterange",
+//                firstDatePicker: {
+//                    Id: "firstDatePickerId4",
+//                    Label: "From: ",
+//                    LabelCss: "DemoCss"
+//                },
+//                secondDatePicker: {
+//                    Id: "secondDatePickerId5",
+//                    Label: "To: "
+//                },
+//                dropDownListId: "dropDownListId2"
+//            });
+
+//            $("#demobutton").click(function () {
+//                alert($('#nexDatePicker2').nexDatePicker("getSingleDate"));
+
+//                var date = $('#nexDatePicker').nexDatePicker("getDateRange");
+//                alert(date.FromDate + ":" + date.ToDate);
+//            });
+           //// =>> main demo below
+//            $('#datepickerplugin').nexDatePicker({
+//                nexDatePickerType: "quickchoose",
+//                datePickerFormat: {
+//                    showOtherMonths: true,
+//                    selectOtherMonths: true,
+//                    dateFormat: "M dd, yy"
+//                },
+//                firstDatePicker: {
+//                    Id: "firstDatePickerId1",
+//                    Label: labelFrom,
+//                    InitDate: "",
+//                    LabelCss: "lbl-field col_2",
+//                    TextboxCss: "edit-field col_5"
+//                },
+//                secondDatePicker: {
+//                    Id: "secondDatePickerId1",
+//                    Label: labelTo,
+//                    InitDate: "",
+//                    LabelCss: "lbl-field col_1",
+//                    TextboxCss: "edit-field col_6"
+//                },
+//                onSelectDatePicker: function () {
+//                    //NumberGameWinLoss.changeReportDate();
+//                    //alert("aaa");
+//                }
+//            });
+        });
+    </script>
+</head>
+<body>
+    <div id="nexDatePicker" class="ui_nexdatepicker demo"></div>
+    <div id="nexDatePicker1" class="ui_nexdatepicker demo"></div>
+    <div id="nexDatePicker2" class="ui_nexdatepicker demo"></div>
+    <div id="nexDatePicker3" class="ui_nexdatepicker demo"></div>
+    <input type="button" value="DemoGetData" id="demobutton"/>
+</body>
+</html>

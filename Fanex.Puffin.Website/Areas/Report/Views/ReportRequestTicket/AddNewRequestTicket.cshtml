@@ -1,0 +1,110 @@
+﻿@using Resource;
+<div id="addNewRequestTicketPopupContainer" class="display-none">
+    <div id="addNewRequestTicketPopup">
+        <div id="filter-bar" class="addNewRequestTicketForm">
+            <div class="filter-form">
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div id="resultMessage_AddNew" class="col_19">
+                        </div>
+                    </div>
+                </div>
+                @*  <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Request_No
+                        </div>
+                        <div class="edit-field col_15">
+                            <input id="txtRequestNo" readonly="readonly" type="text" />
+                        </div>
+                    </div>
+                </div>*@
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Requestor
+                        </div>
+                        <div class="edit-field col_15">
+                            <input id="txtRequestor" readonly="readonly" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Date_of_Request
+                        </div>
+                        <div class="edit-field col_15">
+                            <input id="txtDateOfRequest" readonly="readonly" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Report_Name
+                        </div>
+                        <div class="edit-field col_15">
+                            <input id="txtReportName" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell row-remark">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Remark
+                        </div>
+                        <div class="edit-field col_15">
+                            <textarea id="txtRemark" name="txtRemark"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="edit-field col_20">
+                            <input id="txtDateline" type="text" readonly="readonly" class="txtdate" />
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Assignee
+                        </div>
+                        <div class="edit-field col_15">
+                            <input id="txtAssignee" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Status_of_Report
+                        </div>
+                        <div class="edit-field col_15 align-left">
+                            <select id="ddlStatusOfReport_AddNew" class="alpha">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell row-remark ">
+                        <div class="lbl-field col_5 align-right">
+                            @Labels.Remark_by_Preparer
+                        </div>
+                        <div class="edit-field col_15">
+                            <textarea id="txtRemarkByPreparer" name="txtRemarkByPreparer"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-cell">
+                        <div class="submit width-auto col_5 prefix_15 align-right">
+                            <input id="btnSubmit" name="btnSubmit" type="submit" value="@Labels.Submit" class="col_4 alpha omega" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
+<!--[if (IE 8)]><html lang="en" class="ie8 oldie"><![endif]-->
+<!--[if (IE 9)]><html lang="en" class="ie9"><![endif]-->
+<!--[if (gt IE 9)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--[if lt IE 9]><script src="~/scripts/_libs/utils/html5shiv.min.js" type="text/javascript"></script><![endif]-->
+    <link href="~/content/jquery-ui/jquery-ui-1.9.1.custom.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="~/scripts/_libs/fanexgrid/fanex.grid.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/_libs/fanexgrid/fanex.pagination.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/_Libs/Validation/validationEngine.jquery.css" rel="stylesheet"
+        type="text/css" />
+    @*<link href="~/Content/BetList.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css" rel="stylesheet" type="text/css" />
+    @RenderSection("Head", false)
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles")
+    }
+    else
+    {
+        <link href="~/content/base/style.less" rel="stylesheet" type="text/css" />
+    }
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="~/?ref=logo">&nbsp;</a>
+        </div>
+        @Html.Action("_Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
+        <div class="user-info">
+        <div class="greeting">
+                <h2>
+                    Howdy, <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span
+                        class="info-more"></span></h2>
+                <ul>
+                    <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "User", new { Area = "UserControl" }, new { })</li>
+                    <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "User", new { Area = "UserControl" }, new { })</li>
+                    <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { Area = "UserLogin" }, new { })</li>
+                </ul>
+            </div>
+              
+        </div>
+    </header>
+    <section id="headline">
+        @RenderSection("Headline", false)
+    </section>
+    <section id="body">
+        @RenderBody()
+    </section>
+    <div id="dialog-message">
+    </div>
+    <div id="dialog-popup">
+    </div>
+    @*
+    <div class="alert alert-success" id="msg-box" style="z-index: 9999;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div class="alert-content">
+            <b>Bet transactions deleted!</b>
+            <span class="error">Email sent to ricky shit</span><br />
+            <span class="success">Email sent to ricky shit</span><br />
+            Email sent to ricky shit<br />
+            Email sent to ricky shit<br />
+        </div>
+    </div>
+
+    <div id="msg"></div>
+
+    <div class="loader">
+        <img src="~/content/img/loader.gif" alt="loading..." />
+    </div>*@
+    @Html.Hidden("NapHubRoot", Url.Content("~/"))
+</body>
+</html>
+@Scripts.Render("~/scripts/common")
+<script type="text/javascript" src="~/Areas/UserLogin/scripts/ReCheckIn.js"></script>
+@*@Scripts.Render("~/Areas/UserLogin/scripts")*@
+@Scripts.Render("~/Areas/UserLogin/scripts/lib/msgbox/JS")
+@RenderSection("Scripts", false)
+@RenderSection("Foot", false)
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    window.rootWebPath = '@(Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath)';
+
+    //Set fix width for filter-bar
+    $("#filter-bar").css("width", ($(window).width() - 20) + "px");
+    $(".grid-title").css("width", ($(window).width() - 20) + "px");
+    $(".div-content").css("width", ($(window).width() - 20) + "px");
+    $(window).resize(function () {
+        var width = $(window).width() - 20; //padding-right: 10 + padding-left: 10
+        $("#filter-bar").css("width", width + "px");
+        $(".grid-title").css("width", width + "px");
+        $(".div-content").css("width", width + "px");
+    });
+</script>
