@@ -1,0 +1,58 @@
+﻿<fieldset id="fsMessage" class="form" style="display: none">
+    <legend><span><i class="icon-envelope"></i></span>@Labels.Message</legend>
+    <h6>
+        <em class="em"><u>@Labels.Note</u>:
+            <br />
+            + @Labels.Please_inlude_at_in_message_for_replacing_ticket_numbers
+            <br />
+            + @Labels.English_and_Mandarin_are_required
+            <br />
+            <span>
+                <span id="spMoreMsg">[+]</span> 
+                <span onclick="Message.Helper.displayMoreMsg()" style="cursor: pointer;
+                    text-decoration: underline">@Labels.More_Messages
+                </span>
+            </span> 
+        </em>
+    </h6>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <label for="msg-en">@Labels.English</label>
+                    <textarea rows="1" id="msg-en" class="input-xlarge msg-void-ticket"></textarea>
+                    <label for="msg-ch">@Labels.Chinese_Mandarin</label>
+                    <textarea rows="1" id="msg-ch" class="input-xlarge msg-void-ticket"></textarea>
+                    <label for="msg-cs">@Labels.Chinese_Cantonese</label>
+                    <textarea rows="1" id="msg-cs" class="input-xlarge msg-void-ticket"></textarea>
+                </div>
+            </td>
+            <td style="width: 50px">
+            </td>
+            <td>
+                <div class="other-languages" style="display: none">
+                    <label for="msg-th">@Labels.Th</label>
+                    <textarea rows="1" id="msg-th" class="input-xlarge msg-void-ticket"></textarea>
+                    <label for="msg-it">@Labels.It</label>
+                    <textarea rows="1" id="msg-it" class="input-xlarge msg-void-ticket"></textarea>
+                    <label for="msg-jp">@Labels.Jp</label>
+                    <textarea rows="1" id="msg-jp" class="input-xlarge msg-void-ticket"></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                <div class="other-languages" style="display: none">
+                    <label for="msg-es">@Labels.Es</label>
+                    <textarea rows="1" id="msg-es" class="input-xlarge msg-void-ticket"></textarea>
+                    <label for="msg-ko">@Labels.Ko</label>
+                    <textarea rows="1" id="msg-ko" class="input-xlarge msg-void-ticket"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
