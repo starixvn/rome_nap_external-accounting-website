@@ -1061,19 +1061,27 @@ Fanex.ExtAcc.Customer = {
         .success(function (result) {
             if (result.ErrorCode && result.ErrorCode == '1') {
                 Fanex.ExtAcc.UnBlockUI();
-                alert(result.ErrorMessage);
+                Fanex.ExtAcc.Form.Alert('Error', result.ErrorMessage, 400, 150, 'alert');
                 Fanex.ExtAcc.Form.Close();
             }
             else {
+                if(!result.IsSuccess){
+                        Fanex.ExtAcc.Customer.MultipleDblCommError += (result.ErrorCode == '600' ? ('Account ' + Fanex.ExtAcc.Customer.Names()[current] + ' was disableed<br />') : (result.ErrorMessage + '<br/>'));
+                }                
+
                 if (current == len) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
-                        Fanex.ExtAcc.Form.Close();
+                        Fanex.ExtAcc.Form.Close();                        
+                        Fanex.ExtAcc.UnBlockUI();
+
+                        if(Fanex.ExtAcc.Customer.MultipleDblCommError != ''){                            
+                            Fanex.ExtAcc.Form.Alert('Error', Fanex.ExtAcc.Customer.MultipleDblCommError, 400, 150, 'alert');
+                        }
+                        
                         Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        
                     }, 2000);
-                }
-                else {
-                    Fanex.ExtAcc.Customer.MultipleDblCommError += result.ErrorMessage + '<br/>';
                 }
 
                 current++;
@@ -1081,7 +1089,7 @@ Fanex.ExtAcc.Customer = {
                 if (current <= len) {
                     Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
                 }
-            }
+            }            
         })
         .error(function (xhr, status, err) {
             if (typeof console != 'undefined') {
@@ -1146,7 +1154,7 @@ Fanex.ExtAcc.Customer = {
                     }
                     else {
                         Fanex.ExtAcc.UnBlockUI();
-                        alert(result.ErrorCode == "600" ? "This account was disabled" : result.ErrorMessage);
+                        Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled" : result.ErrorMessage, 300, 150, 'alert');
                     }
                 })
                 .error(function (xhr) {
