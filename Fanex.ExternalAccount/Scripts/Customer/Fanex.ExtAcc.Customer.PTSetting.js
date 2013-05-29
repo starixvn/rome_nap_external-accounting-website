@@ -23,6 +23,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
             $('#arrowUpDown').remove();
+
+            Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
+            Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
         }
 
         if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
@@ -178,6 +181,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $('#statusHeader').remove();
             $('#statusSection').remove();
         }
+
+        if (this.IsMultiple) {
+            Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
+        }
     },
 
     GetMasterPTSetting: function () {
@@ -212,7 +219,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     var updateParameters = '';
                     var customer = Fanex.copy(result.customer);
@@ -359,7 +366,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     var updateParameters = '';
                     var customer = Fanex.copy(result.customer);
@@ -504,7 +511,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     var updateParameters = '';
                     var customer = Fanex.copy(result.customer);
@@ -632,7 +639,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     var updateParameters = '';
                     var customer = Fanex.copy(result.customer);
@@ -722,7 +729,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             Fanex.ExtAcc.Customer.PTSetting.ptGrid.Render(ptContainer);
 
             Fanex.ExtAcc.Customer.PTSetting.PTSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     var updateParameters = '';
                     var customer = Fanex.copy(result.customer);

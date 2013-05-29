@@ -54,6 +54,10 @@ Fanex.ExtAcc.Customer = {
     Usernames: '',
     CustIds: '',
     TitleEditInfo: '',
+    MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
+    MessageUnClosed: 'Are you sure you want to change Close status for this customer?',
+    MessageSuspended: 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!',
+    MessageUnSuspended: 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.',
 
     Init: function () {
         //Prevent loading group name
@@ -2068,5 +2072,79 @@ Fanex.ExtAcc.Customer = {
             $('#names').attr('title', this.Usernames.substring(0, this.Usernames.length - 2));
             $('#arrowUpDown').css('display', 'block');
         }
+    },
+
+    ProcessConfirmClosedStatus: function(id){
+        $(id ? '#' + id : '#closed').bind('click', function () {
+            var checkbox = this;
+
+            if (this.checked) {
+                Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    Fanex.ExtAcc.Customer.MessageClosed,
+                    400,
+                    150,
+                    false,
+                    function () {
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    function () {
+                        checkbox.checked = false;
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    'confirmStatus');
+            }
+            else {
+                Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    Fanex.ExtAcc.Customer.MessageUnClosed,
+                    400,
+                    150,
+                    false,
+                    function () {
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    function () {
+                        checkbox.checked = true;
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    'confirmStatus');
+            }
+        });
+    },
+
+    ProcessConfirmSuspendedStatus: function(id){
+        $(id ? '#' + id : '#suspended').bind('click', function () {
+            var checkbox = this;
+
+            if (this.checked) {
+                Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    Fanex.ExtAcc.Customer.MessageSuspended,
+                    400,
+                    180,
+                    false,
+                    function () {
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    function () {
+                        checkbox.checked = false;
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    'confirmStatus');
+            }
+            else {
+                Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    Fanex.ExtAcc.Customer.MessageUnSuspended,
+                    400,
+                    180,
+                    false,
+                    function () {
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    function () {
+                        checkbox.checked = true;
+                        Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                    },
+                    'confirmStatus');
+            }
+        });
     }
 }
