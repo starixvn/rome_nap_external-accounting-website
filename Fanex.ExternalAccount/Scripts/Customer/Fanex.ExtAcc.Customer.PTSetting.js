@@ -21,14 +21,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
 
-        if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-            $('#arrowUpDown').remove();
-
-            Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
-            Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
-        }
-
-        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+        if (this.IsFullInfo) {
             var interval = setInterval(function () {
                 if (Fanex.ExtAcc.Customer.PTSetting.customer) {
                     clearInterval(interval);
@@ -180,6 +173,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
         else {
             $('#statusHeader').remove();
             $('#statusSection').remove();
+        }
+
+        if (!this.IsMultiple && this.IsFullInfo) {
+            $('#arrowUpDown').remove();
+
+            Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
+            Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
         }
 
         if (this.IsMultiple) {

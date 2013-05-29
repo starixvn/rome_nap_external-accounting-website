@@ -2125,7 +2125,7 @@ Fanex.ExtAcc.Customer = {
                         'confirmStatus');
                 }
             });
-        }, 2000);
+        }, 1000);
     },
 
     ProcessConfirmSuspendedStatus: function(id){
@@ -2167,6 +2167,6 @@ Fanex.ExtAcc.Customer = {
                         'confirmStatus');
                 }
             });
-        }, 2000);
+        }, 1000);
     }
 }
