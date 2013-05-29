@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 
-namespace Fanex.Puffin.Report.Configure
+namespace Fanex.Puffin.Report.App_Start
 {
     public class ReportAreaRegistration : AreaRegistration
     {

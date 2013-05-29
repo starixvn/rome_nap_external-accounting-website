@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Fanex.Puffin.Admin.Configure
+namespace Fanex.Puffin.Report.App_Start
 {
     public class RouteConfig
     {
@@ -8,9 +8,9 @@ namespace Fanex.Puffin.Admin.Configure
         {
             context.MapRoute(
                 areaName + "_Default",
-                areaName + "/{controller}/{action}/{id}",
+                "Report/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                new[] { "Fanex.Puffin.Admin.Controllers" });
+                new[] { "Fanex.Puffin.Report.Controllers" });
         }
     }
 }
