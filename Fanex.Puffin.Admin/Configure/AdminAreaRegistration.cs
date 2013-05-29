@@ -1,8 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
-using Fanex.Puffin.Website.Areas.Admin.Area_Start;
 
-namespace Fanex.Puffin.Website.Areas.Admin
+namespace Fanex.Puffin.Admin.Configure
 {
     public class AdminAreaRegistration : AreaRegistration
     {

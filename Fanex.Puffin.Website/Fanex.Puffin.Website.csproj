@@ -183,12 +183,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Area_Start\BundleConfig.cs" />
-    <Compile Include="Areas\Admin\Area_Start\RouteConfig.cs" />
-    <Compile Include="Areas\Report\Area_Start\BundleConfig.cs" />
-    <Compile Include="Areas\Report\Area_Start\RouteConfig.cs" />
-    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />

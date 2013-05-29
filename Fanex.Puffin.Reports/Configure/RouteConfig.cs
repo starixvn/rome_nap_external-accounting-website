@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Fanex.Puffin.Website.Areas.Report.Area_Start
+namespace Fanex.Puffin.Report.Configure
 {
     public class RouteConfig
     {

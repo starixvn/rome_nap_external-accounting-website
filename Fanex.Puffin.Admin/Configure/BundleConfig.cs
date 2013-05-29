@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Fanex.Puffin.Website.Areas.Admin.Area_Start
+namespace Fanex.Puffin.Admin.Configure
 {
     public class BundleConfig
     {
