@@ -262,14 +262,6 @@
     <Content Include="bin\Fanex.MailDeliver.MailClient.dll" />
     <Content Include="bin\Fanex.NAP.Core.dll" />
     <Content Include="bin\Fanex.NAP.Framework.dll" />
-    <Content Include="bin\Fanex.Notus.Admin.dll" />
-    <Content Include="bin\Fanex.Notus.Admin.pdb" />
-    <Content Include="bin\Fanex.Notus.Core.dll" />
-    <Content Include="bin\Fanex.Notus.Core.pdb" />
-    <Content Include="bin\Fanex.Notus.Report.dll" />
-    <Content Include="bin\Fanex.Notus.Report.pdb" />
-    <Content Include="bin\Fanex.Notus.Website.dll" />
-    <Content Include="bin\Fanex.Notus.Website.pdb" />
     <Content Include="bin\Fanex.Web.HtmlHelper.dll" />
     <Content Include="bin\IBCFile.dll" />
     <Content Include="bin\ICSharpCode.SharpZipLib.dll" />
