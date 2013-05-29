@@ -78,9 +78,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configure\BundleConfig.cs" />
-    <Compile Include="Configure\ReportAreaRegistration.cs" />
-    <Compile Include="Configure\RouteConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ReportAreaRegistration.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ReportRequestTicketController.cs" />
     <Compile Include="Criteria\GetAllLicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSettlement\IMS_ExchangeRateBillingSelCriteria.cs" />

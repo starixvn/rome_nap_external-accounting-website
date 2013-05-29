@@ -55,9 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configure\AdminAreaRegistration.cs" />
-    <Compile Include="Configure\BundleConfig.cs" />
-    <Compile Include="Configure\RouteConfig.cs" />
+    <Compile Include="App_Start\AdminAreaRegistration.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Controllers\DeleteSingleTicketController.cs" />
     <Compile Include="Criteria\AccountingUserCheckOnlineStatusCriteria.cs" />
