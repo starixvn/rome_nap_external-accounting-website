@@ -24,6 +24,8 @@ Fanex.ExtAcc.Customer = {
     Member: 1,
 
     CurrentLevel: 4,
+    CurrentPage: 0,
+    ItemsPerPage: 50,
 
     AllowDoubleCommMaster: false,
     AllowDoubleCommAgent: false,
@@ -1386,9 +1388,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -1480,9 +1486,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -1579,9 +1589,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -1681,9 +1695,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
