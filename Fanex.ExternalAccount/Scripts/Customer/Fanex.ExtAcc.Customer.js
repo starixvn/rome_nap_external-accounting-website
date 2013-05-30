@@ -1157,7 +1157,7 @@ Fanex.ExtAcc.Customer = {
                     }
                     else {
                         Fanex.ExtAcc.UnBlockUI();
-                        Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled" : result.ErrorMessage, 300, 150, 'alert');
+                        Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
                     }
                 })
                 .error(function (xhr) {

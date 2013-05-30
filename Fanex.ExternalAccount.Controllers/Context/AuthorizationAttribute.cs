@@ -89,6 +89,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
         private void CloseConnection(AuthorizationContext filterContext)
         {
             var response = filterContext.HttpContext.Response;
+            var request = filterContext.HttpContext.Request;
 
             try
             {
@@ -113,6 +114,10 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     response.Write("{\"IsSuccess\":false, \"ErrorCode\":\"1\", \"ErrorMessage\":\"" + ViewLang.DontHavePermission + "\"}");
                     response.Flush();
                     response.End();
+                    filterContext.Result = new JsonResult()
+                    {
+                        Data = new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ViewLang.DontHavePermission }
+                    };
                 }
                 else if (!filterContext.HttpContext.Request.IsAuthenticated)
                 {

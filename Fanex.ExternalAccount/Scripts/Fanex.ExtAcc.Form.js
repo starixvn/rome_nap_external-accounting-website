@@ -40,7 +40,8 @@ Fanex.ExtAcc.Form = {
 
         $.ajax({ url: url, data: data }).done(function (data) {
             if (data.ErrorCode && data.ErrorCode == "1") {
-                DivContent.innerHTML = data.ErrorMessage.formatErrorMessage();
+                Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
+                return;
             }
             else {
                 DivContent.innerHTML = data;
