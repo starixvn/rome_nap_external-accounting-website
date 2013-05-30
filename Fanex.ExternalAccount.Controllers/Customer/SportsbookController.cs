@@ -305,7 +305,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 for (int i = 0; i < para.Length; i++)
                 {
-                    param.Add(i, para[i]);
+                    param.Add(i, para[i].ToString());
                 }
             }
 
@@ -385,7 +385,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 for (int i = 0; i < para.Length; i++)
                 {
-                    param.Add(i, para[i]);
+                    param.Add(i, para[i].ToString());
                 }
             }
 
@@ -465,7 +465,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 for (int i = 0; i < para.Length; i++)
                 {
-                    param.Add(i, para[i]);
+                    param.Add(i, para[i].ToString());
                 }
             }
 
@@ -557,7 +557,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 for (int i = 0; i < para.Length; i++)
                 {
-                    param.Add(i, para[i]);
+                    param.Add(i, para[i].ToString());
                 }
             }
 
@@ -636,7 +636,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 for (int i = 0; i < para.Length; i++)
                 {
-                    param.Add(i, para[i]);
+                    param.Add(i, para[i].ToString());
                 }
             }
 
