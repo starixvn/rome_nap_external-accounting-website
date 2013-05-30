@@ -23,6 +23,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
+    using System.Text;
 
     public class AuthorizationAttribute : AuthorizeAttribute
     {
@@ -109,14 +110,14 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
                 if (filterContext.HttpContext.Request.IsAjaxRequest())
                 {
-                    response.StatusCode = 200;
-                    response.ContentType = "application/json";
-                    response.Write("{\"IsSuccess\":false, \"ErrorCode\":\"1\", \"ErrorMessage\":\"" + ViewLang.DontHavePermission + "\"}");
-                    response.Flush();
-                    response.End();
                     filterContext.Result = new JsonResult()
                     {
-                        Data = new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ViewLang.DontHavePermission }
+                        Data = new { IsSuccess = false, ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission },
+                        ContentEncoding = Encoding.UTF8,
+                        ContentType = "application/json",
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        MaxJsonLength = int.MaxValue,
+                        RecursionLimit = int.MaxValue
                     };
                 }
                 else if (!filterContext.HttpContext.Request.IsAuthenticated)
