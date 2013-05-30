@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
 {
     using System;
     using System.Linq;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.DTO;
@@ -23,7 +24,6 @@ namespace Fanex.ExternalAccount.Controllers.Context
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
-    using System.Text;
 
     public class AuthorizationAttribute : AuthorizeAttribute
     {
@@ -80,7 +80,6 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     return;
                 }
             }
-
             catch (Exception ex)
             {
                 this.ProcessException(ex, response);
