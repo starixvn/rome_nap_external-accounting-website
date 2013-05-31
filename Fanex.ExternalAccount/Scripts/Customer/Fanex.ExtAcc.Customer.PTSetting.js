@@ -262,6 +262,15 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
+                                    var min = parseFloat(Fanex.ExtAcc.ReplaceAll($('#minCredit').text(), ',', ''));
+                                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+
+                                    if (!(cur >= min && cur <= max)) {
+                                        Validators.show($('#credit').get(0), 'Master Max Credit must be between ' + $('#minCredit').text() + ' and ' + $('#maxCredit').text());
+                                        return;
+                                    }
+
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
@@ -404,11 +413,36 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
+                                    var min = parseFloat(Fanex.ExtAcc.ReplaceAll($('#minCredit').text(), ',', ''));
+                                    var minMember = parseFloat(Fanex.ExtAcc.ReplaceAll($('#minCreditMember').text(), ',', ''));
+                                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                                    var maxMember = cur;
+                                    var curMember = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
+
+                                    console.log(min);
+                                    console.log(minMember);
+                                    console.log(max);
+                                    console.log(maxMember);
+                                    console.log(cur);
+                                    console.log(curMember);
+
+                                    if (cur < min || cur > max) {
+                                        Validators.show($('#credit').get(0), 'Agent Max Credit must be between ' + $('#minCredit').text() + ' and ' + $('#maxCredit').text());
+                                        return;
+                                    }
+
+                                    if (curMember < minMember || curMember > maxMember) {
+                                        Validators.show($('#memberCredit').get(0), 'Member Max Credit must be between ' + $('#minCreditMember').text() + ' and ' + $('#maxCreditMember').text());
+                                        return;
+                                    }
+
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
                                     customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                                    customer.memberMaxCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -544,12 +578,18 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
+                                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                                    if (cur > max) {
+                                        Validators.show($('#credit').get(0), 'Given Credit must be less than or equals to ' + $('#maxCredit').text());
+                                        return;
+                                    }
+
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
                                     customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
-                                    customer.memberMaxCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -1089,6 +1129,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
+
+                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1226,6 +1269,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
+
+                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1363,6 +1409,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
                         }
+
+                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {

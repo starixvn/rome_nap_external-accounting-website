@@ -436,8 +436,12 @@ Fanex.ExtAcc = {
         });
     },
 
-    CheckNumber: function (evt, ele) {
+    CheckNumber: function (evt, ele, agentCredit) {
         ele.value = Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.ReplaceAll(ele.value, ',', ''));
+
+        if (agentCredit) {
+            this.CheckConstraintAgentCredits(agentCredit);
+        }
 
         var charCode = (evt.which) ? evt.which : event.keyCode;
         var ret = true;
@@ -457,6 +461,11 @@ Fanex.ExtAcc = {
         }
 
         return ret;
+    },
+
+    CheckConstraintAgentCredits: function (agentCredit) {
+        var value = Fanex.ExtAcc.ReplaceAll(agentCredit.value, ',', '');
+        $('#maxCreditMember').text(Fanex.ExtAcc.FormatNumber(value));
     },
 
     FormatErrorMessage: function (username, obj) {
