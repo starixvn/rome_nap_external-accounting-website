@@ -21,14 +21,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
 
-        if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-            $('#arrowUpDown').remove();
-
-            Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
-            Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
-        }
-
-        if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+        if (this.IsFullInfo) {
             var interval = setInterval(function () {
                 if (Fanex.ExtAcc.Customer.PTSetting.customer) {
                     clearInterval(interval);
@@ -182,6 +175,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $('#statusSection').remove();
         }
 
+        if (!this.IsMultiple && this.IsFullInfo) {
+            $('#arrowUpDown').remove();
+
+            Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
+            Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
+        }
+
         if (this.IsMultiple) {
             Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
         }
@@ -262,16 +262,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
-                                    if (!Validators.validateNumber($('#credit').val())) {
-                                        Validators.show($('#credit').get(0), 'Please input number!');
-                                        return;
-                                    }
-
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
-                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -409,16 +404,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
-                                    if (!Validators.validateNumber($('#credit').val())) {
-                                        Validators.show($('#credit').get(0), 'Please input number!');
-                                        return;
-                                    }
-
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
-                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -554,16 +544,12 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
-                                    if (!Validators.validateNumber($('#credit').val())) {
-                                        Validators.show($('#credit').get(0), 'Please input number!');
-                                        return;
-                                    }
-
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
-                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                                    customer.memberMaxCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -1685,108 +1671,6 @@ Fanex.EditPT = {
 
 var isUpdate = false;
 var isUpdatePositionTaking = false;
-
-function getUpdateParamaters() {
-    var paramaters = "";
-    var items = bettingLimit.items;
-
-    if ($("status").checked) {
-        paramaters += "1";
-        if (!isUpdate) {
-            isUpdate = true;
-        }
-    }
-    else {
-        paramaters += "0";
-    }
-
-    if ($("commission").checked) {
-        paramaters += "1";
-        if (!isUpdate) {
-            isUpdate = true;
-        }
-    }
-    else {
-        paramaters += "0";
-    }
-
-    if ($("bettingLimit0").checked && items[0].active === true) {
-        for (var i = 0; i < items.length - 1; i++) {
-            paramaters += "1";
-            if (!isUpdate) {
-                isUpdate = true;
-            }
-        }
-
-        $("bettingLimit9").checked ? paramaters += "1" : paramaters += "0";
-    }
-    else if ($("bettingLimit1").checked && items[1].active === true) {
-        $("bettingLimit0").checked ? paramaters += "1" : paramaters += "0";
-        for (var i = 1; i < items.length - 1; i++) {
-            paramaters += "1";
-            if (!isUpdate) {
-                isUpdate = true;
-            }
-        }
-
-        $("bettingLimit9").checked ? paramaters += "1" : paramaters += "0";
-    }
-    else {
-        for (var i = 0; i < items.length; i++) {
-            if ($("bettingLimit" + i).checked) {
-                paramaters += "1";
-                if (!isUpdate) {
-                    isUpdate = true;
-                }
-            }
-            else {
-                paramaters += "0";
-            }
-        }
-    }
-
-    var itemsPt = ptGrid.items;
-    var cloneFromSoccer = itemsPt[0].cloneButton;
-    var cloneFromBasketball = itemsPt[1].cloneButton;
-    if ($("positionTaking0").checked && cloneFromSoccer.firstChild.checked) {
-        isUpdatePositionTaking = true;
-        for (var i = 0; i < itemsPt.length; i++) {
-            paramaters += "1";
-            if (!isUpdate) {
-                isUpdate = true;
-            }
-        }
-    }
-    else if ($("positionTaking1").checked && cloneFromBasketball.firstChild.checked) {
-        $("positionTaking0").checked ? paramaters += "1" : paramaters += "0";
-        isUpdatePositionTaking = true;
-        for (var i = 1; i < itemsPt.length; i++) {
-            paramaters += "1";
-            if (!isUpdate) {
-                isUpdate = true;
-            }
-        }
-    }
-    else {
-        for (var i = 0; i < itemsPt.length; i++) {
-            if ($("positionTaking" + i).checked) {
-                paramaters += "1";
-                if (!isUpdatePositionTaking) {
-                    isUpdatePositionTaking = true;
-                }
-
-                if (!isUpdate) {
-                    isUpdate = true;
-                }
-            }
-            else {
-                paramaters += "0";
-            }
-        }
-    }
-
-    return paramaters;
-}
 
 function getSuperMasterUpdateMemberParamaters(paramaters) {
     var paramaters = "";

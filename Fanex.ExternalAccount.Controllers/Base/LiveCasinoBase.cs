@@ -396,18 +396,18 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 }
                 else if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
-                    // Sync live casino when updated PT
-                    var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
-
-                    // Manually insert account first
-                    result = this.GameSetting.InsertAccount(req);
-
-                    // Update sync status for acc
-                    ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
-
                     // Insert account success then update game setting
-                    if (string.IsNullOrWhiteSpace(result.ErrorCode) && gameTypes.Count > 0)
+                    if (gameTypes.Count > 0)
                     {
+                        // Sync live casino when updated PT
+                        var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
+
+                        // Manually insert account first
+                        result = this.GameSetting.InsertAccount(req);
+
+                        // Update sync status for acc
+                        ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+
                         var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
 
                         // Dont have game setting then get by upline

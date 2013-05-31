@@ -24,6 +24,8 @@ Fanex.ExtAcc.Customer = {
     Member: 1,
 
     CurrentLevel: 4,
+    CurrentPage: 0,
+    ItemsPerPage: 50,
 
     AllowDoubleCommMaster: false,
     AllowDoubleCommAgent: false,
@@ -1157,7 +1159,7 @@ Fanex.ExtAcc.Customer = {
                     }
                     else {
                         Fanex.ExtAcc.UnBlockUI();
-                        Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled" : result.ErrorMessage, 300, 150, 'alert');
+                        Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
                     }
                 })
                 .error(function (xhr) {
@@ -1386,9 +1388,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -1480,9 +1486,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -1579,9 +1589,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -1681,9 +1695,13 @@ Fanex.ExtAcc.Customer = {
             customPager: false,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
+                currentPage: Fanex.ExtAcc.Customer.CurrentPage,
                 totalItem: rows.length,
-                itemsPerPage: 50
+                itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
+                afterPagedFunction: function(options){
+                    Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
+                    Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                }
             },
             marginRight: 2,
             showDistinctRow: false,
@@ -2125,7 +2143,7 @@ Fanex.ExtAcc.Customer = {
                         'confirmStatus');
                 }
             });
-        }, 2000);
+        }, 1000);
     },
 
     ProcessConfirmSuspendedStatus: function(id){
@@ -2167,6 +2185,6 @@ Fanex.ExtAcc.Customer = {
                         'confirmStatus');
                 }
             });
-        }, 2000);
+        }, 1000);
     }
 }

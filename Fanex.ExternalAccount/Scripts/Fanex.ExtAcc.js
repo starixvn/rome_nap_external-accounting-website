@@ -64,6 +64,19 @@ Fanex.ExtAcc = {
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
 
+    FormatNumber: function (number) { // Format a number to 1,234,567.89
+        number += '';
+
+        x = number.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    },
+
     EscapeHtml: function (string) {
         var result = '';
         if (string.length < 1) {
@@ -424,6 +437,8 @@ Fanex.ExtAcc = {
     },
 
     CheckNumber: function (evt, ele) {
+        ele.value = Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.ReplaceAll(ele.value, ',', ''));
+
         var charCode = (evt.which) ? evt.which : event.keyCode;
         var ret = true;
 
@@ -434,6 +449,7 @@ Fanex.ExtAcc = {
         if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
             while (ele.value.indexOf('0') == 0 && ele.value.length > 1) {
                 ele.value = ele.value.substring(1);
+                ele.value = Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.ReplaceAll(ele.value, ',', ''));
             }
         }
         else if (ele && ele.value.length == 0) {

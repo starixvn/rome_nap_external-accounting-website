@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
 {
     using System;
     using System.Linq;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.DTO;
@@ -79,7 +80,6 @@ namespace Fanex.ExternalAccount.Controllers.Context
                     return;
                 }
             }
-
             catch (Exception ex)
             {
                 this.ProcessException(ex, response);
@@ -89,6 +89,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
         private void CloseConnection(AuthorizationContext filterContext)
         {
             var response = filterContext.HttpContext.Response;
+            var request = filterContext.HttpContext.Request;
 
             try
             {
@@ -108,11 +109,15 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
                 if (filterContext.HttpContext.Request.IsAjaxRequest())
                 {
-                    response.StatusCode = 200;
-                    response.ContentType = "application/json";
-                    response.Write("{\"IsSuccess\":false, \"ErrorCode\":\"1\", \"ErrorMessage\":\"" + ViewLang.DontHavePermission + "\"}");
-                    response.Flush();
-                    response.End();
+                    filterContext.Result = new JsonResult()
+                    {
+                        Data = new { IsSuccess = false, ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission },
+                        ContentEncoding = Encoding.UTF8,
+                        ContentType = "application/json",
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        MaxJsonLength = int.MaxValue,
+                        RecursionLimit = int.MaxValue
+                    };
                 }
                 else if (!filterContext.HttpContext.Request.IsAuthenticated)
                 {

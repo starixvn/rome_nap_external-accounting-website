@@ -55,18 +55,18 @@
     <table border="1" cellpadding="1" cellspacing="2" class="tableInfo">
         <tr>
             <td style="border-left: none; width: 40%" class="tdTitleRight">Accumulated transferable amount</td>
-            <td style="width: 60%; border-right: none"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.totalWinLoss"></span></td>
+            <td style="width: 60%; border-right: none"><span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.totalWinLoss)"></span></td>
         </tr>
         <tr>
             <td style="border-left: none" class="tdTitleRight">Member Max Transfer Credit</td>
             <td>
-                <div style="float: left; height: 24px"><input id="maxTransfer" style="height: 20px !important" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="13" type="text" data-bind="value: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.maxTransferCredit" /></div>
+                <div style="float: left; height: 24px"><input id="maxTransfer" style="height: 20px !important" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="13" type="text" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.maxTransferCredit)" /></div>
                 <div style="float: left; height: 24px;"><input style="margin-top: 5px" id="isAutoReset" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.isAutoReset" /><label for="isAutoReset">Daily auto reset limit (at 12 noon GMT+8)</label></div>
             </td>           
         </tr>
         <tr>
             <td style="border-left: none"></td>
-            <td style="border-right: none">(<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.minTransferCreditLimit)"></span>&nbsp;-&nbsp;<span data-bind="text: String.prototype.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.maxTransferCreditLimit)"></span>)</td>                    
+            <td style="border-right: none">(<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.minTransferCreditLimit)"></span>&nbsp;-&nbsp;<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.maxTransferCreditLimit)"></span>)</td>                    
         </tr>
     </table>
     <div class="headerPositionTaking noneBorderLR"  style="border-bottom: none">

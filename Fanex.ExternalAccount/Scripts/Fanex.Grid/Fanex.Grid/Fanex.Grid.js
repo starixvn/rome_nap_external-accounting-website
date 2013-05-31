@@ -1085,7 +1085,7 @@
                             //// Save for rerender
                             Fanex.Grid.List[me.tableContentId].pagerOption = me.Options.pagerOption;
                             if (typeof (options.pagerOption.afterPagedFunction) == 'function') {
-                                options.pagerOption.afterPagedFunction();
+                                options.pagerOption.afterPagedFunction(me.Options.pagerOption);
                             }
                             return false;
                         }

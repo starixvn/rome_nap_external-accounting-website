@@ -72,7 +72,7 @@
             <div class="customerInfoBlock1">
                 @ViewLang.MasterMaxCredit</div>
             <div class="customerInfoBlock2">
-                <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: customer.credit" />
+                <input type="text" id="credit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(customer.credit)" />
                 <span id="minCreditId">&gt;=<span data-bind="text: customer.minCreditTemp" id="minCredit"></span>&nbsp;@ViewLang.and&nbsp;</span>
                 <= <span data-bind="text: customer.maxCreditTemp" id="maxCredit"></span>
             </div>
