@@ -439,41 +439,97 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             var miniGame = casino.MiniGame;
             var casinoInfo = casino.CasinoInfo;
             var customerInfo = casino.CustomerInfo;
-            var message = string.Empty;
-            var inserted = true;
-            var status = true;
-            var maxTransfer = false;
-            var casinoPT = new Result();
-            var enablePT = false;
-            
-            // Check whether casino is synced or not to insert customer settings
-            if (!customerInfo.CasinoSync)
+            var messages = string.Empty;
+            var settingsInserted = true;
+            var statusUpdated = true;
+            var maxTransferUpdated = false;
+            var casinoPTResult = new Result();
+            var enablePTUpdated = false;
+
+            // Check whether casino is synced or not to insert customer settings for direct downline only
+            if (!customerInfo.CasinoSync && uplineRoleId - roleId == 1)
             {
-                // Sync manually
-                inserted = customer.InsertCustSetting("01", customerInfo.IBCCustID, customerInfo.UserName, customerInfo.UserName2, customerInfo.FirstName, customerInfo.LastName, customerInfo.UserPwd, customerInfo.Phone, customerInfo.MobilePhone, customerInfo.Currency, customerInfo.Fax, customerInfo.Closed, customerInfo.Suspend, customerInfo.IsEnablePT, (decimal)customerInfo.MaxWin, (decimal)customerInfo.MaxLose, true, (decimal)customerInfo.MaxTransferCredit, customerInfo.SIBCCustID, customerInfo.MIBCCustID, customerInfo.AIBCCustID, customerInfo.PTByGameType, roleId.ToString(), DateTime.Now, ip, modifiedId, modifiedBy, fromSystem, customerInfo.IsAutoReset);
+                settingsInserted = customer.InsertCustSetting(
+                    "01", 
+                    customerInfo.IBCCustID, 
+                    customerInfo.UserName, 
+                    customerInfo.UserName2, 
+                    customerInfo.FirstName, 
+                    customerInfo.LastName, 
+                    customerInfo.UserPwd, 
+                    customerInfo.Phone, 
+                    customerInfo.MobilePhone, 
+                    customerInfo.Currency, 
+                    customerInfo.Fax, 
+                    customerInfo.Closed, 
+                    customerInfo.Suspend, 
+                    customerInfo.IsEnablePT, 
+                    (decimal)customerInfo.MaxWin, 
+                    (decimal)customerInfo.MaxLose, 
+                    true, 
+                    (decimal)customerInfo.MaxTransferCredit, 
+                    customerInfo.SIBCCustID, 
+                    customerInfo.MIBCCustID, 
+                    customerInfo.AIBCCustID, 
+                    customerInfo.PTByGameType, 
+                    roleId.ToString(), 
+                    DateTime.Now, 
+                    ip, 
+                    modifiedId, 
+                    modifiedBy, 
+                    fromSystem, 
+                    customerInfo.IsAutoReset);
             }
 
-            // Update Status
-            if ((inserted && !customerInfo.CasinoSync) || customerInfo.CasinoSync)
+            // Update Status for direct downline only
+            if (((settingsInserted && !customerInfo.CasinoSync) || customerInfo.CasinoSync) && uplineRoleId - roleId == 1)
             {                
-                status = this.UpdateCSStatus(custId, true, customerInfo.CasinoDisabled, true, uplineId, string.Empty, 0, "en", customerInfo.UserName, string.Empty, out errMsg);
+                statusUpdated = this.UpdateCSStatus(
+                    custId, 
+                    true, 
+                    customerInfo.CasinoDisabled, 
+                    true, 
+                    uplineId, 
+                    string.Empty, 
+                    0, 
+                    "en", 
+                    customerInfo.UserName, 
+                    string.Empty, 
+                    out errMsg);
             }
 
-            // Enable PT
-            if (status)
+            // Enable PT/Update max transfer for direct downline only
+            if (statusUpdated && uplineRoleId - roleId == 1)
             {
-                enablePT = customer.UpdateCustEnablePT(custId, true);
+                enablePTUpdated = customer.UpdateCustEnablePT(custId, true);
 
-                // Update Max Transfer
-                maxTransfer = customer.UpdateMaxTransfer(custId, true, (decimal)casinoInfo.MaxTransferCredit, casinoInfo.IsAutoReset, ip, uplineId, modifiedBy, fromSystem);
-
-                // Update all settings
-                casinoPT = this.UpdateSettings(custId, roleId, uplineId, uplineRoleId, ip, modifiedId, modifiedBy, fromSystem, casino);
-
-                message += string.IsNullOrWhiteSpace(errMsg) ? string.Empty : errMsg + "<br />" + casinoPT.ErrorMessage;
+                maxTransferUpdated = customer.UpdateMaxTransfer(
+                    custId, 
+                    true, 
+                    (decimal)casinoInfo.MaxTransferCredit, 
+                    casinoInfo.IsAutoReset, 
+                    ip, 
+                    uplineId, 
+                    modifiedBy, 
+                    fromSystem);
             }
 
-            return new Result(message == string.Empty || message == "<br />" ? 0 : 1, message);
+            // Update PT/Betting limit settings
+            casinoPTResult = this.UpdateSettings(
+                custId, 
+                roleId, 
+                uplineId, 
+                uplineRoleId, 
+                ip, 
+                modifiedId, 
+                modifiedBy, 
+                fromSystem, 
+                casino);
+
+            // Gets error messages
+            messages += string.IsNullOrWhiteSpace(errMsg) ? string.Empty : errMsg + "<br />" + casinoPTResult.ErrorMessage;
+
+            return new Result(messages == string.Empty || messages == "<br />" ? 0 : 1, messages);
         }
 
         private bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)

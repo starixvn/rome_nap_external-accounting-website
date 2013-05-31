@@ -136,7 +136,7 @@ Fanex.ExtAcc.Customer.Casino = {
                         checked = 'checked="checked"';
                     }
 
-                    stakeLevels += '<input ' + checked + ' type="checkbox" id="' + result.casinoGame[i].stakeLevels[j].stakeLevelID + '" />' + result.casinoGame[i].stakeLevels[j].stakeLevelName;
+                    stakeLevels += '<input ' + checked + ' type="checkbox" id="rng-' + result.casinoGame[i].stakeLevels[j].stakeLevelID + '" />' + result.casinoGame[i].stakeLevels[j].stakeLevelName;
                 }
 
                 var row = '<tr>' +
@@ -164,7 +164,7 @@ Fanex.ExtAcc.Customer.Casino = {
                         checked = 'checked="checked"';
                     }
 
-                    stakeLevels += '<input name="gameRow' + i + '" ' + checked + ' type="checkbox" id="' + result.miniGame[i].stakeLevels[j].stakeLevelID + '" />' + result.miniGame[i].stakeLevels[j].stakeLevelName;
+                    stakeLevels += '<input name="gameRow' + i + '" ' + checked + ' type="checkbox" id="mini-' + result.miniGame[i].stakeLevels[j].stakeLevelID + '" />' + result.miniGame[i].stakeLevels[j].stakeLevelName;
                 }
 
                 var row = '<tr>' +
@@ -435,15 +435,127 @@ Fanex.ExtAcc.Customer.Casino = {
         }
     },
 
-    UpdateSetting: function (i) {
+    UpdateSetting: function (idx) {
         Fanex.ExtAcc.BlockUI();
 
         var custInfo = Fanex.ExtAcc.Customer.CustomerInfo();
 
+        // Sets status, max transfer limit and daily auto reset RnG Casino
         this.customer.customerInfo.casinoDisabled = !document.getElementById('chkEnable').checked;
+        this.customer.casinoInfo.maxTransferCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxTransfer').val(), ',', ''));
+        this.customer.casinoInfo.isAutoReset = document.getElementById('isAutoReset').checked;
+
+        // PT and Betting limit variables
+        var ptRngGame = this.customer.pts[0];
+        var ptMiniGame = this.customer.pts[1];
+        var rngGames = this.customer.casinoGame;
+        var miniGames = this.customer.miniGame;
+
+        // Sets PT for RnG and Mini Game
+        switch (custInfo.uplineRoleId) {
+            case Fanex.ExtAcc.Customer.Super:
+                if (custInfo.roleId == Fanex.ExtAcc.Customer.Master) {
+                    // Super preset PT
+                    ptRngGame.sPositionTaking = $('#pt_1').val();
+                    ptMiniGame.sPositionTaking = $('#pt_1_1').val();
+
+                    // Super Is Auto PT
+                    ptRngGame.isAutoPositionTaking = document.getElementById('chkAutoPT').checked;
+                    ptMiniGame.isAutoPositionTaking = document.getElementById('chkAutoPT_1').checked;
+
+                    // Super Auto Preset PT
+                    ptRngGame.autoPositionTaking = $('#pt_2').val();
+                    ptMiniGame.autoPositionTaking = $('#pt_2_1').val();
+
+                    // Master Max PT
+                    ptRngGame.maxPositionTaking = $('#pt_3').val();
+                    ptMiniGame.maxPositionTaking = $('#pt_3_1').val();
+
+                    // Master Min PT
+                    ptRngGame.minPositionTaking = $('#pt_4').val();
+                    ptMiniGame.minPositionTaking = $('#pt_4_1').val();
+
+                    // Master Commission
+                    ptRngGame.mAgentRollingRate = $('#comm_5').val();
+                    ptMiniGame.mAgentRollingRate = $('#comm_5_1').val();
+                }
+                else if (custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    // Super preset PT
+                    ptRngGame.sPositionTaking = $('#pt_1').val();
+                    ptMiniGame.sPositionTaking = $('#pt_1_1').val();
+
+                    // Super Is Auto PT
+                    ptRngGame.isAutoPositionTaking = document.getElementById('chkAutoPT').checked;
+                    ptMiniGame.isAutoPositionTaking = document.getElementById('chkAutoPT_1').checked;
+
+                    // Super Auto Preset PT
+                    ptRngGame.autoPositionTaking = $('#pt_2').val();
+                    ptMiniGame.autoPositionTaking = $('#pt_2_1').val();
+                }
+                break;
+            case Fanex.ExtAcc.Customer.Master:
+                if (custInfo.roleId == Fanex.ExtAcc.Customer.Agent) {
+                    // Master Preset PT
+                    ptRngGame.mPositionTaking = $('#pt_1').val();
+                    ptMiniGame.mPositionTaking = $('#pt_1_1').val();
+
+                    // Agent Max PT
+                    ptRngGame.aPositionTaking = $('#pt_3').val();
+                    ptMiniGame.aPositionTaking = $('#pt_3_1').val();
+
+                    // Agent Min PT
+                    ptRngGame.minPositionTaking = $('#pt_4').val();
+                    ptMiniGame.minPositionTaking = $('#pt_4_1').val();
+
+                    // Agent Commission
+                    ptRngGame.agentRollingRate = $('#comm_5').val();
+                    ptMiniGame.agentRollingRate = $('#comm_5_1').val();
+                }
+                else if (custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    // Master Preset PT
+                    ptRngGame.mPositionTaking = $('#pt_1').val();
+                    ptMiniGame.mPositionTaking = $('#pt_1_1').val();
+                }
+                break;
+            case Fanex.ExtAcc.Customer.Agent:
+                if (custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    // Agent Preset PT
+                    ptRngGame.aPositionTaking = $('#pt_1').val();
+                    ptMiniGame.aPositionTaking = $('#pt_1_1').val();
+
+                    // Member Commission
+                    ptRngGame.memberRollingRate = $('#comm_2').val();
+                    ptMiniGame.memberRollingRate = $('#comm_2_1').val();
+                }
+                break;
+            default:
+                break;
+        }
+
+        // Sets Betting Limits for RnG Game
+        for (var i = 0; i < rngGames.length; i++) {
+            var game = rngGames[i];
+
+            if (game.stakeLevels.length > 0) {
+                for (var j = 0; j < game.stakeLevels.length; j++) {
+                    game.stakeLevels[j].isChecked = document.getElementById('rng-' + game.stakeLevels[j].stakeLevelID).checked;
+                }
+            }
+        }
+
+        // Sets Betting Limits for Mini Game
+        for (var i = 0; i < miniGames.length; i++) {
+            var game = miniGames[i];
+
+            if (game.stakeLevels.length > 0) {
+                for (var j = 0; j < game.stakeLevels.length; j++) {
+                    game.stakeLevels[j].isChecked = document.getElementById('mini-' + +game.stakeLevels[j].stakeLevelID).checked;
+                }
+            }
+        }
 
         var data = {
-            custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.Ids()[i],
+            custId: idx == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.Ids()[idx],
             roleId: custInfo.roleId,
             uplineId: this.uplineId,
             uplineRoleId: custInfo.uplineRoleId,
@@ -462,11 +574,11 @@ Fanex.ExtAcc.Customer.Casino = {
                     Fanex.ExtAcc.Customer.Casino.ErrorMessage += result.ErrorMessage.formatErrorMessage() + '<br />';
                 }
                 else {
-                    Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[i] + ":</font><br />" + result.ErrorMessage.formatErrorMessage() + '<br /><br />';
+                    Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[idx] + ":</font><br />" + result.ErrorMessage.formatErrorMessage() + '<br /><br />';
                 }
             }
 
-            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (i != null && i == Fanex.ExtAcc.Customer.Ids().length - 1)) {
+            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (idx != null && idx == Fanex.ExtAcc.Customer.Ids().length - 1)) {
                 if (Fanex.ExtAcc.Customer.Casino.ErrorMessage != '') {
                     $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.ErrorMessage);
                     $('#errMsg').show();
@@ -480,8 +592,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 Fanex.ExtAcc.UnBlockUI();
             }
-            else if (Fanex.ExtAcc.Customer.Casino.IsMultiple && i < Fanex.ExtAcc.Customer.Ids().length - 1) {
-                Fanex.ExtAcc.Customer.Casino.UpdateSetting(++i);
+            else if (Fanex.ExtAcc.Customer.Casino.IsMultiple && idx < Fanex.ExtAcc.Customer.Ids().length - 1) {
+                Fanex.ExtAcc.Customer.Casino.UpdateSetting(++idx);
             }
         })
         .error(function (data) {
@@ -493,10 +605,10 @@ Fanex.ExtAcc.Customer.Casino = {
                 Fanex.ExtAcc.Customer.Casino.ErrorMessage += "Not Casino\'s customer<br />".formatErrorMessage() + '<br />';
             }
             else {
-                Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[i] + ":</font><br />" + " Not Casino\'s customer<br /><br />".formatErrorMessage();
+                Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[idx] + ":</font><br />" + " Not Casino\'s customer<br /><br />".formatErrorMessage();
             }
 
-            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (i != null && i == Fanex.ExtAcc.Customer.Ids().length - 1)) {
+            if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (idx != null && idx == Fanex.ExtAcc.Customer.Ids().length - 1)) {
                 if (Fanex.ExtAcc.Customer.Casino.ErrorMessage != '') {
                     $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.ErrorMessage);
                     $('#errMsg').show();
@@ -510,8 +622,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 Fanex.ExtAcc.UnBlockUI();
             }
-            else if (Fanex.ExtAcc.Customer.Casino.IsMultiple && i < Fanex.ExtAcc.Customer.Ids().length - 1) {
-                Fanex.ExtAcc.Customer.Casino.UpdateSetting(++i);
+            else if (Fanex.ExtAcc.Customer.Casino.IsMultiple && idx < Fanex.ExtAcc.Customer.Ids().length - 1) {
+                Fanex.ExtAcc.Customer.Casino.UpdateSetting(++idx);
             }
         });
     }

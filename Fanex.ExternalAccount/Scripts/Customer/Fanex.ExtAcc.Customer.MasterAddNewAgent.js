@@ -106,6 +106,21 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                     if (!Fanex.Customer.CheckInfoValue()) return;
                     if (!bettingLimit.Validate()) return;
 
+                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                    var maxMember = cur;
+                    var curMember = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberMaxCredit').val(), ',', ''));
+
+                    if (cur > max) {
+                        Validators.show($('#credit').get(0), 'Agent Max Credit must be less than or equals to ' + $('#maxCredit').text());
+                        return;
+                    }
+
+                    if (curMember > maxMember) {
+                        Validators.show($('#memberMaxCredit').get(0), 'Member Max Credit must be less than or equals to ' + $('#maxCreditMember').text());
+                        return;
+                    }
+
                     // Set value to transfer option
                     customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
                     customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);

@@ -108,6 +108,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                         customer.group = $("#group").val();
                     }
 
+                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                    if (cur > max) {
+                        Validators.show($('#credit').get(0), 'Given Credit must be less than or equals to ' + $('#maxCredit').text());
+                        return;
+                    }
+
                     customer.commissionSetting.playerDiscount = $("#discountAsian").val();
                     customer.commissionSetting.playerDiscount1x2 = $("#discount1x2").val();
                     customer.commissionSetting.playerDiscountCs = $("#discountCS").val();

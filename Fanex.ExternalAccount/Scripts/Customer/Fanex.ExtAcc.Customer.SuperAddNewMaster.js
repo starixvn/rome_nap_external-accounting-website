@@ -112,6 +112,14 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                     else
                         customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT;
 
+                    var max = parseFloat($('#maxCredit').text());
+                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+
+                    if (cur > max) {
+                        Validators.show($('#credit').get(0), 'Master Max Credit must be less than or equals to ' + $('#maxCredit').text());
+                        return;
+                    }
+
                     // Set value to transfer option
                     customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
                     customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
