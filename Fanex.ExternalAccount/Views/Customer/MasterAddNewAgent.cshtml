@@ -71,7 +71,7 @@
             <div class="customerInfoBlock1">
                 @ViewLang.AgentMaxCredit</div>
             <div class="customerInfoBlock2">
-                <input type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: customer.credit" />
+                <input type="text" id="credit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(customer.credit)" />
                 <span id="minCreditId">&gt;=<span data-bind="text: customer.minCreditTemp" id="minCredit"></span>&nbsp;@ViewLang.and&nbsp;</span>
                 <= <span data-bind="text: customer.maxCredit" id="maxCredit"></span>
             </div>
@@ -84,8 +84,8 @@
             <div class="customerInfoBlock1">
                 @ViewLang.MemberMaxCredit</div>
             <div class="customerInfoBlock2">
-                <input type="text" id="memberMaxCredit" maxlength="14" class="textBoxCredit textBoxInfo"
-                    data-bind="value: customer.memberMaxCredit" />
+                <input type="text" id="memberMaxCredit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="14" class="textBoxCredit textBoxInfo"
+                    data-bind="value: Fanex.ExtAcc.FormatNumber(customer.memberMaxCredit)" />
                 <span id="minMemberMaxCreditId">&gt;=<span data-bind="text: customer.memberMinCredit"
                     id="lblMinCredit"></span>&nbsp;@ViewLang.and&nbsp;</span><= <span data-bind="text: customer.credit"
                         id="lblMemberMaxCredit"></span>

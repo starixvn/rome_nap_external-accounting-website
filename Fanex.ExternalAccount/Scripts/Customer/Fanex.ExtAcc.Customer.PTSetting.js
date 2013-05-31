@@ -262,16 +262,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
-                                    if (!Validators.validateNumber($('#credit').val())) {
-                                        Validators.show($('#credit').get(0), 'Please input number!');
-                                        return;
-                                    }
-
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
-                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -409,16 +404,11 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
-                                    if (!Validators.validateNumber($('#credit').val())) {
-                                        Validators.show($('#credit').get(0), 'Please input number!');
-                                        return;
-                                    }
-
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
-                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
@@ -554,16 +544,12 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     }
 
-                                    if (!Validators.validateNumber($('#credit').val())) {
-                                        Validators.show($('#credit').get(0), 'Please input number!');
-                                        return;
-                                    }
-
                                     customer.firstName = $('#firstName').val().escapeHtml();
                                     customer.lastName = $('#lastName').val().escapeHtml();
                                     customer.phone = $('#phone').val().escapeHtml();
                                     customer.mobilePhone = $('#mobilePhone').val().escapeHtml();
-                                    customer.credit = parseFloat($('#credit').val());
+                                    customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                                    customer.memberMaxCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
                                     customer.statusSetting.suspended = document.getElementById('suspended').checked;
