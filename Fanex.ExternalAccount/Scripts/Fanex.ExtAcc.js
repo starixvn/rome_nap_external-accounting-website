@@ -440,7 +440,7 @@ Fanex.ExtAcc = {
         ele.value = Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.ReplaceAll(ele.value, ',', ''));
 
         if (agentCredit) {
-            this.CheckConstraintAgentCredits(agentCredit);
+            Fanex.ExtAcc.CheckConstraintAgentCredits(agentCredit);
         }
 
         var charCode = (evt.which) ? evt.which : event.keyCode;
