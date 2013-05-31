@@ -88,7 +88,7 @@
                 @Html.LabelFor(m => m.DisplayOrder, ViewLang.Order, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "order", @onpaste = "return false;", @onkeypress = "return Fanex.ExtAcc.CheckNumber(event, this)", @onkeyup = "return Fanex.ExtAcc.CheckNumber(event, this)" })
+                @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "order", @maxlength = "3", @onpaste = "return false;", @onkeypress = "return Fanex.ExtAcc.CheckNumber(event, this)", @onkeyup = "return Fanex.ExtAcc.CheckNumber(event, this)" })
             </td>
         </tr>
         <tr>
