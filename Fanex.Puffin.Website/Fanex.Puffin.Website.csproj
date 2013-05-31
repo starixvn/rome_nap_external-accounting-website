@@ -720,7 +720,9 @@
     <Content Include="Scripts\_Libs\Validation\validationEngine.jquery.css" />
     <Content Include="test.html" />
     <Content Include="Test\Default.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Configuration\StoreProcedure\NAPFrameworkSpNames.xml" />
     <Content Include="Web.Configuration\StoreProcedure\NAPTicketControlSpNames.xml" />
     <Content Include="Web.Debug.config">

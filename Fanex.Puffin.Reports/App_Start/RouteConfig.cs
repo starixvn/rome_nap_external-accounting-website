@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Reflection;
+using System.Web.Mvc;
 
 namespace Fanex.Puffin.Report.App_Start
 {
@@ -6,11 +7,12 @@ namespace Fanex.Puffin.Report.App_Start
     {
         public static void RegisterRoutes(string areaName, AreaRegistrationContext context)
         {
+            var controllerName = Assembly.GetExecutingAssembly().GetName().Name + ".Controllers";
             context.MapRoute(
                 areaName + "_Default",
-                "Report/{controller}/{action}/{id}",
+                areaName + "/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                new[] { "Fanex.Puffin.Report.Controllers" });
+                new[] { controllerName });
         }
     }
 }
