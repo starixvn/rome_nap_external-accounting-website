@@ -420,13 +420,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     var maxMember = cur;
                                     var curMember = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
 
-                                    console.log(min);
-                                    console.log(minMember);
-                                    console.log(max);
-                                    console.log(maxMember);
-                                    console.log(cur);
-                                    console.log(curMember);
-
                                     if (cur < min || cur > max) {
                                         Validators.show($('#credit').get(0), 'Agent Max Credit must be between ' + $('#minCredit').text() + ' and ' + $('#maxCredit').text());
                                         return;
