@@ -16,7 +16,7 @@
     <table border="1" cellpadding="1" cellspacing="2" class="tableInfo">
         <tr>
             <td class="tdTitleLeft">Username</td>
-            <td style="width: 30%"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.userName"></span></td>
+            <td style="width: 35%"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.userName"></span></td>
             <td class="tdTitleRight">Nickname</td>
             <td style="border-right: none"><span data-bind="text: Fanex.ExtAcc.Customer.Casino.customer.customerInfo.userName2"></span></td>
         </tr>
@@ -66,7 +66,7 @@
         </tr>
         <tr>
             <td style="border-left: none"></td>
-            <td style="border-right: none">(<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.minTransferCreditLimit)"></span>&nbsp;-&nbsp;<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.maxTransferCreditLimit)"></span>)</td>                    
+            <td style="border-right: none">(<span id="minCredit" data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.minTransferCreditLimit)"></span>&nbsp;-&nbsp;<span id="maxCredit" data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.customerInfo.maxTransferCreditLimit)"></span>)</td>                    
         </tr>
     </table>
     <div class="headerPositionTaking noneBorderLR"  style="border-bottom: none">

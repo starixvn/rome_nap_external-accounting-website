@@ -402,19 +402,19 @@ Fanex.ExtAcc.Customer = {
         if (agentSyncCasino) {
             if (syncCasino) {
                 if (disableCasino) {
-                    itemsMember.casino = { name: "Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
-                    itemsMember.scasino = { name: "Super Edit Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Super Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
-                    itemsMember.mcasino = { name: "Master Edit Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Master Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+                    itemsMember.casino = { name: "Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
+                    itemsMember.scasino = { name: "Super Edit Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Super Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
+                    itemsMember.mcasino = { name: "Master Edit Casino", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Master Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
 
                 }
                 else {
-                    itemsMember.casino = { name: "Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
-                    itemsMember.scasino = { name: "Super Edit Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Super Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
-                    itemsMember.mcasino = { name: "Master Edit Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Master Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+                    itemsMember.casino = { name: "Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
+                    itemsMember.scasino = { name: "Super Edit Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.superId), 'Super Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
+                    itemsMember.mcasino = { name: "Master Edit Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.masterId), 'Master Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
                 }
             }
             else {
-                itemsMember.casino = { name: "Casino", className: "iconUnsyncEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1); } };
+                itemsMember.casino = { name: "Casino", className: "iconUnsyncEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('Casino/EditCasino?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.agentId), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1000, 700, false, null, 1); } };
             }
         }
 
@@ -1375,6 +1375,10 @@ Fanex.ExtAcc.Customer = {
                         { HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 }
                     ]
                 }]
+        
+        var currentPage = 0;
+        currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
+        Fanex.ExtAcc.Customer.CurrentPage = currentPage;
 
         options = {
             columns: this.DataFields,
@@ -1473,6 +1477,10 @@ Fanex.ExtAcc.Customer = {
                 ]
             }
             ]
+        
+        var currentPage = 0;
+        currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
+        Fanex.ExtAcc.Customer.CurrentPage = currentPage;
 
         options = {
             columns: this.DataFields,
@@ -1576,6 +1584,10 @@ Fanex.ExtAcc.Customer = {
                 ]
             }
             ]
+
+        var currentPage = 0;
+        currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
+        Fanex.ExtAcc.Customer.CurrentPage = currentPage;
 
         options = {
             columns: this.DataFields,
@@ -1682,6 +1694,10 @@ Fanex.ExtAcc.Customer = {
                 ]
             }
             ]
+
+        var currentPage = 0;
+        currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
+        Fanex.ExtAcc.Customer.CurrentPage = currentPage;
 
         options = {
             columns: this.DataFields,

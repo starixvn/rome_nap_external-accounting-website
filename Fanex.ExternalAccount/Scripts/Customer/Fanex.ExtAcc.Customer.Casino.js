@@ -120,6 +120,16 @@ Fanex.ExtAcc.Customer.Casino = {
             $('#windowPopup').html('<font color="Red">Not casino\'s customer</font>');
             Fanex.ExtAcc.UnBlockUI();
         });
+
+        var level = $('#downline').html();
+        $('#chkEnable').bind('click', function () {
+            if (this.checked) {
+                $('#downline').html(level);
+            }
+            else {
+                $('#downline').html(level + '&nbsp;' + "<font color='Red'>(Casino downlines will be disabled as well)</font>");
+            }
+        });
     },
 
     RenderSetting: function (result) {
@@ -436,6 +446,16 @@ Fanex.ExtAcc.Customer.Casino = {
     },
 
     UpdateSetting: function (idx) {
+        var min = parseFloat(Fanex.ExtAcc.ReplaceAll($('#minCredit').text(), ',', ''));
+        var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+        var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxTransfer').val(), ',', ''));
+
+        if (cur < min || cur > max) {
+            Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').text() + ' and ' + $('#maxCredit').text());
+
+            return;
+        }
+
         Fanex.ExtAcc.BlockUI();
 
         var custInfo = Fanex.ExtAcc.Customer.CustomerInfo();
@@ -746,7 +766,7 @@ function Comm_RenderCombo(combo, min, max, step, selectedValue) {
 
 function checkPT(el, sub_id) {
     if (el.checked) {
-        var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.syncCasino;
+        var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync;
         if (document.getElementById('pt_1' + sub_id))
             document.getElementById('pt_1' + sub_id).disabled = true;
         if (document.getElementById('pt_2' + sub_id))
@@ -800,7 +820,7 @@ function PTChanging(el, sub_id) {
     if (document.getElementById("pt_3" + sub_id)) {
         var cur = parseFloat(document.getElementById("pt_3" + sub_id).value);
         var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0];
-        var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.syncCasino;
+        var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync;
 
         if (document.getElementById("pt_1" + sub_id)) {
             sel = document.getElementById("pt_1" + sub_id).value;

@@ -541,8 +541,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
         {
             var customer = new Customer();
             var msg = string.Empty;
-            var gameKindTable = (uplineRoleId == Super || uplineRoleId == Master) && roleId == Member ? this.GameKindsDataTableMember() : this.GameKindsDataTable();
-            var gameTypeTable = (uplineRoleId == Super || uplineRoleId == Master) && roleId == Member ? this.GameTypesDataTableMember() : this.GameTypesDataTable();
+            var gameKindTable = (uplineRoleId == Super || uplineRoleId == Master) && roleId == Member ? 
+                this.GameKindsDataTableMember() : this.GameKindsDataTable();
+            var gameTypeTable = (uplineRoleId == Super || uplineRoleId == Master) && roleId == Member ? 
+                this.GameTypesDataTableMember() : this.GameTypesDataTable();
             var gameStakeTable = this.GameTypesStakesDataTable();
 
             var gameKinds = this.GetGameKinds(custId);
@@ -595,7 +597,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                             {
                                 custId,
                                 gameKindCasinoID,
-                                0,
+                                null,
                                 casinoPT.SPositionTaking,
                                 casinoPT.MPositionTaking,
                                 casinoPT.APositionTaking,
@@ -619,7 +621,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                             {
                                 custId,
                                 gameKindMiniID,
-                                0,
+                                null,
                                 miniPT.SPositionTaking,
                                 miniPT.MPositionTaking,
                                 miniPT.APositionTaking,
@@ -763,19 +765,32 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                         });
                 }
 
-                var resultKind = customer.UpdateCustGameKind(gameKindTable);
-                var resultType = customer.UpdateCustGameType(gameTypeTable);
-                var resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
+                var resultKind = new DataTable();
+                var resultType = new DataTable();
+                var resultStake = new DataTable();
+
+                if (uplineRoleId - roleId == 1)
+                {
+                    resultKind = customer.UpdateCustGameKind(gameKindTable);
+                    resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
+                }
+                else
+                {
+                    resultKind = customer.UpdateCustGameKind_EditMember(gameKindTable);
+                    /*resultType = customer.UpdateCustGameType(gameTypeTable);*/
+                    resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
+                }
 
                 foreach (DataRow item in resultKind.Rows)
                 {
                     msg += item.Field<string>("ErrMsg") + "<br />";
                 }
 
+                /*
                 foreach (DataRow item in resultType.Rows)
                 {
                     msg += item.Field<string>("ErrMsg") + "<br />";
-                }
+                }*/
 
                 foreach (DataRow item in resultStake.Rows)
                 {

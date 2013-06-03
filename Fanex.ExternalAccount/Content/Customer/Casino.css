@@ -16,14 +16,14 @@ td
 }
 .tdTitleLeft
 {
-    width: 20%;
+    width: 15%;
     text-align: right;
     font-weight:bold;
     border-left: none;
 }
 .tdTitleRight
 {
-    width: 20%;
+    width: 15%;
     text-align: right;
     font-weight:bold;
 }

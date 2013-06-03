@@ -1106,16 +1106,17 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         Fanex.ExtAcc.UnBlockUI();
 
+                        /*
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
-                                hasBetSettingError = true;
-                                break;
-                            }
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                        hasBetSettingError = true;
+                        break;
                         }
-
-                        if (hasBetSettingError) {
+                        }
+                        */
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage == '') {
                             Fanex.ExtAcc.Form.Close(false);
                         }
                         else {
@@ -1245,7 +1246,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         Fanex.ExtAcc.UnBlockUI();
-
+                        /*
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
@@ -1254,8 +1255,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 break;
                             }
                         }
-
-                        if (hasBetSettingError) {
+                        */
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage == '') {
                             Fanex.ExtAcc.Form.Close(false);
                         }
                         else {
@@ -1386,6 +1387,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         Fanex.ExtAcc.UnBlockUI();
 
+                        /*
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
@@ -1394,8 +1396,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 break;
                             }
                         }
-
-                        if (hasBetSettingError) {
+                        */
+                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage == '') {
                             Fanex.ExtAcc.Form.Close(false);
                         }
                         else {
