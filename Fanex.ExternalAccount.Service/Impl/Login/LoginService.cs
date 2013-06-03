@@ -109,12 +109,11 @@
             return null;
         }
 
-        public bool CheckExternalGroup(int custId, int funcId, string funcKey)
+        public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             try
             {
                 Check.Argument.IsNotNegative(custId, "custId");
-                Check.Argument.IsNotNegative(funcId, "funcId");
                 Check.Argument.IsNotNull(funcKey, "funcKey");
                 Check.Argument.IsNotEmpty(funcKey, "funcKey");
 

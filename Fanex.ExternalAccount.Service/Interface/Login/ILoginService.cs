@@ -14,6 +14,6 @@
 
         ICollection<Group> GroupList();
 
-        bool CheckExternalGroup(int custId, int funcId, string funcKey);
+        bool CheckExternalGroup(int custId, int? funcId, string funcKey);
     }
 }

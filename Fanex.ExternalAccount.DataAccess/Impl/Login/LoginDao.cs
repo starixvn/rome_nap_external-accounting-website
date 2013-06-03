@@ -159,7 +159,7 @@
         /// <param name="funcId">The func id.</param>
         /// <param name="funcKey">The func key.</param>
         /// <returns>bool</returns>
-        public bool CheckExternalGroup(int custId, int funcId, string funcKey)
+        public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             using (var db = new ObjectDb("EAS_UserCheckPermission"))
             {

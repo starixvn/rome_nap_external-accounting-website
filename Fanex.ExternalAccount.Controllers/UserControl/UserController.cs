@@ -181,7 +181,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var model = this.userService.GetUserById(id);
 
-            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, 0, eFunctions.ExternalGroup.ToString());
+            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
 
             return this.PartialViewBase(model);
         }
@@ -199,7 +199,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var model = this.userService.GetUserById(id);
 
-            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, 0, eFunctions.ExternalGroup.ToString());
+            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
 
             return this.PartialViewBase(model);
         }
