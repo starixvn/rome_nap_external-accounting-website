@@ -1081,7 +1081,7 @@ Fanex.ExtAcc.Customer = {
                         Fanex.ExtAcc.UnBlockUI();
 
                         if(Fanex.ExtAcc.Customer.MultipleDblCommError != ''){                            
-                            Fanex.ExtAcc.Form.Alert('Error', Fanex.ExtAcc.Customer.MultipleDblCommError, 300, 150, 'alert');
+                            Fanex.ExtAcc.Form.Alert('Error', Fanex.ExtAcc.Customer.MultipleDblCommError.formatErrorMessage(), 300, 150, 'alert');
                         }
                         
                         Fanex.ExtAcc.Customer.CallBackCustomerList();
