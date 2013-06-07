@@ -33,5 +33,11 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
             get;
             set;
         }
+
+        public GameTypeDetail Pt
+        {
+            get;
+            set;
+        }
     }
 }

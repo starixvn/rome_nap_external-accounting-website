@@ -29,9 +29,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             return this.PartialViewBase();
         }
-
+        
         [Authorization(Function = eFunctions.Casino, Policy = ePolicy.Read)]
-        public ActionResult EditCasinoPost(int custId, int uplineId)
+        public ActionResult EditCasinoPost(int custId, int uplineId, int roleId, int uplineRoleId)
         {
             var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
             var casinoSetting = new CasinoCustomer();
@@ -40,27 +40,85 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var miniGames = new List<GameTypeDetail>();
             var casinoStakes = new List<Stakes>();
             var miniStakes = new List<Stakes>();
+            var casinoSettingUpline = new CasinoCustomer();
+
+            // Gets upline settings
+            casinoSettingUpline.IBCCustID = uplineId;
+            CasinoManager.Instance.GetCustSettingCS(ref casinoSettingUpline);
 
             if (!custInfo.CasinoSync)
             {
                 casinoSetting = CasinoManager.Instance.GetCustSettingCS(uplineId);
-                gameKinds = CasinoManager.Instance.GetGameKinds(uplineId);
+                
+                if (uplineRoleId == BaseController.Super && roleId == BaseController.Member)
+                {
+                    gameKinds = CasinoManager.Instance.GetGameKinds_EditMember(uplineId);
+                }
+                else if (uplineRoleId == BaseController.Master && roleId == BaseController.Member)
+                {
+                    gameKinds = CasinoManager.Instance.GetGameKinds_MasterEditMember(uplineId);
+                }
+                else
+                {
+                    gameKinds = CasinoManager.Instance.GetGameKinds(uplineId);
+                }
             }
             else
             {
                 casinoSetting = CasinoManager.Instance.GetCustSettingCS(custId);
-                gameKinds = CasinoManager.Instance.GetGameKinds(custId);
+
+                if (uplineRoleId == BaseController.Super && roleId == BaseController.Member)
+                {
+                    gameKinds = CasinoManager.Instance.GetGameKinds_EditMember(custId);
+                }
+                else if (uplineRoleId == BaseController.Master && roleId == BaseController.Member)
+                {
+                    gameKinds = CasinoManager.Instance.GetGameKinds_MasterEditMember(custId);
+                }
+                else
+                {
+                    gameKinds = CasinoManager.Instance.GetGameKinds(custId);
+                }
             }
+            
+            // Sets PTByGameType property from upline to identify whether PT is apply for each game type or not
+            casinoSetting.PTByGameType = casinoSetting.PTByGameTypeUpline = casinoSettingUpline.PTByGameType;
 
             if (gameKinds != null && gameKinds.Count == 2 && custInfo.CasinoSync)
             {
-                casinoGames = CasinoManager.Instance.GetGameType(custId, gameKinds[0].CodeID);
-                miniGames = CasinoManager.Instance.GetGameType(custId, gameKinds[1].CodeID);
+                if (uplineRoleId == BaseController.Super && roleId == BaseController.Member)
+                {
+                    casinoGames = CasinoManager.Instance.GetGameTypes_EditMember(custId, gameKinds[0].CodeID);
+                    miniGames = CasinoManager.Instance.GetGameTypes_EditMember(custId, gameKinds[1].CodeID);
+                }
+                else if (uplineRoleId == BaseController.Master && roleId == BaseController.Member)
+                {
+                    casinoGames = CasinoManager.Instance.GetGameTypes_MasterEditMember(custId, gameKinds[0].CodeID);
+                    miniGames = CasinoManager.Instance.GetGameTypes_MasterEditMember(custId, gameKinds[1].CodeID);
+                }
+                else
+                {
+                    casinoGames = CasinoManager.Instance.GetGameType(custId, gameKinds[0].CodeID);
+                    miniGames = CasinoManager.Instance.GetGameType(custId, gameKinds[1].CodeID);
+                }
             }
             else if (gameKinds != null && gameKinds.Count == 2 && !custInfo.CasinoSync)
             {
-                casinoGames = CasinoManager.Instance.GetGameType(uplineId, gameKinds[0].CodeID);
-                miniGames = CasinoManager.Instance.GetGameType(uplineId, gameKinds[1].CodeID);
+                if (uplineRoleId == BaseController.Super && roleId == BaseController.Member)
+                {
+                    casinoGames = CasinoManager.Instance.GetGameTypes_EditMember(uplineId, gameKinds[0].CodeID);
+                    miniGames = CasinoManager.Instance.GetGameTypes_EditMember(uplineId, gameKinds[1].CodeID);
+                }
+                else if (uplineRoleId == BaseController.Master && roleId == BaseController.Member)
+                {
+                    casinoGames = CasinoManager.Instance.GetGameTypes_MasterEditMember(uplineId, gameKinds[0].CodeID);
+                    miniGames = CasinoManager.Instance.GetGameTypes_MasterEditMember(uplineId, gameKinds[1].CodeID);
+                }
+                else
+                {
+                    casinoGames = CasinoManager.Instance.GetGameType(uplineId, gameKinds[0].CodeID);
+                    miniGames = CasinoManager.Instance.GetGameType(uplineId, gameKinds[1].CodeID);
+                }
             }
 
             if (casinoGames != null && casinoGames.Count > 0 && custInfo.CasinoSync)
@@ -68,11 +126,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 casinoGames.ForEach(item =>
                 {
                     casinoStakes.Add(
-                        new Stakes 
+                        new Stakes
                         {
                             GameTypeID = item.GameTypeID,
-                            GameTypeName = item.GameTypeName, 
-                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) 
+                            GameTypeName = item.GameTypeName,
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID),
+                            Pt = item
                         });
                 });
             }
@@ -84,8 +143,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                         new Stakes 
                         {
                             GameTypeID = item.GameTypeID,
-                            GameTypeName = item.GameTypeName, 
-                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) 
+                            GameTypeName = item.GameTypeName,
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID),
+                            Pt = item 
                         });
                 });
             }
@@ -98,8 +158,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                         new Stakes 
                         {
                             GameTypeID = item.GameTypeID,
-                            GameTypeName = item.GameTypeName, 
-                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID) 
+                            GameTypeName = item.GameTypeName,
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(custId, item.GameTypeID),
+                            Pt = item 
                         });
                 });
             }
@@ -111,8 +172,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                         new Stakes 
                         {
                             GameTypeID = item.GameTypeID,
-                            GameTypeName = item.GameTypeName, 
-                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID) 
+                            GameTypeName = item.GameTypeName,
+                            StakeLevels = CasinoManager.Instance.GetCustStakeLevels(uplineId, item.GameTypeID),
+                            Pt = item                            
                         });
                 });
             }

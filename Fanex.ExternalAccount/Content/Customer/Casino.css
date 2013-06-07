@@ -68,3 +68,7 @@ td
 {
     text-align: center;
 }
+select
+{
+    width: 61px !important;
+}

@@ -25,7 +25,27 @@ namespace Fanex.ExternalAccount.Controllers.Base
     public class BaseController : Controller
     {
         #region Constant
-        
+
+        /// <summary>
+        /// Constant object
+        /// </summary>
+        public const int Super = 4;
+
+        /// <summary>
+        /// Constant object
+        /// </summary>
+        public const int Master = 3;
+
+        /// <summary>
+        /// Constant object
+        /// </summary>
+        public const int Agent = 2;
+
+        /// <summary>
+        /// Constant object
+        /// </summary>
+        public const int Member = 1;
+
         /// <summary>
         /// Constant object
         /// </summary>

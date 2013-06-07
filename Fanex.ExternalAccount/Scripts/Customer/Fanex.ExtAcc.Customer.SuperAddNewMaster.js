@@ -112,7 +112,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                     else
                         customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT;
 
-                    var max = parseFloat($('#maxCredit').text());
+                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
                     var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
 
                     if (cur > max) {

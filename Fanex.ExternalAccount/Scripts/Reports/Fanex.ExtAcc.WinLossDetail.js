@@ -46,7 +46,7 @@ Fanex.ExtAcc.WinLossDetail = {
     CallSubmit: function () {
         this.groupName = $('#selectedGroupName').html();
         this.ResetParameters();
-        this.username = $("#txtUserName").val();
+        this.username = Fanex.encodeHtml($("#txtUserName").val());
         this.Databind()
     },
     initMonthlyCalendar: function () {
@@ -701,7 +701,7 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     Databind: function () {
         if ($("#txtUserName").val() != '') {
-            this.username = $("#txtUserName").val();
+            this.username = Fanex.encodeHtml($("#txtUserName").val());
         }
         this.GetFromDateToDate();
         this.groupName = $('#selectedGroupName').html();

@@ -21,14 +21,14 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
     
     /// <summary>
     /// TODO: Update summary.
-    /// </summary>
+    /// </summary>    
     public class CasinoManager
     {
         private const int Super = 4;
         private const int Master = 3;
         private const int Agent = 2;
         private const int Member = 1;
-        
+
         private static CasinoManager instance = new CasinoManager();
         private readonly CasinoDao casino = new CasinoDao();
 
@@ -412,6 +412,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 custIBC.IsMaxWin = Utils.ToBoolean(row["IsMaxWin"]);
                 custIBC.IsMaxLose = Utils.ToBoolean(row["IsMaxLose"]);
                 custIBC.PTByGameType = Utils.ToBoolean(row["PTByGameType"]);
+                custIBC.PTByGameKind = Utils.ToBoolean(row["PTByGameKind"]);
                 custIBC.RoleId = Utils.ToInt32(row["RoleId"]);
                 custIBC.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
                 custIBC.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
@@ -527,9 +528,17 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 casino);
 
             // Gets error messages
-            messages += string.IsNullOrWhiteSpace(errMsg) ? string.Empty : errMsg + "<br />" + casinoPTResult.ErrorMessage;
+            messages += string.IsNullOrWhiteSpace(errMsg) && casinoPTResult.IsSuccess ? string.Empty : !string.IsNullOrWhiteSpace(errMsg) ? errMsg + "<br />" + casinoPTResult.ErrorMessage : casinoPTResult.ErrorMessage;
 
-            return new Result(messages == string.Empty || messages == "<br />" ? 0 : 1, messages);
+            var msgs = messages.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var retMsg = string.Empty;
+
+            foreach (var item in msgs)
+            {
+                retMsg += string.Format("{0}{1}", item, ", ");
+            }
+
+            return new Result(retMsg == string.Empty || retMsg == "<br />" ? 0 : 1, retMsg);
         }
 
         private bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
@@ -556,18 +565,19 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 var gameKindCasinoID = gameKinds[0].CodeID;
                 var gameKindMiniID = gameKinds[1].CodeID;
 
-                if ((uplineRoleId == Super || uplineRoleId == Master) && roleId == Member)
+                if (uplineRoleId - roleId != 1)
                 {
+                    // Assign data for indirect downline
                     gameKindTable.Rows.Add(
                         new object[] 
                             {
                                 custId,
                                 gameKindCasinoID,
-                                casinoPT.SPositionTaking,
-                                casinoPT.MPositionTaking,
-                                casinoPT.IsAutoPositionTaking,
-                                casinoPT.AutoPositionTaking,
-                                roleId,
+                                !(uplineRoleId == Super || uplineRoleId == Master) || casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.SPositionTaking,
+                                !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)casinoPT.MPositionTaking,
+                                casinoPT.IsAutoPositionTaking ? 1 : 0,
+                                !casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.AutoPositionTaking,
+                                uplineRoleId,
                                 ip,
                                 modifiedId, 
                                 modifiedBy, 
@@ -579,11 +589,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                             {
                                 custId,
                                 gameKindMiniID,
-                                miniPT.SPositionTaking,
-                                miniPT.MPositionTaking,
-                                miniPT.IsAutoPositionTaking,
-                                miniPT.AutoPositionTaking,
-                                roleId,
+                                !(uplineRoleId == Super || uplineRoleId == Master) || miniPT.IsAutoPositionTaking ? null : (object)miniPT.SPositionTaking,
+                                !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)miniPT.MPositionTaking,
+                                miniPT.IsAutoPositionTaking ? 1 : 0,
+                                !miniPT.IsAutoPositionTaking ? null : (object)miniPT.AutoPositionTaking,
+                                uplineRoleId,
                                 ip,
                                 modifiedId, 
                                 modifiedBy, 
@@ -592,23 +602,24 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 }
                 else
                 {
+                    // Assign data for direct downline
                     gameKindTable.Rows.Add(
                         new object[]
                             {
                                 custId,
                                 gameKindCasinoID,
                                 null,
-                                casinoPT.SPositionTaking,
-                                casinoPT.MPositionTaking,
-                                casinoPT.APositionTaking,
-                                casinoPT.IsAutoPositionTaking,
-                                casinoPT.AutoPositionTaking,
-                                casinoPT.MinPositionTaking,
-                                casinoPT.MaxPositionTaking,
-                                casinoPT.SMAgentRollingRate,
-                                casinoPT.MAgentRollingRate,
-                                casinoPT.AgentRollingRate,
-                                casinoPT.MemberRollingRate,
+                                !(roleId == Super || roleId == Master) || casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.SPositionTaking,
+                                !(roleId == Master || roleId == Agent) ? null : (object)casinoPT.MPositionTaking,
+                                !(roleId == Agent || roleId == Member) ? null : (object)casinoPT.APositionTaking,
+                                casinoPT.IsAutoPositionTaking ? 1 : 0,
+                                !casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.AutoPositionTaking,
+                                !(roleId == Super || roleId == Master || roleId == Agent) ? null : (object)casinoPT.MinPositionTaking,
+                                0,
+                                roleId != Super ? null : (object)casinoPT.SMAgentRollingRate,
+                                roleId != Master ? null : (object)casinoPT.MAgentRollingRate,
+                                roleId != Agent ? null : (object)casinoPT.AgentRollingRate,
+                                roleId != Member ? null : (object)casinoPT.MemberRollingRate,
                                 roleId,
                                 ip,
                                 modifiedId, 
@@ -622,17 +633,17 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                                 custId,
                                 gameKindMiniID,
                                 null,
-                                miniPT.SPositionTaking,
-                                miniPT.MPositionTaking,
-                                miniPT.APositionTaking,
-                                miniPT.IsAutoPositionTaking,
-                                miniPT.AutoPositionTaking,
-                                miniPT.MinPositionTaking,
-                                miniPT.MaxPositionTaking,
-                                miniPT.SMAgentRollingRate,
-                                miniPT.MAgentRollingRate,
-                                miniPT.AgentRollingRate,
-                                miniPT.MemberRollingRate,
+                                !(roleId == Super || roleId == Master) || miniPT.IsAutoPositionTaking ? null : (object)miniPT.SPositionTaking,
+                                !(roleId == Master || roleId == Agent) ? null : (object)miniPT.MPositionTaking,
+                                !(roleId == Agent || roleId == Member) ? null : (object)miniPT.APositionTaking,
+                                miniPT.IsAutoPositionTaking ? 1 : 0,
+                                !miniPT.IsAutoPositionTaking ? null : (object)miniPT.AutoPositionTaking,
+                                !(roleId == Super || roleId == Master || roleId == Agent) ? null : (object)miniPT.MinPositionTaking,
+                                0,
+                                roleId != Super ? null : (object)miniPT.SMAgentRollingRate,
+                                roleId != Master ? null : (object)miniPT.MAgentRollingRate,
+                                roleId != Agent ? null : (object)miniPT.AgentRollingRate,
+                                roleId != Member ? null : (object)miniPT.MemberRollingRate,
                                 roleId,
                                 ip,
                                 modifiedId, 
@@ -640,60 +651,46 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                                 fromSystem
                             });
                 }
-
+                
                 foreach (var item in casino.CasinoGame)
                 {
-                    if ((uplineRoleId == Super || uplineRoleId == Master) && roleId == Member)
+                    if (uplineRoleId - roleId != 1)
                     {
                         gameTypeTable.Rows.Add(
                             new object[] 
-                            {
-                                custId,
-                                item.GameTypeID,
-                                casinoPT.SPositionTaking,
-                                casinoPT.MPositionTaking,
-                                casinoPT.IsAutoPositionTaking,
-                                casinoPT.AutoPositionTaking,
-                                roleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
+                        {
+                            custId,
+                            item.GameTypeID,
+                            !(uplineRoleId == Super || uplineRoleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
+                            !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)item.Pt.MPositionTaking,
+                            item.Pt.IsAutoPositionTaking ? 1 : 0,
+                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
+                            roleId,
+                            ip,
+                            modifiedId, 
+                            modifiedBy, 
+                            fromSystem
+                        });
                     }
                     else
                     {
                         gameTypeTable.Rows.Add(
                             new object[]
-                            {
-                                custId,
-                                item.GameTypeID,
-                                0,
-                                casinoPT.SPositionTaking,
-                                casinoPT.MPositionTaking,
-                                casinoPT.APositionTaking,
-                                casinoPT.IsAutoPositionTaking,
-                                casinoPT.AutoPositionTaking,
-                                casinoPT.MinPositionTaking,
-                                casinoPT.MaxPositionTaking,
-                                casinoPT.SMAgentRollingRate,
-                                casinoPT.MAgentRollingRate,
-                                casinoPT.AgentRollingRate,
-                                casinoPT.MemberRollingRate,
-                                this.SelectedStakeLevels(item.StakeLevels),
-                                roleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
-                    }
-
-                    gameStakeTable.Rows.Add(
-                        new object[] 
                         {
                             custId,
                             item.GameTypeID,
+                            null,
+                            !(roleId == Super || roleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
+                            !(roleId == Master || roleId == Agent) ? null : (object)item.Pt.MPositionTaking,
+                            !(roleId == Agent || roleId == Member) ? null : (object)item.Pt.APositionTaking,
+                            item.Pt.IsAutoPositionTaking ? 1 : 0,
+                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
+                            !(roleId == Super || roleId == Master || roleId == Member) ? null : (object)item.Pt.MinPositionTaking,
+                            0,
+                            roleId != Super ? null : (object)item.Pt.SMAgentRollingRate,
+                            roleId != Master ? null : (object)item.Pt.MAgentRollingRate,
+                            roleId != Agent ? null : (object)item.Pt.AgentRollingRate,
+                            roleId != Member ? null : (object)item.Pt.MemberRollingRate,
                             this.SelectedStakeLevels(item.StakeLevels),
                             roleId,
                             ip,
@@ -701,61 +698,61 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                             modifiedBy, 
                             fromSystem
                         });
+                    }
+
+                    gameStakeTable.Rows.Add(
+                        new object[] 
+                    {
+                        custId,
+                        item.GameTypeID,
+                        this.SelectedStakeLevels(item.StakeLevels),
+                        roleId,
+                        ip,
+                        modifiedId, 
+                        modifiedBy, 
+                        fromSystem
+                    });
                 }
 
                 foreach (var item in casino.MiniGame)
                 {
-                    if ((uplineRoleId == Super || uplineRoleId == Master) && roleId == Member)
+                    if (uplineRoleId - roleId != 1)
                     {
                         gameTypeTable.Rows.Add(
                             new object[] 
-                            {
-                                custId,
-                                item.GameTypeID,
-                                miniPT.SPositionTaking,
-                                miniPT.MPositionTaking,
-                                miniPT.IsAutoPositionTaking,
-                                miniPT.AutoPositionTaking,
-                                roleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
+                        {
+                            custId,
+                            item.GameTypeID,
+                            !(uplineRoleId == Super || uplineRoleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
+                            !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)item.Pt.MPositionTaking,
+                            item.Pt.IsAutoPositionTaking ? 1 : 0,
+                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
+                            roleId,
+                            ip,
+                            modifiedId, 
+                            modifiedBy, 
+                            fromSystem
+                        });
                     }
                     else
                     {
                         gameTypeTable.Rows.Add(
                             new object[]
-                            {
-                                custId,
-                                item.GameTypeID,
-                                0,
-                                miniPT.SPositionTaking,
-                                miniPT.MPositionTaking,
-                                miniPT.APositionTaking,
-                                miniPT.IsAutoPositionTaking,
-                                miniPT.AutoPositionTaking,
-                                miniPT.MinPositionTaking,
-                                miniPT.MaxPositionTaking,
-                                miniPT.SMAgentRollingRate,
-                                miniPT.MAgentRollingRate,
-                                miniPT.AgentRollingRate,
-                                miniPT.MemberRollingRate,
-                                this.SelectedStakeLevels(item.StakeLevels),
-                                roleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
-                    }
-
-                    gameStakeTable.Rows.Add(
-                        new object[] 
                         {
                             custId,
                             item.GameTypeID,
+                            null,
+                            !(roleId == Super || roleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
+                            !(roleId == Master || roleId == Agent) ? null : (object)item.Pt.MPositionTaking,
+                            !(roleId == Agent || roleId == Member) ? null : (object)item.Pt.APositionTaking,
+                            item.Pt.IsAutoPositionTaking ? 1 : 0,
+                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
+                            !(roleId == Super || roleId == Master || roleId == Member) ? null : (object)item.Pt.MinPositionTaking,
+                            0,
+                            roleId != Super ? null : (object)item.Pt.SMAgentRollingRate,
+                            roleId != Master ? null : (object)item.Pt.MAgentRollingRate,
+                            roleId != Agent ? null : (object)item.Pt.AgentRollingRate,
+                            roleId != Member ? null : (object)item.Pt.MemberRollingRate,
                             this.SelectedStakeLevels(item.StakeLevels),
                             roleId,
                             ip,
@@ -763,6 +760,20 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                             modifiedBy, 
                             fromSystem
                         });
+                    }
+
+                    gameStakeTable.Rows.Add(
+                        new object[] 
+                    {
+                        custId,
+                        item.GameTypeID,
+                        this.SelectedStakeLevels(item.StakeLevels),
+                        roleId,
+                        ip,
+                        modifiedId, 
+                        modifiedBy, 
+                        fromSystem
+                    });
                 }
 
                 var resultKind = new DataTable();
@@ -771,31 +782,47 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 
                 if (uplineRoleId - roleId == 1)
                 {
+                    // Update direct downline
                     resultKind = customer.UpdateCustGameKind(gameKindTable);
-                    resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
+                    
+                    if (casino.CasinoInfo.PTByGameType)
+                    {
+                        resultType = customer.UpdateCustGameType(gameTypeTable);
+                    }
                 }
                 else
                 {
+                    // Update indirect downline
                     resultKind = customer.UpdateCustGameKind_EditMember(gameKindTable);
-                    /*resultType = customer.UpdateCustGameType(gameTypeTable);*/
-                    resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
+                    
+                    if (casino.CasinoInfo.PTByGameType)
+                    {
+                        resultType = customer.UpdateCustGameType_EditMember(gameTypeTable);
+                    }
                 }
 
+                resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
+
+                // Process error messages
                 foreach (DataRow item in resultKind.Rows)
                 {
                     msg += item.Field<string>("ErrMsg") + "<br />";
                 }
 
-                /*
-                foreach (DataRow item in resultType.Rows)
+                if (casino.CasinoInfo.PTByGameType)
                 {
-                    msg += item.Field<string>("ErrMsg") + "<br />";
-                }*/
+                    foreach (DataRow item in resultType.Rows)
+                    {
+                        msg += item.Field<string>("ErrMsg") + "<br />";
+                    }
+                }
 
                 foreach (DataRow item in resultStake.Rows)
                 {
                     msg += item.Field<string>("ErrMsg") + "<br />";
                 }
+                
+                msg = msg.EndsWith("<br />") ? msg.Substring(0, msg.IndexOf("<br />")) : msg;
 
                 return new Result(msg == string.Empty || (resultKind.Rows.Count == 0 && resultType.Rows.Count == 0 && resultStake.Rows.Count == 0) ? 0 : 1, msg);
             }

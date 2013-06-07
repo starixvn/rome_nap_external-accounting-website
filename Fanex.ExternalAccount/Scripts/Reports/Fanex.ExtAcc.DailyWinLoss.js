@@ -39,7 +39,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     CallSubmit: function () {
         this.groupName = $('#selectedGroupName').html();
         this.ResetParameters();
-        this.username = $("#txtUserName").val();
+        this.username = Fanex.encodeHtml($("#txtUserName").val());
         this.Databind();
     },
     Init: function () {
@@ -356,7 +356,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     },
     Databind: function () {
         if ($("#txtUserName").val() != '') {
-            this.username = $("#txtUserName").val();
+            this.username = Fanex.encodeHtml($("#txtUserName").val());
         }
 
         this.date = $('#dtpWinLossDate').val();

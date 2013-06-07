@@ -92,9 +92,9 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 var uplineUserName = customer.userName;
 
                 // Set label MaxCredit
-                customer.maxCredit = 0;
                 customer.credit = String.prototype.FormatNumber(customer.credit);
                 customer.agentMaxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
+                customer.maxCredit = 0;
 
                 this.saveCustomer = function () {
                     $('#contentSplitter').scrollTop(0);

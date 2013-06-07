@@ -10,6 +10,7 @@ Fanex.ExtAcc.Customer.Casino = {
     uplineId: Fanex.ExtAcc.Customer.CustomerInfo().uplineId,
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
     ErrorMessage: '',
+    custInfo: Fanex.ExtAcc.Customer.CustomerInfo(),
 
     Init: function () {
         this.LoadData();
@@ -84,7 +85,7 @@ Fanex.ExtAcc.Customer.Casino = {
         $.ajax({
             url: resolveClientUrl('Casino/EditCasinoPost'),
             type: 'post',
-            data: { custId: Fanex.ExtAcc.Customer.UserId, uplineId: Fanex.ExtAcc.Customer.Casino.uplineId },
+            data: Fanex.ExtAcc.Customer.Casino.custInfo, //{ custId: Fanex.ExtAcc.Customer.UserId, uplineId: Fanex.ExtAcc.Customer.Casino.uplineId },
             dataType: 'json'
         })
         .success(function (result) {
@@ -133,6 +134,9 @@ Fanex.ExtAcc.Customer.Casino = {
     },
 
     RenderSetting: function (result) {
+        var isPtByGameType = this.customer.casinoInfo.pTByGameType;
+        var rowspan = isPtByGameType ? ' rowspan="2" ' : ' rowspan="1" ';
+
         // Renders casino game setting
         if (result && result.casinoGame.length > 0) {
             for (var i = 0; i < result.casinoGame.length; i++) {
@@ -149,15 +153,24 @@ Fanex.ExtAcc.Customer.Casino = {
                     stakeLevels += '<input ' + checked + ' type="checkbox" id="rng-' + result.casinoGame[i].stakeLevels[j].stakeLevelID + '" />' + result.casinoGame[i].stakeLevels[j].stakeLevelName;
                 }
 
-                var row = '<tr>' +
+                var rowPT = isPtByGameType ? this.RenderPtByGameType(result.casinoGame[i].pt, i, '_rng') : '';
+                var row = rowPT == '' ?
+                                '<tr>' +
                                     '<td class="R">' + gameName + '</td>' +
-                                    '<td colspan="' + Fanex.ExtAcc.Customer.Casino.colspan + '" style="border-right: none">Betting limit:<span id="bettingLimit">' + stakeLevels + '</span></td>' +
+                                    '<td colspan="' + this.colspan + '" style="border-right: none">Betting limit:<span id="rng-bettingLimit-' + i + '">' + stakeLevels + '</span></td>' +
+                                '</tr>' :
+                                '<tr>' +
+                                    '<td class="R" ' + rowspan + '>' + gameName + '</td>' +
+                                    rowPT +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td colspan="' + this.colspan + '" style="border-right: none">Betting limit:<span id="rng-bettingLimit-' + i + '">' + stakeLevels + '</span></td>' +
                                 '</tr>';
 
                 $('#casinoGame').append(row);
             }
 
-            $('#rowspanCasino').attr('rowspan', result.casinoGame.length + 1);
+            $('#rowspanCasino').attr('rowspan', !isPtByGameType ? result.casinoGame.length + 1 : (result.casinoGame.length) * 2 + 1);
             $('#rowspanCasino').html(result.pts[0].codeName);
         }
 
@@ -177,15 +190,24 @@ Fanex.ExtAcc.Customer.Casino = {
                     stakeLevels += '<input name="gameRow' + i + '" ' + checked + ' type="checkbox" id="mini-' + result.miniGame[i].stakeLevels[j].stakeLevelID + '" />' + result.miniGame[i].stakeLevels[j].stakeLevelName;
                 }
 
-                var row = '<tr>' +
+                var rowPT = isPtByGameType ? this.RenderPtByGameType(result.miniGame[i].pt, i, '_mini') : '';
+                var row = rowPT == '' ?
+                                '<tr>' +
                                     '<td class="R">' + gameName + '</td>' +
-                                    '<td colspan="' + Fanex.ExtAcc.Customer.Casino.colspan + '" style="border-right: none">Betting limit:<span id="bettingLimit">' + stakeLevels + '</span></td>' +
+                                    '<td colspan="' + this.colspan + '" style="border-right: none">Betting limit:<span id="mini-bettingLimit-' + i + '">' + stakeLevels + '</span></td>' +
+                                '</tr>' :
+                                '<tr>' +
+                                    '<td class="R" ' + rowspan + '>' + gameName + '</td>' +
+                                    rowPT +
+                                '</tr>' +
+                                '<tr>' +
+                                    '<td colspan="' + this.colspan + '" style="border-right: none">Betting limit:<span id="mini-bettingLimit-' + i + '">' + stakeLevels + '</span></td>' +
                                 '</tr>';
 
                 $('#miniGame').append(row);
             }
 
-            $('#rowspanMini').attr('rowspan', result.miniGame.length + 1);
+            $('#rowspanMini').attr('rowspan', !isPtByGameType ? result.miniGame.length + 1 : (result.miniGame.length) * 2 + 1);
             $('#rowspanMini').html(result.pts[1].codeName);
         }
 
@@ -201,21 +223,31 @@ Fanex.ExtAcc.Customer.Casino = {
     RenderPT: function (pts) {
         var casinoGamePT = pts[0];
         var miniGamePT = pts[1];
+        var uplineMin = 0;
+        var uplineMax = 0;
+        var uplinePreset = 0;
+        var uplineAutoPreset = 0;
+        var downlinePreset = 0;
+        var downlinePreset2 = 0;
+        var commMax = 0;
+        var commPreset = 0;
+        var max = 0;
+        var synced = this.customer.customerInfo.casinoSync;
 
         // Renders Master-Agent PT
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             //PT Renderring for Casino Game
             //PT values
-            var uplineMin = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking;
-            var uplineMax = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
-            var uplinePreset = this.customer.customerInfo.casinoSync ? casinoGamePT.sPositionTaking : casinoGamePT.sPositionTakingUpline;
-            var uplineAutoPreset = this.customer.customerInfo.casinoSync ? casinoGamePT.autoPositionTaking : casinoGamePT.autoPositionTakingUpline;
-            var downlinePreset = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTaking : casinoGamePT.maxPositionTakingUpline;
-            var downlinePreset2 = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTaking : casinoGamePT.minPositionTakingUpline;
+            uplineMax = synced ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
+            uplinePreset = synced ? casinoGamePT.sPositionTaking : casinoGamePT.sPositionTakingUpline;
+            uplineAutoPreset = synced ? casinoGamePT.autoPositionTaking : casinoGamePT.autoPositionTakingUpline;
+            downlinePreset = synced ? casinoGamePT.maxPositionTaking : casinoGamePT.maxPositionTakingUpline;
+            downlinePreset2 = synced ? casinoGamePT.minPositionTaking : casinoGamePT.minPositionTakingUpline;
+            commMax = synced ? casinoGamePT.sMAgentRollingRateUpline : casinoGamePT.sMAgentRollingRate;
+            commPreset = synced ? casinoGamePT.mAgentRollingRate : casinoGamePT.sMAgentRollingRate;
 
             //Render super preset pt
             PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
-
             //Render super auto preset pt
             PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
             if (!casinoGamePT.isAutoPositionTaking) {
@@ -233,16 +265,17 @@ Fanex.ExtAcc.Customer.Casino = {
             PT_RenderCombo(document.getElementById('pt_4'), 0, downlinePreset, 0.01, downlinePreset2);
 
             //Render Master Commission
-            Comm_RenderCombo(document.getElementById('comm_5'), 0, this.customer.customerInfo.casinoSync ? casinoGamePT.sMAgentRollingRateUpline : casinoGamePT.sMAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? casinoGamePT.mAgentRollingRate : casinoGamePT.sMAgentRollingRate);
+            Comm_RenderCombo(document.getElementById('comm_5'), 0, commMax, 0.0005, commPreset);
 
             //PT Renderring for Mini Game
             //PT values
-            uplineMin = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking;
-            uplineMax = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
-            uplinePreset = this.customer.customerInfo.casinoSync ? miniGamePT.sPositionTaking : miniGamePT.sPositionTakingUpline;
-            uplineAutoPreset = this.customer.customerInfo.casinoSync ? miniGamePT.autoPositionTaking : miniGamePT.autoPositionTakingUpline;
-            downlinePreset = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTaking : miniGamePT.maxPositionTakingUpline;
-            downlinePreset2 = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTaking : miniGamePT.minPositionTakingUpline;
+            uplineMax = synced ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
+            uplinePreset = synced ? miniGamePT.sPositionTaking : miniGamePT.sPositionTakingUpline;
+            uplineAutoPreset = synced ? miniGamePT.autoPositionTaking : miniGamePT.autoPositionTakingUpline;
+            downlinePreset = synced ? miniGamePT.maxPositionTaking : miniGamePT.maxPositionTakingUpline;
+            downlinePreset2 = synced ? miniGamePT.minPositionTaking : miniGamePT.minPositionTakingUpline;
+            commMax = synced ? miniGamePT.sMAgentRollingRateUpline : miniGamePT.sMAgentRollingRate;
+            commPreset = synced ? miniGamePT.mAgentRollingRate : miniGamePT.sMAgentRollingRate;
 
             //Render super preset pt
             PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -264,15 +297,17 @@ Fanex.ExtAcc.Customer.Casino = {
             PT_RenderCombo(document.getElementById('pt_4_1'), 0, downlinePreset, 0.01, downlinePreset2);
 
             //Render Master Commission
-            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, this.customer.customerInfo.casinoSync ? miniGamePT.sMAgentRollingRateUpline : miniGamePT.sMAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? miniGamePT.mAgentRollingRate : miniGamePT.sMAgentRollingRate);
+            Comm_RenderCombo(document.getElementById('comm_5_1'), 0, commMax, 0.0005, commPreset);
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             //PT Renderring for Casino Game
             //PT values
-            var uplineMin = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking;
-            var uplineMax = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
-            var uplinePreset = this.customer.customerInfo.casinoSync ? casinoGamePT.mPositionTaking : casinoGamePT.mPositionTakingUpline;
-            var downlinePreset = this.customer.customerInfo.casinoSync ? casinoGamePT.aPositionTaking : casinoGamePT.aPositionTakingUpline;
+            uplineMax = synced ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
+            uplinePreset = synced ? casinoGamePT.mPositionTaking : casinoGamePT.mPositionTakingUpline;
+            downlinePreset = synced ? casinoGamePT.aPositionTaking : casinoGamePT.aPositionTakingUpline;
+            downlinePreset2 = synced ? casinoGamePT.minPositionTaking : casinoGamePT.minPositionTakingUpline;
+            commMax = synced ? casinoGamePT.mAgentRollingRateUpline : casinoGamePT.mAgentRollingRate;
+            commPreset = synced ? casinoGamePT.agentRollingRate : casinoGamePT.mAgentRollingRate;
 
             if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
                 //Render Master preset pt
@@ -285,7 +320,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 PT_RenderCombo(document.getElementById('pt_4'), 0, downlinePreset, 0.01, downlinePreset2);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_5'), 0, this.customer.customerInfo.casinoSync ? casinoGamePT.mAgentRollingRateUpline : casinoGamePT.mAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? casinoGamePT.agentRollingRate : casinoGamePT.mAgentRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_5'), 0, commMax, 0.0005, commPreset);
             }
             else {
                 $('#chkEnable').attr('disabled', true);
@@ -300,10 +335,12 @@ Fanex.ExtAcc.Customer.Casino = {
 
             //PT Renderring for Mini Game
             //PT values
-            uplineMin = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking;
-            uplineMax = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
-            uplinePreset = this.customer.customerInfo.casinoSync ? miniGamePT.mPositionTaking : miniGamePT.mPositionTakingUpline;
-            downlinePreset = this.customer.customerInfo.casinoSync ? miniGamePT.aPositionTaking : miniGamePT.aPositionTakingUpline;
+            uplineMax = synced ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
+            uplinePreset = synced ? miniGamePT.mPositionTaking : miniGamePT.mPositionTakingUpline;
+            downlinePreset = synced ? miniGamePT.aPositionTaking : miniGamePT.aPositionTakingUpline;
+            downlinePreset2 = synced ? miniGamePT.minPositionTaking : miniGamePT.minPositionTakingUpline;
+            commMax = synced ? miniGamePT.mAgentRollingRateUpline : miniGamePT.mAgentRollingRate;
+            commPreset = synced ? miniGamePT.agentRollingRate : miniGamePT.mAgentRollingRate;
 
             if (!Fanex.ExtAcc.Customer.isSuperEditAgent) {
                 //Render Master preset pt
@@ -316,7 +353,7 @@ Fanex.ExtAcc.Customer.Casino = {
                 PT_RenderCombo(document.getElementById('pt_4_1'), 0, downlinePreset, 0.01, downlinePreset2);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_5_1'), 0, this.customer.customerInfo.casinoSync ? miniGamePT.mAgentRollingRateUpline : miniGamePT.mAgentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? miniGamePT.agentRollingRate : miniGamePT.mAgentRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_5_1'), 0, commMax, 0.0005, commPreset);
             }
             else {
                 $('#chkEnable').attr('disabled', true);
@@ -336,11 +373,11 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 //PT Renderring for Casino Game
                 //PT values
-                var uplineMin = 0;
-                var uplineMax = casinoGamePT.superSPositionTaking - casinoGamePT.mPositionTaking - casinoGamePT.aPositionTaking;
-                var uplinePreset = casinoGamePT.sPositionTaking;
-                var uplineAutoPreset = casinoGamePT.autoPositionTaking;
-                var max = casinoGamePT.superSPositionTaking;
+                uplineMin = casinoGamePT.isAutoPositionTaking ? casinoGamePT.superMinPositionTaking - casinoGamePT.mPositionTaking - casinoGamePT.aPositionTaking : 0;
+                uplineMax = casinoGamePT.superMaxPositionTaking - casinoGamePT.mPositionTaking - casinoGamePT.aPositionTaking;
+                uplinePreset = casinoGamePT.sPositionTaking;
+                uplineAutoPreset = casinoGamePT.autoPositionTaking;
+                max = casinoGamePT.superMaxPositionTaking;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -363,11 +400,11 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 //PT Renderring for Mini Game
                 //PT values
-                uplineMin = 0;
-                uplineMax = miniGamePT.superSPositionTaking - miniGamePT.mPositionTaking - miniGamePT.aPositionTaking;
+                uplineMin = miniGamePT.isAutoPositionTaking ? miniGamePT.superMinPositionTaking - miniGamePT.mPositionTaking - miniGamePT.aPositionTaking : 0;
+                uplineMax = miniGamePT.superMaxPositionTaking - miniGamePT.mPositionTaking - miniGamePT.aPositionTaking;
                 uplinePreset = miniGamePT.sPositionTaking;
                 uplineAutoPreset = miniGamePT.autoPositionTaking;
-                max = miniGamePT.superSPositionTaking;
+                max = miniGamePT.superMaxPositionTaking;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -395,9 +432,8 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 //PT Renderring for Casino Game
                 //PT values
-                var uplineMin = 0;
-                var uplineMax = casinoGamePT.superSPositionTaking - casinoGamePT.sPositionTaking - casinoGamePT.aPositionTaking;
-                var uplinePreset = casinoGamePT.mPositionTaking;
+                uplineMax = casinoGamePT.masterMaxPositionTaking - casinoGamePT.aPositionTaking;
+                uplinePreset = casinoGamePT.mPositionTaking;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -407,8 +443,7 @@ Fanex.ExtAcc.Customer.Casino = {
 
                 //PT Renderring for Mini Game
                 //PT values
-                uplineMin = 0;
-                uplineMax = miniGamePT.superSPositionTaking - miniGamePT.sPositionTaking - miniGamePT.aPositionTaking;
+                uplineMax = miniGamePT.masterMaxPositionTaking - miniGamePT.aPositionTaking;
                 uplinePreset = miniGamePT.mPositionTaking;
 
                 //Render Super preset pt
@@ -420,27 +455,29 @@ Fanex.ExtAcc.Customer.Casino = {
             else {
                 //PT Renderring for Casino Game
                 //PT values
-                var uplineMin = this.customer.customerInfo.casinoSync ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking;
-                var uplineMax = this.customer.customerInfo.casinoSync ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
-                var uplinePreset = this.customer.customerInfo.casinoSync ? casinoGamePT.aPositionTaking : casinoGamePT.aPositionTakingUpline;
+                uplineMax = synced ? casinoGamePT.maxPositionTakingUpline : casinoGamePT.maxPositionTaking;
+                uplinePreset = synced ? casinoGamePT.aPositionTaking : casinoGamePT.aPositionTakingUpline;
+                commMax = synced ? casinoGamePT.agentRollingRateUpline : casinoGamePT.agentRollingRate;
+                commPreset = synced ? casinoGamePT.memberRollingRate : casinoGamePT.agentRollingRate;
 
                 //Render Master preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_2'), 0, this.customer.customerInfo.casinoSync ? casinoGamePT.agentRollingRateUpline : casinoGamePT.agentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? casinoGamePT.memberRollingRate : casinoGamePT.agentRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_2'), 0, commMax, 0.0005, commPreset);
 
                 //PT Renderring for Mini Game
                 //PT values
-                uplineMin = this.customer.customerInfo.casinoSync ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking;
-                uplineMax = this.customer.customerInfo.casinoSync ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
-                uplinePreset = this.customer.customerInfo.casinoSync ? miniGamePT.aPositionTaking : miniGamePT.aPositionTakingUpline;
+                uplineMax = synced ? miniGamePT.maxPositionTakingUpline : miniGamePT.maxPositionTaking;
+                uplinePreset = synced ? miniGamePT.aPositionTaking : miniGamePT.aPositionTakingUpline;
+                commMax = synced ? miniGamePT.agentRollingRateUpline : miniGamePT.agentRollingRate;
+                commPreset = synced ? miniGamePT.memberRollingRate : miniGamePT.agentRollingRate;
 
                 //Render Master preset pt
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
                 //Render Agent Commission
-                Comm_RenderCombo(document.getElementById('comm_2_1'), 0, this.customer.customerInfo.casinoSync ? miniGamePT.agentRollingRateUpline : miniGamePT.agentRollingRate, 0.0005, this.customer.customerInfo.casinoSync ? miniGamePT.memberRollingRate : miniGamePT.agentRollingRate);
+                Comm_RenderCombo(document.getElementById('comm_2_1'), 0, commMax, 0.0005, commPreset);
             }
         }
     },
@@ -458,7 +495,7 @@ Fanex.ExtAcc.Customer.Casino = {
 
         Fanex.ExtAcc.BlockUI();
 
-        var custInfo = Fanex.ExtAcc.Customer.CustomerInfo();
+        var custInfo = this.custInfo;
 
         // Sets status, max transfer limit and daily auto reset RnG Casino
         this.customer.customerInfo.casinoDisabled = !document.getElementById('chkEnable').checked;
@@ -470,89 +507,41 @@ Fanex.ExtAcc.Customer.Casino = {
         var ptMiniGame = this.customer.pts[1];
         var rngGames = this.customer.casinoGame;
         var miniGames = this.customer.miniGame;
+        var isPtByGameType = this.customer.casinoInfo.pTByGameType;
 
         // Sets PT for RnG and Mini Game
         switch (custInfo.uplineRoleId) {
             case Fanex.ExtAcc.Customer.Super:
                 if (custInfo.roleId == Fanex.ExtAcc.Customer.Master) {
-                    // Super preset PT
-                    ptRngGame.sPositionTaking = $('#pt_1').val();
-                    ptMiniGame.sPositionTaking = $('#pt_1_1').val();
-
-                    // Super Is Auto PT
-                    ptRngGame.isAutoPositionTaking = document.getElementById('chkAutoPT').checked;
-                    ptMiniGame.isAutoPositionTaking = document.getElementById('chkAutoPT_1').checked;
-
-                    // Super Auto Preset PT
-                    ptRngGame.autoPositionTaking = $('#pt_2').val();
-                    ptMiniGame.autoPositionTaking = $('#pt_2_1').val();
-
-                    // Master Max PT
-                    ptRngGame.maxPositionTaking = $('#pt_3').val();
-                    ptMiniGame.maxPositionTaking = $('#pt_3_1').val();
-
-                    // Master Min PT
-                    ptRngGame.minPositionTaking = $('#pt_4').val();
-                    ptMiniGame.minPositionTaking = $('#pt_4_1').val();
-
-                    // Master Commission
-                    ptRngGame.mAgentRollingRate = $('#comm_5').val();
-                    ptMiniGame.mAgentRollingRate = $('#comm_5_1').val();
+                    this.SetPtForMaster(ptRngGame);
+                    this.SetPtForMaster(ptMiniGame, '_1');
                 }
                 else if (custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
-                    // Super preset PT
-                    ptRngGame.sPositionTaking = $('#pt_1').val();
-                    ptMiniGame.sPositionTaking = $('#pt_1_1').val();
-
-                    // Super Is Auto PT
-                    ptRngGame.isAutoPositionTaking = document.getElementById('chkAutoPT').checked;
-                    ptMiniGame.isAutoPositionTaking = document.getElementById('chkAutoPT_1').checked;
-
-                    // Super Auto Preset PT
-                    ptRngGame.autoPositionTaking = $('#pt_2').val();
-                    ptMiniGame.autoPositionTaking = $('#pt_2_1').val();
+                    this.SetPtForMemberBySuper(ptRngGame);
+                    this.SetPtForMemberBySuper(ptMiniGame, '_1');
                 }
                 break;
             case Fanex.ExtAcc.Customer.Master:
                 if (custInfo.roleId == Fanex.ExtAcc.Customer.Agent) {
-                    // Master Preset PT
-                    ptRngGame.mPositionTaking = $('#pt_1').val();
-                    ptMiniGame.mPositionTaking = $('#pt_1_1').val();
-
-                    // Agent Max PT
-                    ptRngGame.aPositionTaking = $('#pt_3').val();
-                    ptMiniGame.aPositionTaking = $('#pt_3_1').val();
-
-                    // Agent Min PT
-                    ptRngGame.minPositionTaking = $('#pt_4').val();
-                    ptMiniGame.minPositionTaking = $('#pt_4_1').val();
-
-                    // Agent Commission
-                    ptRngGame.agentRollingRate = $('#comm_5').val();
-                    ptMiniGame.agentRollingRate = $('#comm_5_1').val();
+                    this.SetPtForAgent(ptRngGame);
+                    this.SetPtForAgent(ptMiniGame, '_1');
                 }
                 else if (custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
-                    // Master Preset PT
-                    ptRngGame.mPositionTaking = $('#pt_1').val();
-                    ptMiniGame.mPositionTaking = $('#pt_1_1').val();
+                    this.SetPtForMemberByMaster(ptRngGame);
+                    this.SetPtForMemberByMaster(ptMiniGame, '_1');
                 }
                 break;
             case Fanex.ExtAcc.Customer.Agent:
                 if (custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
-                    // Agent Preset PT
-                    ptRngGame.aPositionTaking = $('#pt_1').val();
-                    ptMiniGame.aPositionTaking = $('#pt_1_1').val();
-
-                    // Member Commission
-                    ptRngGame.memberRollingRate = $('#comm_2').val();
-                    ptMiniGame.memberRollingRate = $('#comm_2_1').val();
+                    this.SetPtForMember(ptRngGame);
+                    this.SetPtForMember(ptMiniGame, '_1');
                 }
                 break;
             default:
                 break;
         }
 
-        // Sets Betting Limits for RnG Game
+        // Sets Betting Limits and PT By Game Type for RnG Game
         for (var i = 0; i < rngGames.length; i++) {
             var game = rngGames[i];
 
@@ -560,6 +549,11 @@ Fanex.ExtAcc.Customer.Casino = {
                 for (var j = 0; j < game.stakeLevels.length; j++) {
                     game.stakeLevels[j].isChecked = document.getElementById('rng-' + game.stakeLevels[j].stakeLevelID).checked;
                 }
+
+            }
+
+            if (isPtByGameType) {
+                this.SetPtForGameType(game.pt, '_1_' + i + '_rng');
             }
         }
 
@@ -571,6 +565,10 @@ Fanex.ExtAcc.Customer.Casino = {
                 for (var j = 0; j < game.stakeLevels.length; j++) {
                     game.stakeLevels[j].isChecked = document.getElementById('mini-' + +game.stakeLevels[j].stakeLevelID).checked;
                 }
+            }
+
+            if (isPtByGameType) {
+                this.SetPtForGameType(game.pt, '_1_' + i + '_mini');
             }
         }
 
@@ -646,6 +644,246 @@ Fanex.ExtAcc.Customer.Casino = {
                 Fanex.ExtAcc.Customer.Casino.UpdateSetting(++idx);
             }
         });
+    },
+
+    SetPtForGameType: function (pt, subfix) {
+        switch (this.custInfo.uplineRoleId) {
+            case Fanex.ExtAcc.Customer.Super:
+                if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Master) {
+                    this.SetPtForMaster(pt, subfix);
+                }
+                else if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    this.SetPtForMemberBySuper(pt, subfix);
+                }
+                break;
+            case Fanex.ExtAcc.Customer.Master:
+                if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Agent) {
+                    this.SetPtForAgent(pt, subfix);
+                }
+                else if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    this.SetPtForMemberByMaster(pt, subfix);
+                }
+                break;
+            case Fanex.ExtAcc.Customer.Agent:
+                this.SetPtForMember(pt, subfix);
+                break;
+            default:
+                break;
+        }
+    },
+
+    SetPtForMaster: function (pt, _subfix) {
+        var subfix = _subfix != null ? _subfix : '';
+        var chkId = (subfix.indexOf('_rng') != -1 || subfix.indexOf('_mini') != -1) ? ('chkAutoPT_1' + subfix) : ('chkAutoPT' + subfix);
+        // Super preset PT
+        pt.sPositionTaking = $('#pt_1' + subfix).val();
+        // Super Is Auto PT
+        pt.isAutoPositionTaking = document.getElementById(chkId).checked;
+
+        // Super Auto Preset PT
+        pt.autoPositionTaking = !pt.isAutoPositionTaking ? 0 : $('#pt_2' + subfix).val();
+
+        // Master Preset PT
+        pt.mPositionTaking = $('#pt_3' + subfix).val();
+
+        // Master Min PT
+        pt.minPositionTaking = $('#pt_4' + subfix).val();
+
+        // Master Commission
+        pt.mAgentRollingRate = $('#comm_5' + subfix).val();
+
+        return pt;
+    },
+
+    SetPtForAgent: function (pt, _subfix) {
+        var subfix = _subfix != null ? _subfix : '';
+        // Master Preset PT
+        pt.mPositionTaking = $('#pt_1' + subfix).val();
+
+        // Agent Preset PT
+        pt.aPositionTaking = $('#pt_3' + subfix).val();
+
+        // Agent Min PT
+        pt.minPositionTaking = $('#pt_4' + subfix).val();
+
+        // Agent Commission
+        pt.agentRollingRate = $('#comm_5' + subfix).val();
+
+        return pt;
+    },
+
+    SetPtForMember: function (pt, _subfix) {
+        var subfix = _subfix != null ? _subfix : '';
+        // Agent Preset PT
+        pt.aPositionTaking = $('#pt_1' + subfix).val();
+
+        // Member Commission
+        pt.memberRollingRate = $('#comm_2' + subfix).val();
+
+        return pt;
+    },
+
+    SetPtForMemberBySuper: function (pt, _subfix) {
+        var subfix = _subfix != null ? _subfix : '';
+        // Super preset PT
+        pt.sPositionTaking = $('#pt_1' + subfix).val();
+
+        // Super Is Auto PT
+        pt.isAutoPositionTaking = document.getElementById('chkAutoPT' + subfix).checked;
+
+        // Super Auto Preset PT
+        pt.autoPositionTaking = $('#pt_2' + subfix).val();
+
+        return pt;
+    },
+
+    SetPtForMemberByMaster: function (pt, _subfix) {
+        var subfix = _subfix != null ? _subfix : '';
+        // Master Preset PT
+        ptRngGame.mPositionTaking = $('#pt_1' + subfix).val();
+
+        return pt;
+    },
+
+    RenderPtByGameType: function (pt, i, subfix) {
+        var row = '';
+
+        switch (this.custInfo.uplineRoleId) {
+            case Fanex.ExtAcc.Customer.Super:
+                if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Master) {
+                    row = this.RenderPtByGameTypeMaster(pt, i, subfix);
+                }
+                else if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Agent) {
+                    row = this.RenderPtByGameTypeAgentBySuper(pt);
+                }
+                else if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    row = this.RenderPtByGameTypeMemberBySuper(pt, i, subfix);
+                }
+                break;
+            case Fanex.ExtAcc.Customer.Master:
+                if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Agent) {
+                    row = this.RenderPtByGameTypeAgent(pt, i, subfix);
+                }
+                else if (this.custInfo.roleId == Fanex.ExtAcc.Customer.Member) {
+                    row = this.RenderPtByGameTypeMemberByMaster(pt, i, subfix);
+                }
+                break;
+            case Fanex.ExtAcc.Customer.Agent:
+                row = this.RenderPtByGameTypeMember(pt, i, subfix);
+                break;
+            default:
+                break;
+        }
+
+        return row;
+    },
+
+    RenderPtByGameTypeMaster: function (pt, idx, subfix) {
+        var row = '';
+        var synced = this.customer.customerInfo.casinoSync;
+
+        var uplineMax = synced ? pt.maxPositionTakingUpline : pt.maxPositionTaking;
+        var uplinePreset = synced ? pt.sPositionTaking : pt.sPositionTakingUpline;
+        var uplineAutoPreset = synced ? pt.autoPositionTaking : pt.autoPositionTakingUpline;
+        var downlinePreset = synced ? pt.maxPositionTaking : pt.maxPositionTakingUpline;
+        var downlinePreset2 = synced ? pt.minPositionTaking : pt.minPositionTakingUpline;
+        var commMax = synced ? pt.sMAgentRollingRateUpline : pt.sMAgentRollingRate;
+        var commPreset = synced ? pt.mAgentRollingRate : pt.sMAgentRollingRate;
+
+        var isAuto = synced ? pt.isAutoPositionTaking : pt.isAutoPositionTakingUpline;
+        var checked = isAuto ? ' checked="checked"' : '';
+        var input = '<input name="' + subfix + '" onclick="checkPT(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')" type="checkbox" id="chkAutoPT_1_1_' + idx + subfix + '" ' + checked + ' />';
+        var disabledPT1 = isAuto ? ' disabled="disabled"' : '';
+        var disabledPT2 = !isAuto ? ' disabled="disabled"' : '';
+
+        row += '<td class="C"><select name="pt_1' + subfix + '" ' + disabledPT1 + ' id="pt_1_1_' + idx + subfix + '" onchange="PTChanging(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')">' + PT_RenderOption(0, uplineMax, 0.01, uplinePreset) + '</select></td>';
+        row += '<td class="C">' + input + '<select name="pt_2' + subfix + '" ' + disabledPT2 + ' id="pt_2_1_' + idx + subfix + '">' + PT_RenderOption(0, uplineMax, 0.01, uplineAutoPreset) + '</select></td>';
+        row += '<td class="C"><select name="pt_3' + subfix + '" id="pt_3_1_' + idx + subfix + '" onchange="PTChanging(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')">' + PT_RenderOption(0, uplineMax - uplinePreset, 0.01, downlinePreset) + '</select></td>';
+        row += '<td class="C"><select name="pt_4' + subfix + '" id="pt_4_1_' + idx + subfix + '">' + PT_RenderOption(0, downlinePreset, 0.01, downlinePreset2) + '</select></td>';
+        row += '<td class="C" style="border-right: none"><select name="comm_5' + subfix + '" id="comm_5_1_' + idx + subfix + '">' + Comm_RenderOption(0, commMax, 0.0005, commPreset) + '</select></td>';
+
+        return row;
+    },
+
+    RenderPtByGameTypeAgent: function (pt, idx, subfix) {
+        var row = '';
+        var synced = this.customer.customerInfo.casinoSync;
+
+        var uplineMin = 0;
+        var uplineMax = synced ? pt.maxPositionTakingUpline : pt.maxPositionTaking;
+        var uplinePreset = synced ? pt.mPositionTaking : pt.mPositionTakingUpline;
+        var downlinePreset = synced ? pt.aPositionTaking : pt.aPositionTakingUpline;
+        var downlinePreset2 = synced ? pt.minPositionTaking : pt.minPositionTakingUpline;
+        var commMax = synced ? pt.mAgentRollingRateUpline : pt.mAgentRollingRate;
+        var commPreset = synced ? pt.agentRollingRate : pt.mAgentRollingRate;
+
+        row += '<td class="C"><select name="pt_1' + subfix + '" id="pt_1_1_' + idx + subfix + '" onchange="PTChanging(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')">' + PT_RenderOption(0, uplineMax, 0.01, uplinePreset) + '</select></td>';
+        row += '<td class="C"><select name="pt_3' + subfix + '" id="pt_3_1_' + idx + subfix + '" onchange="PTChanging(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')">' + PT_RenderOption(0, uplineMax - uplinePreset, 0.01, downlinePreset) + '</select></td>';
+        row += '<td class="C"><select name="pt_4' + subfix + '" id="pt_4_1_' + idx + subfix + '">' + PT_RenderOption(0, downlinePreset, 0.01, downlinePreset2) + '</select></td>';
+        row += '<td class="C" style="border-right: none"><select name="comm_5' + subfix + '" id="comm_5_1_' + idx + subfix + '">' + Comm_RenderOption(0, commMax, 0.0005, commPreset) + '</select></td>';
+
+        return row;
+    },
+
+    RenderPtByGameTypeAgentBySuper: function (pt) {
+        var row = '';
+
+        row += '<td class="C">' + pt.mPositionTaking + '</td>';
+        row += '<td class="C" style="border-right: none">' + pt.aPositionTaking + '</td>';
+
+        return row;
+    },
+
+    RenderPtByGameTypeMember: function (pt, idx, subfix) {
+        var row = '';
+        var synced = this.customer.customerInfo.casinoSync;
+
+        var uplineMin = 0;
+        var uplineMax = synced ? pt.maxPositionTakingUpline : pt.maxPositionTaking;
+        var uplinePreset = synced ? pt.aPositionTaking : pt.aPositionTakingUpline;
+        var commMax = synced ? pt.agentRollingRateUpline : pt.agentRollingRate;
+        var commPreset = synced ? pt.memberRollingRate : pt.agentRollingRate;
+
+        row += '<td class="C"><select name="pt_1' + subfix + '" id="pt_1_1_' + idx + subfix + '">' + PT_RenderOption(uplineMin, uplineMax, 0.01, uplinePreset) + '</select></td>';
+        row += '<td class="C" style="border-right: none"><select name="comm_2' + subfix + '" id="comm_2_1_' + idx + subfix + '">' + Comm_RenderOption(0, commMax, 0.0005, commPreset) + '</select></td>';
+
+        return row;
+    },
+
+    RenderPtByGameTypeMemberBySuper: function (pt, idx, subfix) {
+        var row = '';
+        var uplineMin = pt.isAutoPositionTaking ? pt.superMinPositionTaking - pt.mPositionTaking - pt.aPositionTaking : 0;
+        var uplineMax = pt.superMaxPositionTaking - pt.mPositionTaking - pt.aPositionTaking;
+        var uplinePreset = pt.sPositionTaking;
+        var uplineAutoPreset = pt.autoPositionTaking;
+        var max = pt.superMaxPositionTaking;
+
+        var isAuto = pt.isAutoPositionTaking;
+        var checked = isAuto ? ' checked="checked"' : '';
+        var input = '<input name="' + subfix + '" onclick="checkPT(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')" type="checkbox" id="chkAutoPT_1_1_' + idx + subfix + '" ' + checked + ' />';
+        var disabledPT1 = isAuto ? ' disabled="disabled"' : '';
+        var disabledPT2 = !isAuto ? ' disabled="disabled"' : '';
+
+        row += '<td class="C"><select name="pt_1' + subfix + '" ' + disabledPT1 + ' id="pt_1_1_' + idx + subfix + '" onchange="PTChanging(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')">' + PT_RenderOption(uplineMin, uplineMax, 0.01, uplinePreset) + '</select></td>';
+        row += '<td class="C">' + input + '<select name="pt_2' + subfix + '" ' + disabledPT2 + ' id="pt_2_1_' + idx + subfix + '">' + PT_RenderOption(uplineMin, max, 0.01, uplineAutoPreset) + '</select></td>';
+        row += '<td class="C">' + pt.mPositionTaking + '</td>';
+        row += '<td class="C" style="border-right: none">' + pt.aPositionTaking + '</td>';
+
+        return row;
+    },
+
+    RenderPtByGameTypeMemberByMaster: function (pt, idx, subfix) {
+        var row = '';
+
+        var uplineMin = 0;
+        var uplineMax = pt.masterMaxPositionTaking;
+        var uplinePreset = pt.mPositionTaking;
+
+
+        row += '<td class="C"><select name="pt_1' + subfix + '" id="pt_1_1_' + idx + subfix + '" onchange="PTChanging(this, \'_1_' + idx + subfix + '\', ' + uplineMax + ')">' + PT_RenderOption(uplineMin, uplineMax, 0.01, uplinePreset) + '</select></td>';
+        row += '<td class="C" style="border-right: none">' + pt.aPositionTaking + '</td>';
+
+        return row;
     }
 }
 
@@ -723,6 +961,34 @@ function PT_RenderCombo(combo, min, max, step, selectedValue) {
     }
 }
 
+function PT_RenderOption(min, max, step, selectedValue) {
+    var option = '';
+    min = min > max ? max : min;
+
+    if (selectedValue > max) {
+        option = '<option value="' + ((selectedValue * 100) / 100) + '">' + ((selectedValue * 100) / 100) + '</option>';
+    }
+
+    var c = Math.round((max * 100 - min * 100) / (step * 100));
+
+    if (c <= 0) {
+        return '<option value="' + (Math.round(min * 100) / 100) + '">' + (Math.round(min * 100) / 100) + '</option>';
+    }
+
+    for (var i = c; i >= 0; i--) {
+        var f = Math.round(min * 100 + (i * step * 100)) / 100;
+        var selected = '';
+
+        if (selectedValue == f) {
+            selected = ' selected="selected"';
+        }
+
+        option += '<option value="' + f + '"' + selected + '>' + f + '</option>';
+    }
+
+    return option;
+}
+
 function Comm_RenderCombo(combo, min, max, step, selectedValue) {
     min = min > max ? max : min;
     selectedValue = selectedValue > max ? max : selectedValue;
@@ -764,8 +1030,53 @@ function Comm_RenderCombo(combo, min, max, step, selectedValue) {
     }
 }
 
-function checkPT(el, sub_id) {
+function Comm_RenderOption(min, max, step, selectedValue) {
+    var option = '';
+
+    min = min > max ? max : min;
+    selectedValue = selectedValue > max ? max : selectedValue;
+
+    var c = Math.round((max * 10000 - min * 10000) / (step * 10000));
+
+    if (c <= 0) {
+        return '<option value="' + Math.round(min * 10000) / 10000 + '">' + Math.round(min * 10000) / 10000 + '</option>';
+    }
+
+    for (var i = c; i >= 0; i--) {
+        var f = Math.round(min * 10000 + (i * step * 10000)) / 10000;
+        var selected = '';
+           
+        if (selectedValue == f) {
+            selected = ' selected="selected"';
+        }
+
+        option += '<option value="' + f + '"' + selected + '>' + f + '</option>';
+    }
+
+    return option;
+}
+
+function checkPT(el, sub_id, max) {
+    var ptByGameType = Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.pTByGameType;
+    var isChangedGroupRnG = sub_id == '' && ptByGameType;
+    var isChangedGroupMini = sub_id == '_1' && ptByGameType;
+
     if (el.checked) {
+        if (isChangedGroupRnG) {
+            var chkRnGs = $('input[name=_rng]');
+            for (var i = 0; i < chkRnGs.length; i++) {
+                chkRnGs[i].checked = true;
+                chkRnGs[i].onclick();
+            }
+        }
+        else if (isChangedGroupMini) {
+            var chkMinis = $('input[name=_mini]');
+            for (var i = 0; i < chkMinis.length; i++) {
+                chkMinis[i].checked = true;
+                chkMinis[i].onclick();
+            }
+        }
+
         var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync;
         if (document.getElementById('pt_1' + sub_id))
             document.getElementById('pt_1' + sub_id).disabled = true;
@@ -775,10 +1086,10 @@ function checkPT(el, sub_id) {
         var pt1 = document.getElementById('pt_1' + sub_id);
         var pt3 = document.getElementById("pt_3" + sub_id);
         var pt4 = document.getElementById("pt_4" + sub_id);
-        var maxPT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTakingUpline;
+        var maxPT = !max ? Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTakingUpline : max;
 
         if (!synced) {
-            maxPT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTaking;
+            maxPT = !max ? Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTaking : max;
         }
 
         if (pt3)
@@ -787,6 +1098,21 @@ function checkPT(el, sub_id) {
             PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
     }
     else {
+        if (isChangedGroupRnG) {
+            var chkRnGs = $('input[name=_rng]');
+            for (var i = 0; i < chkRnGs.length; i++) {
+                chkRnGs[i].checked = false;
+                chkRnGs[i].onclick();
+            }
+        }
+        else if (isChangedGroupMini) {
+            var chkMinis = $('input[name=_mini]');
+            for (var i = 0; i < chkMinis.length; i++) {
+                chkMinis[i].checked = false;
+                chkMinis[i].onclick();
+            }
+        }
+
         if (document.getElementById('pt_1' + sub_id)) {
             document.getElementById('pt_1' + sub_id).disabled = false;
             PTChanging(document.getElementById('pt_1' + sub_id));
@@ -815,12 +1141,76 @@ function checkMinMaxPT(sub_id) {
     }
 }
 
-function PTChanging(el, sub_id) {
+function PTChanging(el, sub_id, max) {
+    var ptByGameType = Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.pTByGameType;
+    var isChangedGroupRnG = sub_id == '' && ptByGameType;
+    var isChangedGroupMini = sub_id == '_1' && ptByGameType;
     var sel = parseFloat(el.value);
+    var id = el.id;
+    var cur = 0;
+    var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync;
+    var maxPT = !max ? (synced ? Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTakingUpline : Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0].maxPositionTaking) : max;
+
+    if (isChangedGroupRnG) {
+        // Render comboboxes for game type setting PT of RnG game
+        var chkRnGs = $('select[name=' + id + '_rng]');
+        for (var i = 0; i < chkRnGs.length; i++) {
+            if (document.getElementById("pt_3" + sub_id)) {
+                cur = document.getElementById("pt_3" + sub_id) ? parseFloat(document.getElementById("pt_3" + sub_id).value) : 0;
+
+                if (document.getElementById("pt_1" + sub_id)) {
+                    sel = document.getElementById("pt_1" + sub_id).value;
+                }
+
+                if (cur == 'undefined' || cur == 'NaN') {
+                    cur = 0;
+                }
+
+                if (cur > maxPT - sel) {
+                    cur = maxPT - sel;
+                }
+
+                PT_RenderCombo(document.getElementById("pt_3_1_" + i + "_rng"), 0, maxPT - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
+            }
+            if (document.getElementById("pt_4" + sub_id)) {
+                PT_RenderCombo2(document.getElementById("pt_4_1_" + i + "_rng"), 0, cur, 0.01, sub_id);
+            }
+
+            chkRnGs[i].value = el.value;
+        }
+    }
+    else if (isChangedGroupMini) {
+        // Render comboboxes for game type setting PT of mini game
+        var chkMinis = $('select[name=' + id.substring(0, id.length - 2) + '_mini]');
+        for (var i = 0; i < chkMinis.length; i++) {
+            if (document.getElementById("pt_3" + sub_id)) {
+                cur = document.getElementById("pt_3" + sub_id) ? parseFloat(document.getElementById("pt_3" + sub_id).value) : 0;
+
+                if (document.getElementById("pt_1" + sub_id)) {
+                    sel = document.getElementById("pt_1" + sub_id).value;
+                }
+
+                if (cur == 'undefined' || cur == 'NaN') {
+                    cur = 0;
+                }
+
+                if (cur > maxPT - sel) {
+                    cur = maxPT - sel;
+                }
+
+                PT_RenderCombo(document.getElementById("pt_3_1_" + i + "_mini"), 0, maxPT - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
+            }
+            if (document.getElementById("pt_4" + sub_id)) {
+                PT_RenderCombo2(document.getElementById("pt_4_1_" + i + "_mini"), 0, cur, 0.01, sub_id);
+            }
+
+            chkMinis[i].value = el.value;
+        }
+    }
+
+    // Render comboboxes for game group setting PT
     if (document.getElementById("pt_3" + sub_id)) {
-        var cur = parseFloat(document.getElementById("pt_3" + sub_id).value);
-        var uplinePT = Fanex.ExtAcc.Customer.Casino.customer.pts[sub_id != '' ? 1 : 0];
-        var synced = Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync;
+        cur = document.getElementById("pt_3" + sub_id) ? parseFloat(document.getElementById("pt_3" + sub_id).value) : 0;
 
         if (document.getElementById("pt_1" + sub_id)) {
             sel = document.getElementById("pt_1" + sub_id).value;
@@ -830,14 +1220,14 @@ function PTChanging(el, sub_id) {
             cur = 0;
         }
 
-        if (cur > (synced ? uplinePT.maxPositionTakingUpline : uplinePT.maxPositionTaking) - sel) {
-            cur = (synced ? uplinePT.maxPositionTakingUpline : uplinePT.maxPositionTaking) - sel;
+        if (cur > maxPT - sel) {
+            cur = maxPT - sel;
         }
 
-        PT_RenderCombo(document.getElementById("pt_3" + sub_id), 0, (synced ? uplinePT.maxPositionTakingUpline : uplinePT.maxPositionTaking) - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
+        PT_RenderCombo(document.getElementById("pt_3" + sub_id), 0, maxPT - sel, 0.01, cur != 0 ? (cur.toFixed(2) * 100) / 100 : 0);
     }
     if (document.getElementById("pt_4" + sub_id)) {
-        PT_RenderCombo2(document.getElementById("pt_4" + sub_id), 0, (synced ? uplinePT.maxPositionTakingUpline : uplinePT.maxPositionTaking) - sel, 0.01, sub_id);
+        PT_RenderCombo2(document.getElementById("pt_4" + sub_id), 0, cur, 0.01, sub_id);
     }
 }
 

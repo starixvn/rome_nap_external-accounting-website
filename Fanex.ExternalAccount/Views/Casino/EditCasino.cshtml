@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td style="border-left: none" class="tdTitleRight">Member Max Transfer Credit</td>
-            <td>
+            <td style="border-right: none">
                 <div style="float: left; height: 24px"><input id="maxTransfer" style="height: 20px !important" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="13" type="text" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.maxTransferCredit)" /></div>
                 <div style="float: left; height: 24px;"><input style="margin-top: 5px" id="isAutoReset" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.isAutoReset" /><label for="isAutoReset">Daily auto reset limit (at 12 noon GMT+8)</label></div>
             </td>           
@@ -97,7 +97,7 @@
                 <td class="C">
                     <span class="spanPT">
                         <input type="checkbox" name="chkAutoPT" id="chkAutoPT" onclick="checkPT(this, '');" style="vertical-align: middle;" />
-                        <select id="pt_2" name="pt_2" style="position: relative;">
+                        <select id="pt_2" name="pt_2" style="position: relative;" onchange="PTChanging(this, '')">
                         </select>
                         <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_2', 1);" />
                         <input type="button" class="btnPTUp" onclick="PT_Increase('pt_2', 1);" />
@@ -162,7 +162,7 @@
                 <td class="C">
                     <span class="spanPT">
                         <input type="checkbox" name="chkAutoPT" id="chkAutoPT_1" onclick="checkPT(this, '_1');" style="vertical-align: middle;" />
-                        <select id="pt_2_1" name="pt_2_1" style="position: relative;">
+                        <select id="pt_2_1" name="pt_2_1" style="position: relative;" onchange="PTChanging(this, '_1')">
                         </select>
                         <input type="button" class="btnPTDown" onclick="PT_Reduce('pt_2_1', 1);" />
                         <input type="button" class="btnPTUp" onclick="PT_Increase('pt_2_1', 1);" />
