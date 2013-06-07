@@ -190,16 +190,9 @@
     <Compile Include="Areas\UserLogin\DataAccess\UserDataAccess.cs" />
     <Compile Include="Areas\UserLogin\Services\UserService.cs" />
     <Compile Include="Areas\UserLogin\UserLoginAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Model\Test\IssueDetail.cs" />
-    <Compile Include="Model\Test\IssueDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -723,8 +716,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Configuration\StoreProcedure\NAPFrameworkSpNames.xml" />
-    <Content Include="Web.Configuration\StoreProcedure\NAPTicketControlSpNames.xml" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -771,6 +762,7 @@
     <Folder Include="Content\base\img\icons\" />
     <Folder Include="obj\" />
     <Folder Include="Scripts\_Libs\BlockUI\img\" />
+    <Folder Include="Web.Configuration\StoreProcedure\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -852,7 +844,6 @@
     <None Include="Content\fonts\ProximaNovaReg.woff" />
     <None Include="Content\fonts\YanoneKaffeesatz.woff" />
     <None Include="Content\reset.less" />
-    <None Include="Controllers\TestController.cs.orig" />
     <None Include="Scripts\_Libs\MonthPicker\monPickr-0.0.3-custom.less" />
     <None Include="Settings.StyleCop" />
     <Content Include="Views\Common\AccessDenied.cshtml" />
