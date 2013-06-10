@@ -669,7 +669,7 @@ Fanex.ExtAcc.WinLossDetail = {
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
         };
-        $('#headlineDaily').css("visibility", "visible")
+        $('#headlineDaily').css("visibility", "visible");
     },
     GetDownlineWinLossDetail: function (custId) {
         this.custId = custId;
@@ -719,7 +719,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             + "&mrecommend=" + this.mrecommend
                             + "&recommend=" + this.recommend
                             + "&custid=" + this.custId
-                            + "&username=" + this.username
+                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.username, '&', '')
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate
                             + "&viewlevel=" + this.viewlevel
@@ -762,8 +762,11 @@ Fanex.ExtAcc.WinLossDetail = {
 
                 $this.ChangeHeadlineTab();
 
+                $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
+                $('#jqgrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
+                $('#headlineDaily').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');

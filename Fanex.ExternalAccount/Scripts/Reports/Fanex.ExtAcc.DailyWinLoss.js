@@ -185,7 +185,8 @@ Fanex.ExtAcc.DailyWinLoss = {
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
         };
-        $('#headlineDaily').css("visibility", "visible")
+        $('#headlineDaily').css("visibility", "visible");
+        $('#headlineDaily').css("display", "block");
     },
     GetDownlineDailyWinLoss: function (custId) {
         this.custId = custId;
@@ -367,7 +368,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                             + "&mrecommend=" + this.mrecommend
                             + "&recommend=" + this.recommend
                             + "&custid=" + this.custId
-                            + "&username=" + this.username
+                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.username, '&', '')
                             + "&date=" + this.date
                             + "&viewlevel=" + this.viewlevel;
 
@@ -403,6 +404,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                 $this.ChangeHeadlineTab();
 
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
+                $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
