@@ -39,7 +39,10 @@
             <td style="border-right: none">                
                 <div style="float: left; height: 24px">
                     <input type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled && Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync" style="margin-top: 5px" />                    
-                </div><div style="margin-top: 3px"><label for="chkEnable" id="downline"></label></div>
+                    <label for="chkEnable" id="downline"></label>
+                    <input type="checkbox" id="chkEnableDownline" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled && Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync" style="margin-top: 5px" />                    
+                    <label for="chkEnableDownline" id="enableDownlineText">Previous enabled downlines</label>
+                </div>                
             </td>
         </tr>         
     </table>
@@ -49,13 +52,17 @@
             <input type="checkbox" id="chkEnable" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled && Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync" style="margin-top: 5px" />
             <label for="chkEnable" id="downline"></label>
         </span>
+        <span>
+            <input type="checkbox" id="chkEnableDownline" data-bind="checked: !Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoDisabled && Fanex.ExtAcc.Customer.Casino.customer.customerInfo.casinoSync" style="margin-top: 5px" />
+            <label for="chkEnableDownline" id="enableDownlineText">Previous enabled downlines</label>
+        </span>
     </div>
     <div style="border-bottom: none" class="headerPositionTaking noneBorderLR">
         Bet Setting</div>
     <table border="1" cellpadding="1" cellspacing="2" class="tableInfo">
         <tr>
             <td style="border-left: none; width: 40%" class="tdTitleRight">Accumulated transferable amount</td>
-            <td style="width: 60%; border-right: none"><span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.totalWinLoss)"></span></td>
+            <td style="width: 60%; border-right: none"><span style="margin-left: 6px" data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.Casino.customer.casinoInfo.totalWinLoss)"></span></td>
         </tr>
         <tr>
             <td style="border-left: none" class="tdTitleRight">Member Max Transfer Credit</td>

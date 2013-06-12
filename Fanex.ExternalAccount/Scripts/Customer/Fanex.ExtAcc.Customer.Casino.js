@@ -11,6 +11,7 @@ Fanex.ExtAcc.Customer.Casino = {
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
     ErrorMessage: '',
     custInfo: Fanex.ExtAcc.Customer.CustomerInfo(),
+    enabled: false,
 
     Init: function () {
         this.LoadData();
@@ -27,6 +28,9 @@ Fanex.ExtAcc.Customer.Casino = {
             $('#arrowUpDown').remove();
             $('#statusInfo').remove();
         }
+
+        $('#chkEnableDownline').hide();
+        $('#enableDownlineText').hide();
 
         switch (Fanex.ExtAcc.Customer.CurrentLevel) {
             case Fanex.ExtAcc.Customer.Master:
@@ -74,7 +78,7 @@ Fanex.ExtAcc.Customer.Casino = {
                     this.colspan = 2;
                 }
 
-                $('#downline').html('Member');
+                $('#downline').html('');
                 $('#master').remove();
                 $('#agent').remove();
                 $('#sagent').remove();
@@ -110,8 +114,6 @@ Fanex.ExtAcc.Customer.Casino = {
             }
 
             ko.applyBindings(new Fanex.ExtAcc.Customer.Casino.CasinoModel());
-
-            Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (data, status, err) {
             if (typeof console != 'undefined') {
@@ -123,12 +125,30 @@ Fanex.ExtAcc.Customer.Casino = {
         });
 
         var level = $('#downline').html();
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            Fanex.ExtAcc.Customer.Casino.enabled = document.getElementById('chkEnable').checked;
+            Fanex.ExtAcc.UnBlockUI();
+        }, 2000);
+
         $('#chkEnable').bind('click', function () {
-            if (this.checked) {
-                $('#downline').html(level);
-            }
-            else {
-                $('#downline').html(level + '&nbsp;' + "<font color='Red'>(Casino downlines will be disabled as well)</font>");
+            if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
+                if (this.checked) {
+                    if (!Fanex.ExtAcc.Customer.Casino.enabled) {
+                        $('#chkEnableDownline').show();
+                        $('#enableDownlineText').show();
+                    }
+
+                    $('#downline').html(level);
+                }
+                else {
+                    $('#chkEnableDownline').hide();
+                    $('#enableDownlineText').hide();
+
+                    if (Fanex.ExtAcc.Customer.Casino.enabled) {
+                        $('#downline').html(level + '&nbsp;' + "<font color='Red'>(Casino downlines will be disabled as well)</font>");
+                    }
+                }
             }
         });
     },
@@ -379,6 +399,8 @@ Fanex.ExtAcc.Customer.Casino = {
                 uplineAutoPreset = casinoGamePT.autoPositionTaking;
                 max = casinoGamePT.superMaxPositionTaking;
 
+                uplineMin = uplineMin < 0 ? 0 : uplineMin;
+
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
@@ -405,6 +427,8 @@ Fanex.ExtAcc.Customer.Casino = {
                 uplinePreset = miniGamePT.sPositionTaking;
                 uplineAutoPreset = miniGamePT.autoPositionTaking;
                 max = miniGamePT.superMaxPositionTaking;
+
+                uplineMin = uplineMin < 0 ? 0 : uplineMin;
 
                 //Render Super preset pt
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -460,6 +484,9 @@ Fanex.ExtAcc.Customer.Casino = {
                 commMax = synced ? casinoGamePT.agentRollingRateUpline : casinoGamePT.agentRollingRate;
                 commPreset = synced ? casinoGamePT.memberRollingRate : casinoGamePT.agentRollingRate;
 
+                uplineMin = uplineMax < 0 ? (synced ? casinoGamePT.minPositionTakingUpline : casinoGamePT.minPositionTaking) : uplineMin;
+                uplineMax = uplineMax < 0 ? (synced ? casinoGamePT.aPositionTakingUpline : casinoGamePT.aPositionTaking) : uplineMax;
+
                 //Render Master preset pt
                 PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
 
@@ -472,6 +499,9 @@ Fanex.ExtAcc.Customer.Casino = {
                 uplinePreset = synced ? miniGamePT.aPositionTaking : miniGamePT.aPositionTakingUpline;
                 commMax = synced ? miniGamePT.agentRollingRateUpline : miniGamePT.agentRollingRate;
                 commPreset = synced ? miniGamePT.memberRollingRate : miniGamePT.agentRollingRate;
+
+                uplineMin = uplineMax < 0 ? (synced ? miniGamePT.minPositionTakingUpline : miniGamePT.minPositionTaking) : uplineMin;
+                uplineMax = uplineMax < 0 ? (synced ? miniGamePT.aPositionTakingUpline : miniGamePT.aPositionTaking) : uplineMax;
 
                 //Render Master preset pt
                 PT_RenderCombo(document.getElementById('pt_1_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -498,6 +528,11 @@ Fanex.ExtAcc.Customer.Casino = {
         var custInfo = this.custInfo;
 
         // Sets status, max transfer limit and daily auto reset RnG Casino
+        if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member && !this.enabled && document.getElementById('chkEnable').checked) {
+            // Sets enable for downline if previous value is unchecked
+            this.customer.customerInfo.enableDownline = document.getElementById('chkEnableDownline').checked;
+        }
+
         this.customer.customerInfo.casinoDisabled = !document.getElementById('chkEnable').checked;
         this.customer.casinoInfo.maxTransferCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxTransfer').val(), ',', ''));
         this.customer.casinoInfo.isAutoReset = document.getElementById('isAutoReset').checked;
@@ -844,6 +879,9 @@ Fanex.ExtAcc.Customer.Casino = {
         var commMax = synced ? pt.agentRollingRateUpline : pt.agentRollingRate;
         var commPreset = synced ? pt.memberRollingRate : pt.agentRollingRate;
 
+        uplineMin = uplineMax < 0 ? (synced ? pt.minPositionTakingUpline : pt.minPositionTaking) : uplineMin;
+        uplineMax = uplineMax < 0 ? (synced ? pt.aPositionTakingUpline : pt.aPositionTaking) : uplineMax;
+
         row += '<td class="C"><select name="pt_1' + subfix + '" id="pt_1_1_' + idx + subfix + '">' + PT_RenderOption(uplineMin, uplineMax, 0.01, uplinePreset) + '</select></td>';
         row += '<td class="C" style="border-right: none"><select name="comm_2' + subfix + '" id="comm_2_1_' + idx + subfix + '">' + Comm_RenderOption(0, commMax, 0.0005, commPreset) + '</select></td>';
 
@@ -857,6 +895,8 @@ Fanex.ExtAcc.Customer.Casino = {
         var uplinePreset = pt.sPositionTaking;
         var uplineAutoPreset = pt.autoPositionTaking;
         var max = pt.superMaxPositionTaking;
+
+        uplineMin = uplineMin < 0 ? 0 : uplineMin;
 
         var isAuto = pt.isAutoPositionTaking;
         var checked = isAuto ? ' checked="checked"' : '';

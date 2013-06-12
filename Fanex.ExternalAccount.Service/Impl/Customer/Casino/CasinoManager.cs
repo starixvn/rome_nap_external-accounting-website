@@ -489,7 +489,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                     custId, 
                     true, 
                     customerInfo.CasinoDisabled, 
-                    true, 
+                    customerInfo.EnableDownline, 
                     uplineId, 
                     string.Empty, 
                     0, 

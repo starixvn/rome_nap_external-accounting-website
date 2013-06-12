@@ -1030,18 +1030,18 @@ Fanex.ExtAcc.Customer = {
             2);
     },
 
-    CallBackCustomerList: function () {
+    CallBackCustomerList: function () {                
         if (this.CurrentLevel == this.Super) {
-            this.GetSuperList();
+            this.GetSuperList(this.custId);
         }
         else if (this.CurrentLevel == this.Master) {
-            this.GetMasterList(this.superId, this.AllowDoubleComm, null, null, this.superSyncCasino, this.superSyncBingo, this.superSyncLiveCasino);
+            this.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncBingo, this.superSyncLiveCasino);
         }
         else if (this.CurrentLevel == this.Agent) {
-            this.GetAgentList(this.masterId, this.AllowDoubleComm, null, null, this.masterSyncCasino, this.masterSyncBingo, this.masterSyncLiveCasino);
+            this.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncBingo, this.masterSyncLiveCasino);
         }
         else {
-            this.GetMemberList(this.agentId, this.AllowDoubleComm, null, null, this.agentSyncCasino, this.agentSyncBingo, this.agentSyncLiveCasino);
+            this.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncBingo, this.agentSyncLiveCasino);
         }
     },
 
@@ -1058,6 +1058,7 @@ Fanex.ExtAcc.Customer = {
         $.ajax({
             url: resolveClientUrl('Customer/ConfigDoubleComm'),
             dataType: 'json',
+            type: 'post',
             data: {
                 custid: parseInt(custids[current]),
                 allow: allow
@@ -1144,6 +1145,7 @@ Fanex.ExtAcc.Customer = {
                 $.ajax({
                     url: resolveClientUrl('Customer/ConfigDoubleComm'),
                     dataType: 'json',
+                    type: 'post',
                     data: {
                         custid: custid,
                         allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm')

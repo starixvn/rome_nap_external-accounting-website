@@ -60,6 +60,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabSuper').click(function (e) {
+            console.log($this.supername);
             if ($this.supername != '') {
                 $this.ResetParameters();
                 $this.username = $this.supername;
@@ -68,8 +69,8 @@ Fanex.ExtAcc.DailyWinLoss = {
             else {
                 $this.viewlevel = 5;
                 $this.custId = 0;
-                $this.srecommend = 0;
-                $("#txtUserName").val('');
+                $this.srecommend = $("#txtUserName").val() == '' ? 0 : $this.srecommend;
+                //$("#txtUserName").val('');
                 $this.username = '';
                 $this.ToggleTabs('none', 'none', 'none', 4);
                 $this.Databind();
@@ -77,6 +78,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabMaster').click(function (e) {
+            console.log($this.mastername);
             if ($this.mastername != '') {
                 $this.ResetParameters();
                 $this.username = $this.mastername;
@@ -85,7 +87,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             else {
                 $this.viewlevel = 4;
                 $this.custId = $this.srecommend;
-                $("#txtUserName").val('');
+                //$("#txtUserName").val('');
                 $this.username = '';
                 $this.ToggleTabs('block', 'none', 'none', 3);
                 $this.Databind();
@@ -101,7 +103,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             else {
                 $this.viewlevel = 3;
                 $this.custId = $this.mrecommend;
-                $("#txtUserName").val('');
+                //$("#txtUserName").val('');
                 $this.username = '';
                 $this.ToggleTabs('block', 'block', 'none', 2);
                 $this.Databind();
@@ -190,7 +192,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     },
     GetDownlineDailyWinLoss: function (custId) {
         this.custId = custId;
-        $("#txtUserName").val('');
+        //$("#txtUserName").val('');
         this.username = '';
         this.Databind();
     },
@@ -368,7 +370,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                             + "&mrecommend=" + this.mrecommend
                             + "&recommend=" + this.recommend
                             + "&custid=" + this.custId
-                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.username, '&', '')
+                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? '' : this.username, '&', '')
                             + "&date=" + this.date
                             + "&viewlevel=" + this.viewlevel;
 
