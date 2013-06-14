@@ -93,7 +93,6 @@ Fanex.ExtAcc.Customer.Casino = {
             dataType: 'json'
         })
         .success(function (result) {
-            console.log(result);
             Fanex.ExtAcc.Customer.Casino.customer = result;
 
             Fanex.ExtAcc.Customer.Casino.RenderSetting(result);

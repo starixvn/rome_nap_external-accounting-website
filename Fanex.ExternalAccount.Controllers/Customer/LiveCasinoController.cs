@@ -531,7 +531,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMasterPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(LiveCasinoBase.RoleSuper, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Super, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
@@ -543,7 +543,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(LiveCasinoBase.RoleMaster, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Master, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
@@ -555,7 +555,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(LiveCasinoBase.RoleAgent, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Agent, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             return this.JsonBase(new { ErrorCode = result == null ? "1\u0007" : result.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : result.ErrorMessage });
         }
@@ -583,10 +583,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMasterPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(LiveCasinoBase.RoleSuper, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Super, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleSuper, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Super, custId, customer);
 
             var results = new List<object>();
 
@@ -604,10 +604,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(LiveCasinoBase.RoleMaster, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Master, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleMaster, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Master, custId, customer);
 
             var results = new List<object>();
 
@@ -625,10 +625,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
             // Process manually sync
-            this.SyncManually(LiveCasinoBase.RoleAgent, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Agent, uplineId, custId, customer, model.CustomerInfo.GroupName);
 
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleAgent, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Agent, custId, customer);
             var resultStatus = new Fanex.LiveCasinoSetting.Model.Result();
             var results = new List<object>();
 
@@ -638,7 +638,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             if (result != null && model.GameSetting.Count > 0)
             {
-                resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, RoleAgent, model.CustomerInfo.GroupName)));
+                resultStatus = this.PtSetting.UpdateStatusLiveCasino(new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, BaseController.Agent, model.CustomerInfo.GroupName)));
                 results.Add(new { ErrorCode = result == null ? "1" : resultStatus.ErrorCode, ErrorMessage = result == null ? ViewLang.DisabledAccount : resultStatus.ErrorMessage });
             }
 
@@ -651,7 +651,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleSuper, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Super, custId, customer);
 
             var results = new List<object>();
 
@@ -668,7 +668,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(LiveCasinoBase.RoleMaster, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Master, custId, customer);
 
             var results = new List<object>();
 

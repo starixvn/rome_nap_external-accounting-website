@@ -105,6 +105,19 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetCasinoSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        $.ajax({
+            url: resolveClientUrl('Casino/EditCasino'),
+            data: { custId: Fanex.ExtAcc.Customer.UserId, uplineId: Fanex.ExtAcc.Customer.superId }
+        }).success(function (result) {
+            $('#tabs-4').css('display', 'block');
+            $('#tabs-4').html(result);
+        }).error(function (data) {
+            if (typeof console != 'undefined') {
+                console.log(data.responseText);
+            }
+        });
     },
 
     GetBingoSetting: function () {

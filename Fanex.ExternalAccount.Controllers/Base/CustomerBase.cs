@@ -27,11 +27,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
     /// </summary>
     public class CustomerBase : BaseController
     {
-        private const int RoleSuper = 4;
-        private const int RoleMaster = 3;
-        private const int RoleAgent = 2;
-        private const int RoleMember = 1;
-
         private const string CasinoNo = "01";
 
         private readonly ISettingService setting = new SettingService();
@@ -57,7 +52,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
                     this.logWriter.WriteLog(new LogAutoInsertAccount
                     {
-                        Action = uplineRoleId == RoleSuper ? LogActions.AutoInsert_Master : uplineRoleId == RoleMaster ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
+                        Action = uplineRoleId == BaseController.Super ? LogActions.AutoInsert_Master : uplineRoleId == BaseController.Master ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
                         AgentId = custInfo.AgentId,
                         CustId = custId,
                         CustUserName = custInfo.Username,
@@ -100,7 +95,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     try
                     {
                         isSuccess = customer.AutoInsertAccount(
-                            "01",
+                            CasinoNo,
                             custInfo.IBCCustID,
                             custInfo.UserName,
                             custInfo.UserName2,
@@ -122,7 +117,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                             CurrentContext.Ip4Address,
                             uplineId,
                             uplineName,
-                            BaseController.FromSystem);
+                            BaseController.FromSystem);                            
                     }
                     catch (Exception ex)
                     {
@@ -135,7 +130,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
                     }
                     else
                     {
-                        customer.RemoveAccount(custInfo.UserName, this.CurrentContext.Ip4Address, this.CurrentSession.CustId, this.CurrentSession.UserName, 3);
+                        customer.RemoveAccount(custInfo.UserName, this.CurrentContext.Ip4Address, this.CurrentSession.CustId, this.CurrentSession.UserName, BaseController.FromSystem);
                     }
                 }
 
@@ -247,7 +242,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         private InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
             var custInfo = this.GetCustomerInfo(custId, groupName);
-            var uplineInfo = this.setting.GetCustomerInfo(uplineRoleId == RoleSuper ? custInfo.SuperId : uplineRoleId == RoleMaster ? custInfo.MasterId : custInfo.AgentId);
+            var uplineInfo = this.setting.GetCustomerInfo(uplineRoleId == BaseController.Super ? custInfo.SuperId : uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
 
             var result = new InsertAccountRequest()
             {

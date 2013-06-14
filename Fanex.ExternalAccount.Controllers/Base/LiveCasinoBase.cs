@@ -32,27 +32,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     /// Base controller for live casino setting
     /// </summary>
     public class LiveCasinoBase : BaseController
-    {
-        /// <summary>
-        /// Role super
-        /// </summary>
-        public const int RoleSuper = 4;
-
-        /// <summary>
-        /// Role master
-        /// </summary>
-        public const int RoleMaster = 3;
-
-        /// <summary>
-        /// Role agent
-        /// </summary>
-        public const int RoleAgent = 2;
-
-        /// <summary>
-        /// Role member
-        /// </summary>
-        public const int RoleMember = 1;
-
+    {        
         /// <summary>
         /// Lock object for synchronization
         /// </summary>
@@ -225,7 +205,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
 
             if (oldGameTypes == null || oldGameTypes.Count == 0)
             {
-                oldGameTypes = this.GameSetting.GetByCustomerId(uplineRoleId == RoleSuper ? req.SuperId : uplineRoleId == RoleMaster ? req.MasterId : req.AgentId);
+                oldGameTypes = this.GameSetting.GetByCustomerId(uplineRoleId == BaseController.Super ? req.SuperId : uplineRoleId == BaseController.Master ? req.MasterId : req.AgentId);
             }
 
             if (oldGameTypes != null && oldGameTypes.Count > 0 && gameTypes.Count > 0)
@@ -317,11 +297,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             switch (roleId)
             {
-                case RoleMaster:
+                case BaseController.Master:
                     return LogActions.UpdateStakeLevel_Master;
-                case RoleAgent:
+                case BaseController.Agent:
                     return LogActions.UpdateStakeLevel_Agent;
-                case RoleMember:
+                case BaseController.Member:
                     return LogActions.UpdateStakeLevel_Member;
             }
 
@@ -337,11 +317,11 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             switch (roleId)
             {
-                case RoleMember:
+                case BaseController.Member:
                     return LogActions.ManualInsert_Member;
-                case RoleAgent:
+                case BaseController.Agent:
                     return LogActions.ManualInsert_Agent;
-                case RoleMaster:
+                case BaseController.Master:
                     return LogActions.ManualInsert_Master;
             }
 
@@ -378,12 +358,12 @@ namespace Fanex.ExternalAccount.Controllers.Base
                 if (isUpdateGameSetting && uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
                     // Update PT first
-                    if (uplineRoleId == RoleSuper)
+                    if (uplineRoleId == BaseController.Super)
                     {
                         // Update master PT
                         result = this.UpdateMasterPT(custId, uplineId, customer);
                     }
-                    else if (uplineRoleId == RoleMaster)
+                    else if (uplineRoleId == BaseController.Master)
                     {
                         // Update agent PT
                         result = this.UpdateAgentPT(custId, uplineId, customer);
@@ -815,7 +795,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
         protected InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
             var custInfo = this.GetCustomerInfo(custId, groupName);
-            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineRoleId == RoleSuper ? custInfo.SuperId : uplineRoleId == RoleMaster ? custInfo.MasterId : custInfo.AgentId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineRoleId == BaseController.Super ? custInfo.SuperId : uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
 
             var result = new InsertAccountRequest()
             {

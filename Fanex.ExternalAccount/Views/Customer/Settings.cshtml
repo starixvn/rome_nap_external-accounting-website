@@ -61,6 +61,19 @@
     Fanex.ExtAcc.Customer.SyncBingo = '@ViewBag.SyncBingo';
     Fanex.ExtAcc.Customer.SyncLiveCasino = '@ViewBag.SyncLiveCasino';
     Fanex.ExtAcc.Customer.DisableP2P = '@ViewBag.DisableP2P';
+    Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
+    Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
+
+    Fanex.ExtAcc.Customer.CustomerInfo = function () {
+        var obj = new Object();
+
+        obj.custId = parseInt(Fanex.ExtAcc.Customer.UserId);
+        obj.roleId = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
+        obj.uplineId = parseInt(Fanex.ExtAcc.Customer.superId);
+        obj.uplineRoleId = parseInt(Fanex.ExtAcc.Customer.CurrentLevel) + 1;
+
+        return obj;
+    };
 </script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
