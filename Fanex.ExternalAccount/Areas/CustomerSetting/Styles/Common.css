@@ -1,0 +1,295 @@
+﻿input[type=text]
+{
+    font-size: 11px;
+    margin-top: 1px;
+    font-family: Tahoma;
+}
+.statusInfo
+{
+    border: 1px solid #ccc;
+    border-left: 0;
+    border-right: 0;
+    text-align: center;
+    line-height: 25px;
+}
+.names
+{
+	font-weight: bold;
+	text-align: justify;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 5px;
+}
+.collapse
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../Images/arrowblue-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.expand
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../Images/arrowdown-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.errMsg
+{
+	background-color: #ffedc1;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-image: url("../Images/warning-icn.png");
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	line-height: 1.5;
+	text-align: left;
+	vertical-align: middle; /*color: #ff5411;*/
+	font-size: 13px;
+	clear: both;
+	padding-left: 30px;
+	white-space: pre-line;
+	margin-bottom: 5px;
+	border: 1px solid #d2a243;
+	min-height: 25px;
+	padding-top: 5px;
+	max-height: 180px;
+	overflow: auto;
+}
+.buttonPopup, .ui-button, button[type=button]
+{
+	background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
+	color: #fff !important;
+	cursor: pointer;
+	width: 80px;
+	height: 30px;
+	border: none !important;
+	border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	padding-bottom: 2px;
+	margin-top: 5px;
+	text-indent: 0 !important;
+	margin-bottom: 5px;
+}
+.buttonPopup:hover, .ui-button:hover
+{
+	background: url(../Images/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
+	color: #fff !important;
+	border: none !important;
+	cursor: pointer;
+}
+.btnPTDown
+{
+	background: url(../Images/b_down.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+}
+
+.btnPTUp
+{
+	background: url(../Images/b_up.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+}
+
+.btnPTSub
+{
+	background: url(../Images/b_sub.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+}
+
+.btnPTAdd
+{
+	background: url(../Images/b_add.jpg) repeat-x scroll center top transparent;
+	border: 0 solid #000000;
+	height: 17px;
+	width: 17px;
+	cursor: pointer;
+}
+html, body
+{
+	font-size: 11px;
+	color: #444;
+	font-family: Tahoma, Helvetica, Arial, sans-serif;
+}
+div#settingContainer,div.custInfo
+{
+    border: 1px solid #ccc;
+    border-bottom:0px;
+    border-top: none;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+}
+td
+{
+    border: 1px solid #ccc;
+    font-size: 11px;
+    text-indent: 3px;
+}
+.headerPositionTaking
+{	
+	background-color: #f1f1a6;
+	color: #464646;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 25px;
+	text-align: center;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px;
+}
+.tableInfo
+{
+    border: none;
+    border-color: #ccc; 
+    border-collapse: collapse;
+    border-style: none; 
+    width: 100%;
+    table-layout: fixed;
+    
+}
+.tableInfo tr
+{
+    height: 26px;
+}
+.tdTitleLeft
+{
+    width: 15%;
+    text-align: right;
+    font-weight:bold;
+    border-left: none;
+}
+.tdTitleRight
+{
+    width: 15%;
+    text-align: right;
+    font-weight:bold;
+}
+.noneBorderLR
+{
+    border-left: none;
+    border-right: none;
+}
+.noneBorderR
+{
+    border-right: none;
+}
+.noneBorderL
+{
+    border-left: none;    
+}
+.noneBorderT
+{
+    border-top: none;
+}
+.noneBorderB
+{
+    border-bottom: none;
+}
+.gameTitle
+{
+    text-align: center;
+    font-weight: bold;
+    width: 70px;
+    border-left: none;
+}
+.ptTitle
+{
+    text-align: center;
+    font-weight: bold;
+}
+.R
+{
+    text-align: right;
+}
+.C
+{
+    text-align: center;
+}
+select,.select
+{
+    height: 18px !important;
+    width: 62px !important;    
+    font-size: 11px;
+}
+.noneBorderTop
+{
+    border-top: 0;
+}
+.noneBorderRight
+{
+    border-right: 0;
+}
+.noneBorderLeft
+{
+    border-left: 0;
+}
+.noneBorderBottom
+{
+    border-bottom: 0;
+}
+.innerTD
+{
+    border-top: 0;
+    border-right: 1px !important;
+    border-bottom: 0;
+    border-left: 0;
+}
+.tdWidth
+{
+    width: 150px;
+}
+.autoPtWidth
+{
+    width: 173px;
+}
+.gameGroupWidth
+{
+    width: 80px;
+}
+.gameTypeWidth
+{
+    width: 150px;
+}
+.maxPtAgentWidth
+{
+    width: 166px;
+}
+.memberWidth
+{
+    width: 395px;
+}
+.superAutoPtWidth
+{
+    width: 166px;
+}

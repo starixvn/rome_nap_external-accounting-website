@@ -258,9 +258,8 @@ span.spanPT
 {
 	padding: 0px !important;
 	margin: 0px !important;
-	line-height: 20px;
 	height: 20px;
-	display: block;
+	display: inline-block !important;
 	overflow: hidden;
 	vertical-align: middle;
 }

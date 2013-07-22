@@ -1304,8 +1304,9 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text
 }
 input[type=checkbox]
 {
-	width: 22px; /*height: 22px;*/
 	border: 0px;
+	vertical-align: middle;
+	width: 20px;
 }
 
 .jqx-menu ul

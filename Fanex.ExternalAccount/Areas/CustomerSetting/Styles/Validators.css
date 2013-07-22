@@ -1,0 +1,42 @@
+﻿/* File Created: May 10, 2012 */
+/* The hint to Hide and Show */
+.hint
+{
+	display: none;
+	position: absolute;
+	min-width: 150px;
+	margin-top: -4px;
+	border: 1px solid #c93;
+	padding: 10px 12px; /* to fix IE6, I can't just declare a background-color,     I must do a bg image, too!  So I'm duplicating the pointer.gif     image, and positioning it so that it doesn't show up     within the box */
+	background: #ffc url('../images/pointer.png') no-repeat 10px 38px;
+	white-space: nowrap;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	z-index: 1003;
+	font-size: 12px;
+	height: 13px;
+}
+
+/* The pointer image is hadded by using another span */
+.hint .hint-pointer
+{
+	position: absolute;
+	left: 10px;
+	top: 33px;
+	width: 20px;
+	height: 19px;
+	background: url('../images/pointer.png') left top no-repeat;
+	z-index: 1004;
+}
+
+.hint .hint-pointer-down
+{
+	position: absolute;
+	left: 10px;
+	top: 33px;
+	width: 20px;
+	height: 19px;
+	background: url('../images/pointerDown.png') left top no-repeat;
+	z-index: 1004;
+}

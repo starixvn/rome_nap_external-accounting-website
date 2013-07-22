@@ -68,6 +68,45 @@ Fanex.ExtAcc.Form = {
         });
     },
 
+    ShowFrame: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId) {
+        var id = popupId ? popupId : 'windowPopup';
+        var Frame = document.createElement("iframe");
+        var margin = '30px';
+
+        if (marginRight) {
+            margin = marginRight + 'px';
+        }
+
+        Frame.setAttribute('id', id);
+        Frame.setAttribute('frameBorder', "0");
+
+        Frame.src = url;
+
+        var $self = this;
+        var data = null;
+
+        document.body.appendChild(Frame);
+        $('#' + id).dialog({
+            title: title,
+            height: height,
+            width: width,
+            resizable: false,
+            draggable: true,
+            modal: true,
+            autoOpen: true,
+            position: { my: "center", at: "center", of: window },
+            close: function () {
+                $self.Close(reloadOnClose);
+            }
+        });
+
+        Frame.setAttribute('style', 'display: block; border: none; font-size:12px; z-index:999999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
+
+        if (callBack && typeof callBack === 'function') {
+            callBack();
+        }
+    },
+
     ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");

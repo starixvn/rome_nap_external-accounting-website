@@ -1,0 +1,21 @@
+﻿.showWarningPT
+{
+    color: Red;
+    display: inline-block;
+    width: 10px;
+}
+.hideWarningPT
+{
+    display: none;
+}
+.masterWidth
+{
+    width: 1024px;
+    padding: 0;
+    margin: 0;
+}
+.custInfoHeader
+{
+    border-bottom: 0; 
+    border-top: 1px solid #ccc;
+}

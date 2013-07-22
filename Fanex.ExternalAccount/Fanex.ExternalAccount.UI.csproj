@@ -39,9 +39,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CasinoLibrary, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\CasinoLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="DNAide, Version=2.1.4478.20125, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\DNAide.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.96, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
@@ -52,6 +68,30 @@
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Fanex.PTVirtualSports.dll</HintPath>
+    </Reference>
+    <Reference Include="GotDotNet.ApplicationBlocks.Data, Version=3.1.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\IBCCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDBLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\IBCDBLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\ILogger.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=3.1.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -64,6 +104,10 @@
     <Reference Include="Sunplus.Agent.Configurations, Version=1.0.4276.26261, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -157,6 +201,37 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
+    <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
+    <Content Include="Areas\CustomerSetting\Images\arrowblue-icn.png" />
+    <Content Include="Areas\CustomerSetting\Images\arrowdown-icn.png" />
+    <Content Include="Areas\CustomerSetting\Images\btn-bgsubmit-hover.png" />
+    <Content Include="Areas\CustomerSetting\Images\btn-bgsubmit-original.png" />
+    <Content Include="Areas\CustomerSetting\Images\b_add.jpg" />
+    <Content Include="Areas\CustomerSetting\Images\b_down.jpg" />
+    <Content Include="Areas\CustomerSetting\Images\b_sub.jpg" />
+    <Content Include="Areas\CustomerSetting\Images\b_up.jpg" />
+    <Content Include="Areas\CustomerSetting\Images\Loading.gif" />
+    <Content Include="Areas\CustomerSetting\Images\pointer.png" />
+    <Content Include="Areas\CustomerSetting\Images\pointerDown.png" />
+    <Content Include="Areas\CustomerSetting\Images\warning-icn.png" />
+    <Content Include="Areas\CustomerSetting\Scripts\angular.min.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\Fanex.CustomerSetting.Core.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\jquery.blockUI.1.33.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\jquery.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\ptarea.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\Validators.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\_references.js" />
+    <Content Include="Areas\CustomerSetting\Styles\Common.css" />
+    <Content Include="Areas\CustomerSetting\Styles\Validators.css" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CustomerController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditAgentController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMasterController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberByMasterController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberBySuperController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
     <Content Include="bootstrap\arrows-ffffff.png" />
     <Content Include="bootstrap\externalgroup\arrows-ffffff.png" />
     <Content Include="bootstrap\externalgroup\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -313,6 +388,18 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="Dll\CasinoLibrary.dll" />
+    <Content Include="Dll\DNAide.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Casino.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Core.dll" />
+    <Content Include="Dll\GotDotNet.ApplicationBlocks.Data.dll" />
+    <Content Include="Dll\IBCCrypt.dll" />
+    <Content Include="Dll\IBCDBLibrary.dll" />
+    <Content Include="Dll\ILogger.dll" />
+    <Content Include="Dll\log4net.dll" />
+    <Content Include="Dll\Microsoft.ApplicationBlocks.Data.dll" />
+    <Content Include="Dll\NetUtility.dll" />
+    <Content Include="Dll\Sunplus.Libraries.AOP.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrow-icn-right.png" />
@@ -1437,6 +1524,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Common\Views\Shared\Styles\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -1456,6 +1544,20 @@
     <None Include="AppSettings.ini" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
+    <Content Include="Areas\Common\Views\Authenticate\AccessDenied.cshtml" />
+    <Content Include="Areas\Common\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Common\Views\Web.config" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Agent\EditAgent.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Agent\ViewAgentBySuper.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Customer\CustomerInfo.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Master\EditMaster.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Member\EditMember.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Member\EditMemberByMaster.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Member\EditMemberBySuper.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Web.config" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -1558,7 +1660,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>57158</DevelopmentServerPort>
+          <DevelopmentServerPort>53994</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

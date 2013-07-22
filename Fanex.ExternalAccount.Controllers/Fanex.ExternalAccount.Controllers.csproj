@@ -166,7 +166,6 @@
     </Compile>
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
-    <Compile Include="Customer\CasinoController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\LiveCasinoController.cs" />
     <Compile Include="Customer\SportsbookController.cs" />
