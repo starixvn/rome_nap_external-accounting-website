@@ -22,14 +22,20 @@ function GameGroupController($scope) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
             // Change game group PT
-            var min = gameGroup.n3;
+            var min = gameGroup.n4;
             var max = gameGroup.s4;
 
             var selected = Math.min(max, newValue);
 
-            gameGroup.s3 = selected;
-            gameGroup.$s3.min = gameGroup.$s3.max = gameGroup.$s3.selected = selected;
-            gameGroup.$s3 = toPTSource(gameGroup.$s3);
+            if (selected < min || selected > max) {
+                gameGroup.s3.breakpt = true;
+                gameGroup.$s3.breakpt = true;
+            }
+            else {
+                gameGroup.s3 = selected;
+                gameGroup.$s3.min = gameGroup.$s3.max = gameGroup.$s3.selected = selected;
+                gameGroup.$s3 = toPTSource(gameGroup.$s3);
+            }
 
             // Change game type PT
             if ($scope.customer.isPtByGameType) {
@@ -37,7 +43,7 @@ function GameGroupController($scope) {
                 for (var i = 0; i < c; i++) {
                     var gameType = $scope.gameGroup.gameTypes[i];
 
-                    min = 0;
+                    min = gameType.n4;
                     max = gameType.s4;
 
                     // Set warning for s3 if break pt rule
@@ -45,9 +51,15 @@ function GameGroupController($scope) {
 
                     selected = Math.min(max, newValue).ptRound();
 
-                    gameType.s3 = selected;
-                    gameType.$s3.min = gameType.$s3.max = gameType.$s3.selected = selected;
-                    gameType.$s3 = toPTSource(gameType.$s3);
+                    if (selected < min || selected > max) {
+                        gameType.s3.breakpt = true;
+                        gameType.$s3.breakpt = true;
+                    }
+                    else {
+                        gameType.s3 = selected;
+                        gameType.$s3.min = gameType.$s3.max = gameType.$s3.selected = selected;
+                        gameType.$s3 = toPTSource(gameType.$s3);
+                    }
                 }
             }
         });
@@ -55,7 +67,7 @@ function GameGroupController($scope) {
         $scope.$watch("setting.is3", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
-            if (!newValue) {              
+            if (!newValue) {
                 $scope.gameGroup.$s3.max = $scope.gameGroup.s4;
             }
 

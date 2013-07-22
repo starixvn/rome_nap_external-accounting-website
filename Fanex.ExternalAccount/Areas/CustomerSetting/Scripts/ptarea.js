@@ -1,5 +1,4 @@
-﻿/// <reference path="_references.js" />
-var module = angular.module("settingApp", []);
+﻿var module = angular.module("settingApp", []);
 
 toPTSource = function (obj, resetSelected, isComm) {
     var index = -1;
@@ -8,6 +7,11 @@ toPTSource = function (obj, resetSelected, isComm) {
     var max = obj.max;
     var step = isComm ? 0.0005 : 0.01;
     var selectedValue = obj.selected;
+    var breakpt = obj.breakpt;
+
+    if (breakpt) {
+        return;
+    }
 
     if (resetSelected === true) {
         obj.selected = max;
@@ -16,7 +20,7 @@ toPTSource = function (obj, resetSelected, isComm) {
     var pts = [];
 
     if (min > max) {
-        min = max;
+        min = max < 0 ? 0 : max;
     }
 
     if (selectedValue > max) { // Insert selected value at top
@@ -94,12 +98,15 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                     selected !== scope[attrs.ngModel][source].selected
                     ) {
                     // $ + 'selected' attribute
+                    var warned = obj.warning;
+                    var curWarn = selected > max || selected < min;
+
                     var obj = toPTSource(scope[attrs.ngModel][source] = {
                         name: attrs.selected,
                         min: min,
                         max: max,
                         selected: selected,
-                        warning: selected > max || selected < min
+                        warning: warned || curWarn
                     }, false, isComm);
                 }
             }
@@ -127,6 +134,11 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if ((event.target || event.srcElement).disabled) return;
                 var newValue = (source.selected + (isComm ? 5 * step : step) / (isComm ? 10000 : 100));
 
+                if ((newValue < 0 || newValue > getValue(attrs.max) || newValue < getValue(attrs.min)) || attrs.breakpt) {
+                    attrs.breakpt = true;
+                    return;
+                }
+
                 newValue = newValue < attrs.min ? attrs.min : newValue > attrs.max ? attrs.max : newValue;
                 scope[attrs.ngModel][attrs.selected] = source.selected = newValue.ptRound();
             }
@@ -134,6 +146,11 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             scope[source + "down"] = function (event, source, step, isComm) {
                 if ((event.target || event.srcElement).disabled) return;
                 var newValue = (source.selected - (isComm ? 5 * step : step) / (isComm ? 10000 : 100));
+
+                if ((newValue < 0 || newValue > getValue(attrs.max) || newValue < getValue(attrs.min)) || attrs.breakpt) {
+                    attrs.breakpt = true;
+                    return;
+                }
 
                 newValue = newValue < attrs.min ? attrs.min : newValue > attrs.max ? attrs.max : newValue;
                 scope[attrs.ngModel][attrs.selected] = source.selected = newValue.ptRound();
@@ -152,14 +169,14 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
 
             basicRender();
 
-            //Delay 1s when creating ptarea control to not handle when binding into select control
+            //Delay 2s when creating ptarea control to not handle when binding into select control
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
                 if (typeof scope.setupWatch === "function" && $rootScope[scope.$id] == undefined) {
                     scope.setupWatch();
                     $rootScope[scope.$id] = true;
                 }
-            }, 1000);
+            }, 2000);
         }
     }
 });
