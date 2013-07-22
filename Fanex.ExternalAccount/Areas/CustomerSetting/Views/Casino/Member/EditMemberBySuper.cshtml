@@ -5,9 +5,9 @@
 @using Fanex.ExternalAccount.Controllers.Context
 @model CasinoSettingModel
 @{
-    var isPtByGameType = true;// For testing purpose only
-    //var isPtByGameType = Model.IsPtByGameType;
-    Model.IsPtByGameType = isPtByGameType;// For testing purpose only
+    //var isPtByGameType = true;// For testing purpose only
+    var isPtByGameType = Model.IsPtByGameType;
+    //Model.IsPtByGameType = isPtByGameType;// For testing purpose only
     var settingModel = JsonConvert.SerializeObject(Model, new JsonSerializerSettings
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -139,4 +139,11 @@
             }
         });
     });
+
+    var timeout = setTimeout(function () {
+        clearTimeout(timeout);
+        $('#chkEnable').attr('disabled', true);
+        $('#maxTransfer').attr('disabled', true);
+        $('#isAutoReset').attr('disabled', true);
+    }, 1000);
 </script>
