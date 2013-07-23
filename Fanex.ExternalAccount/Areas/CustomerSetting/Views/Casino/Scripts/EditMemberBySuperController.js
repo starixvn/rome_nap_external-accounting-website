@@ -67,11 +67,14 @@ function GameGroupController($scope) {
         $scope.$watch("setting.is3", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
-            if (!newValue) {
-                $scope.gameGroup.$s3.max = $scope.gameGroup.s4;
-            }
+            var min = gameGroup.n4;
+            var max = gameGroup.s4;
+            var selected = gameGroup.s3;
 
-            toPTSource($scope.gameGroup.$s3);
+            if (!newValue && selected >= min && selected <= max) {
+                $scope.gameGroup.$s3.max = $scope.gameGroup.s4;
+                toPTSource($scope.gameGroup.$s3);
+            }
 
             // Update new is3 for game type            
             if ($scope.customer.isPtByGameType) {
