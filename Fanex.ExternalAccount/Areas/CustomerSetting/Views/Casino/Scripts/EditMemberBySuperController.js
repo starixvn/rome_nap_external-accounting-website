@@ -68,12 +68,12 @@ function GameGroupController($scope) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
             var min = gameGroup.n4;
-            var max = gameGroup.s4;
+            var max = gameGroup.s4 - gameGroup.m3 - gameGroup.m2;
             var selected = gameGroup.s3;
 
             if (!newValue && selected >= min && selected <= max) {
                 $scope.gameGroup.$s3.min = 0;
-                $scope.gameGroup.$s3.max = $scope.gameGroup.s4;
+                $scope.gameGroup.$s3.max = gameGroup.s4 - gameGroup.m3 - gameGroup.m2;
                 toPTSource($scope.gameGroup.$s3);
             }
 

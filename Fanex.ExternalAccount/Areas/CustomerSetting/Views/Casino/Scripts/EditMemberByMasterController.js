@@ -16,14 +16,14 @@ function EditMemberByMasterController($scope, $element) {
 function GameGroupController($scope) {
     $scope.gameGroup = $scope.$parent.gameGroup;
     var gameGroup = $scope.setting = $scope.gameGroup;
+    var preM3 = $scope.setting.m3;
 
     $scope.setupWatch = function () {
         $scope.$watch("setting.m3", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
             // Change game group PT
-            var min = 0;
-            var max = gameGroup.s3 - gameGroup.m2;
+            var max = gameGroup.s4;
             var selected = Math.min(max, newValue).ptRound();
             var m3Group = Math.min(max, newValue).ptRound();
 
@@ -33,9 +33,9 @@ function GameGroupController($scope) {
             }
             else {
                 gameGroup.m3 = selected;
-                gameGroup.$m3.min = gameGroup.$m3.selected = selected;
-                gameGroup.$m3.max = (gameGroup.s3 - gameGroup.m2).ptRound();
-                gameGroup.$m3 = toPTSource(gameGroup.$m3);
+                gameGroup.max = max;
+                gameGroup.$m3.min = gameGroup.$m3.max = gameGroup.$m3.selected = selected;
+                toPTSource(gameGroup.$m3);
             }
             // Change game type PT
             if ($scope.customer.isPtByGameType) {
@@ -43,7 +43,7 @@ function GameGroupController($scope) {
                 for (var i = 0; i < c; i++) {
                     var gameType = $scope.gameGroup.gameTypes[i];
 
-                    max = gameType.s3 - gameType.m2;
+                    max = gameType.s4;
 
                     if (max < 0) {
                         gameType.m3.breakpt = true;
@@ -55,10 +55,10 @@ function GameGroupController($scope) {
                         // Set warning for m3 if break pt rule
                         gameType.$m3.warning = m3Group < min || m3Group > max.ptRound();
 
+                        gameType.max = max;
                         gameType.m3 = selected;
-                        gameType.$m3.min = gameType.$m3.selected = selected;
-                        gameType.$m3.max = (gameType.s3 - gameType.m2).ptRound();
-                        gameType.$m3 = toPTSource(gameType.$m3);
+                        gameType.$m3.min = gameType.$m3.max = gameType.$m3.selected = selected;
+                        //toPTSource(gameType.$m3);
                     }
                 }
             }
@@ -79,7 +79,7 @@ function GameTypeController($scope) {
         $scope.$watch("setting.m3", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
-            max = gameType.s3 - gameType.m2;
+            max = gameType.s4;
 
             if (max < 0 || gameType.breakpt) {
                 gameType.m3.breakpt = true;
@@ -90,7 +90,7 @@ function GameTypeController($scope) {
 
                 gameType.m3 = selected;
                 gameType.$m3.min = gameType.$m3.max = gameType.$m3.selected = selected;
-                gameType.$m3 = toPTSource(gameType.$m3);
+                //toPTSource(gameType.$m3);
             }
         });
     }

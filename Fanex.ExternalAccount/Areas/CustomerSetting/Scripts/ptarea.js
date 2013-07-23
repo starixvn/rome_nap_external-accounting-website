@@ -89,7 +89,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if (obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
-                var max = source == "$m3" && scope[attrs.ngModel].is3 ? scope[attrs.ngModel].s4 : (source == "$m3" ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                var max = source == "$m3" && scope[attrs.ngModel].is3 ? scope[attrs.ngModel].s4 : (source == "$m3" && scope[attrs.ngModel]["n3"] ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
                 var selected = getValue(attrs.selected).ptRound();
                 max = max.ptRound();
 
@@ -136,7 +136,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if (attrs.max == "l4" && scope[attrs.ngModel]["is3"]) {
                     attrs.l4 = scope[attrs.ngModel]["l4"] = scope[attrs.ngModel]["s4"].ptRound();
                 }
-
+                
                 var newValue = (source.selected + (isComm ? 5 * step : step) / (isComm ? 10000 : 100)).ptRound();
                 var max = getValue(attrs.max).ptRound();
                 var min = getValue(attrs.min).ptRound();
@@ -146,7 +146,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 }
 
                 newValue = newValue < min ? min : newValue > max ? max : newValue;
-                scope[attrs.ngModel][attrs.selected] = source.selected = newValue;                
+                scope[attrs.ngModel][attrs.selected] = source.selected = newValue;
             }
 
             scope[source + "down"] = function (event, source, step, isComm) {
