@@ -83,6 +83,7 @@ function GameGroupController($scope) {
             gameGroup.$m3.min = 0;
 
             if (newValue) {
+                gameGroup.min = 0;
                 gameGroup.max = gameGroup.s4;
             }
             else {
