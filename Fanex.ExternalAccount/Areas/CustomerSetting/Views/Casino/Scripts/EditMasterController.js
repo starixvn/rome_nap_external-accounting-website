@@ -36,9 +36,11 @@ function GameGroupController($scope) {
             var m3Group = Math.min(maxM3, m3).ptRound();
             m3 = Math.min(maxM3, m3).ptRound();
 
+            gameGroup.$m3.l4 = gameGroup.is3 ? gameGroup.s4 : (gameGroup.s4 - gameGroup.s3).ptRound();
             gameGroup.m3 = m3;
             gameGroup.$m3.min = gameGroup.$m3.max = gameGroup.$m3.selected = m3;
             gameGroup.$m3 = toPTSource(gameGroup.$m3);
+            gameGroup.$m3.max = gameGroup.$m3.l4;
 
             // Change game type PT
             if ($scope.customer.isPtByGameType) {
@@ -65,9 +67,11 @@ function GameGroupController($scope) {
                     gameType.$m3.warning = m3Group < min || m3Group > maxM3.ptRound();
 
                     m3 = Math.min(maxM3, m3).ptRound();
+                    gameType.$m3.l4 = gameType.is3 ? gameType.s4 : (gameType.s4 - gameType.s3).ptRound();
                     gameType.m3 = m3;
                     gameType.$m3.min = gameType.$m3.max = gameType.$m3.selected = m3;
                     gameType.$m3 = toPTSource(gameType.$m3);
+                    gameType.$m3.max = gameType.$m3.l4;
                 }
             }
         });
@@ -76,25 +80,25 @@ function GameGroupController($scope) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
             // Update min, max for m3
-            $scope.gameGroup.$m3.min = 0;
+            gameGroup.$m3.min = 0;
 
             if (newValue) {
-                $scope.gameGroup.$m3.max = $scope.gameGroup.s4;
+                gameGroup.max = gameGroup.s4;
             }
             else {
-                var selected = $scope.gameGroup.$m3.selected;
-                var max = $scope.gameGroup.s4 - $scope.gameGroup.s3;
+                var selected = gameGroup.$m3.selected;
+                var max = gameGroup.s4 - gameGroup.s3;
 
                 if (selected > max) {
                     selected = max;
                 }
 
-                $scope.gameGroup.m3 = $scope.gameGroup.$m3.min = $scope.gameGroup.$m3.max = $scope.gameGroup.$m3.selected = selected.ptRound();
-                $scope.gameGroup.$s3.max = $scope.gameGroup.s4;
+                gameGroup.m3 = gameGroup.$m3.min = gameGroup.$m3.max = gameGroup.$m3.selected = selected.ptRound();
+                gameGroup.max = gameGroup.s4;
             }
-
-            toPTSource($scope.gameGroup.$s3);
-            toPTSource($scope.gameGroup.$m3);
+            /*
+            toPTSource(gameGroup.$s3);
+            toPTSource(gameGroup.$m3);*/
 
             // Update new is3 for game type            
             if ($scope.customer.isPtByGameType) {

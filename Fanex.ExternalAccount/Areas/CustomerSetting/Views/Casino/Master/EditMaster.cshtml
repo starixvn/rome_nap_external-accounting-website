@@ -2,7 +2,6 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Controllers.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -47,14 +46,14 @@
                     <td colspan="6" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C ptTitle noneBorderTop tdWidth">
-                                    <span enable="gameGroup.is3" class="spanPT" ptarea="true" min="0" max="{{gameGroup.s4}}" selected="s3" ng-model="setting"></span>
+                                    <span ng-init="gameGroup.l4 = gameGroup.s4 - gameGroup.s3" ng-click="gameGroup.l4 = gameGroup.s4 - gameGroup.s3" enable="gameGroup.is3" class="spanPT" ptarea="true" min="0" max="s4" selected="s3" ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop autoPtWidth">
                                     <input type="checkbox" ng-model="gameGroup.is3" />
                                     <span enable="gameGroup.is3 == false" class="spanPT" ptarea="true" min="0" max="s4" selected="us3" ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop tdWidth">
-                                    <span class="spanPT" ptarea="true" min="0" max="{{gameGroup.s4 - gameGroup.s3}}" selected="m3" ng-model="setting"></span>
+                                    <span ng-init="gameGroup.l4 = gameGroup.s4 - gameGroup.s3" ng-click="gameGroup.l4 = gameGroup.s4 - gameGroup.s3" class="spanPT" ptarea="true" min="0" max="l4" selected="m3" ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop tdWidth">
                                     <span class="spanPT" ptarea="true" min="0" max="m3" selected="n3" ng-model="setting"></span>
@@ -73,14 +72,14 @@
                                                 {{gameType.gameTypeName}}
                                             </td>
                                             <td class="C noneBorderT tdWidth">
-                                                <span enable="gameType.is3" class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="s3" ng-model="setting"></span>
+                                                <span ng-init="gameType.l4 = gameType.s4 - gameType.s3" ng-click="gameType.l4 = gameType.s4 - gameType.s3" enable="gameType.is3" class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="s3" ng-model="setting"></span>
                                             </td>
                                             <td class="C noneBorderT autoPtWidth">
                                                 <input type="checkbox" ng-model="gameType.is3" />
                                                     <span enable="gameType.is3 == false" class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="us3" ng-model="setting"></span>
                                             </td>
                                             <td class="C noneBorderT tdWidth">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="{{gameType.s4 - gameType.s3}}" selected="m3" ng-model="setting"></span>
+                                                <span ng-init="gameType.l4 = gameType.s4 - gameType.s3" ng-click="gameType.l4 = gameType.s4 - gameType.s3" class="spanPT" showbutton="false" ptarea="true" min="0" max="l4" selected="m3" ng-model="setting"></span>
                                             </td>
                                             <td class="C noneBorderT tdWidth">
                                                 <span class="spanPT" showbutton="false" ptarea="true" min="0" max="m3" selected="n3" ng-model="setting"></span>
@@ -133,19 +132,10 @@
 
     $(document).ready(function () {
         //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
-        var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
+        var casinoController = new CasinoController(uplineId, '');
 
         $('.buttonPopup').bind('click', function () {
-            casinoController.Update(function (errorCode, errorMessage) {
-                if (errorCode == 0) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-
-                        parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-                        parent.Fanex.ExtAcc.Form.Close();
-                    }, 1000);
-                }
-            });
+            casinoController.Update();
         });
     });
 </script>

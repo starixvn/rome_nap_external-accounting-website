@@ -225,6 +225,7 @@
     <Content Include="Areas\CustomerSetting\Styles\Common.css" />
     <Content Include="Areas\CustomerSetting\Styles\Validators.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CustomerController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditAgentController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMasterController.js" />

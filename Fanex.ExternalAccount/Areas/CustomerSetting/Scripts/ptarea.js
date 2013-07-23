@@ -89,7 +89,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if (obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
-                var max = source == "$m3" && scope[attrs.ngModel].is3 ? scope[attrs.ngModel].s4 : getValue(attrs.max);
+                var max = source == "$m3" && scope[attrs.ngModel].is3 ? scope[attrs.ngModel].s4 : (source == "$m3" ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
                 var selected = getValue(attrs.selected).ptRound();
                 max = max.ptRound();
 
@@ -126,34 +126,47 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             }
 
             scope[source + "change"] = function (event, source) {
-                scope[attrs.ngModel][attrs.selected] = source.selected;
+                scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
                 scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
             }
 
             scope[source + "up"] = function (event, source, step, isComm) {
                 if ((event.target || event.srcElement).disabled) return;
-                var newValue = (source.selected + (isComm ? 5 * step : step) / (isComm ? 10000 : 100));
 
-                if ((newValue < 0 || newValue > getValue(attrs.max) || newValue < getValue(attrs.min)) || attrs.breakpt) {
-                    attrs.breakpt = true;
+                if (attrs.max == "l4" && scope[attrs.ngModel]["is3"]) {
+                    attrs.l4 = scope[attrs.ngModel]["l4"] = scope[attrs.ngModel]["s4"].ptRound();
+                }
+
+                var newValue = (source.selected + (isComm ? 5 * step : step) / (isComm ? 10000 : 100)).ptRound();
+                var max = getValue(attrs.max).ptRound();
+                var min = getValue(attrs.min).ptRound();
+
+                if (newValue < 0 || newValue > max || newValue < min || attrs.breakpt) {
                     return;
                 }
 
-                newValue = newValue < attrs.min ? attrs.min : newValue > attrs.max ? attrs.max : newValue;
-                scope[attrs.ngModel][attrs.selected] = source.selected = newValue.ptRound();
+                newValue = newValue < min ? min : newValue > max ? max : newValue;
+                scope[attrs.ngModel][attrs.selected] = source.selected = newValue;                
             }
 
             scope[source + "down"] = function (event, source, step, isComm) {
                 if ((event.target || event.srcElement).disabled) return;
-                var newValue = (source.selected - (isComm ? 5 * step : step) / (isComm ? 10000 : 100));
 
-                if ((newValue < 0 || newValue > getValue(attrs.max) || newValue < getValue(attrs.min)) || attrs.breakpt) {
-                    attrs.breakpt = true;
+                if (attrs.max == "l4" && scope[attrs.ngModel]["is3"]) {
+                    attrs.l4 = scope[attrs.ngModel]["l4"] = scope[attrs.ngModel]["s4"].ptRound();
+                }
+
+                var newValue = (source.selected - (isComm ? 5 * step : step) / (isComm ? 10000 : 100)).ptRound();
+
+                var max = getValue(attrs.max).ptRound();
+                var min = getValue(attrs.min).ptRound();
+
+                if (newValue < 0 || newValue > max || newValue < min || attrs.breakpt) {
                     return;
                 }
 
-                newValue = newValue < attrs.min ? attrs.min : newValue > attrs.max ? attrs.max : newValue;
-                scope[attrs.ngModel][attrs.selected] = source.selected = newValue.ptRound();
+                newValue = newValue < min ? min : newValue > max ? max : newValue;
+                scope[attrs.ngModel][attrs.selected] = source.selected = newValue;
             }
 
             scope[source + "focus"] = function (event) {
@@ -169,14 +182,10 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
 
             basicRender();
 
-            //Delay 2s when creating ptarea control to not handle when binding into select control
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
-                if (typeof scope.setupWatch === "function" && $rootScope[scope.$id] == undefined) {
-                    scope.setupWatch();
-                    $rootScope[scope.$id] = true;
-                }
-            }, 2000);
+            if (typeof scope.setupWatch === "function" && $rootScope[scope.$id] == undefined) {
+                scope.setupWatch();
+                $rootScope[scope.$id] = true;
+            }
         }
     }
 });
