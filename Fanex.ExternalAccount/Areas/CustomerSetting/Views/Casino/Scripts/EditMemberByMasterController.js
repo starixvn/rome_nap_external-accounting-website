@@ -88,6 +88,7 @@ function GameTypeController($scope) {
             else {
                 selected = Math.min(max, newValue).ptRound();
 
+                gameType.max = max;
                 gameType.m3 = selected;
                 gameType.$m3.min = gameType.$m3.max = gameType.$m3.selected = selected;
                 //toPTSource(gameType.$m3);
