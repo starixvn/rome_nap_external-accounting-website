@@ -81,25 +81,24 @@ function GameGroupController($scope) {
 
             // Update min, max for m3
             gameGroup.$m3.min = 0;
+            var selected = gameGroup.$m3.selected;
+            gameGroup.m3 = gameGroup.$m3.min = gameGroup.$m3.max = gameGroup.$m3.selected = selected.ptRound();
 
-            if (newValue) {
-                gameGroup.min = 0;
+            if (newValue) {                
                 gameGroup.max = gameGroup.s4;
             }
-            else {
-                var selected = gameGroup.$m3.selected;
+            else {                
                 var max = gameGroup.s4 - gameGroup.s3;
 
                 if (selected > max) {
                     selected = max;
                 }
-
-                gameGroup.m3 = gameGroup.$m3.min = gameGroup.$m3.max = gameGroup.$m3.selected = selected.ptRound();
-                gameGroup.max = gameGroup.s4;
+                                
+                gameGroup.max = max;
             }
-            /*
+            
             toPTSource(gameGroup.$s3);
-            toPTSource(gameGroup.$m3);*/
+            toPTSource(gameGroup.$m3);
 
             // Update new is3 for game type            
             if ($scope.customer.isPtByGameType) {
