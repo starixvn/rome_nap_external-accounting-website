@@ -38,7 +38,7 @@
                     <td colspan="5" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C noneBorderTop memberWidth">
-                                    <span ng-init="gameGroup.l4 = gameGroup.s4 - gameGroup.m2; gameGroup.n4 = gameGroup.s3 - gameGroup.m3" class="spanPT" ptarea="true" min="n4" max="l4" selected="m3" ng-model="setting"></span>
+                                    <span ng-init="gameGroup.l4 = gameGroup.s4 - gameGroup.m2" class="spanPT" ptarea="true" min="0" max="l4" selected="m3" ng-model="setting"></span>
                                 </td>
                                 <td class="C noneBorderTop memberWidth" style="border-right: 0px none">
                                     <span>{{gameGroup.m2}}</span>
@@ -54,7 +54,7 @@
                                                 {{gameType.gameTypeName}}
                                             </td>
                                             <td class="C noneBorderTop memberWidth">
-                                                <span showbutton="false" class="spanPT" ng-init="gameType.l4 = gameType.s4 - gameType.m2; gameType.n4 = gameType.s3 - gameType.m3" class="spanPT" ptarea="true" min="n4" max="l4" selected="m3" ng-model="setting"></span>
+                                                <span showbutton="false" class="spanPT" ng-init="gameType.l4 = gameType.s4 - gameType.m2" class="spanPT" ptarea="true" min="0" max="l4" selected="m3" ng-model="setting"></span>
                                             </td>
                                             <td class="C noneBorderTop memberWidth" style="border-right: 0px none">
                                                 <span>{{gameGroup.m2}}</span>
