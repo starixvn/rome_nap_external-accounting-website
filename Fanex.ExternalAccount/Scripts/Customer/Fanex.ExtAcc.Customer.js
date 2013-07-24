@@ -1998,7 +1998,12 @@ Fanex.ExtAcc.Customer = {
                 actionName += 'Agent/EditAgent/' + this.Ids()[0] + '/' + this.masterId;
                 break;
             case this.Member:
-                actionName += 'Member/EditMember/' + this.Ids()[0] + '/' + this.agentId;
+                if (this.isSuperEditMember)
+                    actionName += 'Member/EditMemberBySuper/' + this.Ids()[0] + '/' + this.superId;
+                else if (this.isMasterEditMember)
+                    actionName += 'Member/EditMemberByMaster/' + this.Ids()[0] + '/' + this.masterId;
+                else
+                    actionName += 'Member/EditMember/' + this.Ids()[0] + '/' + this.agentId;
                 break;
             default:
                 break;
@@ -2012,9 +2017,6 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!this.IsMultiple) {
-            window.IsMultiple = false;
-            window.Ids = this.Ids();
-            window.Names = this.Names();
             Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(actionName), levelText + 'Edit Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1064, 700, false, false, 1, null);
         }
         else {

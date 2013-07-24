@@ -2,6 +2,7 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.ExternalAccount.Controllers.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -130,12 +131,19 @@
         return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
     }
 
-    $(document).ready(function () {
-        //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
-        var casinoController = new CasinoController(uplineId, '');
+    //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
+    var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
 
-        $('.buttonPopup').bind('click', function () {
-            casinoController.Update();
+    $('.buttonPopup').bind('click', function () {
+        casinoController.Update(function (errorCode, errorMessage) {
+            if (errorCode == 0) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+                    parent.Fanex.ExtAcc.Form.Close();
+                }, 1000);
+            }
         });
     });
 </script>
