@@ -16,7 +16,6 @@ function EditMemberByMasterController($scope, $element) {
 function GameGroupController($scope) {
     $scope.gameGroup = $scope.$parent.gameGroup;
     var gameGroup = $scope.setting = $scope.gameGroup;
-    var preM3 = $scope.setting.m3;
 
     $scope.setupWatch = function () {
         $scope.$watch("setting.m3", function (newValue, oldValue) {
