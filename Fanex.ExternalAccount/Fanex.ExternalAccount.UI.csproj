@@ -1559,6 +1559,7 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Web.config" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Error.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
