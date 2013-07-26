@@ -97,5 +97,9 @@
         var customerModel = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@customer'));
         var custId = '@id';
         var uplineId = '@uplineId';
+
+        function toUrl(relativeUrl) {
+            return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
+        }
     </script>
 </div>

@@ -120,10 +120,6 @@
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
 
-    function toUrl(relativeUrl) {
-        return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
-    }
-
     //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
     var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
 

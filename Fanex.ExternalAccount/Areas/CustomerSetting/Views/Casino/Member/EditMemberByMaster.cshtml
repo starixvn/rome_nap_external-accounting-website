@@ -96,10 +96,6 @@
 </div>    
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditMemberByMasterController.js")" type="text/javascript"></script>
 <script type="text/javascript">
-    function toUrl(relativeUrl) {
-        return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
-    }
-
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
 
     //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
