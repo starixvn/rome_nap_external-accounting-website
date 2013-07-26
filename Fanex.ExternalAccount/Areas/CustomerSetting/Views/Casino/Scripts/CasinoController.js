@@ -186,7 +186,7 @@
                 console.log(response);
             }
 
-            ErrorMessage += ('Not casino user: ' + Usernames[custIdIndex]).formatErrorMessage() + '<br />';
+            ErrorMessage += $(response.responseText)[1].text.formatErrorMessage() + '<br />';
 
             if (!IsMultiple) {
                 if (ErrorMessage != '') {
