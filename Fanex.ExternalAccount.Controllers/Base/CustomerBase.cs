@@ -113,6 +113,8 @@ namespace Fanex.ExternalAccount.Controllers.Base
                             custInfo.MIBCCustID,
                             custInfo.AIBCCustID,
                             custInfo.RoleId.ToString(),
+                            false,
+                            false,
                             DateTime.Now,
                             CurrentContext.Ip4Address,
                             uplineId,

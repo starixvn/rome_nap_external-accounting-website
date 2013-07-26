@@ -479,7 +479,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                     modifiedId, 
                     modifiedBy, 
                     fromSystem, 
-                    customerInfo.IsAutoReset);
+                    customerInfo.IsAutoReset,
+                    false,
+                    false);
             }
 
             // Update Status for direct downline only
