@@ -89,7 +89,8 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 if (obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
-                var max = source == "$m3" && scope[attrs.ngModel].is3 ? scope[attrs.ngModel].s4 : (source == "$m3" && scope[attrs.ngModel]["n3"] ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                var max = source == "$m3" && scope[attrs.ngModel].is3 ?
+                    scope[attrs.ngModel].s4 : (source == "$m3" && scope[attrs.ngModel]["n3"] != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
                 var selected = getValue(attrs.selected).ptRound();
                 max = max.ptRound();
                
