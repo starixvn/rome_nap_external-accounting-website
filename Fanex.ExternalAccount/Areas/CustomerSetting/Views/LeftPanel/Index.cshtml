@@ -1,0 +1,111 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model Fanex.CustomerSetting.Module.LeftPanel.ViewModels.CustomerModel
+@{
+    var customerModel = JsonConvert.SerializeObject(this.Model, new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = NullValueHandling.Ignore
+    });
+}
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+<div id="ng-app" ng-app="leftPanelApp" class="hidden">
+    <div id="search" class="search">
+        <div class="floatLeft">
+            <input maxlength="50" id="txtCustomerName" type="text" /></div>
+        <div class="floatLeft">
+            <input class="buttonPopup" id="btnSearch" type="button" value="Search" /></div>
+    </div>
+    <div id="leftPanel" class="clearBoth" ng-controller="LeftPanelController">
+        <div ng-controller="PersonalInfoController" ng-init="model.hide = model != null" ng-hide="model.hide" class="red">There is no information.</div>        
+        <div id="usernameInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+            <div class="clearBoth" ng-repeat="person in personalInfo.downlines">
+                <div class="title">{{person.text}}</div>
+                <div class="floatLeft">{{person.value}}</div>
+            </div>
+        </div>
+        <div id="customerInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+            <div class="clearBoth bold currentUser">
+                {{personalInfo.current.value}}
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.name.text}}</div>
+                <div class="floatLeft">{{personalInfo.name.value}}</div>
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.nickname.text}}</div>
+                <div class="floatLeft">{{personalInfo.nickname.value}}</div>
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.phone.text}}</div>
+                <div class="floatLeft">{{personalInfo.phone.value}}</div>
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.mobile.text}}</div>
+                <div class="floatLeft">{{personalInfo.mobile.value}}</div>
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.fax.text}}</div>
+                <div class="floatLeft">{{personalInfo.fax.value}}</div>
+            </div>
+        </div>
+        <div id="viewInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        </div>        
+        <div id="tabs" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+            <ul class="tabs">
+                <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
+                <li id="tab2"><a href="#tabs-2">Downline List</a></li>
+            </ul>
+            <div id="tabs-1" ng-controller="BalanceController">
+                <div class="clearBoth">
+                    <div class="balanceTitle">{{balanceInfo.currency.text}}</div>
+                    <div class="floatLeftBalance R">{{balanceInfo.currency.value}}</div>
+                </div>
+                <div class="clearBoth" ng-repeat="balance in balanceInfo.balances">
+                    <div class="balanceTitle">{{balance.text}}</div>
+                    <div class="{{myClass}}" ng-init="myClass = balance.value < 0">
+                        <div class="floatLeftBalance R">{{balance.value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
+                <div class="clearBoth" ng-repeat="status in balanceInfo.statuses">
+                    <div class="balanceTitle">{{status.text}}</div>
+                    <div class="floatLeftBalance R"><span class="blue">{{status.totalActive}}</span>/<span class="red">{{status.totalClosed}}</span>/{{status.totalSuspended}}</div>
+                </div>    
+            </div>
+            <div class="auto" id="tabs-2" ng-controller="DownlineListController" ng-hide="{{model.length == 0}}">
+                <div class="title" ng-repeat="user in model">
+                    {{user.value}}
+                </div>    
+            </div>
+        </div>
+        <div id="settingInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var model = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@customerModel'));
+    $(document).ready(function () {
+        if (model) {
+            $('#tabs').tabs();
+
+            if (model.downlineList.downlines.length == 0)
+                $('#tab2').remove();
+        }
+        else
+            $('#tabs').remove();
+    });
+</script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/LeftPanelController.js")" type="text/javascript"></script>

@@ -27,7 +27,7 @@ toPTSource = function (obj, resetSelected, isComm) {
         pts.push(selectedValue);
     }
     var c = Math.round((max * 10000 - min * 10000) / (step * 10000));
-    if (c <= 0) { // Not range
+    if (c <= 0 && selectedValue != 0) { // Not range
         pts.push(Math.round(min * 10000) / 10000);
     } else {
         for (var i = c; i >= 0; i--) {
@@ -90,7 +90,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
 
                 var min = getValue(attrs.min).ptRound();
                 var max = source == "$m3" && scope[attrs.ngModel].is3 ?
-                    scope[attrs.ngModel].s4 : (source == "$m3" && scope[attrs.ngModel]["n3"] != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                    scope[attrs.ngModel].s4 : (source == "$m3" && typeof scope[attrs.ngModel]["n3"] != 'undefined' && typeof scope[attrs.ngModel].is3 != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
                 var selected = getValue(attrs.selected).ptRound();
                 max = max.ptRound();
                

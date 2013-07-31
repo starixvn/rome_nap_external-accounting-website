@@ -59,6 +59,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.LeftPanel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.LeftPanel.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
@@ -217,12 +221,19 @@
     <Content Include="Areas\CustomerSetting\Images\warning-icn.png" />
     <Content Include="Areas\CustomerSetting\Scripts\angular.min.js" />
     <Content Include="Areas\CustomerSetting\Scripts\Fanex.CustomerSetting.Core.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\jquery-ui-1.9.1.min.js" />
     <Content Include="Areas\CustomerSetting\Scripts\jquery.blockUI.1.33.js" />
     <Content Include="Areas\CustomerSetting\Scripts\jquery.js" />
     <Content Include="Areas\CustomerSetting\Scripts\ptarea.js" />
     <Content Include="Areas\CustomerSetting\Scripts\Validators.js" />
     <Content Include="Areas\CustomerSetting\Scripts\_references.js" />
     <Content Include="Areas\CustomerSetting\Styles\Common.css" />
+    <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Areas\CustomerSetting\Styles\jquery-ui.css" />
     <Content Include="Areas\CustomerSetting\Styles\Validators.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
@@ -233,6 +244,8 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberBySuperController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\LeftPanelController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Styles\LeftPanel.css" />
     <Content Include="bootstrap\arrows-ffffff.png" />
     <Content Include="bootstrap\externalgroup\arrows-ffffff.png" />
     <Content Include="bootstrap\externalgroup\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -393,6 +406,7 @@
     <Content Include="Dll\DNAide.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Casino.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Core.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.LeftPanel.dll" />
     <Content Include="Dll\GotDotNet.ApplicationBlocks.Data.dll" />
     <Content Include="Dll\IBCCrypt.dll" />
     <Content Include="Dll\IBCDBLibrary.dll" />
@@ -1560,6 +1574,7 @@
     <Content Include="Areas\CustomerSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Web.config" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Error.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Index.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />

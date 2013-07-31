@@ -52,12 +52,12 @@ function GameGroupController($scope) {
                         selected = Math.min(max, newValue).ptRound();
 
                         // Set warning for m3 if break pt rule
-                        gameType.$m3.warning = m3Group < min || m3Group > max.ptRound();
+                        gameType.$m3.warning = m3Group < 0 || m3Group > max.ptRound();
 
                         gameType.max = max;
                         gameType.m3 = selected;
                         gameType.$m3.min = gameType.$m3.max = gameType.$m3.selected = selected;
-                        //toPTSource(gameType.$m3);
+                        toPTSource(gameType.$m3);
                     }
                 }
             }

@@ -1,5 +1,13 @@
 ﻿/// <reference path="_references.js" />
 
+if (typeof $ == 'undefined' || typeof jQuery == 'undefined') {
+    alert("Require jQuery.js");
+}
+
+if (typeof $.blockUI == 'undefined') {
+    alert("Require jquery.blockUI.js");
+}
+
 if (typeof JSON == 'undefined') {
     JSON = {};
 
@@ -222,15 +230,13 @@ Fanex.CustomerSetting.Core = {
     BlockedUI: false,
 
     Init: function () {
+        $ = jQuery;
         $this = this;
-
-        var timeout = setTimeout(function () {            
-            $.blockUI.defaults.css.zIndex = '9999999';
-            $.blockUI.defaults.css.position = 'absolute';
-            $.blockUI.defaults.css.border = '0px solid #aaa';
-            $.blockUI.defaults.css.backgroundColor = "transparent";
-            $.blockUI.defaults.overlayCSS.backgroundColor = "transparent";
-        }, 1000);
+        jQuery.blockUI.defaults.css.zIndex = '9999999';
+        jQuery.blockUI.defaults.css.position = 'absolute';
+        jQuery.blockUI.defaults.css.border = '0px solid #aaa';
+        jQuery.blockUI.defaults.css.backgroundColor = "transparent";
+        jQuery.blockUI.defaults.overlayCSS.backgroundColor = "transparent";
     },
 
     BlockUI: function () {
@@ -248,7 +254,7 @@ Fanex.CustomerSetting.Core = {
     },
 
     UnBlockUI: function () {
-        $.unblockUI(document);
+        jQuery.unblockUI(document);
     },
 
     DecodeHtml: function (str) {
@@ -340,6 +346,34 @@ Fanex.CustomerSetting.Core = {
             $('#names').attr('title', usernames.substring(0, usernames.length - 2));
         }
     }
+}
+
+String.prototype.formatNumber = function () {
+    var number = this;
+    number += '';
+
+    x = number.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
+Number.prototype.formatNumber = function () {
+    var number = this;
+    number += '';
+
+    x = number.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
 }
 
 String.prototype.toFixed = function (precision, optionals) {

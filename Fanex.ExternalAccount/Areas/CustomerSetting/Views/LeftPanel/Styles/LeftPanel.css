@@ -1,0 +1,126 @@
+﻿body, html
+{
+    font-size: 11px !important;
+    padding: 0;
+    margin: 0;
+}
+#leftPanel{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 2px;
+    padding: 2px;
+}
+#btnSearch
+{
+    line-height: 19px;
+    height: 19px;
+    margin: 0;
+    margin-top: 1px;
+    width: 60px;
+    font-size: 11px !important;
+}
+div
+{
+    line-height: 22px; 
+    overflow: hidden;
+    font-size: 11px !important;
+}
+.clearBoth
+{
+    clear: both;
+    max-width: 300px;
+    min-width: 220px;
+}
+.title
+{
+    width: 80px;
+    float: left;
+    white-space: nowrap;
+}
+.floatLeft
+{
+    float: left;
+}
+.search
+{
+    padding: 2px;
+    border: none;
+    padding: 2px;
+}
+.hidden
+{
+    overflow: hidden;
+}
+.auto
+{
+    overflow: auto;
+}
+.red
+{
+    color: Red;
+}
+.ui-widget
+{
+    font-size: 10px;
+}
+.ui-widget-header
+{
+    background: none;
+    border: none;
+}
+.ui-tabs .ui-tabs-panel
+{
+    padding: 2px;
+    max-height: 260px;
+}
+.balanceTitle
+{
+    width: 110px;
+    float: left;
+}
+.floatLeftBalance
+{
+    float: left;
+    width: 144px;    
+    font-weight: bold;
+}
+.true
+{
+    color: Red;
+}
+.ui-tabs .ui-tabs-panel
+{
+    border: 1px solid #ccc;
+}
+.currentUser
+{
+    background-color: #eee;
+    vertical-align: middle;
+    padding-left: 5px;
+    text-transform: uppercase;
+    color: #2489CE;
+}
+.bold
+{
+    font-weight: bold;
+}
+.blue
+{
+    color: Blue;
+}
+.normal
+{
+    color: Black;
+}
+.ui-tabs-anchor
+{
+    font-weight: bold;
+    color: #2489CE !important;
+    height: 8px;
+    vertical-align: middle;    
+}
+.ui-helper-reset
+{
+    line-height: 0.4;
+    padding: 0;
+}

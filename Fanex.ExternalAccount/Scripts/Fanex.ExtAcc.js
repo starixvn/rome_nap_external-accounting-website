@@ -211,6 +211,7 @@ Fanex.ExtAcc = {
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
         $('#leftSplitter').height($('#contentSplitter').height());
+        $('#leftFrame').height($('#contentSplitter').height() - 5);
 
         $('#splitterBar').click(function (event) {
             Fanex.ExtAcc.ToggleSpliter();
@@ -260,6 +261,7 @@ Fanex.ExtAcc = {
         };
 
         $('#leftSplitter').height($('#contentSplitter').height());
+        $('#leftFrame').height($('#contentSplitter').height());
 
         this.Resize();
     },
@@ -279,6 +281,9 @@ Fanex.ExtAcc = {
         }
         catch (err) {
         }
+
+        $('#leftSplitter').height($('#contentSplitter').height() + 5);
+        $('#leftFrame').height($('#contentSplitter').height());
 
         // Update to cookie
         Cookie.set('layout_1', this.leftMenuWidth, 4);
