@@ -28,7 +28,7 @@
         </div>
         <div id="customerInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <div class="clearBoth bold currentUser">
-                {{personalInfo.current.value}}
+                {{personalInfo.currentLevel.value}}
             </div>
             <div class="clearBoth">
                 <div class="title">
@@ -58,7 +58,7 @@
         </div>
         <div id="viewInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
         </div>        
-        <div id="tabs" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        <div id="balanceInfo" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <ul class="tabs">
                 <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
                 <li id="tab2"><a href="#tabs-2">Downline List</a></li>
@@ -75,17 +75,44 @@
                     </div>
                 </div>
                 <div class="clearBoth" ng-repeat="status in balanceInfo.statuses">
-                    <div class="balanceTitle">{{status.text}}</div>
+                    <div class="balanceTitle" title="{{status.tooltip}}">{{status.text}}</div>
                     <div class="floatLeftBalance R"><span class="blue">{{status.totalActive}}</span>/<span class="red">{{status.totalClosed}}</span>/{{status.totalSuspended}}</div>
                 </div>    
             </div>
             <div class="auto" id="tabs-2" ng-controller="DownlineListController" ng-hide="{{model.length == 0}}">
-                <div class="title" ng-repeat="user in model">
+                <div class="downlineTitle" ng-repeat="user in model">
                     {{user.value}}
                 </div>    
             </div>
         </div>
-        <div id="settingInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        <div id="settingInfo" class="clearBoth" ng-controller="SettingController" ng-hide="{{model==null}}">
+            <ul class="tabs">
+                <li><a href="#tab-1">Setting</a></li>
+                <li><a href="#tab-2">Detail</a></li>
+                <li><a href="#tab-3">Login</a></li>
+                <li><a href="#tab-4">Online List</a></li>
+            </ul>
+            <div id="tab-1">
+                <div class="floatLeft" ng-repeat="enableItem in setting.enableItems">
+                    <div class="settingTitle">{{enableItem.text}}</div>
+                    <div class="floatLeft"><input type="checkbox" ng-model="enableItem.value" /></div>
+                </div>    
+            </div>
+            <div class="auto" id="tab-2">
+                <div class="title">
+                    
+                </div>    
+            </div>
+            <div class="auto" id="tab-3">
+                <div class="title">
+                    
+                </div>    
+            </div>
+            <div class="auto" id="tab-4">
+                <div class="title">
+                    
+                </div>    
+            </div>
         </div>
     </div>
 </div>
@@ -99,13 +126,16 @@
     var model = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@customerModel'));
     $(document).ready(function () {
         if (model) {
-            $('#tabs').tabs();
+            $('#balanceInfo').tabs();
+            $('#settingInfo').tabs();
 
             if (model.downlineList.downlines.length == 0)
                 $('#tab2').remove();
         }
-        else
-            $('#tabs').remove();
+        else {
+            $('#balanceInfo').remove();
+            $('#settingInfo').remove();
+        }
     });
 </script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/LeftPanelController.js")" type="text/javascript"></script>

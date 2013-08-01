@@ -33,3 +33,13 @@ function DownlineListController($scope) {
         $scope.model = null;
     }
 };
+
+function SettingController($scope) {
+    if ($scope.$parent.model) {
+        $scope.setting = $scope.$parent.model.setting;
+        $scope.model = $scope.$parent.model;
+    }
+    else {
+        $scope.model = null;
+    }
+};

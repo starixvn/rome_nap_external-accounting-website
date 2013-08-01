@@ -118,9 +118,34 @@ div
     color: #2489CE !important;
     height: 8px;
     vertical-align: middle;    
+    margin: 0;
 }
 .ui-helper-reset
 {
     line-height: 0.4;
     padding: 0;
+}
+.ui-tabs .ui-tabs-nav
+{
+    padding: 0;
+}
+.ui-tabs .ui-tabs-nav li
+{
+    margin: 0;
+}
+.ui-widget
+{
+    font-family: Tahoma,Helvetica,Arial,sans-serif;
+}
+.settingTitle
+{
+    float: left;
+    width: 100px;
+    margin-left: 4px;
+}
+.downlineTitle
+{
+    width: 119px;
+    float: left;
+    white-space: nowrap;
 }
