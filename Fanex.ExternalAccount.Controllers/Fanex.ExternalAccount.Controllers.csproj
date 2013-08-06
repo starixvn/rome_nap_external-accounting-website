@@ -56,6 +56,9 @@
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Security">
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.LiveCasinoSetting">
       <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
@@ -166,6 +169,7 @@
     </Compile>
     <Compile Include="Context\ICurrentContext.cs" />
     <Compile Include="Context\ICurrentSession.cs" />
+    <Compile Include="Context\RNGCasinoAuthenticate.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\LiveCasinoController.cs" />
     <Compile Include="Customer\SportsbookController.cs" />
