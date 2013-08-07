@@ -96,7 +96,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             return this.JsonBase(this.MemberWinLimit.GetMemberWinLimit(custId), settings);

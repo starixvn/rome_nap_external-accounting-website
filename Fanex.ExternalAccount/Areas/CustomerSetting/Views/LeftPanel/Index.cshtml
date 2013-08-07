@@ -2,7 +2,7 @@
 @using Newtonsoft.Json.Serialization
 @model Fanex.CustomerSetting.Module.LeftPanel.ViewModels.CustomerModel
 @{
-    var customerModel = JsonConvert.SerializeObject(this.Model, new JsonSerializerSettings
+    var customerModel = JsonConvert.SerializeObject(this.Model, Formatting.None, new JsonSerializerSettings
     {
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore

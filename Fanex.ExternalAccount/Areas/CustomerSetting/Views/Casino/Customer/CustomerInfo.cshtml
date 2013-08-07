@@ -4,7 +4,7 @@
 @using Newtonsoft.Json.Serialization
 @model CasinoCustomer
 @{
-    var customer = JsonConvert.SerializeObject(Model, new JsonSerializerSettings
+    var customer = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
     {
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore

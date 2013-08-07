@@ -40,7 +40,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
@@ -69,7 +68,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
@@ -98,7 +96,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
@@ -127,7 +124,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
 
@@ -182,7 +178,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             IRequestContext currentContext = new RequestContext()
@@ -209,7 +204,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             ICommissionSetting commissionSetting = JsonConvert.DeserializeObject<CommissionSetting>(txtCustomerObject, settings);
 
@@ -286,7 +280,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -299,7 +292,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var settings = new JsonSerializerSettings();
 
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             if (!string.IsNullOrWhiteSpace(para))
             {
@@ -366,7 +358,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -379,7 +370,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var settings = new JsonSerializerSettings();
 
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             if (!string.IsNullOrWhiteSpace(para))
             {
@@ -446,7 +436,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -459,7 +448,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var settings = new JsonSerializerSettings();
 
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             if (!string.IsNullOrWhiteSpace(para))
             {
@@ -527,7 +515,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -538,7 +525,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
@@ -606,7 +592,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -617,7 +602,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
@@ -715,7 +699,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -753,7 +736,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
             });
         }
 
@@ -762,7 +744,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
@@ -787,7 +768,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()

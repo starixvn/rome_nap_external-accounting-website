@@ -8,7 +8,7 @@
     //var isPtByGameType = true;// For testing purpose only
     var isPtByGameType = Model.IsPtByGameType;
     //Model.IsPtByGameType = isPtByGameType;// For testing purpose only
-    var settingModel = JsonConvert.SerializeObject(Model, new JsonSerializerSettings
+    var settingModel = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore

@@ -62,7 +62,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             var settingModel = this.PtSetting.GetMasterSetting(custId, uplineId);
@@ -144,7 +143,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             var settingModel = this.PtSetting.GetAgentSetting(custId, uplineId);
@@ -226,7 +224,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             var settingModel = this.PtSetting.GetMemberSetting(custId, uplineId);
@@ -308,7 +305,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             var settingModel = this.PtSetting.SuperGetMemberSetting(custId, uplineId);
@@ -428,7 +424,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             var settingModel = this.PtSetting.MasterGetMemberSetting(custId, uplineId);

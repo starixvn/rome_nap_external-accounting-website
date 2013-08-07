@@ -70,7 +70,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             return SerializeToJs(tb, settings);
         }
@@ -82,7 +81,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             foreach (var key in tb.Keys)
             {
                 var value = tb[key];
-                result += "var " + key + " = " + JsonConvert.SerializeObject(value, settings) + ";\n";
+                result += "var " + key + " = " + JsonConvert.SerializeObject(value, Formatting.None, settings) + ";\n";
             }
 
             return result;
@@ -152,10 +151,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
 
                 var settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
-                settings.Formatting = Formatting.Indented;
                 settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-                var responseContent = JsonConvert.SerializeObject(uiResult, settings);
+                var responseContent = JsonConvert.SerializeObject(uiResult, Formatting.None, settings);
                 return this.Content(responseContent);
             }
 

@@ -68,7 +68,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
-                    Formatting = Formatting.Indented
                 });
         }
 
@@ -108,7 +107,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
-                    Formatting = Formatting.Indented
                 });
         }
 
@@ -117,7 +115,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
@@ -176,7 +173,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
-                    Formatting = Formatting.Indented
                 });
         }
 
@@ -185,7 +181,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
@@ -244,7 +239,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
-                    Formatting = Formatting.Indented
                 });
         }
 
@@ -253,7 +247,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Formatting = Formatting.Indented;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()

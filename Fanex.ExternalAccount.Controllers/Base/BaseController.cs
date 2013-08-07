@@ -125,7 +125,6 @@ namespace Fanex.ExternalAccount.Controllers.Base
             {
                 settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
-                settings.Formatting = Formatting.Indented;
             }
 
             return this.JsonExt(data, settings);
