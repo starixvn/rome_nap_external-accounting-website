@@ -65,7 +65,7 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Security.dll</HintPath>
+      <HintPath>Dll\Fanex.CustomerSetting.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
