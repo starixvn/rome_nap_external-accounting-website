@@ -1484,4 +1484,9 @@ textarea
 {
 	padding: 5px 5px !important;
 	font-weight: normal !important;
+}.search
+{
+    padding: 2px;
+    border: none;
+    padding: 2px;
 }

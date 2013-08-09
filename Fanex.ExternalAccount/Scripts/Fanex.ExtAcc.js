@@ -173,10 +173,12 @@ Fanex.ExtAcc = {
         }
     },
 
-    InitSuggestion: function () {
+    InitSuggestion: function (txtUserName) {
         var groupName = $('#selectedGroupName').html();
+        var id = typeof txtUserName == 'undefined' ? '#txtUserName' : '#' + txtUserName;
+        console.log($(id));
 
-        $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($("#txtUserName").val()) + "&groupname=" + groupName))
+        $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
         .success(function (data) {
             var source = [];
 
@@ -184,7 +186,7 @@ Fanex.ExtAcc = {
                 source.push(data[i].Username);
             });
 
-            $("#txtUserName").autocomplete({
+            $(id).autocomplete({
                 source: source
             });
         })
@@ -211,7 +213,7 @@ Fanex.ExtAcc = {
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
         $('#leftSplitter').height($('#contentSplitter').height());
-        $('#leftFrame').height($('#contentSplitter').height() - 5);
+        $('#leftFrame').height($('#contentSplitter').height() - 35);
 
         $('#splitterBar').click(function (event) {
             Fanex.ExtAcc.ToggleSpliter();
@@ -244,6 +246,26 @@ Fanex.ExtAcc = {
                 Fanex.ExtAcc.LoadModule(module);
             }
         }, 100);
+
+        $('#txtLeftPanelUserName').keypress(function (e) {
+            if (typeof e == 'undefined') e = window.event;
+            var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
+            if (key == 13) {
+                //Fanex.ExtAcc.Customer.Search(false);
+
+                return true;
+            } else {
+                return true;
+            }
+        });
+
+        $('#txtLeftPanelUserName').keyup(function (e) {
+            if ($('#txtLeftPanelUserName').val().length > 1) {
+                Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
+            }
+        });
+
+        Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
     },
 
     ToggleSpliter: function () {
@@ -261,7 +283,7 @@ Fanex.ExtAcc = {
         };
 
         $('#leftSplitter').height($('#contentSplitter').height());
-        $('#leftFrame').height($('#contentSplitter').height());
+        $('#leftFrame').height($('#contentSplitter').height() - 30);
 
         this.Resize();
     },
@@ -283,7 +305,7 @@ Fanex.ExtAcc = {
         }
 
         $('#leftSplitter').height($('#contentSplitter').height() + 5);
-        $('#leftFrame').height($('#contentSplitter').height());
+        $('#leftFrame').height($('#contentSplitter').height() - 30);
 
         // Update to cookie
         Cookie.set('layout_1', this.leftMenuWidth, 4);

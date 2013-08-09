@@ -12,12 +12,6 @@
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <div id="ng-app" ng-app="leftPanelApp" class="hidden">
-    <div id="search" class="search">
-        <div class="floatLeft">
-            <input maxlength="50" id="txtCustomerName" type="text" /></div>
-        <div class="floatLeft">
-            <input class="buttonPopup" id="btnSearch" type="button" value="Search" /></div>
-    </div>
     <div id="leftPanel" class="clearBoth" ng-controller="LeftPanelController">
         <div ng-controller="PersonalInfoController" ng-init="model.hide = model != null" ng-hide="model.hide" class="red">There is no information.</div>        
         <div id="usernameInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
