@@ -7,7 +7,7 @@
 //   <change who="Andy.Nguyen" date="2013.07.25">Created</change>
 // </history>
 
-namespace Fanex.CustomerSetting.Module.LeftPanel.ViewModels
+namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
     using System;
     using System.Collections.Generic;

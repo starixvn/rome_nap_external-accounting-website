@@ -18,8 +18,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Controllers.Base;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// Report controller

@@ -7,7 +7,7 @@
 //   <change who="Andy.Nguyen" date="2013.4.5">Created</change>
 // </history>
 
-namespace Fanex.ExternalAccount.Controllers.Base
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System.Web.Mvc;
     using Newtonsoft.Json;

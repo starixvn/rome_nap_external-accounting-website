@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;

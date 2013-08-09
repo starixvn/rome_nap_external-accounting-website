@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System.Text;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// TODO: Update summary.

@@ -7,10 +7,10 @@
 //   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
 // </history>
 
-namespace Fanex.CustomerSetting.Module.LeftPanel.Services.Interface
+namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 {
     using System.Data;
-    using Fanex.CustomerSetting.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.DTO;
 
     /// <summary>

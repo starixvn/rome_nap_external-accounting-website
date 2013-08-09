@@ -8,8 +8,8 @@
     <ProjectGuid>{6ED9BED7-1BCE-4991-B425-740DB8C56BBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fanex.CustomerSetting.Module.LeftPanel</RootNamespace>
-    <AssemblyName>Fanex.CustomerSetting.Module.LeftPanel</AssemblyName>
+    <RootNamespace>Fanex.ExternalAccount.Module.LeftPanel</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.Module.LeftPanel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

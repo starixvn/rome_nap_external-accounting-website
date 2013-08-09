@@ -59,10 +59,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.LeftPanel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Fanex.CustomerSetting.Module.LeftPanel.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Security.dll</HintPath>
@@ -1666,6 +1662,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
       <Name>Fanex.ExternalAccount.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LeftPanel\LeftPanel.csproj">
+      <Project>{6ED9BED7-1BCE-4991-B425-740DB8C56BBD}</Project>
+      <Name>LeftPanel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

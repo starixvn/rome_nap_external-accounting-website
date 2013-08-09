@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Core.Context
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// TODO: Update summary.

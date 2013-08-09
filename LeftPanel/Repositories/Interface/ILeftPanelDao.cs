@@ -7,10 +7,10 @@
 //   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
 // </history>
 
-namespace Fanex.CustomerSetting.Module.LeftPanel.Repositories.Interface
+namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
 {
     using System.Data;
-    using Fanex.CustomerSetting.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO;
 

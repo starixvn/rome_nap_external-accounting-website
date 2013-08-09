@@ -7,7 +7,7 @@
 //   <change who="Andy.Nguyen" date="2013.3.20">Created</change>
 // </history>
 
-namespace Fanex.ExternalAccount.Controllers.Base
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Fanex.ExternalAccount.Controllers.Base
     using System.Data;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;

@@ -17,7 +17,7 @@ namespace Fanex.ExternalAccount.Controllers.Shared
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
-    using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Core.Base;
 
     /// <summary>
     /// Shared controller object

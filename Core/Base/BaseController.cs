@@ -10,12 +10,12 @@
 //   <change who="Andy.Nguyen" date="2012.12.13">Style Cop</change>
 // </history>
 
-namespace Fanex.ExternalAccount.Controllers.Base
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System.IO;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Context;
     using Newtonsoft.Json;
 
     /// <summary>

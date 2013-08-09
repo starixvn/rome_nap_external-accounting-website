@@ -7,7 +7,7 @@
 //   <change who="Andy.Nguyen" date="2013.2.8">Created</change>
 // </history>
 
-namespace Fanex.ExternalAccount.Controllers.Base
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;

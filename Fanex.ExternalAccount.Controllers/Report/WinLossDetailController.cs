@@ -14,8 +14,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using System.Data;
     using System.Web.Mvc;
     using Fanex.Caching;
-    using Fanex.ExternalAccount.Controllers.Base;
-    using Fanex.ExternalAccount.Controllers.Context;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Service.Impl.Report;

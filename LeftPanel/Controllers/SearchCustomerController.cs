@@ -7,13 +7,13 @@
 //   <change who="Andy.Nguyen" date="2013.07.25">Created</change>
 // </history>
 
-namespace Fanex.CustomerSetting.Module.LeftPanel.Controllers
+namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Module.LeftPanel.Services.Impl;
-    using Fanex.CustomerSetting.Module.LeftPanel.Services.Interface;
-    using Fanex.CustomerSetting.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Controllers.Base;
+    using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
+    using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Core.Base;
     using Newtonsoft.Json;
 
     /// <summary>
