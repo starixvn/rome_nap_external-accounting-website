@@ -32,7 +32,7 @@
               </a>
               <ul class="dropdown-menu">
                 @{
-                    var CurrentSession = new Fanex.ExternalAccount.Controllers.Context.CurrentSession();
+                    var CurrentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
                 }
                 @if (CurrentSession.IsITAdmin)
                 {
@@ -47,7 +47,7 @@
             <div id="userGroup" style="float: left; margin-left: 5px">
                 <select id="GroupIDs" class="usernameInput group">
                     @{
-                        var CurrentSession = new Fanex.ExternalAccount.Controllers.Context.CurrentSession();
+                        var CurrentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
                     }
                     @if (CurrentSession.IsITAdmin)
                     {
