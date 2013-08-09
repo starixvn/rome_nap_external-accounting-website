@@ -17,7 +17,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
@@ -26,7 +25,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Sunplus.Core.Common.IPs;
-using Fanex.CustomerSetting.Security.Authenticate;
 
     /// <summary>
     /// TODO: Update summary.
@@ -270,8 +268,7 @@ using Fanex.CustomerSetting.Security.Authenticate;
         }
         #endregion Agent Add New Member
 
-        //[Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult CustomerList()
         {
             return this.ViewBase();

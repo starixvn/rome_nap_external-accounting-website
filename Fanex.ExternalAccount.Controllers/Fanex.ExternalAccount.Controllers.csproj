@@ -157,19 +157,6 @@
   <ItemGroup>
     <Compile Include="Authentication\AccountController.cs" />
     <Compile Include="Authentication\CaptchaResult.cs" />
-    <Compile Include="Base\BaseController.cs" />
-    <Compile Include="Base\ControllerExtentions.cs" />
-    <Compile Include="Base\CustomerBase.cs" />
-    <Compile Include="Base\JsonBase.cs" />
-    <Compile Include="Base\LiveCasinoBase.cs" />
-    <Compile Include="Context\AuthorizationAttribute.cs" />
-    <Compile Include="Context\CurrentContext.cs" />
-    <Compile Include="Context\CurrentSession.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Context\ICurrentContext.cs" />
-    <Compile Include="Context\ICurrentSession.cs" />
-    <Compile Include="Context\ExternalAccountAuthenticate.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\LiveCasinoController.cs" />
     <Compile Include="Customer\SportsbookController.cs" />
@@ -190,6 +177,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
+      <Name>Core %28Controller\Core%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
       <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
       <Name>Fanex.ExternalAccount.DataAccess</Name>

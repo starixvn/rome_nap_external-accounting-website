@@ -8,17 +8,16 @@ namespace Fanex.ExternalAccount.Controllers.Context
 {
     using System;
     using System.Linq;
-    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
-    using Fanex.ExternalAccount.DTO;
 
     /// <summary>
     /// TODO: Update summary.

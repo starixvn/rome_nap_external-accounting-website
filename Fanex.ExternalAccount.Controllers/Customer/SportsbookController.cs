@@ -6,10 +6,8 @@
 
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
-    using System;
     using System.Collections;
     using System.Web.Mvc;
-    using Fanex.Caching;
     using Fanex.ExternalAccount.Controllers.Base;
     using Fanex.ExternalAccount.Controllers.Context;
     using Fanex.ExternalAccount.DTO;
