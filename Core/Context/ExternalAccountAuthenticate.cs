@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.ExternalAccount.Controllers.Context
+namespace Fanex.ExternalAccount.Core.Context
 {
     using System;
     using System.Linq;
@@ -18,6 +18,7 @@ namespace Fanex.ExternalAccount.Controllers.Context
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
+    using Fanex.ExternalAccount.Controllers.Context;
 
     /// <summary>
     /// TODO: Update summary.
@@ -106,11 +107,21 @@ namespace Fanex.ExternalAccount.Controllers.Context
 
         public bool AllowRead(string action)
         {
+            if(action.Contains("SearchCustomer"))
+            {
+                return true;
+            }
+
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, request);
         }
 
         public bool AllowUpdate(string action)
         {
+            if (action.Contains("SearchCustomer"))
+            {
+                return true;
+            }
+
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, request);
         }
 
