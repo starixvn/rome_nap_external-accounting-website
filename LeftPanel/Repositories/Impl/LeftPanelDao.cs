@@ -11,25 +11,34 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 {
     using System.Collections;
     using System.Data;
-    using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Service.Impl.Report;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class LeftPanelDao : ILeftPanelDao
     {
-        public DataSet GetCustomerInfo(string username)
+        public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
-            var ds = new DataSet();
-            var param = new Hashtable();
-            param.Add("username", username);
+            var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
 
-            ds = DbHelper.ExecuteDataSet("Acc_CustomerSelAllInfo", param);
+            if (customerInfo != null && customerInfo.Rows.Count != 0)
+            {
 
-            return ds;
+                var ds = new DataSet();
+                var param = new Hashtable();
+                param.Add("username", username);
+
+                ds = DbHelper.ExecuteDataSet("Acc_CustomerSelAllInfo", param);
+
+                return ds;
+            }
+
+            return null;
         }
         
         public Result Update(int id, int uplineId, CustomerModel model)

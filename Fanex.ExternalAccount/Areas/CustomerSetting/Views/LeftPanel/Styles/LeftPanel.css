@@ -30,6 +30,7 @@ div
     clear: both;
     max-width: 300px;
     min-width: 220px;
+    border-bottom: 1px dashed #CCC;
 }
 .title
 {
@@ -54,6 +55,7 @@ div
 .auto
 {
     overflow: auto;
+    border-bottom: 1px dashed #CCC;
 }
 .red
 {
@@ -71,7 +73,7 @@ div
 .ui-tabs .ui-tabs-panel
 {
     padding: 2px;
-    max-height: 260px;
+    max-height: 275px;
 }
 .balanceTitle
 {
@@ -148,4 +150,9 @@ div
     width: 119px;
     float: left;
     white-space: nowrap;
+    border-bottom: 1px dashed #CCC;
+}
+.normal
+{
+    font-weight: normal;
 }

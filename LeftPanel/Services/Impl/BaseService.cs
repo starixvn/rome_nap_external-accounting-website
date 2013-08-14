@@ -25,7 +25,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
         public int Member { get { return 1; } }
 
-        public virtual CustomerModel GetCustomerInfo(string username)
+        public virtual CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
             throw new NotImplementedException();
         }

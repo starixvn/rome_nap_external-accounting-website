@@ -43,3 +43,13 @@ function SettingController($scope) {
         $scope.model = null;
     }
 };
+
+function LoginController($scope) {
+    if ($scope.$parent.model) {
+        $scope.loginInfo = $scope.$parent.model.login;
+        $scope.model = $scope.$parent.model;
+    }
+    else {
+        $scope.model = null;
+    }
+};

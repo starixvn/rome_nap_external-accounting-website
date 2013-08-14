@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
     /// </summary>
     public interface ILeftPanelService
     {
-        CustomerModel GetCustomerInfo(string username);
+        CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD");
 
         Result Update(int id, int uplineId, CustomerModel model);
 

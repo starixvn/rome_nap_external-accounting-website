@@ -25,9 +25,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     {
         private readonly ILeftPanelDao data = new LeftPanelDao();
 
-        public override CustomerModel GetCustomerInfo(string username)
+        public override CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
-            var ds = this.data.GetCustomerInfo(username);
+            var ds = this.data.GetCustomerInfo(username, groupName);
             var model = new CustomerModel();
 
             if (ds != null && ds.Tables.Count > 0)

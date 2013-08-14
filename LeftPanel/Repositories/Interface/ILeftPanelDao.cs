@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
     /// </summary>
     public interface ILeftPanelDao
     {
-        DataSet GetCustomerInfo(string username);
+        DataSet GetCustomerInfo(string username, string groupName = "ACCDDD");
 
         Result Update(int id, int uplineId, CustomerModel model);
 

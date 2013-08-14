@@ -64,6 +64,12 @@ Fanex.ExtAcc = {
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
 
+    LoadMainFrame: function(url){
+        $('#contentSplitter').html('');
+
+
+    },
+
     FormatNumber: function (number) { // Format a number to 1,234,567.89
         number += '';
 
@@ -251,12 +257,20 @@ Fanex.ExtAcc = {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
-                //Fanex.ExtAcc.Customer.Search(false);
+                var username = $.trim(this.value.encodeHtml());
+
+                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
 
                 return true;
             } else {
                 return true;
             }
+        });
+
+        $('#btnSearch').bind('click', function () {
+            var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
+
+            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
         });
 
         $('#txtLeftPanelUserName').keyup(function (e) {

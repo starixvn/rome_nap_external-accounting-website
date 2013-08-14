@@ -1,11 +1,11 @@
 ﻿/// <reference path="_references.js" />
 
 if (typeof $ == 'undefined' || typeof jQuery == 'undefined') {
-    alert("Require jQuery.js");
+    //alert("Require jQuery.js");
 }
 
 if (typeof $.blockUI == 'undefined') {
-    alert("Require jquery.blockUI.js");
+    //alert("Require jquery.blockUI.js");
 }
 
 /*

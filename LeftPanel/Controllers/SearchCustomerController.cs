@@ -9,6 +9,7 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
@@ -28,9 +29,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// </summary>
         /// <param name="id">Username to view.</param>
         /// <returns>View contains customer model.</returns>
-        public ActionResult Index(string id = null)
+        public ActionResult Index(string id = null, string uplineId = "ACCDDD")
         {
-            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id);
+            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId);
 
             return this.View("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
         }

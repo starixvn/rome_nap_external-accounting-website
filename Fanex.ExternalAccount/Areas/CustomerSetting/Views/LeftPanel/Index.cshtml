@@ -14,13 +14,13 @@
 <div id="ng-app" ng-app="leftPanelApp" class="hidden">
     <div id="leftPanel" class="clearBoth" ng-controller="LeftPanelController">
         <div ng-controller="PersonalInfoController" ng-init="model.hide = model != null" ng-hide="model.hide" class="red">There is no information.</div>        
-        <div id="usernameInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        <div id="usernameInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <div class="clearBoth" ng-repeat="person in personalInfo.downlines">
                 <div class="title">{{person.text}}</div>
                 <div class="floatLeft">{{person.value}}</div>
             </div>
         </div>
-        <div id="customerInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        <div id="customerInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <div class="clearBoth bold currentUser">
                 {{personalInfo.currentLevel.value}}
             </div>
@@ -50,7 +50,7 @@
                 <div class="floatLeft">{{personalInfo.fax.value}}</div>
             </div>
         </div>
-        <div id="viewInfo" class="clearBoth" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        <div id="viewInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
         </div>        
         <div id="balanceInfo" class="clearBoth" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <ul class="tabs">
@@ -75,7 +75,7 @@
             </div>
             <div class="auto" id="tabs-2" ng-controller="DownlineListController" ng-hide="{{model.length == 0}}">
                 <div class="downlineTitle" ng-repeat="user in model">
-                    {{user.value}}
+                    {{user.text}}
                 </div>    
             </div>
         </div>
@@ -97,9 +97,10 @@
                     
                 </div>    
             </div>
-            <div class="auto" id="tab-3">
-                <div class="title">
-                    
+            <div class="auto" id="tab-3" ng-controller="LoginController">
+                <div class="clearBoth dashed" ng-repeat="login in loginInfo">
+                    <div class="balanceTitle bold">{{login.text}}</div>
+                    <div class="floatLeftBalance normal R">{{login.value}}</div>
                 </div>    
             </div>
             <div class="auto" id="tab-4">
@@ -123,7 +124,7 @@
             $('#balanceInfo').tabs();
             $('#settingInfo').tabs();
 
-            if (model.downlineList.downlines.length == 0)
+            if (model.personalInfo.roleId.value == 1)
                 $('#tab2').remove();
         }
         else {
