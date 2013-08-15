@@ -109,10 +109,9 @@ Fanex.ExtAcc.Header = {
                             $('#selectedGroupIndex').html(id);
                             $('#selectedGroupName').html(selectedGroupName);
 
-                            if (location.href.indexOf('Home/Index') != -1
+                            if ((location.href.indexOf('Home/Index') != -1
                                 || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
-                                || location.href == (location.protocol + '//' + location.host + '/')) {
-                                //|| location.href.indexOf(location.protocol + '//' + location.host + '/') != -1) {
+                                || location.href == (location.protocol + '//' + location.host + '/')) && !document.getElementById('mainGrid')) {                                
                                 if (window.history.pushState) {
                                     window.history.pushState("object or string", "Title", location.href.substr(0, location.href.lastIndexOf('/')) + "/" + selectedGroupName);
                                 }
