@@ -34,10 +34,6 @@
         });
 
         Fanex.CustomerSetting.Core.ProcessDisplayMultiple(125, names);
-        names = names.substring(0, names.length - 2);
-
-        jQuery('#names').html(names);
-        jQuery('#names').show();
     }
     else {
         $('#arrowUpDown').hide();
