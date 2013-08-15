@@ -304,7 +304,7 @@ Fanex.ExtAcc.User = {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
+                    Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
         })
@@ -348,7 +348,7 @@ Fanex.ExtAcc.User = {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
+                    Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
         })
@@ -388,7 +388,7 @@ Fanex.ExtAcc.User = {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
+                    Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
         })
@@ -416,7 +416,7 @@ Fanex.ExtAcc.User = {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
+                    Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
         })
