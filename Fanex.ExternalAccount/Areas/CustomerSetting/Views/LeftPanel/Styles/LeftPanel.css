@@ -156,3 +156,7 @@ div
 {
     font-weight: normal;
 }
+.ui-widget-content a {
+    color: #2489CE;
+    text-decoration: none;
+}
