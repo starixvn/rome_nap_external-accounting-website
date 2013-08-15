@@ -37,7 +37,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GroupList()
         {
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]

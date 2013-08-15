@@ -34,13 +34,41 @@ function DownlineListController($scope) {
     }
 };
 
-function SettingController($scope) {
+function SettingController($scope, $http) {
     if ($scope.$parent.model) {
         $scope.setting = $scope.$parent.model.setting;
         $scope.model = $scope.$parent.model;
     }
     else {
         $scope.model = null;
+    }
+
+    $scope.AddNew = function () {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var actionName = '';
+
+        switch (roleId) {
+            case 2:
+                actionName = 'Customer/AgentAddNewMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value + '/' + parent.$('#selectedGroupName').html(); ;
+                break;
+            case 3:
+                actionName = 'Customer/MasterAddNewAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value + '/' + parent.$('#selectedGroupName').html(); ;
+                break;
+            case 4:
+                actionName = 'Customer/SuperAddNewMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value + '/' + parent.$('#selectedGroupName').html(); ;
+                break;
+            default:
+                break;
+        }
+
+        if (actionName != '') {
+            parent.Fanex.ExtAcc.BlockUI();
+
+            $http({ url: parent.resolveClientUrl(actionName), method: 'post', headers: { "X-Requested-With": "XMLHttpRequest"} })
+            .success(function (result) {
+                parent.$('#contentSplitter').html(result);
+            });
+        }
     }
 };
 

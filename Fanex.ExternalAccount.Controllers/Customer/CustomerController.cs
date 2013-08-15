@@ -74,7 +74,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
         public ActionResult SuperAddNewMaster()
         {
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
@@ -140,7 +140,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
         public ActionResult MasterAddNewAgent()
         {
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
@@ -206,7 +206,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
         public ActionResult AgentAddNewMember()
         {
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
@@ -271,7 +271,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult CustomerList()
         {
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
                 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
@@ -293,7 +293,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
             ViewBag.DisableP2P = (bool)result.Rows[0]["DisableP2P"];
 
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
@@ -559,7 +559,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 excelStream.Dispose();
             }
 
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         private void GetDataResult(string groupName, bool? enabled, bool? closed, bool? suspended, string username, out DataTable result, out int srecommend, out int mrecommend, out int recommend, out int custId, out int roleId)

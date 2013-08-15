@@ -215,7 +215,9 @@ Fanex.ExtAcc.Group = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
 
-                    Fanex.ExtAcc.Form.Close(true);
+                    Fanex.ExtAcc.Form.Close(false);
+
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Group/GroupList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -257,13 +259,13 @@ Fanex.ExtAcc.Group = {
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
-                Fanex.ExtAcc.Form.Close(false);
-
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.UnBlockUI();
 
-                    $this.Init();
+                    Fanex.ExtAcc.Form.Close(false);
+
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Group/GroupList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -301,7 +303,9 @@ Fanex.ExtAcc.Group = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
 
-                    Fanex.ExtAcc.Form.Close(true);
+                    Fanex.ExtAcc.Form.Close(false);
+
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Group/GroupList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -314,3 +318,7 @@ Fanex.ExtAcc.Group = {
         location.href = resolveClientUrl('User/UserList/?username=&groupId=' + groupId + '&/' + $('#selectedGroupName').html());
     }
 }
+
+$(document).ready(function () {
+    Fanex.ExtAcc.Group.Init();
+});

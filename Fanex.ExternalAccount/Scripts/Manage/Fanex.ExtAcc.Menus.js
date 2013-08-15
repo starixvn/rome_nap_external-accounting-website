@@ -259,8 +259,8 @@ Fanex.ExtAcc.Menus = {
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    Fanex.ExtAcc.Form.Close(true);
+                    Fanex.ExtAcc.Form.Close();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -328,8 +328,8 @@ Fanex.ExtAcc.Menus = {
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    Fanex.ExtAcc.Form.Close(true);
+                    Fanex.ExtAcc.Form.Close();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -353,8 +353,8 @@ Fanex.ExtAcc.Menus = {
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    Fanex.ExtAcc.Form.Close(true);
+                    Fanex.ExtAcc.Form.Close();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -378,8 +378,8 @@ Fanex.ExtAcc.Menus = {
             else {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    Fanex.ExtAcc.Form.Close(true);
+                    Fanex.ExtAcc.Form.Close();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -390,3 +390,7 @@ Fanex.ExtAcc.Menus = {
         });
     }
 }
+
+$(document).ready(function () {
+    Fanex.ExtAcc.Menus.Init();
+});

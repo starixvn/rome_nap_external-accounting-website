@@ -6,13 +6,15 @@
         <ul class="sf-menu" id="functionsMenu">
             @foreach (var value in menuDict.Values)
             {
+                var id = "ddl-" + value.Name.Replace(" ", string.Empty);
+                
                 <li><a href="#" ignorehref="1">@value.Name</a>
-                    <ul>
+                    <ul id="@id">
                         @if (value.Children.Count > 0)
                         {
                             foreach (var menu in value.Children)
                             {
-                            <li><a href="@(menu.Url != "" ? @Url.Content(menu.Url) : "")">
+                            <li><a parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(menu.Url != "" ? @Url.Content(menu.Url) : "")', '@id')">
                                 @menu.Name
                             </a></li>
                             }

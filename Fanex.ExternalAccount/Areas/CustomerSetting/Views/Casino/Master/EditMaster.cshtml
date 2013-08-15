@@ -136,8 +136,11 @@
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
 
-                    parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-                    parent.Fanex.ExtAcc.Form.Close();
+                    try {
+                        parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        parent.Fanex.ExtAcc.Form.Close();
+                    }
+                    catch (e) { }
                 }, 1000);
             }
         });

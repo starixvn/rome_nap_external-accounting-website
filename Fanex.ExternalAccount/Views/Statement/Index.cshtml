@@ -4,16 +4,13 @@
 @{
     ViewBag.Title = "Statement";
 }
-@section StyleSheet
+@if (HttpContext.Current.IsDebuggingEnabled)
 {
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <link href="@Url.Content("~/Content/Statement/Statement.css")" rel="stylesheet" type="text/css" />
-    }
-    else
-    {
-        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/css")" rel="stylesheet" type="text/css" />
-    }
+    <link href="@Url.Content("~/Content/Statement/Statement.css")" rel="stylesheet" type="text/css" />
+}
+else
+{
+    <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/css")" rel="stylesheet" type="text/css" />
 }
 <div>
     <div class="bgTitle titleForm">
@@ -45,14 +42,11 @@
     <div id='msgNoinfo'>There is no data.</div>
     <input type="hidden" id="CustId" value="@Request.RequestContext.RouteData.Values["id"]" />
 </div>
-@section Scripts
+@if (HttpContext.Current.IsDebuggingEnabled)
 {
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <script src="@Url.Content("~/Scripts/Statement/Fanex.ExtAcc.Statement.js")" type="text/javascript"></script>
-    }
-    else
-    {
-        <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/js")" type="text/javascript"></script>
-    }
+    <script src="@Url.Content("~/Scripts/Statement/Fanex.ExtAcc.Statement.js")" type="text/javascript"></script>
+}
+else
+{
+    <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/js")" type="text/javascript"></script>
 }

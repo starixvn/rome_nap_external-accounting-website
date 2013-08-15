@@ -57,7 +57,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         [Authorization(Function = eFunctions.WinlossDetail, Policy = ePolicy.Read)]
         public ActionResult Index()
         {
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         private bool CheckBelonging()

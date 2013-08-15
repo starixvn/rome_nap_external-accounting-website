@@ -28,9 +28,9 @@ Fanex.ExtAcc.Header = {
                 success: function (data) {
                     var index = 0;
                     var items = eval(data);
-                    $this.Groups = items;
+                    Fanex.ExtAcc.Header.Groups = items;
 
-                    $this.GroupLength = items.length;
+                    Fanex.ExtAcc.Header.GroupLength = items.length;
 
                     // Get current Group Name
                     var indexes = location.href.split('/');
@@ -96,9 +96,9 @@ Fanex.ExtAcc.Header = {
                         if (event.target.id.indexOf('group') == 0) {
                             $('#ddlGroupName').hide();
 
-                            for (var i = 0; i < $this.GroupLength; i++) {
-                                $('#group' + Fanex.ExtAcc.ReplaceAll($this.Groups[i], ' ', '')).css('font-weight', 'normal');
-                                $('#group' + Fanex.ExtAcc.ReplaceAll($this.Groups[i], ' ', '')).css('color', '#acacac');
+                            for (var i = 0; i < Fanex.ExtAcc.Header.GroupLength; i++) {
+                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i], ' ', '')).css('font-weight', 'normal');
+                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i], ' ', '')).css('color', '#acacac');
                             }
 
                             var id = event.target.id;

@@ -12,17 +12,15 @@
         </div>
     </div>
 </div>
-@section Scripts{
-    <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Group.js")" type="text/javascript"></script>
-    <script type="text/javascript">
-        Fanex.ExtAcc.Group.dataTexts = [
-        '@ViewLang.GroupName',
-        '@ViewLang.NumberOfUser',
-        '@ViewLang.Description',
-        '@ViewLang.Creator',
-        '@ViewLang.CreatedDate',
-        '@ViewLang.Permission',
-        '@ViewLang.Delete'
-        ];
-    </script>
-}
+<script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Group.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    Fanex.ExtAcc.Group.dataTexts = [
+    '@ViewLang.GroupName',
+    '@ViewLang.NumberOfUser',
+    '@ViewLang.Description',
+    '@ViewLang.Creator',
+    '@ViewLang.CreatedDate',
+    '@ViewLang.Permission',
+    '@ViewLang.Delete'
+    ];
+</script>

@@ -1,9 +1,6 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.DTO.UserControl
-@section StyleSheet
-{
-    <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
-}
+<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
 <div id='jqWidget' style="background-color: #fff; font-size: 13px; font-family: Verdana;">
     <div class="bgTitle titleForm">
         <div style="float: left; margin: 5px; vertical-align: middle;">
@@ -85,19 +82,19 @@
             There is no data.</div>
     </div>
 </div>
-@section Scripts{
-    <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
-    <script type="text/javascript">
-        Fanex.ExtAcc.User.dataTexts = [
-        '@ViewLang.Username',
-        '@ViewLang.Firstname',
-        '@ViewLang.Lastname',
-        '@ViewLang.GroupName',
-        '@ViewLang.Creator',
-        '@ViewLang.CreatedDate',
-        '@ViewLang.Permission',
-        '@ViewLang.Active',
-        '@ViewLang.Password'
-    ];
-    </script>
-}
+<script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    Fanex.ExtAcc.User.dataTexts = [
+    '@ViewLang.Username',
+    '@ViewLang.Firstname',
+    '@ViewLang.Lastname',
+    '@ViewLang.GroupName',
+    '@ViewLang.Creator',
+    '@ViewLang.CreatedDate',
+    '@ViewLang.Permission',
+    '@ViewLang.Active',
+    '@ViewLang.Password'
+];
+
+Fanex.ExtAcc.User.Init();
+</script>

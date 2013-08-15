@@ -12,18 +12,16 @@
         </div>
     </div>
 </div>
-@section Scripts{
-    <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Menus.js")" type="text/javascript"></script>
-    <script type="text/javascript">
-        Fanex.ExtAcc.Menus.dataTexts = [
-        '@ViewLang.MenuItem',
-        '@ViewLang.Description',
-        '@ViewLang.Url',
-        '@ViewLang.Function',
-        '@ViewLang.Order',
-        '@ViewLang.Lastmodified',
-        '@ViewLang.Active',
-        '@ViewLang.Delete'
-        ];
-    </script>
-}
+<script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Menus.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    Fanex.ExtAcc.Menus.dataTexts = [
+    '@ViewLang.MenuItem',
+    '@ViewLang.Description',
+    '@ViewLang.Url',
+    '@ViewLang.Function',
+    '@ViewLang.Order',
+    '@ViewLang.Lastmodified',
+    '@ViewLang.Active',
+    '@ViewLang.Delete'
+    ];
+</script>

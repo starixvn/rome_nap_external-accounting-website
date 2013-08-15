@@ -309,7 +309,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $("#jqgrid").fanexGrid("resizeGrid");
             }
             catch (err) { }
-        }
+        };
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
@@ -783,3 +783,7 @@ Fanex.ExtAcc.WinLossDetail = {
         })
     }
 };
+
+$(document).ready(function () {
+    Fanex.ExtAcc.WinLossDetail.Init();
+});

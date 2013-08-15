@@ -170,7 +170,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                                     if (Fanex.ExtAcc.AutoInsertCompleted) {
                                         clearInterval(timeout);
 
-                                        document.location.href = resolveClientUrl("Customer/Settings/3/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val() + "/" + $('#selectedGroupName').html());
+                                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
                                     }
                                 }, 100);
 

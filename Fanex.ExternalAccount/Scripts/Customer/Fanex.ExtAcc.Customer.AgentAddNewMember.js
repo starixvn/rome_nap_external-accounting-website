@@ -160,7 +160,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                                     if (Fanex.ExtAcc.AutoInsertCompleted) {
                                         clearInterval(timeout);
 
-                                        document.location.href = resolveClientUrl("Customer/Settings/1/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val() + "/" + $('#selectedGroupName').html());
+                                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/1/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
                                     }
                                 }, 100);
                             }, 2000);

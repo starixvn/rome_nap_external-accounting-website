@@ -2243,3 +2243,7 @@ Fanex.ExtAcc.Customer = {
         }, 1000);
     }
 }
+
+$(document).ready(function () {
+    Fanex.ExtAcc.Customer.Init();
+})

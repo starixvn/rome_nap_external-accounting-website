@@ -46,7 +46,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 ViewBag.GroupList = new GroupService().GetListGroup().Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }
 
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]

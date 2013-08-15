@@ -105,19 +105,40 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetCasinoSetting: function () {
-        Fanex.ExtAcc.BlockUI();
+        var action = '';
 
-        $.ajax({
-            url: resolveClientUrl('Casino/EditCasino'),
-            data: { custId: Fanex.ExtAcc.Customer.UserId, uplineId: Fanex.ExtAcc.Customer.superId }
-        }).success(function (result) {
-            $('#tabs-4').css('display', 'block');
-            $('#tabs-4').html(result);
-        }).error(function (data) {
-            if (typeof console != 'undefined') {
-                console.log(data.responseText);
-            }
-        });
+        if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            action = 'Master/EditMaster';
+        }
+        else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            action = 'Agent/EditAgent';
+        }
+        else {
+            if (Fanex.ExtAcc.Customer.isSuperEditMember)
+                action = 'Member/EditMemberBySuper';
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember)
+                action = 'Member/EditMemberByMaster';
+            else
+                action = 'Member/EditMember';
+        }
+
+        Fanex.ExtAcc.Customer.Ids = function () {
+            return [Fanex.ExtAcc.Customer.UserId];
+        };
+
+        Fanex.ExtAcc.Customer.Names = function () {
+            return [''];
+        };
+
+        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId);
+
+        console.log(url);
+        console.log($('#casinoFrame'));
+        console.log(document.getElementById('casinoFrame'));
+
+        $('#tabs-4').height($('#leftFrame').height() - 30);
+        $('#tabs-4').css('display', 'block');
+        $('#casinoFrame').attr('src', url);
     },
 
     GetBingoSetting: function () {
@@ -160,7 +181,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-1').html('');
         $('#tabs-2').html('');
         $('#tabs-3').html('');
-        $('#tabs-4').html('');
+        //$('#tabs-4').html('');
         $('#tabs-5').html('');
         $('#tabs-6').html('');
         $('#tabs-7').html('');
@@ -169,7 +190,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-1').css('display', 'none');
         $('#tabs-2').css('display', 'none');
         $('#tabs-3').css('display', 'none');
-        $('#tabs-4').css('display', 'none');
+        //$('#tabs-4').css('display', 'none');
         $('#tabs-5').css('display', 'none');
         $('#tabs-6').css('display', 'none');
         $('#tabs-7').css('display', 'none');

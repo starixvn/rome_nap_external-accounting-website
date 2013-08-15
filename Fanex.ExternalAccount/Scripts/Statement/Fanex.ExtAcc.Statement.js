@@ -76,7 +76,7 @@ Fanex.ExtAcc.Statement = {
                 $("#jqgrid").fanexGrid("resizeGrid");
             }
             catch (err) { }
-        }
+        };
     },
     RenderUsernameColumn: function (cell) {
         if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
@@ -198,3 +198,7 @@ Fanex.ExtAcc.Statement = {
         })
     }
 };
+
+$(document).ready(function () {
+    Fanex.ExtAcc.Statement.Init();
+});

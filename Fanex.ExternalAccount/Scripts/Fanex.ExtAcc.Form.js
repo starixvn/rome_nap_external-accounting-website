@@ -211,7 +211,7 @@ Fanex.ExtAcc.Form = {
         });
     },
 
-    Close: function (reload, delay, popupId) {
+    Close: function (reload, delay, popupId, callBack) {
         var delayTime = delay ? delay : 100;
         var id = popupId ? popupId : 'windowPopup';
 
@@ -221,5 +221,9 @@ Fanex.ExtAcc.Form = {
             $('#' + id).remove();
             clearTimeout(timeout);
         }, delayTime);
+
+        if (typeof callBack == 'function') {
+            callBack();
+        }
     }
 }

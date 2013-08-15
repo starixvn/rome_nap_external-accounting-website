@@ -42,7 +42,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
             ViewBag.InternalGroupIDs = ids;
 
-            return this.ViewBase();
+            return this.PartialViewBase();
         }
 
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]

@@ -149,7 +149,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                 $("#jqgrid").fanexGrid("resizeGrid");
             }
             catch (err) { }
-        }
+        };
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
@@ -425,3 +425,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         })
     }
 };
+
+$(document).ready(function () {
+    Fanex.ExtAcc.DailyWinLoss.Init();
+});

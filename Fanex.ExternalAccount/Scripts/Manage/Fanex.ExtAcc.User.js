@@ -300,12 +300,11 @@ Fanex.ExtAcc.User = {
                 $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
             }
             else {
-                Fanex.ExtAcc.Form.Close(false);
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -347,9 +346,9 @@ Fanex.ExtAcc.User = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -387,9 +386,9 @@ Fanex.ExtAcc.User = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
@@ -415,9 +414,9 @@ Fanex.ExtAcc.User = {
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         })
