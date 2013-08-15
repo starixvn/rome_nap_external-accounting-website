@@ -315,7 +315,8 @@ Fanex.ExtAcc.Group = {
     },
 
     SearchUser: function (groupId) {
-        location.href = resolveClientUrl('User/UserList/?username=&groupId=' + groupId + '&/' + $('#selectedGroupName').html());
+        Fanex.ExtAcc.User.URL = resolveClientUrl('User/UserList/?username=&groupId=' + groupId + '&/' + $('#selectedGroupName').html())
+        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('User/UserList/?username=&groupId=' + groupId + '&'));
     }
 }
 

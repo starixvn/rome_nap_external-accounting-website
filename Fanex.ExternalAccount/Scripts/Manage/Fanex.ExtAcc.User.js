@@ -471,8 +471,8 @@ Fanex.ExtAcc.User = {
         var username = '';
         var groupId = null;
 
-        if (location.href.indexOf('?username=') != -1) {
-            var tmp = location.href.split('?')[1].split('&');
+        if (Fanex.ExtAcc.User.URL != '/User/UserListPost' && Fanex.ExtAcc.User.URL != '') {
+            var tmp = Fanex.ExtAcc.User.URL.split('?')[1].split('&');
             username = tmp[0].split('=')[1];
             groupId = tmp[1].split('=')[1];
 
