@@ -252,6 +252,13 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberBySuperController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\arrow-down-icn.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\blue-arrow-icn.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\btn-active.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\btn-original.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\header-bg.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\home-icn.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\up-down-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\LeftPanelController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Styles\LeftPanel.css" />
     <Content Include="bootstrap\arrows-ffffff.png" />

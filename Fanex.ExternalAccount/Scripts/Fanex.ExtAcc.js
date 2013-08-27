@@ -64,7 +64,7 @@ Fanex.ExtAcc = {
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
 
-    LoadMainFrame: function (url, id) {
+    LoadMainFrame: function (url, id, isLeftPanelClick) {
         this.BlockUI();
 
         if (typeof id != 'undefined') {
@@ -73,6 +73,10 @@ Fanex.ExtAcc = {
 
         $.ajax({ url: url + '/' + $('#selectedGroupName').html(), type: 'post', success: function (result) {
             $('#contentSplitter').html(result);
+
+            if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                Fanex.ExtAcc.Customer.Init();
+            }
 
             Fanex.ExtAcc.UnBlockUI();
         }
@@ -197,7 +201,6 @@ Fanex.ExtAcc = {
     InitSuggestion: function (txtUserName) {
         var groupName = $('#selectedGroupName').html();
         var id = typeof txtUserName == 'undefined' ? '#txtUserName' : '#' + txtUserName;
-        console.log($(id));
 
         $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
         .success(function (data) {
@@ -283,7 +286,7 @@ Fanex.ExtAcc = {
             }
         });
 
-        $('#btnSearch').bind('click', function () {
+        $('#btnSearchLeftPanel').bind('click', function () {
             var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
 
             $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
@@ -296,6 +299,10 @@ Fanex.ExtAcc = {
         });
 
         Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
+    },
+
+    ViewUser: function (username) {
+        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
     },
 
     ToggleSpliter: function () {

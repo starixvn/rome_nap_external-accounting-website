@@ -37,6 +37,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 setEventForCheckbox();
             }
         }, 2000);
+
+        $('#names').hide();
     },
 
     GetMasterSetting: function () {

@@ -7,6 +7,8 @@
 #leftPanel{
     border: 1px solid #ccc;
     border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
     margin: 2px;
     padding: 2px;
 }
@@ -30,13 +32,15 @@ div
     clear: both;
     max-width: 300px;
     min-width: 220px;
-    border-bottom: 1px dashed #CCC;
+    border-bottom: 1px solid #CCC;
+    background-color: #F6F6F6;
 }
 .title
 {
     width: 80px;
     float: left;
     white-space: nowrap;
+    padding-left: 2px;
 }
 .floatLeft
 {
@@ -73,17 +77,19 @@ div
 .ui-tabs .ui-tabs-panel
 {
     padding: 2px;
-    max-height: 275px;
+    max-height: 207px;
+    min-height: 160px;
+    background-color: #F6F6F6;
 }
 .balanceTitle
 {
-    width: 110px;
+    width: auto;
     float: left;
 }
 .floatLeftBalance
 {
-    float: left;
-    width: 144px;    
+    float: right;
+    width: auto;    
     font-weight: bold;
 }
 .true
@@ -98,9 +104,22 @@ div
 {
     background-color: #eee;
     vertical-align: middle;
-    padding-left: 5px;
-    text-transform: uppercase;
-    color: #2489CE;
+    padding-left: 2px;
+    text-transform: uppercase;        
+}
+.userDown
+{
+    background: url(../images/arrow-down-icn.png) no-repeat;
+    width: 16px;
+    margin-top: 4px;    
+    cursor: pointer;
+}
+.userUp
+{
+    background: url(../images/arrow-up-icn.png) no-repeat;
+    width: 16px;
+    margin-top: 4px;    
+    cursor: pointer;
 }
 .bold
 {
@@ -117,10 +136,14 @@ div
 .ui-tabs-anchor
 {
     font-weight: bold;
-    color: #2489CE !important;
+    color: #000 !important;
     height: 8px;
     vertical-align: middle;    
     margin: 0;
+}
+.ui-state-active a,.ui-tabs-active a
+{
+    color: #2489CE !important;
 }
 .ui-helper-reset
 {
@@ -147,10 +170,12 @@ div
 }
 .downlineTitle
 {
-    width: 119px;
     float: left;
     white-space: nowrap;
-    border-bottom: 1px dashed #CCC;
+    border-bottom: 1px solid #CCC;
+    color: #2489CE;
+    background-color: #F6F6F6;
+    margin-bottom: 2px;
 }
 .normal
 {
@@ -159,4 +184,122 @@ div
 .ui-widget-content a {
     color: #2489CE;
     text-decoration: none;
+}
+.list
+{
+    padding: 0;
+    margin: 2px 0;
+    cursor: pointer;
+    text-align: center;
+}
+.settingEdit
+{
+    color: #2489CE;
+    float: left;
+    width: 120px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+.detail
+{
+    cursor: pointer;
+    color: #2489CE;    
+    width: auto;
+    display: table;
+    text-decoration: none;    
+}
+.icn-right
+{
+    background: url(../images/blue-arrow-icn.png) no-repeat;
+    background-position: left center;
+    text-indent: 15px;
+}
+#tab-2
+{
+    min-height: 260px;
+}
+.headerLevel
+{
+    background: url(../images/header-bg.png) repeat-x;
+    height: 25px !important; 
+}
+#customerInfo
+{
+    margin-top: 3px;
+}
+.floatRight
+{
+    float: right;
+}
+.home
+{
+    background: url(../images/home-icn.png) no-repeat;
+    width: 16px;
+    cursor: pointer;
+    margin-top: 4px;
+}
+.expanded
+{
+    background: url(../images/up-down-icn.png) no-repeat;
+    background-position: 0 -7px;
+    width: 16px;
+    cursor: pointer;
+    margin-top: 9px;
+    border: none !important;
+    height: 10px;
+}
+.collapsed
+{
+    background: url(../images/up-down-icn.png) no-repeat;
+    background-position: 0 0;
+    width: 16px;
+    cursor: pointer;
+    margin-top: 7px;
+    border: none !important;
+    height: 8px;
+}
+#viewInfo
+{
+    background-color: #FFF;
+}
+.fiftyPercent
+{
+    width: 49.6%;
+}
+.thirdtyThreePercent
+{
+    width: 32.9%;
+}
+.onehundredPercent
+{
+    width: 99.9%;
+}
+.btnDetail
+{
+    background: url(../images/btn-original.png) repeat-x;    
+    height: 25px;
+    border: none;
+    border-right: 1px solid #ccc;
+}
+.btnDetail:hover
+{
+    background: url(../images/btn-active.png) repeat-x;
+    height: 25px;
+    border: none;
+    border-right: 1px solid #ccc;
+    color: #FFF;
+}
+.detail2
+{
+    text-decoration: none;
+    color: #000;
+}
+.detail2:hover
+{
+    text-decoration: none;
+    color: #2489CE;
+}
+.percent50
+{
+    width: 50%;
 }

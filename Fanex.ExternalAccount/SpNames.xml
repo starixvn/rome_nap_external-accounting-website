@@ -69,7 +69,9 @@
 	</Function>
   <Function Name="Left Panel">
     <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="archive" Plain="0" />
-  </Function>
+    <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="archive" Plain="0" />
+</Function>
   <Function Name="Customer List">
 		<Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="checkin" Plain="0" />
 		<Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="checkin" Plain="0" />

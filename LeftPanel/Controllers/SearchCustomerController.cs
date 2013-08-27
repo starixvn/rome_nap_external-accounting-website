@@ -16,6 +16,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Core.Base;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// Controller for left panel menu.    
@@ -31,6 +32,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <returns>View contains customer model.</returns>
         public ActionResult Index(string id = null, string uplineId = "ACCDDD")
         {
+            ViewBag.UserId = CurrentSession.UserId;
+
             var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId);
 
             return this.View("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);

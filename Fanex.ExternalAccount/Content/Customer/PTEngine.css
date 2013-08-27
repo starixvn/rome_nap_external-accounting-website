@@ -462,6 +462,7 @@ input[type="text"], input[type="password"]
 .BettingLimitTextBox4
 {
 	width: 186px;
+	vertical-align: top;
 }
 .BettingLimitTextBox9
 {
@@ -471,6 +472,7 @@ input[type="text"], input[type="password"]
 .BettingLimitTextBox5
 {
 	width: 137px;
+	vertical-align: top;
 }
 .BettingLimitItem2
 {
@@ -499,12 +501,12 @@ input[type="text"], input[type="password"]
 	font-size: 11px !important;
 	text-indent: 1px !important;
 }
-.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem, .BettingLimitItem4, .BettingLimitItem5
 {
 	/*height: 24px;*/
 	background-color: #FFF;
-	border-left: 1px solid #CCC;
-	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC !important;
+	border-top: 1px solid #CCC !important;
 }
 .BettingLimitItem92
 {

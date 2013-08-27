@@ -258,7 +258,7 @@ a
 	border-width: 1px;
 	width: 147px;
 }
-#btnSearch, .btnSearch
+#btnSearch, .btnSearch,#btnSearchLeftPanel
 {
 	background: url(../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;

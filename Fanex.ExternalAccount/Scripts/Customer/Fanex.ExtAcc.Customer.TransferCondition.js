@@ -101,7 +101,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
             var data = {
                 transferOption: str,
-                custId: Fanex.ExtAcc.Customer.UserId
+                custId: custId
             };
 
             Fanex.ExtAcc.BlockUI();

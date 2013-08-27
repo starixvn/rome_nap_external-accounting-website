@@ -7,50 +7,57 @@
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore
     });
+
+    var userId = ViewBag.UserId;
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <div id="ng-app" ng-app="leftPanelApp" class="hidden">
-    <div id="leftPanel" class="clearBoth" ng-controller="LeftPanelController">
+    <div id="leftPanel" class="clearBoth" ng-init="Init()" ng-controller="LeftPanelController">
         <div ng-controller="PersonalInfoController" ng-init="model.hide = model != null" ng-hide="model.hide" class="red">There is no information.</div>        
         <div id="usernameInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
-            <div class="clearBoth" ng-repeat="person in personalInfo.downlines">
-                <div class="title">{{person.text}}</div>
-                <div class="floatLeft">{{person.value}}</div>
-            </div>
+            <div class="headerLevel" ng-repeat="person in personalInfo.downlines">
+                <div class="title bold">{{person.text}}</div>
+                <div class="floatLeft bold detail" onclick="parent.Fanex.ExtAcc.ViewUser('{{person.value}}')">{{person.value}}</div>                
+                <div class="floatRight home" ng-click="Login()">&nbsp;&nbsp;</div>
+            </div>            
         </div>
         <div id="customerInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
-            <div class="clearBoth bold currentUser">
-                {{personalInfo.currentLevel.value}}
-            </div>
+            <div class="bold currentUser headerLevel">
+                <div class="floatLeft bold"><a class="detail2" href="javascript:;" onclick="parent.Fanex.ExtAcc.ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
+                <div id="personalInfo" class="floatRight userDown" ng-click="TooglePersonalInfo()">&nbsp;&nbsp;</div>
+            </div>            
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.name.text}}</div>
-                <div class="floatLeft">{{personalInfo.name.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.name.value}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.nickname.text}}</div>
-                <div class="floatLeft">{{personalInfo.nickname.value}}</div>
-            </div>
-            <div class="clearBoth">
-                <div class="title">
-                    {{personalInfo.phone.text}}</div>
-                <div class="floatLeft">{{personalInfo.phone.value}}</div>
-            </div>
-            <div class="clearBoth">
-                <div class="title">
-                    {{personalInfo.mobile.text}}</div>
-                <div class="floatLeft">{{personalInfo.mobile.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.nickname.value}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.fax.text}}</div>
-                <div class="floatLeft">{{personalInfo.fax.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.fax.value}}</div>
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.phone.text}}</div>
+                <div class="floatLeft red bold">{{personalInfo.phone.value}}</div>
+            </div>
+            <div class="clearBoth">
+                <div class="title">
+                    {{personalInfo.mobile.text}}</div>
+                <div class="floatLeft red bold">{{personalInfo.mobile.value}}</div>
             </div>
         </div>
         <div id="viewInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+            <div ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetCustomerList()">{{personalInfo.custList}}</div>
+            <div class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetStatementList({{personalInfo.custId.value}})">Statement</div>
+            <div ng-hide="{{personalInfo.roleId.value != 2}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetBalance({{personalInfo.custId.value}})">Balance</div>
         </div>        
         <div id="balanceInfo" class="clearBoth" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <ul class="tabs">
@@ -73,10 +80,12 @@
                     <div class="floatLeftBalance R"><span class="blue">{{status.totalActive}}</span>/<span class="red">{{status.totalClosed}}</span>/{{status.totalSuspended}}</div>
                 </div>    
             </div>
-            <div class="auto" id="tabs-2" ng-controller="DownlineListController" ng-hide="{{model.length == 0}}">
-                <div class="downlineTitle" ng-repeat="user in model">
-                    {{user.text}}
-                </div>    
+            <div class="auto" id="tabs-2" ng-controller="DownlineListController">
+                <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
+                    <a class="detail2" href="javascript:;"  onclick="parent.Fanex.ExtAcc.ViewUser('{{user.text}}')">{{user.text}}</a>
+                </div>
+                <span ng-hide="{{model.length < 100}}">Page&nbsp;</span>
+                <div class="C" ng-hide="{{model.length > 0}}">No downline list</div>
             </div>
         </div>
         <div id="settingInfo" style="border:none" class="clearBoth" ng-controller="SettingController" ng-hide="{{model==null}}">
@@ -87,21 +96,65 @@
                 <li><a href="#tab-4">Online List</a></li>
             </ul>
             <div id="tab-1">
+                <div class="floatLeft" ng-repeat="editItem in setting.editItems">
+                    <div class="settingEdit" title="{{editItem.tooltip}}">{{editItem.text}}</div>
+                </div>
                 <div class="floatLeft" ng-repeat="enableItem in setting.enableItems">
-                    <div class="settingTitle">{{enableItem.text}}</div>
+                    <div class="settingTitle" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
                     <div class="floatLeft"><input type="checkbox" ng-model="enableItem.value" /></div>
                 </div>    
             </div>
             <div class="auto" id="tab-2" ng-controller="SettingController">
-                <div class="title">
-                    <a ng-click="AddNew()" href="javascript:;">Add New</a>
+                <div class="detail icn-right" ng-repeat="item in setting.details">
+                    <a ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
                 </div>    
             </div>
-            <div class="auto" id="tab-3" ng-controller="LoginController">
-                <div class="clearBoth dashed" ng-repeat="login in loginInfo">
-                    <div class="balanceTitle bold">{{login.text}}</div>
-                    <div class="floatLeftBalance normal R">{{login.value}}</div>
-                </div>    
+            <div class="auto" id="tab-3" ng-controller="LoginController" ng-init="lenth = loginInfo.lenth">
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[0].text}}</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[0].value}}</div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[1].text}}</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[1].value}}</div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[2].text}}</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[2].value}}</div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold" title="{{loginInfo[3].tooltip}}">{{loginInfo[3].text}}</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[3].value}}</div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[4].text}}
+                        [<a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId={{model.personalInfo.custId.value}}'), 'Reset Password: <font color=\'#6dcff6\'>{{model.personalInfo.currentLevel.value}}</font>', 415, 190)">
+                                Change
+                         </a>]
+                    </div>
+                    <div class="floatLeftBalance normal R">
+                            {{loginInfo[4].value}}
+                    </div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[5].text}}</div>
+                    <div class="floatLeftBalance normal R detail">
+                        <a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Customer.ShowIpInfo('{{loginInfo[5].value}}')">
+                            {{loginInfo[5].value}}
+                        </a>
+                    </div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[6].text}}
+                        [<a href="javascript:;" onclick="javascript:;">
+                                Change
+                            </a>]</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[6].value}}</div>
+                </div>
+                <div class="clearBoth" ng-hide="{{length == 7}}">
+                    <div class="balanceTitle bold">{{loginInfo[7].text}}</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[7].value}}</div>
+                </div>
             </div>
             <div class="auto" id="tab-4">
                 <div class="title">
@@ -118,6 +171,7 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
 <script type="text/javascript">
+    var userId = parseInt('@userId');
     var model = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@customerModel'));
     $(document).ready(function () {
         if (model) {

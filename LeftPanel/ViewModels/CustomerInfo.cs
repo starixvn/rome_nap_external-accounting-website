@@ -24,7 +24,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             this.BetList = new BetList();
             this.CustomerList = new CustomerList();
             this.DownlineList = new DownlineList();
-            this.Login = new Login();
+            this.Login = new List<ObjectInfo>();
             this.OnlineList = new OnlineList();
             this.PersonalInfo = new PersonalInfo();
             this.Setting = new Setting();
@@ -45,7 +45,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 
         public Setting Setting { get; set; }
 
-        public Login Login { get; set; }
+        public List<ObjectInfo> Login { get; set; }
 
         public OnlineList OnlineList { get; set; }
     }
@@ -184,11 +184,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         {
             this.EnableItems = new List<ObjectInfo>();
             this.EditItems = new List<ObjectInfo>();
+            this.SyncItems = new List<ObjectInfo>();
+            this.Details = new List<ObjectInfo>();
         }
 
         public List<ObjectInfo> EnableItems { get; set; }
 
         public List<ObjectInfo> EditItems { get; set; }
+
+        public List<ObjectInfo> SyncItems { get; set; }
+
+        public List<ObjectInfo> Details { get; set; }
     }
         
     public class Login : OnlineInfo
@@ -227,6 +233,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
     {
         public ObjectInfo CustId { get; set; }
 
+        public ObjectInfo UplineId { get; set; }
+
         public ObjectInfo RoleId { get; set; }
 
         public ObjectInfo UplineRoleId { get; set; }
@@ -234,6 +242,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 
     public class ObjectInfo
     {
+        /// <summary>
+        /// Gets or sets key of a field
+        /// </summary>
+        public string Key { get; set; }
+
         /// <summary>
         /// Gets or sets value for the title of a field
         /// </summary>

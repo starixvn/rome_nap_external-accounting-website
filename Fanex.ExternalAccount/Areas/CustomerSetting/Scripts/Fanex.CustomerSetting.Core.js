@@ -1,11 +1,11 @@
 ﻿/// <reference path="_references.js" />
 
 if (typeof $ == 'undefined' || typeof jQuery == 'undefined') {
-    //alert("Require jQuery.js");
+    alert("Require jQuery.js");
 }
 
 if (typeof $.blockUI == 'undefined') {
-    //alert("Require jquery.blockUI.js");
+    alert("Require jquery.blockUI.js");
 }
 
 /*
@@ -560,34 +560,54 @@ Fanex.CustomerSetting.Core = {
         return src;
     },
 
-    CheckNumber: function (evt, ele) {
-        if (!evt) return false;
+    CheckNumber: function (event, ele, isFloat) {
+        var value = ele.value;
 
-        ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
+        var evt = event ? event : window.event; // Fix for IE7
+        if (evt.keyCode === 9) return true; // Ignore TAB key
+        var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
+        var value = obj.value;
 
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        var ret = true;
+        if (value == '') return true;
 
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            ret = false;
+        var num;
+        var dotPosition = 0;
+        var afterDot;
+        var caretPosition = getCaret(obj);
+
+        num = value.toString().replace(/\$|\,/g, '');
+        dotPosition = num.indexOf(".");
+
+        if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+            afterDot = num.substring(dotPosition + 1, num.length).replace(/[^0-9]/g, '');
+            num = num.substring(0, dotPosition);
         }
 
-        if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
-            while (ele.value.indexOf('0') == 0 && ele.value.length > 1) {
-                ele.value = ele.value.substring(1);
-                ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
-            }
+        num = num.formatFloat();
+
+        if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+            eval(obj).value = num + "." + afterDot;
+            num = obj.value;
+        } else {
+            eval(obj).value = num;
         }
-        else if (ele && ele.value.length == 0) {
-            ele.value = '0';
+        if (num.length > value.length) {
+            caretPosition = caretPosition + 1;
         }
 
-        return ret;
+        if (evt.keyCode == 8 && num.substring(caretPosition - 1, caretPosition) == ',') {
+            setCaret(obj, caretPosition - 1);
+        }
+        else {
+            setCaret(obj, caretPosition);
+        }
+
+        return true;
     },
 
     ProcessDisplayMultiple: function (length, usernames) {
         $('#arrowUpDown').bind('click', function () {
-            Fanex.CustomerSetting.Core.ToggleUsernames(length, usernames);
+            Fanex.CustomerSetting.Core.ToggleUsernames(length);
         });
 
         $('#names').css('display', 'block');
@@ -600,7 +620,7 @@ Fanex.CustomerSetting.Core = {
         else {
             $('#names').css('cursor', 'pointer');
             $('#names').bind('click', function () {
-                Fanex.CustomerSetting.Core.ToggleUsernames(length, usernames);
+                Fanex.CustomerSetting.Core.ToggleUsernames(length);
             });
             $('#names').html(usernames.substring(0, (length ? length : 98)) + '...');
             $('#names').attr('title', usernames.substring(0, usernames.length - 2));
@@ -620,10 +640,61 @@ Fanex.CustomerSetting.Core = {
             $('#names').attr('title', usernames.substring(0, usernames.length - 2));
         }
     }
-}
+};
+
+String.prototype.replaceAll = function (args, replace) {
+    var src = this;
+
+    while (src.indexOf(args) != -1) {
+        src = src.replace(args, replace);
+    }
+
+    return src;
+};
+
+Number.prototype.replaceAll = function (args, replace) {
+    return this;
+};
+
+function setCaret(oField, iCaretPos) {
+    // IE Support
+    if (document.selection) {
+        oField.focus();
+        // Create empty selection range
+        var oSel = document.selection.createRange();
+        // Move selection start and end to desired position
+        oSel.moveStart('character', iCaretPos);
+        oSel.moveEnd('character', iCaretPos - oField.value.length);
+        oSel.select();
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0') {
+        oField.selectionStart = iCaretPos;
+        oField.selectionEnd = iCaretPos;
+        oField.focus();
+    }
+};
+
+function getCaret(oField) {
+    var iCaretPos = 0;
+    // IE Support
+    if (document.selection) {
+        oField.focus();
+        // To get cursor position, get empty selection range
+        var oSel = document.selection.createRange();
+        // Move selection start to 0 position
+        oSel.moveStart('character', -oField.value.length);
+        iCaretPos = oSel.text.length;
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0')
+        iCaretPos = oField.selectionStart;
+    // Return results
+    return (iCaretPos);
+};
 
 String.prototype.formatNumber = function () {
-    var number = this;
+    var number = this.replaceAll(',', '');
     number += '';
 
     x = number.split('.');
@@ -637,7 +708,7 @@ String.prototype.formatNumber = function () {
 }
 
 Number.prototype.formatNumber = function () {
-    var number = this;
+    var number = this.replaceAll(',', '');
     number += '';
 
     x = number.split('.');
@@ -649,6 +720,26 @@ Number.prototype.formatNumber = function () {
     }
     return x1 + x2;
 }
+
+String.prototype.formatFloat = function () {
+    var number = this;
+
+    if (number == '') return 0;
+    var sign;
+    if (isNaN(number)) {
+        number = String.Empty;
+    }
+
+    sign = (number == (number = Math.abs(number)));
+    number = Math.floor(number * 100 + 0.50000000001);
+    number = Math.floor(number / 100).toString();
+
+    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3); i++) {
+        number = number.substring(0, number.length - (4 * i + 3)) + ',' + number.substring(number.length - (4 * i + 3));
+    }
+
+    return (((sign) ? '' : '-') + number);
+};
 
 String.prototype.toFixed = function (precision, optionals) {
     var value = parseFloat(this);

@@ -426,6 +426,8 @@ if (typeof (Fanex) != 'undefined' && typeof (Fanex.PTEngine) != 'undefined') { /
     };
 }
 
+extendPTEngine();
+
 function extendPTEngine() {
     Validators.utils.findPos = function (obj) {
         var curleft = curtop = 0;
@@ -444,8 +446,14 @@ function extendPTEngine() {
             curtop -= parent.scrollTop;
         }
 
+        console.log('aaaa22');
+
         return [curleft, curtop];
-    }
+    };
+
+    Validators.utils.findPosRelativeToViewport = function (obj) {
+        return Validators.utils.findPos(obj);
+    };
 }
 
 //RegisterStartUp(function () {

@@ -23,7 +23,7 @@ Fanex.ExtAcc.Customer = {
     Agent: 2,
     Member: 1,
 
-    CurrentLevel: 4,
+    CurrentLevel: 5,
     CurrentPage: 0,
     ItemsPerPage: 50,
 
@@ -551,12 +551,18 @@ Fanex.ExtAcc.Customer = {
                 Fanex.ExtAcc.UnBlockUI();
             }
             else {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                if (document.getElementById('customerListGrid')) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Form.Close();
+                    }, 2000);
+                }
+                else {
                     Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close();
-                }, 2000);
+                }
             }
         })
         .error(function (data) {
@@ -1421,7 +1427,7 @@ Fanex.ExtAcc.Customer = {
 
         this.Render(options);
 
-        $('#mainGrid').css('visibility', 'visible');
+        $('#customerListGrid').css('visibility', 'visible');
 
         $('#breadcrumbs').empty();
 
@@ -1523,7 +1529,7 @@ Fanex.ExtAcc.Customer = {
 
         this.Render(options);
 
-        $('#mainGrid').css('visibility', 'visible');
+        $('#customerListGrid').css('visibility', 'visible');
 
         $('#breadcrumbs').empty();
 
@@ -1630,7 +1636,7 @@ Fanex.ExtAcc.Customer = {
 
         this.Render(options);
 
-        $('#mainGrid').css('visibility', 'visible');
+        $('#customerListGrid').css('visibility', 'visible');
 
         $('#breadcrumbs').empty();
 
@@ -1740,7 +1746,7 @@ Fanex.ExtAcc.Customer = {
 
         this.Render(options);
 
-        $('#mainGrid').css('visibility', 'visible');
+        $('#customerListGrid').css('visibility', 'visible');
 
         $('#breadcrumbs').empty();
 
@@ -2243,7 +2249,7 @@ Fanex.ExtAcc.Customer = {
         }, 1000);
     }
 }
-
+/*
 $(document).ready(function () {
     Fanex.ExtAcc.Customer.Init();
-})
+})*/

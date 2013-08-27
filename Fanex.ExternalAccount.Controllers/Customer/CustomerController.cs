@@ -461,6 +461,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
+            ViewBag.CustId = custId;
             var model = this.masterService.GetTransferOption(custId);
 
             return this.PartialViewBase(model);

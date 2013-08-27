@@ -1,6 +1,10 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.DTO.Customer
 @model Transfer
+@{
+    var custId = ViewBag.CustId;
+}
+<link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
 <div style="padding-top: 10px;">
     <table width="100%" border="0" cellpadding="2">
         <tr class="rowTransferCondition headerTransferCondition">
@@ -55,3 +59,6 @@
     </table>
 </div>
 <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.TransferCondition.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var custId = parseInt('@custId');
+</script>

@@ -250,6 +250,37 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        public ActionResult EditPTSuperGet(int custId, int parentId)
+        {
+            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var context = new RequestContext()
+            {
+                AdminId = CurrentSession.UserId,
+                TargetCustId = custId,
+                CustId = parentId,
+                FormId = FormType.EditPT,
+                IP = CurrentContext.Ip4Address,
+                Language = "En",
+                LangKey = "E",
+                TargetRoleId = (int)CustomerRole.Super,
+                SiteName = SiteName,
+                SubAccId = 0,
+                UserName = CurrentSession.UserName.ToUpper()
+            };
+
+            ICustomer customer = new Customer();
+            customer.PtSetting = new PTGrid();
+
+            customer = ptSetting.GetCustomerForCompanyEditSuper(context);
+
+            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
+            });
+        }
+
+        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
             var ptSetting = new Fanex.PTEngine.Services.CustomerService();
