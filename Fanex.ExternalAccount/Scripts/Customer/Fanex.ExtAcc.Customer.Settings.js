@@ -132,10 +132,6 @@ Fanex.ExtAcc.Customer.Settings = {
 
         var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId);
 
-        console.log(url);
-        console.log($('#casinoFrame'));
-        console.log(document.getElementById('casinoFrame'));
-
         $('#tabs-4').height($('#leftFrame').height() - 30);
         $('#tabs-4').css('display', 'block');
         $('#casinoFrame').attr('src', url);

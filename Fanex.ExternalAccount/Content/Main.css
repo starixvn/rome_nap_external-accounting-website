@@ -1490,3 +1490,6 @@ textarea
     border: none;
     padding: 2px;
 }
+.ui-state-active a, .ui-tabs-active a {
+    color: #2489CE !important;
+}
