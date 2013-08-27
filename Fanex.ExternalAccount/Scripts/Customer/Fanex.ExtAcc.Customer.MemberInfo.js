@@ -446,13 +446,27 @@ function extendPTEngine() {
             curtop -= parent.scrollTop;
         }
 
-        console.log('aaaa22');
-
         return [curleft, curtop];
     };
 
     Validators.utils.findPosRelativeToViewport = function (obj) {
-        return Validators.utils.findPos(obj);
+        var curleft = curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curleft += obj.offsetLeft;
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+        }
+
+        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
+        if (document.getElementById('contentSplitter')) {
+            var parent = document.getElementById('contentSplitter');
+
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        }
+
+        return [curleft, curtop];
     };
 }
 
