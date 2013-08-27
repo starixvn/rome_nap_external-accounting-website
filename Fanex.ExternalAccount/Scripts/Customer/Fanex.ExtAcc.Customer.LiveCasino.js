@@ -12,10 +12,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     Error: '',
 
     Init: function () {
-        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master || (window.CurrentLevel && window.CurrentLevel == 3)) {
             this.GetMasterSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent || (window.CurrentLevel && window.CurrentLevel == 2)) {
             this.GetAgentSetting();
         }
         else {

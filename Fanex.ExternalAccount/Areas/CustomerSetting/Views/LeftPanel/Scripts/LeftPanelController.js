@@ -124,6 +124,37 @@ function LeftPanelController($scope) {
                 break;
         }
     };
+
+    $scope.LiveCasino = function () {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var uplineId = $scope.model.personalInfo.uplineId.value;
+        var url = '';
+        var title = $scope.model.personalInfo.currentLevel.value;
+
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = roleId;
+        parent.Fanex.ExtAcc.Customer.UserId = parent.window.id = custId;
+        parent.window.uplineId = parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
+        parent.window.CurrentLevel = roleId;
+
+        switch (roleId) {
+            case 3:
+                url = parent.resolveClientUrl('LiveCasino/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                break;
+            case 2:
+                url = parent.resolveClientUrl('LiveCasino/EditAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                break;
+            case 1:
+                url = parent.resolveClientUrl('LiveCasino/EditMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                break;
+            default:
+                break;
+        }
+
+        if (url != '') {
+            parent.Fanex.ExtAcc.LoadMainFrame(url);
+        }
+    };
 };
 
 function PersonalInfoController($scope) {
