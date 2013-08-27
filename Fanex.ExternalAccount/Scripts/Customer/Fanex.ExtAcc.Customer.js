@@ -2165,16 +2165,17 @@ Fanex.ExtAcc.Customer = {
     },
 
     ProcessConfirmClosedStatus: function (id) {
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
+        if (!window.CurrentLevel || window.CurrentLevel != 4) {
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
 
-            Fanex.ExtAcc.Customer.Closed = document.getElementById(id ? id : 'closed').checked;
+                Fanex.ExtAcc.Customer.Closed = document.getElementById(id ? id : 'closed').checked;
 
-            $(id ? '#' + id : '#closed').bind('click', function () {
-                var checkbox = this;
+                $(id ? '#' + id : '#closed').bind('click', function () {
+                    var checkbox = this;
 
-                if (this.checked && !Fanex.ExtAcc.Customer.Closed) {
-                    Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    if (this.checked && !Fanex.ExtAcc.Customer.Closed) {
+                        Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
                         Fanex.ExtAcc.Customer.MessageClosed,
                         400,
                         150,
@@ -2187,9 +2188,9 @@ Fanex.ExtAcc.Customer = {
                             Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
                         },
                         'confirmStatus');
-                }
-                else if (!this.checked && Fanex.ExtAcc.Customer.Closed) {
-                    Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    }
+                    else if (!this.checked && Fanex.ExtAcc.Customer.Closed) {
+                        Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
                         Fanex.ExtAcc.Customer.MessageUnClosed,
                         400,
                         150,
@@ -2202,21 +2203,23 @@ Fanex.ExtAcc.Customer = {
                             Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
                         },
                         'confirmStatus');
-                }
-            });
-        }, 1000);
+                    }
+                });
+            }, 1000);
+        }
     },
 
     ProcessConfirmSuspendedStatus: function (id) {
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
-            Fanex.ExtAcc.Customer.Suspended = document.getElementById(id ? id : 'suspended').checked;
+        if (!window.CurrentLevel || window.CurrentLevel != 4) {
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                Fanex.ExtAcc.Customer.Suspended = document.getElementById(id ? id : 'suspended').checked;
 
-            $(id ? '#' + id : '#suspended').bind('click', function () {
-                var checkbox = this;
+                $(id ? '#' + id : '#suspended').bind('click', function () {
+                    var checkbox = this;
 
-                if (this.checked && !Fanex.ExtAcc.Customer.Suspended) {
-                    Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    if (this.checked && !Fanex.ExtAcc.Customer.Suspended) {
+                        Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
                         Fanex.ExtAcc.Customer.MessageSuspended,
                         400,
                         180,
@@ -2229,9 +2232,9 @@ Fanex.ExtAcc.Customer = {
                             Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
                         },
                         'confirmStatus');
-                }
-                else if (!this.checked && Fanex.ExtAcc.Customer.Suspended) {
-                    Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                    }
+                    else if (!this.checked && Fanex.ExtAcc.Customer.Suspended) {
+                        Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
                         Fanex.ExtAcc.Customer.MessageUnSuspended,
                         400,
                         180,
@@ -2244,9 +2247,10 @@ Fanex.ExtAcc.Customer = {
                             Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
                         },
                         'confirmStatus');
-                }
-            });
-        }, 1000);
+                    }
+                });
+            }, 1000);
+        }
     }
 }
 /*
