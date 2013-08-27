@@ -128,11 +128,12 @@ function LeftPanelController($scope) {
     $scope.LiveCasino = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = $scope.model.personalInfo.uplineId.value;
+        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
         var url = '';
         var title = $scope.model.personalInfo.currentLevel.value;
 
         parent.Fanex.ExtAcc.Customer.CurrentLevel = roleId;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = parent.window.id = custId;
         parent.window.uplineId = parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
         parent.window.CurrentLevel = roleId;
