@@ -26,7 +26,7 @@ Fanex.ExtAcc.Group = {
                         CustomCellRender: function (cell) {
                             var func = "javascript:Fanex.ExtAcc.Group.ShowEdit(" + cell.Value.GroupID + ", '" + titles.EditGroup + "')";
 
-                            return '<div class="editInfo"><a href="' + func + '">' + cell.Value.GroupName + '</a></div>';
+                            return '<div class="edit2"><a href="' + func + '">' + cell.Value.GroupName + '</a></div>';
                         }
                     },
                     { HeaderText: 'No. of Users', Name: 'NoUsers', Width: 100, CellAlign: 'center',

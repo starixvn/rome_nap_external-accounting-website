@@ -16,7 +16,7 @@ Fanex.ExtAcc.User = {
     options: null,
 
     Init: function () {
-        $('#mainGrid').css('visibility', 'hidden');
+        //$('#mainGrid').css('visibility', 'hidden');
         $this = this;
 
         $("#GroupIDs").combobox({

@@ -223,7 +223,7 @@
 	vertical-align: middle;
 	cursor: pointer;
 }
-td .editInfo a, td div a
+td .edit2 a, td div a
 {
 	color: #2489CE !important;
 }

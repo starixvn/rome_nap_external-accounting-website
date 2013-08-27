@@ -22,25 +22,6 @@
             <div style="float: left; margin-left: 20px; margin-top: 5px">
                 @ViewLang.Group
             </div>
-            @*<div class="btn-group btn-small">
-              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                @ViewLang.All
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                @{
-                    var CurrentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
-                }
-                @if (CurrentSession.IsITAdmin)
-                {
-                    <li><a href="#">@ViewLang.All</a></li>
-                }
-                @foreach (Group item in ViewBag.GroupList)
-                {
-                    <li><a href="#">@item.GroupName</a></li>
-                }
-              </ul>
-            </div>*@
             <div id="userGroup" style="float: left; margin-left: 5px">
                 <select id="GroupIDs" class="usernameInput group">
                     @{
@@ -76,8 +57,8 @@
         </div>
     </div>
     <div id="mainGrid" style="margin: 0px 3px 0px 3px">
-        <div id="jqgrid" class="removeRadius freegrid content-grid">
-        </div>
+        <div style="position: absolute" id="jqgrid" class="removeRadius freegrid content-grid">
+        </div>    
         <div id="msgNoinfo">
             There is no data.</div>
     </div>
