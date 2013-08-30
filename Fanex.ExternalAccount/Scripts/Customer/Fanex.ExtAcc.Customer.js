@@ -2165,7 +2165,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ProcessConfirmClosedStatus: function (id) {
-        if (!window.CurrentLevel || window.CurrentLevel != 4) {
+        if (this.CurrentLevel != 4) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
 
@@ -2210,7 +2210,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ProcessConfirmSuspendedStatus: function (id) {
-        if (!window.CurrentLevel || window.CurrentLevel != 4) {
+        if (this.CurrentLevel != 4) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.Customer.Suspended = document.getElementById(id ? id : 'suspended').checked;

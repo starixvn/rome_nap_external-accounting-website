@@ -83,15 +83,147 @@ function LeftPanelController($scope) {
     };
 
     $scope.PT = function () {
-        var title = $scope.model.personalInfo.currentLevel.value;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = $scope.model.personalInfo.roleId.value == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.MessageClosed = 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!';
+        parent.Fanex.ExtAcc.Customer.MessageUnClosed = 'Are you sure you want to change Close status for this customer?';
+        parent.Fanex.ExtAcc.Customer.MessageSuspended = 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!';
+        parent.Fanex.ExtAcc.Customer.MessageUnSuspended = 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.';
+        
+        parent.Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus = function (id) {
+            if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
 
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 5;
-        parent.window.CurrentLevel = $scope.model.personalInfo.roleId.value;
-        parent.window.id = $scope.model.personalInfo.custId.value;
-        parent.window.uplineId = $scope.model.personalInfo.roleId.value == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+                    parent.Fanex.ExtAcc.Customer.Closed = parent.document.getElementById(id ? id : 'closed').checked;
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Sportsbook/EditMultiplePT'))//, 'View Super Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 894, 700, false, false, 1);
-    }
+                    parent.$(id ? '#' + id : '#closed').bind('click', function () {
+                        var checkbox = this;
+
+                        if (this.checked && !parent.Fanex.ExtAcc.Customer.Closed) {
+                            parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                            parent.Fanex.ExtAcc.Customer.MessageClosed,
+                            400,
+                            150,
+                            false,
+                            function () {
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            function () {
+                                checkbox.checked = false;
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            'confirmStatus');
+                        }
+                        else if (!this.checked && parent.Fanex.ExtAcc.Customer.Closed) {
+                            parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                            parent.Fanex.ExtAcc.Customer.MessageUnClosed,
+                            400,
+                            150,
+                            false,
+                            function () {
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            function () {
+                                checkbox.checked = true;
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            'confirmStatus');
+                        }
+                    });
+                }, 1000);
+            }
+        };
+
+        parent.Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus = function (id) {
+            if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    parent.Fanex.ExtAcc.Customer.Suspended = parent.document.getElementById(id ? id : 'suspended').checked;
+
+                    parent.$(id ? '#' + id : '#suspended').bind('click', function () {
+                        var checkbox = this;
+
+                        if (this.checked && !parent.Fanex.ExtAcc.Customer.Suspended) {
+                            parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                            parent.Fanex.ExtAcc.Customer.MessageSuspended,
+                            400,
+                            180,
+                            false,
+                            function () {
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            function () {
+                                checkbox.checked = false;
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            'confirmStatus');
+                        }
+                        else if (!this.checked && parent.Fanex.ExtAcc.Customer.Suspended) {
+                            parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
+                            parent.Fanex.ExtAcc.Customer.MessageUnSuspended,
+                            400,
+                            180,
+                            false,
+                            function () {
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            function () {
+                                checkbox.checked = true;
+                                parent.Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
+                            },
+                            'confirmStatus');
+                        }
+                    });
+                }, 1000);
+            }
+        };
+
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Sportsbook/EditMultiplePT'));
+
+        parent.Fanex.ExtAcc.Customer.Init = function () {
+            //Prevent loading group name
+            var timeout = parent.window.setInterval(function () {
+                if (parent.$.trim(parent.$('#selectedGroupName').html()) != '') {
+                    parent.Fanex.ExtAcc.Customer.Search(true);
+                    parent.clearInterval(timeout);
+                }
+            }, 100);
+
+            parent.$('#exporttoexcel').click(function () {
+                var data = parent.Fanex.ExtAcc.Customer.GetParams();
+
+                var params = "groupName=" + data.groupName
+                    + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
+                    + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
+                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
+                parent.document.location.href = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
+            });
+
+            parent.$('#txtUserName').keypress(function (e) {
+                if (typeof e == 'undefined') e = window.event;
+                var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
+                if (key == 13) {
+                    parent.Fanex.ExtAcc.Customer.Search(false);
+
+                    return true;
+                } else {
+                    return true;
+                }
+            });
+
+            parent.$('#txtUserName').keyup(function (e) {
+                if (parent.$('#txtUserName').val().length > 1) {
+                    parent.Fanex.ExtAcc.InitSuggestion();
+                }
+            });
+
+            parent.Fanex.ExtAcc.InitSuggestion();
+        };
+    };
 
     $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;

@@ -21,7 +21,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
 
-        if (this.IsFullInfo || !window.CurrentLevel || this.IsFullInfo || Fanex.ExtAcc.Customer.CurrentLevel == 5) {
+        if (this.IsFullInfo) {
             var interval = setInterval(function () {
                 if (Fanex.ExtAcc.Customer.PTSetting.customer) {
                     clearInterval(interval);
@@ -33,7 +33,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     if (!Fanex.ExtAcc.Customer.isSuperEditMember && !Fanex.ExtAcc.Customer.isMasterEditMember) {
                         var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
 
-                        if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member || window.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
+                        if (Fanex.ExtAcc.Customer.CurrentLevel != 1) {
                             Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                             Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
                             Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
@@ -63,29 +63,22 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }, 100);
         }
 
-        if (window.CurrentLevel && (window.CurrentLevel == 1 || window.CurrentLevel == 2 || window.CurrentLevel == 3)) {
-            this.IsFullInfo = true;
-            this.IsMultiple = false;
-        }
-
-        if (window.CurrentLevel && window.CurrentLevel == 4) {
-            this.IsFullInfo = true;
-            this.IsMultiple = false;
-
-            $('#masterSection').remove();
-            $('#agentSection').remove();
-            $('#agentSection2').remove();
-            $('#agentSection3').remove();
-
-            $('#memberSection').remove();
-            $('#memberSection2').remove();
-            $('#memberSection3').remove();
-
-            Fanex.ExtAcc.Customer.PTSetting.GetSuperPTSetting();
-        }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master || (window.CurrentLevel && window.CurrentLevel == 3)) {
+        if (Fanex.ExtAcc.Customer.CurrentLevel == 4) {
             if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                $('#superSection').remove();
+                $('#masterSection').remove();
+                $('#agentSection').remove();
+                $('#agentSection2').remove();
+                $('#agentSection3').remove();
+
+                $('#memberSection').remove();
+                $('#memberSection2').remove();
+                $('#memberSection3').remove();
+            }
+
+            this.GetSuperPTSetting();
+        }
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == 3) {
+            if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                 $('#agentSection').remove();
                 $('#agentSection2').remove();
                 $('#agentSection3').remove();
@@ -97,9 +90,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             this.GetMasterPTSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent || (window.CurrentLevel && window.CurrentLevel == 2)) {
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == 2) {
             if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                $('#superSection').remove();
                 $('#masterSection').remove();
                 $('#masterStatus').remove();
 
@@ -110,9 +102,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             this.GetAgentPTSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member || (window.CurrentLevel && window.CurrentLevel == 1)) {
+        else {
             if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                $('#superSection').remove();
                 $('#masterSection').remove();
                 $('#masterStatus').remove();
 
@@ -141,6 +132,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 var interval = setInterval(function () {
                     if (Fanex.ExtAcc.Customer.PTSetting.customer) {
                         clearInterval(interval);
+
                         // Generate checkboxes
                         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxStatus();
                         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxPositionTaking();
@@ -168,7 +160,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         /* Render Commission to selected*/
                         var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
 
-                        if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
+                        if (Fanex.ExtAcc.Customer.CurrentLevel != 1) {
                             Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                             Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
                             Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
@@ -197,14 +189,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             $('#statusSection').remove();
         }
 
-        if ((!this.IsMultiple && this.IsFullInfo) || (window.CurrentLevel && window.CurrentLevel != 4)) {
+        if (!this.IsMultiple && this.IsFullInfo) {
             $('#arrowUpDown').remove();
 
             Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
             Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
         }
 
-        if (this.IsMultiple && !window.CurrentLevel) {
+        if (this.IsMultiple) {
             Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
         }
     },
@@ -216,8 +208,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         var data = new Object();
 
-        data.custId = window.id;
-        data.parentId = window.uplineId;
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTSuperGet'),
@@ -232,7 +224,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
-           
+
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
 
@@ -265,8 +257,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         var data = new Object();
 
-        data.custId = window.CurrentLevel ? window.id : Fanex.ExtAcc.Customer.UserId;
-        data.parentId = window.CurrentLevel ? window.uplineId : Fanex.ExtAcc.Customer.superId;
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTMasterGet'),
@@ -377,8 +369,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.BlockUI();
 
                             var para = {
-                                custId: window.CurrentLevel ? window.id : Fanex.ExtAcc.Customer.UserId,
-                                parentId: window.CurrentLevel ? window.uplineId : Fanex.ExtAcc.Customer.superId,
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.superId,
                                 txtCustomerObject: JSON.stringify(customer).escapeHtml(),
                                 isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
                                 newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
@@ -416,8 +408,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         var data = new Object();
 
-        data.custId = window.CurrentLevel ? window.id : Fanex.ExtAcc.Customer.UserId;
-        data.parentId = window.CurrentLevel ? window.uplineId : Fanex.ExtAcc.Customer.masterId;
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTAgentGet'),
@@ -538,8 +530,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                             var text = JSON.stringify(customer).escapeHtml();
                             var para = {
-                                custId: window.CurrentLevel ? window.id : Fanex.ExtAcc.Customer.UserId,
-                                parentId: window.CurrentLevel ? window.uplineId : Fanex.ExtAcc.Customer.masterId,
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.masterId,
                                 txtCustomerObject: text,
                                 isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
                                 newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
@@ -577,8 +569,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         var data = new Object();
 
-        data.custId = window.CurrentLevel ? window.id : Fanex.ExtAcc.Customer.UserId;
-        data.parentId = window.CurrentLevel ? window.uplineId : Fanex.ExtAcc.Customer.agentId;
+        data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.parentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
             url: resolveClientUrl('Sportsbook/EditPTMemberGet'),
@@ -673,8 +665,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             var text = JSON.stringify(customer).escapeHtml();
 
                             var para = {
-                                custId: window.CurrentLevel ? window.id : Fanex.ExtAcc.Customer.UserId,
-                                parentId: window.CurrentLevel ? window.uplineId : Fanex.ExtAcc.Customer.agentId,
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                parentId: Fanex.ExtAcc.Customer.agentId,
                                 txtCustomerObject: text,
                                 isUpdateAllMember: Fanex.ExtAcc.Customer.PTSetting.IsUpdateAllMember,
                                 newPositionTaking: Fanex.ExtAcc.Customer.PTSetting.NewPtTaking,
@@ -1133,23 +1125,21 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                 if (success) {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                        if (document.getElementById('customerListGrid')) {
-                            var timeout = setTimeout(function () {
-                                Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                                clearTimeout(timeout);
-                                Fanex.ExtAcc.UnBlockUI();
-
-                                Fanex.ExtAcc.Form.Close(false);
-
-                                Fanex.ExtAcc.Customer.CallBackCustomerList();
-                            }, 2000);
-                        }
-                        else {
+                        var timeout = setTimeout(function () {
+                            Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                            clearTimeout(timeout);
                             Fanex.ExtAcc.UnBlockUI();
 
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-                        }
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo && document.getElementById('customerListGrid')) {
+                                Fanex.ExtAcc.Form.Close(false);
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
+                            }
+                            else {
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                            }
+
+                        }, 2000);
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1162,9 +1152,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     clearTimeout(timeout);
                                     Fanex.ExtAcc.UnBlockUI();
 
-                                    Fanex.ExtAcc.Form.Close(false);
-
-                                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    if (document.getElementById('customerListGrid')) {
+                                        Fanex.ExtAcc.Form.Close(false);
+                                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    }
+                                    else {
+                                        $('#errMsg').css('display', 'block');
+                                        $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                                    }
                                 }, 2000);
                             }
                             else {
@@ -1280,23 +1275,21 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                 if (success) {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                        if (document.getElementById('customerListGrid')) {
-                            var timeout = setTimeout(function () {
-                                Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                                clearTimeout(timeout);
-                                Fanex.ExtAcc.UnBlockUI();
-
-                                Fanex.ExtAcc.Form.Close(false);
-
-                                Fanex.ExtAcc.Customer.CallBackCustomerList();
-                            }, 2000);
-                        }
-                        else {
+                        var timeout = setTimeout(function () {
+                            Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                            clearTimeout(timeout);
                             Fanex.ExtAcc.UnBlockUI();
 
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-                        } 
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo && document.getElementById('customerListGrid')) {
+                                Fanex.ExtAcc.Form.Close(false);
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
+                            }
+                            else {
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                            }
+
+                        }, 2000);
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1309,9 +1302,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     clearTimeout(timeout);
                                     Fanex.ExtAcc.UnBlockUI();
 
-                                    Fanex.ExtAcc.Form.Close(false);
-
-                                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    if (document.getElementById('customerListGrid')) {
+                                        Fanex.ExtAcc.Form.Close(false);
+                                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    }
+                                    else {
+                                        $('#errMsg').css('display', 'block');
+                                        $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                                    }
                                 }, 2000);
                             }
                             else {
@@ -1426,23 +1424,20 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                 if (success) {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                        if (document.getElementById('customerListGrid')) {
-                            var timeout = setTimeout(function () {
-                                Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
-                                clearTimeout(timeout);
-                                Fanex.ExtAcc.UnBlockUI();
-
-                                Fanex.ExtAcc.Form.Close(false);
-
-                                Fanex.ExtAcc.Customer.CallBackCustomerList();
-                            }, 2000);
-                        }
-                        else {
+                        var timeout = setTimeout(function () {
+                            Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
+                            clearTimeout(timeout);
                             Fanex.ExtAcc.UnBlockUI();
 
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-                        } 
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo && document.getElementById('customerListGrid')) {
+                                Fanex.ExtAcc.Form.Close(false);
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
+                            }
+                            else {
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                            }
+                        }, 2000);
                     }
                     else {
                         if (Fanex.ExtAcc.Customer.PTSetting.CustIdIndex < Fanex.ExtAcc.Customer.CustIds.split(',').length - 1) {
@@ -1453,11 +1448,16 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    Fanex.ExtAcc.UnBlockUI();
+                                    Fanex.ExtAcc.UnBlockUI();                                    
 
-                                    Fanex.ExtAcc.Form.Close(false);
-
-                                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    if (document.getElementById('customerListGrid')) {
+                                        Fanex.ExtAcc.Form.Close(false);
+                                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    }
+                                    else {
+                                        $('#errMsg').css('display', 'block');
+                                        $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                                    }
                                 }, 2000);
                             }
                             else {
@@ -1587,7 +1587,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             clearTimeout(timeout);
                             Fanex.ExtAcc.UnBlockUI();
 
-                            if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo && document.getElementById('customerListGrid')) {
                                 Fanex.ExtAcc.Customer.CallBackCustomerList();
                             }
 
@@ -1607,7 +1607,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                                     Fanex.ExtAcc.Form.Close(false);
 
-                                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    if (document.getElementById('customerListGrid'))
+                                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                                 }, 2000);
                             }
                             else {
@@ -1941,7 +1942,7 @@ function initBettingLimit() {
     var headerSoccer = items[0].header;
     var headerBasketBall = items[1].header;
     headerSoccer.onclick = function () {
-        if (document.getElementById('bettingLimit0') && document.getElementById('bettingLimit0').checked) {
+        if (document.getElementById('bettingLimit0').checked) {
             if (items[0].active === false) { // Uncheck --> Checked
                 items[0].active = true;
                 headerSoccer.className = "BettingLimitHeaderCopiedActive";
@@ -1976,7 +1977,7 @@ function initBettingLimit() {
     };
 
     headerBasketBall.onclick = function () {
-        if (document.getElementById('bettingLimit1') && document.getElementById('bettingLimit1').checked) {
+        if (document.getElementById('bettingLimit1').checked) {
             if (items[1].inactive == true) { // Re-enable current
                 items[1].inactive = false;
                 items[1].copiedItem = null; // Remove copiedItem
@@ -2038,7 +2039,7 @@ function initPositionTaking() {
     disablePositionTaking();
 
     cloneFromSoccer.onclick = function () {
-        if (document.getElementById('positionTaking0') && document.getElementById('positionTaking0').checked) {
+        if (document.getElementById('positionTaking0').checked) {
             Validators.hide();
             var count = sportTypes.length;
             cloneFromSoccer.firstChild.checked = !cloneFromSoccer.firstChild.checked;
@@ -2097,7 +2098,7 @@ function initPositionTaking() {
 
     // Basketball
     cloneFromBasketball.onclick = function () {
-        if (document.getElementById('positionTaking1') && document.getElementById('positionTaking1').checked) {
+        if (document.getElementById('positionTaking1').checked) {
             Validators.hide();
             var count = sportTypes.length;
             cloneFromBasketball.firstChild.checked = !cloneFromBasketball.firstChild.checked;
