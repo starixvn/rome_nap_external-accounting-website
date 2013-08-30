@@ -72,16 +72,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             this.IsFullInfo = true;
             this.IsMultiple = false;
 
-            if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
-                $('#masterSection').remove();
-                $('#agentSection').remove();
-                $('#agentSection2').remove();
-                $('#agentSection3').remove();
+            $('#masterSection').remove();
+            $('#agentSection').remove();
+            $('#agentSection2').remove();
+            $('#agentSection3').remove();
 
-                $('#memberSection').remove();
-                $('#memberSection2').remove();
-                $('#memberSection3').remove();
-            }
+            $('#memberSection').remove();
+            $('#memberSection2').remove();
+            $('#memberSection3').remove();
 
             Fanex.ExtAcc.Customer.PTSetting.GetSuperPTSetting();
         }
@@ -228,7 +226,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            $('.buttonPopup').remove();
+            $('#buttonPopup').remove();
+            $('#buttonPopup2').remove();
             $('#arrowUpDown').remove();
 
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;

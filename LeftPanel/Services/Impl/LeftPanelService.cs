@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     using System.Data;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
+    using Fanex.ExternalAccount.Module.LeftPanel.Extentions;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;
@@ -95,221 +96,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
                 if (roleId == this.Super)
                 {
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 1203, Text = "Total Balance" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 4521, Text = "Yesterday Balance" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 444521, Text = "Master Outstanding" });
-
-                    //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Masters A/C/S", Tooltip="Total Masters Active/Closed/Suspended" });
-                    //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 1, TotalSuspended = 0, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
-                    //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 5, TotalClosed = 0, TotalSuspended = 9, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
-                    
-                    model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" } };
-                    model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" };
-                    
-                    model.Setting = new Setting
-                    {
-                        EnableItems = new List<ObjectInfo>
-                        {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" }
-                        },
-                        EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                        },
-                        SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
-                        },
-                        Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "AddNew", Value = "Add New" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Finance", Value = "Edit Finance" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                        }
-                    };
+                    model.SuperInfo(ds);
                 }
                 else if (roleId == this.Master)
                 {
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 1203, Text = "Total Balance" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 4521, Text = "Yesterday Balance" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 444521, Text = "Agent Outstanding" });
-
-                    //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
-                    //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
-
-                    model.PersonalInfo.UplineId = new ObjectInfo { Value = (int)tableLine.Rows[0]["superID"], Text = "Super ID" };
-                    model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" };
-                    model.PersonalInfo.Downlines = new List<ObjectInfo>
-                    { 
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" } 
-                    };
-
-                    model.Setting = new Setting
-                    {
-                        EnableItems = new List<ObjectInfo>
-                        {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "AutoPT", Value = !(bool)tableCash.Rows[0]["disableAutoMPT"], Text = "Allow Auto PT" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
-                        },
-                        EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                        },
-                        SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
-                        },
-                        Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "AddNew", Value = "Add New" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Finance", Value = "Edit Finance" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                        }
-                    };
+                    model.MasterInfo(ds);
                 }
                 else if (roleId == this.Agent)
                 {
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 1203, Text = "Total Balance" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 4521, Text = "Yesterday Balance" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 444521, Text = "Member Outstanding" });
-
-                    //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
-
-                    model.PersonalInfo.UplineId = new ObjectInfo { Value = (int)tableLine.Rows[0]["masterID"], Text = "Master ID" };
-                    model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["agentName"], Text = "Agent" };
-                    model.PersonalInfo.Downlines = new List<ObjectInfo>
-                    { 
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["agentName"], Text = "Agent" }
-                    };
-
-                    model.Setting = new Setting
-                    {
-                        EnableItems = new List<ObjectInfo>
-                        {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
-                        },
-                        EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                        },
-                        SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
-                        },
-                        Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "AddNew", Value = "Add New" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Finance", Value = "Edit Finance" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                        }
-                    };
+                    model.AgentInfo(ds);
                 }
                 else
                 {
-                    model.PersonalInfo.UplineId = new ObjectInfo { Value = (int)tableLine.Rows[0]["agentID"], Text = "Agent ID" };
-                    model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["memberName"], Text = "Member" };
-                    model.PersonalInfo.Downlines = new List<ObjectInfo>
-                    { 
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["agentName"], Text = "Agent" },
-                    };
-
-                    model.Setting = new Setting
-                    {
-                        EnableItems = new List<ObjectInfo>
-                        {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
-                        },
-                        EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                        },
-                        SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
-                        },
-                        Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Finance", Value = "Edit Finance" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                        }
-                    };
+                    model.MemberInfo(ds);
                 }
 
                 return model;
@@ -339,6 +138,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public override DataRowCollection GetOnlineList(int custid)
         {
             throw new NotImplementedException();
-        }
+        }        
     }
 }
