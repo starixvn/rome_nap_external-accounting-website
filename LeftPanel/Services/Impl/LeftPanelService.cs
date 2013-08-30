@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     using System.Data;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.Extentions;
+    using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;

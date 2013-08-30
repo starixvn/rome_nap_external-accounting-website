@@ -1,23 +1,22 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CustomerModelExtentions.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="CustomerModelExtensions.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.8.30">Created</change>
+// </history>
 
-namespace Fanex.ExternalAccount.Module.LeftPanel.Extentions
+namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Utilities;
     using System.Data;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public static class CustomerModelExtentions
+    public static class CustomerModelExtensions
     {
         public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds)
         {

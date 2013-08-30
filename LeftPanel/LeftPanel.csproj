@@ -67,7 +67,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ModuleRegistrator.cs" />
     <Compile Include="Controllers\SearchCustomerController.cs" />
-    <Compile Include="Extentions\CustomerModelExtentions.cs" />
+    <Compile Include="Extensions\CustomerModelExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Impl\LeftPanelDao.cs" />
     <Compile Include="Repositories\Interface\ILeftPanelDao.cs" />
