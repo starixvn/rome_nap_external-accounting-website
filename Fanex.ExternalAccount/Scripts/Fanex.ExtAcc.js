@@ -276,9 +276,15 @@ Fanex.ExtAcc = {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
+                Fanex.ExtAcc.BlockUI();
                 var username = $.trim(this.value.encodeHtml());
+                this.value = '';
 
                 $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
+
+                $('#leftFrame').ready(function () {
+                    Fanex.ExtAcc.UnBlockUI();
+                })
 
                 return true;
             } else {
@@ -287,9 +293,15 @@ Fanex.ExtAcc = {
         });
 
         $('#btnSearchLeftPanel').bind('click', function () {
+            Fanex.ExtAcc.BlockUI();
             var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
+            $('#txtLeftPanelUserName').val('');
 
             $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
+
+            $('#leftFrame').ready(function () {
+                Fanex.ExtAcc.UnBlockUI();
+            })
         });
 
         $('#txtLeftPanelUserName').keyup(function (e) {
@@ -302,7 +314,13 @@ Fanex.ExtAcc = {
     },
 
     ViewUser: function (username) {
+        this.BlockUI();
+
         $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
+
+        $('#leftFrame').ready(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        })
     },
 
     ToggleSpliter: function () {
