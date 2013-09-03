@@ -439,12 +439,16 @@ function extendPTEngine() {
         }
 
         // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
-        if (document.getElementById('contentSplitter')) {
-            var parent = document.getElementById('contentSplitter');
-
-            curleft -= parent.scrollLeft;
-            curtop -= parent.scrollTop;
+        var parent = null;
+        if (!document.getElementById('windowPopup')) {
+            parent = document.getElementById('contentSplitter');
         }
+        else {
+            parent = document.getElementById('windowPopup');
+        }
+
+        curleft -= parent.scrollLeft;
+        curtop -= parent.scrollTop;
 
         return [curleft, curtop];
     };
@@ -459,12 +463,16 @@ function extendPTEngine() {
         }
 
         // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
-        if (document.getElementById('contentSplitter')) {
-            var parent = document.getElementById('contentSplitter');
-
-            curleft -= parent.scrollLeft;
-            curtop -= parent.scrollTop;
+        var parent = null;
+        if (!document.getElementById('windowPopup')) {
+            parent = document.getElementById('contentSplitter');
         }
+        else {
+            parent = document.getElementById('windowPopup');
+        }
+
+        curleft -= parent.scrollLeft;
+        curtop -= parent.scrollTop;
 
         return [curleft, curtop];
     };
