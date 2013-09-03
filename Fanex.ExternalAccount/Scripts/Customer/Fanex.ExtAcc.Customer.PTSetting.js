@@ -122,6 +122,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }
         }
 
+        if (Fanex.ExtAcc.Customer.CurrentLevel != 4) {
+            $('#superSection').remove();
+        }
+
         if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
             $('#custInfo').remove();
 
@@ -1448,7 +1452,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
-                                    Fanex.ExtAcc.UnBlockUI();                                    
+                                    Fanex.ExtAcc.UnBlockUI();
 
                                     if (document.getElementById('customerListGrid')) {
                                         Fanex.ExtAcc.Form.Close(false);
