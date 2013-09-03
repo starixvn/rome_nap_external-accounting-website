@@ -79,7 +79,7 @@ function LeftPanelController($scope) {
     };
 
     $scope.GetStatementList = function (custId) {
-        parent.Fanex.ExtAcc.LoadMainFrame('/Statement/Index/' + custId);
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index/' + custId));
     };
 
     $scope.PT = function () {
