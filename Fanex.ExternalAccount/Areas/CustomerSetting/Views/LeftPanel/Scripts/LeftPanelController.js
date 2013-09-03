@@ -15,7 +15,7 @@ function LeftPanelController($scope) {
                     $scope.model.personalInfo.custList = 'Agent List';
                     break;
                 case 2:
-                    $scope.model.personalInfo.custList = 'Memer List';
+                    $scope.model.personalInfo.custList = 'Member List';
                     break;
                 default:
                     break;
