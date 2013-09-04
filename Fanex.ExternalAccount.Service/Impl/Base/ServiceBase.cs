@@ -7,7 +7,7 @@
 namespace Fanex.ExternalAccount.Service.Impl.Base
 {
     using System;
-    using Fanex.ExternalAccount.Utilities;
+    using System.Web;
     using Fanex.Logging;
 
     /// <summary>
@@ -17,9 +17,18 @@ namespace Fanex.ExternalAccount.Service.Impl.Base
     {
         protected void ProcessException(Exception ex, string category = "ExternalAccount")
         {
-            LogService.Error(ex.Message, category, ex);
+            var message = ex.Message +
+                             "<br>\r\nSOURCE: " + ex.Source +
+                             "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                             "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
+                             "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                             "<br>\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "<br>\r\nTARGETSITE: " + ex.TargetSite +
+                             "<br>\r\nSTACKTRACE: " + ex.StackTrace;
 
-            if (System.Web.HttpContext.Current.IsDebuggingEnabled)
+            LogService.Error(message, category);
+
+            if (HttpContext.Current.IsDebuggingEnabled)
             {
                 throw ex;
             }
