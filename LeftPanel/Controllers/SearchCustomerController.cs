@@ -30,13 +30,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// </summary>
         /// <param name="id">Username to view.</param>
         /// <returns>View contains customer model.</returns>
-        public ActionResult Index(string id = null, string uplineId = "ACCDDD")
+        public ActionResult Index(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId);
+            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
 
             return this.View("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
+        }
+
+        [HttpPost]
+        public ActionResult ViewDownline(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        {
+            ViewBag.UserId = CurrentSession.UserId;
+
+            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
+
+            return this.JsonBase(model, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         /// <summary>

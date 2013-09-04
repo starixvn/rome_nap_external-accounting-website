@@ -642,6 +642,16 @@ Fanex.CustomerSetting.Core = {
     }
 };
 
+String.prototype.decodeHtml = function () {
+    var str = this;
+    return $("<div/>").html(str).text();
+};
+
+String.prototype.encodeHtml = function () {
+    var str = this;
+    return $('<div/>').text(str).html();
+};
+
 String.prototype.replaceAll = function (args, replace) {
     var src = this;
 

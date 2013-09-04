@@ -290,7 +290,7 @@ function LeftPanelController($scope) {
     };
 };
 
-function PersonalInfoController($scope) {
+function PersonalInfoController($scope, $http) {
     $scope.className = 'fiftyPercent';    
 
     if ($scope.$parent.model) {
@@ -308,8 +308,8 @@ function PersonalInfoController($scope) {
     }
     else {
         $scope.model = null;
-    }    
-
+    }
+    
     $scope.TooglePersonalInfo = function () {
         if ($('#personalInfo').hasClass('userDown')) {
             $('#personalInfo').removeClass('userDown');
@@ -337,14 +337,61 @@ function BalanceController($scope) {
     }
 };
 
-function DownlineListController($scope) {
+function DownlineListController($scope, $http) {
     if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.model) {
         $scope.downlines = $scope.$parent.$parent.model.downlineList;
         $scope.model = $scope.downlines.downlines;
+        $scope.pages = $scope.downlines.pages;
+        $scope.maxHeight = $scope.pages.length > 1 ? '187px' : 'auto';
     }
     else {
         $scope.model = null;
+        $scope.maxHeight = 'auto';
     }
+
+    $scope.Init = function () {
+        if ($scope.pages && $scope.pages.length > 1) {
+            for (var i = 1; i <= $scope.pages.length; i++) {
+                $('#link-' + i).removeClass('bold');
+            }
+
+            var interval = setInterval(function () {
+                if (document.getElementById('link-1')) {
+                    clearInterval(interval);
+
+                    $('#link-1').addClass('bold');
+                }
+            }, 100);
+        }
+    };
+
+    $scope.ViewUser = function (username, pageIndex) {
+        parent.Fanex.ExtAcc.BlockUI();
+
+        $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ViewDownline/' + username + '/' + parent.$('#selectedGroupName').html() + '/' + pageIndex), method: 'post', headers: { "X-Requested-With": "XMLHttpRequest"} })
+            .success(function (result) {
+                model = result;
+                $scope.$parent.$parent.model = model;
+
+                $scope.downlines = $scope.$parent.$parent.model.downlineList;
+                $scope.model = $scope.downlines.downlines;
+                $scope.pages = $scope.downlines.pages;
+
+                $('#downlines').scrollTop(0);
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    for (var i = 1; i <= $scope.pages.length; i++) {
+                        $('#link-' + i).removeClass('bold');
+                    }
+
+                    $('#link-' + $scope.downlines.currentPage).addClass('bold');
+                }, 200);
+
+                parent.Fanex.ExtAcc.UnBlockUI();
+            });
+    };
 };
 
 function SettingController($scope, $http) {
@@ -393,4 +440,23 @@ function LoginController($scope) {
     else {
         $scope.model = null;
     }
+};
+
+function OnlineListController($scope) {
+    if ($scope.$parent && $scope.$parent.model) {
+        $scope.model = $scope.$parent.model;
+        $scope.onlineList = $scope.$parent.model.onlineList.onlines;
+    }
+    else {
+        $scope.model = null;
+        $scope.onlineList = null;
+    }
+
+    $scope.Init = function () {
+        if ($scope.onlineList && $scope.onlineList.length > 0) {
+            for (var i = 0; i < $scope.onlineList.length; i++) {
+                $scope.onlineList[i].index = i + 1;
+            }
+        }
+    };
 };

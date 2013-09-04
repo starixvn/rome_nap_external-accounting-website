@@ -12,11 +12,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
@@ -25,8 +25,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     public class LeftPanelService : BaseService
     {
         private readonly ILeftPanelDao data = new LeftPanelDao();
+        private int TotalPages = 1;
 
-        public override CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD")
+        public override CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
         {
             var ds = this.data.GetCustomerInfo(username, groupName);
             var model = new CustomerModel();
@@ -76,6 +77,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToString("M/d/yyyy H:mm tt"), Text = "Security Code" },
                 };
 
+                var onlines = this.GetOnlineList((int)model.PersonalInfo.CustId.Value);
+
+                foreach (DataRow row in onlines)
+                {
+                    model.OnlineList.Onlines.Add(new OnlineInfo
+                    {                        
+                        IP = new ObjectInfo { Text = row["ip"].ToString() },
+                        LoginTime = new ObjectInfo { Text = ((DateTime)row["reload_time"]).ToString("MM/dd/yyyy HH:mm:ss tt") }
+                    });
+                }
+
                 if (roleId != this.Member)
                 {
                     model.Login.Add(new ObjectInfo { Value = (bool)tableCustomer.Rows[0]["NicknameLoginOnly"] ? "Nickname Only" : "Username/Nickname", Text = "Login Options" });
@@ -84,13 +96,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
                 model.DownlineList = new DownlineList();
 
-                var downlines = this.GetDownlineList((int)model.PersonalInfo.CustId.Value, 100, 1);
+                var downlines = this.GetDownlineList((int)model.PersonalInfo.CustId.Value, 100, pageIndex);
 
                 if (downlines != null && downlines.Rows.Count > 0)
                 {
                     foreach (DataRow item in downlines.Rows)
                     {
                         model.DownlineList.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
+                    }
+
+                    model.DownlineList.CurrentPage = pageIndex;
+
+                    if (this.TotalPages > 1)
+                    {
+                        for (int i = 1; i <= this.TotalPages; i++)
+                        {
+                            model.DownlineList.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                        }
+                    }
+                    else
+                    {
+                        model.DownlineList.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
                     }
                 }
 
@@ -129,6 +155,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
             if (dr != null && dr.ResultSet != null && dr.ResultSet.Tables.Count > 0)
             {
+                this.TotalPages = (int)dr.Outputs["totalpages"];
+
                 return dr.ResultSet.Tables[0];
             }
 
@@ -137,7 +165,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
         public override DataRowCollection GetOnlineList(int custid)
         {
-            throw new NotImplementedException();
-        }        
+            return this.data.GetOnlineList(custid);
+        }
     }
 }

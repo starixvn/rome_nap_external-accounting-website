@@ -80,11 +80,15 @@
                     <div class="floatLeftBalance R"><span class="blue">{{status.totalActive}}</span>/<span class="red">{{status.totalClosed}}</span>/{{status.totalSuspended}}</div>
                 </div>    
             </div>
-            <div class="auto" id="tabs-2" ng-controller="DownlineListController">
-                <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
-                    <a class="detail2" href="javascript:;"  onclick="parent.Fanex.ExtAcc.ViewUser('{{user.text}}')">{{user.text}}</a>
+            <div style="overflow: hidden" class="auto" id="tabs-2" ng-controller="DownlineListController">
+                <div id="downlines" style="max-height: {{maxHeight}}; overflow: auto">
+                    <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
+                        <a class="detail2" href="javascript:;"  onclick="parent.Fanex.ExtAcc.ViewUser('{{user.text}}')">{{user.text}}</a>
+                    </div>
                 </div>
-                <span ng-hide="{{model.length < 100}}">Page&nbsp;</span>
+                <div ng-hide="{{pages.length == 1 || model.length == 0}}" class="floatLeft" style="height: 20px">Page&nbsp;                    
+                </div>
+                <div ng-init="Init()" ng-hide="{{pages.length == 1}}" style="height: 20px; margin-right: 5px" class="floatLeft page" style="text-indent: 25px" ng-repeat="page in pages"><a id="link-{{page.value}}" class="detail" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}', {{page.value}})">{{page.value}}</a></div>
                 <div class="C" ng-hide="{{model.length > 0}}">No downline list</div>
             </div>
         </div>
@@ -156,10 +160,22 @@
                     <div class="floatLeftBalance normal R">{{loginInfo[7].value}}</div>
                 </div>
             </div>
-            <div class="auto" id="tab-4">
-                <div class="title">
-                    
-                </div>    
+            <div class="auto" id="tab-4" ng-controller="OnlineListController">
+                <div class="clearBoth">
+                    <div class="floatLeft bold percent10">No</div>
+                    <div class="floatLeft bold percent39">IP</div>
+                    <div class="floatLeft bold percent51">Last Login</div>
+                </div>
+                <div ng-init="Init()" class="clearBoth" ng-hide="onlineList == null || onlineList.length == 0" ng-repeat="item in onlineList">
+                    <div class="floatLeft percent10">{{item.index}}</div>
+                    <div class="floatLeft percent39">
+                        <a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Customer.ShowIpInfo('{{item.iP.text}}')">
+                            {{item.iP.text}}
+                        </a>
+                    </div>
+                    <div class="floatRight percent51">{{item.loginTime.text}}</div>
+                </div>
+                <div ng-hide="onlineList != null && onlineList.length > 0" class="C">This user is not online</div>    
             </div>
         </div>
     </div>

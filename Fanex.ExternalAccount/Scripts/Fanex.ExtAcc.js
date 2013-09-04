@@ -313,10 +313,10 @@ Fanex.ExtAcc = {
         Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
     },
 
-    ViewUser: function (username) {
+    ViewUser: function (username, pageIndex) {
         this.BlockUI();
 
-        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
+        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html() + '/' + pageIndex));
 
         $('#leftFrame').ready(function () {
             Fanex.ExtAcc.UnBlockUI();

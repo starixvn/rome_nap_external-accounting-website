@@ -25,8 +25,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            RegisterController(context);
-            base.RegisterArea(context);
+            context.MapRoute(
+                AreaName + "_" + ControllerName,
+                AreaName + "/" + ControllerName + "/{controller}/{action}/{id}/{uplineId}/{pageIndex}",
+                new { action = "Index", id = UrlParameter.Optional, uplineId = UrlParameter.Optional, pageIndex = UrlParameter.Optional },
+                new[] { ControllerNameSpace });
         }       
     }
 }
