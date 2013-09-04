@@ -342,7 +342,7 @@ function DownlineListController($scope, $http) {
         $scope.downlines = $scope.$parent.$parent.model.downlineList;
         $scope.model = $scope.downlines.downlines;
         $scope.pages = $scope.downlines.pages;
-        $scope.maxHeight = $scope.pages.length > 1 ? '187px' : 'auto';
+        $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '187px' : 'auto';
     }
     else {
         $scope.model = null;
@@ -376,6 +376,7 @@ function DownlineListController($scope, $http) {
                 $scope.downlines = $scope.$parent.$parent.model.downlineList;
                 $scope.model = $scope.downlines.downlines;
                 $scope.pages = $scope.downlines.pages;
+                $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '187px' : 'auto';
 
                 $('#downlines').scrollTop(0);
 
