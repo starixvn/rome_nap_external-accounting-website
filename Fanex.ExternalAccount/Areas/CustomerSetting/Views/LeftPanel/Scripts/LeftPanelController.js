@@ -387,7 +387,7 @@ function DownlineListController($scope, $http) {
                     }
 
                     $('#link-' + $scope.downlines.currentPage).addClass('bold');
-                }, 200);
+                }, 250);
 
                 parent.Fanex.ExtAcc.UnBlockUI();
             });
