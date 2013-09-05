@@ -81,7 +81,7 @@
                 </div>    
             </div>
             <div style="overflow: hidden" class="auto" id="tabs-2" ng-controller="DownlineListController">
-                <div id="downlines" style="max-height: {{maxHeight}}; overflow: auto">
+                <div id="downlines" style="overflow: auto">
                     <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
                         <a class="detail2" href="javascript:;"  onclick="parent.Fanex.ExtAcc.ViewUser('{{user.text}}')">{{user.text}}</a>
                     </div>
