@@ -107,7 +107,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
         public string GetOutstandingColumn(int roleId)
         {
-            return roleId != this.Member ? "customerOutstanding" : "outstanding";
+            var levelName = string.Empty;
+
+            switch (roleId)
+            {
+                case 4:
+                    levelName = "super";
+                    break;
+                case 3:
+                    levelName = "master";
+                    break;
+                case 2:
+                    levelName = "agent";
+                    break;
+                default:
+                    break;
+            }
+
+            return roleId != this.Member ? levelName + "PositionTaking" : "outstanding";
         }
 
         public virtual DataTable GetDownlineList(int custid, int pageSize, int pageIndex)

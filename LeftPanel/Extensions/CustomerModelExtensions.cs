@@ -22,10 +22,22 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
+            var tableCash = ds.Tables[2];
 
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 1203, Text = "Total Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 4521, Text = "Yesterday Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 444521, Text = "Master Outstanding" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo { 
+                Value = (decimal)tableCash.Rows[0]["superCash"] +
+                        (decimal)tableCash.Rows[0]["masterCash"] +
+                        (decimal)tableCash.Rows[0]["agentCash"] + 
+                        (decimal)tableCash.Rows[0]["customerCash"], 
+                Text = "Total Balance" 
+            });
+            model.BalanceInfo.Balances.Add(new ObjectInfo { 
+                Value = (decimal)tableCash.Rows[0]["yesterday_superCash"] +
+                        (decimal)tableCash.Rows[0]["yesterday_masterCash"] +
+                        (decimal)tableCash.Rows[0]["yesterday_agentCash"] + 
+                        (decimal)tableCash.Rows[0]["yesterday_customerCash"], 
+                Text = "Yesterday Balance" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = (decimal)tableCash.Rows[0]["customerOutstanding"], Text = "Master Outstanding" });
 
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Masters A/C/S", Tooltip="Total Masters Active/Closed/Suspended" });
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 1, TotalSuspended = 0, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
@@ -83,9 +95,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var tableLine = ds.Tables[1];
             var tableCash = ds.Tables[2];
 
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 1203, Text = "Total Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 4521, Text = "Yesterday Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 444521, Text = "Agent Outstanding" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
+                Value = (decimal)tableCash.Rows[0]["masterCash"] +
+                        (decimal)tableCash.Rows[0]["agentCash"] +
+                        (decimal)tableCash.Rows[0]["customerCash"],
+                Text = "Total Balance"
+            });
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
+                Value = (decimal)tableCash.Rows[0]["yesterday_masterCash"] +
+                        (decimal)tableCash.Rows[0]["yesterday_agentCash"] +
+                        (decimal)tableCash.Rows[0]["yesterday_customerCash"],
+                Text = "Yesterday Balance"
+            }); 
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = (decimal)tableCash.Rows[0]["customerOutstanding"], Text = "Agent Outstanding" });
 
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
@@ -146,10 +170,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
+            var tableCash = ds.Tables[2];
 
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 1203, Text = "Total Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 4521, Text = "Yesterday Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = 444521, Text = "Member Outstanding" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
+                Value = (decimal)tableCash.Rows[0]["agentCash"] +
+                        (decimal)tableCash.Rows[0]["customerCash"],
+                Text = "Total Balance"
+            });
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
+                Value = (decimal)tableCash.Rows[0]["yesterday_agentCash"] +
+                        (decimal)tableCash.Rows[0]["yesterday_customerCash"],
+                Text = "Yesterday Balance"
+            }); 
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = (decimal)tableCash.Rows[0]["customerOutstanding"], Text = "Member Outstanding" });
 
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 

@@ -21,23 +21,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public CustomerModel()
         {
             this.BalanceInfo = new BalanceInfo();
-            this.BetList = new BetList();
-            this.CustomerList = new CustomerList();
             this.DownlineList = new DownlineList();
             this.Login = new List<ObjectInfo>();
             this.OnlineList = new OnlineList();
             this.PersonalInfo = new PersonalInfo();
             this.Setting = new Setting();
-            this.StatementList = new StatementList();
         }
 
         public PersonalInfo PersonalInfo { get; set; }
-
-        public CustomerList CustomerList { get; set; }
-
-        public StatementList StatementList { get; set; }
-
-        public BetList BetList { get; set; }
 
         public BalanceInfo BalanceInfo { get; set; }
 
@@ -67,75 +58,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public ObjectInfo Mobile { get; set; }
 
         public ObjectInfo Fax { get; set; }
-    }
-
-    public class CustomerList
-    {
-        public CustomerList()
-        {
-            this.Customers = new DataTable();
-        }
-
-        public DataTable Customers { get; set; }
-    }
-
-    public class BetList
-    {
-        public BetList()
-        {
-            this.Filters = new List<ObjectInfo>();
-            this.Bets = new List<BetItem>();
-        }
-
-        public List<ObjectInfo> Filters { get; set; }
-
-        public List<BetItem> Bets { get; set; }
-    }
-
-    public class BetItem
-    {
-        public ObjectInfo BetId { get; set; }
-
-        public ObjectInfo TransTime { get; set; }
-
-        public ObjectInfo Choice { get; set; }
-
-        public ObjectInfo Odds { get; set; }
-
-        public ObjectInfo Stake { get; set; }
-
-        public ObjectInfo WinLoss { get; set; }
-
-        public ObjectInfo Status { get; set; }
-
-        public ObjectInfo SuperPtComm { get; set; }
-
-        public ObjectInfo MasterPtComm { get; set; }
-
-        public ObjectInfo AgentPtComm { get; set; }
-    }
-
-    public class Statement
-    {
-        public ObjectInfo Id { get; set; }
-
-        public ObjectInfo Date { get; set; }
-
-        public ObjectInfo Remark { get; set; }
-
-        public ObjectInfo Amount { get; set; }
-
-        public ObjectInfo Total { get; set; }
-    }
-
-    public class StatementList
-    {
-        public StatementList()
-        {
-            this.Statements = new List<Statement>();
-        }
-
-        public List<Statement> Statements { get; set; }
     }
 
     public class BalanceInfo

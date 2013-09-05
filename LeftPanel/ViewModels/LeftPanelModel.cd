@@ -1,107 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.CustomerModel">
-    <Position X="8.5" Y="5.25" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAEAAAAAAAAQAAAAAEAEABAAAAAQAABAgAA=</HashCode>
+      <HashCode>AAAAAAIAAAEAAAAAAAAAAAAAAEAAAAAAAAAQAABAgAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.PersonalInfo">
-    <Position X="0.5" Y="4.75" Width="1.5" />
+    <Position X="0.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgAAAAAAAAAAAAAQAAAAAAACBAAAAIAAAAAA=</HashCode>
-      <FileName>ViewModels\CustomerInfo.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.CustomerList">
-    <Position X="6.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\CustomerInfo.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.BetList">
-    <Position X="10.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\CustomerInfo.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.BetItem">
-    <Position X="8.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAgAEAEAAgAAAAACAAAQAAAAAAACADAAAAAABAAAAA=</HashCode>
-      <FileName>ViewModels\CustomerInfo.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.Statement">
-    <Position X="6.75" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAACAAAAAQAABAAAAAAAAAQA=</HashCode>
-      <FileName>ViewModels\CustomerInfo.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.StatementList">
-    <Position X="8.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAgAAAAAAAAAAAAAQAAAAEAACAAAAAIAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.BalanceInfo">
-    <Position X="6.75" Y="0.5" Width="1.5" />
+    <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAEAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAEAAgAAAAAEAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.Status">
-    <Position X="10.25" Y="5.25" Width="1.5" />
+    <Position X="7.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAAAAAAAQAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAQAAAAABAAAAAAAAKAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.DownlineList">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.Setting">
-    <Position X="5" Y="2.5" Width="1.5" />
+    <Position X="6" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAABBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.Login">
-    <Position X="2.75" Y="4.75" Width="1.5" />
+    <Position X="3.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABAAAgAAAAAAAAAAAAAAAACACCgAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.OnlineList">
-    <Position X="10.25" Y="3.5" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.OnlineInfo">
-    <Position X="2.75" Y="2.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Fanex.ExternalAccount.Module.LeftPanel.ViewModels.BasicInfo">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAAAAiAAAAAAA=</HashCode>
       <FileName>ViewModels\CustomerInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
