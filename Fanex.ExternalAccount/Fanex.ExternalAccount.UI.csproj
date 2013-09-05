@@ -228,6 +228,7 @@
     <Content Include="Areas\CustomerSetting\Images\pointerDown.png" />
     <Content Include="Areas\CustomerSetting\Images\warning-icn.png" />
     <Content Include="Areas\CustomerSetting\Scripts\angular.min.js" />
+    <Content Include="Areas\CustomerSetting\Scripts\angular.full.js" />
     <Content Include="Areas\CustomerSetting\Scripts\Fanex.CustomerSetting.Core.js" />
     <Content Include="Areas\CustomerSetting\Scripts\jquery-ui-1.9.1.min.js" />
     <Content Include="Areas\CustomerSetting\Scripts\jquery.blockUI.1.33.js" />
@@ -326,8 +327,8 @@
     <Content Include="bootstrap\Images\logo.png" />
     <Content Include="bootstrap\Images\member-btn.png" />
     <Content Include="bootstrap\Images\right.png" />
+    <Content Include="bootstrap\Images\seperations.png" />
     <Content Include="bootstrap\Images\showMargin.png" />
-    <Content Include="bootstrap\Images\sort-icon-new3.png" />
     <Content Include="bootstrap\Images\sort.png" />
     <Content Include="bootstrap\Images\super-btn.png" />
     <Content Include="bootstrap\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
