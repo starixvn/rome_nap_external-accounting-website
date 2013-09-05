@@ -111,7 +111,7 @@ Fanex.ExtAcc.Header = {
 
                             if ((location.href.indexOf('Home/Index') != -1
                                 || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
-                                || location.href == (location.protocol + '//' + location.host + '/')) && !document.getElementById('mainGrid')) {                                
+                                || location.href == (location.protocol + '//' + location.host + '/')) && !document.getElementById('customerListGrid')) {                                
                                 if (window.history.pushState) {
                                     window.history.pushState("object or string", "Title", location.href.substr(0, location.href.lastIndexOf('/')) + "/" + selectedGroupName);
                                 }
