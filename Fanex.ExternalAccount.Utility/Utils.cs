@@ -49,6 +49,20 @@
             return val;
         }
 
+        public static byte ToByte(this DataRow obj, string fieldName)
+        {
+            byte val = 0;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return val;
+            }
+
+            byte.TryParse(obj[fieldName].ToString(), out val);
+
+            return val;
+        }
+
         public static short ToInt16(object value)
         {
             short val = 0;
@@ -64,6 +78,20 @@
         }
 
         public static short ToInt16(this IDataReader obj, string fieldName)
+        {
+            short val = 0;
+            
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return val;
+            }
+
+            short.TryParse(obj[fieldName].ToString(), out val);
+
+            return val;
+        }
+
+        public static short ToInt16(this DataRow obj, string fieldName)
         {
             short val = 0;
 
@@ -92,6 +120,20 @@
         }
 
         public static decimal ToDecimal(this IDataReader obj, string fieldName)
+        {
+            var val = 0.0m;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return 0.0m;
+            }
+
+            decimal.TryParse(obj[fieldName].ToString(), out val);
+
+            return val.Format(2) == -0.00m ? 0.0m : val;
+        }
+
+        public static decimal ToDecimal(this DataRow obj, string fieldName)
         {
             var val = 0.0m;
 
@@ -138,6 +180,20 @@
             return val;
         }
 
+        public static bool ToBoolean(this DataRow obj, string fieldName)
+        {
+            var val = false;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return false;
+            }
+
+            bool.TryParse(obj[fieldName].ToString(), out val);
+
+            return val;
+        }
+
         public static string ToString(object value)
         {
             if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
@@ -149,6 +205,16 @@
         }
 
         public static string ToString(this IDataReader obj, string fieldName)
+        {
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return string.Empty;
+            }
+
+            return Convert.ToString(obj[fieldName]);
+        }
+
+        public static string ToString(this DataRow obj, string fieldName)
         {
             if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
             {
@@ -173,6 +239,20 @@
         }
 
         public static double ToDouble(this IDataReader obj, string fieldName)
+        {
+            var val = 0.0d;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return 0.0d;
+            }
+
+            double.TryParse(obj[fieldName].ToString(), out val);
+
+            return val;
+        }
+
+        public static double ToDouble(this DataRow obj, string fieldName)
         {
             var val = 0.0d;
 
@@ -214,6 +294,20 @@
             return val;
         }
 
+        public static DateTime ToDateTime(this DataRow obj, string fieldName)
+        {
+            var val = DateTime.MinValue;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return DateTime.MinValue;
+            }
+
+            DateTime.TryParse(obj[fieldName].ToString(), out val);
+
+            return val;
+        }
+
         public static int ToInt32(object value)
         {
             var val = 0;
@@ -236,6 +330,27 @@
         }
 
         public static int ToInt32(this IDataReader obj, string fieldName)
+        {
+            var val = 0;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return 0;
+            }
+
+            if (obj[fieldName] is decimal || obj[fieldName] is double)
+            {
+                val = Convert.ToInt32(obj[fieldName]);
+            }
+            else
+            {
+                int.TryParse(obj[fieldName].ToString(), out val);
+            }
+
+            return val;
+        }
+
+        public static int ToInt32(this DataRow obj, string fieldName)
         {
             var val = 0;
 
@@ -298,6 +413,27 @@
             return val;
         }
 
+        public static long ToInt64(this DataRow obj, string fieldName)
+        {
+            var val = 0L;
+
+            if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
+            {
+                return 0L;
+            }
+
+            if (obj[fieldName] is decimal || obj[fieldName] is double)
+            {
+                val = Convert.ToInt64(obj[fieldName]);
+            }
+            else
+            {
+                long.TryParse(obj[fieldName].ToString(), out val);
+            }
+
+            return val;
+        }
+
         public static decimal Format(object value, int prec = 2)
         {
             var val = Utils.ToDecimal(value);
@@ -334,7 +470,25 @@
             return decimal.Round(val, prec);
         }
 
+        public static decimal Format(this DataRow obj, string fieldName, int prec = 2)
+        {
+            var val = Utils.ToDecimal(obj[fieldName]);
+
+            return decimal.Round(val, prec);
+        }
+
         public static string ToStringFormat(this IDataReader obj, string fieldName, int prec = 2)
+        {
+            var val = Utils.ToDecimal(obj[fieldName]);
+
+            var ret = decimal.Round(val, prec);
+
+            var valRet = ret.ToString("#,##0.########");
+
+            return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
+        }
+
+        public static string ToStringFormat(this DataRow obj, string fieldName, int prec = 2)
         {
             var val = Utils.ToDecimal(obj[fieldName]);
 
