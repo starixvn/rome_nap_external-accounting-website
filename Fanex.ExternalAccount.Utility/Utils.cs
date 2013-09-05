@@ -88,7 +88,7 @@
 
             decimal.TryParse(value.ToString(), out val);
 
-            return val;
+            return val.Format(2) == -0.00m ? 0.0m : val;
         }
 
         public static decimal ToDecimal(this IDataReader obj, string fieldName)
@@ -102,7 +102,7 @@
 
             decimal.TryParse(obj[fieldName].ToString(), out val);
 
-            return val;
+            return val.Format(2) == -0.00m ? 0.0m : val;
         }
 
         public static bool ToBoolean(object value)
