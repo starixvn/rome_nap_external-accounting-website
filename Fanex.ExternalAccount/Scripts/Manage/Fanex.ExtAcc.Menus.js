@@ -260,7 +260,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.reload(true);
+                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
         })
@@ -329,7 +329,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.reload(true);
+                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
         })
@@ -354,7 +354,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.reload(true);
+                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
         })
@@ -379,7 +379,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.reload(true);
+                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
         })

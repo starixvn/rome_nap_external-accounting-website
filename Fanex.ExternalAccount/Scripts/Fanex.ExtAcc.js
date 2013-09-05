@@ -64,29 +64,34 @@ Fanex.ExtAcc = {
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
 
-    LoadMainFrame: function (url, id, isLeftPanelClick) {
+    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu) {
         this.BlockUI();
 
         if (typeof id != 'undefined') {
             $('#' + id).hide();
         }
 
-        $.ajax({ url: url + '/' + $('#selectedGroupName').html(), type: 'post', success: function (result) {
-            $('#contentSplitter').html(result);
+        if (!isMenu) {
+            $.ajax({ url: url + '/' + $('#selectedGroupName').html(), type: 'post', success: function (result) {
+                $('#contentSplitter').html(result);
 
-            if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                Fanex.ExtAcc.Customer.Init();
+                if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                    Fanex.ExtAcc.Customer.Init();
+                }
+
+                Fanex.ExtAcc.UnBlockUI();
             }
+            })
+            .error(function (data) {
+                if (typeof console != undefined)
+                    console.log(data.responseText);
 
-            Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.UnBlockUI();
+            });
         }
-        })
-        .error(function (data) {
-            if (typeof console != undefined)
-                console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
-        });
+        else {
+            window.location.href = url + '/' + $('#selectedGroupName').html();
+        }
     },
 
     FormatNumber: function (number) { // Format a number to 1,234,567.89

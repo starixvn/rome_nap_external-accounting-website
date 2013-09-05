@@ -1,4 +1,7 @@
-﻿@using Fanex.ExternalAccount.Utilities
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Fanex.ExternalAccount.Utilities
 <div id='jqWidget' style="background-color: #fff; font-size: 13px; font-family: Verdana;">
     <div class="bgTitle titleForm">
         <div style="float: left; margin: 5px; vertical-align: middle;">
@@ -12,6 +15,7 @@
         </div>
     </div>
 </div>
+@section Scripts{
 <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Menus.js")" type="text/javascript"></script>
 <script type="text/javascript">
     Fanex.ExtAcc.Menus.dataTexts = [
@@ -25,3 +29,4 @@
     '@ViewLang.Delete'
     ];
 </script>
+}
