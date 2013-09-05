@@ -54,7 +54,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
         #endregion Init WinLossDetail
 
-        [Authorization(Function = eFunctions.WinlossDetail, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.WinlossDetail, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
             return this.PartialViewBase();

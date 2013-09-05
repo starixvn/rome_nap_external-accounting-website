@@ -29,6 +29,7 @@ namespace Fanex.ExternalAccount.Core.Context
     {
         private readonly ILoginService userService = new LoginService();
         private readonly ICachingService cachingService = new CachingService();
+        private bool isAjax = true;
 
         public AuthorizationAttribute()
         {
@@ -37,6 +38,12 @@ namespace Fanex.ExternalAccount.Core.Context
         public string Function { get; set; }
 
         public ePolicy Policy { get; set; }
+
+        public bool IsAjaxRequest 
+        {
+            get { return isAjax;} 
+            set { this.isAjax = value; } 
+        }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
@@ -107,7 +114,7 @@ namespace Fanex.ExternalAccount.Core.Context
                     return;
                 }
 
-                if (filterContext.HttpContext.Request.IsAjaxRequest())
+                if (this.IsAjaxRequest)
                 {
                     filterContext.Result = new JsonResult()
                     {
@@ -167,7 +174,7 @@ namespace Fanex.ExternalAccount.Core.Context
             var foundItems = policyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !this.IsAjaxRequest)
             {
                 hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }

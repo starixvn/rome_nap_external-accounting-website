@@ -30,7 +30,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     {
         private readonly IUserService userService = new UserService();
 
-        [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult UserList()
         {
             if (CurrentSession.IsITAdmin)

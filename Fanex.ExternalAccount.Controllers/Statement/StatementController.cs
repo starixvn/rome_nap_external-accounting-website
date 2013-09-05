@@ -43,7 +43,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         private int custId = 0;
         #endregion Init Statement
 
-        [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
             return this.PartialViewBase();

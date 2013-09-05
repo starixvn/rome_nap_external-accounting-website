@@ -34,7 +34,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             this.menuService = this.menuService ?? new MenuService();
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult MenuList()
         {
             return this.PartialViewBase();

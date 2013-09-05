@@ -46,7 +46,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
         #endregion Init DailyWinLoss
 
-        [Authorization(Function = eFunctions.DailyWinloss, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.DailyWinloss, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
             return this.PartialViewBase();

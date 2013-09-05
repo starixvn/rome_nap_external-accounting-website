@@ -30,7 +30,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     {
         private readonly IFunctionService funcService = new FunctionService();
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
             var internalGroup = new GroupService().GetListGroup()
