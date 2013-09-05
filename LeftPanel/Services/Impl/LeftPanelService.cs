@@ -42,21 +42,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
                 model.BalanceInfo = new BalanceInfo()
                 {
-                    CurrencyId = new ObjectInfo { Value = (int)tableCustomer.Rows[0]["exchangeid"], Text = "Currency Id" },
-                    Currency = new ObjectInfo { Value = tableCustomer.Rows[0]["currency"].ToString(), Text = "Currency" },
+                    CurrencyId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["exchangeid"]), Text = "Currency Id" },
+                    Currency = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["currency"]), Text = "Currency" },
                     Balances = new List<ObjectInfo>()
                     {                        
-                        new ObjectInfo { Value = (decimal)tableCash.Rows[0][this.GetCashColumn(roleId)], Text = "Total Cash" },
-                        new ObjectInfo { Value = (decimal)tableCash.Rows[0][this.GetYesterdayCashColumn(roleId)], Text = "Yesterday Cash" },
-                        new ObjectInfo { Value = (decimal)tableCash.Rows[0][this.GetOutstandingColumn(roleId)], Text = "Outstanding" },
-                        new ObjectInfo { Value = (decimal)tableCustomer.Rows[0]["credit"], Text = "Given Credit" },
-                        //new ObjectInfo { Value = (decimal)tableCustomer.Rows[0]["credit"] - (decimal)tableCash.Rows[0][this.GetOutstandingColumn(roleId)], Text = "Bet Credit" }
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetCashColumn(roleId)]), Text = "Total Cash" },
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetOutstandingColumn(roleId)]), Text = "Outstanding" },
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit" },
+                        //new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"] - Utils.ToDecimal(tableCash.Rows[0][this.GetOutstandingColumn(roleId)], Text = "Bet Credit" }
                     }
                 };
 
                 model.PersonalInfo = new PersonalInfo
                 {
-                    CustId = new ObjectInfo { Value = (int)tableCustomer.Rows[0]["custid"], Text = "Cust Id" },
+                    CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
                     Fax = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["fax"]), Text = "Fax" },
                     Mobile = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["mobilephone"]), Text = "Mobile" },
                     Name = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["firstname"]) + " " + Utils.ToString(tableCustomer.Rows[0]["lastname"]), Text = "Name" },
@@ -68,35 +68,35 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
                 model.Login = new List<ObjectInfo>
                 {
-                    new ObjectInfo { Value = tableCustomer.Rows[0]["site"], Text = "Site" },
+                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["site"]), Text = "Site" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToString("M/d/yyyy H:mm tt"), Text = "Created Date" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Login" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToString("M/d/yyyy H:mm tt"), Text = "Password" },
-                    new ObjectInfo { Value = tableCustomer.Rows[0]["lastloginip"], Text = "Last Login IP" },
+                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["lastloginip"]), Text = "Last Login IP" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToString("M/d/yyyy H:mm tt"), Text = "Security Code" },
                 };
 
-                var onlines = this.GetOnlineList((int)model.PersonalInfo.CustId.Value);
+                var onlines = this.GetOnlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value));
 
                 foreach (DataRow row in onlines)
                 {
                     model.OnlineList.Onlines.Add(new OnlineInfo
                     {                        
                         IP = new ObjectInfo { Text = row["ip"].ToString() },
-                        LoginTime = new ObjectInfo { Text = ((DateTime)row["reload_time"]).ToString("MM/dd/yyyy HH:mm:ss tt") }
+                        LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToString("MM/dd/yyyy HH:mm:ss tt") }
                     });
                 }
 
                 if (roleId != this.Member)
                 {
-                    model.Login.Add(new ObjectInfo { Value = (bool)tableCustomer.Rows[0]["NicknameLoginOnly"] ? "Nickname Only" : "Username/Nickname", Text = "Login Options" });
+                    model.Login.Add(new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname", Text = "Login Options" });
                     model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][this.GetUsedCreditColumn(roleId)], Text = "Used Credit" });
                 }
 
                 model.DownlineList = new DownlineList();
 
-                var downlines = this.GetDownlineList((int)model.PersonalInfo.CustId.Value, 100, pageIndex);
+                var downlines = this.GetDownlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value), 100, pageIndex);
 
                 if (downlines != null && downlines.Rows.Count > 0)
                 {
@@ -155,7 +155,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
             if (dr != null && dr.ResultSet != null && dr.ResultSet.Tables.Count > 0)
             {
-                this.TotalPages = (int)dr.Outputs["totalpages"];
+                this.TotalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
 
                 return dr.ResultSet.Tables[0];
             }

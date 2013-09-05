@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Collections.Generic;
     using System.Data;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -25,39 +26,39 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var tableCash = ds.Tables[2];
 
             model.BalanceInfo.Balances.Add(new ObjectInfo { 
-                Value = (decimal)tableCash.Rows[0]["superCash"] +
-                        (decimal)tableCash.Rows[0]["masterCash"] +
-                        (decimal)tableCash.Rows[0]["agentCash"] + 
-                        (decimal)tableCash.Rows[0]["customerCash"], 
+                Value = Utils.ToDecimal(tableCash.Rows[0]["superCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) + 
+                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]), 
                 Text = "Total Balance" 
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo { 
-                Value = (decimal)tableCash.Rows[0]["yesterday_superCash"] +
-                        (decimal)tableCash.Rows[0]["yesterday_masterCash"] +
-                        (decimal)tableCash.Rows[0]["yesterday_agentCash"] + 
-                        (decimal)tableCash.Rows[0]["yesterday_customerCash"], 
+                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_superCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) + 
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]), 
                 Text = "Yesterday Balance" });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = (decimal)tableCash.Rows[0]["customerOutstanding"], Text = "Master Outstanding" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Master Outstanding" });
 
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Masters A/C/S", Tooltip="Total Masters Active/Closed/Suspended" });
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 1, TotalSuspended = 0, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 5, TotalClosed = 0, TotalSuspended = 9, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 
-            model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" } };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" };
+            model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" } };
+            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
 
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
                         {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" }
+                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },                            
+                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
+                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
+                            new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" },
+                            new ObjectInfo { Key = "LiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },                            
+                            new ObjectInfo { Key = "VirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
+                            new ObjectInfo { Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" }
                         },
                 EditItems = new List<ObjectInfo>
                         {
@@ -66,9 +67,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         },
                 SyncItems = new List<ObjectInfo>
                         {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
+                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
+                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
+                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -97,44 +98,44 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = (decimal)tableCash.Rows[0]["masterCash"] +
-                        (decimal)tableCash.Rows[0]["agentCash"] +
-                        (decimal)tableCash.Rows[0]["customerCash"],
+                Value = Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
                 Text = "Total Balance"
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = (decimal)tableCash.Rows[0]["yesterday_masterCash"] +
-                        (decimal)tableCash.Rows[0]["yesterday_agentCash"] +
-                        (decimal)tableCash.Rows[0]["yesterday_customerCash"],
+                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
                 Text = "Yesterday Balance"
             }); 
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = (decimal)tableCash.Rows[0]["customerOutstanding"], Text = "Agent Outstanding" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Agent Outstanding" });
 
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 
-            model.PersonalInfo.UplineId = new ObjectInfo { Value = (int)tableLine.Rows[0]["superID"], Text = "Super ID" };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" };
+            model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["superID"]), Text = "Super ID" };
+            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     { 
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" } 
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" } 
                     };
 
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
                         {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "AutoPT", Value = !(bool)tableCash.Rows[0]["disableAutoMPT"], Text = "Allow Auto PT" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
+                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },                            
+                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
+                            new ObjectInfo { Key = "AutoPT", Value = !Utils.ToBoolean(tableCash.Rows[0]["disableAutoMPT"]), Text = "Allow Auto PT" },
+                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
+                            new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" },
+                            new ObjectInfo { Key = "LiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },                            
+                            new ObjectInfo { Key = "VirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
+                            new ObjectInfo { Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
                         },
                 EditItems = new List<ObjectInfo>
                         {
@@ -143,9 +144,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         },
                 SyncItems = new List<ObjectInfo>
                         {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
+                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
+                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
+                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -174,41 +175,41 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = (decimal)tableCash.Rows[0]["agentCash"] +
-                        (decimal)tableCash.Rows[0]["customerCash"],
+                Value = Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
                 Text = "Total Balance"
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = (decimal)tableCash.Rows[0]["yesterday_agentCash"] +
-                        (decimal)tableCash.Rows[0]["yesterday_customerCash"],
+                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
                 Text = "Yesterday Balance"
             }); 
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = (decimal)tableCash.Rows[0]["customerOutstanding"], Text = "Member Outstanding" });
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Member Outstanding" });
 
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 
-            model.PersonalInfo.UplineId = new ObjectInfo { Value = (int)tableLine.Rows[0]["masterID"], Text = "Master ID" };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["agentName"], Text = "Agent" };
+            model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["masterID"]), Text = "Master ID" };
+            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     { 
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["agentName"], Text = "Agent" }
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" }
                     };
 
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
                         {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
+                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },                            
+                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
+                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
+                            new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" },
+                            new ObjectInfo { Key = "LiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },                            
+                            new ObjectInfo { Key = "VirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
+                            new ObjectInfo { Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
                         },
                 EditItems = new List<ObjectInfo>
                         {
@@ -217,9 +218,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         },
                 SyncItems = new List<ObjectInfo>
                         {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
+                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
+                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
+                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -245,27 +246,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
 
-            model.PersonalInfo.UplineId = new ObjectInfo { Value = (int)tableLine.Rows[0]["agentID"], Text = "Agent ID" };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = (string)tableLine.Rows[0]["memberName"], Text = "Member" };
+            model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["agentID"]), Text = "Agent ID" };
+            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["memberName"]), Text = "Member" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     { 
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["superName"], Text = "Super" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["masterName"], Text = "Master" },
-                        new ObjectInfo { Value = (string)tableLine.Rows[0]["agentName"], Text = "Agent" },
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
+                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" },
                     };
 
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
                         {                            
-                            new ObjectInfo { Key = "Closed", Value = (bool)tableCustomer.Rows[0]["closed"], Text = "Closed" },                            
-                            new ObjectInfo { Key = "Suspended", Value = (bool)tableCustomer.Rows[0]["suspended"], Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !(bool)tableCustomer.Rows[0]["disableOutright"], Text = "Allow Outright" },
-                            new ObjectInfo { Key = "Casino", Value = !(bool)tableCustomer.Rows[0]["disableCasino"], Text = "Enable Casino" },
-                            new ObjectInfo { Key = "NumberGame", Value = !(bool)tableCustomer.Rows[0]["disableNumber"], Text = "Enable Num Game", Tooltip = "Enable Number Game" },
-                            new ObjectInfo { Key = "LiveCasino", Value = !(bool)tableCustomer.Rows[0]["disableLiveCasino"], Text = "Enable Live Casino" },                            
-                            new ObjectInfo { Key = "VirtualSports", Value = !(bool)tableCustomer.Rows[0]["disableVirtualSports"], Text = "Virtual Sports" },
-                            new ObjectInfo { Key = "DoubleComm", Value = (bool)tableCustomer.Rows[0]["doubleCommLosing"], Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
+                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },                            
+                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
+                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
+                            new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" },
+                            new ObjectInfo { Key = "LiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },                            
+                            new ObjectInfo { Key = "VirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
+                            new ObjectInfo { Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission On Losing Ticket" },                            
                         },
                 EditItems = new List<ObjectInfo>
                         {
@@ -274,9 +275,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         },
                 SyncItems = new List<ObjectInfo>
                         {
-                            new ObjectInfo { Key = "SyncCasino", Value = (bool)tableCustomer.Rows[0]["syncCasino"], Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = (bool)tableCustomer.Rows[0]["syncBingo"], Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = (bool)tableCustomer.Rows[0]["syncLiveCasino"], Text = "Live Casino Synced" },
+                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
+                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
+                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
                         },
                 Details = new List<ObjectInfo>
                         {
