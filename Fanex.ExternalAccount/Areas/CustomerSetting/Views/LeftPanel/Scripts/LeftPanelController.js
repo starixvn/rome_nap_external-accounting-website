@@ -353,14 +353,14 @@ function DownlineListController($scope, $http) {
     $scope.Init = function () {
         if ($scope.pages && $scope.pages.length > 1) {
             for (var i = 1; i <= $scope.pages.length; i++) {
-                $('#link-' + i).removeClass('bold');
+                $('#link-' + i).removeClass('pageSelected');
             }
 
             var interval = setInterval(function () {
                 if (document.getElementById('link-1')) {
                     clearInterval(interval);
 
-                    $('#link-1').addClass('bold');
+                    $('#link-1').addClass('pageSelected');
                 }
             }, 100);
         }
@@ -386,10 +386,10 @@ function DownlineListController($scope, $http) {
                     clearTimeout(timeout);
 
                     for (var i = 1; i <= $scope.pages.length; i++) {
-                        $('#link-' + i).removeClass('bold');
+                        $('#link-' + i).removeClass('pageSelected');
                     }
 
-                    $('#link-' + $scope.downlines.currentPage).addClass('bold');
+                    $('#link-' + $scope.downlines.currentPage).addClass('pageSelected');
                 }, 250);
 
                 parent.Fanex.ExtAcc.UnBlockUI();

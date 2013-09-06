@@ -86,9 +86,9 @@
                         <a class="detail2" href="javascript:;"  onclick="parent.Fanex.ExtAcc.ViewUser('{{user.text}}')">{{user.text}}</a>
                     </div>
                 </div>
-                <div ng-hide="{{pages.length == 1 || model.length == 0}}" class="floatLeft" style="height: 20px">Page&nbsp;                    
+                <div ng-hide="{{pages.length == 1 || model.length == 0}}" class="floatLeft" style="height: 20px">Page
                 </div>
-                <div ng-init="Init()" ng-hide="{{pages.length == 1}}" style="height: 20px; margin-right: 5px" class="floatLeft page" style="text-indent: 25px" ng-repeat="page in pages"><a id="link-{{page.value}}" class="detail" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}', {{page.value}})">{{page.value}}</a></div>
+                <div ng-init="Init()" ng-hide="{{pages.length == 1}}" style="height: 20px" class="floatLeft page" ng-repeat="page in pages"><a id="link-{{page.value}}" class="page" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}', {{page.value}})">{{page.value}}</a></div>
                 <div class="C" ng-hide="{{model.length > 0}}">No downline list</div>
             </div>
         </div>

@@ -311,3 +311,15 @@ div
 {
     width: 10%;
 }
+.page
+{
+    color: #000 !important;
+    height: 8px;
+    padding: 0 2px 1px 2px;
+}
+.pageSelected
+{
+    height: 8px;
+    border: 1px solid #2489CE !important;
+    padding: 0 2px 1px 2px;
+}

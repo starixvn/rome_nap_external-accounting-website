@@ -36,7 +36,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
 
-            return this.View("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
+            return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
         }
 
         [HttpPost]

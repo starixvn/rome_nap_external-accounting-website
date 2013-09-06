@@ -71,7 +71,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseController"/> class
         /// </summary>
-        public BaseController()
+        protected BaseController()
         {
             this.currentContext = new CurrentContext();
             this.currentSession = new CurrentSession();
@@ -80,7 +80,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Gets current context of this session
         /// </summary>
-        public ICurrentContext CurrentContext
+        protected virtual ICurrentContext CurrentContext
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Gets current session of this session
         /// </summary>
-        public ICurrentSession CurrentSession
+        protected virtual ICurrentSession CurrentSession
         {
             get
             {
@@ -102,15 +102,15 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Returns View associated with model object
         /// </summary>
-        /// <param name="objModel">Model object</param>
+        /// <param name="model">Model object</param>
         /// <returns>ActionResult object </returns>
         [OutputCache(Duration = 604800, VaryByParam = "*")]
-        public virtual ActionResult ViewBase(object objModel = null)
+        protected virtual ActionResult ViewBase(string viewName = null, object model = null)
         {
             Response.AppendHeader("Content-Encoding", "gzip");
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
-            return this.View(objModel);
+            return string.IsNullOrWhiteSpace(viewName) ? this.View(model) : this.View(viewName, model);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="data">Data need to render JSON object</param>
         /// <param name="settings">Allow Get method by default</param>
         /// <returns>ActionResult object</returns>
-        public virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
+        protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         {
             if (settings == null)
             {
@@ -136,7 +136,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="data">Data need to render JSON object</param>
         /// <param name="settings">Allow Get method by default</param>
         /// <returns>ActionResult object</returns>
-        public virtual ActionResult JsonBase2(object data, JsonRequestBehavior settings = JsonRequestBehavior.AllowGet)
+        protected virtual ActionResult JsonBase2(object data, JsonRequestBehavior settings = JsonRequestBehavior.AllowGet)
         {
             return this.Json(data, settings);
         }
@@ -146,7 +146,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="objModel">Model object</param>
         /// <returns>PartialViewResult object</returns>
-        public virtual ActionResult PartialViewBase(object objModel = null)
+        protected virtual ActionResult PartialViewBase(object objModel = null)
         {
             return this.PartialView(objModel);
         }
@@ -156,7 +156,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="excelStream">Excel stream</param>
         /// <param name="fileName">Name of excel file</param>
-        protected void ExportToExcel(MemoryStream excelStream, string fileName)
+        protected virtual void ExportToExcel(MemoryStream excelStream, string fileName)
         {
             Response.ContentType = "application/vnd.ms-excel";
             Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", fileName));
@@ -170,7 +170,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="viewlevel">Level id</param>
         /// <returns>Level name</returns>
-        protected string LevelName(int viewlevel)
+        protected virtual string LevelName(int viewlevel)
         {
             switch (viewlevel)
             {
