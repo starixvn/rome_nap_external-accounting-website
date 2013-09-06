@@ -7,6 +7,9 @@
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.Login;
     using Fanex.ExternalAccount.DTO.UserControl;
+    using Fanex.Data.DNAide;
+    using System;
+    using DNAide.Core;
 
     /// <summary>
     /// LoginDao
@@ -177,6 +180,22 @@
             }
         }
 
+        public DateTime GetDBTime()
+        {
+            DbResult dr = null;
+            DateTime loginTime;
+            var p = new System.Collections.Hashtable();
+
+            p.Add("logintime", null);
+
+            dr = DNAide.Data.DbHelper.Execute("Age_LoginAdminVerifyTicket", p);
+            loginTime = CastAide.AsDateTime(dr.Outputs["logintime"]);
+
+
+            return loginTime;
+        }
+
         #endregion ILoginDao Members
+
     }
 }

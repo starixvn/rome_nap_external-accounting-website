@@ -22,6 +22,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using System.Configuration;
 
     /// <summary>
     /// TODO: Update summary.
@@ -275,6 +276,17 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             var result = this.userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
+        }
+
+        [HttpPost]
+        public ActionResult InternalLogin(string username)
+        {
+            var encryption = new RSACryptoPad.EncryptionThread();
+            var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks);
+            param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
+            var url = ConfigurationManager.AppSettings["int_agent_url"].ToString() + "?params=" + param;
+
+            return this.JsonBase(new { errorCode = 0, url = url });
         }
     }
 }

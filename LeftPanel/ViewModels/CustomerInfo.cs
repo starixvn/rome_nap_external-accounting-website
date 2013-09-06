@@ -173,7 +173,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         /// <summary>
         /// Gets or sets key of a field
         /// </summary>
-        public string Key { get; set; }
+        public object Key { get; set; }
 
         /// <summary>
         /// Gets or sets value for the title of a field

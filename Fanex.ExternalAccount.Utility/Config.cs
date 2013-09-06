@@ -222,6 +222,14 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static string InternalLoginUrl
+        {
+            get
+            {
+                return GetValue("int_agent_url");
+            }
+        }
+
         /// <summary>
         ///
         /// </summary>

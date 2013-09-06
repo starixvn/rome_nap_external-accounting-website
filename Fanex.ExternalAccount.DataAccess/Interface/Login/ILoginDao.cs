@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Login
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
@@ -20,5 +21,7 @@
         ICollection<Group> GroupList();
 
         bool CheckExternalGroup(int custId, int? funcId, string funcKey);
+
+        DateTime GetDBTime();
     }
 }

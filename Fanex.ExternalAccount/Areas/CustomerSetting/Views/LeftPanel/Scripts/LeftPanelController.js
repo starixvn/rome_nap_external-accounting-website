@@ -323,7 +323,20 @@ function PersonalInfoController($scope, $http) {
         }
     };
 
-    $scope.Login = function () {
+    $scope.Login = function (username) {
+        $http({
+            url: parent.resolveClientUrl('User/InternalLogin/?username=' + username),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            window.open(result.url, '_blank');
+        })
+        .error(function (result) {
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
     };
 };
 

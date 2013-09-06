@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 1, TotalSuspended = 0, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
             //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 5, TotalClosed = 0, TotalSuspended = 9, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 
-            model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" } };
+            model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" } };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
 
             model.Setting = new Setting
@@ -119,8 +119,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     { 
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" } 
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" } 
                     };
 
             model.Setting = new Setting
@@ -193,9 +193,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     { 
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" }
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("agentID"), Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" }
                     };
 
             model.Setting = new Setting

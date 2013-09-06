@@ -7,10 +7,10 @@
     using Fanex.ExternalAccount.DataAccess.Impl.Login;
     using Fanex.ExternalAccount.DataAccess.Interface.Login;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
-    using Fanex.ExternalAccount.DTO.UserControl;
 
     public class LoginService : ServiceBase, ILoginService
     {
@@ -127,6 +127,20 @@
             return true;
         }
 
+        public DateTime GetDBTime()
+        {
+            try
+            {
+                return this.loginDao.GetDBTime();
+            }
+            catch (Exception ex)
+            {
+                base.ProcessException(ex);
+            }
+
+            return DateTime.Now;
+        }        
+        
         #endregion ILoginService Members
     }
 }

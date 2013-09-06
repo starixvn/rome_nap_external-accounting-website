@@ -1622,6 +1622,9 @@
     <None Include="ExcelTemplates\Statement\Statement.xls" />
     <Content Include="PTEngine\BettingLimitMappingSection.config" />
     <Content Include="PTEngine\PTMappingSection.config" />
+    <None Include="IbcKeys\ibckeydec.snk" />
+    <None Include="IbcKeys\ibcpkey.snk" />
+    <Content Include="IbcKeys\Web.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
