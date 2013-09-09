@@ -87,6 +87,7 @@ Fanex.ExtAcc.Customer = {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
+                $('.ui-autocomplete').hide();
                 Fanex.ExtAcc.Customer.Search(false);
 
                 return true;

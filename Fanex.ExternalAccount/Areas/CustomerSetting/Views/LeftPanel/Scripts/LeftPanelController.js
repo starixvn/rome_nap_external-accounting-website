@@ -241,6 +241,7 @@ function LeftPanelController($scope) {
                 if (typeof e == 'undefined') e = window.event;
                 var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
                 if (key == 13) {
+                    parent.$('.ui-autocomplete').hide();
                     parent.Fanex.ExtAcc.Customer.Search(false);
 
                     return true;

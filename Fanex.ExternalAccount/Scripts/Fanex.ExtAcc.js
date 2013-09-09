@@ -286,6 +286,8 @@ Fanex.ExtAcc = {
                 var username = $.trim(this.value.encodeHtml());
                 this.value = '';
 
+                $('.ui-autocomplete').hide();
+
                 $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
 
                 $('#leftFrame').ready(function () {
@@ -302,6 +304,8 @@ Fanex.ExtAcc = {
             Fanex.ExtAcc.BlockUI();
             var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
             $('#txtLeftPanelUserName').val('');
+
+            $('.ui-autocomplete').hide();
 
             $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html()));
 
