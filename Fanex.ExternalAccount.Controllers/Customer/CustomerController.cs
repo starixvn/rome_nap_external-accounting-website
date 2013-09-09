@@ -336,37 +336,85 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            this.cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
             var result = this.masterService.GetData(srecommend, custId, enabled, closed, suspended);
+
+            var superId = Utils.ToInt32(srecommend);
+            var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), superId, null, true);
+            int mrecommend = 0,
+            recommend = 0,
+            roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+            }
+
+            this.cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
-            return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
+            return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            this.cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
             var result = this.agentService.GetData(mrecommend, custId, enabled, closed, suspended);
+
+            var masterId = Utils.ToInt32(mrecommend);
+            var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), masterId, null, true);
+            int srecommend = 0,
+            recommend = 0,
+            roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+            }
+
+            this.cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
-            return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
+            return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            this.cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
             var result = this.memberService.GetData(recommend, custId, enabled, closed, suspended);
+
+            var agentId = Utils.ToInt32(recommend);
+            var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), agentId, null, true);
+            int mrecommend = 0,
+            srecommend = 0,
+            roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+            }
+
+            this.cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
 
-            return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
+            return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId });
         }
 
         [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
