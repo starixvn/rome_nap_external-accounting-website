@@ -163,17 +163,17 @@
             <div class="auto" id="tab-4" ng-controller="OnlineListController">
                 <div class="clearBoth">
                     <div class="floatLeft bold percent10">No</div>
-                    <div class="floatLeft bold percent39">IP</div>
-                    <div class="floatLeft bold percent51">Last Login</div>
+                    <div class="floatLeft bold percent32">IP</div>
+                    <div class="floatLeft bold percent58">Last Login</div>
                 </div>
                 <div ng-init="Init()" class="clearBoth" ng-hide="onlineList == null || onlineList.length == 0" ng-repeat="item in onlineList">
                     <div class="floatLeft percent10">{{item.index}}</div>
-                    <div class="floatLeft percent39">
+                    <div class="floatLeft percent32">
                         <a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Customer.ShowIpInfo('{{item.iP.text}}')">
                             {{item.iP.text}}
                         </a>
                     </div>
-                    <div class="floatRight percent51">{{item.loginTime.text}}</div>
+                    <div class="floatRight percent58">{{item.loginTime.text}}</div>
                 </div>
                 <div ng-hide="onlineList != null && onlineList.length > 0" class="C">This user is not online</div>    
             </div>

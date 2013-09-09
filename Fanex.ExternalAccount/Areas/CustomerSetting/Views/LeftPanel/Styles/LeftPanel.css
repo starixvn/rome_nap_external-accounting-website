@@ -1,6 +1,5 @@
 ﻿body, html
 {
-    font-size: 11px !important;
     padding: 0;
     margin: 0;
 }
@@ -165,8 +164,9 @@ div
 .settingTitle
 {
     float: left;
-    width: 100px;
-    margin-left: 4px;
+    width: 113px;
+    margin: 0;
+    padding: 0;
 }
 .downlineTitle
 {
@@ -196,8 +196,7 @@ div
 {
     color: #2489CE;
     float: left;
-    width: 120px;
-    margin-left: 4px;
+    width: 126px;
     cursor: pointer;
 }
 .detail
@@ -303,13 +302,20 @@ div
 {
     width: 50%;
 }
-.percent39
+.percent32
 {
-    width: 39%;
+    width: 32%;
+    font-size: 9px !important;
+}
+.percent58
+{
+    width: 58%;
+    font-size: 9px !important;
 }
 .percent10
 {
     width: 10%;
+    font-size: 9px !important;
 }
 .page
 {
@@ -322,4 +328,8 @@ div
     height: 8px;
     border: 1px solid #2489CE !important;
     padding: 0 2px 1px 2px;
+}
+input
+{
+    margin: 3px 1px 0 0;
 }
