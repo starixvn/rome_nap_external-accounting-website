@@ -26,7 +26,6 @@ Fanex.ExtAcc.Header = {
                 dataType: 'html',
                 cache: false,
                 success: function (data) {
-                    var index = 0;
                     var items = eval(data);
                     Fanex.ExtAcc.Header.Groups = items;
 
@@ -67,27 +66,7 @@ Fanex.ExtAcc.Header = {
                         $('#dllUsername').hide();
                         $('#userNameMenu').removeClass('sfHover');
                     });
-
-                    for (var i = 0; i < links.length; i++) {
-                        try {
-                            if ($(links[i]).attr('ignorehref') != '1' && links[i].href.indexOf('javascript') < 0 && links[i].href.indexOf('Fanex') < 0) {
-                                var originalURL = links[i].href;
-                                var indexOriUrl = originalURL.split('/')[3];
-                                if (indexOriUrl.toLowerCase() == "statement") {
-                                    links[i].href = originalURL + "/1539009/" + selectedGroupName;
-                                }
-                                else {
-                                    links[i].href = originalURL + "/" + selectedGroupName; // queryString;
-                                }
-                            }
-                            else {
-                                links[i].href = 'javascript:;';
-                            }
-                        }
-                        catch (err) {
-                        }
-                    }
-
+                    
                     $('#dllUsername').bind('click', function (event) {
                         $('#dllUsername').hide();
                     });
@@ -123,16 +102,6 @@ Fanex.ExtAcc.Header = {
                             }
                             else {
                                 location.href = location.protocol + '//' + location.host + resolveClientUrl('') + 'Home/Index/' + selectedGroupName;
-                            }
-
-                            var links = $('a');
-                            for (var i = 0; i < links.length; i++) {
-                                if ($(links[i]).attr('ignorehref') != '1' && links[i].href.indexOf('javascript') < 0 && links[i].href.indexOf('Fanex') < 0) {
-                                    links[i].href = links[i].href.substr(0, links[i].href.lastIndexOf('/')) + "/" + selectedGroupName;
-                                }
-                                else {
-                                    links[i].href = 'javascript:;';
-                                }
                             }
                         }
                     });
