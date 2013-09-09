@@ -1,12 +1,12 @@
-﻿body,html, div, span
+﻿body,html, div, span, input
 {
 	font-family: Verdana, Tahoma, Helvetica, Arial, sans-serif;
 }
 input[type=text]
 {
+    font-family: Verdana, Tahoma, Helvetica, Arial, sans-serif;
     font-size: 11px;
     margin-top: 1px;
-    font-family: Tahoma;
 }
 .statusInfo
 {
