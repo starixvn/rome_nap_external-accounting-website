@@ -2339,7 +2339,7 @@ function setEventForCheckbox() {
     var gameRows = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length;
     for (var i = 0; i < gameRows; i++) {
         var items = document.getElementsByName('gameRow' + i);
-        if (items[0].type == 'checkbox') {
+        if (items && items[0] && items[0].type == 'checkbox') {
             for (var j = 0; j < items.length; j++) {
                 items[j].onclick = onchangeCheckbox;
             }
