@@ -1062,7 +1062,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             var row = '<div class="customerInfoBlock1" style="margin: 0px">' +
                 gameSetting[i].name +
                 '</div>' +
-                '<div class="customerInfoBlock2" style="width: 675px; height: auto">' +
+                '<div class="customerInfoBlock2" style="width: 675px; ' + (bettingLimitItem == '' ? '"' : 'height: auto"') + '>' +
                 bettingLimitItem +
                 '</div>';
 
