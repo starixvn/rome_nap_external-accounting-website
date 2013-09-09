@@ -76,6 +76,7 @@ Fanex.ExtAcc = {
                 $('#contentSplitter').html(result);
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                    Fanex.ExtAcc.Customer.LoadFromLeftPanel = false;
                     Fanex.ExtAcc.Customer.Init();
                 }
 

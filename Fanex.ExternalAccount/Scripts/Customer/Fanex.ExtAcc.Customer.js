@@ -1257,8 +1257,9 @@ Fanex.ExtAcc.Customer = {
             else {
                 $('#msgNoinfo').css('display', 'none');
                 $('#jqgrid').css('display', 'block');
-                $('#exporttoexcel').css('display', 'block');
-                $('#breadcrumbs').css('display', 'block');
+
+                $('#exporttoexcel').show();
+
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
             }

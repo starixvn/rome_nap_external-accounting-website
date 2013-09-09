@@ -21,7 +21,7 @@ function LeftPanelController($scope) {
                     break;
             }
         }
-    };    
+    };
 
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -33,6 +33,40 @@ function LeftPanelController($scope) {
         var interval = setInterval(function () {
             if (parent.document.getElementById('customerListGrid')) {
                 clearInterval(interval);
+
+                parent.Fanex.ExtAcc.InitSuggestion();
+
+                parent.$('#exporttoexcel').unbind('click');
+                parent.$('#txtUserName').unbind('keypress');
+                parent.$('#txtUserName').unbind('keyup');
+
+                parent.$('#exporttoexcel').click(function () {
+                    var data = parent.Fanex.ExtAcc.Customer.GetParams();
+
+                    var params = "groupName=" + data.groupName
+                    + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
+                    + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
+                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
+                    parent.document.location.href = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
+                });
+
+                parent.$('#txtUserName').keypress(function (e) {
+                    if (typeof e == 'undefined') e = window.event;
+                    var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
+                    if (key == 13) {
+                        parent.Fanex.ExtAcc.Customer.Search(false);
+
+                        return true;
+                    } else {
+                        return true;
+                    }
+                });
+
+                parent.$('#txtUserName').keyup(function (e) {
+                    if (parent.$('#txtUserName').val().length > 1) {
+                        parent.Fanex.ExtAcc.InitSuggestion();
+                    }
+                });
 
                 var allowDoubleComm = false;
                 var syncBingo = false;
