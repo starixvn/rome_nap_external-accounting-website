@@ -491,6 +491,11 @@ function LoginController($scope) {
     else {
         $scope.model = null;
     }
+
+    $scope.ResetPassword = function (custId, title) {
+        var roleId = model.personalInfo.roleId.value;
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
+    }
 };
 
 function OnlineListController($scope) {
