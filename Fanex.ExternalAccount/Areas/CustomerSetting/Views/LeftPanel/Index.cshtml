@@ -90,7 +90,10 @@
                 <div class="clearBoth">
                     <div class="balanceTitle">{{balances[3].text}}</div>
                     <div class="{{myClass3}}" ng-init="myClass3 = balances[3].value < 0">
-                        <div class="floatLeftBalance R"><a href="javascript:;" ng-click="UpdateCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a></div>
+                        <div class="floatLeftBalance R">
+                            <a id="linkGivenCredit" href="javascript:;" ng-click="EditCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a>
+                            <input ng-blur="RevertCredit()" ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" value="{{balances[3].value}}" ng-hide="true" />
+                        </div>
                     </div>
                 </div>
                 <div ng-hide="{{isHide}}" class="clearBoth">

@@ -375,7 +375,7 @@ function PersonalInfoController($scope, $http) {
     };
 };
 
-function BalanceController($scope) {
+function BalanceController($scope, $http) {
     if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.model) {
         $scope.balanceInfo = $scope.$parent.$parent.model.balanceInfo;
         $scope.model = $scope.balanceInfo;
@@ -383,6 +383,56 @@ function BalanceController($scope) {
     else {
         $scope.model = null;
     }
+
+    $scope.EditCredit = function () {
+        $('#linkGivenCredit').hide();
+        $('#givenCredit').show();
+        $('#givenCredit').focus();
+    };
+
+    $scope.UpdateCredit = function (event) {
+        var keyCode = event.keyCode;
+        var value = event.target.value;
+        var id = $scope.personalInfo.custId.value;
+        var uplineId = userId;
+
+        if (keyCode == 13 && value != '') {
+            parent.Fanex.ExtAcc.BlockUI();
+            $http({
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value),
+                method: 'post',
+                headers: { "X-Requested-With": "XMLHttpRequest" }
+            })
+            .success(function (result) {
+                parent.Fanex.ExtAcc.UnBlockUI();
+
+                $('#linkGivenCredit').show();
+                $('#givenCredit').hide();
+
+                if (result.isSuccess) {
+                    $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
+                    $('#givenCredit').val(value);
+                }
+                else {
+                    $('#givenCredit').val($scope.preVal);
+                    parent.Fanex.ExtAcc.Form.Alert('Update Credit Error', result.errorMessage.formatErrorMessage(), 400, 200, 'alert');
+                }
+            })
+            .error(function (data) {
+                parent.Fanex.ExtAcc.UnBlockUI();
+
+                if (typeof console != 'undefined') {
+                    console.log(data);
+                }
+            });
+        }
+    };
+
+    $scope.RevertCredit = function () {
+        $('#linkGivenCredit').show();
+        $('#givenCredit').val($scope.preVal);
+        $('#givenCredit').hide();
+    };
 };
 
 function DownlineListController($scope, $http) {
