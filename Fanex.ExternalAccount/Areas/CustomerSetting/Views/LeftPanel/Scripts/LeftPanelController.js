@@ -412,9 +412,10 @@ function BalanceController($scope, $http) {
                 if (result.isSuccess) {
                     $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
                     $('#givenCredit').val(value);
+                    $('#givenCredit').attr('onblur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
                 }
                 else {
-                    $('#givenCredit').val($scope.preVal);
+                    $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());
                     parent.Fanex.ExtAcc.Form.Alert('Update Credit Error', result.errorMessage.formatErrorMessage(), 400, 200, 'alert');
                 }
             })
@@ -427,12 +428,12 @@ function BalanceController($scope, $http) {
             });
         }
     };
+};
 
-    $scope.RevertCredit = function () {
-        $('#linkGivenCredit').show();
-        $('#givenCredit').val($scope.preVal);
-        $('#givenCredit').hide();
-    };
+function RevertCredit(preVal) {
+    $('#linkGivenCredit').show();
+    $('#givenCredit').val(preVal.replaceAll(',', '').toFixed(2).formatNumber());
+    $('#givenCredit').hide();
 };
 
 function DownlineListController($scope, $http) {
