@@ -164,7 +164,7 @@ div
 .settingTitle
 {
     float: left;
-    width: 113px;
+    width: 111px;
     margin: 0;
     padding: 0;
 }
@@ -342,5 +342,5 @@ div
 }
 input
 {
-    margin: 3px 1px 0 0;
+    margin: 3px 3px 0 0;
 }
