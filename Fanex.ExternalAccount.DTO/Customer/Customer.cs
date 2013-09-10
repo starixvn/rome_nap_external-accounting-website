@@ -22,6 +22,12 @@ namespace Fanex.ExternalAccount.DTO.Customer
             set;
         }
 
+        public int RoleId
+        {
+            get;
+            set;
+        }
+
         public string Username
         {
             get;

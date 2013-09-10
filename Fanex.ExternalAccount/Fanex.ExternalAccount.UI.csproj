@@ -1594,6 +1594,7 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Error.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Security\AccessDenied.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\SecurityCode\Index.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />

@@ -131,10 +131,7 @@
                     <div class="floatLeftBalance normal R">{{loginInfo[3].value}}</div>
                 </div>
                 <div class="clearBoth">
-                    <div class="balanceTitle bold">{{loginInfo[4].text}}
-                        [<a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId={{model.personalInfo.custId.value}}'), 'Reset Password: <font color=\'#6dcff6\'>{{model.personalInfo.currentLevel.value}}</font>', 415, 190)">
-                                Change
-                         </a>]
+                    <div class="balanceTitle bold">{{loginInfo[4].text}}&nbsp;[<a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId={{model.personalInfo.custId.value}}'), 'Reset Password: <font color=\'#6dcff6\'>{{model.personalInfo.currentLevel.value}}</font>', 415, 190)">Change</a>]
                     </div>
                     <div class="floatLeftBalance normal R">
                             {{loginInfo[4].value}}
@@ -148,11 +145,8 @@
                         </a>
                     </div>
                 </div>
-                <div ng-hide="true" class="clearBoth">
-                    <div class="balanceTitle bold">{{loginInfo[6].text}}
-                        [<a href="javascript:;" onclick="javascript:;">
-                                Change
-                            </a>]</div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" onclick="javascript:;">Change</a>]</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[6].value}}</div>
                 </div>
                 <div class="clearBoth" ng-hide="{{length == 7}}">

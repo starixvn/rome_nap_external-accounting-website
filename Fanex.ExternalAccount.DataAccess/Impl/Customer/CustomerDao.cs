@@ -77,6 +77,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
                         return new Customer()
                         {
                             CustId = reader.ToInt("custid"),
+                            RoleId = reader.ToInt("roleid"),
                             Username = reader.ToString("username"),
                             FirstName = reader.ToString("firstname"),
                             LastName = reader.ToString("lastname"),

@@ -146,9 +146,9 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="objModel">Model object</param>
         /// <returns>PartialViewResult object</returns>
-        protected virtual ActionResult PartialViewBase(object objModel = null)
+        protected virtual ActionResult PartialViewBase(object objModel = null, string viewName = null)
         {
-            return this.PartialView(objModel);
+            return string.IsNullOrWhiteSpace(viewName) ? this.PartialView(objModel) : this.PartialView(viewName, objModel);
         }
 
         /// <summary>

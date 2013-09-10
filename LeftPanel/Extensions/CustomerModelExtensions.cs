@@ -40,10 +40,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Text = "Yesterday Balance" });
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Master Outstanding" });
 
-            //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Masters A/C/S", Tooltip="Total Masters Active/Closed/Suspended" });
-            //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 1, TotalSuspended = 0, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
-            //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 5, TotalClosed = 0, TotalSuspended = 9, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
-
             model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" } };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
 
@@ -111,9 +107,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Text = "Yesterday Balance"
             }); 
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Agent Outstanding" });
-
-            //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Agents A/C/S", Tooltip = "Total Agents Active/Closed/Suspended" });
-            //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 
             model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["superID"]), Text = "Super ID" };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" };
@@ -186,8 +179,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Text = "Yesterday Balance"
             }); 
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Member Outstanding" });
-
-            //model.BalanceInfo.Statuses.Add(new Status { TotalActive = 3, TotalClosed = 2, TotalSuspended = 4, Text = "Members A/C/S", Tooltip = "Total Members Active/Closed/Suspended" });
 
             model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["masterID"]), Text = "Master ID" };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" };

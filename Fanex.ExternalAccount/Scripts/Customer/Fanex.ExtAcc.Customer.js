@@ -170,7 +170,7 @@ Fanex.ExtAcc.Customer = {
             selector: '.editInfo',
             items: {
                 editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } },
-                changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } }
+                changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } }
             },
             trigger: "left",
             ignoreRightClick: true,
@@ -262,7 +262,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsMaster.separator2 = "-----";
         itemsMaster.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
-        itemsMaster.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } };
+        itemsMaster.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } };
 
         if (transferCondition == false) {
             itemsMaster.transferCondition = { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } };
@@ -366,7 +366,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsAgent.separator2 = "-----";
         itemsAgent.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
-        itemsAgent.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } };
+        itemsAgent.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } };
 
         if (transferCondition == false) {
             itemsAgent.transferCondition = { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } };
@@ -500,7 +500,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsMember.separator2 = "-----";
         itemsMember.editInfo = { name: "Edit Info", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } };
-        itemsMember.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 190, false); } };
+        itemsMember.changePassword = { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 350, false); } };
 
         if ($.contextMenu) $.contextMenu('destroy');
         $.contextMenu({
@@ -988,16 +988,16 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    ResetPwd: function () {
+    ResetPwd: function (isMember) {
         if (!Validators.validateInput($('#Password').val())) {
             $('#Password').focus();
-            Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            Validators.show($('#Password').get(0), 'This field is required');
             return false;
         }
 
-        if (!Validators.validatePassword($('#Password').val())) {
+        if (!this.validatePassword($('#Password').val(), isMember)) {
             $('#Password').focus();
-            Validators.showDown($('#Password').get(0), 'Password must have at least 6 characters, including at least 2 letters and at least 2 digits. (e.g:pass22)', 0, 10, 41, -10, 15, 5000);
+            Validators.show($('#Password').get(0), 'Your password does not meet the minimum security requirement');
             return false;
         }
 
@@ -1007,9 +1007,9 @@ Fanex.ExtAcc.Customer = {
             return false;
         }
 
-        if (!Validators.validatePassword($('#confirmPwd').val())) {
+        if (!this.validatePassword($('#confirmPwd').val(), isMember)) {
             $('#Password').focus();
-            Validators.show($('#confirmPwd').get(0), 'Password must have at least 6 characters, including at least 2 letters and at least 2 digits. (e.g:pass22)', null, null, 5000);
+            Validators.show($('#confirmPwd').get(0), 'Your password does not meet the minimum security requirement');
             return false;
         }
 
@@ -2253,8 +2253,34 @@ Fanex.ExtAcc.Customer = {
                 });
             }, 1000);
         }
-    }
+    },
+
+    validatePassword: function (str, isMember) {        
+        return isMember ? this.validatePwdMember(str) : this.validatePwdAgent(str);
+    },
+
+    validatePwdAgent: function (str) {
+        var regex1 = /^(?=.*\d).{8,100}$/;
+        var regex2 = /^(?=.*[a-z]).{8,100}$/;
+        var regex3 = /^(?=.*[A-Z]).{8,100}$/;
+        var regex4 = /^(?=.*[\[\]\^\$\.\|\?\*\+\(\)\\~`\!@#%&\-_+={}'""<>:;,]).{8,100}$/;
+        var whiteSpace = /^\S*$/;
+        var case1 = str.search(regex1) != -1 ? 1 : 0;
+        var case2 = str.search(regex2) != -1 ? 1 : 0;
+        var case3 = str.search(regex3) != -1 ? 1 : 0;
+        var case4 = str.search(regex4) != -1 ? 1 : 0;
+        var case5 = str.search(whiteSpace) != -1;
+        return (case1 + case2 + case3 + case4 >= 3) && case5;
+    },
+
+    validatePwdMember: function (str) {
+        var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,10}$/;
+        var whiteSpace = /^\S*$/;
+        var case5 = str.search(whiteSpace) != -1;
+        return (str.search(regex) != -1) && case5;
+    },
 }
+
 /*
 $(document).ready(function () {
     Fanex.ExtAcc.Customer.Init();

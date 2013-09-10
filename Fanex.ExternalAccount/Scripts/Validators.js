@@ -257,33 +257,29 @@ var Validators = {
         return false;
     },
 
-    validatePassword: function (str) {
-        var s = str.toLowerCase();
-        var numbers = "0123456789";
+    validatePassword: function (str, isMember) {        
+        return isMember ? this.validatePwdMember(str) : this.validatePwdAgent(str);
+    },
 
-        var i = 0;
-        var nCount = 0;
+    validatePwdAgent: function (str) {
+        var regex1 = /^(?=.*\d).{8,100}$/;
+        var regex2 = /^(?=.*[a-z]).{8,100}$/;
+        var regex3 = /^(?=.*[A-Z]).{8,100}$/;
+        var regex4 = /^(?=.*[\[\]\^\$\.\|\?\*\+\(\)\\~`\!@#%&\-_+={}'""<>:;,]).{8,100}$/;
+        var whiteSpace = /^\S*$/;
+        var case1 = str.search(regex1) != -1 ? 1 : 0;
+        var case2 = str.search(regex2) != -1 ? 1 : 0;
+        var case3 = str.search(regex3) != -1 ? 1 : 0;
+        var case4 = str.search(regex4) != -1 ? 1 : 0;
+        var case5 = str.search(whiteSpace) != -1;
+        return (case1 + case2 + case3 + case4 >= 3) && case5;
+    },
 
-        while (i < s.length) {
-            (numbers.indexOf(s.substring(i, i + 1)) >= 0) ? nCount++ : false;
-            i++;
-        }
-
-        var validNumber = ((nCount > (s.length - 2)) || nCount < 2 || s.length < 6) ? false : true;
-
-        var letters = "abcdefghijklmnopqrstuvwxyz";
-
-        i = 0;
-        nCount = 0;
-
-        while (i < s.length) {
-            (letters.indexOf(s.substring(i, i + 1)) >= 0) ? nCount++ : false;
-            i++;
-        }
-
-        var validLetter = ((nCount > (s.length - 2)) || nCount < 2 || s.length < 6) ? false : true;
-
-        return validNumber & validLetter;
+    validatePwdMember: function (str) {
+        var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,10}$/;
+        var whiteSpace = /^\S*$/;
+        var case5 = str.search(whiteSpace) != -1;
+        return (str.search(regex) != -1) && case5;
     },
 
     validateName: function (str) {
