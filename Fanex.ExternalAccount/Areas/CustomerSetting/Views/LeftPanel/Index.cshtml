@@ -55,9 +55,9 @@
             </div>
         </div>
         <div id="viewInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
-            <div ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetCustomerList()">{{personalInfo.custList}}</div>
-            <div class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetStatementList({{personalInfo.custId.value}})">Statement</div>
-            <div ng-hide="{{personalInfo.roleId.value != 2}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetBalance({{personalInfo.custId.value}})">Balance</div>
+            <input id="btnCustList" type="button" ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetCustomerList()" value="{{personalInfo.custList}}" />
+            <input id="btnStatement" type="button" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetStatementList({{personalInfo.custId.value}})" value="Statement" />
+            <input id="btnBalance" type="button" ng-hide="{{personalInfo.roleId.value != 2}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetBalance({{personalInfo.custId.value}})" value="Balance" />
         </div>        
         <div id="balanceInfo" class="clearBoth" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <ul class="tabs">

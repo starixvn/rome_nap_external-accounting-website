@@ -273,20 +273,22 @@ div
 {
     width: 99.9%;
 }
-.btnDetail
+#btnCustList, #btnStatement, #btnBalance, .btnDetail
 {
     background: url(../images/btn-original.png) repeat-x;    
     height: 25px;
     border: none;
     border-right: 1px solid #ccc;
+    font-size: 11px;
 }
-.btnDetail:hover
+#btnCustList:hover, #btnStatement:hover, #btnBalance:hover, .btnDetail:hover
 {
     background: url(../images/btn-active.png) repeat-x;
     height: 25px;
     border: none;
     border-right: 1px solid #ccc;
     color: #FFF;
+    font-size: 11px;
 }
 .detail2
 {
