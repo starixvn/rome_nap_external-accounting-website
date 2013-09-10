@@ -605,7 +605,7 @@ Fanex.ExtAcc.Customer = {
                             var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
                             Fanex.ExtAcc.Customer.superDisableP2P = cell.Value.DisableP2P;
                             var len = cell.Value.username.length;
-                            var title = len >= 13 ? ' title="' + cell.Value.username + '"' : '';
+                            var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
 
                             return '<div' + title + '><a id="usr-' + custId + '" href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -705,7 +705,7 @@ Fanex.ExtAcc.Customer = {
                             var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
                             Fanex.ExtAcc.Customer.masterDisableP2P = cell.Value.DisableP2P;
                             var len = cell.Value.username.length;
-                            var title = len >= 13 ? ' title="' + cell.Value.username + '"' : '';
+                            var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
 
                             return '<div' + title + '><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -812,7 +812,7 @@ Fanex.ExtAcc.Customer = {
                             var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ")";
                             Fanex.ExtAcc.Customer.agentDisableP2P = cell.Value.DisableP2P;
                             var len = cell.Value.username.length;
-                            var title = len >= 13 ? ' title="' + cell.Value.username + '"' : '';
+                            var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
 
                             return '<div' + title + '><a href="' + func + '">' + cell.Value.username + '</a></div>';
                         }
@@ -916,7 +916,7 @@ Fanex.ExtAcc.Customer = {
                     { HeaderText: 'Username', Name: 'username', Width: 100,
                         CustomCellRender: function (cell) {
                             var len = cell.Value.username.length;
-                            var title = len >= 13 ? ' title="' + cell.Value.username + '"' : '';
+                            var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
 
                             return '<div' + title + '>' + cell.Value.username + '</div>';
                         }
@@ -2278,7 +2278,7 @@ Fanex.ExtAcc.Customer = {
         var whiteSpace = /^\S*$/;
         var case5 = str.search(whiteSpace) != -1;
         return (str.search(regex) != -1) && case5;
-    },
+    }
 }
 
 /*
