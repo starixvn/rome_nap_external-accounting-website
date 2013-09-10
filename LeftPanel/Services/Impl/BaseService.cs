@@ -30,7 +30,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             throw new NotImplementedException();
         }
 
-        public virtual Result Update(int id, int uplineId, ViewModels.CustomerModel model)
+        public virtual Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             throw new NotImplementedException();
         }

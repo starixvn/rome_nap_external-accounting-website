@@ -72,6 +72,11 @@
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="archive" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="on_user" Plain="0" />
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="main" Plain="0" />
   </Function>
   <Function Name="Customer List">
 		<Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="checkin" Plain="0" />

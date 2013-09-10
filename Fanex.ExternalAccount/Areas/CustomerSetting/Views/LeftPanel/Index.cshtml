@@ -64,21 +64,59 @@
                 <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
                 <li id="tab2"><a href="#tabs-2">Downline List</a></li>
             </ul>
-            <div id="tabs-1" ng-controller="BalanceController">
+            <div id="tabs-1" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
                 <div class="clearBoth">
                     <div class="balanceTitle">{{balanceInfo.currency.text}}</div>
                     <div class="floatLeftBalance R">{{balanceInfo.currency.value}}</div>
                 </div>
-                <div class="clearBoth" ng-repeat="balance in balanceInfo.balances">
-                    <div class="balanceTitle">{{balance.text}}</div>
-                    <div class="{{myClass}}" ng-init="myClass = balance.value < 0">
-                        <div class="floatLeftBalance R">{{balance.value.toFixed(2).formatNumber()}}</div>
+                <div class="clearBoth">
+                    <div class="balanceTitle">{{balances[0].text}}</div>
+                    <div class="{{myClass0}}" ng-init="myClass0 = balances[0].value < 0">
+                        <div class="floatLeftBalance R">{{balances[0].value.toFixed(2).formatNumber()}}</div>
                     </div>
                 </div>
-                <div class="clearBoth" ng-repeat="status in balanceInfo.statuses">
-                    <div class="balanceTitle" title="{{status.tooltip}}">{{status.text}}</div>
-                    <div class="floatLeftBalance R"><span class="blue">{{status.totalActive}}</span>/<span class="red">{{status.totalClosed}}</span>/{{status.totalSuspended}}</div>
-                </div>    
+                <div class="clearBoth">
+                    <div class="balanceTitle">{{balances[1].text}}</div>
+                    <div class="{{myClass1}}" ng-init="myClass1 = balances[1].value < 0">
+                        <div class="floatLeftBalance R">{{balances[1].value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle">{{balances[2].text}}</div>
+                    <div class="{{myClass2}}" ng-init="myClass2 = balances[2].value < 0">
+                        <div class="floatLeftBalance R">{{balances[2].value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle">{{balances[3].text}}</div>
+                    <div class="{{myClass3}}" ng-init="myClass3 = balances[3].value < 0">
+                        <div class="floatLeftBalance R"><a href="javascript:;" ng-click="UpdateCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a></div>
+                    </div>
+                </div>
+                <div ng-hide="{{isHide}}" class="clearBoth">
+                    <div class="balanceTitle">{{balances[4].text}}&nbsp;[<a href="javascript:;" ng-click="CreditDetail()">Detail</a>]</div>
+                    <div class="{{myClass4}}" ng-init="myClass4 = balances[4].value < 0">
+                        <div class="floatLeftBalance R">{{balances[4].value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
+                <div ng-hide="{{isHide}}" class="clearBoth">
+                    <div class="balanceTitle">{{balances[5].text}}</div>
+                    <div class="{{myClass5}}" ng-init="myClass5 = balances[5].value < 0">
+                        <div class="floatLeftBalance R">{{balances[5].value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
+                <div ng-hide="{{isHide}}" class="clearBoth">
+                    <div class="balanceTitle">{{balances[6].text}}</div>
+                    <div class="{{myClass6}}" ng-init="myClass6 = balances[6].value < 0">
+                        <div class="floatLeftBalance R">{{balances[6].value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
+                <div ng-hide="{{isHide}}" class="clearBoth">
+                    <div class="balanceTitle">{{balances[7].text}}</div>
+                    <div class="{{myClass7}}" ng-init="myClass7 = balances[7].value < 0">
+                        <div class="floatLeftBalance R">{{balances[7].value.toFixed(2).formatNumber()}}</div>
+                    </div>
+                </div>
             </div>
             <div style="overflow: hidden" class="auto" id="tabs-2" ng-controller="DownlineListController">
                 <div id="downlines" style="overflow: auto">

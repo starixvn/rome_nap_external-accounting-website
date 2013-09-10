@@ -21,7 +21,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
     {
         DataSet GetCustomerInfo(string username, string groupName = "ACCDDD");
 
-        Result Update(int id, int uplineId, CustomerModel model);
+        Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
         DbResult GetDownlineList(int custid, int pageSize, int pageIndex);
 

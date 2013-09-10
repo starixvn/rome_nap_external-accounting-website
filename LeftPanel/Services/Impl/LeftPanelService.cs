@@ -143,9 +143,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return null;
         }
 
-        public override Result Update(int id, int uplineId, CustomerModel model)
+        public override Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
-            throw new NotImplementedException();
+            return this.data.UpdateGivenCredit(id, uplineId, newGivenCredit);
         }
 
         public override DataTable GetDownlineList(int custid, int pageSize, int pageIndex)

@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
     {
         CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1);
 
-        Result Update(int id, int uplineId, CustomerModel model);
+        Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
         DataTable GetDownlineList(int custid, int pageSize, int pageIndex);
 

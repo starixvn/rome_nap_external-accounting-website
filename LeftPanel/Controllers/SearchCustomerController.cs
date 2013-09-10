@@ -9,12 +9,12 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using System.Web;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Core.Base;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -34,7 +34,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
+            var model = this.service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
 
             return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
         }
@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            var model = service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
+            var model = this.service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
 
             return this.JsonBase(model, new JsonSerializerSettings
             {
@@ -60,11 +60,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Up-line id of customer.</param>
         /// <param name="model">Customer model string.</param>
         /// <returns>JSON object.</returns>
-        public ActionResult UpdatePost(int id, int uplineId, string model)
+        [HttpPost, Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
+        public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
-            var customerModel = JsonConvert.DeserializeObject<CustomerModel>(model);
+            var model = this.service.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
-            return this.JsonBase(null);
+            return this.JsonBase(model, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
     }
 }

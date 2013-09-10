@@ -11,10 +11,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 {
     using System.Collections;
     using System.Data;
+    using Fanex.Data;
     using Fanex.Data.DNAide;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Service.Impl.Report;
 
     /// <summary>
@@ -40,10 +41,25 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
             return null;
         }
-        
-        public Result Update(int id, int uplineId, CustomerModel model)
+
+        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
-            throw new System.NotImplementedException();
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdCredit"))
+            {
+                var param = new Hashtable();
+                param.Add("userid", uplineId);
+                param.Add("custid", id);
+                param.Add("newcredit", newGivenCredit);
+                param.Add("ip", CurrentContext.Instance.Ip4Address);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+
+                objDb.AssignParamValues(param);
+
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
         }
 
 
