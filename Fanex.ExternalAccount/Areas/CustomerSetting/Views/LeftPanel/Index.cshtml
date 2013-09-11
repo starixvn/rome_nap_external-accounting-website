@@ -92,7 +92,7 @@
                     <div class="{{myClass3}}" ng-init="myClass3 = balances[3].value < 0">
                         <div class="floatLeftBalance R">
                             <a id="linkGivenCredit" href="javascript:;" ng-click="EditCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a>
-                            <input onblur="RevertCredit({{preVal}})" ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" value="{{balances[3].value.toFixed(2).formatNumber()}}" ng-hide="true" />
+                            <input style="text-align: right; margin-right: 0" onblur="RevertCredit({{preVal}})" ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" value="{{balances[3].value.toFixed(2).formatNumber()}}" ng-hide="true" />
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                     <a ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
                 </div>    
             </div>
-            <div class="auto" id="tab-3" ng-controller="LoginController" ng-init="lenth = loginInfo.lenth">
+            <div class="auto" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
                 <div class="clearBoth">
                     <div class="balanceTitle bold">{{loginInfo[0].text}}</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[0].value}}</div>
@@ -210,7 +210,7 @@
                     </div>
                     <div class="floatRight percent58">{{item.loginTime.text}}</div>
                 </div>
-                <div ng-hide="onlineList != null && onlineList.length > 0" class="C .font-9px">This user is not online</div>    
+                <div ng-hide="onlineList != null && onlineList.length > 0" class="C">This user is not online</div>    
             </div>
         </div>
     </div>
