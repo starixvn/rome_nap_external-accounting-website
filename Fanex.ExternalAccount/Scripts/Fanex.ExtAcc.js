@@ -76,8 +76,13 @@ Fanex.ExtAcc = {
                 $('#contentSplitter').html(result);
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                    Fanex.ExtAcc.Customer.LoadFromLeftPanel = false;
-                    Fanex.ExtAcc.Customer.Init();
+                    var interval = setInterval(function () {
+                        if (typeof Fanex.ExtAcc.Customer.Init != 'undefined') {
+                            clearInterval(interval);
+
+                            Fanex.ExtAcc.Customer.Init();
+                        }
+                    }, 100);
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
