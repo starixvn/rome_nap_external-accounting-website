@@ -42,8 +42,7 @@
     <Reference Include="CasinoLibrary">
       <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CasinoSetting">
       <HintPath>..\Dependencies\CasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="CasinoUtility">
@@ -73,15 +72,29 @@
     <Reference Include="IBCFile">
       <HintPath>..\Dependencies\IBCFile.dll</HintPath>
     </Reference>
-    <Reference Include="IBCMessage">
-      <HintPath>..\Dependencies\IBCMessage.dll</HintPath>
-    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependencies\IBCUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\ILogger.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Dependencies\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="NetUtility">
+      <HintPath>..\Dependencies\NetUtility.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>

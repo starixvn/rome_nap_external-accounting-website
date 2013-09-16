@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="VirtualSportsController.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="VirtualSportsController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.13">StyleCop</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
 {
@@ -26,8 +29,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
     /// </summary>
     public class VirtualSportsController : BaseController
     {
-        private bool isChanged = false;
-        private List<Fanex.ExternalAccount.DTO.Result> uiResult = new List<Fanex.ExternalAccount.DTO.Result>();
+        private bool _isChanged = false;
+        private List<Fanex.ExternalAccount.DTO.Result> _result = new List<Fanex.ExternalAccount.DTO.Result>();
 
         [Authorization(Function = eFunctions.VirtualSports, Policy = ePolicy.Read)]
         [HttpGet]
@@ -64,27 +67,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             var result = SerializeToJs(ht);
 
             return this.Content(result);
-        }
-
-        internal static string SerializeToJs(Hashtable tb)
-        {
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            return SerializeToJs(tb, settings);
-        }
-
-        internal static string SerializeToJs(Hashtable tb, JsonSerializerSettings settings)
-        {
-            string result = string.Empty;
-
-            foreach (var key in tb.Keys)
-            {
-                var value = tb[key];
-                result += "var " + key + " = " + JsonConvert.SerializeObject(value, Formatting.None, settings) + ";\n";
-            }
-
-            return result;
         }
 
         [Authorization(Function = eFunctions.VirtualSports, Policy = ePolicy.Update)]
@@ -144,7 +126,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                 this.UpdateBettingLimitMessages(currentContext, results.ResultBetSetting);
                 this.UpdatePTMessages(currentContext, results.ResultPT);
 
-                if (!this.isChanged)
+                if (!this._isChanged)
                 {
                     return this.JsonBase(new { errorCode = 50, errorMessage = ViewLang.NoChangeToUpdate });
                 }
@@ -153,11 +135,32 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                 settings.NullValueHandling = NullValueHandling.Ignore;
                 settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-                var responseContent = JsonConvert.SerializeObject(uiResult, Formatting.None, settings);
+                var responseContent = JsonConvert.SerializeObject(this._result, Formatting.None, settings);
                 return this.Content(responseContent);
             }
 
             return this.ViewBase("Error");
+        }
+
+        internal static string SerializeToJs(Hashtable tb)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            return SerializeToJs(tb, settings);
+        }
+
+        internal static string SerializeToJs(Hashtable tb, JsonSerializerSettings settings)
+        {
+            string result = string.Empty;
+
+            foreach (var key in tb.Keys)
+            {
+                var value = tb[key];
+                result += "var " + key + " = " + JsonConvert.SerializeObject(value, Formatting.None, settings) + ";\n";
+            }
+
+            return result;
         }
 
         [NonAction]
@@ -165,7 +168,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         {
             if (results.Count > 0)
             {
-                isChanged = true;
+                this._isChanged = true;
                 string msg = ViewLang.Status + ": ";
 
                 foreach (var r in results)
@@ -181,7 +184,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                         r.ErrorMessage = msg + r.ErrorMessage;
                     }
 
-                    uiResult.Add(new Fanex.ExternalAccount.DTO.Result(errCode, r.ErrorMessage));
+                    this._result.Add(new Fanex.ExternalAccount.DTO.Result(errCode, r.ErrorMessage));
                 }
             }
         }
@@ -191,7 +194,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         {
             if (results.Count > 0)
             {
-                isChanged = true;
+                this._isChanged = true;
                 foreach (var r in results)
                 {
                     int errCode = Convert.ToInt32(r.ErrorCode);
@@ -220,6 +223,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                     {
                                         r.ErrorMessage = msg2 + r.ErrorMessage;
                                     }
+
                                     break;
 
                                 case Constant.AGENT_ROLEID:
@@ -231,6 +235,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                     {
                                         r.ErrorMessage = msg2 + r.ErrorMessage;
                                     }
+
                                     break;
 
                                 case Constant.MEMBER_ROLEID:
@@ -242,6 +247,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                     {
                                         r.ErrorMessage = msg2 + r.ErrorMessage;
                                     }
+
                                     break;
                             }
 
@@ -249,7 +255,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                     }
 
                     string sportName = CacheRef.GetSportName(r.SportTypeId);
-                    uiResult.Add(new Fanex.ExternalAccount.DTO.Result(errCode, sportName + " - " + r.ErrorMessage));
+                    this._result.Add(new Fanex.ExternalAccount.DTO.Result(errCode, sportName + " - " + r.ErrorMessage));
                 }
             }
         }
@@ -259,7 +265,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         {
             if (results.Count > 0)
             {
-                isChanged = true;
+                this._isChanged = true;
                 foreach (var r in results)
                 {
                     int errCode = Convert.ToInt32(r.ErrorCode);
@@ -292,6 +298,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                     {
                                         r.ErrorMessage = msg2 + r.ErrorMessage;
                                     }
+
                                     break;
 
                                 case Constant.AGENT_ROLEID:
@@ -303,6 +310,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                     {
                                         r.ErrorMessage = msg2 + r.ErrorMessage;
                                     }
+
                                     break;
 
                                 case Constant.MEMBER_ROLEID:
@@ -321,6 +329,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                             {
                                                 r.ErrorMessage = msg1 + r.ErrorMessage;
                                             }
+
                                             break;
 
                                         case Constant.MASTER_ROLEID:
@@ -336,6 +345,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                             {
                                                 r.ErrorMessage = msg1 + r.ErrorMessage;
                                             }
+
                                             break;
 
                                         case Constant.AGENT_ROLEID:
@@ -347,8 +357,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                                             {
                                                 r.ErrorMessage = msg2 + r.ErrorMessage;
                                             }
+
                                             break;
                                     }
+
                                     break;
                             }
 
@@ -356,7 +368,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
                     }
 
                     string sportName = CacheRef.GetSportName(r.SportTypeId);
-                    uiResult.Add(new Fanex.ExternalAccount.DTO.Result(errCode, sportName + " - " + r.ErrorMessage));
+                    this._result.Add(new Fanex.ExternalAccount.DTO.Result(errCode, sportName + " - " + r.ErrorMessage));
                 }
             }
         }

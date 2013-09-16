@@ -23,7 +23,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using RemotingRef;
 
     /// <summary>
-    /// Controller for processing live casino setting
+    /// Controller for processing live casino setting.
     /// </summary>
     public class LiveCasinoController : LiveCasinoBase
     {

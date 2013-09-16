@@ -23,7 +23,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
     /// </summary>
     public class ReportService : ServiceBase, IReportService
     {
-        private const string BALANCEUP_DAY_KEY = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
+        private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
         private readonly IReportDAO reportDAO = null;
 
         public ReportService(IReportDAO reportDAO = null)
@@ -31,23 +31,37 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             this.reportDAO = reportDAO ?? new ReportDAO();
         }
 
+        private static ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+
         public static DataTable GetBalanceUpDay()
         {
-            ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
+            DataTable oldBalanceUpDay = ReportService._cache.Get<DataTable>(BalanceUpDayKey);
 
-            object oldData = cache.Get<DataTable>(BALANCEUP_DAY_KEY);
-            if (oldData == null)
+            if (oldBalanceUpDay == null)
             {
-                ReportDAO dao = new ReportDAO();
-                DataTable dt = dao.Age_SelBalanceUpDay();
+                ReportDAO reportDao = new ReportDAO();
 
-                // Store in cache
-                cache.Set<DataTable>(BALANCEUP_DAY_KEY, dt, DateTime.Now.AddMinutes(5));
+                DataTable balanceUpDay = null;
 
-                return dt;
+                try
+                {
+                    balanceUpDay = reportDao.Age_SelBalanceUpDay();
+
+                    if (balanceUpDay != null)
+                    {
+                        // Store in cache
+                        ReportService._cache.Set<DataTable>(ReportService.BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logs.Error(ex.Message);
+                }
+                                
+                return balanceUpDay;
             }
 
-            return oldData as DataTable;
+            return oldBalanceUpDay;
         }
 
         public static DateTime BalanceUpDate

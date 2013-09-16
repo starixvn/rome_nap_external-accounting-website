@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Newtonsoft.Json;
         
     /// <summary>
-    /// JSON class for render JSON to output stream
+    /// JSON class for render JSON to output stream.
     /// </summary>
     public class JsonBase : ActionResult
     {
@@ -38,19 +38,19 @@ namespace Fanex.ExternalAccount.Core.Base
             this.Settings = settings;
         }
 
-        /// <summary>Gets or sets the serializer settings</summary>
+        /// <summary>Gets or sets the serializer settings.</summary>
         public JsonSerializerSettings Settings { get; set; }
 
-        /// <summary>Gets or sets the encoding of the response</summary>
+        /// <summary>Gets or sets the encoding of the response.</summary>
         public Encoding ContentEncoding { get; set; }
 
-        /// <summary>Gets or sets the content type for the response</summary>
+        /// <summary>Gets or sets the content type for the response.</summary>
         public string ContentType { get; set; }
 
-        /// <summary>Gets or sets the body of the response</summary>
+        /// <summary>Gets or sets the body of the response.</summary>
         public object ResponseBody { get; set; }
 
-        /// <summary>Gets the formatting types depending on whether we are in debug mode</summary>
+        /// <summary>Gets the formatting types depending on whether we are in debug mode.</summary>
         private Formatting Formatting
         {
             get
@@ -60,9 +60,9 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Serializes the response and writes it out to the response object
+        /// Serializes the response and writes it out to the response object.
         /// </summary>
-        /// <param name="context">The execution context</param>
+        /// <param name="context">The execution context.</param>
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)

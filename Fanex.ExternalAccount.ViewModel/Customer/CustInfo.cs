@@ -13,7 +13,7 @@
 namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     /// <summary>
-    /// Customer Information
+    /// Customer Information.
     /// </summary>
     public class CustInfo
     {

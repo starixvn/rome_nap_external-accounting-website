@@ -10,7 +10,6 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
 {
     using System.Data;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO;
 

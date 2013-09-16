@@ -52,7 +52,7 @@ namespace Fanex.Puffin.Core.Web
             {
                 return _cacheManager.Get<T>(key);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return default(T);
             }

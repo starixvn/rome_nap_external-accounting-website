@@ -18,26 +18,26 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     /// </summary>
     public class CommissionService : CustomerService, ICommissionService
     {
-        private readonly ICommissionDao dao = new CommissionDao();
+        private readonly ICommissionDao _dao = new CommissionDao();
 
         public ICommissionSetting GetCommission(IRequestContext requestContext)
         {
-            return this.dao.Age_CustomerSelUserComm(requestContext);
+            return this._dao.Age_CustomerSelUserComm(requestContext);
         }
 
         public DTO.Result UpdateCommissionMaster(ICommissionSetting commissionSetting, IRequestContext requestContext)
         {
-            return this.dao.Age_CustomerUpdMasterComm(commissionSetting, requestContext);
+            return this._dao.Age_CustomerUpdMasterComm(commissionSetting, requestContext);
         }
 
         public DTO.Result UpdateCommissionAgent(ICommissionSetting commissionSetting, IRequestContext requestContext)
         {
-            return this.dao.Age_CustomerUpdAgentComm(commissionSetting, requestContext);
+            return this._dao.Age_CustomerUpdAgentComm(commissionSetting, requestContext);
         }
 
         public DTO.Result UpdateCommissionMember(ICommissionSetting commissionSetting, IRequestContext requestContext)
         {
-            return this.dao.Age_CustomerUpdUserComm(commissionSetting, requestContext);
+            return this._dao.Age_CustomerUpdUserComm(commissionSetting, requestContext);
         }
     }
 }

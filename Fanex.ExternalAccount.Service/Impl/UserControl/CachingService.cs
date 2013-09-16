@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="CachingService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.13">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System;
     using Fanex.Caching;
@@ -9,19 +18,19 @@
 
     public class CachingService : ICachingService
     {
-        private static readonly ICache userCache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private readonly IMenuDao menuDao = new MenuDao();
+        private static readonly ICache UserCache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly IMenuDao _menuDao = new MenuDao();
 
         public UserCache GetUserCache(int userId)
         {
-            var result = userCache.Get<UserCache>(userId.ToString());
+            var result = UserCache.Get<UserCache>(userId.ToString());
 
             if (result == null)
             {
-                result = this.menuDao.GetMenuByUserId(userId);
+                result = this._menuDao.GetMenuByUserId(userId);
                 if (result != null)
                 {
-                    userCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddSeconds(30));
+                    UserCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddSeconds(30));
                 }
             }
 
@@ -30,12 +39,12 @@
 
         internal void RemoveUserCache(int userId)
         {
-            userCache.Remove(userId.ToString());
+            UserCache.Remove(userId.ToString());
         }
 
         internal void ClearUserCache()
         {
-            userCache.Clear();
+            UserCache.Clear();
         }
     }
 }

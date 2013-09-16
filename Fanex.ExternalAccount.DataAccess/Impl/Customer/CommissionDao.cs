@@ -22,10 +22,10 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
     public class CommissionDao : DAOBase, ICommissionDao
     {
         /// <summary>
-        /// Get customer commission
+        /// Get customer commission.
         /// </summary>
         /// <param name="requestContext">The request context.</param>
-        /// <returns></returns>
+        /// <returns>ICommissionSetting object.</returns>
         public ICommissionSetting Age_CustomerSelUserComm(IRequestContext requestContext)
         {
             IDataReader reader;
@@ -43,11 +43,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         }
 
         /// <summary>
-        /// Update master commission
+        /// Update master commission.
         /// </summary>
-        /// <param name="commissionSetting"></param>
-        /// <param name="requestContext"></param>
-        /// <returns></returns>
+        /// <param name="commissionSetting">Commission setting.</param>
+        /// <param name="requestContext">Request context object.</param>
+        /// <returns>Result object.</returns>
         public DTO.Result Age_CustomerUpdMasterComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
         {
             Hashtable parameters = new Hashtable();
@@ -64,11 +64,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         }
 
         /// <summary>
-        /// Update agent commission
+        /// Update agent commission.
         /// </summary>
-        /// <param name="commissionSetting"></param>
-        /// <param name="requestContext"></param>
-        /// <returns></returns>
+        /// <param name="commissionSetting">ICommissionSetting object</param>
+        /// <param name="requestContext">IRequestContext object.</param>
+        /// <returns>Result object.</returns>
         public DTO.Result Age_CustomerUpdAgentComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
         {
             Hashtable parameters = new Hashtable();
@@ -85,11 +85,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         }        
 
         /// <summary>
-        /// Update member commission
+        /// Update member commission.
         /// </summary>
-        /// <param name="commissionSetting"></param>
-        /// <param name="requestContext"></param>
-        /// <returns></returns>
+        /// <param name="commissionSetting">Commission setting.</param>
+        /// <param name="requestContext">Request context object.</param>
+        /// <returns>Result object.</returns>
         public DTO.Result Age_CustomerUpdUserComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
         {
             Hashtable parameters = new Hashtable();

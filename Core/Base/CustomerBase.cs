@@ -23,36 +23,37 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.LiveCasinoSetting.Request;
 
     /// <summary>
-    /// Base class for customer controller
+    /// Base class for customer controller.
     /// </summary>
     public class CustomerBase : BaseController
     {
         private const string CasinoNo = "01";
 
-        private readonly ISettingService setting = new SettingService();
-        private readonly IGameSettingService gameSetting = new GameSettingService();
-        private readonly ILogWriterService logWriter = new LogWriterService();
-        private readonly IReportService report = new ReportService();
+        private readonly ISettingService _setting = new SettingService();
+        private readonly IGameSettingService _gameSetting = new GameSettingService();
+        private readonly ILogWriterService _logWriter = new LogWriterService();
+        private readonly IReportService _report = new ReportService();
 
         #region Live Casino
 
         public ActionResult AutoInsertLiveCasinoPost(int custId, int parentId, int uplineRoleId, string groupName)
         {
-            var parentInfo = this.setting.GetCustomerInfo(parentId);
-            var userInfo = this.setting.GetCustomerInfo(custId);
+            var parentInfo = this._setting.GetCustomerInfo(parentId);
+            var userInfo = this._setting.GetCustomerInfo(custId);
 
             if (parentInfo.IsSyncLiveCasino && !userInfo.IsSyncLiveCasino)
             {
                 var table = new DataTable();
-                var result = this.gameSetting.InsertAccount(this.GetInsertAccountRequest(custId, uplineRoleId, groupName), ref table);
+                var result = this._gameSetting.InsertAccount(this.GetInsertAccountRequest(custId, uplineRoleId, groupName), ref table);
 
                 if (string.IsNullOrWhiteSpace(result.ErrorCode))
                 {
                     var custInfo = this.GetCustomerInfo(custId, groupName);
 
-                    this.logWriter.WriteLog(new LogAutoInsertAccount
+                    this._logWriter.WriteLog(new LogAutoInsertAccount
                     {
-                        Action = uplineRoleId == BaseController.Super ? LogActions.AutoInsert_Master : uplineRoleId == BaseController.Master ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
+                        Action = uplineRoleId == BaseController.Super ? LogActions.AutoInsert_Master : 
+                            uplineRoleId == BaseController.Master ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
                         AgentId = custInfo.AgentId,
                         CustId = custId,
                         CustUserName = custInfo.Username,
@@ -128,11 +129,25 @@ namespace Fanex.ExternalAccount.Core.Base
 
                     if (isSuccess)
                     {
-                        CasinoManager.Instance.UpdateCSStatus(custId, true, custInfo.CasinoDisabled, this.CurrentSession.UserId, this.CurrentContext.Ip4Address, 0, "En", string.Empty, string.Empty);
+                        CasinoManager.Instance.UpdateCSStatus(
+                            custId, 
+                            true, 
+                            custInfo.CasinoDisabled, 
+                            this.CurrentSession.UserId, 
+                            this.CurrentContext.Ip4Address, 
+                            0, 
+                            "En", 
+                            string.Empty, 
+                            string.Empty);
                     }
                     else
                     {
-                        customer.RemoveAccount(custInfo.UserName, this.CurrentContext.Ip4Address, this.CurrentSession.CustId, this.CurrentSession.UserName, BaseController.FromSystem);
+                        customer.RemoveAccount(
+                            custInfo.UserName, 
+                            this.CurrentContext.Ip4Address, 
+                            this.CurrentSession.CustId, 
+                            this.CurrentSession.UserName, 
+                            BaseController.FromSystem);
                     }
                 }
 
@@ -187,7 +202,16 @@ namespace Fanex.ExternalAccount.Core.Base
                 if (isSuccess)
                 {
                     var err = string.Empty;
-                    var result = BingoManager.Instance.UpdateBingoStatus(custId, this.CurrentSession.UserId, 0, true, custInfo.BingoDisabled, true, this.CurrentContext.Ip4Address, "En", ref err);
+                    var result = BingoManager.Instance.UpdateBingoStatus(
+                        custId, 
+                        this.CurrentSession.UserId, 
+                        0, 
+                        true, 
+                        custInfo.BingoDisabled, 
+                        true, 
+                        this.CurrentContext.Ip4Address, 
+                        "En", 
+                        ref err);
 
                     return this.JsonBase(new { ErrorCode = result, ErrorMessage = err });
                 }
@@ -203,14 +227,14 @@ namespace Fanex.ExternalAccount.Core.Base
         #endregion
 
         /// <summary>
-        /// Gets customer info
+        /// Gets customer info.
         /// </summary>
-        /// <param name="custId">Customer Id</param>
-        /// <param name="groupName">Group Name that user belongs to</param>
-        /// <returns>CUSTINFO object</returns>
+        /// <param name="custId">Customer Id.</param>
+        /// <param name="groupName">Group Name that user belongs to.</param>
+        /// <returns>CUSTINFO object.</returns>
         private CustInfo GetCustomerInfo(int custId, string groupName)
         {
-            var custInfo = this.report.GetCustomerInfo(groupName, custId, string.Empty, true);
+            var custInfo = this._report.GetCustomerInfo(groupName, custId, string.Empty, true);
 
             if (custInfo == null || custInfo.Rows.Count == 0)
             {
@@ -235,16 +259,18 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets insert account request
+        /// Gets insert account request.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineRoleId">Up-line role id</param>
-        /// <param name="groupName">Group name</param>
-        /// <returns>InsertAccountRequest object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineRoleId">Up-line role id.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>InsertAccountRequest object.</returns>
         private InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
             var custInfo = this.GetCustomerInfo(custId, groupName);
-            var uplineInfo = this.setting.GetCustomerInfo(uplineRoleId == BaseController.Super ? custInfo.SuperId : uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
+            var uplineInfo = this._setting.GetCustomerInfo(
+                uplineRoleId == BaseController.Super ? custInfo.SuperId : 
+                uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
 
             var result = new InsertAccountRequest()
             {

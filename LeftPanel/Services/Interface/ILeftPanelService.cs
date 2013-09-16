@@ -10,8 +10,8 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 {
     using System.Data;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
     /// <summary>
     /// TODO: Update summary.

@@ -19,30 +19,37 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     /// </summary>
     public static class CustomerModelExtensions
     {
+        /// <summary>
+        /// Gets customer model for super level.
+        /// </summary>
+        /// <param name="model">Model object.</param>
+        /// <param name="ds">DataSet object that contains user information.</param>
+        /// <returns>CustomerModel object.</returns>
         public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
             var tableCash = ds.Tables[2];
-
-            model.BalanceInfo.Balances.Add(new ObjectInfo { 
-                Value = Utils.ToDecimal(tableCash.Rows[0]["superCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) + 
-                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]), 
-                Text = "Total Balance" 
-            });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { 
+            model.BalanceInfo.Balances.Add(
+                new ObjectInfo
+                {
+                    Value = Utils.ToDecimal(tableCash.Rows[0]["superCash"]) +
+                            Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
+                            Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
+                            Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
+                    Text = "Total Balance"
+                });
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
                 Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_superCash"]) +
                         Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) + 
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]), 
-                Text = "Yesterday Balance" });
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
+                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
+                Text = "Yesterday Balance"
+            });
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Master Outstanding" });
-
             model.PersonalInfo.Downlines = new List<ObjectInfo> { new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" } };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
-
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
@@ -86,6 +93,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
+        /// <summary>
+        /// Gets customer model for super level.
+        /// </summary>
+        /// <param name="model">Model object.</param>
+        /// <param name="ds">DataSet object that contains user information.</param>
+        /// <returns>CustomerModel object.</returns>
         public static CustomerModel MasterInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -105,7 +118,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
                         Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
                 Text = "Yesterday Balance"
-            }); 
+            });
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Agent Outstanding" });
 
             model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["superID"]), Text = "Super ID" };
@@ -160,6 +173,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
+        /// <summary>
+        /// Gets customer model for super level.
+        /// </summary>
+        /// <param name="model">Model object.</param>
+        /// <param name="ds">DataSet object that contains user information.</param>
+        /// <returns>CustomerModel object.</returns>
         public static CustomerModel AgentInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -177,7 +196,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
                         Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
                 Text = "Yesterday Balance"
-            }); 
+            });
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Member Outstanding" });
 
             model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["masterID"]), Text = "Master ID" };
@@ -232,11 +251,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
+        /// <summary>
+        /// Gets customer model for super level.
+        /// </summary>
+        /// <param name="model">Model object.</param>
+        /// <param name="ds">DataSet object that contains user information.</param>
+        /// <returns>CustomerModel object.</returns>
         public static CustomerModel MemberInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
-
             model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["agentID"]), Text = "Agent ID" };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["memberName"]), Text = "Member" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
@@ -245,7 +269,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
                         new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" },
                     };
-
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>

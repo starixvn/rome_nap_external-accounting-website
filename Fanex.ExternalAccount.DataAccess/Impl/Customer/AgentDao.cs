@@ -24,15 +24,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         #region IData Agents
 
         /// <summary>
-        /// Base function for Agent level
+        /// Base function for Agent level.
         /// </summary>
-        /// <param name="recommend">Id of current level</param>
-        /// <param name="custId">Id of selected user</param>
-        /// <param name="enabled">Enable status</param>
-        /// <param name="closed">Close status</param>
-        /// <param name="suspended">Suspend status</param>
-        /// <param name="groupName">Group name of currency</param>
-        /// <returns>DataTable object</returns>
+        /// <param name="recommend">Id of current level.</param>
+        /// <param name="custId">Id of selected user.</param>
+        /// <param name="enabled">Enable status.</param>
+        /// <param name="closed">Close status.</param>
+        /// <param name="suspended">Suspend status.</param>
+        /// <returns>DataTable object.</returns>
         public DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var param = new Hashtable();
@@ -45,6 +44,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return DbHelper.ExecuteDataTable("EAS_CustomerSelByMAg", param);
         }
 
+        /// <summary>
+        /// Gets transfer options.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>Transfer object.</returns>
         public Transfer GetTransferOption(int custId)
         {
             var param = new Hashtable();

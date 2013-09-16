@@ -28,14 +28,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         #region ICustomerDao Members
 
         #region Search&Copy
+
         /// <summary>
-        /// Check if userName is belong to uplineId.
-        /// Author: Jeff
-        /// Task: Search&Copy
+        /// Checks belonging username.
         /// </summary>
-        /// <param name="userId">int-userid want to check his permission</param>
-        /// <param name="funcId">int-functionid</param>
-        /// <returns>bool</returns>
+        /// <param name="userName">Username to check.</param>
+        /// <param name="uplineId">Id of upper user.</param>
+        /// <param name="custId">Id of customer.</param>
+        /// <param name="isSubAcc">Output to identify whether or not this customer is a sub-account.</param>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>Boolean object.</returns>
         public bool IsUsernameBelong(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
         {
             custId = 0;
@@ -93,8 +95,18 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             }
         }
 
-        public Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,
-                                    string email, string fax, string ip, int userId, int subAccId, string language)
+        public Result EditUserInfo(
+            int custId, 
+            string firstName, 
+            string lastName, 
+            string homePhone, 
+            string mobilePhone,                                    
+            string email, 
+            string fax, 
+            string ip, 
+            int userId, 
+            int subAccId, 
+            string language)
         {
             var param = new Hashtable();
             param.Add("custid", custId);

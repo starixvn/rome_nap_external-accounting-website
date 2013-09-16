@@ -32,8 +32,6 @@ namespace Fanex.Puffin.Core.Web.Security
 
             var pathActionName = controlName + "/" + _mainAction;
 
-            bool hasPermission = false;
-
             var actionPrivilege = CheckPrivilege(pathActionName);
 
             switch (_authenticationType)

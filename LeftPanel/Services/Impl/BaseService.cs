@@ -1,51 +1,73 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="BaseService.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="BaseService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
     using System;
     using System.Data;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.DTO;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class BaseService : ILeftPanelService
     {
-        public int Super { get { return 4; } }
-
-        public int Master { get { return 3; } }
-
-        public int Agent { get { return 2; } }
-
-        public int Member { get { return 1; } }
-
-        public virtual CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
-        {
-            throw new NotImplementedException();
+        public int Agent 
+        { 
+            get 
+            { 
+                return 2; 
+            } 
         }
 
-        public virtual Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
-        {
-            throw new NotImplementedException();
+        public int Master 
+        { 
+            get 
+            { 
+                return 3; 
+            } 
         }
 
+        public int Member 
+        { 
+            get 
+            { 
+                return 1; 
+            }
+        }
+
+        public int Super
+        {
+            get
+            {
+                return 4;
+            }
+        }
+
+        /// <summary>
+        /// Gets cash column.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>String object.</returns>
         public string GetCashColumn(int roleId)
         {
             if (roleId == this.Super)
             {
                 return "superCash";
             }
-            else if(roleId == this.Master)
+            else if (roleId == this.Master)
             {
                 return "masterCash";
             }
-            else if(roleId == this.Agent)
+            else if (roleId == this.Agent)
             {
                 return "agentCash";
             }
@@ -55,26 +77,84 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             }
         }
 
-        public string GetYesterdayCashColumn(int roleId)
+        /// <summary>
+        /// Gets customer cash column.
+        /// </summary>
+        /// <returns>String object.</returns>
+        public string GetCustomerCash()
         {
-            if (roleId == this.Super)
-            {
-                return "yesterday_superCash";
-            }
-            else if (roleId == this.Master)
-            {
-                return "yesterday_masterCash";
-            }
-            else if (roleId == this.Agent)
-            {
-                return "yesterday_agentCash";
-            }
-            else
-            {
-                return "yesterday_cash";
-            }
+            return "customerCash";
         }
 
+        /// <summary>
+        /// Gets customer information.
+        /// </summary>
+        /// <param name="username">Username of customer.</param>
+        /// <param name="groupName">Group name of customer.</param>
+        /// <param name="pageIndex">Current page index.</param>
+        /// <returns>CustomerModel object.</returns>
+        public virtual CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets down-lines of customer.
+        /// </summary>
+        /// <param name="custid">Id of customer.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="pageIndex">Current page index.</param>
+        /// <returns>DataTable object.</returns>
+        public virtual DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets online list user.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <returns>DataRowCollection object.</returns>
+        public virtual DataRowCollection GetOnlineList(int custid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets outstanding column.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>String object.</returns>
+        public string GetOutstandingColumn(int roleId)
+        {
+            var levelName = string.Empty;
+
+            switch (roleId)
+            {
+                case 4:
+                    levelName = "super";
+                    break;
+
+                case 3:
+                    levelName = "master";
+                    break;
+
+                case 2:
+                    levelName = "agent";
+                    break;
+
+                default:
+                    break;
+            }
+
+            return roleId != this.Member ? levelName + "PositionTaking" : "outstanding";
+        }
+
+        /// <summary>
+        /// Gets used column of customer.
+        /// </summary>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>String object.</returns>
         public string GetUsedCreditColumn(int roleId)
         {
             if (roleId == this.Super)
@@ -95,44 +175,48 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             }
         }
 
-        public string GetCustomerCash()
+        /// <summary>
+        /// Gets yester day cash column.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>String object.</returns>
+        public string GetYesterdayCashColumn(int roleId)
         {
-            return "customerCash";
+            if (roleId == this.Super)
+            {
+                return "yesterday_superCash";
+            }
+            else if (roleId == this.Master)
+            {
+                return "yesterday_masterCash";
+            }
+            else if (roleId == this.Agent)
+            {
+                return "yesterday_agentCash";
+            }
+            else
+            {
+                return "yesterday_cash";
+            }
         }
 
+        /// <summary>
+        /// Gets yester cash column of customer.
+        /// </summary>
+        /// <returns>String object.</returns>
         public string GetYesterdayCustomerCash()
         {
             return "yesterday_customerCash";
         }
 
-        public string GetOutstandingColumn(int roleId)
-        {
-            var levelName = string.Empty;
-
-            switch (roleId)
-            {
-                case 4:
-                    levelName = "super";
-                    break;
-                case 3:
-                    levelName = "master";
-                    break;
-                case 2:
-                    levelName = "agent";
-                    break;
-                default:
-                    break;
-            }
-
-            return roleId != this.Member ? levelName + "PositionTaking" : "outstanding";
-        }
-
-        public virtual DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual DataRowCollection GetOnlineList(int custid)
+        /// <summary>
+        /// Updates given credit for customer.
+        /// </summary>
+        /// <param name="id">Id of customer.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <param name="newGivenCredit">New given credit.</param>
+        /// <returns>Result object.</returns>
+        public virtual Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             throw new NotImplementedException();
         }

@@ -12,6 +12,7 @@
 namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System;
+    using System.Configuration;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -22,14 +23,13 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
-    using System.Configuration;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class UserController : BaseController
     {
-        private readonly IUserService userService = new UserService();
+        private readonly IUserService _userService = new UserService();
 
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult UserList()
@@ -53,7 +53,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
         public ActionResult UserListPost(string userName = null, int? groupId = null)
         {
-            var result = this.userService.GetListUsers(userName, groupId);
+            var result = this._userService.GetListUsers(userName, groupId);
 
             if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
@@ -70,7 +70,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
         public ActionResult EditUser(int id)
         {
-            var model = this.userService.GetUserById(id);
+            var model = this._userService.GetUserById(id);
 
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
@@ -94,7 +94,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Update)]
         public ActionResult Edit(int custId, string firstName, string lastName, int groupId)
         {
-            var result = this.userService.EditUser(CurrentSession.UserId, custId, firstName, lastName, CurrentContext.Ip4Address, groupId);
+            var result = this._userService.EditUser(CurrentSession.UserId, custId, firstName, lastName, CurrentContext.Ip4Address, groupId);
 
             return this.JsonBase(result);
         }
@@ -148,7 +148,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Create)]
         public ActionResult Add(string username, string pwd, string firstName, string lastName, int groupId)
         {
-            var result = this.userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId, CurrentContext.Ip4Address);
+            var result = this._userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }
@@ -156,7 +156,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Create)]
         public ActionResult AddExist(string username, int groupId)
         {
-            var result = this.userService.CreateExistUser(CurrentSession.UserId, username, groupId, CurrentContext.Ip4Address);
+            var result = this._userService.CreateExistUser(CurrentSession.UserId, username, groupId, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }
@@ -164,7 +164,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Update)]
         public ActionResult UpdateStatus(int userId, bool isActive)
         {
-            var result = this.userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
+            var result = this._userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }
@@ -172,7 +172,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Update)]
         public ActionResult ResetPwd(int userId, string pwd)
         {
-            var result = this.userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
+            var result = this._userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }
@@ -180,7 +180,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Read)]
         public ActionResult ResetPassword(int id)
         {
-            var model = this.userService.GetUserById(id);
+            var model = this._userService.GetUserById(id);
 
             ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
 
@@ -191,14 +191,14 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 
         public ActionResult ResetPwdOwner(int userId, string pwd)
         {
-            var result = this.userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
+            var result = this._userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }
 
         public ActionResult ResetPasswordOwner(int id)
         {
-            var model = this.userService.GetUserById(id);
+            var model = this._userService.GetUserById(id);
 
             ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
 
@@ -212,7 +212,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var groups = new GroupService().GetListGroup();
             var externalGroup = new LoginService().GroupList();
-            var functionList = this.userService.GetUserFunction(userId);
+            var functionList = this._userService.GetUserFunction(userId);
             var groupId = groups.Where(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().GroupID;
 
             ViewBag.UserID = userId;
@@ -273,7 +273,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageUser, Policy = ePolicy.Update)]
         public ActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
-            var result = this.userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy, CurrentContext.Ip4Address);
+            var result = this._userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }

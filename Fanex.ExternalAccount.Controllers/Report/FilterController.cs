@@ -13,13 +13,13 @@ namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Service.Interface.Report;
-    using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
-    /// Report controller
+    /// Report controller.
     /// </summary>
     public partial class FilterController : BaseController
     {

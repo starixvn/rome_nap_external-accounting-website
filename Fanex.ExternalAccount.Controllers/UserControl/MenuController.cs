@@ -27,11 +27,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     /// </summary>
     public class MenuController : BaseController
     {
-        private readonly IMenuService menuService = null;
+        private readonly IMenuService _menuService = null;
 
         public MenuController()
         {
-            this.menuService = this.menuService ?? new MenuService();
+            this._menuService = this._menuService ?? new MenuService();
         }
 
         [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read, IsAjaxRequest = false)]
@@ -62,7 +62,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
         public ActionResult EditMenu(int id)
         {
-            var model = this.menuService.GetAllMenus().Where(o => o.MenuID == id).FirstOrDefault();
+            var model = this._menuService.GetAllMenus().Where(o => o.MenuID == id).FirstOrDefault();
             var userCache = new CachingService().GetUserCache(CurrentSession.UserId);
 
             model.MenuName = HttpUtility.HtmlDecode(model.MenuName);
@@ -80,7 +80,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var menuId = 0;
 
-            var result = this.menuService.CreateMenu(
+            var result = this._menuService.CreateMenu(
                     name,
                     description,
                     url,
@@ -99,7 +99,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Update)]
         public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
         {
-            var result = this.menuService.UpdateMenu(
+            var result = this._menuService.UpdateMenu(
                     menuId,
                     name,
                     description,
@@ -117,7 +117,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Update)]
         public ActionResult UpdateStatus(int menuId, bool isActive)
         {
-            var result = this.menuService.UpdateMenuStatus(
+            var result = this._menuService.UpdateMenuStatus(
                     menuId,
                     isActive,
                     CurrentSession.CustId);
@@ -128,7 +128,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Delete)]
         public ActionResult Delete(int menuId)
         {
-            var result = this.menuService.DeleteMenu(
+            var result = this._menuService.DeleteMenu(
                     menuId,
                     CurrentSession.CustId);
 
@@ -138,7 +138,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
         private List<Menu> GetAllMenus()
         {
-            var menuList = this.menuService.GetAllMenus();
+            var menuList = this._menuService.GetAllMenus();
             var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
@@ -163,11 +163,6 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             foreach (var parent in parents)
             {
                 list.Add(parent);
-                //var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.MenuID);
-                //if (items.Count() > 0)
-                //{
-                //    list.AddRange(items);
-                //}
             }
 
             return list;

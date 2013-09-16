@@ -27,9 +27,9 @@ namespace Fanex.ExternalAccount.Core.Context
 
     public class AuthorizationAttribute : AuthorizeAttribute
     {
-        private readonly ILoginService userService = new LoginService();
-        private readonly ICachingService cachingService = new CachingService();
-        private bool isAjax = true;
+        private readonly ILoginService _userService = new LoginService();
+        private readonly ICachingService _cachingService = new CachingService();
+        private bool _isAjax = true;
 
         public AuthorizationAttribute()
         {
@@ -41,8 +41,8 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public bool IsAjaxRequest 
         {
-            get { return isAjax;} 
-            set { this.isAjax = value; } 
+            get { return this._isAjax; } 
+            set { this._isAjax = value; } 
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -146,11 +146,11 @@ namespace Fanex.ExternalAccount.Core.Context
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
 
-            var onUserId = currentSession.OnUserId;
+            var onuserId = currentSession.OnUserId;
 
-            if (onUserId > 0)
+            if (onuserId > 0)
             {
-                this.userService.Logout(onUserId, currentSession.UserName);
+                this._userService.Logout(onuserId, currentSession.UserName);
                 currentContext.Context.Session.Abandon();
             }
             else
@@ -168,7 +168,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 return false;
             }
 
-            var userCache = this.cachingService.GetUserCache(userId);
+            var userCache = this._cachingService.GetUserCache(userId);
             var policyList = userCache.PolicyList;
             var menuList = userCache.MenuList;
             var foundItems = policyList.Where(x => x.FuncKey == functionKey);

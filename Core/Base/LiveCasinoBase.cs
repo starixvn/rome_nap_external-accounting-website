@@ -29,17 +29,17 @@ namespace Fanex.ExternalAccount.Core.Base
     using Newtonsoft.Json.Serialization;
 
     /// <summary>
-    /// Base controller for live casino setting
+    /// Base controller for live casino setting.
     /// </summary>
     public class LiveCasinoBase : BaseController
     {        
         /// <summary>
-        /// Lock object for synchronization
+        /// Lock object for synchronization.
         /// </summary>
         private static object locker = new object();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LiveCasinoBase"/> class
+        /// Initializes a new instance of the <see cref="LiveCasinoBase"/> class.
         /// </summary>
         public LiveCasinoBase()
         {
@@ -51,7 +51,7 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets or sets property
+        /// Gets or sets property.
         /// </summary>
         protected ISettingService PtSetting
         {
@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets or sets property
+        /// Gets or sets property.
         /// </summary>
         protected IGameSettingService GameSetting
         {
@@ -69,7 +69,7 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets or sets property
+        /// Gets or sets property.
         /// </summary>
         protected IMemberWinLimitService MemberWinLimit
         {
@@ -78,7 +78,7 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets or sets property
+        /// Gets or sets property.
         /// </summary>
         protected ILogWriterService LogWriter
         {
@@ -87,10 +87,10 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets member win limit value
+        /// Gets member win limit value.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <returns>MemberWinLimit object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>MemberWinLimit object.</returns>
         [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
         public ActionResult GetMemberWinLimit(int custId)
         {
@@ -102,11 +102,11 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Checks whether an account is disabled or not
+        /// Checks whether an account is disabled or not.
         /// </summary>
-        /// <param name="username">Username to check</param>
-        /// <param name="groupName">Group name that user belongs to</param>
-        /// <returns>Boolean value</returns>
+        /// <param name="username">Username to check.</param>
+        /// <param name="groupName">Group name that user belongs to.</param>
+        /// <returns>Boolean value.</returns>
         protected bool IsDisableAccount(string username, string groupName)
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
@@ -147,13 +147,13 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Updates member win limit setting
+        /// Updates member win limit setting.
         /// </summary>
-        /// <param name="custId">Updated customer id</param>
-        /// <param name="isDailyAutoReset">Is daily auto reset</param>
-        /// <param name="maxWinLimit">Maximum win limit</param>
-        /// <param name="customer">JSON customer string</param>
-        /// <returns>ActionResult object</returns>
+        /// <param name="custId">Updated customer id.</param>
+        /// <param name="isDailyAutoReset">Is daily auto reset.</param>
+        /// <param name="maxWinLimit">Maximum win limit.</param>
+        /// <param name="customer">JSON customer string.</param>
+        /// <returns>ActionResult object.</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -183,12 +183,12 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Updates game setting info
+        /// Updates game setting info.
         /// </summary>
-        /// <param name="uplineRoleId">Role id of up-line</param>
-        /// <param name="custId">Customer id</param>
-        /// <param name="customer">Customer string object</param>
-        /// <returns>JSON string object</returns>
+        /// <param name="uplineRoleId">Role id of up-line.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="customer">Customer string object.</param>
+        /// <returns>JSON string object.</returns>
         protected List<object> UpdateGameSetting(int uplineRoleId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -204,7 +204,9 @@ namespace Fanex.ExternalAccount.Core.Base
 
             if (oldGameTypes == null || oldGameTypes.Count == 0)
             {
-                oldGameTypes = this.GameSetting.GetByCustomerId(uplineRoleId == BaseController.Super ? req.SuperId : uplineRoleId == BaseController.Master ? req.MasterId : req.AgentId);
+                oldGameTypes = this.GameSetting.GetByCustomerId(
+                    uplineRoleId == BaseController.Super ? req.SuperId : 
+                    uplineRoleId == BaseController.Master ? req.MasterId : req.AgentId);
             }
 
             if (oldGameTypes != null && oldGameTypes.Count > 0 && gameTypes.Count > 0)
@@ -255,11 +257,11 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets customer info
+        /// Gets customer info.
         /// </summary>
-        /// <param name="custId">Customer Id</param>
-        /// <param name="groupName">Group Name that user belongs to</param>
-        /// <returns>CUSTINFO object</returns>
+        /// <param name="custId">Customer Id.</param>
+        /// <param name="groupName">Group Name that user belongs to.</param>
+        /// <returns>CUSTINFO object.</returns>
         protected CustInfo GetCustomerInfo(int custId, string groupName)
         {
             var report = new ReportService();
@@ -288,10 +290,10 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets log action update stake level
+        /// Gets log action update stake level.
         /// </summary>
-        /// <param name="roleId">Role id of customer</param>
-        /// <returns>LogActions object</returns>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>LogActions object.</returns>
         protected LogActions LogActionUpdateStakeLevel(int roleId)
         {
             switch (roleId)
@@ -308,10 +310,10 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets log action manual insert account
+        /// Gets log action manual insert account.
         /// </summary>
-        /// <param name="roleId">Role id of customer</param>
-        /// <returns>LogActions object</returns>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>LogActions object.</returns>
         protected LogActions LogActionManual(int roleId)
         {
             switch (roleId)
@@ -328,16 +330,22 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Synchronizes account manually
+        /// Synchronizes account manually.
         /// </summary>
-        /// <param name="uplineRoleId">Role id of up-line</param>
-        /// <param name="uplineId">Id of up-line</param>
-        /// <param name="custId">Customer id</param>
-        /// <param name="customer">Customer JSON string</param>
-        /// <param name="groupName">Group name that user belongs to</param>
-        /// <param name="isUpdateGameSetting">Boolean value</param>
-        /// <returns>Result object</returns>
-        protected Fanex.LiveCasinoSetting.Model.Result SyncManually(int uplineRoleId, int uplineId, int custId, string customer, string groupName = "ACCINDO", bool isUpdateGameSetting = false)
+        /// <param name="uplineRoleId">Role id of up-line.</param>
+        /// <param name="uplineId">Id of up-line.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <param name="groupName">Group name that user belongs to.</param>
+        /// <param name="isUpdateGameSetting">Boolean value.</param>
+        /// <returns>Result object.</returns>
+        protected Fanex.LiveCasinoSetting.Model.Result SyncManually(
+            int uplineRoleId, 
+            int uplineId, 
+            int custId, 
+            string customer, 
+            string groupName = "ACCINDO", 
+            bool isUpdateGameSetting = false)
         {
             lock (locker)
             {
@@ -359,17 +367,14 @@ namespace Fanex.ExternalAccount.Core.Base
                     // Update PT first
                     if (uplineRoleId == BaseController.Super)
                     {
-                        // Update master PT
                         result = this.UpdateMasterPT(custId, uplineId, customer);
                     }
                     else if (uplineRoleId == BaseController.Master)
                     {
-                        // Update agent PT
                         result = this.UpdateAgentPT(custId, uplineId, customer);
                     }
                     else
                     {
-                        // Update member PT
                         result = this.UpdateMemberPT(custId, uplineId, customer);
                     }
                 }
@@ -381,15 +386,12 @@ namespace Fanex.ExternalAccount.Core.Base
                         // Sync live casino when updated PT
                         var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
 
-                        // Manually insert account first
                         result = this.GameSetting.InsertAccount(req);
 
-                        // Update sync status for acc
                         ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
 
                         var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
 
-                        // Dont have game setting then get by upline
                         if (oldGameTypes == null || oldGameTypes.Count == 0)
                         {
                             oldGameTypes = this.GameSetting.GetByCustomerId(uplineId);
@@ -397,7 +399,6 @@ namespace Fanex.ExternalAccount.Core.Base
 
                         if (oldGameTypes != null || oldGameTypes.Count > 0)
                         {
-                            // Force settings changed
                             oldGameTypes.ForEach(o => o.BettingLimit.ForEach(p =>
                             {
                                 gameTypes.ForEach(q =>
@@ -415,13 +416,10 @@ namespace Fanex.ExternalAccount.Core.Base
                                 });
                             }));
 
-                            // Update game settings
                             var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineRoleId - 1, gameTypes);
 
-                            // Update game settings successfully then sync live casino
                             if (string.IsNullOrWhiteSpace(resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode))
                             {
-                                // Write log manual insert account
                                 var custList = new List<KeyValuePair<int, string>>();
                                 custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
 
@@ -447,7 +445,6 @@ namespace Fanex.ExternalAccount.Core.Base
                                     CustomerList = custList
                                 });
 
-                                // Write log stake level
                                 this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
                                                 {
                                                     Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
@@ -470,12 +467,12 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Update PT
+        /// Update master PT.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineId">Up-line id</param>
-        /// <param name="customer">Customer JSON string</param>
-        /// <returns>Result object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMasterPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -549,12 +546,12 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Update PT
+        /// Update agent PT.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineId">Up-line id</param>
-        /// <param name="customer">Customer JSON string</param>
-        /// <returns>Result object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateAgentPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -628,12 +625,12 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Update PT
+        /// Update member PT.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineId">Up-line id</param>
-        /// <param name="customer">Customer JSON string</param>
-        /// <returns>Result object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -697,12 +694,12 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Update PT
+        /// Update member PT by super.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineId">Up-line id</param>
-        /// <param name="customer">Customer JSON string</param>
-        /// <returns>Result object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
         protected Fanex.LiveCasinoSetting.Model.Result SuperUpdateMemberPT(int custId, int uplineId, string customer)
         {
             var pt = this.PtSetting.SuperGetMemberPTSetting(custId, uplineId);
@@ -741,12 +738,12 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Update PT
+        /// Update member PT by master.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineId">Up-line id</param>
-        /// <param name="customer">Customer JSON string</param>
-        /// <returns>Result object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
         protected Fanex.LiveCasinoSetting.Model.Result MasterUpdateMemberPT(int custId, int uplineId, string customer)
         {
             var pt = this.PtSetting.MasterGetMemberPTSetting(custId, uplineId);
@@ -785,16 +782,18 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
-        /// Gets insert account request
+        /// Gets insert account request.
         /// </summary>
-        /// <param name="custId">Customer id</param>
-        /// <param name="uplineRoleId">Up-line role id</param>
-        /// <param name="groupName">Group name</param>
-        /// <returns>InsertAccountRequest object</returns>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineRoleId">Up-line role id.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>InsertAccountRequest object.</returns>
         protected InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
         {
             var custInfo = this.GetCustomerInfo(custId, groupName);
-            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineRoleId == BaseController.Super ? custInfo.SuperId : uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(
+                uplineRoleId == BaseController.Super ? custInfo.SuperId : 
+                uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
 
             var result = new InsertAccountRequest()
             {

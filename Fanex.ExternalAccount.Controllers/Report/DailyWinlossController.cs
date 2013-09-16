@@ -13,36 +13,37 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using System.Data;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Report;
+    using Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
-    /// Report controller
+    /// Report controller.
     /// </summary>
     public class DailyWinlossController : BaseController
     {
         #region Init DailyWinLoss
 
-        private ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private IReportService reportService = new ReportService();
-        private List<DailyWinLoss> listDailyWinLoss = null;
-        private DateTime winlostDate = DateTime.Today;
-        private string username = string.Empty;
-        private string groupname = string.Empty;
-        private string cacheList = string.Empty;
-        private int roleId = 5;
-        private int viewlevel = 5;
-        private int srecommend = 0;
-        private int mrecommend = 0;
-        private int recommend = 0;
-        private int memberId = 0;
-        private int custId = 0;
-        private string searchName = string.Empty;
+        private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private IReportService _reportService = new ReportService();
+        private List<DailyWinLoss> _listDailyWinLoss = null;
+        private DateTime _winlostDate = DateTime.Today;
+        private string _username = string.Empty;
+        private string _groupname = string.Empty;
+        private string _cacheList = string.Empty;
+        private int _roleId = 5;
+        private int _viewlevel = 5;
+        private int _srecommend = 0;
+        private int _mrecommend = 0;
+        private int _recommend = 0;
+        private int _memberId = 0;
+        private int _custId = 0;
+        private string _searchName = string.Empty;
 
         #endregion Init DailyWinLoss
 
@@ -51,68 +52,19 @@ namespace Fanex.ExternalAccount.Controllers.Report
         {
             return this.PartialViewBase();
         }
-
-        private bool CheckBelonging()
-        {            
-            if (!string.IsNullOrEmpty(this.username))
-            {
-                DataTable customerInfo = this.reportService.GetCustomerInfo(this.groupname, this.custId, this.username, true);
-                if (customerInfo != null)
-                {
-                    this.roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                    if (this.roleId == 4)
-                    {
-                        this.srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                    }
-                    else if (this.roleId == 3)
-                    {
-                        this.srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this.mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                    }
-                    else if (this.roleId == 2)
-                    {
-                        this.srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this.mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                        this.recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                    }
-                    else
-                    {
-                        this.srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this.mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                        this.recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                        this.memberId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public void GetRequestPage()
-        {
-            this.username = CheckRequest.GetStringRequest("username", string.Empty);
-            this.viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
-            this.custId = CheckRequest.GetIntRequest("custid", 0);
-            this.groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
-            this.winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
-        }
-
+                
         [Authorization(Function = eFunctions.DailyWinloss, Policy = ePolicy.Read)]
         public ActionResult GetDailyWinLoss()
         {
             this.GetRequestPage();
-            this.srecommend = CheckRequest.GetIntRequest("srecommend", 0);
-            this.mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
-            this.recommend = CheckRequest.GetIntRequest("recommend", 0);
-            this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.winlostDate.ToString();
+            this._srecommend = CheckRequest.GetIntRequest("srecommend", 0);
+            this._mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
+            this._recommend = CheckRequest.GetIntRequest("recommend", 0);
+            this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._winlostDate.ToString();
 
             if (this.CheckBelonging())
             {
-                if (this.custId != 0)
+                if (this._custId != 0)
                 {
                     return this.GetDailyWinLossDownline();
                 }
@@ -123,82 +75,170 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
             else
             {
-                return this.JsonBase(new { viewlevel = 5, srecommend = this.srecommend, mrecommend = this.mrecommend, recommend = this.recommend, rows = string.Empty });
+                return this.JsonBase(new { viewlevel = 5, srecommend = this._srecommend, mrecommend = this._mrecommend, recommend = this._recommend, rows = string.Empty });
             }
         }
 
         public void GetExportToExcel()
         {
             this.GetRequestPage();
-            this.cacheList = "CacheList" + this.username + this.groupname + this.custId.ToString() + this.winlostDate.ToString();
+            this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._winlostDate.ToString();
 
             if (this.CheckBelonging())
             {
                 // Expired Cache
-                if (this.cache.Get<List<DailyWinLoss>>(this.cacheList) == null)
+                if (this._cache.Get<List<DailyWinLoss>>(this._cacheList) == null)
                 {
                     this.GetDailyWinLoss();
                 }
 
-                var builder = new Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReportBuilder(this.cache.Get<List<DailyWinLoss>>(this.cacheList), false, this.viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
+                var builder = new DailyWinLossReportBuilder(this._cache.Get<List<DailyWinLoss>>(this._cacheList), false, this._viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
 
                 var excelStream = builder.Build();
                 if (excelStream != null)
                 {
-                    this.ExportToExcel(excelStream, LevelName(this.viewlevel) + "DailyWinLoss_" + this.winlostDate.ToString("yyyyMMdd") + ".xls");
+                    this.ExportToExcel(excelStream, this.LevelName(this._viewlevel) + "DailyWinLoss_" + this._winlostDate.ToString("yyyyMMdd") + ".xls");
                     excelStream.Dispose();
                 }
             }
-        }             
+        }
+
+        public void GetRequestPage()
+        {
+            this._username = CheckRequest.GetStringRequest("username", string.Empty);
+            this._viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
+            this._custId = CheckRequest.GetIntRequest("custid", 0);
+            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
+            this._winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
+        }
 
         private ActionResult GetDailyWinLossSearch()
         {
-            if (this.roleId > 3)
+            if (this._roleId > 3)
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLoss(this.winlostDate, this.srecommend, this.groupname);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 4, supername = this.username, mastername = string.Empty, agentname = string.Empty, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLoss(this._winlostDate, this._srecommend, this._groupname);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(new { viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, rows = this._listDailyWinLoss });
             }
-            else if (this.roleId == 3)
+            else if (this._roleId == 3)
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLossSuper(this.winlostDate, this.srecommend, this.mrecommend);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 3, supername = string.Empty, mastername = this.username, agentname = string.Empty, srecommend = this.srecommend, mrecommend = this.mrecommend, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLossSuper(this._winlostDate, this._srecommend, this._mrecommend);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 3, 
+                        supername = string.Empty, 
+                        mastername = this._username, 
+                        agentname = string.Empty, 
+                        srecommend = this._srecommend, 
+                        mrecommend = this._mrecommend, 
+                        rows = this._listDailyWinLoss 
+                    });
             }
-            else if (this.roleId == 2)
+            else if (this._roleId == 2)
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLossMaster(this.winlostDate, this.mrecommend, this.recommend);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 2, supername = string.Empty, mastername = string.Empty, agentname = this.username, srecommend = this.srecommend, mrecommend = this.mrecommend, recommend = this.recommend, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLossMaster(this._winlostDate, this._mrecommend, this._recommend);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 2, 
+                        supername = string.Empty, 
+                        mastername = string.Empty, 
+                        agentname = this._username, 
+                        srecommend = this._srecommend, 
+                        mrecommend = this._mrecommend, 
+                        recommend = this._recommend, 
+                        rows = this._listDailyWinLoss 
+                    });
             }
             else
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLossAgent(this.winlostDate, this.recommend, this.memberId);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 1, supername = string.Empty, mastername = string.Empty, agentname = string.Empty, srecommend = this.srecommend, mrecommend = this.mrecommend, recommend = this.recommend, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLossAgent(this._winlostDate, this._recommend, this._memberId);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 1, 
+                        supername = string.Empty, 
+                        mastername = string.Empty, 
+                        agentname = string.Empty, 
+                        srecommend = this._srecommend, 
+                        mrecommend = this._mrecommend, 
+                        recommend = this._recommend, 
+                        rows = this._listDailyWinLoss 
+                    });
             }
         }
 
         private ActionResult GetDailyWinLossDownline()
         {
-            if (this.viewlevel == 4)
+            if (this._viewlevel == 4)
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLossSuper(this.winlostDate, this.custId, 0);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 3, srecommend = this.custId, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLossSuper(this._winlostDate, this._custId, 0);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(new { viewlevel = 3, srecommend = this._custId, rows = this._listDailyWinLoss });
             }
-            else if (this.viewlevel == 3)
+            else if (this._viewlevel == 3)
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLossMaster(this.winlostDate, this.custId, 0);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 2, srecommend = this.srecommend, mrecommend = this.custId, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLossMaster(this._winlostDate, this._custId, 0);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 2, 
+                        srecommend = this._srecommend, 
+                        mrecommend = this._custId, 
+                        rows = this._listDailyWinLoss 
+                    });
             }
             else
             {
-                this.listDailyWinLoss = this.reportService.GetDailyWinLossAgent(this.winlostDate, this.custId, 0);
-                this.cache.Set<List<DailyWinLoss>>(this.cacheList, this.listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 1, srecommend = this.srecommend, mrecommend = this.mrecommend, recommend = this.custId, rows = this.listDailyWinLoss });
+                this._listDailyWinLoss = this._reportService.GetDailyWinLossAgent(this._winlostDate, this._custId, 0);
+                this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                return this.JsonBase(new { viewlevel = 1, srecommend = this._srecommend, mrecommend = this._mrecommend, recommend = this._custId, rows = this._listDailyWinLoss });
             }
+        }
+
+        private bool CheckBelonging()
+        {
+            if (!string.IsNullOrEmpty(this._username))
+            {
+                DataTable customerInfo = this._reportService.GetCustomerInfo(this._groupname, this._custId, this._username, true);
+                if (customerInfo != null)
+                {
+                    this._roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                    if (this._roleId == 4)
+                    {
+                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                    }
+                    else if (this._roleId == 3)
+                    {
+                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                    }
+                    else if (this._roleId == 2)
+                    {
+                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                        this._recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                    }
+                    else
+                    {
+                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                        this._recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                        this._memberId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

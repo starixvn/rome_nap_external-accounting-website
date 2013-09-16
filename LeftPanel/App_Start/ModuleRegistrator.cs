@@ -1,9 +1,21 @@
-﻿using System.Reflection;
-using System.Web.Mvc;
-using Fanex.CustomerSetting.Module.Core.Web.App_Start;
+﻿// --------------------------------------------------------------------------
+// <copyright file="ModuleRegistrator.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
 {
+    using System.Reflection;
+    using System.Web.Mvc;
+    using Fanex.CustomerSetting.Module.Core.Web.App_Start;
+    
+    /// <summary>
+    /// Registers area for left panel.
+    /// </summary>
     public class ModuleRegistrator : AppAreaRegistrator 
     {
         protected override string ControllerName
@@ -23,6 +35,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
             }
         }
 
+        /// <summary>
+        /// Overrides register area method.
+        /// </summary>
+        /// <param name="context">Context of request.</param>
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(

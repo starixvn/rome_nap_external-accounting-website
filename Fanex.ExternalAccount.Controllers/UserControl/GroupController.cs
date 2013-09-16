@@ -27,11 +27,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     /// </summary>
     public class GroupController : BaseController
     {
-        private IGroupService groupService = null;
+        private IGroupService _groupService = null;
 
         public GroupController()
         {
-            this.groupService = this.groupService ?? new GroupService();
+            this._groupService = this._groupService ?? new GroupService();
         }
 
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read, IsAjaxRequest = false)]
@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GroupListPost()
         {
-            var result = this.groupService.GetListGroup();
+            var result = this._groupService.GetListGroup();
 
             if (!CurrentSession.IsITAdmin && !CurrentSession.IsInternalAdmin)
             {
@@ -66,7 +66,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult EditGroup(int id)
         {
-            var model = this.groupService.GetGroupById(id);
+            var model = this._groupService.GetGroupById(id);
 
             model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
             model.Description = HttpUtility.HtmlDecode(model.Description);
@@ -77,7 +77,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
         public ActionResult GetGroupPolicy(int groupId)
         {
-            var model = this.groupService.GetAllGroupPolicy(groupId);
+            var model = this._groupService.GetAllGroupPolicy(groupId);
 
             return this.PartialViewBase(model);
         }
@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var groupId = 0;
 
-            var result = this.groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address, out groupId);
+            var result = this._groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address, out groupId);
 
             return this.JsonBase(result);
         }
@@ -95,7 +95,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
         public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
-            var result = this.groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
 
             return this.JsonBase(result);
         }
@@ -103,7 +103,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Delete)]
         public ActionResult Delete(int groupId)
         {
-            var result = this.groupService.DeleteGroup(groupId, CurrentSession.CustId);
+            var result = this._groupService.DeleteGroup(groupId, CurrentSession.CustId);
 
             return this.JsonBase(result);
         }
@@ -111,7 +111,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
-            var result = this.groupService.EditGroup(groupName, description, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            var result = this._groupService.EditGroup(groupName, description, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
 
             return this.JsonBase(result);
         }
@@ -120,7 +120,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult GrantPermission(int groupId, string groupName)
         {
             var externalGroup = new LoginService().GroupList();
-            var functionList = this.groupService.GetAllGroupPolicy(groupId);
+            var functionList = this._groupService.GetAllGroupPolicy(groupId);
 
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;
@@ -136,9 +136,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 }
             }
 
-            if (!isEditExtGroup) // Continue to check new external groups created after launching
+            if (!isEditExtGroup) 
             {
-                isEditExtGroup = (groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase));
+                // Continue to check new external groups created after launching
+                isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase);
             }
 
             if (isEditExtGroup)
@@ -189,7 +190,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
-            var result = this.groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
 
             return this.JsonBase(result);
         }

@@ -9,7 +9,6 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using Fanex.ExternalAccount.DTO;
@@ -24,12 +23,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     /// </summary>
     public class LeftPanelService : BaseService
     {
-        private readonly ILeftPanelDao data = new LeftPanelDao();
-        private int TotalPages = 1;
+        private readonly ILeftPanelDao _data = new LeftPanelDao();
+        private int _totalPages = 1;
 
+        /// <summary>
+        /// Gets all customer information on left panel.
+        /// </summary>
+        /// <param name="username">Username of customer.</param>
+        /// <param name="groupName">Group name of customer.</param>
+        /// <param name="pageIndex">Page index.</param>
+        /// <returns>CustomerModel object.</returns>
         public override CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
         {
-            var ds = this.data.GetCustomerInfo(username, groupName);
+            var ds = this._data.GetCustomerInfo(username, groupName);
             var model = new CustomerModel();
 
             if (ds != null && ds.Tables.Count > 0)
@@ -50,7 +56,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                         new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
                         new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetOutstandingColumn(roleId)]), Text = "Outstanding" },
                         new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit" },
-                        //new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"] - Utils.ToDecimal(tableCash.Rows[0][this.GetOutstandingColumn(roleId)], Text = "Bet Credit" }
                     }
                 };
 
@@ -107,9 +112,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
                     model.DownlineList.CurrentPage = pageIndex;
 
-                    if (this.TotalPages > 1)
+                    if (this._totalPages > 1)
                     {
-                        for (int i = 1; i <= this.TotalPages; i++)
+                        for (int i = 1; i <= this._totalPages; i++)
                         {
                             model.DownlineList.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
                         }
@@ -143,19 +148,33 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return null;
         }
 
+        /// <summary>
+        /// Updates given credit.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <param name="newGivenCredit">New given credit.</param>
+        /// <returns>Result object.</returns>
         public override Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
-            return this.data.UpdateGivenCredit(id, uplineId, newGivenCredit);
+            return this._data.UpdateGivenCredit(id, uplineId, newGivenCredit);
         }
 
+        /// <summary>
+        /// Gets down-line customers.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="pageIndex">Page index.</param>
+        /// <returns>DataTable object.</returns>
         public override DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
         {
             var dataTable = new DataTable();
-            var dr = this.data.GetDownlineList(custid, pageSize, pageIndex);
+            var dr = this._data.GetDownlineList(custid, pageSize, pageIndex);
 
             if (dr != null && dr.ResultSet != null && dr.ResultSet.Tables.Count > 0)
             {
-                this.TotalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
+                this._totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
 
                 return dr.ResultSet.Tables[0];
             }
@@ -163,9 +182,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return null;
         }
 
+        /// <summary>
+        /// Gets online list customer.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <returns>DataRowCollection object.</returns>
         public override DataRowCollection GetOnlineList(int custid)
         {
-            return this.data.GetOnlineList(custid);
+            return this._data.GetOnlineList(custid);
         }
     }
 }

@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.ViewModel.ManageMenu
+﻿// --------------------------------------------------------------------------
+// <copyright file="CreateMenuModel.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.13">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.ViewModel.ManageMenu
 {
     public class CreateMenuModel
     {

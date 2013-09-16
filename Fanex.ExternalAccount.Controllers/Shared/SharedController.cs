@@ -15,12 +15,12 @@ namespace Fanex.ExternalAccount.Controllers.Shared
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
-    using Fanex.ExternalAccount.Core.Base;
 
     /// <summary>
-    /// Shared controller object
+    /// Shared controller object.
     /// </summary>
     public class SharedController : BaseController
     {
@@ -76,10 +76,5 @@ namespace Fanex.ExternalAccount.Controllers.Shared
         {
             return this.PartialViewBase();
         }
-
-        //public ActionResult _LeftMenu()
-        //{
-        //    return this.PartialViewBase();
-        //}
     }
 }

@@ -29,7 +29,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
             if (customerInfo != null && customerInfo.Rows.Count != 0)
             {
-
                 var ds = new DataSet();
                 var param = new Hashtable();
                 param.Add("username", username);
@@ -62,7 +61,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             }
         }
 
-
         public DbResult GetDownlineList(int custid, int pageSize, int pageIndex)
         {
             DbResult rs = null;
@@ -79,13 +77,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         public DataRowCollection GetOnlineList(int custid)
-        {        
+        {
             DbResult rs = null;
             var param = new Hashtable();
             param.Add("custid", custid);
             rs = DbHelper.ExecuteDbResult("Acc_CustomerSelOnline", param);
 
-            return rs.ResultSet.Tables[0].Rows;        
+            return rs.ResultSet.Tables[0].Rows;
         }
     }
 }

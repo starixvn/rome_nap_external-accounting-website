@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ExternalAccountAuthenticate.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="ExternalAccountAuthenticate.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.13">StyleCop</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Core.Context
 {
@@ -18,62 +21,73 @@ namespace Fanex.ExternalAccount.Core.Context
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
-    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class ExternalAccountAuthenticate : ActionFilterAttribute, IAuthenticate
     {
-        private readonly ILoginService userService = new LoginService();
-        private readonly ICachingService cachingService = new CachingService();
+        private readonly ILoginService _userService = new LoginService();
+        private readonly ICachingService _cachingService = new CachingService();
 
-        private HttpRequest request = null;
-        private HttpResponse response = null;
+        private HttpRequest _request = null;
+        private HttpResponse _response = null;
 
         public ExternalAccountAuthenticate()
         {
             var context = CurrentContext.Instance.Context;
 
-            request = context.Request;
-            response = context.Response;
+            this._request = context.Request;
+            this._response = context.Response;
 
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
 
-            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !this._request.RawUrl.ToLower().Contains("login"))
             {
-                response.Redirect("~/Account/Login");
+                this._response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && this._request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && this._request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
 
-                response.Redirect("~/Home/Index" + group);
+                this._response.Redirect("~/Home/Index" + group);
             }
         }
+
+        public AuthenticateAction.AuthenticationType Policy
+        {
+            get;
+            set;
+        }
+
+        public string Function
+        {
+            get;
+            set;
+        }        
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var context = CurrentContext.Instance.Context;
 
-            request = context.Request;
-            response = context.Response;
+            this._request = context.Request;
+            this._response = context.Response;
 
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
 
-            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !this._request.RawUrl.ToLower().Contains("login"))
             {
-                response.Redirect("~/Account/Login");
+                this._response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && this._request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && this._request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
 
-                response.Redirect("~/Home/Index" + group);
+                this._response.Redirect("~/Home/Index" + group);
             }
 
             try
@@ -93,7 +107,7 @@ namespace Fanex.ExternalAccount.Core.Context
                     return;
                 }
 
-                if (!this.FunctionAuthorization(currentSession.UserId, this.Function, request))
+                if (!this.FunctionAuthorization(currentSession.UserId, this.Function, this._request))
                 {
                     this.CloseConnection(context);
                     return;
@@ -101,18 +115,18 @@ namespace Fanex.ExternalAccount.Core.Context
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex, response);
+                this.ProcessException(ex, this._response);
             }
         }
 
         public bool AllowRead(string action)
         {
-            if(action.Contains("SearchCustomer"))
+            if (action.Contains("SearchCustomer"))
             {
                 return true;
             }
 
-            return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, request);
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
         public bool AllowUpdate(string action)
@@ -122,19 +136,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 return true;
             }
 
-            return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, request);
-        }
-
-        public AuthenticateAction.AuthenticationType Policy
-        {
-            get;
-            set;
-        }
-
-        public string Function
-        {
-            get;
-            set;
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
         private void CloseConnection(HttpContext httpContext)
@@ -182,11 +184,11 @@ namespace Fanex.ExternalAccount.Core.Context
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
 
-            var onUserId = currentSession.OnUserId;
+            var onuserId = currentSession.OnUserId;
 
-            if (onUserId > 0)
+            if (onuserId > 0)
             {
-                this.userService.Logout(onUserId, currentSession.UserName);
+                this._userService.Logout(onuserId, currentSession.UserName);
                 currentContext.Context.Session.Abandon();
             }
             else
@@ -204,13 +206,17 @@ namespace Fanex.ExternalAccount.Core.Context
                 return false;
             }
 
-            var userCache = this.cachingService.GetUserCache(userId);
+            var userCache = this._cachingService.GetUserCache(userId);
             var policyList = userCache.PolicyList;
             var menuList = userCache.MenuList;
             var foundItems = policyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !(request.Headers["X-Requested-With"] != null && request.Headers["X-Requested-With"].Equals("XMLHttpRequest")))
+            if (!request.RawUrl.Equals("/") && 
+                !request.RawUrl.ToLower().Contains("home/index") && 
+                !request.RawUrl.ToLower().Contains("exporttoexcel") && 
+                !(request.Headers["X-Requested-With"] != null && 
+                request.Headers["X-Requested-With"].Equals("XMLHttpRequest")))
             {
                 hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }

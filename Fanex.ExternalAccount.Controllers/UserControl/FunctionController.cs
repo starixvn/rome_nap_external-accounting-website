@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     /// </summary>
     public class FunctionController : BaseController
     {
-        private readonly IFunctionService funcService = new FunctionService();
+        private readonly IFunctionService _funcService = new FunctionService();
 
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
@@ -48,7 +48,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
         public ActionResult FunctionListPost()
         {
-            var funcs = this.funcService.GetAllFunctions();
+            var funcs = this._funcService.GetAllFunctions();
             var parents = funcs.Where(o => o.ParentID == 0);
             var funcsOrder = new List<Function>();
 
@@ -92,9 +92,9 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
         public ActionResult EditFunction(int id)
         {
-            var funcs = this.funcService.GetAllFunctions();
+            var funcs = this._funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
-            var model = this.funcService.GetFunctionPolicy(id);
+            var model = this._funcService.GetFunctionPolicy(id);
             var groups = new GroupService().GetAllGroup();
             var tmp = string.Empty;
             var groupIds = string.Empty;
@@ -147,7 +147,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
         public ActionResult AddFunction()
         {
-            var funcs = this.funcService.GetAllFunctions();
+            var funcs = this._funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = new Function();
             var groups = new GroupService().GetAllGroup();
@@ -176,7 +176,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Update)]
         public ActionResult Edit(int funcId, string name, string desc, int parentId, string parent, int order, string oldGroups, string groups)
         {
-            var result = this.funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, oldGroups, groups);
+            var result = this._funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, oldGroups, groups);
 
             return this.JsonBase(result);
         }
@@ -186,7 +186,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var funcId = 0;
 
-            var result = this.funcService.CreateFunction(name, key, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, groups, out funcId);
+            var result = this._funcService.CreateFunction(name, key, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, groups, out funcId);
 
             return this.JsonBase(result);
         }
@@ -194,7 +194,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Update)]
         public ActionResult UpdateStatus(int funcId, bool isTest)
         {
-            var result = this.funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = this._funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
         }
@@ -202,7 +202,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
         public ActionResult PolicyList(int funcId, bool addNew = false)
         {
-            var groups = this.funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
+            var groups = this._funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
 
             if (!CurrentSession.IsInternalAdmin && !CurrentSession.IsITAdmin)
             {

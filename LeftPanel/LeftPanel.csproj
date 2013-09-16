@@ -45,9 +45,9 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\_Dependencies\Web\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,8 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ModuleRegistrator.cs" />
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Extensions\CustomerModelExtensions.cs" />
@@ -74,7 +72,17 @@
     <Compile Include="Services\Impl\BaseService.cs" />
     <Compile Include="Services\Impl\LeftPanelService.cs" />
     <Compile Include="Services\Interface\ILeftPanelService.cs" />
-    <Compile Include="ViewModels\CustomerInfo.cs" />
+    <Compile Include="ViewModels\BalanceInfo.cs" />
+    <Compile Include="ViewModels\BasicInfo.cs" />
+    <Compile Include="ViewModels\CustomerModel.cs" />
+    <Compile Include="ViewModels\DownlineList.cs" />
+    <Compile Include="ViewModels\Login.cs" />
+    <Compile Include="ViewModels\ObjectInfo.cs" />
+    <Compile Include="ViewModels\OnlineInfo.cs" />
+    <Compile Include="ViewModels\OnlineList.cs" />
+    <Compile Include="ViewModels\PersonalInfo.cs" />
+    <Compile Include="ViewModels\Setting.cs" />
+    <Compile Include="ViewModels\Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\" />

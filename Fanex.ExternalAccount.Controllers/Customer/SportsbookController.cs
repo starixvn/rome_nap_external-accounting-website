@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SportsbookController.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="SportsbookController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.13">StyleCop</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
@@ -23,7 +26,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     /// </summary>
     public class SportsbookController : BaseController
     {
-        private ICommissionService commissionService = new CommissionService();
+        private ICommissionService _commissionService = new CommissionService();
 
         #region Bet Setting
 
@@ -192,7 +195,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            ICommissionSetting commissionSetting = commissionService.GetCommission(currentContext);
+            ICommissionSetting commissionSetting = this._commissionService.GetCommission(currentContext);
 
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
         }
@@ -219,15 +222,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             DTO.Result result = null;
             if (currentLevel == (int)CustomerRole.Master)
             {
-                result = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
+                result = this._commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
             }
             else if (currentLevel == (int)CustomerRole.Agent)
             {
-                result = commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
+                result = this._commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
             }
             else if (currentLevel == (int)CustomerRole.Member)
             {
-                result = commissionService.UpdateCommissionMember(commissionSetting, requestContext);
+                result = this._commissionService.UpdateCommissionMember(commissionSetting, requestContext);
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -252,7 +255,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult EditPTSuperGet(int custId, int parentId)
         {
-            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -271,19 +274,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = ptSetting.GetCustomerForCompanyEditSuper(context);
+            customer = setting.GetCustomerForCompanyEditSuper(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                    new { context = context, customer = customer }, 
+                    new JsonSerializerSettings()
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                        NullValueHandling = NullValueHandling.Ignore,
+                    });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
-            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -303,13 +308,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = ptSetting.GetCustomerForSuperEditMaster(context);
+            customer = setting.GetCustomerForSuperEditMaster(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
@@ -361,7 +368,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult EditPTAgentGet(int custId, int parentId)
         {
-            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -381,13 +388,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = ptSetting.GetCustomerForMasterEditAgent(context);
+            customer = setting.GetCustomerForMasterEditAgent(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
@@ -433,13 +442,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 result = custSrv.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
             }
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult EditPTMemberGet(int custId, int parentId)
         {
-            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -459,13 +469,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = ptSetting.GetCustomerForAgentUpdateMember(context);
+            customer = setting.GetCustomerForAgentUpdateMember(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
@@ -511,13 +523,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 result = custSrv.AgentUpdateMember(customer, requestContext);
             }
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
         {
-            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -538,13 +551,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = ptSetting.GetCustomerForSuperEditMember(context);
+            customer = setting.GetCustomerForSuperEditMember(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
@@ -594,7 +609,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
-            var ptSetting = new Fanex.PTEngine.Services.CustomerService();
+            var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -615,13 +630,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = ptSetting.GetCustomerForMasterEditMember(context);
+            customer = setting.GetCustomerForMasterEditMember(context);
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
@@ -724,11 +741,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             customer.CommissionSetting = null;
             customer.CommissionSetting2 = null;
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
@@ -761,11 +780,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             customer.CommissionSetting = null;
             customer.CommissionSetting2 = null;
 
-            return this.JsonBase(new { context = context, customer = customer }, new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore,
-            });
+            return this.JsonBase(
+                new { context = context, customer = customer }, 
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
         }
 
         [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
