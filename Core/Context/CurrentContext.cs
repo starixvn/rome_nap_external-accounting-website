@@ -18,6 +18,9 @@ namespace Fanex.ExternalAccount.Core.Context
     using System.Web;
     using System.Web.UI;
 
+    /// <summary>
+    /// Current context of session.
+    /// </summary>
     public class CurrentContext : ICurrentContext
     {
         private static string loginErrorMessage = string.Empty;
@@ -123,6 +126,11 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
+        /// <summary>
+        /// Resolves culture information.
+        /// </summary>
+        /// <param name="request">Request object.</param>
+        /// <returns>CultureInfo object.</returns>
         private CultureInfo ResolveCulture(HttpRequest request)
         {
             string[] languages = request.UserLanguages;

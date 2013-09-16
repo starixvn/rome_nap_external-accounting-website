@@ -14,6 +14,9 @@ namespace Fanex.ExternalAccount.Core.Context
     using System.Web.UI;
     using Fanex.ExternalAccount.Utilities;
 
+    /// <summary>
+    /// Current Session.
+    /// </summary>
     public class CurrentSession : Page, ICurrentSession
     {
         #region Constants

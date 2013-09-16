@@ -65,6 +65,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         }
         #endregion
 
+        /// <summary>
+        /// Gets user information.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>Customer object.</returns>
         public Customer UserInfo(int custId)
         {
             var param = new Hashtable();
@@ -95,6 +100,21 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             }
         }
 
+        /// <summary>
+        /// Edits user information.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="homePhone">Home phone.</param>
+        /// <param name="mobilePhone">Mobile phone.</param>
+        /// <param name="email">Email address.</param>
+        /// <param name="fax">Fax number.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="language">Language to get data.</param>
+        /// <returns>Result object.</returns>
         public Result EditUserInfo(
             int custId, 
             string firstName, 
@@ -129,6 +149,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
 
+        /// <summary>
+        /// Resets password.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="password">Password characters.</param>
+        /// <param name="request">Request object.</param>
+        /// <returns>Result object.</returns>
         public Result ResetPassword(int custId, string password, DTO.Request request)
         {
             var param = new Hashtable();
@@ -147,6 +174,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
         }
 
+        /// <summary>
+        /// Config double commission.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="allow">Allow double commission or not.</param>
+        /// <param name="request">Request object.</param>
+        /// <returns>Result object.</returns>
         public Result ConfigDoubleComm(int custId, bool allow, DTO.Request request)
         {
             var param = new Hashtable();

@@ -14,19 +14,26 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
     using NPOI.SS.UserModel;
     using Utility;
 
+    /// <summary>
+    /// Customer list.
+    /// </summary>
     internal class CustomerListPage : TemplateReport, IReportBuilder
     {
-        private CustomerListPageBuilder builder;
+        private CustomerListPageBuilder _builder;
 
         public CustomerListPage(string filePath, CustomerListPageBuilder builder)
             : base(filePath)
         {
-            this.builder = builder;
+            this._builder = builder;
         }
 
+        /// <summary>
+        /// Build workbook.
+        /// </summary>
+        /// <returns>HSSFWorkbook object.</returns>
         public HSSFWorkbook Build()
         {
-            var data = this.builder.Data;
+            var data = this._builder.Data;
             if (data == null)
             {
                 return null;
@@ -35,8 +42,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             ISheet templateSheet = HssfWorkbook.GetSheet("Template");
             ISheet resultSheet = HssfWorkbook.GetSheet("CustomerList");
 
-            // apply Bold on all fonts
-            if (this.builder.IsBold)
+            if (this._builder.IsBold)
             {
                 this.BoldAllFonts();
             }
@@ -44,8 +50,8 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             int rowId = 0;
             int colId = 0;
 
-            // Header
-            string mainTitle = this.builder.Status + (this.builder.RoleId == 1 ? " Member" : (this.builder.RoleId == 2 ? " Agent" : (this.builder.RoleId == 3 ? " Master" : " Super"))) + " List";
+            string mainTitle = this._builder.Status + (this._builder.RoleId == 1 ? " Member" : 
+                (this._builder.RoleId == 2 ? " Agent" : (this._builder.RoleId == 3 ? " Master" : " Super"))) + " List";
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
@@ -61,7 +67,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                 var values = new List<object> { };
                 int totalColumn = 15;
                 int lastColumnIndex = colId + totalColumn - 1;
-                if (this.builder.RoleId != 1)
+                if (this._builder.RoleId != 1)
                 {
                     GetOtherList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex);
                 }
@@ -77,7 +83,26 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             return this.HssfWorkbook;
         }
 
-        private static void GetMemberList(ISheet templateSheet, ISheet resultSheet, ref int rowId, int colId, ref int id, DataRowCollection dtr, ref List<object> values, int lastColumnIndex)
+        /// <summary>
+        /// Gets member list.
+        /// </summary>
+        /// <param name="templateSheet">Template sheet.</param>
+        /// <param name="resultSheet">Result sheet.</param>
+        /// <param name="rowId">Row id of workbook.</param>
+        /// <param name="colId">Column id.</param>
+        /// <param name="id">Customer id.</param>
+        /// <param name="dtr">Data rows.</param>
+        /// <param name="values">Object values.</param>
+        /// <param name="lastColumnIndex">Last column index.</param>
+        private static void GetMemberList(
+            ISheet templateSheet, 
+            ISheet resultSheet, 
+            ref int rowId, 
+            int colId, 
+            ref int id, 
+            DataRowCollection dtr, 
+            ref List<object> values, 
+            int lastColumnIndex)
         {
             string custStatus = "Disabled";
             foreach (DataRow items in dtr)
@@ -113,7 +138,26 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             }
         }
 
-        private static void GetOtherList(ISheet templateSheet, ISheet resultSheet, ref int rowId, int colId, ref int id, DataRowCollection dtr, ref List<object> values, int lastColumnIndex)
+        /// <summary>
+        /// Gets other list.
+        /// </summary>
+        /// <param name="templateSheet">Template sheet.</param>
+        /// <param name="resultSheet">Result sheet.</param>
+        /// <param name="rowId">Row id of workbook.</param>
+        /// <param name="colId">Column id.</param>
+        /// <param name="id">Customer id.</param>
+        /// <param name="dtr">Data rows.</param>
+        /// <param name="values">Object values.</param>
+        /// <param name="lastColumnIndex">Last column index.</param>
+        private static void GetOtherList(
+            ISheet templateSheet, 
+            ISheet resultSheet, 
+            ref int rowId,
+            int colId, 
+            ref int id, 
+            DataRowCollection dtr,
+            ref List<object> values, 
+            int lastColumnIndex)
         {
             string custStatus = "Disabled";
             foreach (DataRow items in dtr)
@@ -146,9 +190,28 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             }
         }
 
-        private static string SetBackgroundRow(ISheet templateSheet, ISheet resultSheet, int rowId, int colId, int lastColumnIndex, string custStatus, DataRow items)
+        /// <summary>
+        /// Sets background row.
+        /// </summary>
+        /// <param name="templateSheet">Template sheet.</param>
+        /// <param name="resultSheet">Result sheet.</param>
+        /// <param name="rowId">Row id of workbook.</param>
+        /// <param name="colId">Column id.</param>
+        /// <param name="lastColumnIndex">Last column index.</param>
+        /// <param name="custStatus">Customer status.</param>
+        /// <param name="items">Data rows.</param>
+        /// <returns>String object.</returns>
+        private static string SetBackgroundRow(
+            ISheet templateSheet, 
+            ISheet resultSheet, 
+            int rowId, 
+            int colId, 
+            int lastColumnIndex, 
+            string custStatus, 
+            DataRow items)
         {
-            custStatus = !Convert.ToBoolean(items["enabled"]) ? "Disabled" : Convert.ToBoolean(items["closed"]) ? "Closed" : Convert.ToBoolean(items["suspended"]) ? "Suspended" : "Open";
+            custStatus = !Convert.ToBoolean(items["enabled"]) ? "Disabled" : Convert.ToBoolean(items["closed"]) ? 
+                "Closed" : Convert.ToBoolean(items["suspended"]) ? "Suspended" : "Open";
             if (custStatus.ToLower() == "open")
             {
                 resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
@@ -165,6 +228,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             {
                 resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
             }
+
             return custStatus;
         }
     }

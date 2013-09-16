@@ -27,6 +27,11 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// </summary>
     public class CaptchaResult : ActionResult
     {
+        /// <summary>
+        /// Gets captcha string.
+        /// </summary>
+        /// <param name="length">Length of captcha.</param>
+        /// <returns>String object.</returns>
         public string GetCaptchaString(int length)
         {
             var varZero = '0';
@@ -51,6 +56,10 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             return strCaptchaString;
         }
 
+        /// <summary>
+        /// Execute result.
+        /// </summary>
+        /// <param name="context">ControllerContext object.</param>
         public override void ExecuteResult(ControllerContext context)
         {
             var bmp = new Bitmap(100, 30);

@@ -12,7 +12,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
     using CasinoLibrary.SBAgent;
     using Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino;
     using Fanex.ExternalAccount.DTO;
@@ -30,7 +29,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
         private const int Member = 1;
 
         private static CasinoManager instance = new CasinoManager();
-        private readonly CasinoDao casino = new CasinoDao();
+        private readonly CasinoDao _casino = new CasinoDao();
 
         public static CasinoManager Instance
         {
@@ -40,11 +39,20 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             }
         }
 
+        /// <summary>
+        /// Gets language of field name.
+        /// </summary>
+        /// <param name="original">Field name.</param>
+        /// <returns>String object.</returns>
         public static string Lang(string original)
         {
             return original + "_En";
         }
 
+        /// <summary>
+        /// Gets game kind detail.
+        /// </summary>
+        /// <returns>GameKindDetail object.</returns>
         public List<GameKindDetail> GetGameKinds()
         {
             var gameKinds = new List<GameKindDetail>();
@@ -52,30 +60,111 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             var dt = basicInfo.GetGameKind(null);
             foreach (DataRow row in dt.Rows)
             {
-                var gameKind = new GameKindDetail(Utils.ToInt32(row["CodeID"]), Utils.ToString(row["CodeNo"]), Utils.ToString(row[Lang("CodeName")]), Utils.ToString(row["CodeSName"]));
+                var gameKind = new GameKindDetail(
+                    Utils.ToInt32(row["CodeID"]), 
+                    Utils.ToString(row["CodeNo"]), 
+                    Utils.ToString(row[Lang("CodeName")]), 
+                    Utils.ToString(row["CodeSName"]));
                 gameKinds.Add(gameKind);
             }
 
             return gameKinds;
         }
 
+        /// <summary>
+        /// Gets casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <returns>Boolean object.</returns>
         public bool GetCasinoStatus(int custid)
         {
-            return this.casino.GetCasinoStatus(custid);
+            return this._casino.GetCasinoStatus(custid);
         }
 
-        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, int userId, string ip, int subAccId, string lang, string username, string subUsername)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <param name="username">Username of customer.</param>
+        /// <param name="subUsername">Sub-username of customer.</param>
+        /// <returns>Boolean object.</returns>
+        public bool UpdateCSStatus(
+            int custid,
+            bool syncCS,
+            bool disabledCS,
+            int userId,
+            string ip,
+            int subAccId,
+            string lang,
+            string username,
+            string subUsername)
         {
-            return this.casino.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang, username, subUsername);
+            return this._casino.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang, username, subUsername);
         }
 
-        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, string username, string subUsername)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="isUpdDownline">Update down-line status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <param name="username">Username of customer.</param>
+        /// <param name="subUsername">Sub-username of customer.</param>
+        /// <returns>Boolean object.</returns>
+        public bool UpdateCSStatus(
+            int custid, 
+            bool syncCS, 
+            bool disabledCS, 
+            bool isUpdDownline, 
+            int userId, 
+            string ip, 
+            int subAccId, 
+            string lang, 
+            string username, 
+            string subUsername)
         {
             string errMsg = string.Empty;
             return this.UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username, subUsername, out errMsg);
         }
 
-        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, string username, string subUsername, out string errMsg)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="isUpdDownline">Update down-line status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <param name="username">Username of customer.</param>
+        /// <param name="subUsername">Sub-username of customer.</param>
+        /// <param name="errMsg">Error message.</param>
+        /// <returns>Boolean object.</returns>
+        public bool UpdateCSStatus(
+            int custid, 
+            bool syncCS, 
+            bool disabledCS, 
+            bool isUpdDownline, 
+            int userId, 
+            string ip, 
+            int subAccId, 
+            string lang, 
+            string username, 
+            string subUsername, 
+            out string errMsg)
         {
             bool status = this.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
             if (!status)
@@ -87,17 +176,48 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, custid, subAccId == 0 ? username : subUsername, 2);
         }
 
-        public bool UpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="isUpdDownline">Update down-line status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <returns>Boolean object.</returns>
+        public bool UpdateCSStatusWithoutSync(
+            int custid, 
+            bool syncCS, 
+            bool disabledCS, 
+            bool isUpdDownline, 
+            int userId, 
+            string ip, 
+            int subAccId, 
+            string lang)
         {
             string errMsg = string.Empty;
             return this.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
         }
 
+        /// <summary>
+        /// Gets customer information.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
         {            
-            return this.casino.GetCustInfoIBC(custid, uplineId);
+            return this._casino.GetCustInfoIBC(custid, uplineId);
         }
 
+        /// <summary>
+        /// Gets game kind details.
+        /// </summary>
+        /// <param name="casinoNo">Casino number.</param>
+        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds(string casinoNo)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -105,13 +225,22 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             var dt = basicInfo.GetGameKind(casinoNo);
             foreach (DataRow row in dt.Rows)
             {
-                var gameKind = new GameKindDetail(Utils.ToInt32(row["CodeID"]), Utils.ToString(row["CodeNo"]), Utils.ToString(row[Lang("CodeName")]), Utils.ToString(row["CodeSName"]));
+                var gameKind = new GameKindDetail(
+                    Utils.ToInt32(row["CodeID"]), 
+                    Utils.ToString(row["CodeNo"]), 
+                    Utils.ToString(row[Lang("CodeName")]), 
+                    Utils.ToString(row["CodeSName"]));
                 gameKinds.Add(gameKind);
             }
 
             return gameKinds;
         }
 
+        /// <summary>
+        /// Gets game kind details.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds(int custId)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -153,6 +282,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameKinds;
         }
 
+        /// <summary>
+        /// Get game kind details.
+        /// </summary>
+        /// <param name="memberId">Member id.</param>
+        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds_EditMember(int memberId)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -177,6 +311,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameKinds;
         }
 
+        /// <summary>
+        /// Gets game type detail.
+        /// </summary>
+        /// <param name="memberId">Member id.</param>
+        /// <param name="gameKindID">Game kind id.</param>
+        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameTypes_EditMember(int memberId, int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -202,6 +342,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameTypes;
         }
 
+        /// <summary>
+        /// Gets game type.
+        /// </summary>
+        /// <param name="gameKindID">Game kind id.</param>
+        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameType(int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -226,6 +371,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameTypes;
         }
 
+        /// <summary>
+        /// Gets game type detail.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="gameKindID">Game kind id.</param>
+        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameType(int custId, int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -267,6 +418,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameTypes;
         }
 
+        /// <summary>
+        /// Gets game kind member by master.
+        /// </summary>
+        /// <param name="memberid">Member id.</param>
+        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds_MasterEditMember(int memberid)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -295,6 +451,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameKinds;
         }
 
+        /// <summary>
+        /// Gets game type detail by master.
+        /// </summary>
+        /// <param name="memberid">Member id.</param>
+        /// <param name="gameKindID">Game kind id.</param>
+        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameTypes_MasterEditMember(int memberid, int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -323,6 +485,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return gameTypes;
         }
 
+        /// <summary>
+        /// Gets customer stake level.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="gameTypeID">Game type id.</param>
+        /// <returns>List stake level detail.</returns>
         public List<StakeLevelDetail> GetCustStakeLevels(int custId, int gameTypeID)
         {
             var stakeLevels = new List<StakeLevelDetail>();
@@ -340,6 +508,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return stakeLevels;
         }
 
+        /// <summary>
+        /// Gets game type by stake level.
+        /// </summary>
+        /// <param name="gameTypeID">Game type id.</param>
+        /// <param name="currencyId">Currency id.</param>
+        /// <returns>List stake level detail.</returns>
         public List<StakeLevelDetail> GetGameTypeStakeLevels(int gameTypeID, int currencyId)
         {
             var stakeLevels = new List<StakeLevelDetail>();
@@ -357,6 +531,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return stakeLevels;
         }
 
+        /// <summary>
+        /// Gets casino setting.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustSettingCS(int custId)
         {
             var cust = new Customer();
@@ -394,6 +573,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return custSetting;
         }
 
+        /// <summary>
+        /// Gets customer setting.
+        /// </summary>
+        /// <param name="custIBC">Customer id.</param>
         public void GetCustSettingCS(ref CasinoCustomer custIBC)
         {
             var cust = new Customer();
@@ -430,408 +613,99 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                 custIBC.NoCSData = false;
             }
         }
-
-        public Result Update(int custId, int roleId, int uplineId, int uplineRoleId, string ip, int modifiedId, string modifiedBy, int fromSystem, CasinoObject casino)
+                       
+        /// <summary>
+        /// Inserts casino setting.
+        /// </summary>
+        /// <param name="customerInfo">Customer information object.</param>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <param name="modifiedDate">Modify date.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="modifiedId">Modify id.</param>
+        /// <param name="modifiedBy">Modify name.</param>
+        /// <param name="fromSystem">From system.</param>
+        /// <param name="enableBonus">Enable bonus.</param>
+        /// <param name="enableJackpot">Enable Jack Pot.</param>
+        /// <returns>Boolean object.</returns>
+        private bool InsertSetting(
+            CasinoCustomer customerInfo, 
+            int roleId,
+            DateTime modifiedDate,
+            string ip,
+            int modifiedId,
+            string modifiedBy,
+            int fromSystem,
+            bool enableBonus, 
+            bool enableJackpot)
         {
-            var errMsg = string.Empty;
-            var customer = new Customer();
-            var pts = casino.Pts;
-            var casinoGame = casino.CasinoGame;
-            var miniGame = casino.MiniGame;
-            var casinoInfo = casino.CasinoInfo;
-            var customerInfo = casino.CustomerInfo;
-            var messages = string.Empty;
-            var settingsInserted = true;
-            var statusUpdated = true;
-            var maxTransferUpdated = false;
-            var casinoPTResult = new Result();
-            var enablePTUpdated = false;
+            Customer customer = new Customer();
 
-            // Check whether casino is synced or not to insert customer settings for direct downline only
-            if (!customerInfo.CasinoSync && uplineRoleId - roleId == 1)
-            {
-                settingsInserted = customer.InsertCustSetting(
-                    "01", 
-                    customerInfo.IBCCustID, 
-                    customerInfo.UserName, 
-                    customerInfo.UserName2, 
-                    customerInfo.FirstName, 
-                    customerInfo.LastName, 
-                    customerInfo.UserPwd, 
-                    customerInfo.Phone, 
-                    customerInfo.MobilePhone, 
-                    customerInfo.Currency, 
-                    customerInfo.Fax, 
-                    customerInfo.Closed, 
-                    customerInfo.Suspend, 
-                    customerInfo.IsEnablePT, 
-                    (decimal)customerInfo.MaxWin, 
-                    (decimal)customerInfo.MaxLose, 
-                    true, 
-                    (decimal)customerInfo.MaxTransferCredit, 
-                    customerInfo.SIBCCustID, 
-                    customerInfo.MIBCCustID, 
-                    customerInfo.AIBCCustID, 
-                    customerInfo.PTByGameType, 
-                    roleId.ToString(), 
-                    DateTime.Now, 
-                    ip, 
-                    modifiedId, 
-                    modifiedBy, 
-                    fromSystem, 
-                    customerInfo.IsAutoReset,
-                    false,
-                    false);
-            }
-
-            // Update Status for direct downline only
-            if (((settingsInserted && !customerInfo.CasinoSync) || customerInfo.CasinoSync) && uplineRoleId - roleId == 1)
-            {                
-                statusUpdated = this.UpdateCSStatus(
-                    custId, 
-                    true, 
-                    customerInfo.CasinoDisabled, 
-                    customerInfo.EnableDownline, 
-                    uplineId, 
-                    string.Empty, 
-                    0, 
-                    "en", 
-                    customerInfo.UserName, 
-                    string.Empty, 
-                    out errMsg);
-            }
-
-            // Enable PT/Update max transfer for direct downline only
-            if (statusUpdated && uplineRoleId - roleId == 1)
-            {
-                enablePTUpdated = customer.UpdateCustEnablePT(custId, true);
-
-                maxTransferUpdated = customer.UpdateMaxTransfer(
-                    custId, 
-                    true, 
-                    (decimal)casinoInfo.MaxTransferCredit, 
-                    casinoInfo.IsAutoReset, 
-                    ip, 
-                    uplineId, 
-                    modifiedBy, 
-                    fromSystem);
-            }
-
-            // Update PT/Betting limit settings
-            casinoPTResult = this.UpdateSettings(
-                custId, 
-                roleId, 
-                uplineId, 
-                uplineRoleId, 
-                ip, 
-                modifiedId, 
-                modifiedBy, 
-                fromSystem, 
-                casino);
-
-            // Gets error messages
-            messages += string.IsNullOrWhiteSpace(errMsg) && casinoPTResult.IsSuccess ? string.Empty : !string.IsNullOrWhiteSpace(errMsg) ? errMsg + "<br />" + casinoPTResult.ErrorMessage : casinoPTResult.ErrorMessage;
-
-            var msgs = messages.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var retMsg = string.Empty;
-
-            foreach (var item in msgs)
-            {
-                retMsg += string.Format("{0}{1}", item, ", ");
-            }
-
-            return new Result(retMsg == string.Empty || retMsg == "<br />" ? 0 : 1, retMsg);
+            return customer.InsertCustSetting(
+                    "01",
+                    customerInfo.IBCCustID,
+                    customerInfo.UserName,
+                    customerInfo.UserName2,
+                    customerInfo.FirstName,
+                    customerInfo.LastName,
+                    customerInfo.UserPwd,
+                    customerInfo.Phone,
+                    customerInfo.MobilePhone,
+                    customerInfo.Currency,
+                    customerInfo.Fax,
+                    customerInfo.Closed,
+                    customerInfo.Suspend,
+                    customerInfo.IsEnablePT,
+                    (decimal)customerInfo.MaxWin,
+                    (decimal)customerInfo.MaxLose,
+                    true,
+                    (decimal)customerInfo.MaxTransferCredit,
+                    customerInfo.SIBCCustID,
+                    customerInfo.MIBCCustID,
+                    customerInfo.AIBCCustID,
+                    customerInfo.PTByGameType,
+                    roleId.ToString(),
+                    DateTime.Now,
+                    ip,
+                    modifiedId,
+                    modifiedBy,
+                    fromSystem,
+                    customerInfo.IsAutoReset,                    
+                    enableBonus,
+                    enableJackpot);
         }
 
-        private bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="isUpdDownline">Update down-line status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <param name="errMsg">Error message.</param>        
+        /// <returns>Boolean object.</returns>
+        private bool DoUpdateCSStatusWithoutSync(
+            int custid, 
+            bool syncCS, 
+            bool disabledCS, 
+            bool isUpdDownline, 
+            int userId, 
+            string ip, 
+            int subAccId, 
+            string lang, 
+            out string errMsg)
         {
-            return this.casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
-        }
-
-        private Result UpdateSettings(int custId, int roleId, int uplineId, int uplineRoleId, string ip, int modifiedId, string modifiedBy, int fromSystem, CasinoObject casino)
-        {
-            var customer = new Customer();
-            var msg = string.Empty;
-            var gameKindTable = (uplineRoleId == Super || uplineRoleId == Master) && roleId == Member ? 
-                this.GameKindsDataTableMember() : this.GameKindsDataTable();
-            var gameTypeTable = (uplineRoleId == Super || uplineRoleId == Master) && roleId == Member ? 
-                this.GameTypesDataTableMember() : this.GameTypesDataTable();
-            var gameStakeTable = this.GameTypesStakesDataTable();
-
-            var gameKinds = this.GetGameKinds(custId);
-                                    
-            if (gameKinds != null && gameKinds.Count == 2)
-            {
-                var casinoPT = casino.Pts[0];
-                var miniPT = casino.Pts[1];
-                var gameKindCasinoID = gameKinds[0].CodeID;
-                var gameKindMiniID = gameKinds[1].CodeID;
-
-                if (uplineRoleId - roleId != 1)
-                {
-                    // Assign data for indirect downline
-                    gameKindTable.Rows.Add(
-                        new object[] 
-                            {
-                                custId,
-                                gameKindCasinoID,
-                                !(uplineRoleId == Super || uplineRoleId == Master) || casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.SPositionTaking,
-                                !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)casinoPT.MPositionTaking,
-                                casinoPT.IsAutoPositionTaking ? 1 : 0,
-                                !casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.AutoPositionTaking,
-                                uplineRoleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
-
-                    gameKindTable.Rows.Add(
-                        new object[] 
-                            {
-                                custId,
-                                gameKindMiniID,
-                                !(uplineRoleId == Super || uplineRoleId == Master) || miniPT.IsAutoPositionTaking ? null : (object)miniPT.SPositionTaking,
-                                !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)miniPT.MPositionTaking,
-                                miniPT.IsAutoPositionTaking ? 1 : 0,
-                                !miniPT.IsAutoPositionTaking ? null : (object)miniPT.AutoPositionTaking,
-                                uplineRoleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
-                }
-                else
-                {
-                    // Assign data for direct downline
-                    gameKindTable.Rows.Add(
-                        new object[]
-                            {
-                                custId,
-                                gameKindCasinoID,
-                                null,
-                                !(roleId == Super || roleId == Master) || casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.SPositionTaking,
-                                !(roleId == Master || roleId == Agent) ? null : (object)casinoPT.MPositionTaking,
-                                !(roleId == Agent || roleId == Member) ? null : (object)casinoPT.APositionTaking,
-                                casinoPT.IsAutoPositionTaking ? 1 : 0,
-                                !casinoPT.IsAutoPositionTaking ? null : (object)casinoPT.AutoPositionTaking,
-                                !(roleId == Super || roleId == Master || roleId == Agent) ? null : (object)casinoPT.MinPositionTaking,
-                                0,
-                                roleId != Super ? null : (object)casinoPT.SMAgentRollingRate,
-                                roleId != Master ? null : (object)casinoPT.MAgentRollingRate,
-                                roleId != Agent ? null : (object)casinoPT.AgentRollingRate,
-                                roleId != Member ? null : (object)casinoPT.MemberRollingRate,
-                                roleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
-
-                    gameKindTable.Rows.Add(
-                        new object[]
-                            {
-                                custId,
-                                gameKindMiniID,
-                                null,
-                                !(roleId == Super || roleId == Master) || miniPT.IsAutoPositionTaking ? null : (object)miniPT.SPositionTaking,
-                                !(roleId == Master || roleId == Agent) ? null : (object)miniPT.MPositionTaking,
-                                !(roleId == Agent || roleId == Member) ? null : (object)miniPT.APositionTaking,
-                                miniPT.IsAutoPositionTaking ? 1 : 0,
-                                !miniPT.IsAutoPositionTaking ? null : (object)miniPT.AutoPositionTaking,
-                                !(roleId == Super || roleId == Master || roleId == Agent) ? null : (object)miniPT.MinPositionTaking,
-                                0,
-                                roleId != Super ? null : (object)miniPT.SMAgentRollingRate,
-                                roleId != Master ? null : (object)miniPT.MAgentRollingRate,
-                                roleId != Agent ? null : (object)miniPT.AgentRollingRate,
-                                roleId != Member ? null : (object)miniPT.MemberRollingRate,
-                                roleId,
-                                ip,
-                                modifiedId, 
-                                modifiedBy, 
-                                fromSystem
-                            });
-                }
-                
-                foreach (var item in casino.CasinoGame)
-                {
-                    if (uplineRoleId - roleId != 1)
-                    {
-                        gameTypeTable.Rows.Add(
-                            new object[] 
-                        {
-                            custId,
-                            item.GameTypeID,
-                            !(uplineRoleId == Super || uplineRoleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
-                            !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)item.Pt.MPositionTaking,
-                            item.Pt.IsAutoPositionTaking ? 1 : 0,
-                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
-                            roleId,
-                            ip,
-                            modifiedId, 
-                            modifiedBy, 
-                            fromSystem
-                        });
-                    }
-                    else
-                    {
-                        gameTypeTable.Rows.Add(
-                            new object[]
-                        {
-                            custId,
-                            item.GameTypeID,
-                            null,
-                            !(roleId == Super || roleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
-                            !(roleId == Master || roleId == Agent) ? null : (object)item.Pt.MPositionTaking,
-                            !(roleId == Agent || roleId == Member) ? null : (object)item.Pt.APositionTaking,
-                            item.Pt.IsAutoPositionTaking ? 1 : 0,
-                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
-                            !(roleId == Super || roleId == Master || roleId == Member) ? null : (object)item.Pt.MinPositionTaking,
-                            0,
-                            roleId != Super ? null : (object)item.Pt.SMAgentRollingRate,
-                            roleId != Master ? null : (object)item.Pt.MAgentRollingRate,
-                            roleId != Agent ? null : (object)item.Pt.AgentRollingRate,
-                            roleId != Member ? null : (object)item.Pt.MemberRollingRate,
-                            this.SelectedStakeLevels(item.StakeLevels),
-                            roleId,
-                            ip,
-                            modifiedId, 
-                            modifiedBy, 
-                            fromSystem
-                        });
-                    }
-
-                    gameStakeTable.Rows.Add(
-                        new object[] 
-                    {
-                        custId,
-                        item.GameTypeID,
-                        this.SelectedStakeLevels(item.StakeLevels),
-                        roleId,
-                        ip,
-                        modifiedId, 
-                        modifiedBy, 
-                        fromSystem
-                    });
-                }
-
-                foreach (var item in casino.MiniGame)
-                {
-                    if (uplineRoleId - roleId != 1)
-                    {
-                        gameTypeTable.Rows.Add(
-                            new object[] 
-                        {
-                            custId,
-                            item.GameTypeID,
-                            !(uplineRoleId == Super || uplineRoleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
-                            !(uplineRoleId == Master || uplineRoleId == Agent) ? null : (object)item.Pt.MPositionTaking,
-                            item.Pt.IsAutoPositionTaking ? 1 : 0,
-                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
-                            roleId,
-                            ip,
-                            modifiedId, 
-                            modifiedBy, 
-                            fromSystem
-                        });
-                    }
-                    else
-                    {
-                        gameTypeTable.Rows.Add(
-                            new object[]
-                        {
-                            custId,
-                            item.GameTypeID,
-                            null,
-                            !(roleId == Super || roleId == Master) || item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.SPositionTaking,
-                            !(roleId == Master || roleId == Agent) ? null : (object)item.Pt.MPositionTaking,
-                            !(roleId == Agent || roleId == Member) ? null : (object)item.Pt.APositionTaking,
-                            item.Pt.IsAutoPositionTaking ? 1 : 0,
-                            !item.Pt.IsAutoPositionTaking ? null : (object)item.Pt.AutoPositionTaking,
-                            !(roleId == Super || roleId == Master || roleId == Member) ? null : (object)item.Pt.MinPositionTaking,
-                            0,
-                            roleId != Super ? null : (object)item.Pt.SMAgentRollingRate,
-                            roleId != Master ? null : (object)item.Pt.MAgentRollingRate,
-                            roleId != Agent ? null : (object)item.Pt.AgentRollingRate,
-                            roleId != Member ? null : (object)item.Pt.MemberRollingRate,
-                            this.SelectedStakeLevels(item.StakeLevels),
-                            roleId,
-                            ip,
-                            modifiedId, 
-                            modifiedBy, 
-                            fromSystem
-                        });
-                    }
-
-                    gameStakeTable.Rows.Add(
-                        new object[] 
-                    {
-                        custId,
-                        item.GameTypeID,
-                        this.SelectedStakeLevels(item.StakeLevels),
-                        roleId,
-                        ip,
-                        modifiedId, 
-                        modifiedBy, 
-                        fromSystem
-                    });
-                }
-
-                var resultKind = new DataTable();
-                var resultType = new DataTable();
-                var resultStake = new DataTable();
-
-                if (uplineRoleId - roleId == 1)
-                {
-                    // Update direct downline
-                    resultKind = customer.UpdateCustGameKind(gameKindTable);
-                    
-                    if (casino.CasinoInfo.PTByGameType)
-                    {
-                        resultType = customer.UpdateCustGameType(gameTypeTable);
-                    }
-                }
-                else
-                {
-                    // Update indirect downline
-                    resultKind = customer.UpdateCustGameKind_EditMember(gameKindTable);
-                    
-                    if (casino.CasinoInfo.PTByGameType)
-                    {
-                        resultType = customer.UpdateCustGameType_EditMember(gameTypeTable);
-                    }
-                }
-
-                resultStake = customer.UpdateCustGameTypeStakeLevel(gameStakeTable);
-
-                // Process error messages
-                foreach (DataRow item in resultKind.Rows)
-                {
-                    msg += item.Field<string>("ErrMsg") + "<br />";
-                }
-
-                if (casino.CasinoInfo.PTByGameType)
-                {
-                    foreach (DataRow item in resultType.Rows)
-                    {
-                        msg += item.Field<string>("ErrMsg") + "<br />";
-                    }
-                }
-
-                foreach (DataRow item in resultStake.Rows)
-                {
-                    msg += item.Field<string>("ErrMsg") + "<br />";
-                }
-                
-                msg = msg.EndsWith("<br />") ? msg.Substring(0, msg.IndexOf("<br />")) : msg;
-
-                return new Result(msg == string.Empty || (resultKind.Rows.Count == 0 && resultType.Rows.Count == 0 && resultStake.Rows.Count == 0) ? 0 : 1, msg);
-            }
-            
-            return new Result(1, "Invalid data input");
-        }
+            return this._casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
+        }        
         
+        /// <summary>
+        /// Gets selected stake levels.
+        /// </summary>
+        /// <param name="stakes">List stake level detail.</param>
+        /// <returns>String object.</returns>
         private string SelectedStakeLevels(List<StakeLevelDetail> stakes)
         {
             var selectedLevels = string.Empty;
@@ -844,6 +718,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return selectedLevels.EndsWith(",") ? selectedLevels.Substring(0, selectedLevels.Length - 1) : selectedLevels;
         }
 
+        /// <summary>
+        /// Gets game kind data table structure.
+        /// </summary>
+        /// <returns>DataTable object.</returns>
         private DataTable GameKindsDataTableMember()
         {
             var dt = new DataTable();
@@ -866,6 +744,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return dt;
         }
 
+        /// <summary>
+        /// Gets game type data table structure.
+        /// </summary>
+        /// <returns>DataTable object.</returns>
         private DataTable GameTypesDataTableMember()
         {
             var dt = new DataTable();
@@ -888,6 +770,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return dt;
         }
 
+        /// <summary>
+        /// Gets game kind data table structure.
+        /// </summary>
+        /// <returns>DataTable object.</returns>
         private DataTable GameKindsDataTable()
         {
             var dt = new DataTable();
@@ -918,6 +804,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return dt;
         }
 
+        /// <summary>
+        /// Gets game type data table structure.
+        /// </summary>
+        /// <returns>DataTable object.</returns>
         private DataTable GameTypesDataTable()
         {
             var dt = new DataTable();
@@ -949,6 +839,10 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             return dt;
         }
 
+        /// <summary>
+        /// Gets game kind data table structure.
+        /// </summary>
+        /// <returns>DataTable object.</returns>
         private DataTable GameTypesStakesDataTable()
         {
             var dt = new DataTable();

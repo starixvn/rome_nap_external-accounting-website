@@ -21,11 +21,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
     /// </summary>
     public class CasinoDao
     {
+        /// <summary>
+        /// Gets customer information.
+        /// </summary>
+        /// <param name="ibcCustId">Customer id.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
         {
             Hashtable param = new Hashtable();
             param.Add("custid", ibcCustId);
-
             DbResult dr = DNAide.Data.DbHelper.Execute("Age_CustomerSelUserInfo", param, 300);
             DataRow row = null;
             CasinoCustomer customerDetail = new CasinoCustomer();
@@ -47,22 +52,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.SIBCCustID = Utils.ToInt32(row["superid"]);
                 customerDetail.MIBCCustID = Utils.ToInt32(row["masterid"]);
                 customerDetail.AIBCCustID = Utils.ToInt32(row["agentid"]);
-
                 customerDetail.GivenCredit = Utils.ToInt32(row["credit"]);
-
                 customerDetail.CasinoSync = Utils.ToBoolean(row["synccasino"]);
                 customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
-
                 customerDetail.LiveCasinoSync = Utils.ToBoolean(row["synclivecasino"]);
                 customerDetail.LiveCasinoDisabled = Utils.ToBoolean(row["disablelivecasino"]);
-
                 customerDetail.IBCCustID = Utils.ToInt32(row["custid"]);
                 customerDetail.UserPwd = Utils.ToString(row["userpwd"]);
                 customerDetail.UpperCustID = uplineId;
                 customerDetail.NoCSData = true;
                 customerDetail.IsEnablePT = true;
-
-                // Get max transfer information
                 CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();                
                 DataTable dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, false);
 
@@ -79,6 +78,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             return customerDetail;
         }
 
+        /// <summary>
+        /// Gets casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <returns>Boolean object.</returns>
         public bool GetCasinoStatus(int custid)
         {
             Hashtable param = new Hashtable();
@@ -88,7 +92,29 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             return Utils.ToBoolean(dr.Outputs["status"]);
         }
 
-        public bool UpdateCSStatus(int custid, bool syncCS, bool disabledCS, int userId, string ip, int subAccId, string lang, string username, string subUsername)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <param name="username">Username of customer.</param>
+        /// <param name="subUsername">Sub-username of customer.</param>
+        /// <returns>Boolean object.</returns>
+        public bool UpdateCSStatus(
+            int custid, 
+            bool syncCS, 
+            bool disabledCS, 
+            int userId, 
+            string ip, 
+            int subAccId, 
+            string lang, 
+            string username, 
+            string subUsername)
         {
             Hashtable param = new Hashtable();
             param.Add("custid", custid);
@@ -114,7 +140,29 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             return cust.UpdateCustEnableCasino(custid, !disabledCS, true, ip, custid, subAccId == 0 ? username : subUsername, 2);
         }
 
-        public bool DoUpdateCSStatusWithoutSync(int custid, bool syncCS, bool disabledCS, bool isUpdDownline, int userId, string ip, int subAccId, string lang, out string errMsg)
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="syncCS">Synchronize casino status.</param>
+        /// <param name="disabledCS">Disabled casino status.</param>
+        /// <param name="isUpdDownline">Update down-line status.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP information.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="lang">Language to get information.</param>
+        /// <param name="errMsg">Error message.</param>        
+        /// <returns>Boolean object.</returns>
+        public bool DoUpdateCSStatusWithoutSync(
+            int custid, 
+            bool syncCS, 
+            bool disabledCS, 
+            bool isUpdDownline, 
+            int userId, 
+            string ip, 
+            int subAccId, 
+            string lang, 
+            out string errMsg)
         {
             Hashtable param = new Hashtable();
             param.Add("custid", custid);

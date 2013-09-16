@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Commission.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="Commission.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.DTO.Customer
 {
@@ -16,32 +19,32 @@ namespace Fanex.ExternalAccount.DTO.Customer
     /// </summary>
     public class Commission
     {
-        public double groupa { get; set; }
+        public double Groupa { get; set; }
 
-        public double groupb { get; set; }
+        public double Groupb { get; set; }
 
-        public double groupc { get; set; }
+        public double Groupc { get; set; }
 
-        public double groupd { get; set; }
+        public double Groupd { get; set; }
 
-        public double discount1x2 { get; set; }
+        public double Discount1x2 { get; set; }
 
-        public double discountcs { get; set; }
+        public double Discountcs { get; set; }
 
-        public double discountnumber { get; set; }
+        public double Discountnumber { get; set; }
 
-        public double groupa_max { get; set; }
+        public double Groupa_max { get; set; }
 
-        public double groupb_max { get; set; }
+        public double Groupb_max { get; set; }
 
-        public double groupc_max { get; set; }
+        public double Groupc_max { get; set; }
 
-        public double groupd_max { get; set; }
+        public double Groupd_max { get; set; }
 
-        public double discount1x2_max { get; set; }
+        public double Discount1x2_max { get; set; }
 
-        public double discountcs_max { get; set; }
+        public double Discountcs_max { get; set; }
 
-        public double discountnumber_max { get; set; }
+        public double Discountnumber_max { get; set; }
     }
 }

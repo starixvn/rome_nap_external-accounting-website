@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CellExtension.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="CellExtension.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Excel.Utility
 {
@@ -15,6 +18,11 @@ namespace Fanex.ExternalAccount.Excel.Utility
     /// </summary>
     public static class CellExtension
     {
+        /// <summary>
+        /// Sets cell value.
+        /// </summary>
+        /// <param name="cell">Cell info.</param>
+        /// <param name="value">Value for cell.</param>
         public static void SetCellValue(this ICell cell, object value)
         {
             if (value == null)
@@ -117,6 +125,11 @@ namespace Fanex.ExternalAccount.Excel.Utility
             cell.SetCellValue((long)value);
         }
 
+        /// <summary>
+        /// Copies a cell to another cell.
+        /// </summary>
+        /// <param name="cell">Source cell.</param>
+        /// <param name="sourceCell">Destination cell.</param>
         public static void CopyFrom(this ICell cell, ICell sourceCell)
         {
             // copy Merged

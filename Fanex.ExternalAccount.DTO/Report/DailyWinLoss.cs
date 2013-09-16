@@ -1,9 +1,18 @@
-﻿namespace Fanex.ExternalAccount.DTO.Report
+﻿// --------------------------------------------------------------------------
+// <copyright file="DailyWinLoss.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DTO.Report
 {
     using System;
 
     /// <summary>
-    /// Summary description for DailyWinLoss
+    /// Description for DailyWinLoss.
     /// </summary>
     public class DailyWinLoss
     {

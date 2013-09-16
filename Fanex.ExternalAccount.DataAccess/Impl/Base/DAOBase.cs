@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="DAOBase.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="DAOBase.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.DataAccess.Impl.Base
 {
@@ -21,12 +24,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Base
     {
         private const int DEFAULTTIMEOUT = 600;
 
-        /// <summary>
-        /// Add out put param for Execute Nonquery
-        /// Error Code and Error Messages
-        /// </summary>
-        /// <param name="db"></param>
-        /// <param name="command"></param>
         public void AddResultParams(Database db, DbCommand command)
         {
             db.AddOutParameter(command, "ErrCode", DbType.String, 300);
@@ -37,11 +34,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Base
         {
             var errorCode = db.GetParameterValue(command, "ErrCode");
             errorCode = (errorCode is DBNull) ? string.Empty : Convert.ToString(errorCode);
-
             var errorMessage = db.GetParameterValue(command, "ErrMsg");
             errorMessage = (errorMessage is DBNull) ? string.Empty : Convert.ToString(errorMessage);
-
-            ////get result message
             var result = new Result((string)errorCode, (string)errorMessage);
 
             return result;
@@ -51,10 +45,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Base
 
         public virtual IDataReader ExecDataReader(string name, Hashtable parameters)
         {
-            ////Data.IDbSetting dtbSetting = DbSettingProviderManager.Current.GetSetting(name);
-            ////string spName = dtbSetting.SpName;
-            ////string asType = dtbSetting.DbName;
-
             string spname = name;
             return DbHelper.ExecuteReader(spname, parameters, DEFAULTTIMEOUT);
         }
@@ -62,14 +52,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Base
         public virtual IDataReader ExecDataReader(string name, Hashtable parameters, int timeOut)
         {
             IDataReader reader = this.ExecDataReader(name, parameters);
-            if (reader != null)
-            {
-                return reader;
-            }
-            else
-            {
-                return null;
-            }
+            return reader != null ? reader : null;
         }
 
         #endregion ExecSp To DataSet

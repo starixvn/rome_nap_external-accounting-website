@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Config.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="Config.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Utilities
 {
@@ -19,20 +22,6 @@ namespace Fanex.ExternalAccount.Utilities
     /// </summary>
     public static class Config
     {
-        public static MaintenanceInfo GetMaintenanceInfo()
-        {
-            var maintenanceInfo = new MaintenanceInfo { IsDownTime = false };
-
-            if (Config.IsUM)
-            {
-                maintenanceInfo.IsDownTime = true;
-                maintenanceInfo.TimeFrom = Config.TimeFrom;
-                maintenanceInfo.TimeTo = Config.TimeTo;
-            }
-
-            return maintenanceInfo;
-        }
-
         public static DateTime WinlostDate
         {
             get
@@ -56,9 +45,6 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public static string LBUrl
         {
             get
@@ -67,9 +53,6 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public static bool IsUM
         {
             get
@@ -78,9 +61,6 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public static string TimeFrom
         {
             get
@@ -89,9 +69,6 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public static string TimeTo
         {
             get
@@ -231,13 +208,25 @@ namespace Fanex.ExternalAccount.Utilities
         }
 
         /// <summary>
-        ///
+        /// Gets maintenance information.
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <returns>MaintenanceInfo object.</returns>
+        public static MaintenanceInfo GetMaintenanceInfo()
+        {
+            var maintenanceInfo = new MaintenanceInfo { IsDownTime = false };
+
+            if (Config.IsUM)
+            {
+                maintenanceInfo.IsDownTime = true;
+                maintenanceInfo.TimeFrom = Config.TimeFrom;
+                maintenanceInfo.TimeTo = Config.TimeTo;
+            }
+
+            return maintenanceInfo;
+        }
+
         private static string GetValue(string key)
         {
-            //return ConfigurationManager.AppSettings[key];
             return Sunplus.Agent.Configurations.AppSettings.Configuration.Get(key);
         }
     }

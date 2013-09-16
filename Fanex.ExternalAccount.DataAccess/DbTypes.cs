@@ -6,6 +6,9 @@
 
 namespace Fanex.ExternalAccount.DataAccess
 {
+    /// <summary>
+    /// DB type object.
+    /// </summary>
     public class DbTypes
     {
         private static string _main = "main";
@@ -18,7 +21,7 @@ namespace Fanex.ExternalAccount.DataAccess
         private static string _archive53 = "archive053";
         private static string _archive6 = "archive06";
 
-        private static string _onUser = "on_user";
+        private static string _onuser = "on_user";
         private static string _wareHouse = "warehouse";
         private static string _message = "MessageDB";
         private static string _maintenance = "maintenance";
@@ -94,7 +97,7 @@ namespace Fanex.ExternalAccount.DataAccess
         {
             get
             {
-                return _onUser;
+                return _onuser;
             }
         }
 

@@ -25,6 +25,9 @@ namespace Fanex.ExternalAccount.Core.Context
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging;
 
+    /// <summary>
+    /// Authorize action.
+    /// </summary>
     public class AuthorizationAttribute : AuthorizeAttribute
     {
         private readonly ILoginService _userService = new LoginService();
@@ -45,6 +48,10 @@ namespace Fanex.ExternalAccount.Core.Context
             set { this._isAjax = value; } 
         }
 
+        /// <summary>
+        /// Authorizes action.
+        /// </summary>
+        /// <param name="filterContext">AuthorizationContext object.</param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var currentSession = new CurrentSession();
@@ -93,6 +100,10 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
+        /// <summary>
+        /// Closes connection.
+        /// </summary>
+        /// <param name="filterContext">AuthorizationContext object.</param>
         private void CloseConnection(AuthorizationContext filterContext)
         {
             var response = filterContext.HttpContext.Response;
@@ -141,6 +152,10 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
+        /// <summary>
+        /// Sign out session.
+        /// </summary>
+        /// <param name="response">Response object.</param>
         private void SignOut(HttpResponseBase response)
         {
             var currentSession = new CurrentSession();
@@ -161,6 +176,13 @@ namespace Fanex.ExternalAccount.Core.Context
             response.Redirect("~/Account/Login", true);
         }
 
+        /// <summary>
+        /// Authorizes function.
+        /// </summary>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="functionKey">Function key.</param>
+        /// <param name="request">Request object.</param>
+        /// <returns>Boolean object.</returns>
         private bool FunctionAuthorization(int userId, string functionKey, HttpRequestBase request)
         {
             if (userId <= 0)
@@ -169,14 +191,15 @@ namespace Fanex.ExternalAccount.Core.Context
             }
 
             var userCache = this._cachingService.GetUserCache(userId);
-            var policyList = userCache.PolicyList;
             var menuList = userCache.MenuList;
-            var foundItems = policyList.Where(x => x.FuncKey == functionKey);
+            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && !request.RawUrl.ToLower().Contains("exporttoexcel") && !this.IsAjaxRequest)
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && 
+                !request.RawUrl.ToLower().Contains("exporttoexcel") && !this.IsAjaxRequest)
             {
-                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && 
+                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }
 
             if (!hasPerm)
@@ -190,9 +213,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 switch (this.Policy)
                 {
                     case ePolicy.Read:
-                        if (firstItem.Policy == ePolicy.Create ||
-                            firstItem.Policy == ePolicy.Delete ||
-                            firstItem.Policy == ePolicy.Update ||
+                        if (firstItem.Policy == ePolicy.Create || firstItem.Policy == ePolicy.Delete || firstItem.Policy == ePolicy.Update || 
                             firstItem.Policy == ePolicy.Read)
                         {
                             return true;
@@ -214,6 +235,12 @@ namespace Fanex.ExternalAccount.Core.Context
             return false;
         }
 
+        /// <summary>
+        /// Processes exception.
+        /// </summary>
+        /// <param name="ex">Exception object.</param>
+        /// <param name="response">Response object.</param>
+        /// <param name="category">Category string.</param>
         private void ProcessException(Exception ex, HttpResponseBase response, string category = "ExternalAccount")
         {
             LogService.Error(ex.Message, category, ex);

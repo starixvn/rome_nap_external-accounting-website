@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DisplayAttribute.cs" company="">
+// <copyright file="EASDisplayAttribute.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -15,14 +15,14 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
     /// </summary>
     public class EASDisplayAttribute : DisplayNameAttribute
     {
-        private readonly PropertyInfo nameProperty;
+        private readonly PropertyInfo _nameProperty;
 
         public EASDisplayAttribute(string displayNameKey, Type resourceType)
             : base(displayNameKey)
         {
             if (resourceType != null)
             {
-                this.nameProperty = resourceType.GetProperty(base.DisplayName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                this._nameProperty = resourceType.GetProperty(base.DisplayName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             }
         }
 
@@ -30,12 +30,12 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
         {
             get
             {
-                if (this.nameProperty == null)
+                if (this._nameProperty == null)
                 {
                     return base.DisplayName;
                 }
 
-                return (string)this.nameProperty.GetValue(this.nameProperty.DeclaringType, null);
+                return (string)this._nameProperty.GetValue(this._nameProperty.DeclaringType, null);
             }
         }
     }

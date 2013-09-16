@@ -13,6 +13,9 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
     using Fanex.ExternalAccount.DTO.Customer;
     using NPOI.HSSF.UserModel;
 
+    /// <summary>
+    /// Customer list builder.
+    /// </summary>
     public class CustomerListPageBuilder
     {
         public CustomerListPageBuilder(DataTable customerList, bool isBold, string status, int roleId)
@@ -31,6 +34,10 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 
         public string Status { get; private set; }
 
+        /// <summary>
+        /// Builds customer list stream.
+        /// </summary>
+        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
             TemplateReport report = null;

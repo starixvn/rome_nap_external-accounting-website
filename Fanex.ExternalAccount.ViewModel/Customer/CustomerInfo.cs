@@ -18,10 +18,11 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-
     public class CustomerInfo
     {
-        public CustomerInfo() { }
+        public CustomerInfo() 
+        {
+        }
 
         public int CustomerId { get; set; }
 

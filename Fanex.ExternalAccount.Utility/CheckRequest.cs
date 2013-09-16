@@ -1,66 +1,124 @@
-﻿using System;
-using System.Globalization;
-using System.Web;
-
-/*
- * Created 20100428@Lee - Formater functions
- * Revision:
- * ?@? - ...
- *
- */
+﻿// --------------------------------------------------------------------------
+// <copyright file="CheckRequest.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Utilities
 {
+    using System;
+    using System.Globalization;
+    using System.Web;
+
+    /// <summary>
+    /// Utilities class.
+    /// </summary>
     public abstract class CheckRequest
     {
-        protected DateTime MIN_REPORT_DATE = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
-        protected DateTime MAX_REPORT_DATE = DateTime.Today.AddDays(7);
+        private DateTime _minReportDate = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
+        private DateTime _maxReportDate = DateTime.Today.AddDays(7);
 
-        public static int GetIntRequest(String name, int defaultValue)
+        protected DateTime MinReportDate
         {
-            HttpRequest Request = HttpContext.Current.Request;
-            if (String.IsNullOrEmpty(Request[name]))
+            get { return _minReportDate; }
+            set { _minReportDate = value; }
+        }
+
+        protected DateTime MaxReportDate
+        {
+            get { return _maxReportDate; }
+            set { _maxReportDate = value; }
+        }
+
+        /// <summary>
+        /// Gets integer request.
+        /// </summary>
+        /// <param name="name">Query string name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>Integer object.</returns>
+        public static int GetIntRequest(string name, int defaultValue)
+        {
+            HttpRequest request = HttpContext.Current.Request;
+            if (string.IsNullOrEmpty(request[name]))
             {
                 return defaultValue;
             }
             else
             {
                 int value = 0;
-                if (!int.TryParse(Request[name], out value)) return defaultValue;
+                if (!int.TryParse(request[name], out value))
+                {
+                    return defaultValue;
+                }
+
                 return value;
             }
         }
 
+        /// <summary>
+        /// Gets integer request.
+        /// </summary>
+        /// <param name="name">Query string name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>DateTime object.</returns>
         public static DateTime GetDateTimeRequest(string name, DateTime defaultValue)
         {
-            HttpRequest Request = HttpContext.Current.Request;
-            if (String.IsNullOrEmpty(Request[name]))
+            HttpRequest request = HttpContext.Current.Request;
+            if (string.IsNullOrEmpty(request[name]))
             {
                 return defaultValue;
             }
             else
             {
                 DateTime value = DateTime.Now;
-                if (!DateTime.TryParse(Request[name], out value)) return defaultValue;
+                if (!DateTime.TryParse(request[name], out value))
+                {
+                    return defaultValue;
+                }
+
                 return value;
             }
         }
 
-        public static bool GetBooleanRequest(String name, bool defaultValue)
+        /// <summary>
+        /// Gets integer request.
+        /// </summary>
+        /// <param name="name">Query string name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>Boolean object.</returns>
+        public static bool GetBooleanRequest(string name, bool defaultValue)
         {
-            HttpRequest Request = HttpContext.Current.Request;
-            if (String.IsNullOrEmpty(Request[name])) return defaultValue;
+            HttpRequest request = HttpContext.Current.Request;
+            if (string.IsNullOrEmpty(request[name]))
+            {
+                return defaultValue;
+            }
             else
             {
-                return Request[name].Equals("1") || Request[name].Equals("true") || Request[name].Equals("on") ? true : false;
+                return request[name].Equals("1") || request[name].Equals("true") || request[name].Equals("on") ? true : false;
             }
         }
 
-        public static string GetStringRequest(String name, String defaultValue)
+        /// <summary>
+        /// Gets integer request.
+        /// </summary>
+        /// <param name="name">Query string name.</param>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns>String object.</returns>
+        public static string GetStringRequest(string name, string defaultValue)
         {
-            HttpRequest Request = HttpContext.Current.Request;
-            if (String.IsNullOrEmpty(Request[name])) return defaultValue;
-            else return Request[name];
+            HttpRequest request = HttpContext.Current.Request;
+            if (string.IsNullOrEmpty(request[name]))
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return request[name];
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HSSFSheetExtension.cs" company="">
+// <copyright file="HSSFSheetExtension.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -17,6 +17,14 @@ namespace Fanex.ExternalAccount.Excel.Utility
     /// </summary>
     public static class HSSFSheetExtension
     {
+        /// <summary>
+        /// Copies rows.
+        /// </summary>
+        /// <param name="sheet">Worksheet object.</param>
+        /// <param name="sourceSheet">Worksheet source.</param>
+        /// <param name="sourceRowNum">Row number.</param>
+        /// <param name="destinateRowNum">Destination row number.</param>
+        /// <param name="total">Total rows.</param>
         public static void CopyRows(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum, int total)
         {
             if (total <= 0)
@@ -30,6 +38,15 @@ namespace Fanex.ExternalAccount.Excel.Utility
             }
         }
 
+        /// <summary>
+        /// Copies rows.
+        /// </summary>
+        /// <param name="sheet">Worksheet object.</param>
+        /// <param name="sourceSheet">Worksheet source.</param>
+        /// <param name="sourceRowNum">Row number.</param>
+        /// <param name="destinateRowNum">Destination row number.</param>
+        /// <param name="firstColumn">First column index.</param>
+        /// <param name="lastColumn">Last column index.</param>
         public static void CopyRow(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum, int firstColumn, int lastColumn)
         {
             if (sheet.LastRowNum < destinateRowNum)
@@ -40,7 +57,6 @@ namespace Fanex.ExternalAccount.Excel.Utility
                 }
             }
 
-            // Get the source / new row
             var sourceRow = sourceSheet.GetRow(sourceRowNum);
             if (sourceRow == null)
             {
@@ -48,22 +64,12 @@ namespace Fanex.ExternalAccount.Excel.Utility
             }
 
             var newRow = sheet.GetRow(destinateRowNum);
-            if (newRow == null)
-            {
-                newRow = sheet.CreateRow(destinateRowNum);
-            }
-
+            newRow = newRow == null ? sheet.CreateRow(destinateRowNum) : newRow;
             newRow.Height = sourceRow.Height;
-
-            // Loop through source columns to add to new row
-            int firstCellNum = Math.Min(sourceRow.FirstCellNum, firstColumn);
-            int lastCellNum = Math.Min(sourceRow.LastCellNum, lastColumn + 1);
+            int firstCellNum = Math.Min(sourceRow.FirstCellNum, firstColumn), lastCellNum = Math.Min(sourceRow.LastCellNum, lastColumn + 1);
             for (int i = firstCellNum; i < lastCellNum; i++)
             {
-                // Grab a copy of the old/new cell
                 var oldCell = sourceRow.GetCell(i);
-
-                // If the old cell is null jump to next cell
                 if (oldCell == null)
                 {
                     continue;
@@ -71,14 +77,11 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
                 var newCell = newRow.CreateCell(i);
                 CloneCell(newCell, oldCell);
-
-                // copy Merged
                 CellRangeAddress sourceRange = null;
                 for (var j = 0; j < sourceSheet.NumMergedRegions; j++)
                 {
                     CellRangeAddress range = sourceSheet.GetMergedRegion(j);
-                    if (range.FirstColumn == oldCell.ColumnIndex
-                        && range.FirstRow == oldCell.RowIndex)
+                    if (range.FirstColumn == oldCell.ColumnIndex && range.FirstRow == oldCell.RowIndex)
                     {
                         sourceRange = range;
                         break;
@@ -87,7 +90,8 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
                 if (sourceRange != null)
                 {
-                    CellRangeAddress newRange = new CellRangeAddress(newCell.RowIndex, newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow, newCell.ColumnIndex, newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn);
+                    int lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow, firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
+                    var newRange = new CellRangeAddress(newCell.RowIndex, lastRow, newCell.ColumnIndex, firstCol);
                     sheet.AddMergedRegion(newRange);
                 }
             }
@@ -112,6 +116,11 @@ namespace Fanex.ExternalAccount.Excel.Utility
             }
         }
 
+        /// <summary>
+        /// Remove column from worksheet.
+        /// </summary>
+        /// <param name="sheet">Worksheet object.</param>
+        /// <param name="columnIndex">Column index.</param>
         public static void RemoveColumn(this ISheet sheet, int columnIndex)
         {
             int maxColumn = 0;
@@ -119,87 +128,19 @@ namespace Fanex.ExternalAccount.Excel.Utility
             for (int r = sheet.FirstRowNum; r <= sheet.LastRowNum; r++)
             {
                 var row = sheet.GetRow(r);
-
-                // if no row exists here; then nothing to do; next!
-                if (row == null)
-                {
-                    continue;
-                }
-
-                // if the row doesn't have this many columns then we are good; next!
                 int lastColumn = row.LastCellNum;
                 maxColumn = Math.Max(maxColumn, lastColumn);
-
-                if (lastColumn < columnIndex)
+                if (row == null || lastColumn < columnIndex)
                 {
                     continue;
                 }
 
-                for (int x = columnIndex; x < lastColumn; x++)
-                {
-                    var oldCell = row.GetCell(x);
-                    if (oldCell != null)
-                    {
-                        row.RemoveCell(oldCell);
-                    }
+                SetColumnWidth(ref sheet, ref columnIndex, ref lastColumn, ref row, ref adjustColumn);
 
-                    if (x < lastColumn)
-                    {
-                        // move cell
-                        var nextCell = row.GetCell(x + 1);
-                        if (nextCell != null)
-                        {
-                            var newCell = row.CreateCell(x, nextCell.CellType);
-                            if (adjustColumn)
-                            {
-                                sheet.SetColumnWidth(newCell.ColumnIndex, sheet.GetColumnWidth(nextCell.ColumnIndex));
-                            }
-
-                            CloneCell(newCell, nextCell);
-                        }
-                    }
-                    else
-                    {
-                        var removeCell = row.GetCell(x);
-                        if (removeCell != null)
-                        {
-                            row.RemoveCell(removeCell);
-                        }
-                    }
-                }
-
-                // adjust merged region
-                for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
-                {
-                    var mergedRegion = sheet.GetMergedRegion(i);
-
-                    ////if (r >= mergedRegion.FirstRow && r <= mergedRegion.LastRow)
-                    if (r == mergedRegion.FirstRow)
-                    {
-                        if (columnIndex == mergedRegion.FirstColumn && columnIndex == mergedRegion.LastColumn)
-                        {
-                            sheet.RemoveMergedRegion(i);
-                        }
-                        else if (mergedRegion.FirstColumn > columnIndex)
-                        {
-                            mergedRegion.FirstColumn = mergedRegion.FirstColumn - 1;
-                            mergedRegion.LastColumn = mergedRegion.LastColumn - 1;
-                        }
-                        else if (columnIndex <= mergedRegion.LastColumn)
-                        {
-                            mergedRegion.LastColumn = mergedRegion.LastColumn - 1;
-                        }
-                    }
-                }
+                MergeColumn(ref sheet, ref columnIndex, ref r);
 
                 adjustColumn = false;
             }
-
-            //// Adjust the column widths
-            ////for (int c = 0; c < maxColumn; c++)
-            ////{
-            ////    sheet.SetColumnWidth(c, sheet.GetColumnWidth(c + 1));
-            ////}
         }
 
         public static void CloneCell(this ISheet sheet, ICell newCell, ICell oldCell)
@@ -218,6 +159,14 @@ namespace Fanex.ExternalAccount.Excel.Utility
             return sheet.AddMergedRegion(rangeAddress);
         }
 
+        /// <summary>
+        /// Removes merge regions.
+        /// </summary>
+        /// <param name="sheet">Worksheet object.</param>
+        /// <param name="firstRow">First row index.</param>
+        /// <param name="firstCol">First column index.</param>
+        /// <param name="lastRow">Last row index.</param>
+        /// <param name="lastCol">Last column index.</param>
         public static void RemoveMergedRegions(this ISheet sheet, int firstRow, int firstCol, int lastRow, int lastCol)
         {
             for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
@@ -231,6 +180,15 @@ namespace Fanex.ExternalAccount.Excel.Utility
             }
         }
 
+        /// <summary>
+        /// Creates a cell value.
+        /// </summary>
+        /// <param name="sheet">Worksheet object.</param>
+        /// <param name="rowId">Row id of worksheet.</param>
+        /// <param name="colId">Column id of worksheet.</param>
+        /// <param name="rowSpan">Row span of column.</param>
+        /// <param name="colSpan">Column span of row.</param>
+        /// <returns>ICell object.</returns>
         public static ICell CreateCell(this ISheet sheet, int rowId, int colId, int rowSpan, int colSpan)
         {
             Debug.Assert(rowSpan >= 0, "rowSpan must be more than or equal 0");
@@ -253,6 +211,13 @@ namespace Fanex.ExternalAccount.Excel.Utility
             return cell;
         }
 
+        /// <summary>
+        /// Creates a cell values.
+        /// </summary>
+        /// <param name="sheet">Worksheet object.</param>
+        /// <param name="rowId">Row id of worksheet.</param>
+        /// <param name="colId">Column id of worksheet.</param>
+        /// <returns>ICell object.</returns>
         public static ICell CreateCell(this ISheet sheet, int rowId, int colId)
         {
             IRow row = sheet.GetRow(rowId);
@@ -270,10 +235,11 @@ namespace Fanex.ExternalAccount.Excel.Utility
             return cell;
         }
 
-        /*
-         * Takes an existing Cell and merges all the styles and forumla into the new one
-         */
-
+        /// <summary>
+        /// Clones a cell.
+        /// </summary>
+        /// <param name="newCell">New cell value.</param>
+        /// <param name="oldCell">Old cell value.</param>
         private static void CloneCell(ICell newCell, ICell oldCell)
         {
             if (oldCell.CellComment != null)
@@ -314,6 +280,79 @@ namespace Fanex.ExternalAccount.Excel.Utility
                 case CellType.FORMULA:
                     newCell.CellFormula = oldCell.CellFormula;
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Sets column width.
+        /// </summary>
+        /// <param name="sheet">ISheet object.</param>
+        /// <param name="columnIndex">Column index.</param>
+        /// <param name="lastColumn">Last column index.</param>
+        /// <param name="row">IRow object.</param>
+        /// <param name="adjustColumn">Is adjusted column constant.</param>
+        private static void SetColumnWidth(ref ISheet sheet, ref int columnIndex, ref int lastColumn, ref IRow row, ref bool adjustColumn)
+        {
+            for (int x = columnIndex; x < lastColumn; x++)
+            {
+                var oldCell = row.GetCell(x);
+                if (oldCell != null)
+                {
+                    row.RemoveCell(oldCell);
+                }
+
+                if (x < lastColumn)
+                {
+                    var nextCell = row.GetCell(x + 1);
+                    if (nextCell != null)
+                    {
+                        var newCell = row.CreateCell(x, nextCell.CellType);
+                        if (adjustColumn)
+                        {
+                            sheet.SetColumnWidth(newCell.ColumnIndex, sheet.GetColumnWidth(nextCell.ColumnIndex));
+                        }
+
+                        CloneCell(newCell, nextCell);
+                    }
+                }
+                else
+                {
+                    var removeCell = row.GetCell(x);
+                    if (removeCell != null)
+                    {
+                        row.RemoveCell(removeCell);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Merges columns.
+        /// </summary>
+        /// <param name="sheet">ISheet object.</param>
+        /// <param name="columnIndex">Column index.</param>
+        /// <param name="rowIndex">Row index.</param>
+        private static void MergeColumn(ref ISheet sheet, ref int columnIndex, ref int rowIndex)
+        {
+            for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
+            {
+                var mergedRegion = sheet.GetMergedRegion(i);
+                if (rowIndex == mergedRegion.FirstRow)
+                {
+                    if (columnIndex == mergedRegion.FirstColumn && columnIndex == mergedRegion.LastColumn)
+                    {
+                        sheet.RemoveMergedRegion(i);
+                    }
+                    else if (mergedRegion.FirstColumn > columnIndex)
+                    {
+                        mergedRegion.FirstColumn = mergedRegion.FirstColumn - 1;
+                        mergedRegion.LastColumn = mergedRegion.LastColumn - 1;
+                    }
+                    else if (columnIndex <= mergedRegion.LastColumn)
+                    {
+                        mergedRegion.LastColumn = mergedRegion.LastColumn - 1;
+                    }
+                }
             }
         }
     }

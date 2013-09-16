@@ -66,7 +66,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         /// <summary>
         /// Update agent commission.
         /// </summary>
-        /// <param name="commissionSetting">ICommissionSetting object</param>
+        /// <param name="commissionSetting">ICommissionSetting object.</param>
         /// <param name="requestContext">IRequestContext object.</param>
         /// <returns>Result object.</returns>
         public DTO.Result Age_CustomerUpdAgentComm(ICommissionSetting commissionSetting, IRequestContext requestContext)

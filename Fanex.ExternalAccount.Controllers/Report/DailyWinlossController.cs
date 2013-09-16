@@ -52,7 +52,11 @@ namespace Fanex.ExternalAccount.Controllers.Report
         {
             return this.PartialViewBase();
         }
-                
+
+        /// <summary>
+        /// Gets daily win loss page.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.DailyWinloss, Policy = ePolicy.Read)]
         public ActionResult GetDailyWinLoss()
         {
@@ -79,6 +83,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
         }
 
+        /// <summary>
+        /// Exports excel.
+        /// </summary>
         public void GetExportToExcel()
         {
             this.GetRequestPage();
@@ -92,7 +99,11 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     this.GetDailyWinLoss();
                 }
 
-                var builder = new DailyWinLossReportBuilder(this._cache.Get<List<DailyWinLoss>>(this._cacheList), false, this._viewlevel, CheckRequest.GetStringRequest("date", string.Empty));
+                var builder = new DailyWinLossReportBuilder(
+                    this._cache.Get<List<DailyWinLoss>>(this._cacheList), 
+                    false, 
+                    this._viewlevel, 
+                    CheckRequest.GetStringRequest("date", string.Empty));
 
                 var excelStream = builder.Build();
                 if (excelStream != null)
@@ -108,10 +119,15 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._username = CheckRequest.GetStringRequest("username", string.Empty);
             this._viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             this._custId = CheckRequest.GetIntRequest("custid", 0);
-            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
+            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : 
+                CurrentSession.CurrencyGroup;
             this._winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
         }
 
+        /// <summary>
+        /// Search daily win loss.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         private ActionResult GetDailyWinLossSearch()
         {
             if (this._roleId > 3)
@@ -125,15 +141,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossSuper(this._winlostDate, this._srecommend, this._mrecommend);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 3, 
-                        supername = string.Empty, 
-                        mastername = this._username, 
-                        agentname = string.Empty, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        rows = this._listDailyWinLoss 
+                    new
+                    {
+                        viewlevel = 3, supername = string.Empty, mastername = this._username, agentname = string.Empty, 
+                        srecommend = this._srecommend, mrecommend = this._mrecommend, rows = this._listDailyWinLoss
                     });
             }
             else if (this._roleId == 2)
@@ -141,16 +152,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossMaster(this._winlostDate, this._mrecommend, this._recommend);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 2, 
-                        supername = string.Empty, 
-                        mastername = string.Empty, 
-                        agentname = this._username, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        recommend = this._recommend, 
-                        rows = this._listDailyWinLoss 
+                    new
+                    {
+                        viewlevel = 2, supername = string.Empty, mastername = string.Empty, agentname = this._username,
+                        srecommend = this._srecommend, mrecommend = this._mrecommend, recommend = this._recommend, rows = this._listDailyWinLoss
                     });
             }
             else
@@ -158,20 +163,18 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossAgent(this._winlostDate, this._recommend, this._memberId);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 1, 
-                        supername = string.Empty, 
-                        mastername = string.Empty, 
-                        agentname = string.Empty, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        recommend = this._recommend, 
-                        rows = this._listDailyWinLoss 
+                    new
+                    {
+                        viewlevel = 1, supername = string.Empty, mastername = string.Empty, agentname = string.Empty, srecommend = this._srecommend,
+                        mrecommend = this._mrecommend, recommend = this._recommend, rows = this._listDailyWinLoss
                     });
             }
         }
 
+        /// <summary>
+        /// Gets daily win loss of down-line.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         private ActionResult GetDailyWinLossDownline()
         {
             if (this._viewlevel == 4)
@@ -185,22 +188,26 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossMaster(this._winlostDate, this._custId, 0);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 2, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._custId, 
-                        rows = this._listDailyWinLoss 
+                    new
+                    {
+                        viewlevel = 2,
+                        srecommend = this._srecommend,
+                        mrecommend = this._custId,
+                        rows = this._listDailyWinLoss
                     });
             }
             else
             {
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossAgent(this._winlostDate, this._custId, 0);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
-                return this.JsonBase(new { viewlevel = 1, srecommend = this._srecommend, mrecommend = this._mrecommend, recommend = this._custId, rows = this._listDailyWinLoss });
+                return this.JsonBase(new { viewlevel = 1, srecommend = _srecommend, mrecommend = _mrecommend, recommend = _custId, rows = _listDailyWinLoss });
             }
         }
 
+        /// <summary>
+        /// Checks belonging.
+        /// </summary>
+        /// <returns>Boolean object.</returns>
         private bool CheckBelonging()
         {
             if (!string.IsNullOrEmpty(this._username))
