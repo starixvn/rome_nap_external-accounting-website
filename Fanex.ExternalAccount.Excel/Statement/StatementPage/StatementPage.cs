@@ -94,7 +94,7 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
                         else 
                         {
                             accumulatedTotal = accumulatedTotal - item.TotalAmt;
-                            ballanceResult = "NOT EQUAL \nDiff: " + Formater.DecFormat(accumulatedTotal, 2);
+                            ballanceResult = "NOT EQUAL \nDiff: " + Utils.ToDecimal(accumulatedTotal);
                         }
                     }
                     else 

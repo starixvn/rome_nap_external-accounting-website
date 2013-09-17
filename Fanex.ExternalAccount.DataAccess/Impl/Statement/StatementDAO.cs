@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
         {
             if (string.Compare(transType.ToLowerInvariant(), "bet", true) == 0 && accDate >= balanceUpDay)
             {
-                return accDate.DayOfWeek + "<br/>" + Formater.FormatDateOptionalTime(accDate);
+                return accDate.DayOfWeek + "<br/>" + Utils.FormatDateOptionalTime(accDate);
             }
             else
             {
@@ -98,7 +98,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
                 }
                 else
                 {
-                    return accDate.DayOfWeek + " <br/>" + Formater.FormatDateOptionalTime(accDate);
+                    return accDate.DayOfWeek + " <br/>" + Utils.FormatDateOptionalTime(accDate);
                 }
             }
         }

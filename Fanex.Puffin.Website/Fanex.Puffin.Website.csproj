@@ -861,20 +861,6 @@
     <Content Include="Web.ConnectionString.config" />
     <None Include="Web.ConnectionString.config.orig" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.Puffin.Admin\Admin.csproj">
-      <Project>{AE0012D9-DD72-4DC5-A94D-6FFA1C3A259A}</Project>
-      <Name>Admin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Puffin.Core\_Core.csproj">
-      <Project>{AF2E11AA-2A92-47AC-86FA-4D48B0AEB5D7}</Project>
-      <Name>_Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Puffin.Reports\Report.csproj">
-      <Project>{FE5FD977-2CF8-4F46-932E-6B8D0D66B6F6}</Project>
-      <Name>Report</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

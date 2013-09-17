@@ -1,21 +1,23 @@
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Web;
-
-/*
- * Created ?@Ken,Ben,Don
- * Revision 20091224@Lee - Add namespace
- *
- * !!!CAUTION: ANY REVISION MUST BE APPROVED BEFORE PROCEEDING!!!
- * Please refer to <document url> for more details
- *
- */
+// --------------------------------------------------------------------------
+// <copyright file="Logs.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Utilities
 {
+    using System;
+    using System.Diagnostics;
+    using System.Reflection;
+    using System.Web;
     using Fanex.Logging;
 
+    /// <summary>
+    /// Logs object.
+    /// </summary>
     public static class Logs
     {
         public static void Write(string msg)
@@ -23,6 +25,10 @@ namespace Fanex.ExternalAccount.Utilities
             LogService.Error(msg);
         }
 
+        /// <summary>
+        /// Writes log.
+        /// </summary>
+        /// <param name="msg">Log message.</param>
         public static void Write(object msg)
         {
             if (msg is Exception)
