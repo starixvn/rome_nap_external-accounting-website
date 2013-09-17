@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Interface.Login
+﻿// --------------------------------------------------------------------------
+// <copyright file="ILoginService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Service.Interface.Login
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +16,13 @@
 
     public interface ILoginService
     {
-        Result Login(string username, string password, Request request, out int custId, out int onUserId, out bool isIntAcc);
+        Result Login(
+            string username, 
+            string password, 
+            Request request, 
+            out int custId, 
+            out int onuserId, 
+            out bool isIntAcc);
 
         Result Logout(int custId, string username);
 

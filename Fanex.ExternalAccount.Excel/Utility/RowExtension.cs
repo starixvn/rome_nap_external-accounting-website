@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="RowExtension.cs" company="">
+// <copyright file="RowExtension.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -21,6 +21,12 @@ namespace Fanex.ExternalAccount.Excel.Utility
             return cell;
         }
 
+        /// <summary>
+        /// Writes cell values.
+        /// </summary>
+        /// <param name="row">Row to write values.</param>
+        /// <param name="colId">Column id.</param>
+        /// <param name="values">Values to write.</param>
         public static void WriteCells(this IRow row, int colId, params object[] values)
         {
             int id = colId;

@@ -34,19 +34,23 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             this._groupService = this._groupService ?? new GroupService();
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read, IsAjaxRequest = false)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Read, IsAjaxRequest = false)]
         public ActionResult GroupList()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Read)]
         public ActionResult AddGroup()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets group list data.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Read)]
         public ActionResult GroupListPost()
         {
             var result = this._groupService.GetListGroup();
@@ -63,7 +67,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result });
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Read)]
         public ActionResult EditGroup(int id)
         {
             var model = this._groupService.GetGroupById(id);
@@ -74,7 +78,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Read)]
         public ActionResult GetGroupPolicy(int groupId)
         {
             var model = this._groupService.GetAllGroupPolicy(groupId);
@@ -82,7 +86,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Create)]
         public ActionResult Add(string name, string description)
         {
             var groupId = 0;
@@ -92,7 +96,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Update)]
         public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
@@ -100,7 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Delete)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Delete)]
         public ActionResult Delete(int groupId)
         {
             var result = this._groupService.DeleteGroup(groupId, CurrentSession.CustId);
@@ -108,7 +112,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Update)]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
             var result = this._groupService.EditGroup(groupName, description, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
@@ -116,16 +120,20 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Grants permission for group.
+        /// </summary>
+        /// <param name="groupId">Id of group.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Read)]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
             var externalGroup = new LoginService().GroupList();
             var functionList = this._groupService.GetAllGroupPolicy(groupId);
-
+            var isEditExtGroup = false;
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;
-
-            var isEditExtGroup = false;
 
             foreach (var item in externalGroup)
             {
@@ -139,55 +147,38 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             if (!isEditExtGroup) 
             {
                 // Continue to check new external groups created after launching
-                isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase);
+                isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && 
+                    !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase);
             }
 
             if (isEditExtGroup)
             {
-                ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
-                    x.FuncKey != eFunctions.ManageFunction &&
-                    x.FuncKey != eFunctions.ManageGroup &&
-                    x.FuncKey != eFunctions.ManageMenu &&
-                    x.FuncKey != eFunctions.ManageUser &&
-                    x.FuncKey != eFunctions.Administration &&
-                    x.FuncKey != eFunctions.SystemConfiguration &&
-                    x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageGroup && x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.ManageUser &&
+                    x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
 
-                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncKey != eFunctions.ManageFunction &&
-                    x.FuncKey != eFunctions.ManageGroup &&
-                    x.FuncKey != eFunctions.ManageMenu &&
-                    x.FuncKey != eFunctions.ManageUser &&
-                    x.FuncKey != eFunctions.Administration &&
-                    x.FuncKey != eFunctions.SystemConfiguration &&
-                    x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageGroup && x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.ManageUser &&
+                    x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
             }
             else if (groupId != 1)
             {
-                ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
-                        x.FuncKey != eFunctions.ManageFunction &&
-                        x.FuncKey != eFunctions.ManageMenu &&
-                        x.FuncKey != eFunctions.SystemConfiguration &&
-                        x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction &&
+                        x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
 
-                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncKey != eFunctions.ManageFunction &&
-                    x.FuncKey != eFunctions.ManageMenu &&
-                    x.FuncKey != eFunctions.SystemConfiguration &&
-                    x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction &&
+                    x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
             }
             else
             {
-                ViewBag.Function = functionList.Where(x => x.ParentID == 0 &&
-                    x.FuncKey != eFunctions.ExternalGroup);
-                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 &&
-                    x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ExternalGroup);
             }
 
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageGroup, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageGroup, Policy = EPolicy.Update)]
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);

@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Login
+﻿// --------------------------------------------------------------------------
+// <copyright file="ILoginDao.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DataAccess.Interface.Login
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +15,7 @@
     using Fanex.ExternalAccount.DTO.UserControl;
 
     /// <summary>
-    /// ILoginDao
+    /// ILoginDao interface.
     /// </summary>
     public interface ILoginDao
     {
@@ -14,7 +23,7 @@
 
         Result Logout(int custId, string username);
 
-        Result Checkin(int custId, string netSessionID, string ip, out int onUserId);
+        Result Checkin(int custId, string netSessionID, string ip, out int onuserId);
 
         Result Recheckin(int custId, out bool isKickOut);
 

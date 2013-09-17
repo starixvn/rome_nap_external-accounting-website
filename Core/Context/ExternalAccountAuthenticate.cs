@@ -68,6 +68,10 @@ namespace Fanex.ExternalAccount.Core.Context
             set;
         }        
 
+        /// <summary>
+        /// Action executing context.
+        /// </summary>
+        /// <param name="filterContext">Filter context.</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var context = CurrentContext.Instance.Context;
@@ -139,6 +143,10 @@ namespace Fanex.ExternalAccount.Core.Context
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
+        /// <summary>
+        /// Close connection.
+        /// </summary>
+        /// <param name="httpContext">HttpContext object.</param>
         private void CloseConnection(HttpContext httpContext)
         {
             var response = httpContext.Response;
@@ -179,6 +187,10 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
+        /// <summary>
+        /// Sign out session.
+        /// </summary>
+        /// <param name="response">HttpResponse object.</param>
         private void SignOut(HttpResponse response)
         {
             var currentSession = new CurrentSession();
@@ -199,6 +211,13 @@ namespace Fanex.ExternalAccount.Core.Context
             response.Redirect("~/Account/Login", true);
         }
 
+        /// <summary>
+        /// Authorizes function.
+        /// </summary>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="functionKey">Function key.</param>
+        /// <param name="request">HttpRequest object.</param>
+        /// <returns>Boolean object.</returns>
         private bool FunctionAuthorization(int userId, string functionKey, HttpRequest request)
         {
             if (userId <= 0)
@@ -207,18 +226,15 @@ namespace Fanex.ExternalAccount.Core.Context
             }
 
             var userCache = this._cachingService.GetUserCache(userId);
-            var policyList = userCache.PolicyList;
-            var menuList = userCache.MenuList;
-            var foundItems = policyList.Where(x => x.FuncKey == functionKey);
+            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
-
-            if (!request.RawUrl.Equals("/") && 
-                !request.RawUrl.ToLower().Contains("home/index") && 
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && 
                 !request.RawUrl.ToLower().Contains("exporttoexcel") && 
                 !(request.Headers["X-Requested-With"] != null && 
                 request.Headers["X-Requested-With"].Equals("XMLHttpRequest")))
             {
-                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+                hasPerm = userCache.MenuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && 
+                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }
 
             if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
@@ -232,17 +248,17 @@ namespace Fanex.ExternalAccount.Core.Context
                 switch (this.Policy)
                 {
                     case AuthenticateAction.AuthenticationType.Read:
-                        if (firstItem.Policy == ePolicy.Create ||
-                            firstItem.Policy == ePolicy.Delete ||
-                            firstItem.Policy == ePolicy.Update ||
-                            firstItem.Policy == ePolicy.Read)
+                        if (firstItem.Policy == EPolicy.Create ||
+                            firstItem.Policy == EPolicy.Delete ||
+                            firstItem.Policy == EPolicy.Update ||
+                            firstItem.Policy == EPolicy.Read)
                         {
                             return true;
                         }
 
                         break;
                     case AuthenticateAction.AuthenticationType.Host:
-                        if (firstItem.Policy == ePolicy.Read)
+                        if (firstItem.Policy == EPolicy.Read)
                         {
                             return false;
                         }

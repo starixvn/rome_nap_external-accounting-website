@@ -23,6 +23,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
     /// </summary>
     public class LeftPanelDao : ILeftPanelDao
     {
+        /// <summary>
+        /// Gets customer info.
+        /// </summary>
+        /// <param name="username">Customer username.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>DataSet object.</returns>
         public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
@@ -41,6 +47,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             return null;
         }
 
+        /// <summary>
+        /// Update given credit.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <param name="newGivenCredit">New given credit.</param>
+        /// <returns>Result object.</returns>
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdCredit"))
@@ -61,6 +74,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             }
         }
 
+        /// <summary>
+        /// Gets down-line list.
+        /// </summary>
+        /// <param name="custid">Customer id.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="pageIndex">Page index.</param>
+        /// <returns>DBResult object.</returns>
         public DbResult GetDownlineList(int custid, int pageSize, int pageIndex)
         {
             DbResult rs = null;

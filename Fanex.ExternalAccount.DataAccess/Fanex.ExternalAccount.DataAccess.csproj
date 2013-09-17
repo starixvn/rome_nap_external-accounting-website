@@ -124,7 +124,6 @@
     <Compile Include="Impl\UserControl\GroupDao.cs" />
     <Compile Include="Impl\UserControl\MenuDao.cs" />
     <Compile Include="DbTypes.cs" />
-    <Compile Include="Impl\UserControl\User.cs" />
     <Compile Include="Interface\Customer\ICommissionDao.cs" />
     <Compile Include="Interface\Customer\IAgentDao.cs" />
     <Compile Include="Interface\Customer\ICustomerDao.cs" />

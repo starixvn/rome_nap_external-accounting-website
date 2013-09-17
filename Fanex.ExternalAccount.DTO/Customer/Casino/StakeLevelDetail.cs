@@ -9,6 +9,9 @@
 
 namespace Fanex.ExternalAccount.DTO.Customer.Casino
 {
+    /// <summary>
+    /// StakeLevelDetail object.
+    /// </summary>
     public class StakeLevelDetail
     {
         public int StakeLevelID

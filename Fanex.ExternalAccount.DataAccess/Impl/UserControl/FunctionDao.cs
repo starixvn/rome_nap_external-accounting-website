@@ -1,17 +1,26 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="FunctionDao.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
-    /// FunctionDao
+    /// Function Data object.
     /// </summary>
     public class FunctionDao : DAOBase, IFunctionDao
     {
@@ -20,18 +29,28 @@
         /// <summary>
         /// Creates the function.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="key">The key.</param>
+        /// <param name="name">The function name.</param>
+        /// <param name="key">The function key.</param>
         /// <param name="description">The description.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="parentName">Name of the parent.</param>
         /// <param name="displayOrder">The display order.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
-        /// <param name="assignedGroupIDs">The assigned group I ds.</param>
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP information.</param>
+        /// <param name="assignedGroupIDs">The assigned group ids.</param>
         /// <param name="functionId">The function id.</param>
-        /// <returns>Result</returns>
-        public Result CreateFunction(string name, string key, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string assignedGroupIDs, out int functionId)
+        /// <returns>Result object.</returns>
+        public Result CreateFunction(
+            string name, 
+            string key, 
+            string description, 
+            int parentId,
+            string parentName,
+            int displayOrder, 
+            int custId, 
+            string ip,
+            string assignedGroupIDs, 
+            out int functionId)
         {
             functionId = 0;
 
@@ -69,18 +88,28 @@
         /// <summary>
         /// Updates the function.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="id">The function id.</param>
+        /// <param name="name">The function name.</param>
         /// <param name="description">The description.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="parentName">Name of the parent.</param>
         /// <param name="displayOrder">The display order.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
-        /// <param name="oldAssignedGroupIDs">The old assigned group I ds.</param>
-        /// <param name="assignedGroupIDs">The assigned group I ds.</param>
-        /// <returns>Result</returns>
-        public Result UpdateFunction(int id, string name, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs)
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP information.</param>
+        /// <param name="oldAssignedGroupIDs">The old assigned group Ids.</param>
+        /// <param name="assignedGroupIDs">The assigned group Ids.</param>
+        /// <returns>Result object.</returns>
+        public Result UpdateFunction(
+            int id, 
+            string name, 
+            string description,
+            int parentId,
+            string parentName,
+            int displayOrder,
+            int custId,
+            string ip,
+            string oldAssignedGroupIDs,
+            string assignedGroupIDs)
         {
             using (var db = new ObjectDb("EAS_FunctionUpd"))
             {
@@ -107,7 +136,7 @@
         /// <summary>
         /// Gets all functions.
         /// </summary>
-        /// <returns>IEnumerable<Function></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetAllFunctions()
         {
             var result = new List<Function>();
@@ -145,8 +174,8 @@
         /// <summary>
         /// Gets the function policy.
         /// </summary>
-        /// <param name="funcId">The func id.</param>
-        /// <returns>Function</returns>
+        /// <param name="funcId">The function id.</param>
+        /// <returns>Function object.</returns>
         public Function GetFunctionPolicy(int funcId)
         {
             var func = this.GetAllFunctions().Where(o => o.FuncID == funcId).FirstOrDefault();
@@ -182,11 +211,11 @@
         /// <summary>
         /// Updates the status.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="isTest">if set to <c>true</c> [is test].</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>Result</returns>
+        /// <param name="id">The function id.</param>
+        /// <param name="isTest">If set to <c>true</c> [is test].</param>
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP information.</param>
+        /// <returns>Result object.</returns>
         public Result UpdateStatus(int id, bool isTest, int custId, string ip)
         {
             using (var db = new ObjectDb("EAS_FuncUpdStatus"))

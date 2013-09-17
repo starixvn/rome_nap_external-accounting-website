@@ -9,6 +9,9 @@
 
 namespace Fanex.ExternalAccount.DTO.Customer.Casino
 {
+    /// <summary>
+    /// GameTypeDetail class.
+    /// </summary>
     public class GameTypeDetail
     {       
         public int CasinoID

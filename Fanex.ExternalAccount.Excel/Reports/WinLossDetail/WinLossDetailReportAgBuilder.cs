@@ -12,6 +12,9 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
     using Fanex.ExternalAccount.DTO.Report;
     using NPOI.HSSF.UserModel;
 
+    /// <summary>
+    /// Win loss detail report for agent.
+    /// </summary>
     public class WinLossDetailReportAgBuilder
     {
         public WinLossDetailReportAgBuilder(List<WinLossDetailAg> winLossDetailAg, bool isBold, int roleId, string fromDate, string toDate)
@@ -33,6 +36,10 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 
         public string ToDate { get; private set; }
 
+        /// <summary>
+        /// Builds report.
+        /// </summary>
+        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
             TemplateReport report = null;

@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="IFunctionService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
     using System;
     using System.Collections.Generic;
@@ -9,9 +18,29 @@
 
     public interface IFunctionService
     {
-        Result CreateFunction(string name, string key, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string assignedGroupIDs, out int functionId);
+        Result CreateFunction(
+            string name, 
+            string key,
+            string description,
+            int parentId,
+            string parentName,
+            int displayOrder,
+            int custId,
+            string ip,
+            string assignedGroupIDs,
+            out int functionId);
 
-        Result UpdateFunction(int id, string name, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
+        Result UpdateFunction(
+            int id,
+            string name,
+            string description,
+            int parentId, 
+            string parentName, 
+            int displayOrder,
+            int custId, 
+            string ip, 
+            string oldAssignedGroupIDs, 
+            string assignedGroupIDs);
 
         IEnumerable<Function> GetAllFunctions();
 

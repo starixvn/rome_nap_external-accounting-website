@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="StatementService.cs" company="">
+// <copyright file="StatementService.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -20,12 +20,12 @@ namespace Fanex.ExternalAccount.Service.Impl.Statement
     /// </summary>
     public class StatementService : ServiceBase, IStatementService
     {
-        private const string BALANCEUP_DAY_KEY = "SUNPLUS.AGENT.MODEL.BL.STATEMENT.BALANCEUPDAY";
-        private readonly IStatementDAO StatementDAO = null;
+        private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.STATEMENT.BALANCEUPDAY";
+        private readonly IStatementDAO _statementDAO = null;
 
-        public StatementService(IStatementDAO StatementDAO = null)
+        public StatementService(IStatementDAO statementDAO = null)
         {
-            this.StatementDAO = StatementDAO ?? new StatementDAO();
+            this._statementDAO = statementDAO ?? new StatementDAO();
         }
         
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
@@ -35,8 +35,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Statement
             {
                 includeAccBal = true;
             }
-            return StatementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate, ReportService.MoveBetsDate, includeAccBal);
-        }
 
+            return _statementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate, ReportService.MoveBetsDate, includeAccBal);
+        }
     }
 }

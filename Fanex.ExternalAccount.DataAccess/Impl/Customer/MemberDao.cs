@@ -10,8 +10,8 @@
 namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
     using System.Collections;
-    using Fanex.Data.DNAide;
     using System.Data;
+    using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
 
     /// <summary>
@@ -22,16 +22,22 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         #region IData Members
 
         /// <summary>
-        /// Base function for Member level
+        /// Base function for Member level.
         /// </summary>
-        /// <param name="recommend">Id of current level</param>
-        /// <param name="custId">Id of selected user</param>
-        /// <param name="enabled">Enable status</param>
-        /// <param name="closed">Close status</param>
-        /// <param name="suspended">Suspend status</param>
-        /// <param name="groupName">Group name of currency</param>
-        /// <returns>DataTable object</returns>
-        public DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null, string groupName = "ACCDDD")
+        /// <param name="recommend">Id of current level.</param>
+        /// <param name="custId">Id of selected user.</param>
+        /// <param name="enabled">Enable status.</param>
+        /// <param name="closed">Close status.</param>
+        /// <param name="suspended">Suspend status.</param>
+        /// <param name="groupName">Group name of currency.</param>
+        /// <returns>DataTable object.</returns>
+        public DataTable GetData(
+            int? recommend = null, 
+            int? custId = null, 
+            bool? enabled = null, 
+            bool? closed = null, 
+            bool? suspended = null, 
+            string groupName = "ACCDDD")
         {
             var param = new Hashtable();
             param.Add("recommend", recommend);

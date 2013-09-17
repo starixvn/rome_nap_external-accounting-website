@@ -9,18 +9,21 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.Web;
 
+    /// <summary>
+    /// Template setting of reports.
+    /// </summary>
     internal class TemplateSettings
     {
-        private string dir;
+        private string _dir;
 
         public TemplateSettings()
         {
-            this.dir = HttpContext.Current.Server.MapPath("~") + "\\ExcelTemplates\\Reports";
+            this._dir = HttpContext.Current.Server.MapPath("~") + "\\ExcelTemplates\\Reports";
         }
 
         public string DailyWinLossPath()
         {
-            return this.dir + "\\" + "DailyWinLoss.xls";
+            return this._dir + "\\" + "DailyWinLoss.xls";
         }
     }
 }

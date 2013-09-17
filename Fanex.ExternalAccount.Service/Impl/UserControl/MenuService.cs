@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="MenuService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System;
     using System.Collections.Generic;
@@ -9,26 +18,33 @@
     using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
 
+    /// <summary>
+    /// Menu service class.
+    /// </summary>
     public class MenuService : ServiceBase, IMenuService
     {
-        private readonly IMenuDao menuDao = null;
+        private readonly IMenuDao _menuDao = null;
 
         public MenuService(IMenuDao menuDao = null)
         {
-            this.menuDao = menuDao ?? new MenuDao();
+            this._menuDao = menuDao ?? new MenuDao();
         }
 
         #region IMenuService Members
 
+        /// <summary>
+        /// Gets all menus.
+        /// </summary>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Menu> GetAllMenus()
         {
             try
             {
-                return this.menuDao.GetAllMenus();
+                return this._menuDao.GetAllMenus();
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
@@ -41,13 +57,39 @@
             return userCache.MenuList;
         }
 
-        public Result CreateMenu(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, bool isActive, int custId, string ip, out int menuId)
+        /// <summary>
+        /// Creates new menu.
+        /// </summary>
+        /// <param name="name">The menu name.</param>
+        /// <param name="description">Menu Description.</param>
+        /// <param name="url">The menu URL.</param>
+        /// <param name="functionId">Function id.</param>
+        /// <param name="parentId">Parent function id.</param>
+        /// <param name="parentName">Parent function name.</param>
+        /// <param name="displayOrder">Display order.</param>
+        /// <param name="isActive">Is menu active or not.</param>
+        /// <param name="custId">Admin user id.</param>
+        /// <param name="ip">IP address.</param>
+        /// <param name="menuId">The menu id.</param>
+        /// <returns>Result object.</returns>
+        public Result CreateMenu(
+            string name, 
+            string description, 
+            string url, 
+            int functionId, 
+            int parentId,
+            string parentName,
+            int displayOrder,
+            bool isActive, 
+            int custId, 
+            string ip,
+            out int menuId)
         {
             menuId = 0;
 
             try
             {
-                var result = this.menuDao.CreateMenu(name, description, url, functionId, parentId, parentName, displayOrder, isActive, custId, ip, out menuId);
+                var result = this._menuDao.CreateMenu(name, description, url, functionId, parentId, parentName, displayOrder, isActive, custId, ip, out menuId);
 
                 if (result.IsSuccess)
                 {
@@ -58,17 +100,41 @@
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
-        public Result UpdateMenu(int id, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, int custId, string ip)
+        /// <summary>
+        /// Update menu info.
+        /// </summary>
+        /// <param name="id">The menu id.</param>
+        /// <param name="name">The menu name.</param>
+        /// <param name="description">Menu Description.</param>
+        /// <param name="url">The menu URL.</param>
+        /// <param name="functionId">Function id.</param>
+        /// <param name="parentId">Parent function id.</param>
+        /// <param name="parentName">Parent function name.</param>
+        /// <param name="displayOrder">Display order.</param>
+        /// <param name="custId">Admin user id.</param>
+        /// <param name="ip">IP address.</param>
+        /// <returns>Result object.</returns>
+        public Result UpdateMenu(
+            int id, 
+            string name,
+            string description, 
+            string url,
+            int functionId,
+            int parentId, 
+            string parentName,
+            int displayOrder,
+            int custId,
+            string ip)
         {
             try
             {
-                var result = this.menuDao.UpdateMenu(id, name, description, url, functionId, parentId, parentName, displayOrder, custId, ip);
+                var result = this._menuDao.UpdateMenu(id, name, description, url, functionId, parentId, parentName, displayOrder, custId, ip);
 
                 if (result.IsSuccess)
                 {
@@ -79,17 +145,24 @@
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Updates menu status.
+        /// </summary>
+        /// <param name="id">The menu id.</param>
+        /// <param name="isActive">Is menu active or not.</param>
+        /// <param name="custId">Admin user id.</param>
+        /// <returns>Result object.</returns>
         public Result UpdateMenuStatus(int id, bool isActive, int custId)
         {
             try
             {
-                var result = this.menuDao.UpdateMenuStatus(id, isActive, custId);
+                var result = this._menuDao.UpdateMenuStatus(id, isActive, custId);
 
                 if (result.IsSuccess)
                 {
@@ -100,17 +173,23 @@
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Deletes menu item.
+        /// </summary>
+        /// <param name="id">The menu id.</param>
+        /// <param name="custId">Admin user id.</param>
+        /// <returns>Result object.</returns>
         public Result DeleteMenu(int id, int custId)
         {
             try
             {
-                var result = this.menuDao.DeleteMenu(id, custId);
+                var result = this._menuDao.DeleteMenu(id, custId);
 
                 if (result.IsSuccess)
                 {
@@ -121,7 +200,7 @@
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;

@@ -1,16 +1,25 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="GroupDao.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 {
     using System;
     using System.Collections.Generic;
     using Fanex.Common.Extensions;
     using Fanex.Data;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
 
     /// <summary>
-    /// GroupDao
+    /// Group Data object.
     /// </summary>
     public class GroupDao : DAOBase, IGroupDao
     {
@@ -19,7 +28,7 @@
         /// <summary>
         /// Gets the list group.
         /// </summary>
-        /// <returns>IEnumerable<Group></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Group> GetListGroup()
         {
             var result = new List<Group>();
@@ -49,7 +58,7 @@
         /// <summary>
         /// Gets all group.
         /// </summary>
-        /// <returns>IEnumerable<Group></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Group> GetAllGroup()
         {
             var result = new List<Group>();
@@ -76,7 +85,7 @@
         /// Gets all group policy.
         /// </summary>
         /// <param name="groupId">The group id.</param>
-        /// <returns>IEnumerable<Function></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetAllGroupPolicy(int groupId)
         {
             var result = new List<Function>();
@@ -97,7 +106,7 @@
                             DisplayOrder = reader.ToInt("DisplayOrder"),
                             ParentID = reader.ToInt("ParentID"),
                             ParentName = reader.ToString("ParentName"),
-                            GroupPolicy = (ePolicy)Convert.ToInt32(reader["Policy"])
+                            GroupPolicy = (EPolicy)Convert.ToInt32(reader["Policy"])
                         });
                     }
                 }
@@ -110,7 +119,7 @@
         /// Gets the group by id.
         /// </summary>
         /// <param name="groupId">The group id.</param>
-        /// <returns>Group</returns>
+        /// <returns>Group object.</returns>
         public Group GetGroupById(int groupId)
         {
             var result = new Group();
@@ -141,10 +150,10 @@
         /// </summary>
         /// <param name="groupName">Name of the group.</param>
         /// <param name="description">The description.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP address.</param>
         /// <param name="groupId">The group id.</param>
-        /// <returns>Result</returns>
+        /// <returns>Result object.</returns>
         public Result CreateGroup(string groupName, string description, int custId, string ip, out int groupId)
         {
             groupId = 0;
@@ -177,10 +186,10 @@
         /// </summary>
         /// <param name="groupName">Name of the group.</param>
         /// <param name="description">The description.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP address.</param>
         /// <param name="groupId">The group id.</param>
-        /// <returns>Result</returns>
+        /// <returns>Result object.</returns>
         public Result EditGroup(string groupName, string description, int custId, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_GroupInfoUpd"))
@@ -204,10 +213,10 @@
         /// </summary>
         /// <param name="oldGroupPolicy">The old group policy.</param>
         /// <param name="groupPolicy">The group policy.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP address.</param>
         /// <param name="groupId">The group id.</param>
-        /// <returns>Result</returns>
+        /// <returns>Result object.</returns>
         public Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_GroupPolicyUpd"))
@@ -231,7 +240,7 @@
         /// </summary>
         /// <param name="groupID">The group ID.</param>
         /// <param name="userID">The user ID.</param>
-        /// <returns>Result</returns>
+        /// <returns>Result object.</returns>
         public Result DeleteGroup(int groupID, int userID)
         {
             using (var db = new ObjectDb("EAS_GroupInfoDel"))

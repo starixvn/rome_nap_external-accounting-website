@@ -19,15 +19,31 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     /// </summary>
     public class SuperService : CustomerService, ISuperService
     {
-        private readonly ISuperDao dao = new SuperDao();
+        private readonly ISuperDao _dao = new SuperDao();
 
         #region IDataService Members
 
-        public System.Data.DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null, string groupName = "ACCDDD")
+        /// <summary>
+        /// Gets super list.
+        /// </summary>
+        /// <param name="recommend">Super agent id.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="enabled">Enabled status.</param>
+        /// <param name="closed">Closed status.</param>
+        /// <param name="suspended">Suspended status.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>DataTable object.</returns>
+        public System.Data.DataTable GetData(
+            int? recommend = null, 
+            int? custId = null, 
+            bool? enabled = null, 
+            bool? closed = null, 
+            bool? suspended = null, 
+            string groupName = "ACCDDD")
         {
             try
             {
-                return this.dao.GetData(recommend, custId, enabled, closed, suspended, groupName);
+                return this._dao.GetData(recommend, custId, enabled, closed, suspended, groupName);
             }
             catch (Exception ex)
             {

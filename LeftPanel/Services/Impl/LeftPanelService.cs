@@ -23,8 +23,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     /// </summary>
     public class LeftPanelService : BaseService
     {
+        private static int _totalPages = 1;
         private readonly ILeftPanelDao _data = new LeftPanelDao();
-        private int _totalPages = 1;
+
+        public static int TotalPages
+        {
+            get { return LeftPanelService._totalPages; }
+            set { LeftPanelService._totalPages = value; }
+        }
 
         /// <summary>
         /// Gets all customer information on left panel.
@@ -46,84 +52,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 var tableTotalMember = ds.Tables[3];
                 var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
 
-                model.BalanceInfo = new BalanceInfo()
-                {
-                    CurrencyId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["exchangeid"]), Text = "Currency Id" },
-                    Currency = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["currency"]), Text = "Currency" },
-                    Balances = new List<ObjectInfo>()
-                    {                        
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetCashColumn(roleId)]), Text = "Total Cash" },
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][this.GetOutstandingColumn(roleId)]), Text = "Outstanding" },
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit" },
-                    }
-                };
-
-                model.PersonalInfo = new PersonalInfo
-                {
-                    CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
-                    Fax = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["fax"]), Text = "Fax" },
-                    Mobile = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["mobilephone"]), Text = "Mobile" },
-                    Name = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["firstname"]) + " " + Utils.ToString(tableCustomer.Rows[0]["lastname"]), Text = "Name" },
-                    Nickname = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["username2"]), Text = "Nickname" },
-                    Phone = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["phone"]), Text = "Phone" },
-                    RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
-                    UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
-                };
-
-                model.Login = new List<ObjectInfo>
-                {
-                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["site"]), Text = "Site" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToString("M/d/yyyy H:mm tt"), Text = "Created Date" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Login" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToString("M/d/yyyy H:mm tt"), Text = "Password" },
-                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["lastloginip"]), Text = "Last Login IP" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToString("M/d/yyyy H:mm tt"), Text = "Security Code" },
-                };
-
-                var onlines = this.GetOnlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value));
-
-                foreach (DataRow row in onlines)
-                {
-                    model.OnlineList.Onlines.Add(new OnlineInfo
-                    {                        
-                        IP = new ObjectInfo { Text = row["ip"].ToString() },
-                        LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToString("MM/dd/yyyy HH:mm:ss tt") }
-                    });
-                }
-
-                if (roleId != this.Member)
-                {
-                    model.Login.Add(new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname", Text = "Login Options" });
-                    model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][this.GetUsedCreditColumn(roleId)], Text = "Used Credit" });
-                }
-
-                model.DownlineList = new DownlineList();
-
-                var downlines = this.GetDownlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value), 100, pageIndex);
-
-                if (downlines != null && downlines.Rows.Count > 0)
-                {
-                    foreach (DataRow item in downlines.Rows)
-                    {
-                        model.DownlineList.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
-                    }
-
-                    model.DownlineList.CurrentPage = pageIndex;
-
-                    if (this._totalPages > 1)
-                    {
-                        for (int i = 1; i <= this._totalPages; i++)
-                        {
-                            model.DownlineList.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
-                        }
-                    }
-                    else
-                    {
-                        model.DownlineList.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
-                    }
-                }
+                model.BalanceInfo(ds);
+                model.PersonalInfo(ds);
+                model.LoginInfo(ds);
+                model.GetOnlineList(ds);
+                model.GetDownlineList(ds, pageIndex);
 
                 if (roleId == this.Super)
                 {
@@ -174,7 +107,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
             if (dr != null && dr.ResultSet != null && dr.ResultSet.Tables.Count > 0)
             {
-                this._totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
+                TotalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
 
                 return dr.ResultSet.Tables[0];
             }

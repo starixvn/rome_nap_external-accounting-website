@@ -33,6 +33,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
         public const string ShowLiveCasino = "showlivecasino";
         public const string ShowVirtualSport = "showvs";
 
+        /// <summary>
+        /// Gets list of request from filter condition.
+        /// </summary>
+        /// <returns>ICollection object.</returns>
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             List<KeyValuePair<string, bool>> list = new List<KeyValuePair<string, bool>>();
@@ -49,6 +53,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return list;
         }
 
+        /// <summary>
+        /// Gets product list.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         public ActionResult ProductsList()
         {
             List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
@@ -69,6 +77,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return this.JsonBase(list);
         }
 
+        /// <summary>
+        /// Gets suggested usernames.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         public ActionResult GetSuggestedUserName()
         {
             if (string.IsNullOrEmpty(CheckRequest.GetStringRequest("groupname", string.Empty)))
@@ -77,7 +89,12 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
 
             IReportService reportService = new ReportService();
-            return this.JsonBase(reportService.GetSuggestedUserName(CurrentSession.CustId, CheckRequest.GetStringRequest("username", string.Empty), CheckRequest.GetStringRequest("groupname", string.Empty)));
+            var users = reportService.GetSuggestedUserName(
+                CurrentSession.CustId, 
+                CheckRequest.GetStringRequest("username", string.Empty), 
+                CheckRequest.GetStringRequest("groupname", string.Empty));
+            
+            return this.JsonBase(users);
         }
     }
 }

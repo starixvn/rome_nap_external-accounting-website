@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UserDao.cs" company="">
+// <copyright file="UserDao.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,9 +11,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
 
     /// <summary>
@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <param name="groupId">The group id.</param>
-        /// <returns>IEnumerable<DTO.User></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<User> GetListUsers(string userName, int? groupId)
         {
             var result = new List<User>();
@@ -68,7 +68,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// Gets the user by id.
         /// </summary>
         /// <param name="userId">The user id.</param>
-        /// <returns>DTO.User</returns>
+        /// <returns>DTO.User object.</returns>
         public User GetUserById(int userId)
         {
             var result = new User();
@@ -107,8 +107,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// <param name="adminId">The admin id.</param>
         /// <param name="userId">The user id.</param>
         /// <param name="password">The password.</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>DTO.Result</returns>
+        /// <param name="ip">The IP address.</param>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result ResetPassword(int adminId, int userId, string password, string ip)
         {
             var result = new DTO.Result();
@@ -137,8 +137,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="groupId">The group id.</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>DTO.Result</returns>
+        /// <param name="ip">The IP address.</param>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result CreateUser(int adminId, string userName, string password, string firstName, string lastName, int groupId, string ip)
         {
             var custId = 0;
@@ -169,9 +169,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// <param name="userId">The user id.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="ip">The IP address.</param>
         /// <param name="groupId">The group id.</param>
-        /// <returns>DTO.Result</returns>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_UserInfoUpdAll"))
@@ -196,9 +196,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// </summary>
         /// <param name="adminId">The admin id.</param>
         /// <param name="userId">The user id.</param>
-        /// <param name="active">if set to <c>true</c> [active].</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>DTO.Result</returns>
+        /// <param name="active">If set to <c>true</c> [active].</param>
+        /// <param name="ip">The IP address.</param>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result UpdateStatus(int adminId, int userId, bool active, string ip)
         {
             using (var db = new ObjectDb("EAS_UserInfoUpdStatus"))
@@ -222,8 +222,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// <param name="adminId">The admin id.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="groupId">The group id.</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>DTO.Result</returns>
+        /// <param name="ip">The IP address.</param>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result CreateExistUser(int adminId, string userName, int groupId, string ip)
         {
             using (var db = new ObjectDb("EAS_UserInfoAddExistingUser"))
@@ -246,7 +246,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// Gets the user function.
         /// </summary>
         /// <param name="userId">The user id.</param>
-        /// <returns>IEnumerable<DTO.Function></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetUserFunction(int userId)
         {
             using (var db = new ObjectDb("EAS_UserPolicySel"))
@@ -269,8 +269,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
                                 DisplayOrder = reader.ToInt("DisplayOrder"),
                                 ParentID = reader.ToInt("ParentID"),
                                 ParentName = reader.ToString("ParentName"),
-                                Policy = (ePolicy)Convert.ToInt32(reader["UserPolicy"]),
-                                GroupPolicy = (ePolicy)Convert.ToInt32(reader["GroupPolicy"])
+                                Policy = (EPolicy)Convert.ToInt32(reader["UserPolicy"]),
+                                GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"])
                             });
                         }
                     }
@@ -287,8 +287,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// <param name="userId">The user id.</param>
         /// <param name="oldPolicy">The old policy.</param>
         /// <param name="policy">The policy.</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>DTO.Result</returns>
+        /// <param name="ip">The IP address.</param>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
         {
             using (var db = new ObjectDb("EAS_UserPolicyUpd"))

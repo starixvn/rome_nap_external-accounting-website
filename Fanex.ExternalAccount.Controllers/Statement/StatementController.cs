@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         private int _custId = 0;
         #endregion Init Statement
 
-        [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Statement, Policy = EPolicy.Read)]
         public ActionResult Index()
         {
             return this.PartialViewBase();
@@ -53,13 +53,18 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         public void GetRequestPage()
         {            
             this._custId = CheckRequest.GetIntRequest("custid", 0);
-            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
+            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? 
+                CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
             this._fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
             this._cacheList = "CacheList" + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
         }
 
-        [Authorization(Function = eFunctions.Statement, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets statement page.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Statement, Policy = EPolicy.Read)]
         public ActionResult GetStatement()
         {
             this.GetRequestPage();
@@ -73,6 +78,9 @@ namespace Fanex.ExternalAccount.Controllers.Statement
             }
         }
 
+        /// <summary>
+        /// Exports excel.
+        /// </summary>
         public void GetExportToExcel()
         {
             this.GetRequestPage();
@@ -84,7 +92,12 @@ namespace Fanex.ExternalAccount.Controllers.Statement
                     this.GetStatement();
                 }
 
-                var builder = new StatementPageBuilder(this._cache.Get<List<Statement>>(this._cacheList), false, this._username, this._fromDate.ToString("MMM, dd yyyy"), this._toDate.ToString("MMM, dd yyyy"));
+                var builder = new StatementPageBuilder(
+                    this._cache.Get<List<Statement>>(this._cacheList), 
+                    false, 
+                    this._username, 
+                    this._fromDate.ToString("MMM, dd yyyy"), 
+                    this._toDate.ToString("MMM, dd yyyy"));
 
                 var excelStream = builder.Build();
                 if (excelStream != null)
@@ -102,6 +115,10 @@ namespace Fanex.ExternalAccount.Controllers.Statement
             return this.JsonBase(new { rows = this._listStatement, username = this._username });
         }
 
+        /// <summary>
+        /// Checks belonging.
+        /// </summary>
+        /// <returns>Boolean object.</returns>
         private bool CheckBelonging()
         {
             IReportService reportService = new ReportService();

@@ -9,24 +9,33 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.ExternalAccount.Utilities;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
 
+    /// <summary>
+    /// Statement report builder.
+    /// </summary>
     internal class StatementPage : TemplateReport, IReportBuilder
     {
-        private StatementPageBuilder builder;
+        private StatementPageBuilder _builder;
 
         public StatementPage(string filePath, StatementPageBuilder builder)
             : base(filePath)
         {
-            this.builder = builder;
+            this._builder = builder;
         }
 
+        /// <summary>
+        /// Builds excel.
+        /// </summary>
+        /// <returns>Workbook object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
-            var data = this.builder.Data;
+            var data = this._builder.Data;
             if (data == null)
             {
                 return null;
@@ -36,7 +45,7 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
             ISheet resultSheet = HssfWorkbook.GetSheet("Statement");
 
             // apply Bold on all fonts
-            if (this.builder.IsBold)
+            if (this._builder.IsBold)
             {
                 this.BoldAllFonts();
             }
@@ -45,7 +54,7 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
             int colId = 0;
 
             // Header
-            string mainTitle = " Statement " + this.builder.Username + " From " + this.builder.FromDate + " To " + this.builder.ToDate;
+            string mainTitle = " Statement " + this._builder.Username + " From " + this._builder.FromDate + " To " + this._builder.ToDate;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 

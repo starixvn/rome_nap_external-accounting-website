@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Context;
@@ -53,6 +54,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Gets or sets property.
         /// </summary>
+        /// <value>System.Object object.</value>
         protected ISettingService PtSetting
         {
             get;
@@ -62,6 +64,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Gets or sets property.
         /// </summary>
+        /// <value>System.Object object.</value>
         protected IGameSettingService GameSetting
         {
             get;
@@ -71,6 +74,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Gets or sets property.
         /// </summary>
+        /// <value>System.Object object.</value>
         protected IMemberWinLimitService MemberWinLimit
         {
             get;
@@ -80,6 +84,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Gets or sets property.
         /// </summary>
+        /// <value>System.Object object.</value>
         protected ILogWriterService LogWriter
         {
             get;
@@ -91,7 +96,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="custId">Customer id.</param>
         /// <returns>MemberWinLimit object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
         public ActionResult GetMemberWinLimit(int custId)
         {
             var settings = new JsonSerializerSettings();
@@ -189,6 +194,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="custId">Customer id.</param>
         /// <param name="customer">Customer string object.</param>
         /// <returns>JSON string object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         protected List<object> UpdateGameSetting(int uplineRoleId, int custId, string customer)
         {
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
@@ -339,6 +345,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="groupName">Group name that user belongs to.</param>
         /// <param name="isUpdateGameSetting">Boolean value.</param>
         /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         protected Fanex.LiveCasinoSetting.Model.Result SyncManually(
             int uplineRoleId, 
             int uplineId, 
@@ -473,6 +480,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="uplineId">Up-line id.</param>
         /// <param name="customer">Customer JSON string.</param>
         /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMasterPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -552,6 +560,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="uplineId">Up-line id.</param>
         /// <param name="customer">Customer JSON string.</param>
         /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         protected Fanex.LiveCasinoSetting.Model.Result UpdateAgentPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext
@@ -631,6 +640,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="uplineId">Up-line id.</param>
         /// <param name="customer">Customer JSON string.</param>
         /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberPT(int custId, int uplineId, string customer)
         {
             var context = new RequestContext

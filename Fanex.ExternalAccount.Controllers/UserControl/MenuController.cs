@@ -34,13 +34,13 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             this._menuService = this._menuService ?? new MenuService();
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read, IsAjaxRequest = false)]
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read, IsAjaxRequest = false)]
         public ActionResult MenuList()
         {
             return this.ViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read)]
         public ActionResult MenuListPost()
         {
             var result = this.GetAllMenus();
@@ -48,7 +48,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result });
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read)]
         public ActionResult AddMenu()
         {
             var userCache = new CachingService().GetUserCache(CurrentSession.UserId);
@@ -59,7 +59,12 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(new Menu());
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets edit menu page.
+        /// </summary>
+        /// <param name="id">Id of menu.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read)]
         public ActionResult EditMenu(int id)
         {
             var model = this._menuService.GetAllMenus().Where(o => o.MenuID == id).FirstOrDefault();
@@ -75,7 +80,18 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Create)]
+        /// <summary>
+        /// Add new menu.
+        /// </summary>
+        /// <param name="name">Menu name.</param>
+        /// <param name="description">Menu description.</param>
+        /// <param name="url">Menu's URL.</param>
+        /// <param name="functionId">Function id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="parentName">Parent name.</param>
+        /// <param name="displayOrder">Display order.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Create)]
         public ActionResult Add(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
         {
             var menuId = 0;
@@ -96,7 +112,19 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Edits menu item.
+        /// </summary>
+        /// <param name="menuId">Id of menu.</param>
+        /// <param name="name">Menu name.</param>
+        /// <param name="description">Menu description.</param>
+        /// <param name="url">Menu's URL.</param>
+        /// <param name="functionId">Function id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="parentName">Parent name.</param>
+        /// <param name="displayOrder">Display order.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Update)]
         public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
         {
             var result = this._menuService.UpdateMenu(
@@ -114,7 +142,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Update)]
         public ActionResult UpdateStatus(int menuId, bool isActive)
         {
             var result = this._menuService.UpdateMenuStatus(
@@ -125,7 +153,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Delete)]
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Delete)]
         public ActionResult Delete(int menuId)
         {
             var result = this._menuService.DeleteMenu(
@@ -135,7 +163,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets all menus.
+        /// </summary>
+        /// <returns>List of menus.</returns>
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read)]
         private List<Menu> GetAllMenus()
         {
             var menuList = this._menuService.GetAllMenus();
@@ -154,7 +186,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return list;
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets list of menus.
+        /// </summary>
+        /// <returns>List of menus.</returns>
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read)]
         private List<Menu> GetMenus()
         {
             var menuList = new CachingService().GetUserCache(CurrentSession.UserId).MenuList;
@@ -168,7 +204,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return list;
         }
 
-        [Authorization(Function = eFunctions.ManageMenu, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets list of functions.
+        /// </summary>
+        /// <returns>List of functions.</returns>
+        [Authorization(Function = eFunctions.ManageMenu, Policy = EPolicy.Read)]
         private List<Function> GetFunctions()
         {
             var menuList = new CachingService().GetUserCache(CurrentSession.UserId).PolicyList;

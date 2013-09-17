@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="WinLossDetailMAg.cs" company="">
+// <copyright file="WinLossDetailMAg.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,7 +9,7 @@ namespace Fanex.ExternalAccount.DTO.Report
     using System;
 
     /// <summary>
-    /// Summary description for WinLossDetailMAg
+    /// TODO: Summary description.
     /// </summary>
     public class WinLossDetailMAg
     {

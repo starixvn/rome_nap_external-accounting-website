@@ -8,24 +8,33 @@
 namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
 
+    /// <summary>
+    /// Win loss detail report for super.
+    /// </summary>
     internal class WinLossDetailReportMAg : TemplateReport, IReportBuilder
     {
-        private WinLossDetailReportMAgBuilder builder;
+        private WinLossDetailReportMAgBuilder _builder;
 
         public WinLossDetailReportMAg(string filePath, WinLossDetailReportMAgBuilder builder)
             : base(filePath)
         {
-            this.builder = builder;
+            this._builder = builder;
         }
 
+        /// <summary>
+        /// Builds report.
+        /// </summary>
+        /// <returns>Workbook object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
-            var data = this.builder.Data;
+            var data = this._builder.Data;
             if (data == null)
             {
                 return null;
@@ -35,7 +44,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
             ISheet resultSheet = HssfWorkbook.GetSheet("WinLossDetailMAg");
 
             // apply Bold on all fonts
-            if (this.builder.IsBold)
+            if (this._builder.IsBold)
             {
                 this.BoldAllFonts();
             }
@@ -45,13 +54,13 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 
             // Header
             string mainTitle = string.Empty;
-            if (this.builder.FromDate.Equals(this.builder.ToDate))
+            if (this._builder.FromDate.Equals(this._builder.ToDate))
             {
-                mainTitle = "Agent Win Loss Detail on " + this.builder.FromDate;
+                mainTitle = "Agent Win Loss Detail on " + this._builder.FromDate;
             }
             else
             {
-                mainTitle = "Agent Win Loss Detail From " + this.builder.FromDate + " To " + this.builder.ToDate;
+                mainTitle = "Agent Win Loss Detail From " + this._builder.FromDate + " To " + this._builder.ToDate;
             }
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);

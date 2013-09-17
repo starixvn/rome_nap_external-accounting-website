@@ -11,6 +11,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
+    using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
 
@@ -19,6 +21,280 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     /// </summary>
     public static class CustomerModelExtensions
     {
+        /// <summary>
+        /// Gets outstanding column.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>String object.</returns>
+        public static string GetOutstandingColumn(int roleId)
+        {
+            var levelName = string.Empty;
+
+            switch (roleId)
+            {
+                case 4:
+                    levelName = "super";
+                    break;
+
+                case 3:
+                    levelName = "master";
+                    break;
+
+                case 2:
+                    levelName = "agent";
+                    break;
+
+                default:
+                    break;
+            }
+
+            return roleId != 1 ? levelName + "PositionTaking" : "outstanding";
+        }
+
+        /// <summary>
+        /// Gets used column of customer.
+        /// </summary>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>String object.</returns>
+        public static string GetUsedCreditColumn(int roleId)
+        {
+            if (roleId == 4)
+            {
+                return "superUsedCredit";
+            }
+            else if (roleId == 3)
+            {
+                return "masterUsedCredit";
+            }
+            else if (roleId == 2)
+            {
+                return "agentUsedCredit";
+            }
+            else
+            {
+                return "superUsedCredit";
+            }
+        }
+
+        /// <summary>
+        /// Gets yester day cash column.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>String object.</returns>
+        public static string GetYesterdayCashColumn(int roleId)
+        {
+            if (roleId == 4)
+            {
+                return "yesterday_superCash";
+            }
+            else if (roleId == 3)
+            {
+                return "yesterday_masterCash";
+            }
+            else if (roleId == 2)
+            {
+                return "yesterday_agentCash";
+            }
+            else
+            {
+                return "yesterday_cash";
+            }
+        }
+
+        /// <summary>
+        /// Gets yester cash column of customer.
+        /// </summary>
+        /// <returns>String object.</returns>
+        public static string GetYesterdayCustomerCash()
+        {
+            return "yesterday_customerCash";
+        }
+
+        /// <summary>
+        /// Gets cash column.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>String object.</returns>
+        public static string GetCashColumn(int roleId)
+        {
+            if (roleId == 4)
+            {
+                return "superCash";
+            }
+            else if (roleId == 3)
+            {
+                return "masterCash";
+            }
+            else if (roleId == 2)
+            {
+                return "agentCash";
+            }
+            else
+            {
+                return "cash";
+            }
+        }
+
+        /// <summary>
+        /// Gets customer cash column.
+        /// </summary>
+        /// <returns>String object.</returns>
+        public static string GetCustomerCash()
+        {
+            return "customerCash";
+        }
+
+        /// <summary>
+        /// Gets down-line list.
+        /// </summary>
+        /// <param name="model">CustomerModel object data.</param>
+        /// <param name="ds">Customer data.</param>
+        /// <param name="pageIndex">Page index.</param>
+        /// <returns>CustomerModel object.</returns>
+        public static CustomerModel GetDownlineList(this CustomerModel model, DataSet ds, int pageIndex)
+        {
+            var totalPages = 0;
+            var downlineList = new LeftPanelDao().GetDownlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value), 100, pageIndex);
+            var downlines = downlineList.ResultSet.Tables[0];
+            
+            LeftPanelService.TotalPages = totalPages = Utils.ToInt32(downlineList.Outputs["totalpages"]);
+            model.DownlineList = new DownlineList();
+
+            if (downlines != null && downlines.Rows.Count > 0)
+            {
+                foreach (DataRow item in downlines.Rows)
+                {
+                    model.DownlineList.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
+                }
+
+                model.DownlineList.CurrentPage = pageIndex;
+
+                if (totalPages > 1)
+                {
+                    for (int i = 1; i <= totalPages; i++)
+                    {
+                        model.DownlineList.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                    }
+                }
+                else
+                {
+                    model.DownlineList.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
+                }
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Gets online list.
+        /// </summary>
+        /// <param name="model">CustomerModel object data.</param>
+        /// <param name="ds">Customer data.</param>
+        /// <returns>CustomerModel object.</returns>
+        public static CustomerModel GetOnlineList(this CustomerModel model, DataSet ds)
+        {
+            var onlines = new LeftPanelDao().GetOnlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value));
+
+            foreach (DataRow row in onlines)
+            {
+                model.OnlineList.Onlines.Add(new OnlineInfo
+                {
+                    IP = new ObjectInfo { Text = row["ip"].ToString() },
+                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToString("MM/dd/yyyy HH:mm:ss tt") }
+                });
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Gets login info.
+        /// </summary>
+        /// <param name="model">CustomerModel object data.</param>
+        /// <param name="ds">Customer data.</param>
+        /// <returns>CustomerModel object.</returns>
+        public static CustomerModel LoginInfo(this CustomerModel model, DataSet ds)
+        {
+            var tableCustomer = ds.Tables[0];
+            var tableCash = ds.Tables[2];
+            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
+            model.Login = new List<ObjectInfo>
+                {
+                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["site"]), Text = "Site" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToString("M/d/yyyy H:mm tt"), Text = "Created Date" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Login" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToString("M/d/yyyy H:mm tt"), Text = "Password" },
+                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["lastloginip"]), Text = "Last Login IP" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToString("M/d/yyyy H:mm tt"), Text = "Security Code" },
+                };
+
+            if (roleId != 1)
+            {
+                model.Login.Add(
+                    new ObjectInfo
+                    {
+                        Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
+                        Text = "Login Options"
+                    });
+                model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)], Text = "Used Credit" });
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Gets personal info.
+        /// </summary>
+        /// <param name="model">CustomerModel object data.</param>
+        /// <param name="ds">Customer data.</param>
+        /// <returns>CustomerModel object.</returns>
+        public static CustomerModel PersonalInfo(this CustomerModel model, DataSet ds)
+        {
+            var tableCustomer = ds.Tables[0];
+            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
+            model.PersonalInfo = new PersonalInfo
+            {
+                CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
+                Fax = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["fax"]), Text = "Fax" },
+                Mobile = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["mobilephone"]), Text = "Mobile" },
+                Name = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["firstname"]) + " " + Utils.ToString(tableCustomer.Rows[0]["lastname"]), Text = "Name" },
+                Nickname = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["username2"]), Text = "Nickname" },
+                Phone = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["phone"]), Text = "Phone" },
+                RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
+                UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
+            };
+
+            return model;
+        }
+
+        /// <summary>
+        /// Gets balance info.
+        /// </summary>
+        /// <param name="model">CustomerModel object data.</param>
+        /// <param name="ds">Customer data.</param>
+        /// <returns>CustomerModel object.</returns>
+        public static CustomerModel BalanceInfo(this CustomerModel model, DataSet ds)
+        {
+            var tableCustomer = ds.Tables[0];            
+            var tableCash = ds.Tables[2];
+            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
+            model.BalanceInfo = new BalanceInfo()
+            {
+                CurrencyId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["exchangeid"]), Text = "Currency Id" },
+                Currency = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["currency"]), Text = "Currency" },
+                Balances = new List<ObjectInfo>()
+                    {                        
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][GetCashColumn(roleId)]), Text = "Total Cash" },
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][GetOutstandingColumn(roleId)]), Text = "Outstanding" },
+                        new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit" },
+                    }
+            };
+
+            return model;
+        }
+
         /// <summary>
         /// Gets customer model for super level.
         /// </summary>

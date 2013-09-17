@@ -1,9 +1,11 @@
-﻿/*
- * Created 20120216@Leo
- * Revision:
- * ?@? - ...
- *
- */
+﻿// --------------------------------------------------------------------------
+// <copyright file="RtfTextRender.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Excel.Utility
 {
@@ -11,10 +13,13 @@ namespace Fanex.ExternalAccount.Excel.Utility
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
+    /// <summary>
+    /// Text renderer.
+    /// </summary>
     public class RtfTextRender
     {
-        private IFont font;
-        private List<TextBlock> blocks = new List<TextBlock>();
+        private IFont _font;
+        private List<TextBlock> _blocks = new List<TextBlock>();
 
         public RtfTextRender()
         {
@@ -23,27 +28,31 @@ namespace Fanex.ExternalAccount.Excel.Utility
         public RtfTextRender(IFont font)
             : base()
         {
-            this.font = font;
+            this._font = font;
         }
 
         public void Clear()
         {
-            this.blocks.Clear();
+            this._blocks.Clear();
         }
 
+        /// <summary>
+        /// Render text string.
+        /// </summary>
+        /// <returns>IRichTextString object.</returns>
         public IRichTextString Render()
         {
             string s = string.Empty;
-            foreach (var block in this.blocks)
+            foreach (var block in this._blocks)
             {
                 s += block.Text;
             }
 
             IRichTextString result = new HSSFRichTextString(s);
             int textIndex = 0;
-            foreach (var block in this.blocks)
+            foreach (var block in this._blocks)
             {
-                IFont font = this.font;
+                IFont font = this._font;
                 if (font == null)
                 {
                     font = block.Font;
@@ -71,17 +80,17 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
         public void AddText(TextBlock block)
         {
-            this.blocks.Add(block);
+            this._blocks.Add(block);
         }
 
         public void AddText(string text)
         {
-            this.blocks.Add(new TextBlock(text));
+            this._blocks.Add(new TextBlock(text));
         }
 
         public void AddText(string text, IFont font)
         {
-            this.blocks.Add(new TextBlock(text, font));
+            this._blocks.Add(new TextBlock(text, font));
         }
     }
 }

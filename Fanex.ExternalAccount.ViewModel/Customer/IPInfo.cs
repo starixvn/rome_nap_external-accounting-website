@@ -10,7 +10,7 @@
 namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     /// <summary>
-    /// IP information
+    /// IP information.
     /// </summary>
     public class IPInfo
     {

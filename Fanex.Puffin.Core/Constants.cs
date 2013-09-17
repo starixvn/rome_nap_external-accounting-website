@@ -32,5 +32,4 @@ namespace Fanex.Puffin.Core
         public const string ARES_DATE_FORMAT = "dd-MMM-yy";
         public const string ARES_MONTH_YEAR_FORMAT = "MMM-yy";
     }
-
 }

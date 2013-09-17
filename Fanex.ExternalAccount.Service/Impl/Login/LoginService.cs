@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Impl.Login
+﻿// --------------------------------------------------------------------------
+// <copyright file="LoginService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Service.Impl.Login
 {
     using System;
     using System.Collections.Generic;
@@ -12,18 +21,31 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
 
+    /// <summary>
+    /// Login service.
+    /// </summary>
     public class LoginService : ServiceBase, ILoginService
     {
-        private readonly ILoginDao loginDao = null;
+        private readonly ILoginDao _loginDao = null;
 
         public LoginService(ILoginDao loginDao = null)
         {
-            this.loginDao = loginDao ?? new LoginDao();
+            this._loginDao = loginDao ?? new LoginDao();
         }
 
         #region ILoginService Members
 
-        public DTO.Result Login(string username, string password, Request request, out int custId, out int onUserId, out bool isIntAcc)
+        /// <summary>
+        /// Processes login.
+        /// </summary>
+        /// <param name="username">Admin username.</param>
+        /// <param name="password">Admin password.</param>
+        /// <param name="request">Request object.</param>
+        /// <param name="custId">Admin user id.</param>
+        /// <param name="onuserId">Admin on user id.</param>
+        /// <param name="isIntAcc">Is Internal account or not.</param>
+        /// <returns>Result object.</returns>
+        public DTO.Result Login(string username, string password, Request request, out int custId, out int onuserId, out bool isIntAcc)
         {
             Check.Argument.IsNotNull(username, "username");
             Check.Argument.IsNotEmpty(username, "username");
@@ -32,17 +54,17 @@
             Check.Argument.IsNotEmpty(password, "password");
 
             custId = 0;
-            onUserId = 0;
+            onuserId = 0;
             isIntAcc = true;
 
             try
             {
-                var result = loginDao.Login(username, password, request.Browser, request.IP, request.DomainName, request.CountryCode, request.Platform, out custId);
+                var result = _loginDao.Login(username, password, request.Browser, request.IP, request.DomainName, request.CountryCode, request.Platform, out custId);
 
                 if (result.IsSuccess)
                 {
-                    var result2 = loginDao.Checkin(custId, request.NetSessionId, request.IP, out onUserId);
-                    isIntAcc = loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
+                    var result2 = _loginDao.Checkin(custId, request.NetSessionId, request.IP, out onuserId);
+                    isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
 
                     result.ResultData = new GroupService().GetGroupById((int)result.ResultData);
 
@@ -53,12 +75,18 @@
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Logout session.
+        /// </summary>
+        /// <param name="custId">Admin user id.</param>
+        /// <param name="username">Admin username.</param>
+        /// <returns>Result object.</returns>
         public DTO.Result Logout(int custId, string username)
         {
             Check.Argument.IsNotNegative(custId, "custId");
@@ -67,16 +95,22 @@
 
             try
             {
-                return loginDao.Logout(custId, username);
+                return _loginDao.Logout(custId, username);
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Recheck in info.
+        /// </summary>
+        /// <param name="custId">Admin user id.</param>
+        /// <param name="isKickOut">Is kicked out or not.</param>
+        /// <returns>Result object.</returns>
         public DTO.Result Recheckin(int custId, out bool isKickOut)
         {
             isKickOut = false;
@@ -85,30 +119,41 @@
 
             try
             {
-                return loginDao.Recheckin(custId, out isKickOut);
+                return _loginDao.Recheckin(custId, out isKickOut);
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Gets all groups.
+        /// </summary>
+        /// <returns>ICollection object.</returns>
         public ICollection<Group> GroupList()
         {
             try
             {
-                return loginDao.GroupList().OrderBy(o => o.GroupName).ToList();
+                return _loginDao.GroupList().OrderBy(o => o.GroupName).ToList();
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Checks whether an admin is external group or not.
+        /// </summary>
+        /// <param name="custId">Admin user id.</param>
+        /// <param name="funcId">Function id.</param>
+        /// <param name="funcKey">Function key.</param>
+        /// <returns>Boolean object.</returns>
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             try
@@ -117,25 +162,29 @@
                 Check.Argument.IsNotNull(funcKey, "funcKey");
                 Check.Argument.IsNotEmpty(funcKey, "funcKey");
 
-                return loginDao.CheckExternalGroup(custId, funcId, funcKey);
+                return _loginDao.CheckExternalGroup(custId, funcId, funcKey);
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return true;
         }
 
+        /// <summary>
+        /// Gets DB date time.
+        /// </summary>
+        /// <returns>DateTime object.</returns>
         public DateTime GetDBTime()
         {
             try
             {
-                return this.loginDao.GetDBTime();
+                return this._loginDao.GetDBTime();
             }
             catch (Exception ex)
             {
-                base.ProcessException(ex);
+                this.ProcessException(ex);
             }
 
             return DateTime.Now;

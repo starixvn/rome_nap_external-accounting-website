@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Function.cs" company="">
+// <copyright file="Function.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -37,9 +37,9 @@ namespace Fanex.ExternalAccount.DTO.UserControl
 
         public bool IsTest { get; set; }
 
-        public ePolicy Policy { get; set; }
+        public EPolicy Policy { get; set; }
 
-        public ePolicy GroupPolicy { get; set; }
+        public EPolicy GroupPolicy { get; set; }
 
         public IEnumerable<FunctionPolicy> AssignGroups { get; set; }
     }

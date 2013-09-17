@@ -1,3 +1,12 @@
+// --------------------------------------------------------------------------
+// <copyright file="StatementDAO.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
 namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
 {
     using System;
@@ -10,8 +19,21 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
     using Fanex.ExternalAccount.DTO.Statement;
     using Fanex.ExternalAccount.Utilities;
 
+    /// <summary>
+    /// Statement data access object.
+    /// </summary>
     public class StatementDAO : DAOBase, IStatementDAO
     {
+        /// <summary>
+        /// Gets all statements.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date time.</param>
+        /// <param name="balanceUpDay">Balance up day.</param>
+        /// <param name="moveBetDay">Move bet day.</param>
+        /// <param name="includeAccBal">Include account balance or not.</param>
+        /// <returns>List object.</returns>
         public List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate, DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal)
         {
             Hashtable parameters = new Hashtable();
@@ -53,6 +75,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
             return result;
         }
 
+        /// <summary>
+        /// Get date time.
+        /// </summary>
+        /// <param name="transType">Transaction type.</param>
+        /// <param name="isAccBal">Is account balance or not.</param>
+        /// <param name="accDate">Account date.</param>
+        /// <param name="balanceUpDay">Balance up day.</param>
+        /// <returns>String object.</returns>
         private string GetDate(string transType, bool isAccBal, DateTime accDate, DateTime balanceUpDay)
         {
             if (string.Compare(transType.ToLowerInvariant(), "bet", true) == 0 && accDate >= balanceUpDay)
@@ -61,7 +91,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
             }
             else
             {
-                //Do not show date at ACCUMULATED BALANCE row
+                // Do not show date at ACCUMULATED BALANCE row
                 if (isAccBal)
                 {
                     return "--";

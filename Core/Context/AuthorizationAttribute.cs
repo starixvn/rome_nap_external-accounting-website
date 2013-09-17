@@ -40,7 +40,7 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public string Function { get; set; }
 
-        public ePolicy Policy { get; set; }
+        public EPolicy Policy { get; set; }
 
         public bool IsAjaxRequest 
         {
@@ -212,18 +212,18 @@ namespace Fanex.ExternalAccount.Core.Context
                 var firstItem = foundItems.First();
                 switch (this.Policy)
                 {
-                    case ePolicy.Read:
-                        if (firstItem.Policy == ePolicy.Create || firstItem.Policy == ePolicy.Delete || firstItem.Policy == ePolicy.Update || 
-                            firstItem.Policy == ePolicy.Read)
+                    case EPolicy.Read:
+                        if (firstItem.Policy == EPolicy.Create || firstItem.Policy == EPolicy.Delete || firstItem.Policy == EPolicy.Update || 
+                            firstItem.Policy == EPolicy.Read)
                         {
                             return true;
                         }
 
                         break;
-                    case ePolicy.Create:
-                    case ePolicy.Delete:
-                    case ePolicy.Update:
-                        if (firstItem.Policy == ePolicy.Read)
+                    case EPolicy.Create:
+                    case EPolicy.Delete:
+                    case EPolicy.Update:
+                        if (firstItem.Policy == EPolicy.Read)
                         {
                             return false;
                         }

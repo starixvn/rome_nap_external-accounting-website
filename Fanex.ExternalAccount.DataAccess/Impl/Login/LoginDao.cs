@@ -1,18 +1,27 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Login
+﻿// --------------------------------------------------------------------------
+// <copyright file="LoginDao.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 {
+    using System;
     using System.Collections.Generic;
+    using DNAide.Core;
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
+    using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.Login;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.Data.DNAide;
-    using System;
-    using DNAide.Core;
 
     /// <summary>
-    /// LoginDao
+    /// LoginDao object.
     /// </summary>
     public class LoginDao : DAOBase, ILoginDao
     {
@@ -24,13 +33,21 @@
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <param name="browser">The browser.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="ip">The IP address.</param>
         /// <param name="domain">The domain.</param>
         /// <param name="countryCode">The country code.</param>
-        /// <param name="platForm">The plat form.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <returns>Fanex.ExternalAccount.DTO.Result</returns>
-        public Fanex.ExternalAccount.DTO.Result Login(string username, string password, string browser, string ip, string domain, string countryCode, string platForm, out int custId)
+        /// <param name="platForm">The platform.</param>
+        /// <param name="custId">The customer id.</param>
+        /// <returns>Result object.</returns>
+        public Fanex.ExternalAccount.DTO.Result Login(
+            string username, 
+            string password, 
+            string browser, 
+            string ip, 
+            string domain,
+            string countryCode, 
+            string platForm, 
+            out int custId)
         {
             var result = new DTO.Result();
 
@@ -62,11 +79,11 @@
         }
 
         /// <summary>
-        /// Logouts the specified cust id.
+        /// Logouts the specified customer id.
         /// </summary>
-        /// <param name="custId">The cust id.</param>
+        /// <param name="custId">The customer id.</param>
         /// <param name="username">The username.</param>
-        /// <returns>DTO.Result</returns>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result Logout(int custId, string username)
         {
             using (var db = new ObjectDb("EAS_UserLogout"))
@@ -80,18 +97,18 @@
         }
 
         /// <summary>
-        /// Checkins the specified cust id.
+        /// Check-in the specified customer id.
         /// </summary>
-        /// <param name="custId">The cust id.</param>
+        /// <param name="custId">The customer id.</param>
         /// <param name="netSessionID">The net session ID.</param>
-        /// <param name="ip">The ip.</param>
-        /// <param name="onUserId">The on user id.</param>
-        /// <returns>DTO.Result</returns>
-        public DTO.Result Checkin(int custId, string netSessionID, string ip, out int onUserId)
+        /// <param name="ip">The IP address.</param>
+        /// <param name="onuserId">The on user id.</param>
+        /// <returns>DTO.Result object.</returns>
+        public DTO.Result Checkin(int custId, string netSessionID, string ip, out int onuserId)
         {
             var result = new DTO.Result();
 
-            onUserId = 0;
+            onuserId = 0;
 
             using (var db = new ObjectDb("EAS_UserCheckIn"))
             {
@@ -101,18 +118,18 @@
                 db.AddOutParameter("on_userid", System.Data.DbType.Int32, sizeof(int));
                 db.ExecuteNonQuery();
 
-                onUserId = (int)db.GetParameterValue("on_userid");
+                onuserId = (int)db.GetParameterValue("on_userid");
             }
 
             return result;
         }
 
         /// <summary>
-        /// Recheckins the specified cust id.
+        /// Recheck-in the specified customer id .
         /// </summary>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="isKickOut">if set to <c>true</c> [is kick out].</param>
-        /// <returns>DTO.Result</returns>
+        /// <param name="custId">The customer id .</param>
+        /// <param name="isKickOut">If set to <c>true</c> [is kick out].</param>
+        /// <returns>DTO.Result object.</returns>
         public DTO.Result Recheckin(int custId, out bool isKickOut)
         {
             isKickOut = false;
@@ -132,7 +149,7 @@
         /// <summary>
         /// Groups the list.
         /// </summary>
-        /// <returns>ICollection<DTO.Group></returns>
+        /// <returns>ICollection object.</returns>
         public ICollection<Group> GroupList()
         {
             var list = new List<Group>();
@@ -158,10 +175,10 @@
         /// <summary>
         /// Checks the external group.
         /// </summary>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="funcId">The func id.</param>
-        /// <param name="funcKey">The func key.</param>
-        /// <returns>bool</returns>
+        /// <param name="custId">The customer id .</param>
+        /// <param name="funcId">The function id.</param>
+        /// <param name="funcKey">The function key.</param>
+        /// <returns>Boolean object.</returns>
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             using (var db = new ObjectDb("EAS_UserCheckPermission"))
@@ -180,6 +197,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets DB time.
+        /// </summary>
+        /// <returns>DateTime object.</returns>
         public DateTime GetDBTime()
         {
             DbResult dr = null;
@@ -191,11 +212,9 @@
             dr = DNAide.Data.DbHelper.Execute("Age_LoginAdminVerifyTicket", p);
             loginTime = CastAide.AsDateTime(dr.Outputs["logintime"]);
 
-
             return loginTime;
         }
 
         #endregion ILoginDao Members
-
     }
 }

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IReportService.cs" company="">
+// <copyright file="IReportService.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -7,9 +7,9 @@
 namespace Fanex.ExternalAccount.Service.Interface.Report
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Collections;
     using Fanex.ExternalAccount.DTO.Report;
 
     /// <summary>
@@ -17,7 +17,7 @@ namespace Fanex.ExternalAccount.Service.Interface.Report
     /// </summary>
     public interface IReportService
     {
-        DataTable GetCustomerInfo(string groupname, int custId, string userName, Boolean isGetUplineInfo);
+        DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);
 
@@ -28,7 +28,6 @@ namespace Fanex.ExternalAccount.Service.Interface.Report
         List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId);
 
         List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
-
 
         List<WinLossDetail> GetWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams);
 

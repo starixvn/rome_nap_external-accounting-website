@@ -39,18 +39,23 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>Gets or sets the serializer settings.</summary>
+        /// <value>System.Object object.</value>
         public JsonSerializerSettings Settings { get; set; }
 
         /// <summary>Gets or sets the encoding of the response.</summary>
+        /// <value>System.Object object.</value>
         public Encoding ContentEncoding { get; set; }
 
         /// <summary>Gets or sets the content type for the response.</summary>
+        /// <value>System.Object object.</value>
         public string ContentType { get; set; }
 
         /// <summary>Gets or sets the body of the response.</summary>
+        /// <value>System.Object object.</value>
         public object ResponseBody { get; set; }
 
         /// <summary>Gets the formatting types depending on whether we are in debug mode.</summary>
+        /// <value>System.Object object.</value>
         private Formatting Formatting
         {
             get

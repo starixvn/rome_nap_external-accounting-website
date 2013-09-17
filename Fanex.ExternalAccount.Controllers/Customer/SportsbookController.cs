@@ -30,13 +30,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Bet Setting
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditBetSetting()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditBetSettingMasterGet(int custId, int parentId)
         {
             var settings = new JsonSerializerSettings();
@@ -64,7 +70,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditBetSettingAgentGet(int custId, int parentId)
         {
             var settings = new JsonSerializerSettings();
@@ -92,7 +104,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditBetSettingMemberGet(int custId, int parentId)
         {
             var settings = new JsonSerializerSettings();
@@ -120,7 +138,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult EditBetSettingPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -150,31 +175,37 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Edit Commission
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditCommission()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditCommissionDetail()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditCommissionMember()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditCommissionMemberDetail()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditCommissionGet(int custId, int parentId)
         {
             var settings = new JsonSerializerSettings();
@@ -200,7 +231,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="currentLevel">Current level.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult EditCommissionPost(int custId, int parentId, int currentLevel, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -240,19 +279,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region PT Setting
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditPT(/*int custId, int parentId*/)
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult SuperMasterEditSB()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditPTSuperGet(int custId, int parentId)
         {
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -285,7 +330,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                     });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -319,7 +370,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <param name="isUpdateAllMember">Is update all member.</param>
+        /// <param name="newPositionTaking">New position taking.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
             var mult = Request["isMult"];
@@ -365,7 +425,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditPTAgentGet(int custId, int parentId)
         {
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -399,7 +465,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <param name="isUpdateAllMember">Is update all member.</param>
+        /// <param name="newPositionTaking">New position taking.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
             var mult = Request["isMult"];
@@ -446,7 +521,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditPTMemberGet(int custId, int parentId)
         {
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -480,7 +561,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
             var mult = Request["isMult"];
@@ -527,7 +615,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="agentId">Agent's id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
         {
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -562,7 +657,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult SuperEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var para = Request["para"];
@@ -606,7 +708,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="agentId">Agent's id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -641,7 +750,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult MasterEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var para = Request["para"];
@@ -689,13 +805,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Multiple PT Setting
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditMultiplePT()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult SuperMasterEditMultiplePTMember()
         {
             return this.PartialViewBase();
@@ -705,13 +821,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Edit Min PT
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult EditMinPT()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
         {
             var context = new RequestContext()
@@ -750,7 +872,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
         {
             var context = new RequestContext()
@@ -789,7 +917,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -813,7 +948,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Updates settings data.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="parentId">Parent id.</param>
+        /// <param name="txtCustomerObject">JSON string.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
         public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();

@@ -30,7 +30,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     {
         private readonly IFunctionService _funcService = new FunctionService();
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read, IsAjaxRequest = false)]
+        /// <summary>
+        /// Get function list page.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
             var internalGroup = new GroupService().GetListGroup()
@@ -45,7 +49,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets data of function list page.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
         public ActionResult FunctionListPost()
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -89,7 +97,12 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(new { total = 1, page = 1, records = funcsOrder.Count(), rows = funcsOrder });
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Edits function.
+        /// </summary>
+        /// <param name="id">Function id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
         public ActionResult EditFunction(int id)
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -106,12 +119,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {
-                // Is Internal admin logged in
                 parent = parent.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
             else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
             {
-                // Is External admin logged in
                 parent = parent.Where(o => o.FuncKey != eFunctions.Administration &&
                     o.FuncKey != eFunctions.SystemConfiguration &&
                     o.FuncKey != eFunctions.ExternalGroup);
@@ -144,7 +155,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Add new function.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
         public ActionResult AddFunction()
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -173,7 +188,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Update)]
         public ActionResult Edit(int funcId, string name, string desc, int parentId, string parent, int order, string oldGroups, string groups)
         {
             var result = this._funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, oldGroups, groups);
@@ -181,7 +196,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Create)]
         public ActionResult Add(string name, string key, string desc, int parentId, string parent, int order, string groups)
         {
             var funcId = 0;
@@ -191,7 +206,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Update)]
         public ActionResult UpdateStatus(int funcId, bool isTest)
         {
             var result = this._funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
@@ -199,7 +214,13 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets policy list of a function.
+        /// </summary>
+        /// <param name="funcId">Function id.</param>
+        /// <param name="addNew">Specify is add new function or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
         public ActionResult PolicyList(int funcId, bool addNew = false)
         {
             var groups = this._funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();

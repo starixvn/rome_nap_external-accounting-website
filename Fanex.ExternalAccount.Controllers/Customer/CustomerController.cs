@@ -45,7 +45,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="username">Customer username.</param>
         /// <param name="parentRoleId">Parent role id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult CheckUsername(string username, int parentRoleId)
         {
             int errCode = 0;
@@ -82,7 +82,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Gets add new super page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
         public ActionResult SuperAddNewMaster()
         {
             return this.PartialViewBase();
@@ -95,7 +95,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -134,7 +134,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -167,7 +167,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Gets agent page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
         public ActionResult MasterAddNewAgent()
         {
             return this.PartialViewBase();
@@ -180,7 +180,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -219,7 +219,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -252,7 +252,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Get member page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
         public ActionResult AgentAddNewMember()
         {
             return this.PartialViewBase();
@@ -265,7 +265,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -304,7 +304,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = ePolicy.Create)]
+        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -335,7 +335,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Gets customer list page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read, IsAjaxRequest = false)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read, IsAjaxRequest = false)]
         public ActionResult CustomerList()
         {
             return this.PartialViewBase();
@@ -376,7 +376,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Sets cache list.
         /// </summary>
         /// <param name="result">Customer data.</param>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public void SetCacheList(DataTable result)
         {
             if (result != null)
@@ -395,7 +395,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="username">Customer username.</param>
         /// <param name="isExportExcel">Export excel or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult SearchListPost(
             string groupName = "ACCDDD", 
             bool? enabled = null, 
@@ -429,7 +429,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult SuperListPost(
             string groupName = "ACCDDD", 
             int? custId = null, 
@@ -455,7 +455,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this._masterService.GetData(srecommend, custId, enabled, closed, suspended);
@@ -500,7 +500,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>        
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
@@ -542,7 +542,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = this._memberService.GetData(recommend, custId, enabled, closed, suspended);
@@ -580,7 +580,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <param name="ip">IP address.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult ViewIP(string ip)
         {
             try
@@ -618,7 +618,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custid">Customer id.</param>
         /// <param name="allow">Allow double commission or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = this._superService.ConfigDoubleComm(
@@ -645,7 +645,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <param name="custId">Customer id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
         public ActionResult EditInfo(int custId)
         {
             var model = this._customerService.UserInfo(custId);
@@ -670,7 +670,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="email">Email address.</param>
         /// <param name="fax">Fax number.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult EditInfoPost(int custId, string firstName, string lastName, string homePhone, string mobilePhone, string email, string fax)
         {
             var result = this._customerService.EditUserInfo(
@@ -689,20 +689,20 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id)
         {
             ViewBag.RoleId = id;
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
         public ActionResult TransferCondition()
         {
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
             ViewBag.CustId = custId;
@@ -711,7 +711,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
             var result = this._masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
@@ -719,7 +719,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
         public ActionResult ResetPassword(int custId)
         {
             var user = this._customerService.UserInfo(custId);
@@ -732,7 +732,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custId">Customer id.</param>
         /// <param name="password">Password characters.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult UpdatePassword(int custId, string password)
         {
             var result = this._customerService.ResetPassword(
@@ -767,7 +767,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult GetExportToExcel(
             int? currentLevel = null, 
             string groupName = "ACCDDD", 

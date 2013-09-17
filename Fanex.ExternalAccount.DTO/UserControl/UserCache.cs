@@ -1,16 +1,16 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UserCache.cs" company="">
+// <copyright file="UserCache.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
 namespace Fanex.ExternalAccount.DTO.UserControl
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    using System.Collections.Generic;
-
     public class UserCache
     {
         public List<Menu> MenuList { get; set; }

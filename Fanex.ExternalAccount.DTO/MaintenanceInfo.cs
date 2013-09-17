@@ -1,8 +1,20 @@
-﻿namespace Fanex.ExternalAccount.DTO
+﻿// --------------------------------------------------------------------------
+// <copyright file="MaintenanceInfo.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DTO
 {
     using System;
     using System.Globalization;
 
+    /// <summary>
+    /// MaintenanceInfo class.
+    /// </summary>
     public class MaintenanceInfo
     {
         public MaintenanceInfo()
@@ -13,18 +25,21 @@
         }
 
         /// <summary>
-        /// Checking server is under downtime
+        /// Gets or sets a value indicating whether server is under downtime or not.
         /// </summary>
+        /// <value>Boolean object.</value>
         public bool IsDownTime { get; set; }
 
         /// <summary>
-        /// Get from time
+        /// Gets or sets from time.
         /// </summary>
+        /// <value>String object.</value>
         public string TimeFrom { get; set; }
 
         /// <summary>
-        /// Get to time
+        /// Gets or sets to time.
         /// </summary>
+        /// <value>String object.</value>
         public string TimeTo { get; set; }
     }
 }

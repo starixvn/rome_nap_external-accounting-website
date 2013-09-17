@@ -19,15 +19,31 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     /// </summary>
     public class MemberService : CustomerService, IMemberService
     {
-        private readonly IMemberDao dao = new MemberDao();
+        private readonly IMemberDao _dao = new MemberDao();
 
         #region IDataService Members
 
-        public System.Data.DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null, string groupName = "ACCDDD")
+        /// <summary>
+        /// Base function for all levels.
+        /// </summary>
+        /// <param name="recommend">Id of current level.</param>
+        /// <param name="custId">Id of selected user.</param>
+        /// <param name="enabled">Enable status.</param>
+        /// <param name="closed">Close status.</param>
+        /// <param name="suspended">Suspend status.</param>
+        /// <param name="groupName">Group name of currency.</param>
+        /// <returns>DataTable object.</returns>
+        public System.Data.DataTable GetData(
+            int? recommend = null, 
+            int? custId = null, 
+            bool? enabled = null, 
+            bool? closed = null, 
+            bool? suspended = null, 
+            string groupName = "ACCDDD")
         {
             try
             {
-                return this.dao.GetData(recommend, custId, enabled, closed, suspended, groupName);
+                return this._dao.GetData(recommend, custId, enabled, closed, suspended, groupName);
             }
             catch (Exception ex)
             {

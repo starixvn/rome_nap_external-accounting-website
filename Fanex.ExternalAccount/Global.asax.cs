@@ -1,19 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-using Fanex.ExternalAccount.Utilities;
+﻿// --------------------------------------------------------------------------
+// <copyright file="Global.asax.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode,
-    // visit http://go.microsoft.com/?LinkId=9394801
+    using System.Configuration;
+    using System.Web.Http;
+    using System.Web.Mvc;
+    using System.Web.Optimization;
+    using System.Web.Routing;
+    using Fanex.ExternalAccount.Utilities;
 
+    /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
+     visit http://go.microsoft.com/?LinkId=9394801*/
+
+    /// <summary>
+    /// TODO: Global application.
+    /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -21,6 +29,10 @@ namespace Fanex.ExternalAccount
             filters.Add(new HandleErrorAttribute());
         }
 
+        /// <summary>
+        /// Registers routes.
+        /// </summary>
+        /// <param name="routes">Routes collection.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -48,9 +60,16 @@ namespace Fanex.ExternalAccount
             routes.MapRoute(
                 name: "Default4",
                 url: "{controller}/{action}/{id}/{custId}/{uplineId}/{username}/{groupname}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, custId = UrlParameter.Optional, uplineId = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional });
+                defaults: new 
+                { 
+                    controller = "Home", action = "Index", id = UrlParameter.Optional, 
+                    custId = UrlParameter.Optional, uplineId = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional 
+                });
         }
 
+        /// <summary>
+        /// Application is starting.
+        /// </summary>
         protected void Application_Start()
         {
             Sunplus.Agent.Configurations.AppSettings.LoadComplete += new Sunplus.Agent.Configurations.AppSettings.UpdateEventHandler(AppSettings_LoadComplete);

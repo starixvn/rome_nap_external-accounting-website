@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.Caching;
     using Fanex.ExternalAccount.Core.Base;
@@ -55,7 +56,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
         #endregion Init WinLossDetail
 
-        [Authorization(Function = eFunctions.WinlossDetail, Policy = ePolicy.Read, IsAjaxRequest = false)]
+        [Authorization(Function = eFunctions.WinlossDetail, Policy = EPolicy.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
             return this.PartialViewBase();
@@ -66,12 +67,17 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._username = CheckRequest.GetStringRequest("username", string.Empty);
             this._viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             this._custId = CheckRequest.GetIntRequest("custid", 0);
-            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
+            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? 
+                CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
             this._fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
         }
 
-        [Authorization(Function = eFunctions.WinlossDetail, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets report data.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.WinlossDetail, Policy = EPolicy.Read)]
         public ActionResult GetData()
         {
             this.GetRequestPage();
@@ -96,14 +102,24 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
             else
             {
-                return this.JsonBase(new { viewlevel = 5, srecommend = this._srecommend, mrecommend = this._mrecommend, recommend = this._recommend, rows = string.Empty, sortingorderlist = this._sortingOrderList });
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 5, srecommend = this._srecommend, mrecommend = this._mrecommend, 
+                        recommend = this._recommend, rows = string.Empty, sortingorderlist = this._sortingOrderList 
+                    });
             }
         }
 
+        /// <summary>
+        /// Exports excel.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public void GetExportToExcelWinLossDetail()
         {
             this.GetRequestPage();
-            this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
+            this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + 
+                this._fromDate.ToString() + this._toDate.ToString();
 
             if (this.CheckBelonging())
             {
@@ -124,7 +140,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     var excelStream = builder.Build();
                     if (excelStream != null)
                     {
-                        this.ExportToExcel(excelStream, "MemberWinLossDetail_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
+                        this.ExportToExcel(
+                            excelStream, "MemberWinLossDetail_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
                         excelStream.Dispose();
                     }
                 }
@@ -145,7 +162,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     var excelStream = builder.Build();
                     if (excelStream != null)
                     {
-                        this.ExportToExcel(excelStream, this.LevelName(this._viewlevel) + "WinLossDetail_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
+                        this.ExportToExcel(
+                            excelStream, this.LevelName(this._viewlevel) + "WinLossDetail_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
                         excelStream.Dispose();
                     }
                 }
@@ -166,13 +184,18 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     var excelStream = builder.Build();
                     if (excelStream != null)
                     {
-                        this.ExportToExcel(excelStream, this.LevelName(this._viewlevel) + "WinLossDetail_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
+                        this.ExportToExcel(
+                            excelStream, this.LevelName(this._viewlevel) + "WinLossDetail_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
                         excelStream.Dispose();
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Checks belonging.
+        /// </summary>
+        /// <returns>Boolean object.</returns>
         private bool CheckBelonging()
         {
             if (!string.IsNullOrEmpty(this._username))
@@ -213,18 +236,30 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return true;
         }
 
+        /// <summary>
+        /// Search data.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private ActionResult GetWinLossDetailSearch()
         {
             if (this._roleId > 3)
             {
-                this._listWinLossDetail = this._reportService.GetWinLossDetail(this._groupname, this._srecommend, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetail = this._reportService.GetWinLossDetail(
+                    this._groupname, this._srecommend, this._fromDate, this._toDate, this._filterParams);
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
-                return this.JsonBase(new { viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList });
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, 
+                        rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList 
+                    });
             }
             else if (this._roleId == 3)
             {
-                this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(this._srecommend, this._mrecommend, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(
+                    this._srecommend, this._mrecommend, this._fromDate, this._toDate, this._filterParams);
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
@@ -242,7 +277,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
             else if (this._roleId == 2)
             {
-                this._listWinLossDetailMAg = this._reportService.GetWinLossDetailMAg(this._mrecommend, this._recommend, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetailMAg = this._reportService.GetWinLossDetailMAg(
+                    this._mrecommend, this._recommend, this._fromDate, this._toDate, this._filterParams);
                 this._totalPages = (this._listWinLossDetailMAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailMAg>>(this._cacheList, this._listWinLossDetailMAg, 120);
                 return this.JsonBase(
@@ -261,7 +297,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
             else
             {
-                this._listWinLossDetailAg = this._reportService.GetWinLossDetailAg(this._recommend, this._memberId, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetailAg = this._reportService.GetWinLossDetailAg(
+                    this._recommend, this._memberId, this._fromDate, this._toDate, this._filterParams);
                 this._totalPages = (this._listWinLossDetailAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailAg>>(this._cacheList, this._listWinLossDetailAg, 120);
                 return this.JsonBase(
@@ -280,6 +317,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
         }
 
+        /// <summary>
+        /// Search down-line data.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         private ActionResult GetWinLossDetailDownline()
         {
             IReportService reportService = new ReportService();
@@ -295,7 +336,12 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._listWinLossDetailMAg = this._reportService.GetWinLossDetailMAg(this._custId, 0, this._fromDate, this._toDate, this._filterParams);
                 this._totalPages = (this._listWinLossDetailMAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailMAg>>(this._cacheList, this._listWinLossDetailMAg, 120);
-                return this.JsonBase(new { viewlevel = 2, srecommend = this._srecommend, mrecommend = this._custId, rows = this._listWinLossDetailMAg, sortingorderlist = this._sortingOrderList });
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 2, srecommend = this._srecommend, mrecommend = this._custId, rows = this._listWinLossDetailMAg, 
+                        sortingorderlist = this._sortingOrderList 
+                    });
             }
             else
             {

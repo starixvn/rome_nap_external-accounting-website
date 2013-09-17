@@ -17,9 +17,12 @@ namespace Fanex.ExternalAccount.SecurityCode.Controllers
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
 
+    /// <summary>
+    /// Home controller.
+    /// </summary>
     public class HomeController : BaseController
     {
-        [Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
         public ActionResult Index(int id, string groupName)
         {
             return this.PartialViewBase("~/Areas/CustomerSetting/Views/SecurityCode/Index.cshtml");

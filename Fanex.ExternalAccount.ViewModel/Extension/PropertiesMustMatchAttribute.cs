@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PropertiesMustMatchAttribute.cs" company="">
+// <copyright file="PropertiesMustMatchAttribute.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
     public sealed class PropertiesMustMatchAttribute : ValidationAttribute
     {
         private const string DefaultErrorMessage = "'{0}' and '{1}' do not match.";
-        private readonly object typeId = new object();
+        private readonly object _typeId = new object();
 
         public PropertiesMustMatchAttribute(string originalProperty, string confirmProperty)
             : base(DefaultErrorMessage)
@@ -36,7 +36,7 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
         {
             get
             {
-                return this.typeId;
+                return this._typeId;
             }
         }
 

@@ -25,15 +25,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         #region IData Masters
 
         /// <summary>
-        /// Base function for all levels
+        /// Base function for all levels.
         /// </summary>
-        /// <param name="recommend">Id of current level</param>
-        /// <param name="custId">Id of selected user</param>
-        /// <param name="enabled">Enable status</param>
-        /// <param name="closed">Close status</param>
-        /// <param name="suspended">Suspend status</param>
-        /// <param name="groupName">Group name of currency</param>
-        /// <returns>DataTable object</returns>
+        /// <param name="recommend">Id of current level.</param>
+        /// <param name="custId">Id of selected user.</param>
+        /// <param name="enabled">Enable status.</param>
+        /// <param name="closed">Close status.</param>
+        /// <param name="suspended">Suspend status.</param>
+        /// <returns>DataTable object.</returns>
         public DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var param = new Hashtable();
@@ -46,6 +45,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return DbHelper.ExecuteDataTable("EAS_CustomerSelBySAg", param);
         }
 
+        /// <summary>
+        /// Gets transfer options.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>Transfer object.</returns>
         public Transfer GetTransferOption(int custId)
         {
             var param = new Hashtable();
@@ -72,6 +76,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             return null;
         }
 
+        /// <summary>
+        /// Edits transfer options.
+        /// </summary>
+        /// <param name="transferOption">Transfer options.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="ip">IP address.</param>
+        /// <param name="subAccId">Sub-account id.</param>
+        /// <param name="language">Language to get data.</param>
+        /// <returns>Result object.</returns>
         public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
         {
             var param = new Hashtable();

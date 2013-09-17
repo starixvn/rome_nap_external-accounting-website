@@ -71,7 +71,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Up-line id of customer.</param>
         /// <param name="newGivenCredit">New given credit.</param>
         /// <returns>JSON object.</returns>
-        [HttpPost, Authorization(Function = eFunctions.EditCustomer, Policy = ePolicy.Update)]
+        [HttpPost, Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
             var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);

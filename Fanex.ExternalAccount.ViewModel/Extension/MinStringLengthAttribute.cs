@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MinStringLengthAttribute.cs" company="">
+// <copyright file="MinStringLengthAttribute.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -17,23 +17,23 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
     public sealed class MinStringLengthAttribute : ValidationAttribute
     {
         private const string DefaultErrorMessage = "'{0}' must be at least {1} characters long.";
-        private readonly int minCharacters = 6;
+        private readonly int _minCharacters = 6;
 
         public MinStringLengthAttribute(int minCharacters)
             : base(DefaultErrorMessage)
         {
-            this.minCharacters = minCharacters;
+            this._minCharacters = minCharacters;
         }
 
         public override string FormatErrorMessage(string name)
         {
-            return string.Format(CultureInfo.CurrentUICulture, this.ErrorMessageString, name, this.minCharacters);
+            return string.Format(CultureInfo.CurrentUICulture, this.ErrorMessageString, name, this._minCharacters);
         }
 
         public override bool IsValid(object value)
         {
             string valueAsString = value as string;
-            return valueAsString != null && valueAsString.Length >= this.minCharacters;
+            return valueAsString != null && valueAsString.Length >= this._minCharacters;
         }
     }
 }

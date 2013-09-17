@@ -12,6 +12,9 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
     using Fanex.ExternalAccount.DTO.Statement;
     using NPOI.HSSF.UserModel;
 
+    /// <summary>
+    /// Statement page builder.
+    /// </summary>
     public class StatementPageBuilder
     {
         public StatementPageBuilder(List<Statement> statement, bool isBold, string username, string fromDate, string toDate)
@@ -33,6 +36,10 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 
         public string ToDate { get; private set; }
 
+        /// <summary>
+        /// Builds report.
+        /// </summary>
+        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
             TemplateReport report = null;

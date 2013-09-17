@@ -1,31 +1,43 @@
-﻿namespace Fanex.ExternalAccount.Excel.Utility
+﻿// --------------------------------------------------------------------------
+// <copyright file="TextBlock.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Excel.Utility
 {
     using NPOI.SS.UserModel;
 
+    /// <summary>
+    /// Defines text block.
+    /// </summary>
     public class TextBlock
     {
-        private string text;
-        private IFont font;
+        private string _text;
+        private IFont _font;
 
         public TextBlock(string text)
         {
-            this.text = text;
+            this._text = text;
         }
 
         public TextBlock(string text, IFont font)
         {
-            this.text = text;
-            this.font = font;
+            this._text = text;
+            this._font = font;
         }
 
         public string Text
         {
-            get { return this.text; }
+            get { return this._text; }
         }
 
         public IFont Font
         {
-            get { return this.font; }
+            get { return this._font; }
         }
     }
 }

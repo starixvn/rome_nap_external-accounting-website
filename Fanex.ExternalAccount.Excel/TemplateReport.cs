@@ -1,9 +1,11 @@
-﻿/*
- * Created 20120216@Leo
- * Revision:
- * ?@? - ...
- *
- */
+﻿// --------------------------------------------------------------------------
+// <copyright file="TemplateReport.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
 
 namespace Fanex.ExternalAccount.Excel
 {
@@ -12,43 +14,46 @@ namespace Fanex.ExternalAccount.Excel
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
+    /// <summary>
+    /// Template report object.
+    /// </summary>
     public abstract class TemplateReport : IDisposable
     {
-        private HSSFWorkbook hssfWorkbook;
+        private HSSFWorkbook _hssfWorkbook;
 
         public TemplateReport(string filePath)
         {
             FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            this.hssfWorkbook = new HSSFWorkbook(file);
+            this._hssfWorkbook = new HSSFWorkbook(file);
         }
 
         public HSSFWorkbook Workbook
         {
             get
             {
-                return this.hssfWorkbook;
+                return this._hssfWorkbook;
             }
         }
 
         protected HSSFWorkbook HssfWorkbook
         {
-            get { return this.hssfWorkbook; }
-            set { this.hssfWorkbook = value; }
+            get { return this._hssfWorkbook; }
+            set { this._hssfWorkbook = value; }
         }
 
         public void Dispose()
         {
-            if (this.hssfWorkbook != null)
+            if (this._hssfWorkbook != null)
             {
-                this.hssfWorkbook.Dispose();
+                this._hssfWorkbook.Dispose();
             }
         }
 
         public void BoldAllFonts()
         {
-            for (short i = 0; i < this.hssfWorkbook.NumberOfFonts; i++)
+            for (short i = 0; i < this._hssfWorkbook.NumberOfFonts; i++)
             {
-                var font = this.hssfWorkbook.GetFontAt(i);
+                var font = this._hssfWorkbook.GetFontAt(i);
                 font.Boldweight = (short)FontBoldWeight.BOLD;
             }
         }

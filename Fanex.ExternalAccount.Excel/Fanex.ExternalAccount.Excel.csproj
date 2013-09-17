@@ -64,7 +64,7 @@
     <Compile Include="Utility\HSSFSheetExtension.cs" />
     <Compile Include="Utility\ITextFormat.cs" />
     <Compile Include="Utility\RowExtension.cs" />
-    <Compile Include="Utility\RtfFontFormatter.cs" />
+    <Compile Include="Utility\IFontFormatter.cs" />
     <Compile Include="Utility\RtfTextRender.cs" />
     <Compile Include="Utility\TextBlock.cs" />
     <Compile Include="Utility\TextFormatRunner.cs" />

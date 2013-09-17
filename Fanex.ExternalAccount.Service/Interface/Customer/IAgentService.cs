@@ -18,6 +18,7 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
     public interface IAgentService
     {
         DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null);
+
         Transfer GetTransferOption(int custId);
     }
 }

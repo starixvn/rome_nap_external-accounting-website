@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MaxStringLengthAttribute.cs" company="">
+// <copyright file="MaxStringLengthAttribute.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -17,23 +17,23 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
     public sealed class MaxStringLengthAttribute : ValidationAttribute
     {
         private const string DefaultErrorMessage = "'{0}' must be under {1} characters.";
-        private readonly int maxCharacters = 50;
+        private readonly int _maxCharacters = 50;
 
         public MaxStringLengthAttribute(int maxCharacters)
             : base(DefaultErrorMessage)
         {
-            this.maxCharacters = maxCharacters;
+            this._maxCharacters = maxCharacters;
         }
 
         public override string FormatErrorMessage(string name)
         {
-            return string.Format(CultureInfo.CurrentUICulture, this.ErrorMessageString, name, this.maxCharacters);
+            return string.Format(CultureInfo.CurrentUICulture, this.ErrorMessageString, name, this._maxCharacters);
         }
 
         public override bool IsValid(object value)
         {
             string valueAsString = value as string;
-            return valueAsString != null && valueAsString.Length < this.maxCharacters;
+            return valueAsString != null && valueAsString.Length < this._maxCharacters;
         }
     }
 }

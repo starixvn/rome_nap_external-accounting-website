@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IReportDAO.cs" company="">
+// <copyright file="IReportDAO.cs" company="Nexcel Solution Co.Ltd">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -37,13 +37,37 @@ namespace Fanex.ExternalAccount.DataAccess.Interface.Report
 
         List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId);
 
-        List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(string groupname, int custId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay);
+        List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(
+            string groupname, 
+            int custId, 
+            DateTime fromDate, 
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams,
+            DateTime balanceUpDay);
 
-        List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(int custId, int masterId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay);
+        List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
+            int custId, 
+            int masterId, 
+            DateTime fromDate, 
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams, 
+            DateTime balanceUpDay);
 
-        List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(int custId, int agentId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay);
+        List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
+            int custId,
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams, 
+            DateTime balanceUpDay);
 
-        List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(int custId, int memberId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay);
+        List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(
+            int custId, 
+            int memberId, 
+            DateTime fromDate, 
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams, 
+            DateTime balanceUpDay);
 
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
     }

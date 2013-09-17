@@ -29,6 +29,10 @@ namespace Fanex.ExternalAccount.Controllers.Shared
             return this.View();
         }
 
+        /// <summary>
+        /// Gets menus.
+        /// </summary>
+        /// <returns>ActionResult object.</returns>
         public ActionResult _Menu()
         {
             // load menus

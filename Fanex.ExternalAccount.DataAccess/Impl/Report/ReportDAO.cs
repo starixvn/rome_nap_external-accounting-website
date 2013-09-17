@@ -1,3 +1,12 @@
+// --------------------------------------------------------------------------
+// <copyright file="ReportDAO.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
 namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
     using System;
@@ -10,6 +19,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using Fanex.ExternalAccount.DataAccess.Interface.Report;
     using Fanex.ExternalAccount.DTO.Report;
 
+    /// <summary>
+    /// Report data access object.
+    /// </summary>
     public class ReportDAO : DAOBase, IReportDAO
     {
         #region BalanceUpDay
@@ -26,6 +38,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
         #region Common Report
 
+        /// <summary>
+        /// Selects user info.
+        /// </summary>
+        /// <param name="groupname">Group name.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="userName">Customer name.</param>
+        /// <param name="isGetUplineInfo">Gets upper info or not.</param>
+        /// <returns>DataTable object.</returns>
         public DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
             using (var db = new ObjectDb("EAS_CustomerSelUserInfo"))
@@ -52,6 +72,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             }
         }
 
+        /// <summary>
+        /// Searches user info.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="username">Customer username.</param>
+        /// <param name="groupname">Group name.</param>
+        /// <returns>List of suggested usernames.</returns>
         public List<SuggestedUserName> EAS_CustomerSelUserSearch(int custId, string username, string groupname)
         {
             var entityList = new List<SuggestedUserName>();
@@ -97,6 +124,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
         #region Daily WinLoss
 
+        /// <summary>
+        /// Gets daily win loss in 14 days.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="groupname">Group name.</param>
+        /// <returns>List of daily win loss object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com14(DateTime winlostDate, int custId, string groupname)
         {
             Hashtable parameters = new Hashtable();
@@ -110,6 +144,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com14", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report for commission.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="groupname">Group name.</param>
+        /// <returns>List of daily win loss object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(DateTime winlostDate, int custId, string groupname)
         {
             Hashtable parameters = new Hashtable();
@@ -123,6 +164,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report in 14 days for super.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="masterId">Master id.</param>
+        /// <returns>List object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId)
         {
             Hashtable parameters = new Hashtable();
@@ -136,6 +184,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg14", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report for super.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="masterId">Master id.</param>
+        /// <returns>List object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId)
         {
             Hashtable parameters = new Hashtable();
@@ -149,6 +204,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="agentId">Agent's id.</param>
+        /// <returns>List object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId)
         {
             Hashtable parameters = new Hashtable();
@@ -162,6 +224,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg14", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="agentId">Agent's id.</param>
+        /// <returns>List object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId)
         {
             Hashtable parameters = new Hashtable();
@@ -175,6 +244,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="memberId">Member id.</param>
+        /// <returns>List object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag14(DateTime winlostDate, int custId, int memberId)
         {
             Hashtable parameters = new Hashtable();
@@ -188,6 +264,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Ag14", parameters);
         }
 
+        /// <summary>
+        /// Gets daily win loss report.
+        /// </summary>
+        /// <param name="winlostDate">Win loss date.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="memberId">Member id.</param>
+        /// <returns>List object.</returns>
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId)
         {
             Hashtable parameters = new Hashtable();
@@ -205,7 +288,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
         #region WinLoss Detail
 
-        public List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(string groupname, int custId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay)
+        /// <summary>
+        /// Gets win loss detail for commission.
+        /// </summary>
+        /// <param name="groupname">Group name.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date time.</param>
+        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="balanceUpDay">Balance up day.</param>
+        /// <returns>List object.</returns>
+        public List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(
+            string groupname, 
+            int custId,
+            DateTime fromDate,
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams,
+            DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
             parameters.Add("groupname", groupname);
@@ -225,7 +324,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDetail("EAS_Rpt_WinLossDetail_Com", parameters);
         }
 
-        public List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(int custId, int masterId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay)
+        /// <summary>
+        /// Gets win loss detail.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="masterId">Master id.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date time.</param>
+        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="balanceUpDay">Balance up day.</param>
+        /// <returns>List object.</returns>
+        public List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
+            int custId, 
+            int masterId, 
+            DateTime fromDate, 
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams,
+            DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
             parameters.Add("custid", custId);
@@ -246,7 +361,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDetail("EAS_Rpt_WinLossDetail_SAg", parameters);
         }
 
-        public List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(int custId, int agentId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay)
+        /// <summary>
+        /// Gets win loss detail.
+        /// </summary>        
+        /// <param name="custId">Customer id.</param>
+        /// <param name="agentId">Agent's id.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date time.</param>
+        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="balanceUpDay">Balance up day.</param>
+        /// <returns>List object.</returns>
+        public List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
+            int custId, 
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams,
+            DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
             parameters.Add("custid", custId);
@@ -267,7 +398,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return this.GetCommonWinLossDetailMAg("EAS_Rpt_WinLossDetail_MAg", parameters);
         }
 
-        public List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(int custId, int memberId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams, DateTime balanceUpDay)
+        /// <summary>
+        /// Gets win loss detail.
+        /// </summary>        
+        /// <param name="custId">Customer id.</param>
+        /// <param name="memberId">Member id.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date time.</param>
+        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="balanceUpDay">Balance up day.</param>
+        /// <returns>List object.</returns>
+        public List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(
+            int custId,
+            int memberId,
+            DateTime fromDate, 
+            DateTime toDate, 
+            ICollection<KeyValuePair<string, bool>> filterParams, 
+            DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
             parameters.Add("custid", custId);
@@ -299,6 +446,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
         #region Common WinLoss Detail
 
+        /// <summary>
+        /// Gets commission win loss detail.
+        /// </summary>
+        /// <param name="spname">Procedure name.</param>
+        /// <param name="parameters">Parameter values.</param>
+        /// <returns>List object.</returns>
         private List<WinLossDetail> GetCommonWinLossDetail(string spname, Hashtable parameters)
         {
             var entityList = new List<WinLossDetail>();
@@ -318,6 +471,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entityList;
         }
 
+        /// <summary>
+        /// Creates win loss detail entity.
+        /// </summary>
+        /// <param name="reader">IDataReader object.</param>
+        /// <returns>WinLossDetail object.</returns>        
         private WinLossDetail CreateWinLossDetailEntity(IDataReader reader)
         {
             var entity = new WinLossDetail
@@ -344,6 +502,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entity;
         }
 
+        /// <summary>
+        /// Gets common win loss detail.
+        /// </summary>
+        /// <param name="spname">Procedure name.</param>
+        /// <param name="parameters">Parameter values.</param>
+        /// <returns>List object.</returns>
         private List<WinLossDetailMAg> GetCommonWinLossDetailMAg(string spname, Hashtable parameters)
         {
             var entityList = new List<WinLossDetailMAg>();
@@ -363,6 +527,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entityList;
         }
 
+        /// <summary>
+        /// Creates win loss detail entity.
+        /// </summary>
+        /// <param name="reader">IDataReader object.</param>
+        /// <returns>WinLossDetailMAg object.</returns>
         private WinLossDetailMAg CreateWinLossDetailMAgEntity(IDataReader reader)
         {
             var entity = new WinLossDetailMAg
@@ -386,6 +555,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entity;
         }
 
+        /// <summary>
+        /// Gets common win loss detail.
+        /// </summary>
+        /// <param name="spname">Procedure name.</param>
+        /// <param name="parameters">Parameter values.</param>
+        /// <returns>List object.</returns>
         private List<WinLossDetailAg> GetCommonWinLossDetailAg(string spname, Hashtable parameters)
         {
             var entityList = new List<WinLossDetailAg>();
@@ -405,6 +580,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entityList;
         }
 
+        /// <summary>
+        /// Creates win loss detail entity.
+        /// </summary>
+        /// <param name="reader">IDataReader object.</param>
+        /// <returns>List object.</returns>
         private WinLossDetailAg CreateWinLossDetailAgEntity(IDataReader reader)
         {
             var entity = new WinLossDetailAg
@@ -425,6 +605,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entity;
         }
 
+        /// <summary>
+        /// Gets sorted list.
+        /// </summary>
+        /// <param name="spname">Procedure name.</param>
+        /// <param name="parameters">Parameter values.</param>
+        /// <returns>List object.</returns>
         private ArrayList GetSortingOrderList(string spname, Hashtable parameters)
         {
             var entityList = new ArrayList();
@@ -446,6 +632,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
         #region Common WinLoss Daily
 
+        /// <summary>
+        /// Gets common win loss daily.
+        /// </summary>
+        /// <param name="spname">Procedure name.</param>
+        /// <param name="parameters">Parameter values.</param>
+        /// <returns>List object.</returns>
         private List<DailyWinLoss> GetCommonWinLossDaily(string spname, Hashtable parameters)
         {
             var entityList = new List<DailyWinLoss>();
@@ -467,6 +659,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entityList;
         }
 
+        /// <summary>
+        /// Creates win loss detail entity.
+        /// </summary>
+        /// <param name="reader">IDataReader object.</param>
+        /// <param name="num">Order number.</param>
+        /// <returns>List object.</returns>
         private DailyWinLoss CreateWinLossDailyEntity(IDataReader reader, int num)
         {
             var entity = new DailyWinLoss

@@ -50,41 +50,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             {
                 return 4;
             }
-        }
-
-        /// <summary>
-        /// Gets cash column.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>String object.</returns>
-        public string GetCashColumn(int roleId)
-        {
-            if (roleId == this.Super)
-            {
-                return "superCash";
-            }
-            else if (roleId == this.Master)
-            {
-                return "masterCash";
-            }
-            else if (roleId == this.Agent)
-            {
-                return "agentCash";
-            }
-            else
-            {
-                return "cash";
-            }
-        }
-
-        /// <summary>
-        /// Gets customer cash column.
-        /// </summary>
-        /// <returns>String object.</returns>
-        public string GetCustomerCash()
-        {
-            return "customerCash";
-        }
+        }        
 
         /// <summary>
         /// Gets customer information.
@@ -118,96 +84,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public virtual DataRowCollection GetOnlineList(int custid)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets outstanding column.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>String object.</returns>
-        public string GetOutstandingColumn(int roleId)
-        {
-            var levelName = string.Empty;
-
-            switch (roleId)
-            {
-                case 4:
-                    levelName = "super";
-                    break;
-
-                case 3:
-                    levelName = "master";
-                    break;
-
-                case 2:
-                    levelName = "agent";
-                    break;
-
-                default:
-                    break;
-            }
-
-            return roleId != this.Member ? levelName + "PositionTaking" : "outstanding";
-        }
-
-        /// <summary>
-        /// Gets used column of customer.
-        /// </summary>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>String object.</returns>
-        public string GetUsedCreditColumn(int roleId)
-        {
-            if (roleId == this.Super)
-            {
-                return "superUsedCredit";
-            }
-            else if (roleId == this.Master)
-            {
-                return "masterUsedCredit";
-            }
-            else if (roleId == this.Agent)
-            {
-                return "agentUsedCredit";
-            }
-            else
-            {
-                return "superUsedCredit";
-            }
-        }
-
-        /// <summary>
-        /// Gets yester day cash column.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>String object.</returns>
-        public string GetYesterdayCashColumn(int roleId)
-        {
-            if (roleId == this.Super)
-            {
-                return "yesterday_superCash";
-            }
-            else if (roleId == this.Master)
-            {
-                return "yesterday_masterCash";
-            }
-            else if (roleId == this.Agent)
-            {
-                return "yesterday_agentCash";
-            }
-            else
-            {
-                return "yesterday_cash";
-            }
-        }
-
-        /// <summary>
-        /// Gets yester cash column of customer.
-        /// </summary>
-        /// <returns>String object.</returns>
-        public string GetYesterdayCustomerCash()
-        {
-            return "yesterday_customerCash";
-        }
+        }        
 
         /// <summary>
         /// Updates given credit for customer.

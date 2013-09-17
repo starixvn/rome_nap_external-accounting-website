@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="IMenuService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
     using System;
     using System.Collections.Generic;
@@ -13,9 +22,30 @@
 
         IEnumerable<Menu> GetMenusByUserId(int userId);
 
-        Result CreateMenu(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, bool isActive, int custId, string ip, out int menuId);
+        Result CreateMenu(
+            string name, 
+            string description, 
+            string url, 
+            int functionId,
+            int parentId, 
+            string parentName,
+            int displayOrder, 
+            bool isActive,
+            int custId,
+            string ip,
+            out int menuId);
 
-        Result UpdateMenu(int id, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, int custId, string ip);
+        Result UpdateMenu(
+            int id, 
+            string name,
+            string description, 
+            string url,
+            int functionId,
+            int parentId, 
+            string parentName, 
+            int displayOrder,
+            int custId, 
+            string ip);
 
         Result UpdateMenuStatus(int id, bool isActive, int custId);
 

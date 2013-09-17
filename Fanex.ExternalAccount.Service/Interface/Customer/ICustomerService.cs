@@ -9,8 +9,8 @@
 
 namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
-    using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.Customer;
 
     /// <summary>
     /// TODO: Update summary.
@@ -21,8 +21,18 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
 
         Customer UserInfo(int custId);
 
-        Result EditUserInfo(int custId, string firstName, string lastName, string homePhone, string mobilePhone,
-                                    string email, string fax, string ip, int userId, int subAccId, string language);
+        Result EditUserInfo(
+            int custId,
+            string firstName,
+            string lastName,
+            string homePhone,
+            string mobilePhone,
+            string email,
+            string fax,
+            string ip,
+            int userId,
+            int subAccId,
+            string language);
 
         Result ResetPassword(int custId, string password, Request request);
 

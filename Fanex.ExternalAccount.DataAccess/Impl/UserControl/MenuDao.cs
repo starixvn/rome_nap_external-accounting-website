@@ -1,4 +1,13 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
+﻿// --------------------------------------------------------------------------
+// <copyright file="MenuDao.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 {
     using System.Collections.Generic;
     using System.Data;
@@ -11,7 +20,7 @@
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
-    /// MenuDao
+    /// MenuDao object.
     /// </summary>
     public class MenuDao : DAOBase, IMenuDao
     {
@@ -20,7 +29,7 @@
         /// <summary>
         /// Gets all menus.
         /// </summary>
-        /// <returns>IEnumerable<Menu></returns>
+        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Menu> GetAllMenus()
         {
             var result = new List<Menu>();
@@ -61,16 +70,14 @@
         /// Gets the menu by user id.
         /// </summary>
         /// <param name="userId">The user id.</param>
-        /// <returns>UserCache</returns>
+        /// <returns>UserCache object.</returns>
         public UserCache GetMenuByUserId(int userId)
         {
             var menus = new List<Menu>();
             var funcs = new List<Function>();
-
             using (var db = new ObjectDb("EAS_MenuSelByUserID"))
             {
                 db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
-
                 using (var ds = db.ExecuteDataSet())
                 {
                     if (ds != null && ds.Tables.Count == 2)
@@ -99,7 +106,7 @@
                                      ParentID = c.Field<int>("parentId"),
                                      FuncName = c.Field<string>("funcName"),
                                      FuncKey = c.Field<string>("funcKey"),
-                                     Policy = c.Field<ePolicy>("policy"),
+                                     Policy = c.Field<EPolicy>("policy"),
                                      IsTest = c.Field<bool>("IsTest")
                                  }).ToList();
 
@@ -118,19 +125,30 @@
         /// <summary>
         /// Creates the menu.
         /// </summary>
-        /// <param name="name">The name.</param>
+        /// <param name="name">The menu name.</param>
         /// <param name="description">The description.</param>
-        /// <param name="url">The URL.</param>
+        /// <param name="url">The URL info.</param>
         /// <param name="functionId">The function id.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="parentName">Name of the parent.</param>
         /// <param name="displayOrder">The display order.</param>
-        /// <param name="isActive">if set to <c>true</c> [is active].</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="isActive">If set to <c>true</c> [is active].</param>
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP address.</param>
         /// <param name="menuId">The menu id.</param>
-        /// <returns>Result</returns>
-        public Result CreateMenu(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, bool isActive, int custId, string ip, out int menuId)
+        /// <returns>Result object.</returns>
+        public Result CreateMenu(
+            string name, 
+            string description,
+            string url, 
+            int functionId,
+            int parentId,
+            string parentName,
+            int displayOrder,
+            bool isActive,
+            int custId, 
+            string ip, 
+            out int menuId)
         {
             menuId = 0;
 
@@ -166,18 +184,28 @@
         /// <summary>
         /// Updates the menu.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="id">The menu id.</param>
+        /// <param name="name">The menu name.</param>
         /// <param name="description">The description.</param>
-        /// <param name="url">The URL.</param>
+        /// <param name="url">The URL info.</param>
         /// <param name="functionId">The function id.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="parentName">Name of the parent.</param>
         /// <param name="displayOrder">The display order.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <param name="ip">The ip.</param>
-        /// <returns>Result</returns>
-        public Result UpdateMenu(int id, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, int custId, string ip)
+        /// <param name="custId">The customer id.</param>
+        /// <param name="ip">The IP address.</param>
+        /// <returns>Result object.</returns>
+        public Result UpdateMenu(
+            int id,
+            string name,
+            string description,
+            string url, 
+            int functionId,
+            int parentId,
+            string parentName,
+            int displayOrder,
+            int custId,
+            string ip)
         {
             using (var db = new ObjectDb("EAS_MenuUpd"))
             {
@@ -204,10 +232,10 @@
         /// <summary>
         /// Updates the menu status.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="isActive">if set to <c>true</c> [is active].</param>
-        /// <param name="custId">The cust id.</param>
-        /// <returns>Result</returns>
+        /// <param name="id">The menu id.</param>
+        /// <param name="isActive">If set to <c>true</c> [is active].</param>
+        /// <param name="custId">The customer id.</param>
+        /// <returns>Result object.</returns>
         public Result UpdateMenuStatus(int id, bool isActive, int custId)
         {
             using (var db = new ObjectDb("EAS_MenuUpdStatus"))
@@ -227,9 +255,9 @@
         /// <summary>
         /// Deletes the menu.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="custId">The cust id.</param>
-        /// <returns>Result</returns>
+        /// <param name="id">The menu id.</param>
+        /// <param name="custId">The customer id.</param>
+        /// <returns>Result object.</returns>
         public Result DeleteMenu(int id, int custId)
         {
             using (var db = new ObjectDb("EAS_MenuDel"))

@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -32,14 +33,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         private bool _isChanged = false;
         private List<Fanex.ExternalAccount.DTO.Result> _result = new List<Fanex.ExternalAccount.DTO.Result>();
 
-        [Authorization(Function = eFunctions.VirtualSports, Policy = ePolicy.Read)]
+        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
         [HttpGet]
         public ActionResult EditSingle(PTVirtualSportsModel model)
         {
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.VirtualSports, Policy = ePolicy.Read)]
+        /// <summary>
+        /// Gets virtual sports data.
+        /// </summary>
+        /// <param name="model">Model object.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
         [HttpGet]
         public ActionResult DataSource(PTVirtualSportsModel model)
         {
@@ -69,7 +75,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             return this.Content(result);
         }
 
-        [Authorization(Function = eFunctions.VirtualSports, Policy = ePolicy.Update)]
+        /// <summary>
+        /// Gets settings data.
+        /// </summary>
+        /// <param name="model">Model object.</param>
+        /// <returns>ActionResult object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Update)]
         [ActionName("EditSingle"), HttpPost]
         public ActionResult EditSinglePost(PTVirtualSportsUpdateModel model)
         {
@@ -150,6 +162,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             return SerializeToJs(tb, settings);
         }
 
+        /// <summary>
+        /// Serializes java script data.
+        /// </summary>
+        /// <param name="tb">Hash table object.</param>
+        /// <param name="settings">JSON settings object.</param>
+        /// <returns>String object.</returns>
         internal static string SerializeToJs(Hashtable tb, JsonSerializerSettings settings)
         {
             string result = string.Empty;
@@ -163,6 +181,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             return result;
         }
 
+        /// <summary>
+        /// Updates status message.
+        /// </summary>
+        /// <param name="currentContext">IRequestContext object.</param>
+        /// <param name="results">Result object.</param>
         [NonAction]
         private void UpdateStatusMessages(IRequestContext currentContext, IList<Fanex.PTEngine.BusinessObjects.Result> results)
         {
@@ -189,6 +212,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             }
         }
 
+        /// <summary>
+        /// Updates betting limit messages.
+        /// </summary>
+        /// <param name="currentContext">IRequestContext object.</param>
+        /// <param name="results">Result object.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [NonAction]
         private void UpdateBettingLimitMessages(IRequestContext currentContext, IList<Fanex.PTVirtualSports.BusinessObjects.Result> results)
         {
@@ -260,6 +289,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             }
         }
 
+        /// <summary>
+        /// Updates PT messages.
+        /// </summary>
+        /// <param name="currentContext">IRequestContext object.</param>
+        /// <param name="results">Result object.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [NonAction]
         private void UpdatePTMessages(IRequestContext currentContext, IList<Fanex.PTVirtualSports.BusinessObjects.Result> results)
         {

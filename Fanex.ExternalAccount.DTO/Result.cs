@@ -1,13 +1,25 @@
-﻿namespace Fanex.ExternalAccount.DTO
+﻿// --------------------------------------------------------------------------
+// <copyright file="Result.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.DTO
 {
     using System;
 
+    /// <summary>
+    /// Result class.
+    /// </summary>
     public class Result
     {
         public Result(object errCode = null, object errMsg = null, object resultData = null)
         {
             this.ErrorCode = errCode != null ? errCode.ToString() : string.Empty;
-            this.ErrorMessage = errMsg != null ? errMsg.ToString(): string.Empty;
+            this.ErrorMessage = errMsg != null ? errMsg.ToString() : string.Empty;
             this.ResultData = resultData;
         }
 
