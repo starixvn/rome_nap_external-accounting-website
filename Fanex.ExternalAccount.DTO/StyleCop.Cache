@@ -301,39 +301,17 @@
       </violation>
     </violations>
   </sourcecode>
+  <project key="494174675">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <project key="1308790022">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <sourcecode name="ePolicy.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:13:37.514</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
   <sourcecode name="CasinoCustomer.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/07/29 09:10:07.336</sourceFile>
+      <sourceFile>2013/06/14 14:33:53.588</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -358,182 +336,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/07/29 09:10:07.336</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Stakes.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/07/29 09:10:07.336</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Commission.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 13:49:00.720</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Customer.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 13:58:34.078</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Functions.generated.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/07/29 09:10:07.336</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 13:56:21.103</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="DailyWinLoss.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 15:07:56.907</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Function.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:14:01.325</sourceFile>
+      <sourceFile>2013/05/17 10:01:31.206</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -558,7 +361,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:14:50.108</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.019</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -583,182 +386,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:14:59.869</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="GroupCurrency.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:15:20.800</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="MaintenanceInfo.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:17:23.395</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="FunctionPolicy.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:14:27.707</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Group.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:15:09.750</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Request.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:18:10.379</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Menu.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:17:54.018</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Result.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:18:52.588</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.020</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -783,7 +411,82 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:19:33.693</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.020</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Stakes.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/06/04 15:59:25.486</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Commission.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.021</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Customer.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.021</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -808,7 +511,157 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:19:49.754</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.022</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ePolicy.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.034</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Functions.generated.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/05/17 16:56:19.954</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="GroupCurrency.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.022</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MaintenanceInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.023</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.023</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DailyWinLoss.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.024</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -833,7 +686,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:20:28.247</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.024</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -858,132 +711,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:20:43.796</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="WinLossDetailMAg.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:21:24.500</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Statement.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:21:40.771</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="StatusKickedOut.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:22:41.216</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="User.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:22:50.897</sourceFile>
-      <parser>2013/07/26 10:22:18.000</parser>
-      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
-      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
-      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="UserCache.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2013/07/26 10:22:18.000</styleCop>
-      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:23:10.981</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.025</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -1008,7 +736,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:21:11.809</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.025</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -1029,7 +757,279 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="494174675">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
+  <sourcecode name="WinLossDetailMAg.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.026</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Request.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.026</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Result.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.027</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Statement.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.028</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="StatusKickedOut.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.028</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Function.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.030</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="FunctionPolicy.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.031</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Group.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.031</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Menu.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.032</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="User.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.033</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="UserCache.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2013/07/26 10:22:18.000</styleCop>
+      <settingsFile>2013/09/17 12:43:52.000</settingsFile>
+      <sourceFile>2013/09/17 16:09:43.033</sourceFile>
+      <parser>2013/07/26 10:22:18.000</parser>
+      <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules>2013/07/26 10:22:18.000</StyleCop.CSharp.Nexcel.NexcelCustomRules>
+      <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2013/07/26 10:22:18.000</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2013/07/26 10:22:18.000</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2013/07/26 10:22:18.000</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
 </stylecopresultscache>

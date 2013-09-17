@@ -3,9 +3,6 @@
   <project key="-1426579960">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <project key="-633584488">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="User.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
@@ -37,11 +34,17 @@
       </violation>
     </violations>
   </sourcecode>
+  <project key="1568940205">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <project key="-633584488">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="DbTypes.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 15:50:32.106</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.034</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -66,7 +69,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 14:17:17.257</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.036</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -91,7 +94,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 10:37:51.373</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.036</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -116,7 +119,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 11:02:19.459</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.037</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -141,7 +144,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 11:14:59.028</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.038</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -166,7 +169,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 13:49:44.063</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.038</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -191,7 +194,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/16 14:38:10.866</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.039</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -216,7 +219,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 12:38:09.008</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.039</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -241,7 +244,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 12:39:32.665</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.040</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -266,7 +269,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 12:40:06.570</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.040</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -291,7 +294,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 12:33:52.438</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.041</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -316,7 +319,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 12:58:40.398</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.042</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -341,7 +344,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:01:18.069</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.043</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -366,7 +369,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:25:31.272</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.043</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -391,7 +394,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:12:30.931</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.044</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -416,7 +419,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:12:30.981</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.045</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -441,7 +444,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 13:12:30.331</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.045</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -466,7 +469,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:28:50.424</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.046</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -491,7 +494,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:29:08.650</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.046</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -516,7 +519,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:30:17.320</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.047</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -541,7 +544,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:30:52.098</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.048</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -566,7 +569,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:33:38.888</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.048</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -591,7 +594,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:33:58.418</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.049</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -616,7 +619,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:36:22.043</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.049</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -641,7 +644,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:33:07.143</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.050</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -666,7 +669,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:35:52.519</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.051</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -691,7 +694,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:35:36.282</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.052</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -716,7 +719,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:32:11.275</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.052</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -741,7 +744,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:32:31.342</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.053</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -766,7 +769,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:36:03.938</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.054</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -791,7 +794,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/17 11:36:29.827</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.054</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -816,7 +819,7 @@
     <timestamps>
       <styleCop>2013/07/26 10:22:18.000</styleCop>
       <settingsFile>2013/09/17 12:43:52.000</settingsFile>
-      <sourceFile>2013/09/13 14:38:48.606</sourceFile>
+      <sourceFile>2013/09/17 16:09:43.055</sourceFile>
       <parser>2013/07/26 10:22:18.000</parser>
       <StyleCop.CSharp.LayoutRules>2013/07/26 10:22:18.000</StyleCop.CSharp.LayoutRules>
       <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
@@ -837,7 +840,4 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="1568940205">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
 </stylecopresultscache>
