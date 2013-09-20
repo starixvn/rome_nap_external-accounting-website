@@ -45,9 +45,9 @@
             <td class="tdTitleRight">Enable Casino</td>
             <td class="noneBorderRight">                
                 <div style="float: left; height: 24px">
-                    <input type="checkbox" id="chkEnable" ng-click="EnableClicked()" style="margin-top: 5px" ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled" ng-model="CustomerModel.casinoEnabled" ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
+                    <input type="checkbox" id="chkEnable" ng-click="EnableClicked()" style="margin-top: 5px" ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" ng-model="CustomerModel.casinoEnabled" ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
                     <label for="chkEnable" id="downline"></label>                    
-                    <span ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline">
+                    <span ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline && CustomerModel.roleId != 1">
                         <input type="checkbox" id="chkEnableDownline" ng-model="CustomerModel.enableDownline" ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    
                         <label for="chkEnableDownline" id="enableDownlineText" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline">Previous enabled downlines</label>
                     </span>
@@ -58,7 +58,7 @@
     </div>
     <div id="statusInfo" class="statusInfo"><span class="tdTitleRight">Enable Casino:</span>
         <span style="height: 24px">
-            <input type="checkbox" id="chkEnable" ng-click="EnableClicked()" style="margin-top: 5px" ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled" ng-model="CustomerModel.casinoEnabled" ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
+            <input type="checkbox" id="chkEnable" ng-click="EnableClicked()" style="margin-top: 5px" ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" ng-model="CustomerModel.casinoEnabled" ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
             <label for="chkEnable" id="downline"></label>                    
             <span ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline">
                 <input type="checkbox" id="chkEnableDownline" ng-model="CustomerModel.enableDownline" ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    

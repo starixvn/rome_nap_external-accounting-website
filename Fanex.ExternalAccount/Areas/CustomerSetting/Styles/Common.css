@@ -188,8 +188,7 @@ td
     border-collapse: collapse;
     border-style: none; 
     width: 100%;
-    table-layout: fixed;
-    
+    table-layout: fixed auto;    
 }
 .tableInfo tr
 {
