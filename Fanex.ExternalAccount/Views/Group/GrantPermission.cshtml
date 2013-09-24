@@ -41,14 +41,14 @@
         string val = "0";
         if (fn.GroupPolicy != null)
         {
-            if (fn.GroupPolicy == ePolicy.Create ||
-                fn.GroupPolicy == ePolicy.Delete ||
-                fn.GroupPolicy == ePolicy.Update)
+            if (fn.GroupPolicy == EPolicy.Create ||
+                fn.GroupPolicy == EPolicy.Delete ||
+                fn.GroupPolicy == EPolicy.Update)
             {
                 activeR = activeW = "permActive";
                 val = "2";
             }
-            else if (fn.GroupPolicy == ePolicy.Read)
+            else if (fn.GroupPolicy == EPolicy.Read)
             {
                 activeR = "permActive";
                 activeW = "permInactive";
@@ -83,14 +83,14 @@
                 string Subval = "0";
                 if (subfn.GroupPolicy != null)
                 {
-                    if (subfn.GroupPolicy == ePolicy.Create ||
-                        subfn.GroupPolicy == ePolicy.Delete ||
-                        subfn.GroupPolicy == ePolicy.Update)
+                    if (subfn.GroupPolicy == EPolicy.Create ||
+                        subfn.GroupPolicy == EPolicy.Delete ||
+                        subfn.GroupPolicy == EPolicy.Update)
                     {
                         SubactiveR = SubactiveW = "permActive";
                         Subval = "2";
                     }
-                    else if (subfn.GroupPolicy == ePolicy.Read)
+                    else if (subfn.GroupPolicy == EPolicy.Read)
                     {
                         SubactiveR = "permActive";
                         SubactiveW = "permInactive";
