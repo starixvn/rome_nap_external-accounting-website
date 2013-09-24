@@ -12,10 +12,13 @@
 
 namespace Fanex.ExternalAccount.Core.Base
 {
+    using System;
     using System.IO;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -167,6 +170,29 @@ namespace Fanex.ExternalAccount.Core.Base
             Response.Clear();
             Response.BinaryWrite(excelStream.GetBuffer());
             Response.End();
+        }
+
+        /// <summary>
+        /// Updates Casino statues.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="result">Result object.</param>
+        /// <param name="customer">Customer object.</param>
+        protected void UpdateCasinoStatus(int custId, Result result, Customer customer)
+        {
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0)
+            {
+                // Update Casino status for closed and suspended
+                var cust = new CasinoLibrary.SBAgent.Customer();
+                try
+                {
+                    cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
 
         /// <summary>

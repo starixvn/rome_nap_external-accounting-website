@@ -157,6 +157,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int masterId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
 
+            this.UpdateCasinoStatus(custId, result, customer);
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
         }
         #endregion Super Add New Master
@@ -242,6 +244,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int agentId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewAgent(customer, requestContext, out agentId);
 
+            this.UpdateCasinoStatus(custId, result, customer);
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
         }
         #endregion Master Add New Agent
@@ -326,6 +330,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             int memberId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
+
+            this.UpdateCasinoStatus(custId, result, customer);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
         }

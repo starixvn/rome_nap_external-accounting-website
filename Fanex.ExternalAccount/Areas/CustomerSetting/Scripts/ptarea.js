@@ -8,6 +8,7 @@ toPTSource = function (obj, resetSelected, isComm) {
     var step = isComm ? 0.0005 : 0.01;
     var selectedValue = obj.selected;
     var breakpt = obj.breakpt;
+    min = min < 0 ? 0 : min;
 
     if (breakpt) {
         return;

@@ -422,6 +422,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
             }
 
+            this.UpdateCasinoStatus(custId, result, customer);
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
@@ -518,6 +520,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
             }
 
+            this.UpdateCasinoStatus(custId, result, customer);
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
@@ -612,6 +616,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.AgentUpdateMember(customer, requestContext);
             }
 
+            this.UpdateCasinoStatus(custId, result, customer);
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
@@ -705,6 +711,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.SuperUpdateMember(customer, requestContext);
             }
 
+            this.UpdateCasinoStatus(custId, result, customer);
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
@@ -797,6 +805,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             {
                 result = custSrv.MasterUpdateMember(customer, requestContext);
             }
+
+            this.UpdateCasinoStatus(custId, result, customer);
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }

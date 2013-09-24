@@ -64,6 +64,10 @@
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4894.26393, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation">
       <HintPath>..\Dependencies\FluentValidation.dll</HintPath>
     </Reference>
