@@ -566,6 +566,7 @@ Fanex.CustomerSetting.Core = {
         var evt = event ? event : window.event; // Fix for IE7
         if (evt.keyCode === 9) return true; // Ignore TAB key
         var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
+        var value = obj.value;
         value = !$.isNumeric(this.ReplaceAll(value, ',', '')) ? '' : value;
         obj.value = value;
 
@@ -608,7 +609,7 @@ Fanex.CustomerSetting.Core = {
 
     ProcessDisplayMultiple: function (length, usernames) {
         $('#arrowUpDown').bind('click', function () {
-            Fanex.CustomerSetting.Core.ToggleUsernames(length);
+            Fanex.CustomerSetting.Core.ToggleUsernames(length, usernames);
         });
 
         $('#names').css('display', 'block');
@@ -621,7 +622,7 @@ Fanex.CustomerSetting.Core = {
         else {
             $('#names').css('cursor', 'pointer');
             $('#names').bind('click', function () {
-                Fanex.CustomerSetting.Core.ToggleUsernames(length);
+                Fanex.CustomerSetting.Core.ToggleUsernames(length, usernames);
             });
             $('#names').html(usernames.substring(0, (length ? length : 98)) + '...');
             $('#names').attr('title', usernames.substring(0, usernames.length - 2));
@@ -643,16 +644,6 @@ Fanex.CustomerSetting.Core = {
     }
 };
 
-String.prototype.decodeHtml = function () {
-    var str = this;
-    return $("<div/>").html(str).text();
-};
-
-String.prototype.encodeHtml = function () {
-    var str = this;
-    return $('<div/>').text(str).html();
-};
-
 String.prototype.replaceAll = function (args, replace) {
     var src = this;
 
@@ -663,7 +654,7 @@ String.prototype.replaceAll = function (args, replace) {
     return src;
 };
 
-Number.prototype.replaceAll = function (args, replace) {
+Number.prototype.replaceAll = function (args, replace) {    
     return this;
 };
 
