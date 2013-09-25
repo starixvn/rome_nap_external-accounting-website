@@ -228,6 +228,8 @@ Fanex.ExtAcc = {
             $(id).autocomplete({
                 source: source
             });
+
+            Fanex.ExtAcc.SuggestionXHR = null;
         })
         .error(function (err) {
             if (typeof console != 'undefined' && err.statusText && err.statusText != "abort") {
