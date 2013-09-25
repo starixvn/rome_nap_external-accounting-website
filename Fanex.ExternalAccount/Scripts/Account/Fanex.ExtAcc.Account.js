@@ -79,7 +79,7 @@ Fanex.ExtAcc.Account = {
             dataType: 'html',
             cache: false,
             success: function (data) {
-                this.currentRetryTimes = 0;
+                Fanex.ExtAcc.Account.currentRetryTimes = 0;
                 if (data == -1) {
                     Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!');
 
@@ -96,9 +96,9 @@ Fanex.ExtAcc.Account = {
             },
             error: function (xhr, status, e) {
                 if (typeof console != 'undefined') console.log(e);
-                this.currentRetryTimes++;
-                if (this.currentRetryTimes >= this.maxRetryTimes) {
-                    clearInterval(this.kickOutIntId);
+                Fanex.ExtAcc.Account.currentRetryTimes++;
+                if (Fanex.ExtAcc.Account.currentRetryTimes >= Fanex.ExtAcc.Account.maxRetryTimes) {
+                    clearInterval(Fanex.ExtAcc.Account.kickOutIntId);
                     window.location.replace(resolveClientUrl('Account/Login'));
                 }
 
