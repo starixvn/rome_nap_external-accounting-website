@@ -155,8 +155,8 @@ Fanex.Customer = {
         }
         else {
             if (isMember) {
-                var msg = "<span class='prewrap'>Password must be 6-10 characters without white-space and contain at least: <br/><br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 uppercase letter <br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 lowercase letter <br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 numeric digit <br/><br/>For example: 493abcDE, 59D7!4$h<br/><br/>Notes: your password is cAsE sEnSiTiVe</span>";
-                this.ValidateMessage($("#password").get(0), msg, -215, 220, true, 120, 'down', 8000);
+                var msg = "<span class='prewrap'>Password must be 6-10 characters without white-space and contain at least: <br/><br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 uppercase letter <br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 lowercase letter <br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 numeric digit <br/><br/>For example: 493abcDE, 59D7!4$h<br/>Notes: your password is cAsE sEnSiTiVe</span>";
+                this.ValidateMessage($("#password").get(0), msg, -215, 220, true, 140, 'down', 8000);
             }
             else {
                 var msg = "<span class='prewrap'>Password must be at least 8 characters without white-space and contain at least 3 of the following:<br/><br/> &nbsp;&nbsp;&nbsp;&nbsp;• Uppercase letter [A-Z] <br/> &nbsp;&nbsp;&nbsp;&nbsp;• Lowercase letter [a-z] <br/> &nbsp;&nbsp;&nbsp;&nbsp;• Numeric [0-9] <br/> &nbsp;&nbsp;&nbsp;&nbsp;• Special character (!,@,#,etc..)<br/><br/>For example: 59D7!4$h, 493abcDE<br/>Notes: your password is cAsE sEnSiTiVe</span>";
