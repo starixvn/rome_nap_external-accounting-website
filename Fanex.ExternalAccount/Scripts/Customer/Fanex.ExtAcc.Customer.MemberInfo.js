@@ -147,10 +147,10 @@ Fanex.Customer = {
     CheckPassword: function (pwdElement, iconElementId, isMember) {
         if (pwdElement == null) return true;
         var isPwd = this.IsPassword(pwdElement.value, isMember);
-        var iconElement = $(iconElementId);
+        var iconElement = document.getElementById(iconElementId);
         if (!iconElement) return false;
         if (isPwd) {
-            Validators.hide();
+            document.getElementById('fHintDown').style.display = 'none';
             iconElement.className = 'PwdSuccess';
         }
         else {
