@@ -81,8 +81,12 @@ Fanex.ExtAcc.Account = {
             success: function (data) {
                 this.currentRetryTimes = 0;
                 if (data == -1) {
-                    navigateToUrl('Account/Login');
-                    alert('You have logged in from another session or your login session has expired!');
+                    Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!');
+
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        navigateToUrl('Account/Login');
+                    }, 3000);
                 }
                 else if (data == 2) {
                     navigateToUrl('Account/Login');
