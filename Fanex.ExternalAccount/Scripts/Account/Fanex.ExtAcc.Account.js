@@ -96,11 +96,6 @@ Fanex.ExtAcc.Account = {
             },
             error: function (xhr, status, e) {
                 if (typeof console != 'undefined') console.log(e);
-                Fanex.ExtAcc.Account.currentRetryTimes++;
-                if (Fanex.ExtAcc.Account.currentRetryTimes >= Fanex.ExtAcc.Account.maxRetryTimes) {
-                    clearInterval(Fanex.ExtAcc.Account.kickOutIntId);
-                    window.location.replace(resolveClientUrl('Account/Login'));
-                }
 
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
             }

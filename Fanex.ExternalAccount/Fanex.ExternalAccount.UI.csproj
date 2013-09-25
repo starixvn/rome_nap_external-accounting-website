@@ -226,6 +226,7 @@
     <Content Include="Areas\CustomerSetting\Images\Loading.gif" />
     <Content Include="Areas\CustomerSetting\Images\pointer.png" />
     <Content Include="Areas\CustomerSetting\Images\pointerDown.png" />
+    <Content Include="Areas\CustomerSetting\Images\Success.gif" />
     <Content Include="Areas\CustomerSetting\Images\warning-icn.png" />
     <Content Include="Areas\CustomerSetting\Scripts\angular.min.js" />
     <Content Include="Areas\CustomerSetting\Scripts\angular.full.js" />

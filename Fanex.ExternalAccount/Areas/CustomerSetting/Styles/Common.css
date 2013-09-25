@@ -378,10 +378,6 @@ select,.select
 {
     margin: 0;
 }
-.hidden
-{
-    display: none;
-}
 #tabs
 {
     min-width: 819px;
