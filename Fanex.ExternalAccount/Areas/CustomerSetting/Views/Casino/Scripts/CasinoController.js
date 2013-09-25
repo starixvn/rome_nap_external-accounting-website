@@ -34,6 +34,10 @@
         });
 
         Fanex.CustomerSetting.Core.ProcessDisplayMultiple(125, names);
+        names = names.substring(0, names.length - 2);
+
+        jQuery('#names').html(names);
+        jQuery('#names').show();
     }
     else {
         $('#arrowUpDown').hide();
@@ -103,6 +107,7 @@
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
+        data.custName = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
 
         $.ajax({
             url: toUrl(actionName),
@@ -130,6 +135,7 @@
                     return false;
                 }
                 else {
+                    $('#errMsg').attr('class', 'successMsg');
                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                     $('#errMsg').show();
 
@@ -159,6 +165,7 @@
                         return false;
                     }
                     else {
+                        $('#errMsg').attr('class', 'successMsg');
                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                         $('#errMsg').show();
 
@@ -199,6 +206,7 @@
                     return false;
                 }
                 else {
+                    $('#errMsg').attr('class', 'successMsg');
                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                     $('#errMsg').show();
 
@@ -228,6 +236,7 @@
                         return false;
                     }
                     else {
+                        $('#errMsg').attr('class', 'successMsg');
                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                         $('#errMsg').show();
 
