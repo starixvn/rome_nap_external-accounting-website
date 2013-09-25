@@ -63,6 +63,7 @@ Fanex.ExtAcc = {
     leftMenuWidth: Cookie.get('layout_1') ? parseInt(Cookie.get('layout_1')) : 300,
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
+    SuggestionXHR: null,
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu) {
         this.BlockUI();
@@ -210,10 +211,13 @@ Fanex.ExtAcc = {
     },
 
     InitSuggestion: function (txtUserName) {
+        if (this.SuggestionXHR != null)
+            this.SuggestionXHR.abort();
+
         var groupName = $('#selectedGroupName').html();
         var id = typeof txtUserName == 'undefined' ? '#txtUserName' : '#' + txtUserName;
 
-        $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
+        this.SuggestionXHR = $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
         .success(function (data) {
             var source = [];
 
@@ -226,8 +230,8 @@ Fanex.ExtAcc = {
             });
         })
         .error(function (err) {
-            if (typeof console != 'undefined') {
-                consolse.log(err);
+            if (typeof console != 'undefined' && err.statusText && err.statusText != "abort") {
+                console.log(err);
             }
         });
     },
@@ -287,6 +291,9 @@ Fanex.ExtAcc = {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
+                if (this.SuggestionXHR != null)
+                    this.SuggestionXHR.abort();
+
                 Fanex.ExtAcc.BlockUI();
                 var username = $.trim(this.value.encodeHtml());
                 this.value = '';
@@ -306,6 +313,9 @@ Fanex.ExtAcc = {
         });
 
         $('#btnSearchLeftPanel').bind('click', function () {
+            if (this.SuggestionXHR != null)
+                this.SuggestionXHR.abort();
+
             Fanex.ExtAcc.BlockUI();
             var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
             $('#txtLeftPanelUserName').val('');

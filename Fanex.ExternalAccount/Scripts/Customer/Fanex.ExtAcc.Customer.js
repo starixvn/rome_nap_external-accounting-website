@@ -87,6 +87,9 @@ Fanex.ExtAcc.Customer = {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
+                if (Fanex.ExtAcc.SuggestionXHR != null)
+                    Fanex.ExtAcc.SuggestionXHR.abort();
+
                 $('.ui-autocomplete').hide();
                 Fanex.ExtAcc.Customer.Search(false);
 
@@ -1537,6 +1540,8 @@ Fanex.ExtAcc.Customer = {
 
         $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a>');
 
+        $('#breadcrumbs').show();
+
         Fanex.ExtAcc.OnResize = function () {
             try {
                 $("#jqgrid").fanexGrid("resizeGrid");
@@ -1643,6 +1648,8 @@ Fanex.ExtAcc.Customer = {
         $('#breadcrumbs').empty();
 
         $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
+
+        $('#breadcrumbs').show();
 
         Fanex.ExtAcc.OnResize = function () {
             try {
@@ -1757,6 +1764,8 @@ Fanex.ExtAcc.Customer = {
         var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + Fanex.ExtAcc.Customer.masterId + ', ' + Fanex.ExtAcc.Customer.AllowDoubleCommAgent + ',' + Fanex.ExtAcc.Customer.directAgentId + ', null, ' + Fanex.ExtAcc.Customer.masterSyncCasino + ',' + Fanex.ExtAcc.Customer.masterSyncBingo + ',' + Fanex.ExtAcc.Customer.masterSyncLiveCasino + ')">' + 'Agent' + '</a>';
 
         $('#breadcrumbs').append('<div style="float:left">' + linkAgent + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
+
+        $('#breadcrumbs').show();
 
         Fanex.ExtAcc.OnResize = function () {
             try {
@@ -2255,7 +2264,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    validatePassword: function (str, isMember) {        
+    validatePassword: function (str, isMember) {
         return isMember ? this.validatePwdMember(str) : this.validatePwdAgent(str);
     },
 
