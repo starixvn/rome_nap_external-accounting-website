@@ -169,8 +169,8 @@ Fanex.Customer = {
     },
 
     // Check values input: Password and Max Credit
-    CheckInfoValue: function () {
-        if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon")) {
+    CheckInfoValue: function (isMember) {
+        if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon", isMember)) {
             return false;
         }
 
