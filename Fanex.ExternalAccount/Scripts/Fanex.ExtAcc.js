@@ -235,6 +235,8 @@ Fanex.ExtAcc = {
             if (typeof console != 'undefined' && err.statusText && err.statusText != "abort") {
                 console.log(err);
             }
+
+            Fanex.ExtAcc.SuggestionXHR = null;
         });
     },
 

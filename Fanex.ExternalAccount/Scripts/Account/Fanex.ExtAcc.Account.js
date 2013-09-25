@@ -10,6 +10,7 @@ Fanex.ExtAcc.Account = {
     kickOutIntId: 0,
     maxRetryTimes: 3,
     currentRetryTimes: 0,
+    RecheckinXHR: null,
 
     Init: function () {
         this.kickOutIntId = setInterval(this.GetValidateImage, 120000);
@@ -69,7 +70,10 @@ Fanex.ExtAcc.Account = {
     },
 
     ReCheckin: function () {
-        $.ajax({
+        if (this.RecheckinXHR != null)
+            this.RecheckinXHR.abort();
+
+        this.RecheckinXHR = $.ajax({
             url: resolveClientUrl('Account/ReCheckIn'),
             type: 'GET',
             dataType: 'html',
@@ -83,6 +87,8 @@ Fanex.ExtAcc.Account = {
                 else if (data == 2) {
                     navigateToUrl('Account/Login');
                 }
+
+                Fanex.ExtAcc.Account.RecheckinXHR = null;
             },
             error: function (xhr, status, e) {
                 if (typeof console != 'undefined') console.log(e);
@@ -91,6 +97,8 @@ Fanex.ExtAcc.Account = {
                     clearInterval(this.kickOutIntId);
                     window.location.replace(resolveClientUrl('Account/Login'));
                 }
+
+                Fanex.ExtAcc.Account.RecheckinXHR = null;
             }
         });
     }
