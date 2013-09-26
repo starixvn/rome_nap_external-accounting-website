@@ -1,5 +1,45 @@
-﻿@{
-    ViewBag.Title = "MasterAgentCredit";
-}
-
-<h2>MasterAgentCredit</h2>
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using Fanex.ExternalAccount.Utilities
+@model Fanex.ExternalAccount.Module.LeftPanel.ViewModels.MasterAgentUsedCreditModel
+<div style="width: 702px">
+    <table width="100%" id="tblInner" border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            <td colspan="3"><div class="bgTitle titleForm creditDetail">Credit Detail</div></td>            
+        </tr>
+        <tr>
+            <td class="C bold" style="background: #D4E3EB">Username</td>
+            <td class="C bold" style="background: #D4E3EB">Given Credit</td>
+            <td class="C bold" style="background: #D4E3EB">Used Credit</td>        
+        </tr>
+        @if (Model == null || Model.MasterAgentUsedCreditItems == null || Model.MasterAgentUsedCreditItems.Count == 0)
+        {
+            <tr>
+                <td class="title C" colspan="3">There is no information available.</td>            
+            </tr>
+        }
+        else
+        {
+            int index = 0;
+            string className = string.Empty;
+            
+            foreach (var item in Model.MasterAgentUsedCreditItems)
+            {
+                className = index % 2 == 0 ? string.Empty : "odd";    
+                
+                 <tr>
+                    <td class="C @className">@item.Username</td>
+                    <td class="R @className">@item.GivenCredit.ToStringFormat()</td>
+                    <td class="R @className">@item.UsedCredit.ToStringFormat()</td>
+                </tr>   
+                
+                index++;
+            }            
+            <tr>
+                <td class="total bold C">TOTAL</td>
+                <td class="total bold R">@Model.Total.GivenCredit.ToStringFormat()</td>
+                <td class="total bold R">@Model.Total.UsedCredit.ToStringFormat()</td>
+            </tr>
+        }        
+    </table>
+</div>

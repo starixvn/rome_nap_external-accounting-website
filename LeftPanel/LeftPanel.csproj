@@ -79,12 +79,16 @@
     <Compile Include="ViewModels\CustomerModel.cs" />
     <Compile Include="ViewModels\DownlineList.cs" />
     <Compile Include="ViewModels\Login.cs" />
+    <Compile Include="ViewModels\MasterAgentUsedCreditModel.cs" />
+    <Compile Include="ViewModels\MemberUsedCreditItem.cs" />
+    <Compile Include="ViewModels\MemberUsedCreditModel.cs" />
     <Compile Include="ViewModels\ObjectInfo.cs" />
     <Compile Include="ViewModels\OnlineInfo.cs" />
     <Compile Include="ViewModels\OnlineList.cs" />
     <Compile Include="ViewModels\PersonalInfo.cs" />
     <Compile Include="ViewModels\Setting.cs" />
     <Compile Include="ViewModels\Status.cs" />
+    <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\" />

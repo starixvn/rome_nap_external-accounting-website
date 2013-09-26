@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
+//   <change who="Andy.Nguyen" date="2013.9.26">View used credit and reset member credit</change>
 // </history>
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
@@ -123,6 +124,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public override DataRowCollection GetOnlineList(int custid)
         {
             return this._data.GetOnlineList(custid);
+        }
+
+        public override IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        {
+            return this._data.MasterAgentUsedCreditItems(custId, roleId);
+        }
+
+        public override IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+        {
+            return this._data.MemberUsedCreditItems(custId);
+        }
+
+        public override Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
+        {
+            return this._data.ResetMemberCredit(custId, agentId, closedOnly);
         }
     }
 }

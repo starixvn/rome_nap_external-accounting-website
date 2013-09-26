@@ -9,6 +9,7 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 {
+    using System.Collections.Generic;
     using System.Data;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
@@ -25,5 +26,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
         DataTable GetDownlineList(int custid, int pageSize, int pageIndex);
 
         DataRowCollection GetOnlineList(int custid);
+
+        IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
+
+        IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+
+        Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
     }
 }

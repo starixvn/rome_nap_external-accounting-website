@@ -390,6 +390,31 @@ function BalanceController($scope, $http) {
         $('#givenCredit').focus();
     };
 
+    $scope.CreditDetail = function () {
+        var id = $scope.personalInfo.custId.value;
+        var roleId = $scope.personalInfo.roleId.value;
+
+        parent.Fanex.ExtAcc.BlockUI();
+
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+
+            parent.$('#contentSplitter').html(result);
+        })
+        .error(function (data) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+
+            if (typeof console != 'undefined') {
+                console.log(data);
+            }
+        })
+    };
+
     $scope.UpdateCredit = function (event) {
         var keyCode = event.keyCode;
         var value = event.target.value;

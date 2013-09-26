@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
@@ -94,6 +95,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         /// <param name="newGivenCredit">New given credit.</param>
         /// <returns>Result object.</returns>
         public virtual Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
         {
             throw new NotImplementedException();
         }

@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -78,6 +79,52 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             return this.JsonBase(
                 model, 
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Gets used credit page.
+        /// </summary>
+        /// <param name="id">Upper customer id.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        public ActionResult UsedCreditPage(int id, int roleId)
+        {
+            ViewBag.CustId = id;
+
+            if (roleId == Super || roleId == Master)
+            {
+                var items = this._service.MasterAgentUsedCreditItems(id, roleId);
+                var model = new MasterAgentUsedCreditModel
+                {
+                    MasterAgentUsedCreditItems = items
+                };
+
+                return this.PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml");
+            }
+            else
+            {
+                var items = this._service.MemberUsedCreditItems(id);
+                var model = new MemberUsedCreditModel
+                {
+                    MemberUsedCreditItems = items
+                };
+
+                return this.PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml");
+            }
+        }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
+        {
+            var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
+            return this.JsonBase(
+                result, 
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),

@@ -263,6 +263,7 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\up-down-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\LeftPanelController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Styles\LeftPanel.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\Scripts\MasterAgentUsedCreditController.js" />
     <Content Include="bootstrap\arrows-ffffff.png" />
     <Content Include="bootstrap\externalgroup\arrows-ffffff.png" />
     <Content Include="bootstrap\externalgroup\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1597,7 +1598,6 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Security\AccessDenied.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\SecurityCode\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Balance\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\MasterAgentCredit.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\MemberCredit.cshtml" />

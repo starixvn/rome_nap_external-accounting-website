@@ -9,9 +9,11 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
 {
+    using System.Collections.Generic;
     using System.Data;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
     /// <summary>
     /// TODO: Update summary.
@@ -25,5 +27,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
         DbResult GetDownlineList(int custid, int pageSize, int pageIndex);
 
         DataRowCollection GetOnlineList(int custid);
+
+        IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
+
+        IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+
+        Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
     }
 }
