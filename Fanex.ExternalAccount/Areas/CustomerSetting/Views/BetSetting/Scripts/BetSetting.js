@@ -1,6 +1,6 @@
 ﻿function LoadSB() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('Sportsbook/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
+    document.location.href = toUrl('SportsbookSetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
 
 function LoadRacing() {

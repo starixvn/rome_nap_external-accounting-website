@@ -162,7 +162,7 @@
     <Compile Include="Authentication\CaptchaResult.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\LiveCasinoController.cs" />
-    <Compile Include="Customer\SportsbookController.cs" />
+    <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\VirtualSportsController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />

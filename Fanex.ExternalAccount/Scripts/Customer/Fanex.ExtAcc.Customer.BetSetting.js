@@ -25,7 +25,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
         data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditBetSettingMasterGet'),
+            url: resolveClientUrl('SportsbookSetting/EditBetSettingMasterGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -57,7 +57,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                     }
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        url: resolveClientUrl('SportsbookSetting/EditBetSettingPost'),
                         data: para,
                         dataType: 'json'
                     })
@@ -101,7 +101,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
         data.parentId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditBetSettingAgentGet'),
+            url: resolveClientUrl('SportsbookSetting/EditBetSettingAgentGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -133,7 +133,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                     }
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        url: resolveClientUrl('SportsbookSetting/EditBetSettingPost'),
                         data: para,
                         dataType: 'json'
                     })
@@ -175,7 +175,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
         data.parentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditBetSettingMemberGet'),
+            url: resolveClientUrl('SportsbookSetting/EditBetSettingMemberGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -207,7 +207,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                     }
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/EditBetSettingPost'),
+                        url: resolveClientUrl('SportsbookSetting/EditBetSettingPost'),
                         data: para,
                         dataType: 'json'
                     })

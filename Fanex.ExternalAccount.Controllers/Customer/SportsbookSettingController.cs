@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="SportsbookController.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="SportsbookSettingController.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -24,7 +24,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class SportsbookController : BaseController
+    public class SportsbookSettingController : BaseController
     {
         private ICommissionService _commissionService = new CommissionService();
 

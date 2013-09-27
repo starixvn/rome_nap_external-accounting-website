@@ -87,7 +87,7 @@ Fanex.ExtAcc.Customer.Settings = {
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditMinPT')
+            url: resolveClientUrl('SportsbookSetting/EditMinPT')
         }).success(function (result) {
             $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);

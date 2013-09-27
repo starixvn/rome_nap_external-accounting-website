@@ -216,7 +216,7 @@ function LeftPanelController($scope) {
             }
         };
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Sportsbook/EditMultiplePT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT'));
 
         parent.Fanex.ExtAcc.Customer.Init = function () {
             //Prevent loading group name

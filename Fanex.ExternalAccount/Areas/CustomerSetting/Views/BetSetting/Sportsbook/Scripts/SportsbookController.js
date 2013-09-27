@@ -341,7 +341,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
     $.ajax({
         dataType: 'json',
         type: 'post',
-        url: toUrl('Sportsbook/EditBetSettingPost'),
+        url: toUrl('SportsbookSetting/EditBetSettingPost'),
         data: {
             id: custId,
             uplineId: uplineId,

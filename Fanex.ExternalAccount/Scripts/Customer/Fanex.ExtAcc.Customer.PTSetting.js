@@ -216,7 +216,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditPTSuperGet'),
+            url: resolveClientUrl('SportsbookSetting/EditPTSuperGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -265,7 +265,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.superId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditPTMasterGet'),
+            url: resolveClientUrl('SportsbookSetting/EditPTMasterGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -416,7 +416,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditPTAgentGet'),
+            url: resolveClientUrl('SportsbookSetting/EditPTAgentGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -577,7 +577,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.parentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditPTMemberGet'),
+            url: resolveClientUrl('SportsbookSetting/EditPTMemberGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -709,7 +709,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.agentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/SuperEditPTMemberGet'),
+            url: resolveClientUrl('SportsbookSetting/SuperEditPTMemberGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -799,7 +799,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.agentId = Fanex.ExtAcc.Customer.agentId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/MasterEditPTMemberGet'),
+            url: resolveClientUrl('SportsbookSetting/MasterEditPTMemberGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -1098,7 +1098,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/SuperUpdateMasterPTPost'),
+            url: resolveClientUrl('SportsbookSetting/SuperUpdateMasterPTPost'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -1248,7 +1248,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/MasterUpdateAgentPTPost'),
+            url: resolveClientUrl('SportsbookSetting/MasterUpdateAgentPTPost'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -1397,7 +1397,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/AgentUpdateMemberPTPost'),
+            url: resolveClientUrl('SportsbookSetting/AgentUpdateMemberPTPost'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -1539,10 +1539,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
         var urlPost = '';
 
         if (Fanex.ExtAcc.Customer.isSuperEditMember) {
-            urlPost = 'Sportsbook/SuperEditPTMemberPost';
+            urlPost = 'SportsbookSetting/SuperEditPTMemberPost';
         }
         else {
-            urlPost = 'Sportsbook/MasterEditPTMemberPost';
+            urlPost = 'SportsbookSetting/MasterEditPTMemberPost';
         }
 
         if (!i) {
