@@ -113,5 +113,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             throw new NotImplementedException();
         }
+
+        public virtual int UserGroupId(int custId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

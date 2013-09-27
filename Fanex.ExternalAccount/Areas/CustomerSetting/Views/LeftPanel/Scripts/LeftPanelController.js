@@ -323,6 +323,15 @@ function LeftPanelController($scope) {
             parent.Fanex.ExtAcc.LoadMainFrame(url);
         }
     };
+
+    $scope.BetSetting = function () {
+        var custId = $scope.model.personalInfo.custId.value;
+        var param = custId + '/' + custId + '/' + parent.userId + '/' + parent.$('#selectedGroupName').html();
+        var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/'+ param);
+        
+
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup');
+    };
 };
 
 function PersonalInfoController($scope, $http) {

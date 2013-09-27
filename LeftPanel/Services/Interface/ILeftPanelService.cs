@@ -32,5 +32,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
         IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
 
         Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
+
+        int UserGroupId(int custId);
     }
 }

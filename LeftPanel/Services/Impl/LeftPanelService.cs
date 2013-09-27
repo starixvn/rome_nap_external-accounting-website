@@ -140,5 +140,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.ResetMemberCredit(custId, agentId, closedOnly);
         }
+
+        public override int UserGroupId(int custId)
+        {
+            return this._data.UserGroupId(custId);
+        }
     }
 }

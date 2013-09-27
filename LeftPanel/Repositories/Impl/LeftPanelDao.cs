@@ -194,6 +194,35 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
+        /// Users the group identifier.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <returns>Integer object.</returns>
+        public int UserGroupId(int custId)
+        {
+            var param = new Hashtable();
+            param.Add("custid", custId);
+
+            using (var objDb = new ObjectDb("Acc_Con_FileNameSelByCustID"))
+            {
+                objDb.AssignParamValues(param);
+
+                using (var reader = objDb.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            return reader.ToInt32("groupid");
+                        }
+                    }
+
+                    return 0;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets master used credit.
         /// </summary>
         /// <param name="custId">Customer id.</param>
@@ -251,6 +280,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             }
 
             return items;
-        }
+        }        
     }
 }

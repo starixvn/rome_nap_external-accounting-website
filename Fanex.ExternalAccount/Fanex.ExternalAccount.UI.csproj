@@ -51,6 +51,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
@@ -69,6 +73,9 @@
     <Reference Include="Fanex.PTEngine.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTEngine.Age.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.PTRacing">
+      <HintPath>..\Dependencies\Fanex.PTRacing.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Fanex.PTVirtualSports.dll</HintPath>
@@ -89,6 +96,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\ILogger.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCasinoLibrary, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Bingo\LiveCasinoLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\log4net.dll</HintPath>
@@ -98,6 +109,9 @@
       <HintPath>Dll\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\Dependencies\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -108,9 +122,30 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Accounting.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Agent.Configurations, Version=1.0.4276.26261, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Core">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data.LinqToSql">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.LinqToSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Entities">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Services">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.LoggingLib">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Core.LoggingLib.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -238,13 +273,28 @@
     <Content Include="Areas\CustomerSetting\Scripts\Validators.js" />
     <Content Include="Areas\CustomerSetting\Scripts\_references.js" />
     <Content Include="Areas\CustomerSetting\Styles\Common.css" />
+    <Content Include="Areas\CustomerSetting\Styles\images\copied.png" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_glass_65_ffffff_1x400.png" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_glass_75_dadada_1x400.png" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_glass_75_e6e6e6_1x400.png" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Areas\CustomerSetting\Styles\images\uncopied.png" />
     <Content Include="Areas\CustomerSetting\Styles\jquery-ui.css" />
     <Content Include="Areas\CustomerSetting\Styles\Validators.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Scripts\BingoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Styles\Bingo.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Scripts\CasinoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Styles\Casino.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Scripts\LiveCasinoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Styles\LiveCasino.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Scripts\RacingController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Styles\Racing.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Scripts\BetSetting.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Scripts\SportsbookController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Styles\Sportsbook.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Scripts\VirtualSportsController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Styles\VirtualSports.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CustomerController.js" />
@@ -745,6 +795,7 @@
     <Content Include="Images\super-btn.png" />
     <Content Include="PTEngine\BettingLimit.xml" />
     <Content Include="PTEngine\PTGrid.xml" />
+    <Content Include="PTEngine\PTRacingGrid.xml" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\Assets\css\1200.css" />
     <Content Include="Scripts\Assets\css\1200.min.css" />
@@ -1601,6 +1652,13 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Balance\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\MasterAgentCredit.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\MemberCredit.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Index.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -1632,6 +1690,8 @@
     <None Include="IbcKeys\ibckeydec.snk" />
     <None Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
+    <Content Include="PTEngine\PTRacingMappingSection.config" />
+    <Content Include="PTEngine\RacingBettingCommSettingMappingSection.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />

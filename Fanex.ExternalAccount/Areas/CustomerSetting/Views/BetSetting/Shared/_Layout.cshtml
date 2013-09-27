@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+   <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="description">
+        <meta content="" name="author">       
+        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
+        @RenderSection("Styles", false)
+    </head>
+    <body>
+    <div id="tabs" style="float: left; width: auto">
+        <ul class="tabs">
+            <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
+            <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
+            <li id="tab3" onclick="LoadVirtualSports()"><a href="#tabs-3">Virtual Sports</a></li>
+            <li id="tab4" onclick="LoadLiveCasino()"><a href="#tabs-4">Live Casino</a></li>
+            <li id="tab5" onclick="LoadBingo()"><a href="#tabs-5">Bingo</a></li>
+            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
+        </ul>
+        <div id="tabs-1">
+            @RenderSection("Sportsbook", false)
+        </div>
+        <div id="tabs-2">
+            @RenderSection("Racing", false)
+        </div>
+        <div id="tabs-3">
+            @RenderSection("VirtualSports", false)
+        </div>
+        <div id="tabs-4">          
+            @RenderSection("LiveCasino", false)
+        </div>                
+        <div id="tabs-5">   
+            @RenderSection("Bingo", false)       
+        </div>                
+        <div id="tabs-6">          
+            @RenderSection("Casino", false)
+        </div>
+    </div>                    
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
+    @RenderSection("Scripts", false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tabs').tabs();
+        });
+    </script>
+    </body>
+</html>

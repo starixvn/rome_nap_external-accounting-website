@@ -3,6 +3,11 @@
 @using Fanex.ExternalAccount.Utilities
 @using System.Web.Optimization
 @using Fanex.PTEngine
+@{
+    var groupId = new Fanex.ExternalAccount.Module.LeftPanel.Services.Impl.LeftPanelService().UserGroupId(CurrentSession.Instance.UserId);
+    var groups = Fanex.CustomerSetting.Security.Authenticate.GroupConfigurations.AllowBettingGroups;
+    var showBetSetting = groups.Contains(groupId) ? 1 : 0;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,6 +162,8 @@
         Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
         Fanex.ExtAcc.IsITAdmin = '@CurrentSession.Instance.IsITAdmin';
 
+        var showBetSetting = '@showBetSetting';
+        var userId = '@CurrentSession.Instance.UserId';
         var menuTitles = '{"ResetPwd" : "@ViewLang.ResetPassword", "CreateExistUser" : "@ViewLang.AddExistingUser", "CreateUser" : "@ViewLang.NewUser", "EditUser" : "@ViewLang.EditUserInfo", "Edit": "@ViewLang.EditMenu", "Activate": "@ViewLang.Activate", "Delete": "@ViewLang.Delete", "Create" : "@ViewLang.NewMenu", "Deactivate" : "@ViewLang.Deactivate", "EditGroup" : "@ViewLang.EditGroup", "EditFunction":"@ViewLang.EditFunction", "CreateFunction" : "@ViewLang.NewFunction"}';
 
         $(document).ready(function () {

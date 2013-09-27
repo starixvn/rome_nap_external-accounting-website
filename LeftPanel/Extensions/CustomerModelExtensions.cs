@@ -11,6 +11,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
@@ -489,6 +491,29 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                         }
             };
+            model.AddBettingLimitForSuper();
+            
+            return model;
+        }
+
+        /// <summary>
+        /// Adds betting limit link for special admin.
+        /// </summary>
+        /// <param name="model">CustomerModel object.</param>
+        /// <returns>CustomerModel context.</returns>
+        private static CustomerModel AddBettingLimitForSuper(this CustomerModel model)
+        {
+            IList<int> groups = GroupConfigurations.AllowBettingGroups;
+            int groupId = new LeftPanelService().UserGroupId(CurrentSession.Instance.UserId);
+
+            if (groups.Contains(groupId))
+            {
+                model.Setting.Details.Add(new ObjectInfo
+                {
+                    Key = "BetSetting",
+                    Value = "Edit Betting Limit"
+                });
+            }
 
             return model;
         }
