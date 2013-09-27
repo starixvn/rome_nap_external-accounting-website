@@ -175,7 +175,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (showBetSetting == '1') {
-            items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 870, 600, false); } };
+            items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup'); } };
         }
 
         $.contextMenu({

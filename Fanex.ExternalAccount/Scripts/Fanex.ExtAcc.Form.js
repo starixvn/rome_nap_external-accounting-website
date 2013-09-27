@@ -96,7 +96,7 @@ Fanex.ExtAcc.Form = {
             autoOpen: true,
             position: { my: "center", at: "center", of: window },
             close: function () {
-                $self.Close(reloadOnClose);
+                $self.Close(reloadOnClose, null, id);
             }
         });
 
