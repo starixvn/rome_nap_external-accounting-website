@@ -174,7 +174,7 @@ Fanex.ExtAcc.Customer = {
             changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } }
         }
 
-        if (showBetSetting) {
+        if (showBetSetting == '1') {
             items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 870, 600, false); } };
         }
 
