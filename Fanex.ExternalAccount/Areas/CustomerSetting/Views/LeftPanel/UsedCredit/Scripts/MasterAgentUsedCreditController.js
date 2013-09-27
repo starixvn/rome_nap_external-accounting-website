@@ -17,7 +17,7 @@
             })
             .success(function (result) {
                 Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Close(null, null, 'confirmClosedAccCredit');
 
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
@@ -41,7 +41,7 @@
                     });
                 }
                 else {
-                    Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage());
+                    Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage(), 400, 150, 'alertClosedCredit');
                 }
             })
             .error(function (data) {
@@ -51,7 +51,9 @@
                     console.log(data);
                 }
             });
-        });
+        },
+        null,
+        'confirmClosedAccCredit');
 }
 
 function ResetAllAccountCredit(agentId) {
@@ -71,7 +73,7 @@ function ResetAllAccountCredit(agentId) {
             })
             .success(function (result) {
                 Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Close(null, null, 'confirmAllAccCredit');
 
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
@@ -95,7 +97,7 @@ function ResetAllAccountCredit(agentId) {
                     });
                 }
                 else {
-                    Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage());
+                    Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage(), 400, 150, 'alertAllCredit');
                 }
             })
             .error(function (data) {
@@ -105,5 +107,7 @@ function ResetAllAccountCredit(agentId) {
                     console.log(data);
                 }
             });
-        });
+        },
+        null,
+        'confirmAllAccCredit');
 };

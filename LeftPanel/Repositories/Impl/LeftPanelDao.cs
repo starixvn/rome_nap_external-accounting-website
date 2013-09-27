@@ -185,6 +185,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
                 objDb.AssignParamValues(param);
 
+                objDb.ExecuteNonQuery();
+
                 var errorCode = Utils.ToInt32(objDb.GetParameterValue("errcode"));
 
                 return new Result(errorCode, objDb.GetParameterValue("errmsg"));
