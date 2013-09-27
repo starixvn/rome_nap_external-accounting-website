@@ -124,7 +124,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             {
                 items = this.MasterUsedCreditItems(custId);
             }
-            else if(roleId == 3)
+            else if (roleId == 3)
             {
                 items = this.AgentUsedCreditItems(custId);
             }
