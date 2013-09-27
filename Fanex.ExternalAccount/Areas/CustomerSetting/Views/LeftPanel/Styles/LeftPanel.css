@@ -94,6 +94,7 @@ div
 .true
 {
     color: Red;
+    background: none !important;
 }
 .ui-tabs .ui-tabs-panel
 {
