@@ -81,7 +81,7 @@ Fanex.ExtAcc.Account = {
             success: function (data) {
                 Fanex.ExtAcc.Account.currentRetryTimes = 0;
                 if (data == -1) {
-                    Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!');
+                    Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150);
 
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
