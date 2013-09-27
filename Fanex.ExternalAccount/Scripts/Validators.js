@@ -57,6 +57,7 @@ var Validators = {
             };
             elementInput.focus();
         };
+        hint.style.minHeight = '18px';
         hint.style.display = 'block';
     },
     showDown: function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
@@ -257,7 +258,7 @@ var Validators = {
         return false;
     },
 
-    validatePassword: function (str, isMember) {        
+    validatePassword: function (str, isMember) {
         return isMember ? this.validatePwdMember(str) : this.validatePwdAgent(str);
     },
 
