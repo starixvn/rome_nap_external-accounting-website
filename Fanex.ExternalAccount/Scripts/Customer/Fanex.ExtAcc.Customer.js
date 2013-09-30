@@ -53,6 +53,7 @@ Fanex.ExtAcc.Customer = {
 
     Closed: false,
     Suspended: false,
+    TransferCondition: false,
 
     URL: '',
     MultipleDblCommError: '',
@@ -164,6 +165,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowEditSuper: function (custId, title) {
+        this.TransferCondition = false;
         this.UserId = custId;
         this.TitleEditInfo = title;
 
@@ -171,7 +173,8 @@ Fanex.ExtAcc.Customer = {
 
         var items = {
             editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } },
-            changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } }
+            changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } },
+            transferCondition: { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } }
         }
 
         if (showBetSetting == '1' && $('#selectedGroupName').html() == 'ACCUT') {
@@ -188,6 +191,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, disableVirtualSport, superSyncCasino, superSyncBingo, superSyncLiveCasino) {
+        this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
 
@@ -234,7 +238,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!disableP2P) {
-            itemsMaster.poker = { name: "Poker", className: "iconEnableEdit" };
+            //itemsMaster.poker = { name: "Poker", className: "iconEnableEdit" };
         }
 
         if (superSyncLiveCasino) {
@@ -292,6 +296,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino) {
+        this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
 
@@ -340,7 +345,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!disableP2P) {
-            itemsAgent.poker = { name: "Poker", className: "iconEnableEdit" };
+            //itemsAgent.poker = { name: "Poker", className: "iconEnableEdit" };
         }
 
         if (masterSyncLiveCasino) {
@@ -393,6 +398,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino) {
+        this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
 
@@ -446,7 +452,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!disableP2P) {
-            itemsMember.poker = { name: "Poker", className: "iconEnableEdit" };
+            //itemsMember.poker = { name: "Poker", className: "iconEnableEdit" };
         }
 
         if (agentSyncLiveCasino) {
@@ -1816,7 +1822,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (!this.superDisableP2P) {
-                menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
+                //menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
             }
 
             if (this.superSyncLiveCasino) {
@@ -1852,7 +1858,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (!this.masterDisableP2P) {
-                menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
+                //menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
             }
 
             if (this.masterSyncLiveCasino) {
@@ -1893,7 +1899,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (!this.agentDisableP2P) {
-                menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
+                //menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
             }
 
             if (this.agentSyncLiveCasino) {
