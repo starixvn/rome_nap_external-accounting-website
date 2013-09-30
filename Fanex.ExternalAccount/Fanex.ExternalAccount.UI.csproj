@@ -304,6 +304,7 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberBySuperController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Balance\Scripts\BalanceController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\arrow-down-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\blue-arrow-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\btn-active.png" />

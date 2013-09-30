@@ -1,1 +1,57 @@
-﻿
+﻿@using Fanex.ExternalAccount.Utilities
+@model System.Data.DataTable
+<table width="99%" id="tblInner" border="1" cellpadding="0" cellspacing="0" style="margin: 1px 0 0 1px">
+    <tr>
+        <td colspan="5" class="C bold" style="background: #F6F6F6">&nbsp;</td>
+        <td class="C bold" style="background: #F6F6F6"><input type="button" value="Submit" class="buttonPopup" onclick="Update()" /></td>
+        <td colspan="3" class="C bold" style="background: #F6F6F6"></td>
+    </tr>
+    <tr>
+        <td class="C bold" style="background: #D4E3EB">No.</td>
+        <td class="C bold" style="background: #D4E3EB">Credit</td>
+        <td class="C bold" style="background: #D4E3EB">Balance</td>
+        <td class="C bold" style="background: #D4E3EB">Yesterday Balance</td>
+        <td class="C bold" style="background: #D4E3EB">Outstanding</td>
+        <td class="C bold" style="background: #D4E3EB"><input id="all" type="checkbox" onclick="CheckAll()"/></td>
+        <td class="C bold" style="background: #D4E3EB">Username</td>
+        <td class="C bold" style="background: #D4E3EB">First Name</td>
+        <td class="C bold" style="background: #D4E3EB">Last Name</td>
+    </tr>
+    @if (Model == null || Model.Rows.Count == 0)
+    {
+        <tr>
+            <td colspan="9" class="C">There is no information available</td>
+        </tr>
+    }
+    else
+    {
+        int index = 0;
+        string disabled = string.Empty;
+                
+        foreach (System.Data.DataRow row in Model.Rows)
+        {
+            index++;
+            disabled = Utils.ToDecimal(row["yesterday_balance"]) == 0m ? "disabled='disabled'" : string.Empty;
+            <tr>
+                <td class="C">@index</td>
+                <td class="R bold">@Utils.ToDecimal(row["credit"]).ToStringFormat()</td>
+                <td class="R bold">@Utils.ToDecimal(row["balance"]).ToStringFormat()</td>
+                <td class="R bold">@Utils.ToDecimal(row["yesterday_balance"]).ToStringFormat()</td>
+                <td class="R bold">@Utils.ToDecimal(row["outstanding"]).ToStringFormat()</td>
+                <td class="C"><input type="checkbox" @disabled id="@row["custid"]" onclick="Check(this)"/></td>
+                <td class="C bold">@row["username"]</td>
+                <td class="C bold">@row["firstname"]</td>
+                <td class="C bold">@row["lastname"]</td>
+            </tr>
+        }
+    }
+    <tr>
+        <td colspan="5" class="C bold" style="background: #F6F6F6">&nbsp;</td>
+        <td class="C bold" style="background: #F6F6F6"><input type="button" value="Submit" class="buttonPopup" /></td>
+        <td colspan="3" class="C bold" style="background: #F6F6F6"></td>
+    </tr>
+</table>
+<script type="text/javascript">
+    var custId = '@ViewBag.CustId';
+</script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Balance/Scripts/BalanceController.js")" type="text/javascript"></script>

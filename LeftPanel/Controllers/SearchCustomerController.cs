@@ -146,5 +146,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                     NullValueHandling = NullValueHandling.Ignore
                 });
         }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        public ActionResult SelectClearBalance(int custId)
+        {
+            ViewBag.CustId = custId;
+            var result = this._service.CustomerSelectClearBalance(custId);
+            return this.PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
+        }
     }
 }

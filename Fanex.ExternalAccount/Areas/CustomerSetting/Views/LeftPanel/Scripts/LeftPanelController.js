@@ -382,6 +382,25 @@ function PersonalInfoController($scope, $http) {
             }
         });
     };
+
+    $scope.GetBalance = function (custId) {
+        parent.Fanex.ExtAcc.BlockUI();
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            parent.$('#contentSplitter').html(result);
+        })
+        .error(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
 };
 
 function BalanceController($scope, $http) {
