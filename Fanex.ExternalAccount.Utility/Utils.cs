@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Utilities
 {
     using System;
     using System.Data;
+    using System.Web;
     using System.Web.Optimization;
 
     /// <summary>
@@ -705,6 +706,11 @@ namespace Fanex.ExternalAccount.Utilities
             var valRet = ret.ToString("#,##0.########");
 
             return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
+        }
+
+        public static string DecodeHtml(this DataRow obj, string fieldName)
+        {
+            return HttpUtility.HtmlDecode(obj.ToString(fieldName));
         }
 
         /// <summary>

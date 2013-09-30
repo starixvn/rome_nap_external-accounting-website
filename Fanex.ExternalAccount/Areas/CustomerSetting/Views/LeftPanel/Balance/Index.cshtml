@@ -37,14 +37,14 @@
             disabled = Utils.ToDecimal(row["yesterday_balance"]) == 0m ? "disabled='disabled'" : string.Empty;
             <tr>
                 <td class="C">@index</td>
-                <td class="R bold">@Utils.ToDecimal(row["credit"]).ToStringFormat()</td>
-                <td class="R bold">@Utils.ToDecimal(row["balance"]).ToStringFormat()</td>
-                <td class="R bold">@Utils.ToDecimal(row["yesterday_balance"]).ToStringFormat()</td>
-                <td class="R bold">@Utils.ToDecimal(row["outstanding"]).ToStringFormat()</td>
+                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["credit"]).ToStringFormat())</td>
+                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["balance"]).ToStringFormat())</td>
+                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["yesterday_balance"]).ToStringFormat())</td>
+                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["outstanding"]).ToStringFormat())</td>
                 <td class="C"><input type="checkbox" @disabled id="@row["custid"]" onclick="Check(this)"/></td>
-                <td class="C bold">@row["username"]</td>
-                <td class="C bold">@row["firstname"]</td>
-                <td class="C bold">@row["lastname"]</td>
+                <td class="C bold">@row.DecodeHtml("username")</td>
+                <td class="C bold">@row.DecodeHtml("firstname")</td>
+                <td class="C bold">@row.DecodeHtml("lastname")</td>
             </tr>
         }
     }
