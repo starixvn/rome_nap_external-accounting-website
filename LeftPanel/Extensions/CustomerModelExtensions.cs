@@ -16,6 +16,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
@@ -434,6 +436,57 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" },
                     };
             model.MemberSettings(ds);
+
+            return model;
+        }
+
+        /// <summary>
+        /// Checks transfer condition.
+        /// </summary>
+        /// <param name="model">Customer model item.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <param name="username">Username of customer.</param>
+        /// <returns>CustomerModel object.</returns>
+        public static CustomerModel TransferCondition(this CustomerModel model, string groupName, string username)
+        {
+            DataTable customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
+            DataTable result = null;
+            int srecommend = 0;
+            int mrecommend = 0;
+            int recommend = 0;
+            int custId = 0;
+            int roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+
+                if (roleId == 4)
+                {
+                    result = new SuperService().GetData(null, custId, null, null, null, groupName);
+                }
+                else if (roleId == 3)
+                {
+                    result = new MasterService().GetData(srecommend, custId, null, null, null);
+                }
+                else if (roleId == 2)
+                {
+                    result = new AgentService().GetData(mrecommend, custId, null, null, null);
+                }
+                else
+                {
+                    result = new MemberService().GetData(recommend, custId, null, null, null);
+                }
+
+                if (roleId != 4 && roleId != 1 && Utils.ToBoolean(result.Rows[0]["disableTransfer"]))
+                {
+                    model.Setting.Details.RemoveAt(3);
+                }
+            }
 
             return model;
         }

@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
@@ -38,6 +39,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             ViewBag.UserId = CurrentSession.UserId;
 
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
+            model.TransferCondition(uplineId, id);
 
             return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
         }
