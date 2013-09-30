@@ -25,7 +25,7 @@ function Update() {
     var isCheckedAll = false;
 
     checkboxes.each(function (index, item) {
-        if (item.id && item.checked) {
+        if (item.id != 'all' && item.checked) {
             custIds += item.id + ',';
         }
         if(item.id == 'all' && item.checked){
