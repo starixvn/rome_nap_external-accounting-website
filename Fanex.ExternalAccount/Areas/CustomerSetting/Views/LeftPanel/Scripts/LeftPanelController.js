@@ -539,6 +539,18 @@ function SettingController($scope, $http) {
         $scope.model = null;
     }
 
+    $scope.Init = function () {
+        if ($scope.setting != null) {
+            var groupName = parent.$('#selectedGroupName').html();
+            for (var i = 0; i < $scope.setting.details.length; i++) {
+                if ($scope.setting.details[i].key == 'BetSetting' && groupName != 'ACCUT') {
+                    $scope.setting.details[i].isHide = true;
+                    break;
+                }
+            }
+        }
+    };
+
     $scope.AddNew = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var actionName = '';

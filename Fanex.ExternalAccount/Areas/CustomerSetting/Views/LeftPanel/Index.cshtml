@@ -149,9 +149,9 @@
                     <div class="floatLeft"><input type="checkbox" ng-model="enableItem.value" /></div>
                 </div>    
             </div>
-            <div class="auto" id="tab-2" ng-controller="SettingController">
+            <div class="auto" id="tab-2" ng-controller="SettingController" ng-init="Init()">
                 <div class="detail icn-right" ng-repeat="item in setting.details">
-                    <a ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
+                    <a ng-hide="item.isHide" ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
                 </div>    
             </div>
             <div class="auto" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
