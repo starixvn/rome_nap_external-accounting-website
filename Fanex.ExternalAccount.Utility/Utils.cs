@@ -713,6 +713,26 @@ namespace Fanex.ExternalAccount.Utilities
             return HttpUtility.HtmlDecode(obj.ToString(fieldName));
         }
 
+        public static string EncodeHtml(this DataRow obj, string fieldName)
+        {
+            return HttpUtility.HtmlEncode(obj.ToString(fieldName));
+        }
+
+        public static string DecodeHtml(this string str)
+        {
+            return HttpUtility.HtmlDecode(str);
+        }
+
+        public static string EncodeHtml(this string str)
+        {
+            return HttpUtility.HtmlEncode(str);
+        }
+
+        public static string EncodeHtml(this object obj)
+        {
+            return HttpUtility.HtmlEncode(obj);
+        }
+
         /// <summary>
         /// Truncates a string to a certain length.
         /// </summary>
