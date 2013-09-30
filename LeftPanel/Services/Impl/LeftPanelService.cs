@@ -145,5 +145,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.UserGroupId(custId);
         }
+
+        public override Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
+        {
+            return this._data.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip);
+        }
+
+        public override DataTable CustomerSelectClearBalance(int custId)
+        {
+            return this._data.CustomerSelectClearBalance(custId);
+        }
     }
 }

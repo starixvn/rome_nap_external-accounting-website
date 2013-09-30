@@ -118,5 +118,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             throw new NotImplementedException();
         }
+
+        public virtual Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual DataTable CustomerSelectClearBalance(int custId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

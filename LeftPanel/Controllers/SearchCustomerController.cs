@@ -131,5 +131,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                     NullValueHandling = NullValueHandling.Ignore
                 });
         }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
+        {
+            var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
+            return this.JsonBase(
+                result,
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
     }
 }

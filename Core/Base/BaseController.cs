@@ -196,6 +196,25 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         /// <summary>
+        /// Updates casino statuses.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="closed">Closed status.</param>
+        /// <param name="suspended">Suspended status.</param>
+        protected void UpdateCasinoStatus2(int custId, bool closed, bool suspended)
+        {
+            var cust = new CasinoLibrary.SBAgent.Customer();
+            try
+            {
+                cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
         /// Gets level name of request.
         /// </summary>
         /// <param name="viewlevel">Level id of user.</param>

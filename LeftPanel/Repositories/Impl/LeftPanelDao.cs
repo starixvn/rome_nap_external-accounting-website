@@ -223,6 +223,51 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
+        /// Clears balance.
+        /// </summary>
+        /// <param name="custId">From customer id.</param>
+        /// <param name="custIds">To customer ids.</param>
+        /// <param name="isCheckedAll">Boolean status.</param>
+        /// <param name="ip">IP address.</param>
+        /// <returns>Result object.</returns>
+        public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_CustomerInsClearBalance"))
+            {
+                var param = new Hashtable();
+                param.Add("fromcustid", custId);
+                param.Add("tocustids", custIds);
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("language", "E");
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+                param.Add("cusstatus", !isCheckedAll ? string.Empty : "All");
+                param.Add("ip", ip);
+
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+
+                return new Result
+                {
+                    ErrorCode = Utils.ToString(db.GetParameterValue("errcode")),
+                    ErrorMessage = Utils.ToString(db.GetParameterValue("errmsg"))
+                };
+            }
+        }
+
+        public DataTable CustomerSelectClearBalance(int custId)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_CustomerSelClearBalance"))
+            {
+                var param = new Hashtable();
+                param.Add("custid", custId);
+                var result = db.ExecuteDataSet(param);
+
+                return result != null && result.Tables != null ? result.Tables[0] : null;
+            }
+        }
+
+        /// <summary>
         /// Gets master used credit.
         /// </summary>
         /// <param name="custId">Customer id.</param>
@@ -280,6 +325,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             }
 
             return items;
-        }        
+        }
     }
 }
