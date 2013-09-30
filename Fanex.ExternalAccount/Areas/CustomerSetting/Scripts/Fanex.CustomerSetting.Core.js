@@ -778,6 +778,16 @@ String.prototype.formatErrorMessage = function () {
     return formatMsg;
 };
 
+String.prototype.decodeHtml = function () {
+    var str = this;
+    return $("<div/>").html(str).text();
+};
+
+String.prototype.encodeHtml = function () {
+    var str = this;
+    return $('<div/>').text(str).html();
+};
+
 $(document).ready(function () {
     Fanex.CustomerSetting.Core.Init();
 });

@@ -32,17 +32,17 @@
                 className = index % 2 == 0 ? string.Empty : "odd";    
                 
                  <tr>
-                    <td class="C @className">@item.Username</td>
-                    <td class="C @className">@item.FirstName</td>
-                    <td class="C @className">@item.LastName</td>
-                    <td class="R @className">@item.Amount.ToStringFormat()</td>
+                    <td class="C @className">@item.Username.DecodeHtml()</td>
+                    <td class="C @className">@item.FirstName.DecodeHtml()</td>
+                    <td class="C @className">@item.LastName.DecodeHtml()</td>
+                    <td class="R @className">@item.Amount.ToStringFormat().DecodeHtml()</td>
                 </tr>   
                 
                 index++;
             }            
             <tr>
                 <td class="total bold R" colspan="3">TOTAL</td>
-                <td class="total bold R">@Model.TotalActiveMemberUsedCredit.ToStringFormat()</td>
+                <td class="total bold R">@Model.TotalActiveMemberUsedCredit.ToStringFormat().DecodeHtml()</td>
             </tr>
         }        
     </table>
@@ -74,21 +74,21 @@
                 className = index % 2 == 0 ? string.Empty : "odd";    
                 
                  <tr>
-                    <td class="C @className">@item.Username</td>
-                    <td class="C @className">@item.FirstName</td>
-                    <td class="C @className">@item.LastName</td>
-                    <td class="R @className">@item.Amount.ToStringFormat()</td>
+                    <td class="C @className">@item.Username.DecodeHtml()</td>
+                    <td class="C @className">@item.FirstName.DecodeHtml()</td>
+                    <td class="C @className">@item.LastName.DecodeHtml()</td>
+                    <td class="R @className">@item.Amount.ToStringFormat().DecodeHtml()</td>
                 </tr>   
                 
                 index++;
             }            
             <tr>
                 <td class="total bold R" colspan="3">TOTAL</td>
-                <td class="total bold R">@Model.TotalInactiveMemberUsedCredit.ToStringFormat()</td>
+                <td class="total bold R">@Model.TotalInactiveMemberUsedCredit.ToStringFormat().DecodeHtml()</td>
             </tr>
             <tr>
                 <td class="bold R grandTotal" colspan="3">TOTAL Active + Inactive</td>
-                <td class="bold R grandTotal">@grandTotal.ToStringFormat()</td>
+                <td class="bold R grandTotal">@grandTotal.ToStringFormat().DecodeHtml()</td>
             </tr>            
         }
         @if (Model.TotalActiveMemberUsedCredit + Model.TotalInactiveMemberUsedCredit != 0m)

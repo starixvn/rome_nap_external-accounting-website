@@ -31,27 +31,27 @@
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.name.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.name.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.name.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.nickname.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.nickname.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.nickname.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.fax.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.fax.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.fax.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.phone.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.phone.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.phone.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.mobile.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.mobile.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.mobile.value.decodeHtml()}}</div>
             </div>
         </div>
         <div id="viewInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">

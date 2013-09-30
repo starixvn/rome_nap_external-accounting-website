@@ -28,17 +28,17 @@
                 className = index % 2 == 0 ? string.Empty : "odd";    
                 
                  <tr>
-                    <td class="C @className">@item.Username</td>
-                    <td class="R @className">@item.GivenCredit.ToStringFormat()</td>
-                    <td class="R @className">@item.UsedCredit.ToStringFormat()</td>
+                    <td class="C @className">@item.Username.DecodeHtml()</td>
+                    <td class="R @className">@item.GivenCredit.ToStringFormat().DecodeHtml()</td>
+                    <td class="R @className">@item.UsedCredit.ToStringFormat().DecodeHtml()</td>
                 </tr>   
                 
                 index++;
             }            
             <tr>
                 <td class="total bold C">TOTAL</td>
-                <td class="total bold R">@Model.Total.GivenCredit.ToStringFormat()</td>
-                <td class="total bold R">@Model.Total.UsedCredit.ToStringFormat()</td>
+                <td class="total bold R">@Model.Total.GivenCredit.ToStringFormat().DecodeHtml()</td>
+                <td class="total bold R">@Model.Total.UsedCredit.ToStringFormat().DecodeHtml()</td>
             </tr>
         }        
     </table>
