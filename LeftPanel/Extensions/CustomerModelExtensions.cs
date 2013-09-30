@@ -731,7 +731,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         {
                             new ObjectInfo { Key = "Info", Value = "Edit Info" },
                             new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
                             new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
                             new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
                             new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
