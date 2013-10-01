@@ -107,7 +107,7 @@ Fanex.ExtAcc.Form = {
         }
     },
 
-    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId) {
+    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
         var id = popupId ? popupId : 'windowPopup';
@@ -151,7 +151,7 @@ Fanex.ExtAcc.Form = {
                 }
             },
             {
-                text: "No",
+                text: isCancel ? "Cancel" : "No",
                 click: function () {
                     if (cancelClickEvent && typeof cancelClickEvent === 'function') {
                         cancelClickEvent();
