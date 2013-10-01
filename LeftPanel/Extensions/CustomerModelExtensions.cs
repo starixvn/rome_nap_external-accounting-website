@@ -333,7 +333,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" } 
             };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
-            model.SuperSettings(ds);
+            model.SuperSettings(tableCustomer);
 
             return model;
         }
@@ -373,7 +373,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
                         new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" } 
                     };
-            model.MasterSettings(ds, tableCash);            
+            model.MasterSettings(tableCustomer, tableCash);            
 
             return model;
         }
@@ -495,11 +495,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// Customer settings.
         /// </summary>
         /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="ds">Customer data.</param>
+        /// <param name="tableCustomer">Customer data.</param>
         /// <returns>CustomerModel object.</returns>
-        private static CustomerModel SuperSettings(this CustomerModel model, DataSet ds)
+        private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer)
         {
-            var tableCustomer = ds.Tables[0];
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
@@ -508,6 +507,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
                             new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
                             new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "Bingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
                             new ObjectInfo 
                             { 
                                 Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" 
@@ -575,12 +575,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// Customer settings.
         /// </summary>
         /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="ds">Customer data.</param>
+        /// <param name="tableCustomer">Customer data.</param>
         /// <param name="tableCash">Cash info table.</param>
         /// <returns>CustomerModel object.</returns>
-        private static CustomerModel MasterSettings(this CustomerModel model, DataSet ds, DataTable tableCash = null)
+        private static CustomerModel MasterSettings(this CustomerModel model, DataTable tableCustomer, DataTable tableCash = null)
         {
-            var tableCustomer = ds.Tables[0];
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
@@ -590,6 +589,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "AutoPT", Value = !Utils.ToBoolean(tableCash.Rows[0]["disableAutoMPT"]), Text = "Allow Auto PT" },
                             new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
                             new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "Bingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
                             new ObjectInfo 
                             { 
                                 Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" 
@@ -647,6 +647,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
                             new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
                             new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "Bingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
                             new ObjectInfo 
                             { 
                                 Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game" 
@@ -704,6 +705,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
                             new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
                             new ObjectInfo { Key = "Casino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
+                            new ObjectInfo { Key = "Bingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
                             new ObjectInfo 
                             { 
                                 Key = "NumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), 
