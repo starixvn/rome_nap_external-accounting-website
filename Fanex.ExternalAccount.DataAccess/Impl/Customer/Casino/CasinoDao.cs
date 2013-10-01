@@ -31,7 +31,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
         {
             Hashtable param = new Hashtable();
             param.Add("custid", ibcCustId);
-            DbResult dr = DNAide.Data.DbHelper.Execute("Age_CustomerSelUserInfo", param, 300);
+            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", param, 300);
             DataRow row = null;
             CasinoCustomer customerDetail = new CasinoCustomer();
             if (dr.ResultSet.Tables[0].Rows.Count > 0)
@@ -88,7 +88,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             Hashtable param = new Hashtable();
             param.Add("custid", custid);
 
-            DbResult dr = DNAide.Data.DbHelper.Execute("Age_GetCSStatus", param, 300);
+            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Age_GetCSStatus", param, 300);
             return Utils.ToBoolean(dr.Outputs["status"]);
         }
 
@@ -127,7 +127,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             param.Add("loginip", ip);
             param.Add("language", lang);
 
-            DbResult dr = DNAide.Data.DbHelper.Execute("Acc_UpdCSStatus", param, 300);
+            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Acc_UpdCSStatus", param, 300);
 
             bool status = Utils.ToBoolean(dr.Outputs["status"]);
 
@@ -175,7 +175,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             param.Add("loginip", ip);
             param.Add("language", lang);
 
-            DbResult dr = DNAide.Data.DbHelper.Execute("Acc_UpdCSStatus", param, 300);
+            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Acc_UpdCSStatus", param, 300);
 
             errMsg = dr.Outputs["errmsg"].ToString();
             return Utils.ToBoolean(dr.Outputs["status"]);

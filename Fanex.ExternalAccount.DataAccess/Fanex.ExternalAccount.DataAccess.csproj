@@ -48,9 +48,6 @@
     <Reference Include="CasinoUtility">
       <HintPath>..\Dependencies\CasinoUtility.dll</HintPath>
     </Reference>
-    <Reference Include="DNAide">
-      <HintPath>..\Dependencies\DNAide.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>

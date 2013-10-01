@@ -11,7 +11,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 {
     using System;
     using System.Collections.Generic;
-    using DNAide.Core;
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -209,8 +208,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 
             p.Add("logintime", null);
 
-            dr = DNAide.Data.DbHelper.Execute("Age_LoginAdminVerifyTicket", p);
-            loginTime = CastAide.AsDateTime(dr.Outputs["logintime"]);
+            dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Age_LoginAdminVerifyTicket", p);
+            loginTime = Fanex.Common.Converter.ToDateTime(dr.Outputs["logintime"]);
 
             return loginTime;
         }
