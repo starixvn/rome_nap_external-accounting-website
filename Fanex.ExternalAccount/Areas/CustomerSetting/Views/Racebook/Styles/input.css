@@ -1,0 +1,355 @@
+﻿select, input
+{
+	font-size:11px;
+	border:solid 1px #818181;
+	vertical-align: baseline;
+	!margin-bottom:1px;
+	!vertical-align: middle;
+	vertical-align  /*\**/: middle\9;
+}
+
+input[type=radio], input[type=checkbox]
+{
+	border:none 0px;	
+	}
+input[disabled].btn {
+	border: 1px solid #999;
+	background-color: #ddd;
+	/*background-image:none !important;*/
+	color:#999 !important;
+}	
+.form_top{
+	background-color:#f2ede6;
+	width:120px;
+	color:#000000;
+	font-size:11px;
+	padding-left:3px;
+	border:solid 1px #8db4cf;
+	vertical-align:baseline;
+	height:14px;
+	!margin-top:1px;
+	!vertical-align: middle;
+	vertical-align  /*\**/: middle\9;
+}
+
+.expanded{background:url("images/opened_folder.png") no-repeat center left transparent;  display:inline-block;  height:18px;  vertical-align:middle; padding-left:20px; cursor:pointer}
+.expand{ background:url("images/folder.png") no-repeat transparent;}
+
+.btn
+{
+	text-align:center;
+	font-size:11px;
+	font-weight:bold;
+	color:#000;
+	background:url(images/buttons/bg_btn.jpg) repeat-x left;
+	cursor:pointer;
+	border:1px solid #7C98A4;
+	margin:0px 2px 0px 0px;
+	vertical-align:baseline;
+	height:18px;
+	padding:1px 4px;
+	text-decoration:none;
+	!vertical-align: middle;
+	vertical-align  /*\**/: middle\9;
+}
+
+input.unverify, input.verified, input.verifiedDisabled, input.reversed
+{
+	background-position: left; text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000;
+	cursor: pointer;
+	margin: 0px;
+	vertical-align: baseline;
+	height: 18px;
+	width : 55px;
+	padding: 1px 4px;
+	text-decoration: none; !vertical-align:middle;
+	vertical-align/*\**/:middle\9;
+	
+
+ }
+ 
+ input.verifiedDisabled 
+ {
+	color: Gray;	
+	cursor : auto;
+ }
+ 
+ input.unverify
+ {
+ 	background: url("images/buttons/bgred_btn.jpg") repeat-x left;
+ 	border: 1px solid #CC3300; 	
+ 	
+ }
+
+input.verified , input.reversed
+{
+	
+	background: url(images/buttons/bg_btn.jpg) repeat-x left;	
+	border: 1px solid #7C98A4;	
+	
+}
+input.reversed
+ {
+ 	background: url(images/buttons/bgred1_btn.jpg) repeat-x left;
+ 	border: 1px solid #CC3300; 	
+ 	
+ }
+
+
+.btn:hover
+{
+	color: #195687;
+}
+.btncurrent
+{
+	color:#195687;
+}
+
+input.txtdate {
+    background:url(Images/calendar1.gif)  no-repeat right center; 
+    padding:2px; 
+    width:100px;
+    cursor: pointer;
+}
+
+
+.btnExcel {
+background:transparent url(images/excel.gif) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+.btnBack {
+background:transparent url(images/back.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+
+.btnClose {
+background:transparent url(images/close.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+
+.btnAdd {
+background:transparent url(images/icn_add.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+
+.btnEdit {
+background: url("images/icn_edit.png") no-repeat scroll center center transparent;
+border: 0 none;
+cursor: pointer;
+height: 18px;
+width: 18px;
+overflow: visible;
+padding-left: 6px;
+padding-right: 6px;
+margin-left:2px;
+}
+.btnSendMail {
+background:transparent url(images/email.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+
+.btnRefresh
+{
+background:transparent url(images/refresh_icon.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+
+.btnHelp {
+    background: url("images/help.png") no-repeat scroll center center transparent;
+    border: 0 none;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    overflow: visible;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left:2px;
+}
+
+.btnDelete
+{
+background:transparent url(images/icn_del.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:18px;
+width:18px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px; 
+}
+
+.btnSave
+{
+background:transparent url(images/Save.png) no-repeat center center;
+border:0px solid red;
+cursor:pointer;
+font-size:11px;
+height:20px;
+width:20px;
+margin:0 2px;
+overflow:visible;
+padding-left:6px;
+padding-right:6px;
+}
+
+.checkbox{color:#5b5a5a; width:45px; height:15px; display:block; border:1px solid #d0d0d0; background:url(images/bg_checkbox.jpg) repeat-x top #dfe4e7; margin:5px 1px 5px 1px; line-height:13px; text-align:center; font-weight:bold; text-decoration:none}
+.checkbox:hover{color:#D66D35}
+
+.txt{
+	background-color:#fff;
+	width:120px;
+	color:#000;
+	font-size:11px;
+	border:solid 1px #818181;
+	vertical-align:middle
+}
+.img-date-selector 
+{
+	border:0px;
+	cursor:pointer;
+	margin-left:2px;
+	vertical-align:middle;
+}
+.select-group {
+width:100px;
+}
+.selectcomm, .select-comm {
+width:60px;
+}
+.select-pt, .pt{width:48px;}
+
+.commlist
+{
+	width:60px;
+	}
+
+.btn-inc1{cursor:pointer; width:16px; height:16px; background:url(images/dec1.gif) no-repeat; border:none}
+input[disabled].btn-inc1{background:url(images/dec1_disable.jpg) no-repeat !important;}
+.btn-inc10{cursor:pointer; width:16px; height:16px; background:url(images/dec3.gif) no-repeat; border:none}
+input[disabled].btn-inc10{background:url(images/dec3_disable.gif) no-repeat !important;}
+.btn-dec1{cursor:pointer; width:16px; height:16px; background:url(images/dec2.gif) no-repeat; border:none}
+input[disabled].btn-dec1{background:url(images/dec2_disable.gif) no-repeat !important;}
+.btn-dec10{cursor:pointer; width:16px; height:16px; background:url(images/dec4.gif) no-repeat; border:none}
+input[disabled].btn-dec10{background:url(images/dec4_disable.gif) no-repeat !important;}
+
+.custBtn1{background:transparent url(images/btUpdateL.gif) no-repeat top left; width:26px; height:24px; cursor:pointer;}
+.custBtn2{background:transparent url(images/btUpdateR.gif) no-repeat top left; text-align:left; width:96px; padding-left:12px; height:24px; font-size:10pt; font-weight:bold; color:#fff;cursor:pointer;}
+
+#btntop td{height:21px}
+td.btnleft{background:transparent url(images/ptL.gif) no-repeat top left; width:22px; height:21px}
+
+td.btnmiddle{background:transparent url(images/ptRp.gif); vertical-align:middle; padding-left:15px; padding-right:42px; border-width:0px; text-align:left; line-height:normal}
+
+td.btnright{width:1px; height:20px}
+.md2
+{
+background:transparent url(images/ptR.gif) no-repeat scroll left top;
+height:21px;
+width:18px;
+}
+.mp3
+{
+background:transparent url(images/ptR_down.gif) no-repeat scroll left top;
+height:21px;
+width:18px;
+}
+span.mp{
+color:#FFFFFF;
+font-size:8pt;
+font-weight:bold;
+}
+table.mp
+{
+border-style:none;
+position:relative;
+width:250px;
+}
+.md3{
+background:transparent url(images/ptR_down.gif) no-repeat scroll left top;
+height:21px;
+width:18px;
+}
+
+span.mp1{
+color:#000;
+font-size:11px;
+}
+
+.tblPTheader
+{
+	height:21px;
+	margin:6px 0px 2px 0px;
+	}
+.tblPTheader td{border:0px !important; padding:0px!important;}	
+.txtsearchonblur
+{
+	color:#666666;
+	font-style:italic;
+	}	
+
+.undo
+{
+	
+	background: url(images/undo.png) repeat-x left;	
+	border: 1px solid #7C98A4;	
+	
+}
+
+input.txtcalendar {
+    background: url("Images/calendar1.gif") no-repeat scroll right center transparent;
+    padding: 2px;
+    width: 125px;
+}

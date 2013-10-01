@@ -805,14 +805,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in cssLogin)
             {
-                bootstrapCssLogin.AddFile(item);
+                bootstrapCssLogin.Include(item);
             }
 
             bundles.Add(bootstrapCssLogin);
 
             foreach (var item in jssLogin)
             {
-                bootstrapJsLogin.AddFile(item);
+                bootstrapJsLogin.Include(item);
             }
 
             bundles.Add(bootstrapJsLogin);
@@ -833,14 +833,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -861,14 +861,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -889,14 +889,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -917,14 +917,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -945,14 +945,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -973,14 +973,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
