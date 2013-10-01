@@ -1156,7 +1156,7 @@
                 var $item = $(this),
                     key = $item.data('contextMenuKey'),
                     item = opt.items[key],
-                    disabled = item ? (($.isFunction(item.disabled) && item.disabled.call($trigger, key, root)) || item.disabled === true) : true;
+                    disabled = item ? (($.isFunction(item.disabled) && item.disabled.call($trigger, key, root)) || item.disabled === true) : false;
 
                 // dis- / enable item
                 $item[disabled ? 'addClass' : 'removeClass']('disabled');
