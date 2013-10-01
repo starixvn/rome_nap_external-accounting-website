@@ -477,6 +477,9 @@
     <Content Include="Dll\Fanex.CustomerSetting.Module.Casino.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Core.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.LeftPanel.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.ProgressiveBonus.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Racebook.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Racebook.Resources.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Security.dll" />
     <Content Include="Dll\GotDotNet.ApplicationBlocks.Data.dll" />
     <Content Include="Dll\IBCCrypt.dll" />
