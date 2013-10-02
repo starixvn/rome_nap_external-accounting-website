@@ -332,6 +332,34 @@ function LeftPanelController($scope) {
 
         parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup');
     };
+
+    $scope.Racing = function () {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var url = '';
+        var title = $scope.model.personalInfo.currentLevel.value;
+        switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + custId);
+                break;
+            case 3:
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?custid=' + custId + '&uplineid=' + uplineId);
+                break;
+            case 2:
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?custid=' + custId + '&uplineid=' + uplineId);
+                break;
+            case 1:
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?custid=' + custId + '&uplineid=' + uplineId);
+                break;
+            default:
+                break;
+        }
+
+        if (url !== '') {
+            parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Racing Setting ' + '<font color="#6dcff6">' + title + '</font>', 1050, 680, false, null, 1);
+        }
+    };
 };
 
 function PersonalInfoController($scope, $http) {
