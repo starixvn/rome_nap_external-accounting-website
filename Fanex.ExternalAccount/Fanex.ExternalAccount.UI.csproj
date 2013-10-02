@@ -230,6 +230,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\WebGrease.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\Error1.designer.cs">
@@ -489,6 +493,7 @@
     <Content Include="Dll\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="Dll\NetUtility.dll" />
     <Content Include="Dll\Sunplus.Libraries.AOP.dll" />
+    <Content Include="Dll\WebGrease.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrow-icn-right.png" />
