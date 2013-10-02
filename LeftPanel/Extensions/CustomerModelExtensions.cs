@@ -451,11 +451,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             DataTable customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
             DataTable result = null;
-            int srecommend = 0;
-            int mrecommend = 0;
-            int recommend = 0;
-            int custId = 0;
-            int roleId = 0;
+            int srecommend = 0, mrecommend = 0, recommend = 0, custId = 0, roleId = 0;
+            bool syncCasino = false, syncBingo = false, syncLiveCasino = false;
 
             if (customerInfo != null)
             {
@@ -481,6 +478,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 {
                     result = new MemberService().GetData(recommend, custId, null, null, null);
                 }
+
+                syncBingo = result.Rows[0].ToBoolean("syncBingo");
+                syncCasino = result.Rows[0].ToBoolean("syncCasino");
+                syncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
 
                 if (roleId != 4 && roleId != 1 && Utils.ToBoolean(result.Rows[0]["disableTransfer"]))
                 {
