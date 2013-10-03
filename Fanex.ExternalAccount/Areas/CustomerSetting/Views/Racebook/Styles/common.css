@@ -13,8 +13,8 @@ button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="but
 
 #err, #errMsg, #errfunc, #errTransfer, .errMsg
 {
-    color: Red;
-    font-weight: bold;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 12px;
     padding: 0px;
     margin: 0px;
     display: inline;
@@ -219,17 +219,15 @@ span.cannotchangeinternal:hover
 .maincontent_box
 {
     background: #FFF url(images/banner/bg_head_tb.jpg) repeat-x left bottom;
-    border: solid 1px #7c98a4;
-    padding: 4px 2px;
+    /*border: solid 1px #7c98a4;*/
     display: table;
-    width: 99%;
+    width: 100%;
     text-align: left;
 }
 .bg_table
 {
-    background: #e6e9f0;
     padding: 4px 2px;
-    border: solid 1px #7c98a4;
+    border:none;
     display: table;
     width: 99%;
     margin-top: 2px;

@@ -80,12 +80,19 @@
         }
     },
     updateCustomerSettings: function () {
-        if (this.bettingCommSetting.Validate()) {
-            var isUpdateAllMember = this.ptSetting.Validate(this.currentSetting.settings, false);
-            this.currentSetting.settings = this.ptSetting.Save();
-            if (!isUpdateAllMember) {
-                customerPTRacingSetting.updateAllSettings();
-            }
+        var needToValidate = true;
+        if (window.targetRoleId == ptRacingCommon.memberRoleId &&
+            (window.pageRole == ptRacingCommon.superRoleId || window.pageRole == ptRacingCommon.masterRoleId)) {
+            needToValidate = false;
+        }
+        if (needToValidate && !this.bettingCommSetting.Validate()) {
+            return;
+        }
+        
+        var isUpdateAllMember = this.ptSetting.Validate(this.currentSetting.settings, false);
+        this.currentSetting.settings = this.ptSetting.Save();
+        if (!isUpdateAllMember) {
+            customerPTRacingSetting.updateAllSettings();
         }
     },
     updateAllSettings: function () {

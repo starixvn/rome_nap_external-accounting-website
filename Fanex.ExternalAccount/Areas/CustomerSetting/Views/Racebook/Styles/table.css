@@ -98,19 +98,20 @@
 {
 	background-color:#fff;
 	border-collapse: collapse;
-	border:solid 1px #7c98a4;
+	border:solid 1px #CCCCCC;
 	width:100%;
 	text-align:center;
 	line-height:18px;
 	font-family:Tahoma,Arial ,helvetica ,sans-serif;
 	font-size:11px;
-	border:solid 1px #7c98a4;
+	border:solid 1px #CCCCCC;
 }
 .tblcollapse td, .tblcollapse th 
 {
-	border:solid 1px #7c98a4;
+	border:solid 1px #CCCCCC;
 	line-height:18px;
 	padding:1px;
+	height:22px;
 }
 .tblcollapse a{cursor:pointer}
 .tblcollapse .title
@@ -121,10 +122,10 @@
 }
 .tblcollapse .title td, .tblcollapse .title th
 {
-	border:solid 1px #7c98a4;
+	border:solid 1px #CCCCCC;
 }
-.tblcollapse .title td{background-color:#b5c4d0 !important;}	
-.tblcollapse .title th{background-color:#b5c4d0 !important;}	
+.tblcollapse .title td{background-color:#F1F1A6 !important; height:25px;color:#464646;font-size:12px;}	
+.tblcollapse .title th{background-color:#F1F1A6 !important;}	
 
 .tblcollapse .title1
 {

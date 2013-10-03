@@ -59,7 +59,9 @@
 
         if (isSuccess) {
             result = '<div class="boxscc">' + result + '</div>';
-            t1 = setTimeout("ptRacingCommon.clearMessage('" + containerid + "')", 3000);
+            t1 = setTimeout(function () {
+                ptRacingCommon.clearMessage(containerid); 
+                parent.Fanex.ExtAcc.Form.Close(false); }, 3000);
             ptRacingCommon.afterUpdate();
         }
         else {

@@ -8,59 +8,27 @@
     @Styles.Render("~/bundles/racingstyle")
     @functions
     {
-
-        
-
     }
 </head>
     <body>
-        <div class="maincontent">
-            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
-                <tr>
-                    <td class="maincontent_headerL">
-                    </td>
-                    <td class="maincontent_headerC fixfont">
-                        Update Racing Setting
-                    </td>
-                    <td class="maincontent_headerR">
-                    </td>
-                </tr>
-            </table>
-            <div id="divShowInfo" class="maincontent_box" style="width: 1013px;">
+        <div class="maincontent" style="width: 1012px;">
+            <div id="divShowInfo" class="maincontent_box" style="width:1012px;display:none;">
                 <div id="err" class="errMsg">
                 </div>
                 <div id="errMsg" class="error-message">
                 </div>
             </div>
-            <div class="bg_table" style="width: 1013px;">
-        
-                <table cellspacing="0" cellpadding="0" border="0">
-                    <tbody>
-                        <tr>
-                            <td class="custBtn1">
-                            </td>
-                            <td onclick="return customerPTRacingSetting.updateCustomerSettings();" class="custBtn2 hand">
-                                Update
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="floatR">
+                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+            </div>
+            <div class="bg_table" style="width: 1012px;">
                 <div id="divCustInfo">
                 </div>
                 @Html.Partial("~/Areas/CustomerSetting/Views/Racebook/Setting/RacingSetting.cshtml")
        
-                <table cellspacing="0" cellpadding="0" border="0">
-                    <tbody>
-                        <tr>
-                            <td class="custBtn1">
-                            </td>
-                            <td onclick="return customerPTRacingSetting.updateCustomerSettings();" class="custBtn2 hand">
-                                Update
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-        
+                <div class="floatR">
+                    <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+                </div>
             </div>
         </div>
         @RenderBody()
@@ -69,10 +37,9 @@
     <script type="text/javascript">
         //var Roles=@Html.Raw(ViewBag.PageRole);
         
-        window.uplineId = @Fanex.Common.Converter.ToInt(Request["uplineId"]);
-        window.custId = @Fanex.Common.Converter.ToInt(Request["custId"]);
+        window.uplineId = '@Fanex.Common.Converter.ToInt(Request["uplineId"])';
+        window.custId = '@Fanex.Common.Converter.ToInt(Request["custId"])';
         window.rootUrl = '@ViewBag.RootUrl';
-
     </script>
 
     @Scripts.Render("~/bundles/racingsetting")
@@ -82,7 +49,7 @@
     <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BetTypeGroup.js")"></script>
     <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BetType.js")"></script>
     <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BettingCommSetting.js")"></script>
-
+    
     @RenderSection("scripts", required: false)
    
 </html>

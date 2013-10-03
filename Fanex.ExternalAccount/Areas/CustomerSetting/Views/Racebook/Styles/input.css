@@ -1,17 +1,16 @@
-﻿select, input
-{
-	font-size:11px;
-	border:solid 1px #818181;
-	vertical-align: baseline;
-	!margin-bottom:1px;
-	!vertical-align: middle;
-	vertical-align  /*\**/: middle\9;
+﻿select, input {
+    margin: 0;
+    outline: none !important;
 }
-
+input[type="text"] {
+    border: 1px solid #BBBBBB;
+    border-radius: 3px 3px 3px 3px;
+    height: 20px;
+}
 input[type=radio], input[type=checkbox]
 {
 	border:none 0px;	
-	}
+}
 input[disabled].btn {
 	border: 1px solid #999;
 	background-color: #ddd;
@@ -27,9 +26,9 @@ input[disabled].btn {
 	border:solid 1px #8db4cf;
 	vertical-align:baseline;
 	height:14px;
-	!margin-top:1px;
-	!vertical-align: middle;
-	vertical-align  /*\**/: middle\9;
+	margin-top:1px;
+	vertical-align: middle;
+	vertical-align: middle;
 }
 
 .expanded{background:url("images/opened_folder.png") no-repeat center left transparent;  display:inline-block;  height:18px;  vertical-align:middle; padding-left:20px; cursor:pointer}
@@ -49,8 +48,8 @@ input[disabled].btn {
 	height:18px;
 	padding:1px 4px;
 	text-decoration:none;
-	!vertical-align: middle;
-	vertical-align  /*\**/: middle\9;
+	vertical-align: middle;
+	vertical-align: middle;
 }
 
 input.unverify, input.verified, input.verifiedDisabled, input.reversed
@@ -65,8 +64,8 @@ input.unverify, input.verified, input.verifiedDisabled, input.reversed
 	height: 18px;
 	width : 55px;
 	padding: 1px 4px;
-	text-decoration: none; !vertical-align:middle;
-	vertical-align/*\**/:middle\9;
+	text-decoration: none; vertical-align:middle;
+	vertical-align: middle;
 	
 
  }
@@ -352,4 +351,28 @@ input.txtcalendar {
     background: url("Images/calendar1.gif") no-repeat scroll right center transparent;
     padding: 2px;
     width: 125px;
+}
+.btnTop {
+    margin: 4px 0 4px !important;
+}
+.buttonPopup {
+    background: url("Images/btn-bgsubmit-original.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
+    font-family:Verdana,Arial,sans-serif;
+    font-size:12px;
+    border: medium none !important;
+    border-radius: 3px 3px 3px 3px !important;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    height: 30px;
+    margin-bottom: 3px;
+    margin-top: 5px;
+    padding-bottom: 2px;
+    text-indent: 0 !important;
+    width: 80px;
+}
+.buttonPopup:hover {
+    background: url("Images/btn-bgsubmit-hover.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
+    border: medium none !important;
+    color: #FFFFFF !important;
+    cursor: pointer;
 }
