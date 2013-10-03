@@ -136,14 +136,14 @@ Fanex.ExtAcc = {
     },
 
     BlockUI: function () {
-        if (!$this.BlockedUI) {
+        if (!this.BlockedUI) {
             $.blockUI({
                 message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
                 onBlock: function () {
-                    $this.BlockedUI = true;
+                    Fanex.ExtAcc.BlockedUI = true;
                 },
                 onUnblock: function () {
-                    $this.BlockedUI = false;
+                    Fanex.ExtAcc.BlockedUI = false;
                 }
             });
         }

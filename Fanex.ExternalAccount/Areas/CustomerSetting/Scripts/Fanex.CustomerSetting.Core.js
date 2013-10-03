@@ -1,11 +1,11 @@
 ﻿/// <reference path="_references.js" />
 
 if (typeof $ == 'undefined' || typeof jQuery == 'undefined') {
-    alert("Require jQuery.js");
+    //alert("Require jQuery.js");
 }
 
 if (typeof $.blockUI == 'undefined') {
-    alert("Require jquery.blockUI.js");
+    //alert("Require jquery.blockUI.js");
 }
 
 /*
@@ -500,12 +500,10 @@ if (typeof Fanex.CustomerSetting == 'undefined') {
 }
 
 Fanex.CustomerSetting.Core = {
-    $this: null,
     BlockedUI: false,
 
     Init: function () {
         $ = jQuery;
-        $this = this;
         jQuery.blockUI.defaults.css.zIndex = '9999999';
         jQuery.blockUI.defaults.css.position = 'absolute';
         jQuery.blockUI.defaults.css.border = '0px solid #aaa';
@@ -514,14 +512,14 @@ Fanex.CustomerSetting.Core = {
     },
 
     BlockUI: function () {
-        if (!$this.BlockedUI) {
+        if (!this.BlockedUI) {
             $.blockUI({
                 message: '<div class="loading"></div>',
                 onBlock: function () {
-                    $this.BlockedUI = true;
+                    Fanex.CustomerSetting.Core.BlockedUI = true;
                 },
                 onUnblock: function () {
-                    $this.BlockedUI = false;
+                    Fanex.CustomerSetting.Core.BlockedUI = false;
                 }
             });
         }

@@ -475,6 +475,9 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="SpNames.Production.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Dll\CasinoLibrary.dll" />
     <Content Include="Dll\DNAide.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.BetSetting.dll" />
@@ -1669,6 +1672,15 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Index.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
+    <Content Include="Web.Production.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Production.Debug.config">
+      <DependentUpon>Web.Production.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Production.Release.config">
+      <DependentUpon>Web.Production.config</DependentUpon>
+    </Content>
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
     <None Include="ExcelTemplates\Reports\WinLossDetailAg.xls" />
