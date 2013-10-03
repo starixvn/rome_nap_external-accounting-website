@@ -26,12 +26,12 @@
 }
 .uncopied, .true
 {
-    background: url("/Areas/CustomerSetting/Styles/images/uncopied.png") no-repeat scroll 100px 2px transparent;
+    background: url("../Styles/images/uncopied.png") no-repeat scroll 100px 2px transparent;
     cursor: pointer;
 }
 .copied
 {
-    background: url("/Areas/CustomerSetting/Styles/images/copied.png") no-repeat scroll 100px 2px transparent;
+    background: url("../Styles/images/copied.png") no-repeat scroll 100px 2px transparent;
     cursor: pointer;
 }
 .collapse
