@@ -433,6 +433,202 @@ function PersonalInfoController($scope, $http) {
     };
 };
 
+function NoInfoController($scope, $http) {
+    $scope.className = 'fiftyPercent';
+
+    if ($scope.$parent.model) {
+        $scope.personalInfo = $scope.$parent.model.personalInfo;
+        $scope.model = $scope.$parent.model;
+
+        $scope.personalInfoHeight = $('#customerInfo').height();
+
+        if ($scope.personalInfo.roleId.value == 2) {
+            $scope.className = 'thirdtyThreePercent';
+        }
+        else if ($scope.personalInfo.roleId.value == 1) {
+            $scope.className = 'onehundredPercent';
+        }
+    }
+    else {
+        $scope.model = null;
+    }
+};
+
+function LineInfoController($scope, $http) {
+    $scope.className = 'fiftyPercent';
+
+    if ($scope.$parent.model) {
+        $scope.personalInfo = $scope.$parent.model.personalInfo;
+        $scope.model = $scope.$parent.model;
+
+        $scope.personalInfoHeight = $('#customerInfo').height();
+
+        if ($scope.personalInfo.roleId.value == 2) {
+            $scope.className = 'thirdtyThreePercent';
+        }
+        else if ($scope.personalInfo.roleId.value == 1) {
+            $scope.className = 'onehundredPercent';
+        }
+    }
+    else {
+        $scope.model = null;
+    }
+
+    $scope.Login = function (username) {
+        $http({
+            url: parent.resolveClientUrl('User/InternalLogin/?username=' + username),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            window.open(result.url, '_blank');
+        })
+        .error(function (result) {
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
+};
+
+function ViewInfoController($scope, $http) {
+    $scope.className = 'fiftyPercent';
+
+    if ($scope.$parent.model) {
+        $scope.personalInfo = $scope.$parent.model.personalInfo;
+        $scope.model = $scope.$parent.model;
+
+        $scope.personalInfoHeight = $('#customerInfo').height();
+
+        if ($scope.personalInfo.roleId.value == 2) {
+            $scope.className = 'thirdtyThreePercent';
+        }
+        else if ($scope.personalInfo.roleId.value == 1) {
+            $scope.className = 'onehundredPercent';
+        }
+    }
+    else {
+        $scope.model = null;
+    }
+
+    $scope.TooglePersonalInfo = function () {
+        if ($('#personalInfo').hasClass('userDown')) {
+            $('#personalInfo').removeClass('userDown');
+            $('#personalInfo').addClass('userUp');
+            $('#customerInfo').height(25);
+        }
+        else {
+            $('#personalInfo').addClass('userDown');
+            $('#personalInfo').removeClass('userUp');
+            $('#customerInfo').height($scope.personalInfoHeight);
+        }
+    };
+
+    $scope.Login = function (username) {
+        $http({
+            url: parent.resolveClientUrl('User/InternalLogin/?username=' + username),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            window.open(result.url, '_blank');
+        })
+        .error(function (result) {
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
+
+    $scope.GetBalance = function (custId) {
+        parent.Fanex.ExtAcc.BlockUI();
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            parent.$('#contentSplitter').html(result);
+        })
+        .error(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
+};
+
+function BalanceDownlineInfoController($scope, $http) {
+    $scope.className = 'fiftyPercent';
+
+    if ($scope.$parent.model) {
+        $scope.personalInfo = $scope.$parent.model.personalInfo;
+        $scope.model = $scope.$parent.model;
+
+        $scope.personalInfoHeight = $('#customerInfo').height();
+
+        if ($scope.personalInfo.roleId.value == 2) {
+            $scope.className = 'thirdtyThreePercent';
+        }
+        else if ($scope.personalInfo.roleId.value == 1) {
+            $scope.className = 'onehundredPercent';
+        }
+    }
+    else {
+        $scope.model = null;
+    }
+
+    $scope.TooglePersonalInfo = function () {
+        if ($('#personalInfo').hasClass('userDown')) {
+            $('#personalInfo').removeClass('userDown');
+            $('#personalInfo').addClass('userUp');
+            $('#customerInfo').height(25);
+        }
+        else {
+            $('#personalInfo').addClass('userDown');
+            $('#personalInfo').removeClass('userUp');
+            $('#customerInfo').height($scope.personalInfoHeight);
+        }
+    };
+
+    $scope.Login = function (username) {
+        $http({
+            url: parent.resolveClientUrl('User/InternalLogin/?username=' + username),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            window.open(result.url, '_blank');
+        })
+        .error(function (result) {
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
+
+    $scope.GetBalance = function (custId) {
+        parent.Fanex.ExtAcc.BlockUI();
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            parent.$('#contentSplitter').html(result);
+        })
+        .error(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
+};
+
 function BalanceController($scope, $http) {
     if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.model) {
         $scope.balanceInfo = $scope.$parent.$parent.model.balanceInfo;

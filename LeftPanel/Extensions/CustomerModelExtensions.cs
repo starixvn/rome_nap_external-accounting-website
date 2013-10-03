@@ -558,7 +558,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel AddBettingLimitForSuper(this CustomerModel model)
         {
             IList<int> groups = GroupConfigurations.AllowBettingGroups;
-            int groupId = new LeftPanelService().UserGroupId(CurrentSession.Instance.UserId);
+            int groupId = CurrentSession.Instance.GroupId;
 
             if (groups.Contains(groupId))
             {

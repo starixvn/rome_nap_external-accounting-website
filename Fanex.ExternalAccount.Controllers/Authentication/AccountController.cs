@@ -108,12 +108,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     out isIntAcc);
                 if (result != null && result.IsSuccess)
                 {
+                    var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
                     this._currentSession.UserName = model.UserName;
                     this._currentSession.UserId = custId;
                     this._currentSession.CustId = custId;
                     this._currentSession.OnUserId = onuserId;
                     this._currentSession.IsInternalAdmin = isIntAcc;
-                    this._currentSession.CurrencyGroup = (result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group).GroupName;
+                    this._currentSession.GroupId = group.GroupID;
+                    this._currentSession.CurrencyGroup = group.GroupName;
                     this._currentSession.IsITAdmin = (result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group).GroupID == 1;
                     if (isIntAcc || this._currentSession.IsITAdmin)
                     {

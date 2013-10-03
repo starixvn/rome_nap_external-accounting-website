@@ -4,7 +4,7 @@
 @using System.Web.Optimization
 @using Fanex.PTEngine
 @{
-    var groupId = new Fanex.ExternalAccount.Module.LeftPanel.Services.Impl.LeftPanelService().UserGroupId(CurrentSession.Instance.UserId);
+    var groupId = CurrentSession.Instance.GroupId;
     var groups = Fanex.CustomerSetting.Security.Authenticate.GroupConfigurations.AllowBettingGroups;
     var showBetSetting = groups.Contains(groupId) ? 1 : 0;
 }

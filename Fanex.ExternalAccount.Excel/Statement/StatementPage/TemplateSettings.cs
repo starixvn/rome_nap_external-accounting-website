@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 
         public TemplateSettings()
         {
-            this._dir = HttpContext.Current.Server.MapPath("~") + "\\ExcelTemplates\\Statement";
+            this._dir = HttpContext.Current.Server.MapPath("~/") + "\\ExcelTemplates\\Statement";
         }
 
         public string StatementPath()

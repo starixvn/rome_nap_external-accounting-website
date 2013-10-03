@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
-	<Function Name="main">
+	<Function Name="Login">
 		<Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="main" Plain="0" />
 		<Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="checkin" Plain="0" />
 		<Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="checkin" Plain="0" />
