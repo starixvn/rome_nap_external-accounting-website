@@ -342,6 +342,7 @@ function LeftPanelController($scope) {
         var title = $scope.model.personalInfo.currentLevel.value;
         switch (roleId) {
             case 4:
+                height = 620;
                 url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + custId);
                 break;
             case 3:

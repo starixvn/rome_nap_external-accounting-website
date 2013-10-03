@@ -7,19 +7,19 @@
     text-align: right;
 }
 
-.floatR {
+.floatL {
     float: left;
 }
 .bettingBox, .bettingBox2, .bettingBox3 {
     border-bottom: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
 }
-.bettingBox-header-sport, .bettingBox-header-tote, .bettingBox-header-bsbox, .bettingBox-header-bsbox2, .bettingBox-header-comm, .bettingBox-header-comm2, .bettingBox-header-comm3, .bettingBox-header-status, .bettingBox-header-status2, .bettingBox-header-minbet, .bettingBox-header-minbet2, .bettingBox-header-maxbet, .bettingBox-header-maxbet2, .bettingBox-header-maxpermatch, .bettingBox-header-maxpermatch2, .bettingBox-header-roletitle, .bettingBox-header-downlines, .bettingBox-sport, .ToteLabel3 {
+.bettingBox-header-sport, .bettingBox-header-tote, .bettingBox-header-bsbox, .bettingBox-header-bsbox2, .bettingBox-header-comm, .bettingBox-header-comm2, .bettingBox-header-comm3, .bettingBox-header-status, .bettingBox-header-status2, .bettingBox-header-minbet, .bettingBox-header-minbet2, .bettingBox-header-maxbet, .bettingBox-header-maxbet2, .bettingBox-header-maxpermatch, .bettingBox-header-maxpermatch2, .bettingBox-header-roletitle, .bettingBox-header-downlines, .bettingBox-sport, .ToteLabel3, .ToteLabel4 {
     background-color:#E7F7FF;
     border-left: 1px solid #CCCCCC;
     border-top: 1px solid #CCCCCC;
 }
-.bettingBox-tote, .bettingBox-minbet, .bettingBox-minbet2, .bettingBox-maxbet, .bettingBox-maxbet2, .bettingBox-maxpermatch, .bettingBox-maxpermatch2, .bettingBox-maxpermatch, .bettingBox-comm, .bettingBox-comm2, .bettingBox-status, .bettingBox-status2, .bettingBox-downlines, .BetTypeLabel, .BetTypeHeader2, .BetTypeHeader, .BetTypeLabel, .PTLabel, .BetTypeSelect {
+.bettingBox-tote, .bettingBox-minbet, .bettingBox-minbet2, .bettingBox-maxbet, .bettingBox-maxbet2, .bettingBox-maxpermatch, .bettingBox-maxpermatch2, .bettingBox-maxpermatch, .bettingBox-comm, .bettingBox-comm2, .bettingBox-status, .bettingBox-status2, .bettingBox-downlines, .BetTypeLabel, .BetTypeHeader2, .BetTypeHeader, .BetTypeLabel, .PTLabel, .BetTypeSelect, .BetTypeSelect2 {
     background-color:#FFF;
     border-left: 1px solid #CCCCCC;
     border-top: 1px solid #CCCCCC;
@@ -31,3 +31,4 @@
 .PTSportLabel {
     border-left:none;
 }
+.display-none { display:none; }

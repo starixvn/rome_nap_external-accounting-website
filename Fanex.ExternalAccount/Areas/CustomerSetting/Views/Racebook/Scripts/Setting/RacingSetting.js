@@ -50,6 +50,9 @@
         });
     },
     initHtml: function () {
+        if (window.targetRoleId !== ptRacingCommon.superRoleId) {
+            $('.floatL').removeClass('display-none');
+        }
         ptRacingCommon.renderCustomerInfo(customerPTRacingSetting.getPageName(window.targetRoleId), customerPTRacingSetting.currentSetting);
         $('#bettingCommContainer').html('');
         if (this.currentSetting && this.currentSetting.settings &&
@@ -88,7 +91,7 @@
         if (needToValidate && !this.bettingCommSetting.Validate()) {
             return;
         }
-        
+
         var isUpdateAllMember = this.ptSetting.Validate(this.currentSetting.settings, false);
         this.currentSetting.settings = this.ptSetting.Save();
         if (!isUpdateAllMember) {

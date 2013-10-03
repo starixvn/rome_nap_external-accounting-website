@@ -63,6 +63,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.Racebook.Resources.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Security.dll</HintPath>
