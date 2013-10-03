@@ -114,11 +114,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             throw new NotImplementedException();
         }
 
-        public virtual int UserGroupId(int custId)
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {
             throw new NotImplementedException();

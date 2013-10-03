@@ -386,3 +386,7 @@ select,.select
 {
     float: left;
 }
+.ui-tabs
+{
+    border: none !important;
+}

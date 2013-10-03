@@ -23,6 +23,8 @@ namespace Fanex.ExternalAccount.Core.Context
 
         int UserId { get; set; }
 
+        int GroupId { get; set; }
+
         bool IsLogin { get; }
 
         int OnUserId { get; set; }

@@ -29,6 +29,7 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASCurrencyGroup = "EASCurrencyGroup";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
+        public const string EASGroupId = "EASGroupId";
 
         #endregion Constants
 
@@ -154,6 +155,19 @@ namespace Fanex.ExternalAccount.Core.Context
             set
             {
                 this.Session[EASITAdmin] = value;
+            }
+        }
+
+
+        public int GroupId
+        {
+            get
+            {
+                return Utils.ToInt32(this.Session[EASGroupId]);
+            }
+            set
+            {
+                this.Session[EASGroupId] = value;
             }
         }
     }

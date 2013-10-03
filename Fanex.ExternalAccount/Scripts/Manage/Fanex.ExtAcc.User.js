@@ -472,9 +472,16 @@ Fanex.ExtAcc.User = {
         var groupId = null;
 
         if (Fanex.ExtAcc.User.URL != '/User/UserListPost' && Fanex.ExtAcc.User.URL != '') {
-            var tmp = Fanex.ExtAcc.User.URL.split('?')[1].split('&');
-            username = tmp[0].split('=')[1];
-            groupId = tmp[1].split('=')[1];
+            var tmp = Fanex.ExtAcc.User.URL.split('?');
+
+            if (tmp != null) {
+                tmp = tmp[1];
+                if (tmp != null) {
+                    tmp = tmp.split('&');
+                    username = tmp[0].split('=')[1];
+                    groupId = tmp[1].split('=')[1];
+                }
+            }
 
             if (username != $('#Usernames').val()) {
                 username = $('#Usernames').val();

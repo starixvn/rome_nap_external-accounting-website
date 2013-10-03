@@ -33,8 +33,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 
         Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
 
-        int UserGroupId(int custId);
-
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
 
         DataTable CustomerSelectClearBalance(int custId);
