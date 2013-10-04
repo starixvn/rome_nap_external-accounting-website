@@ -158,13 +158,13 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
-
         public int GroupId
         {
             get
             {
                 return Utils.ToInt32(this.Session[EASGroupId]);
             }
+
             set
             {
                 this.Session[EASGroupId] = value;

@@ -89,9 +89,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             if (this._currentSession.Captcha != null && this._currentSession.Captcha.Equals(model.Captcha, StringComparison.OrdinalIgnoreCase))
             {
                 CurrentContext.LoginErrorMessage = string.Empty;
-                var custId = 0;
-                var onuserId = 0;
-                var isIntAcc = true;
+                int custId = 0, onuserId = 0;
+                bool isIntAcc = true;
                 var result = this._userService.Login(
                     model.UserName, 
                     model.Password, 
@@ -116,13 +115,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     this._currentSession.IsInternalAdmin = isIntAcc;
                     this._currentSession.GroupId = group.GroupID;
                     this._currentSession.CurrencyGroup = group.GroupName;
-                    this._currentSession.IsITAdmin = (result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group).GroupID == 1;
-                    if (isIntAcc || this._currentSession.IsITAdmin)
-                    {
-                        return this.RedirectToAction("ExternalGroup", "Account");
-                    }
-
-                    return this.RedirectToAction("Index", "Home");
+                    this._currentSession.IsITAdmin = group.GroupID == 1;
+                    return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
                 }
                 else
                 {
