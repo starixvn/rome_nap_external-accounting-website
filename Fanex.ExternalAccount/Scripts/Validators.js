@@ -57,7 +57,7 @@ var Validators = {
             };
             elementInput.focus();
         };
-        hint.style.minHeight = '18px';
+        //hint.style.minHeight = '18px';
         hint.style.display = 'block';
     },
     showDown: function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
