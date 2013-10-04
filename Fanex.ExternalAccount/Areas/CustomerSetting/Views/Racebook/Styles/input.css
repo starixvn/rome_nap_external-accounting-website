@@ -348,31 +348,33 @@ font-size:11px;
 }
 
 input.txtcalendar {
-    background: url("../Styles/Images/calendar1.gif") no-repeat scroll right center transparent;
+    background: url("../Areas/CustomerSetting/Images/calendar1.gif") no-repeat scroll right center transparent;
     padding: 2px;
     width: 125px;
 }
 .btnTop {
     margin: 4px 0 4px !important;
 }
-.buttonPopup {
-    background: url("../../../Images/btn-bgsubmit-original.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
-    font-family:Verdana,Arial,sans-serif;
-    font-size:12px;
-    border: medium none !important;
-    border-radius: 3px 3px 3px 3px !important;
-    color: #FFFFFF !important;
-    cursor: pointer;
-    height: 30px;
-    margin-bottom: 3px;
-    margin-top: 5px;
-    padding-bottom: 2px;
-    text-indent: 0 !important;
-    width: 80px;
+.buttonPopup, .ui-button, button[type=button]
+{
+	background: url(../Areas/CustomerSetting/Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
+	color: #fff !important;
+	cursor: pointer;
+	width: 80px;
+	height: 30px;
+	border: none !important;
+	border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	padding-bottom: 2px;
+	margin-top: 5px;
+	text-indent: 0 !important;
+	margin-bottom: 5px;
 }
-.buttonPopup:hover {
-    background: url("../../../Images/btn-bgsubmit-hover.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
-    border: medium none !important;
-    color: #FFFFFF !important;
-    cursor: pointer;
+.buttonPopup:hover, .ui-button:hover
+{
+	background: url(../Areas/CustomerSetting/Images/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
+	color: #fff !important;
+	border: none !important;
+	cursor: pointer;
 }

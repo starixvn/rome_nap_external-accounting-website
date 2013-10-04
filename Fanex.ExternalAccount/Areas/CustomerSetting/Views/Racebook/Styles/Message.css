@@ -18,9 +18,9 @@
 .alertboxerr div, .alertboxscc div,.alertboxwrn div, .msgerror, .msgcorrect, .msgwarning
 {padding:5px 4px 5px 25px;margin-left:5px;text-align:left;}
 
-.alertboxerr div, .msgerror{background:#FFEDC1 url(../../../Images/warning-icn.png) no-repeat center left; }
-.alertboxscc div, .msgcorrect{background:#FFEDC1 url(../../../Images/Success.gif) no-repeat center left; }
-.alertboxwrn div, .msgwarning{background:#FFEDC1 url(../../../Images/warning-icn.png) no-repeat center left; }
+.alertboxerr div, .msgerror{background:#FFEDC1 url(../Areas/CustomerSetting/Images/warning-icn.png) no-repeat center left; }
+.alertboxscc div, .msgcorrect{background:#FFEDC1 url(../Areas/CustomerSetting/Views/Racebook/Styles/images/Sucess.gif) no-repeat center left; }
+.alertboxwrn div, .msgwarning{background:#FFEDC1 url(../Areas/CustomerSetting/Images/warning-icn.png) no-repeat center left; }
 .msgdenied{position: absolute; top:50%; left:50%; margin-top:45px; margin-left:60px;}
 
 

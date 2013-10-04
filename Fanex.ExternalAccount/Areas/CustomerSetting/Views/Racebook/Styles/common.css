@@ -218,7 +218,7 @@ span.cannotchangeinternal:hover
 }
 .maincontent_box
 {
-    background: #FFF url(images/banner/bg_head_tb.jpg) repeat-x left bottom;
+    background: #FFF url(../Areas/CustomerSetting/Views/Racebook/Styles/images/banner/bg_head_tb.jpg) repeat-x left bottom;
     /*border: solid 1px #7c98a4;*/
     display: table;
     width: 100%;
