@@ -62,7 +62,6 @@
             t1 = setTimeout(function () {
                 ptRacingCommon.clearMessage(containerid); 
                 parent.Fanex.ExtAcc.Form.Close(false); }, 3000);
-            ptRacingCommon.afterUpdate();
         }
         else {
             result = '<div class="boxerr">' + result + '</div>';
