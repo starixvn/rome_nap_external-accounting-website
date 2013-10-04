@@ -81,7 +81,7 @@ Fanex.ExtAcc = {
                         if (document.getElementById('btnSearch')) {
                             clearInterval(interval);
 
-                            document.getElementById('btnSearch').click();
+                            Fanex.ExtAcc.Customer.Init();
                         }
                     }, 100);
                 }
