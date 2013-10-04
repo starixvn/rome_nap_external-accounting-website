@@ -39,6 +39,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"requestContext":' + JSON.stringify(customerPTRacingSetting.context) + '}',
+            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
             success: function (stringCustomer) {
                 customerPTRacingSetting.currentSetting = JSON.parse(stringCustomer);
                 customerPTRacingSetting.oldSetting = JSON.parse(stringCustomer);
@@ -46,7 +47,7 @@
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Customer Error", 1);
-            }
+            }, complete: function (jqXHR, textStatus) { parent.Fanex.ExtAcc.UnBlockUI(); }
         });
     },
     initHtml: function () {
@@ -99,8 +100,6 @@
         }
     },
     updateAllSettings: function () {
-        try { parent.BlockUI() } catch (e) { }
-
         $.ajax({
             type: "POST",
             url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/UpdateCustomerSetting"),
@@ -111,6 +110,7 @@
                 ', "currentContext":' + JSON.stringify(customerPTRacingSetting.context) +
                 ', "otherSettings":' + JSON.stringify(customerPTRacingSetting.otherSettings) +
                 '}',
+            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
             success: function (result) {
                 if (typeof (result.ErrorCode) != 'undefined') {
                     showAlertMessage("err", result.ErrorMessage, 1);
@@ -119,11 +119,11 @@
                     $('#divShowInfo').show();
                     ptRacingCommon.renderErrorMessage('err', result);
                 }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                parent.Fanex.ExtAcc.UnBlockUI();
             }
             , error: function (e) {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
                 showAlertMessage("err", "Update Agent Unsuccessfully!", 1);
+                parent.Fanex.ExtAcc.UnBlockUI();
             }
         });
     },
