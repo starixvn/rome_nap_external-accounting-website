@@ -348,7 +348,7 @@ font-size:11px;
 }
 
 input.txtcalendar {
-    background: url("Images/calendar1.gif") no-repeat scroll right center transparent;
+    background: url("../Styles/Images/calendar1.gif") no-repeat scroll right center transparent;
     padding: 2px;
     width: 125px;
 }
@@ -356,7 +356,7 @@ input.txtcalendar {
     margin: 4px 0 4px !important;
 }
 .buttonPopup {
-    background: url("Images/btn-bgsubmit-original.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
+    background: url("../../../Images/btn-bgsubmit-original.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
     font-family:Verdana,Arial,sans-serif;
     font-size:12px;
     border: medium none !important;
@@ -371,7 +371,7 @@ input.txtcalendar {
     width: 80px;
 }
 .buttonPopup:hover {
-    background: url("Images/btn-bgsubmit-hover.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
+    background: url("../../../Images/btn-bgsubmit-hover.png") repeat-x scroll 5px center rgba(0, 0, 0, 0) !important;
     border: medium none !important;
     color: #FFFFFF !important;
     cursor: pointer;

@@ -11,16 +11,16 @@
 .emsg_3_3{background:url(images/emsg_3_3.gif) no-repeat left top}
 
 .msgerr{background:url(../images/error-icon.gif) no-repeat left top; padding:1px 0px 4px 30px; margin-left:5px; list-style:none; vertical-align:middle; text-align:left; height:24px;}
-.msgscc{background:url(../images/success.gif) no-repeat left top; padding-left:30px; margin-left:5px; list-style:none; vertical-align:middle; text-align:left; height:24px;}
+.msgscc{background:url(../../../Images/Success.gif) no-repeat left top; padding-left:30px; margin-left:5px; list-style:none; vertical-align:middle; text-align:left; height:24px;}
 
 .error-message-login{ }
 .alertboxerr, .alertboxscc{margin-top: 2px;margin-bottom: 2px; }
 .alertboxerr div, .alertboxscc div,.alertboxwrn div, .msgerror, .msgcorrect, .msgwarning
 {padding:5px 4px 5px 25px;margin-left:5px;text-align:left;}
 
-.alertboxerr div, .msgerror{background:#FFEDC1 url(images/error.png) no-repeat center left; }
-.alertboxscc div, .msgcorrect{background:#FFEDC1 url(images/success.gif) no-repeat center left; }
-.alertboxwrn div, .msgwarning{background:#FFEDC1 url(images/error.png) no-repeat center left; }
+.alertboxerr div, .msgerror{background:#FFEDC1 url(../../../Images/warning-icn.png) no-repeat center left; }
+.alertboxscc div, .msgcorrect{background:#FFEDC1 url(../../../Images/Success.gif) no-repeat center left; }
+.alertboxwrn div, .msgwarning{background:#FFEDC1 url(../../../Images/warning-icn.png) no-repeat center left; }
 .msgdenied{position: absolute; top:50%; left:50%; margin-top:45px; margin-left:60px;}
 
 
