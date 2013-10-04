@@ -78,10 +78,10 @@ Fanex.ExtAcc = {
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
                     var interval = setInterval(function () {
-                        if (typeof Fanex.ExtAcc.Customer.Init != 'undefined') {
+                        if (document.getElementById('btnSearch')) {
                             clearInterval(interval);
 
-                            Fanex.ExtAcc.Customer.Init();
+                            document.getElementById('btnSearch').click();
                         }
                     }, 100);
                 }
