@@ -350,6 +350,7 @@ function LeftPanelController($scope) {
                 url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?custid=' + custId + '&uplineid=' + uplineId);
                 break;
             case 2:
+                height = 775;
                 url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?custid=' + custId + '&uplineid=' + uplineId);
                 break;
             case 1:
