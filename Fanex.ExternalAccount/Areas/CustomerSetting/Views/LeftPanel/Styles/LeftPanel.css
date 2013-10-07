@@ -147,7 +147,7 @@ div
 }
 .ui-helper-reset
 {
-    line-height: 0.4;
+    line-height: 0.8 !important;
     padding: 0;
 }
 .ui-tabs .ui-tabs-nav
@@ -165,7 +165,7 @@ div
 .settingTitle
 {
     float: left;
-    width: 111px;
+    width: 100px;
     margin: 0;
     padding: 0;
 }
@@ -264,15 +264,15 @@ div
 }
 .fiftyPercent
 {
-    width: 49.6%;
+    width: 48%;
 }
 .thirdtyThreePercent
 {
-    width: 32.9%;
+    width: 32%;
 }
 .onehundredPercent
 {
-    width: 99.9%;
+    width: 99%;
 }
 #btnCustList, #btnStatement, #btnBalance, .btnDetail
 {
@@ -303,7 +303,7 @@ div
 }
 .percent50
 {
-    width: 50%;
+    width: 49%;
 }
 .percent32
 {
@@ -311,7 +311,7 @@ div
 }
 .percent58
 {
-    width: 58%;
+    width: 56%;
 }
 .percent10
 {
@@ -323,7 +323,7 @@ div
 }
 .p58
 {
-    width: 58%;
+    width: 56%;
 }
 .p10
 {

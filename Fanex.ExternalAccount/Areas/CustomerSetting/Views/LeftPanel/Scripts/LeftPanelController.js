@@ -3,26 +3,6 @@
 function LeftPanelController($scope) {
     $scope.model = model;    
 
-    $scope.Init = function () {        
-        if ($scope.model) {
-            var roleId = $scope.model.personalInfo.roleId.value;
-
-            switch (roleId) {
-                case 4:
-                    $scope.model.personalInfo.custList = 'Master List';
-                    break;
-                case 3:
-                    $scope.model.personalInfo.custList = 'Agent List';
-                    break;
-                case 2:
-                    $scope.model.personalInfo.custList = 'Member List';
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
@@ -126,7 +106,7 @@ function LeftPanelController($scope) {
         parent.Fanex.ExtAcc.Customer.MessageUnClosed = 'Are you sure you want to change Close status for this customer?';
         parent.Fanex.ExtAcc.Customer.MessageSuspended = 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!';
         parent.Fanex.ExtAcc.Customer.MessageUnSuspended = 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.';
-        
+
         parent.Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus = function (id) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
                 var timeout = setTimeout(function () {
@@ -327,8 +307,8 @@ function LeftPanelController($scope) {
     $scope.BetSetting = function () {
         var custId = $scope.model.personalInfo.custId.value;
         var param = custId + '/' + custId + '/' + parent.userId + '/' + parent.$('#selectedGroupName').html();
-        var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/'+ param);
-        
+        var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + param);
+
 
         parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup');
     };
@@ -367,7 +347,7 @@ function LeftPanelController($scope) {
 };
 
 function PersonalInfoController($scope, $http) {
-    $scope.className = 'fiftyPercent';    
+    $scope.className = 'fiftyPercent';
 
     if ($scope.$parent.model) {
         $scope.personalInfo = $scope.$parent.model.personalInfo;
@@ -385,7 +365,7 @@ function PersonalInfoController($scope, $http) {
     else {
         $scope.model = null;
     }
-    
+
     $scope.TooglePersonalInfo = function () {
         if ($('#personalInfo').hasClass('userDown')) {
             $('#personalInfo').removeClass('userDown');
@@ -432,6 +412,10 @@ function PersonalInfoController($scope, $http) {
                 console.log(result);
             }
         });
+    };
+
+    $scope.ViewUser = function (username) {
+        parent.Fanex.ExtAcc.ViewUser(username);
     };
 };
 
@@ -491,6 +475,10 @@ function LineInfoController($scope, $http) {
             }
         });
     };
+
+    $scope.ViewUser = function (username) {
+        parent.Fanex.ExtAcc.ViewUser(username);
+    };
 };
 
 function ViewInfoController($scope, $http) {
@@ -507,11 +495,11 @@ function ViewInfoController($scope, $http) {
         }
         else if ($scope.personalInfo.roleId.value == 1) {
             $scope.className = 'onehundredPercent';
-        }
+        }        
     }
     else {
         $scope.model = null;
-    }
+    }    
 
     $scope.TooglePersonalInfo = function () {
         if ($('#personalInfo').hasClass('userDown')) {
@@ -640,8 +628,9 @@ function BalanceController($scope, $http) {
         $scope.model = null;
     }
 
-    $scope.EditCredit = function () {
+    $scope.EditCredit = function (value) {
         $('#linkGivenCredit').hide();
+        $('#givenCredit').val(value.toFixed(2).formatNumber())
         $('#givenCredit').show();
         $('#givenCredit').focus();
     };
@@ -709,6 +698,12 @@ function BalanceController($scope, $http) {
             });
         }
     };
+
+    $scope.RevertCredit = function (preVal) {
+        $('#linkGivenCredit').show();
+        $('#givenCredit').val(preVal.replaceAll(',', '').toFixed(2).formatNumber());
+        $('#givenCredit').hide();
+    };
 };
 
 function RevertCredit(preVal) {
@@ -722,8 +717,9 @@ function DownlineListController($scope, $http) {
         $scope.downlines = $scope.$parent.$parent.model.downlineList;
         $scope.model = $scope.downlines.downlines;
         $scope.pages = $scope.downlines.pages;
-        $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '187px' : 'auto';
-        $('#downlines').css('max-height', $scope.maxHeight);
+        $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '178px' : 'auto';
+        $('#downlines').css('height', $scope.maxHeight);
+        $('#downlines').css('overflow', 'auto');
     }
     else {
         $scope.model = null;
@@ -757,10 +753,10 @@ function DownlineListController($scope, $http) {
                 $scope.downlines = $scope.$parent.$parent.model.downlineList;
                 $scope.model = $scope.downlines.downlines;
                 $scope.pages = $scope.downlines.pages;
-                $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '187px' : 'auto';
+                $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '178px' : 'auto';
 
                 $('#downlines').scrollTop(0);
-                $('#downlines').css('max-height', $scope.maxHeight);
+                $('#downlines').css('height', $scope.maxHeight);
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
@@ -770,10 +766,14 @@ function DownlineListController($scope, $http) {
                     }
 
                     $('#link-' + $scope.downlines.currentPage).addClass('pageSelected');
-                }, 250);
+                }, 500);
 
                 parent.Fanex.ExtAcc.UnBlockUI();
             });
+    };
+
+    $scope.SearchUser = function (username) {
+        parent.Fanex.ExtAcc.ViewUser(username);
     };
 };
 
@@ -789,8 +789,8 @@ function SettingController($scope, $http) {
     $scope.Init = function () {
         if ($scope.setting != null) {
             var groupName = parent.$('#selectedGroupName').html();
-            for (var i = 0; i < $scope.setting.details.length; i++) {                
-                if ($scope.setting.details[i].key == 'Poker' || 
+            for (var i = 0; i < $scope.setting.details.length; i++) {
+                if ($scope.setting.details[i].key == 'Poker' ||
                     ($scope.setting.details[i].key == 'Transfer' && $scope.model.personalInfo.roleId.value == 1) ||
                     ($scope.setting.details[i].key == 'BetSetting' && groupName != 'ACCUT')) {
                     $scope.setting.details[i].isHide = true;
@@ -840,7 +840,11 @@ function LoginController($scope) {
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
-    }
+    };
+
+    $scope.ShowIp = function (ip) {
+        parent.Fanex.ExtAcc.Customer.ShowIpInfo(ip);
+    };
 };
 
 function OnlineListController($scope) {
@@ -859,5 +863,9 @@ function OnlineListController($scope) {
                 $scope.onlineList[i].index = i + 1;
             }
         }
+    };
+
+    $scope.ShowIp = function (ip) {
+        parent.Fanex.ExtAcc.Customer.ShowIpInfo(ip);
     };
 };

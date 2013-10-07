@@ -30,5 +30,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public ObjectInfo Mobile { get; set; }
 
         public ObjectInfo Fax { get; set; }
+
+        public ObjectInfo CustList { get; set; }
     }
 }

@@ -267,6 +267,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Phone = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["phone"]), Text = "Phone" },
                 RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
+                CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List"}
             };
 
             return model;
