@@ -1,4 +1,11 @@
-﻿var module = angular.module("leftPanelApp", []);
+﻿var module = angular.module("leftPanelApp", [])
+.directive('ngBlur', function () {
+    return function (scope, elem, attrs) {
+        elem.bind('blur', function () {
+            scope.$apply(attrs.ngBlur);
+        });
+    };
+});
 
 function LeftPanelController($scope) {
     $scope.model = model;    
