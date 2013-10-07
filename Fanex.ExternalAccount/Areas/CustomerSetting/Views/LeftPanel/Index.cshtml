@@ -65,7 +65,7 @@
                 <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
                 <li id="tab2"><a href="#tabs-2">Downline List</a></li>
             </ul>
-            <div id="tabs-1" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
+            <div id="tabs-1" style="height: 100%" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
                 <div class="clearBoth">
                     <div class="balanceTitle">{{balanceInfo.currency.text}}</div>
                     <div class="floatLeftBalance R">{{balanceInfo.currency.value}}</div>
@@ -141,12 +141,12 @@
                 <li><a href="#tab-3">Login</a></li>
                 <li><a href="#tab-4">Online List</a></li>
             </ul>
-            <div id="tab-1">
+            <div id="tab-1" class="auto" style="height: 100%">
                 <div class="floatLeft" ng-repeat="editItem in setting.editItems">
-                    <div class="settingEdit" title="{{editItem.tooltip}}">{{editItem.text}}</div>
+                    <div class="settingEdit floatLeft" title="{{editItem.tooltip}}">{{editItem.text}}</div>
                 </div>
                 <div class="floatLeft" ng-repeat="enableItem in setting.enableItems">
-                    <div class="settingTitle" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
+                    <div class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
                     <div class="floatLeft"><input type="checkbox" ng-model="enableItem.value" /></div>
                 </div>    
             </div>
@@ -155,7 +155,7 @@
                     <a ng-hide="item.isHide" ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
                 </div>    
             </div>
-            <div class="auto" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
+            <div class="auto" style="height: 100%" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
                 <div class="clearBoth">
                     <div class="balanceTitle bold">{{loginInfo[0].text}}</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[0].value}}</div>

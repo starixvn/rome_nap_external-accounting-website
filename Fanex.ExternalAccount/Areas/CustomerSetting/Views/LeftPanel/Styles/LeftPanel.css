@@ -76,7 +76,7 @@ div
 .ui-tabs .ui-tabs-panel
 {
     padding: 2px;
-    max-height: 207px;
+    max-height: 210px;
     min-height: 160px;
     background-color: #F6F6F6;
 }
@@ -272,7 +272,7 @@ div
 }
 .onehundredPercent
 {
-    width: 99%;
+    width: 97%;
 }
 #btnCustList, #btnStatement, #btnBalance, .btnDetail
 {
