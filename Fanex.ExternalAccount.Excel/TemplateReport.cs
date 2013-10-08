@@ -68,13 +68,10 @@ namespace Fanex.ExternalAccount.Excel
         /// <param name="disposing">Identifies to dispose or not.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing) 
+            if (disposing && this._hssfWorkbook != null) 
             {
-                if (this._hssfWorkbook != null)
-                {
-                    this._hssfWorkbook.Dispose();
-                    this._hssfWorkbook = null;
-                }
+                this._hssfWorkbook.Dispose();
+                this._hssfWorkbook = null;
             }
         }
     }
