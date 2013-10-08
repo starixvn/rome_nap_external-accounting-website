@@ -11,7 +11,6 @@ namespace Fanex.ExternalAccount.Excel
 {
     using System;
     using System.IO;
-    using System.Runtime.InteropServices;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
@@ -20,7 +19,6 @@ namespace Fanex.ExternalAccount.Excel
     /// </summary>
     public abstract class TemplateReport : IDisposable
     {
-        private IntPtr _nativeResource = Marshal.AllocHGlobal(100);
         private HSSFWorkbook _hssfWorkbook;
 
         public TemplateReport(string filePath)
@@ -77,13 +75,6 @@ namespace Fanex.ExternalAccount.Excel
                     this._hssfWorkbook.Dispose();
                     this._hssfWorkbook = null;
                 }
-            }
-
-            // free native resources if there are any.
-            if (_nativeResource != IntPtr.Zero) 
-            {
-                Marshal.FreeHGlobal(_nativeResource);
-                _nativeResource = IntPtr.Zero;
             }
         }
     }
