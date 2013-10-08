@@ -70,6 +70,9 @@
         var actionName = '';
 
         switch (UplineRoleId) {
+            case 5:
+                actionName = 'Super/UpdateSuperPost';
+                break;
             case 4:
                 if (IsMaster) {
                     actionName = 'Master/UpdateMasterPost';

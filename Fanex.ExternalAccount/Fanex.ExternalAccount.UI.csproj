@@ -309,6 +309,7 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Scripts\VirtualSportsController.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Styles\VirtualSports.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditSuperController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CustomerController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditAgentController.js" />
@@ -1798,6 +1799,7 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\Super.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\SuperEditMember.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />

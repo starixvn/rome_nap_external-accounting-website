@@ -167,7 +167,7 @@ Fanex.ExtAcc.Form = {
         });
     },
 
-    Alert: function (title, message, width, height, popupId) {
+    Alert: function (title, message, width, height, popupId, okClick) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
         var id = popupId ? popupId : 'windowPopup';
@@ -203,10 +203,16 @@ Fanex.ExtAcc.Form = {
                 text: "OK",
                 click: function () {
                     $self.Close(null, null, id);
+                    if (typeof okClick == 'function') {
+                        okClick();
+                    }
                 }
             }],
             close: function (event) {
                 $self.Close(null, null, id);
+                if (typeof okClick == 'function') {
+                    okClick();
+                }
             }
         });
     },

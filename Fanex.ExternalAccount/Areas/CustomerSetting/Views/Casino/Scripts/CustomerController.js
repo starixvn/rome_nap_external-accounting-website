@@ -10,6 +10,7 @@ function CustomerController($scope) {
     $scope.IsMaster = false;
     $scope.IsAgent = false;
     $scope.IsMember = false;
+    $scope.IsSuper = false;
 
     UplineRoleId = $scope.CustomerModel.uplineRoleId;
 
@@ -35,7 +36,16 @@ function CustomerController($scope) {
             IsMember = false;
             break;
         default:
+            $scope.Level = 'Super';
+            $scope.IsSuper = true;
+            IsMaster = false;
+            IsAgent = false;
+            IsMember = false;
             break;
+    }
+
+    if ($scope.IsSuper) {
+        customerModel.maxTransferCreditLimit = 0;
     }
 
     $('#downline').each(function (i, item) {

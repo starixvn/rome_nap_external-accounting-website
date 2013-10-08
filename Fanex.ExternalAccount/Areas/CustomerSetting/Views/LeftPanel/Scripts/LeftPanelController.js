@@ -262,6 +262,10 @@ function LeftPanelController($scope) {
         var url = '';
 
         switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
+                parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
+                break;
             case 3:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
                 parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
@@ -724,7 +728,7 @@ function DownlineListController($scope, $http) {
         $scope.downlines = $scope.$parent.$parent.model.downlineList;
         $scope.model = $scope.downlines.downlines;
         $scope.pages = $scope.downlines.pages;
-        $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '178px' : 'auto';
+        $scope.maxHeight = '208px';
         $('#downlines').css('height', $scope.maxHeight);
         $('#downlines').css('overflow', 'auto');
     }
@@ -760,7 +764,7 @@ function DownlineListController($scope, $http) {
                 $scope.downlines = $scope.$parent.$parent.model.downlineList;
                 $scope.model = $scope.downlines.downlines;
                 $scope.pages = $scope.downlines.pages;
-                $scope.maxHeight = ($scope.pages.length > 1 || $scope.model.length > 8) ? '178px' : 'auto';
+                $scope.maxHeight = '208px';
 
                 $('#downlines').scrollTop(0);
                 $('#downlines').css('height', $scope.maxHeight);

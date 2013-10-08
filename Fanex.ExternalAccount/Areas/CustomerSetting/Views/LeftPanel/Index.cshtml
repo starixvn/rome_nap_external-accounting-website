@@ -54,7 +54,7 @@
                 <div class="floatLeft red bold">{{personalInfo.mobile.value.decodeHtml()}}</div>
             </div>
         </div>
-		<div class="clearBoth"></div>
+		<div class="clearBoth" style="display: inline"></div>
         <div id="viewInfo" ng-controller="ViewInfoController" ng-hide="{{model==null}}">
             <div id="btnCustList" ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetCustomerList()" style="height: 25px">{{personalInfo.custList.value}}</div>
             <input id="btnStatement" type="button" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetStatementList({{personalInfo.custId.value}})" value="Statement" />
@@ -65,7 +65,7 @@
                 <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
                 <li id="tab2"><a href="#tabs-2">Downline List</a></li>
             </ul>
-            <div id="tabs-1" style="height: 100%" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
+            <div style="height: 208px" id="tabs-1" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
                 <div class="clearBoth">
                     <div class="balanceTitle">{{balanceInfo.currency.text}}</div>
                     <div class="floatLeftBalance R">{{balanceInfo.currency.value}}</div>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div style="overflow: hidden" class="auto" id="tabs-2" ng-controller="DownlineListController">
+            <div class="auto" id="tabs-2" ng-controller="DownlineListController">
                 <div id="downlines" style="overflow: auto">
                     <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
                         <a class="detail2" href="javascript:;"  ng-click="SearchUser('{{user.text}}')">{{user.text}}</a>
@@ -200,7 +200,7 @@
                 <div class="clearBoth">
                     <div class="floatLeft bold p10">No</div>
                     <div class="floatLeft bold p32">IP</div>
-                    <div class="floatLeft bold p58">Last Login</div>
+                    <div class="floatRight bold p58">Last Login</div>
                 </div>
                 <div ng-init="Init()" class="clearBoth" ng-hide="onlineList == null || onlineList.length == 0" ng-repeat="item in onlineList">
                     <div class="floatLeft percent10">{{item.index}}</div>
