@@ -386,7 +386,7 @@ function PersonalInfoController($scope, $http) {
         else {
             $('#personalInfo').addClass('userDown');
             $('#personalInfo').removeClass('userUp');
-            $('#customerInfo').height($scope.personalInfoHeight);
+            $('#customerInfo').height(140);
         }
     };
 
