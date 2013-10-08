@@ -6,9 +6,7 @@
     <title>@ViewBag.Title</title>
     <link rel="Stylesheet" href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.css")" />
     @Styles.Render("~/bundles/racingstyle")
-    @functions
-    {
-    }
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/input.css")" rel="stylesheet" type="text/css" />
 </head>
     <body>
         <div class="maincontent" style="width: 1012px;">
