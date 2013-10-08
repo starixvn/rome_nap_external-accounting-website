@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Excel
 {
     using System;
     using System.IO;
+    using System.Runtime.InteropServices;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
@@ -19,12 +20,19 @@ namespace Fanex.ExternalAccount.Excel
     /// </summary>
     public abstract class TemplateReport : IDisposable
     {
+        private IntPtr _nativeResource = Marshal.AllocHGlobal(100);
         private HSSFWorkbook _hssfWorkbook;
 
         public TemplateReport(string filePath)
         {
             FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             this._hssfWorkbook = new HSSFWorkbook(file);
+        }
+
+        ~TemplateReport()
+        {
+            // Finalizer calls Dispose(false)
+            this.Dispose(false);
         }
 
         public HSSFWorkbook Workbook
@@ -43,10 +51,8 @@ namespace Fanex.ExternalAccount.Excel
 
         public void Dispose()
         {
-            if (this._hssfWorkbook != null)
-            {
-                this._hssfWorkbook.Dispose();
-            }
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public void BoldAllFonts()
@@ -55,6 +61,29 @@ namespace Fanex.ExternalAccount.Excel
             {
                 var font = this._hssfWorkbook.GetFontAt(i);
                 font.Boldweight = (short)FontBoldWeight.BOLD;
+            }
+        }
+
+        /// <summary>
+        /// Dispose an object.
+        /// </summary>
+        /// <param name="disposing">Identifies to dispose or not.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing) 
+            {
+                if (this._hssfWorkbook != null)
+                {
+                    this._hssfWorkbook.Dispose();
+                    this._hssfWorkbook = null;
+                }
+            }
+
+            // free native resources if there are any.
+            if (_nativeResource != IntPtr.Zero) 
+            {
+                Marshal.FreeHGlobal(_nativeResource);
+                _nativeResource = IntPtr.Zero;
             }
         }
     }
