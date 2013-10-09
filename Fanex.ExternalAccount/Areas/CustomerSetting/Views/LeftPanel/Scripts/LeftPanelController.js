@@ -307,6 +307,9 @@ function LeftPanelController($scope, $element) {
         parent.window.CurrentLevel = roleId;
 
         switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl('LiveCasino/EditSuper/' + $scope.model.personalInfo.custId.value + '/' + uplineId);
+                break;
             case 3:
                 url = parent.resolveClientUrl('LiveCasino/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
                 break;

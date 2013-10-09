@@ -564,6 +564,7 @@
     <Content Include="Content\Images\lastGoal.gif" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\loading1.gif" />
+    <Content Include="Content\Images\Login\warning-icn.png" />
     <Content Include="Content\Images\member.png" />
     <Content Include="Content\Images\message.png" />
     <Content Include="Content\Images\pointericon.png" />
@@ -1872,6 +1873,7 @@
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\Casino\EditCasino.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
+    <Content Include="Views\LiveCasino\EditSuper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
