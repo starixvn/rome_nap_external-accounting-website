@@ -11,7 +11,7 @@ function CustomerController($scope, $element) {
     var timeout = setTimeout(function () {
         clearTimeout(timeout);
         e.style.display = 'block';
-    }, 1000);
+    }, 2000);
 
     $scope.CustomerModel = customerModel;
     $scope.Enabled = !customerModel.casinoDisabled;
