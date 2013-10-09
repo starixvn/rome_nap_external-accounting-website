@@ -273,23 +273,22 @@ function LeftPanelController($scope, $element) {
         switch (roleId) {
             case 4:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
-                parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
-                //parent.Fanex.ExtAcc.LoadMainFrame(url, null, false, false, true);
                 break;
             case 3:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
-                parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
                 break;
             case 2:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Agent/EditAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
-                parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
                 break;
             case 1:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
-                parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
                 break;
             default:
                 break;
+        }
+
+        if (url != '') {
+            parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
 
@@ -365,7 +364,8 @@ function LeftPanelController($scope, $element) {
         }
 
         if (url !== '') {
-            parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Racing Setting ' + '<font color="#6dcff6">' + title + '</font>', 1050, height, false, null, 1);
+            //parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Racing Setting ' + '<font color="#6dcff6">' + title + '</font>', 1050, height, false, null, 1);
+            parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
 };

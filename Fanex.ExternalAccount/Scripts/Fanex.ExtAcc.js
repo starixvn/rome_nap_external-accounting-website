@@ -65,6 +65,24 @@ Fanex.ExtAcc = {
     AutoInsertCount: 0,
     SuggestionXHR: null,
 
+    LoadMainIFrame: function (url) {
+        this.BlockUI();
+
+        $('#contentSplitter').html('');
+
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('id', 'mainIFrame');
+        iframe.setAttribute('src', url);
+        iframe.setAttribute('frameborder', 0);
+        iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
+        iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
+        iframe.setAttribute('style', 'overflow: auto');
+
+        $('#contentSplitter').append(iframe);
+
+        this.UnBlockUI();
+    },
+
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
 
@@ -75,6 +93,7 @@ Fanex.ExtAcc = {
         if (!isMenu) {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
             $.ajax({ url: fullUrl, type: 'post', success: function (result) {
+                $('#contentSplitter').html('');
                 $('#contentSplitter').html(result);
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
@@ -371,6 +390,11 @@ Fanex.ExtAcc = {
         $('#leftFrame').height($('#contentSplitter').height() - 30);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
+        if (document.getElementById('mainIFrame')) {
+            $('#mainIFrame').width($('#contentSplitter').width() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
+        }
+
         if (document.getElementById('tabs-4')) {
             $('#tabs-4').height($('#contentSplitter').height() - 55);
         }
@@ -387,6 +411,11 @@ Fanex.ExtAcc = {
 
         $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
+
+        if (document.getElementById('mainIFrame')) {
+            $('#mainIFrame').width($('#contentSplitter').width() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
+        }
 
         try {
             $("#jqgrid").fanexGrid("resizeGrid");
