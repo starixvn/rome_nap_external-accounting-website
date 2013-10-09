@@ -1367,7 +1367,7 @@ Fanex.ExtAcc.Customer = {
             this.masterId = dataSource.mrecommend;
             this.agentId = dataSource.recommend;
         }
-        console.log(dataSource);
+
         var rows = $.parseJSON(dataSource.rows);
         var options = null;
         var bodyRows = [];

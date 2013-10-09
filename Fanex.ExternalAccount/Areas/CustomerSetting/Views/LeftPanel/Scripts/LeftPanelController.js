@@ -15,7 +15,7 @@ function LeftPanelController($scope, $element) {
     var timeout = setTimeout(function () {
         clearTimeout(timeout);
         e.style.display = 'block';
-    }, 200);
+    }, 500);
 
     $scope.model = model;    
 
