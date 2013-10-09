@@ -6,7 +6,16 @@ if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' |
 
 Fanex.CustomerSetting.Betting = {};
 
-Fanex.CustomerSetting.Betting.Racing = function ($scope, $http) {
+Fanex.CustomerSetting.Betting.Racing = function ($scope, $element) {
+    var e = $element[0];
+
+    e.style.display = 'none';
+
+    var timeout = setTimeout(function () {
+        clearTimeout(timeout);
+        e.style.display = 'block';
+    }, 1000);
+
     $scope.model = model;
 
     $scope.bettingLimits = $scope.model.settings.sportTypes;
@@ -264,7 +273,10 @@ Fanex.CustomerSetting.Betting.Racing.Update = function (ondone) {
         Fanex.CustomerSetting.Core.UnBlockUI();
 
         if (typeof ondone == 'function') {
-            ondone(data);
+            ondone({ 
+                errorCode: data.errorCode == "0" || data.errorCode == "" || success ? "0" : "1",
+                errorMessage: data.errorMessage
+            });
         }
     })
     .error(function (data) {

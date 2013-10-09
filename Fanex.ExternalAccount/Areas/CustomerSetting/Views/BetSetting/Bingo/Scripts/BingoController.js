@@ -6,7 +6,16 @@ if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' |
 
 Fanex.CustomerSetting.Betting = {};
 
-Fanex.CustomerSetting.Betting.Bingo = function ($scope, $http) {
+Fanex.CustomerSetting.Betting.Bingo = function ($scope, $element) {
+    var e = $element[0];
+
+    e.style.display = 'none';
+
+    var timeout = setTimeout(function () {
+        clearTimeout(timeout);
+        e.style.display = 'block';
+    }, 1000);
+
     $scope.model = model;
     $scope.gameKinds = $scope.model.gameKindList;
 

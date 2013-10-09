@@ -65,7 +65,7 @@ Fanex.ExtAcc = {
     AutoInsertCount: 0,
     SuggestionXHR: null,
 
-    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu) {
+    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
 
         if (typeof id != 'undefined') {
@@ -73,7 +73,8 @@ Fanex.ExtAcc = {
         }
 
         if (!isMenu) {
-            $.ajax({ url: url + '/' + $('#selectedGroupName').html(), type: 'post', success: function (result) {
+            var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
+            $.ajax({ url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html(result);
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {

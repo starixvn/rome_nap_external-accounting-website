@@ -255,6 +255,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
+    <Content Include="Areas\CustomerSetting\Styles\input.css" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -375,8 +376,6 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\up.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\up_down.png" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\bg_checkbox.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\btn-bgsubmit-hover.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\btn-bgsubmit-original.png" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\btUpdateL.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\btUpdateR.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\bgred1_btn.jpg" />

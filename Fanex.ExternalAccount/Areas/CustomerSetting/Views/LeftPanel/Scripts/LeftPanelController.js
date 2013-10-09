@@ -7,7 +7,16 @@
     };
 });
 
-function LeftPanelController($scope) {
+function LeftPanelController($scope, $element) {
+    var e = $element[0];
+
+    e.style.display = 'none';
+
+    var timeout = setTimeout(function () {
+        clearTimeout(timeout);
+        e.style.display = 'block';
+    }, 200);
+
     $scope.model = model;    
 
     $scope.GetCustomerList = function () {
@@ -263,8 +272,9 @@ function LeftPanelController($scope) {
 
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
+                //url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
                 parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
+                parent.Fanex.ExtAcc.LoadMainFrame(url, null, false, false, true);
                 break;
             case 3:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
@@ -728,7 +738,7 @@ function DownlineListController($scope, $http) {
         $scope.downlines = $scope.$parent.$parent.model.downlineList;
         $scope.model = $scope.downlines.downlines;
         $scope.pages = $scope.downlines.pages;
-        $scope.maxHeight = '208px';
+        $scope.maxHeight = '190px';
         $('#downlines').css('height', $scope.maxHeight);
         $('#downlines').css('overflow', 'auto');
     }
@@ -764,7 +774,7 @@ function DownlineListController($scope, $http) {
                 $scope.downlines = $scope.$parent.$parent.model.downlineList;
                 $scope.model = $scope.downlines.downlines;
                 $scope.pages = $scope.downlines.pages;
-                $scope.maxHeight = '208px';
+                $scope.maxHeight = '190px';
 
                 $('#downlines').scrollTop(0);
                 $('#downlines').css('height', $scope.maxHeight);
