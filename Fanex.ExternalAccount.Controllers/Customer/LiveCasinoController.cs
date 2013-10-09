@@ -78,7 +78,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            var settingModel = this.PtSetting.GetSuperSetting(custId, CurrentSession.GroupId);
+            var settingModel = this.PtSetting.GetSuperSetting(custId);
 
             var gameSetting = settingModel.GameSetting;
 
