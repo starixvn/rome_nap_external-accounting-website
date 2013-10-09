@@ -272,9 +272,9 @@ function LeftPanelController($scope, $element) {
 
         switch (roleId) {
             case 4:
-                //url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
+                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
                 parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Casino Setting <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 1064, 700, false, null, 1);
-                parent.Fanex.ExtAcc.LoadMainFrame(url, null, false, false, true);
+                //parent.Fanex.ExtAcc.LoadMainFrame(url, null, false, false, true);
                 break;
             case 3:
                 url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);

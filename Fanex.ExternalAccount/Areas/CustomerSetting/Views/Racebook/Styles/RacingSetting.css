@@ -9,6 +9,7 @@
 
 .floatL {
     float: left;
+    margin-left: 2px;
 }
 .bettingBox, .bettingBox2, .bettingBox3 {
     border-bottom: 1px solid #CCCCCC;
