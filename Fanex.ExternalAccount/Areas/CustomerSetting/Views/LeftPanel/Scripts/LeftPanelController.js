@@ -331,9 +331,8 @@ function LeftPanelController($scope, $element) {
         var custId = $scope.model.personalInfo.custId.value;
         var param = custId + '/' + custId + '/' + parent.userId + '/' + parent.$('#selectedGroupName').html();
         var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + param);
-
-
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup');
+        
+        parent.Fanex.ExtAcc.LoadMainIFrame(url);
     };
 
     $scope.Racing = function () {
