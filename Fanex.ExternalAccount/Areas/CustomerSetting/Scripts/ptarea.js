@@ -1,5 +1,9 @@
 ﻿var module = angular.module("settingApp", []);
 
+angular.element(document.getElementById('ng-app')).ready(function () {
+    $('#ng-app').show();
+});
+
 toPTSource = function (obj, resetSelected, isComm) {
     var index = -1;
     var itemIndex = 0;

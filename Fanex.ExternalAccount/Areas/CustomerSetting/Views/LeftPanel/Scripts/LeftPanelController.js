@@ -7,16 +7,11 @@
     };
 });
 
+angular.element(document.getElementById('ng-app')).ready(function () {
+    $('#ng-app').show();
+});
+
 function LeftPanelController($scope, $element) {
-    var e = $element[0];
-
-    e.style.display = 'none';
-
-    var timeout = setTimeout(function () {
-        clearTimeout(timeout);
-        e.style.display = 'block';
-    }, 500);
-
     $scope.model = model;    
 
     $scope.GetCustomerList = function () {

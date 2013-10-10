@@ -2,7 +2,6 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Core.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -14,7 +13,7 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" ng-app="settingApp" style="width: 1024px">
+<div id="ng-app" style="display: none" ng-app="settingApp" style="width: 1024px">
     <div id="errMsg" style="display: none;" class="errMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
@@ -105,21 +104,9 @@
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
 
     //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
-    var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
+    var casinoController = new CasinoController(uplineId, '');
 
     $('.buttonPopup').bind('click', function () {
-        casinoController.Update(function (errorCode, errorMessage) {
-            if (errorCode == 0) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    try {
-                        parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-                        parent.Fanex.ExtAcc.Form.Close();
-                    }
-                    catch (e) { }
-                }, 1000);
-            }
-        });
+        casinoController.Update();
     });
 </script>

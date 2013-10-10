@@ -2,7 +2,6 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Core.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -14,7 +13,7 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" ng-app="settingApp" style="width: 1024px">
+<div id="ng-app" style="display: none" ng-app="settingApp" style="width: 1024px">
     <div id="info">
         @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
     </div>    
