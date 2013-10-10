@@ -2,7 +2,6 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Core.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -14,7 +13,7 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" ng-app="settingApp" style="width: 1024px">
+<div id="ng-app" style="display: none; width: 1024px" ng-app="settingApp">
     <div id="errMsg" style="display: none;" class="errMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
@@ -45,11 +44,13 @@
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="5" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
-                            <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C ptTitle noneBorderTop tdWidth">
+                            <tr>
+                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>
+                                <td class="C ptTitle noneBorderTop tdWidth">
                                     <span class="spanPT" ptarea="true" min="0" max="m3" selected="m2" ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop maxPtAgentWidth">
-                                    <span class="spanPT" ptarea="true" min="0" max="{{gameGroup.m3 - gameGroup.m2}}" selected="a2" ng-model="setting"></span>
+                                    <span class="spanPT" ptarea="true" min="0" max="{{gameGroup.m3.ptRound() - gameGroup.m2.ptRound()}}" selected="a2" ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop tdWidth">
                                     <span class="spanPT" ptarea="true" min="0" max="a2" selected="n2" ng-model="setting"></span>
@@ -119,21 +120,9 @@
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
 
     //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
-    var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
+    var casinoController = new CasinoController(uplineId, '');
 
     $('.buttonPopup').bind('click', function () {
-        casinoController.Update(function (errorCode, errorMessage) {
-            if (errorCode == 0) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    try {
-                        parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-                        parent.Fanex.ExtAcc.Form.Close();
-                    }
-                    catch (e) { }
-                }, 1000);
-            }
-        });
+        casinoController.Update();
     });
 </script>

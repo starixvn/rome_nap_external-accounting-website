@@ -1,4 +1,10 @@
-﻿function LoadSB() {
+﻿var module = angular.module("bettingApp", []);
+
+angular.element(document.getElementById('ng-app')).ready(function () {
+    $('#ng-app').show();
+});
+
+function LoadSB() {
     Fanex.CustomerSetting.Core.BlockUI();
     document.location.href = toUrl('Sportsbook/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };

@@ -12,7 +12,7 @@
         @RenderSection("Styles", false)
     </head>
     <body>
-    <div id="tabs" style="float: left; width: auto">
+    <div id="ng-app" ng-app="bettingApp" style="float: left; width: 821px; display: none">
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
@@ -50,7 +50,7 @@
     @RenderSection("Scripts", false)
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#tabs').tabs();
+            $('#ng-app').tabs();
         });
     </script>
     </body>

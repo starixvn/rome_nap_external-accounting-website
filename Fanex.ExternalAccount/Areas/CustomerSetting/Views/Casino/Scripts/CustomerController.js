@@ -4,15 +4,6 @@ var IsMember = false;
 var UplineRoleId = 4;
 
 function CustomerController($scope, $element) {
-    var e = $element[0];
-    
-    e.style.display = 'none';
-
-    var timeout = setTimeout(function () {
-        clearTimeout(timeout);
-        e.style.display = 'block';
-    }, 2000);
-
     $scope.CustomerModel = customerModel;
     $scope.Enabled = !customerModel.casinoDisabled;
     $scope.Level = '';
