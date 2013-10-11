@@ -96,6 +96,10 @@ Fanex.ExtAcc = {
                 $('#contentSplitter').html('');
                 $('#contentSplitter').html(result);
 
+                if (document.getElementById('btnLogin')) {
+                    location.href = resolveClientUrl('Account/Login');
+                }
+
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
                     var interval = setInterval(function () {
                         if (document.getElementById('btnSearch')) {
