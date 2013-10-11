@@ -84,7 +84,7 @@ Fanex.ExtAcc = {
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
-        this.BlockUI();
+        //this.BlockUI();
 
         if (typeof id != 'undefined') {
             $('#' + id).hide();
@@ -106,14 +106,14 @@ Fanex.ExtAcc = {
                     }, 100);
                 }
 
-                Fanex.ExtAcc.UnBlockUI();
+                //Fanex.ExtAcc.UnBlockUI();
             }
             })
             .error(function (data) {
                 if (typeof console != undefined)
                     console.log(data.responseText);
 
-                Fanex.ExtAcc.UnBlockUI();
+                //Fanex.ExtAcc.UnBlockUI();
             });
         }
         else {

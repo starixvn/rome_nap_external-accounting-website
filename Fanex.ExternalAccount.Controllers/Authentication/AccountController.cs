@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Interface.Login;
@@ -40,8 +40,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         public AccountController(ILoginService userService, ICurrentSession currentSession, ICurrentContext currentContext)
         {
             this._userService = userService ?? new LoginService();
-            this._currentSession = currentSession ?? new CurrentSession();
-            this._currentContext = currentContext ?? new CurrentContext();
+            this._currentSession = currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
+            this._currentContext = currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         {
             if (this._currentSession.Captcha != null && this._currentSession.Captcha.Equals(model.Captcha, StringComparison.OrdinalIgnoreCase))
             {
-                CurrentContext.LoginErrorMessage = string.Empty;
+                Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
                 int custId = 0, onuserId = 0;
                 bool isIntAcc = true;
                 var result = this._userService.Login(
@@ -120,13 +120,13 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 }
                 else
                 {
-                    CurrentContext.LoginErrorMessage = result.ErrorMessage;
+                    Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
                     return this.PartialView(model);
                 }
             }
             else
             {
-                CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
+                Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
                 this._currentSession.UserName = string.Empty;
                 return this.PartialView(model);
             }
@@ -322,7 +322,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         private ActionResult SignOut(int onuserId, string userName)
         {
             this._userService.Logout(onuserId, userName);
-            CurrentContext.Instance.Context.Session.Abandon();
+            Fanex.ExternalAccount.Core.Context.CurrentContext.Instance.Context.Session.Abandon();
 
             return this.RedirectToAction("Login", "Account");
         }

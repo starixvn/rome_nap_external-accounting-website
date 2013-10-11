@@ -16,7 +16,7 @@ namespace Fanex.ExternalAccount.Core.Context
     using System.Globalization;
     using System.Net;
     using System.Web;
-    using System.Web.UI;
+    using Fanex.CustomerSetting.Module.Core.Web;
 
     /// <summary>
     /// Current context of session.
