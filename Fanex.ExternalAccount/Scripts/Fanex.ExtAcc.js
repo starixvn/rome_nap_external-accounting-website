@@ -106,6 +106,13 @@ Fanex.ExtAcc = {
                             clearInterval(interval);
 
                             Fanex.ExtAcc.Customer.Init();
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                if ($.trim($('#jqgrid').html()) == '') {
+                                    $('#btnSearch').click();
+                                }
+                            }, 2000);
                         }
                     }, 100);
                 }
