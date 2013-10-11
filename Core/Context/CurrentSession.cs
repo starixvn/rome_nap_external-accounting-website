@@ -12,6 +12,7 @@
 namespace Fanex.ExternalAccount.Core.Context
 {
     using System.Web.UI;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
@@ -99,11 +100,17 @@ namespace Fanex.ExternalAccount.Core.Context
             {
                 return !string.IsNullOrWhiteSpace(this.UserName);
             }
+
+            set
+            {
+                this.Session["IsLogin"] = value;
+            }
         }
 
         public string NetSessionId
         {
             get { return this.Session.SessionID; }
+            set { this.Session["SessionID"] = value; }
         }
 
         public string Captcha

@@ -16,6 +16,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.IO;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
@@ -76,8 +77,8 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         protected BaseController()
         {
-            this._currentContext = new CurrentContext();
-            this._currentSession = new CurrentSession();
+            this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
+            this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             get
             {
-                return this._currentContext ?? new CurrentContext();
+                return this._currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
             }
         }
 
@@ -100,7 +101,7 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             get
             {
-                return this._currentSession ?? new CurrentSession();
+                return this._currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
             }
         }
 

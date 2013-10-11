@@ -50,6 +50,10 @@
     <Reference Include="Fanex.CustomerSetting.Module.Casino">
       <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Security.dll</HintPath>
     </Reference>
@@ -139,8 +143,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Context\ExternalAccountAuthenticate.cs" />
-    <Compile Include="Context\ICurrentContext.cs" />
-    <Compile Include="Context\ICurrentSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -56,6 +56,9 @@
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Core">
+      <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Security.dll</HintPath>
     </Reference>
