@@ -583,24 +583,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
         public ActionResult ViewIP(string ip)
         {
-            try
+            if (ip.Equals("::1", StringComparison.OrdinalIgnoreCase))
             {
-                var info = IpUtils.LocationFromIP(ip);
-                var ipinfo = new IPInfo()
-                {
-                    IP = ip,
-                    City = info.City,
-                    Country = info.CountryLong,
-                    Flag = info.CountryShort + ".gif",
-                    Info = string.Format(ViewLang.IPNote, ip)
-                };         
-                
-                return this.PartialViewBase(ipinfo);
-            }
-            catch (Exception ex)
-            {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
-
                 return this.PartialViewBase(new IPInfo
                 {
                     City = string.Empty,
@@ -610,6 +594,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     IP = ip
                 });
             }
+
+            var info = IpUtils.LocationFromIP(ip);
+            var ipinfo = new IPInfo()
+            {
+                IP = ip,
+                City = info.City,
+                Country = info.CountryLong,
+                Flag = info.CountryShort + ".gif",
+                Info = string.Format(ViewLang.IPNote, ip)
+            };
+
+            return this.PartialViewBase(ipinfo);
         }
 
         /// <summary>
