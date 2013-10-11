@@ -843,7 +843,56 @@ function SettingController($scope, $http) {
                 parent.$('#contentSplitter').html(result);
             });
         }
-    }
+    };
+
+    $scope.DoubleComm = function (allow, id) {
+        var msg = allow ?
+            "Are you sure you want to disallow Double Commission feature for Sportsbook's Losing tickets on this customer? Warning, all members under this agent will be disallowed as well!" :
+            "Are you sure you want to allow Double Commission feature for Sportsbook's Losing tickets on this customer?";
+        parent.Fanex.ExtAcc.Form.ConfirmBox(allow ? 'Disable Allow Double Commission' : 'Allow Double Commission', msg, 450, 170, false, function () {
+            parent.Fanex.ExtAcc.BlockUI();
+
+            $.ajax({
+                url: parent.resolveClientUrl('Customer/ConfigDoubleComm'),
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    custid: $scope.model.personalInfo.custId.value,
+                    allow: !allow
+                }
+            })
+            .success(function (result) {
+                parent.Fanex.ExtAcc.Form.Close();
+                if (result.IsSuccess) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        document.location.reload(true);
+                    }, 2000);
+                }
+                else {
+                    parent.Fanex.ExtAcc.UnBlockUI();
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
+                    document.getElementById('DoubleComm').checked = allow;
+                }
+            })
+            .error(function (xhr) {
+                parent.Fanex.ExtAcc.UnBlockUI();
+                document.getElementById('DoubleComm').checked = allow;
+                if (typeof console != 'undefined') {
+                    console.log(xhr);
+                }
+            });
+        }, function () {
+            parent.Fanex.ExtAcc.Form.Close();
+            document.getElementById(id).checked = allow;
+        },
+        null,
+        null,
+        function () {
+            document.getElementById(id).checked = allow;
+        });
+    };
 };
 
 function LoginController($scope) {

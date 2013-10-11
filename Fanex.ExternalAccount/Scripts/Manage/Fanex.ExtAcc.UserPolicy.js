@@ -203,6 +203,7 @@ Fanex.ExtAcc.UserPolicy = {
     },
 
     SaveUserPolicy: function () {
+        Fanex.ExtAcc.BlockUI();
         var userPolicy = this.GetUserPolicy();
 
         var url = "User/GrantPermissionPost";
@@ -225,12 +226,18 @@ Fanex.ExtAcc.UserPolicy = {
                 if (!json.IsSuccess) {
                     $('#errMsg').css('display', 'block');
                     $('#errMsg').html(json.ErrorMessage);
+                    Fanex.ExtAcc.UnBlockUI();
                 }
                 else {
-                    Fanex.ExtAcc.Form.Close(false);
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close(false);
+                        Fanex.ExtAcc.UnBlockUI();
+                    }, 2000);
                 }
             },
             error: function (xhr, status, err) {
+                Fanex.ExtAcc.UnBlockUI();
                 if (typeof console != 'undefined') console.log(err);
             }
         });
