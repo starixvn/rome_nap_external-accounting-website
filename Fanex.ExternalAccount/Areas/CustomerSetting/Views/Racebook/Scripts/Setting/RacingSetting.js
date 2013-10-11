@@ -112,17 +112,28 @@
                 '}',
             beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
             success: function (result) {
-                if (typeof (result.ErrorCode) != 'undefined') {
-                    showAlertMessage("err", result.ErrorMessage, 1);
+                $('#divShowInfo').show();
+
+                if (typeof (result.errorCode) != 'undefined') {
+                    showAlertMessage("err", result.errorMessage, 1);
                 }
                 else {
-                    $('#divShowInfo').show();
                     ptRacingCommon.renderErrorMessage('err', result);
                 }
                 parent.Fanex.ExtAcc.UnBlockUI();
             }
-            , error: function (e) {
-                showAlertMessage("err", "Update Agent Unsuccessfully!", 1);
+            , error: function (response) {
+                var ErrorMessage = '';
+                
+                if ($.parseJSON($(response)[0].responseText).errorCode) {
+                    ErrorMessage += '<font color="red">' + $.parseJSON($(response)[0].responseText).errorMessage + '</font><br />';
+                }
+                else {
+                    ErrorMessage += '<font color="red">' + $(response.responseText)[1].text + '</font><br />';
+                }
+
+                $('#divShowInfo').show();
+                showAlertMessage("err", ErrorMessage, 1);
                 parent.Fanex.ExtAcc.UnBlockUI();
             }
         });

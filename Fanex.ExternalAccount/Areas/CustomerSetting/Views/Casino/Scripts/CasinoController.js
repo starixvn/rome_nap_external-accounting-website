@@ -192,7 +192,12 @@
                 console.log(response);
             }
 
-            ErrorMessage += $(response.responseText)[1].text.formatErrorMessage() + '<br />';
+            if ($.parseJSON($(response)[0].responseText).errorCode) {
+                ErrorMessage += $.parseJSON($(response)[0].responseText).errorMessage.formatErrorMessage();
+            }
+            else {
+                ErrorMessage += $(response.responseText)[1].text.formatErrorMessage() + '<br />';
+            }
 
             if (!IsMultiple) {
                 if (ErrorMessage != '') {
