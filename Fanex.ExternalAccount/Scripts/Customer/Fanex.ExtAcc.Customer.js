@@ -168,16 +168,20 @@ Fanex.ExtAcc.Customer = {
         this.TransferCondition = false;
         this.UserId = custId;
         this.TitleEditInfo = title;
+        this.CurrentLevel = this.Super;
 
         this.ResetFlags();
 
         var items = {
-            racing: { name: "Racing", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Racing Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1050, 620, false, null, 1); } },
-            separator: "-----",
-            casino: { name: "Casino", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + Fanex.ExtAcc.Customer.UserId + '/0'), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1); } },
-            liveCasino: { name: "Live Casino", className: "iconEnableEdit", callback: function () {
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditSuper'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
-            }},
+            sportbook: { name: "Sportsbook", className: "iconViewEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT' + '/' + $('#selectedGroupName').html()), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 900, 700, false, false, 1); } },
+            separator0: "-----",
+            racing: { name: "Racing", className: "iconViewEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Racing Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1050, 620, false, null, 1); } },
+            separator1: "-----",
+            casino: { name: "Casino", className: "iconViewEdit", callback: function () { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + Fanex.ExtAcc.Customer.UserId + '/0'), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1); } },
+            liveCasino: { name: "Live Casino", className: "iconViewEdit", callback: function () {
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditSuper'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
+            } 
+            },
             separator2: "-----",
             editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } },
             changePassword: { name: "Reset Password", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false); } },
@@ -205,7 +209,7 @@ Fanex.ExtAcc.Customer = {
         this.ResetFlags();
 
         itemsMaster = {
-            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 894, 700, false, false, 1); } },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1); } },
             ptSportbook: { name: "PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMinPT'), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 450, false, false, 1); } },
@@ -310,7 +314,7 @@ Fanex.ExtAcc.Customer = {
         this.ResetFlags();
 
         var itemsAgent = {
-            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 894, 700, false, false, 1); } },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1); } },
             ptSportbook: { name: "PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             minPTSportbook: { name: "Min PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMinPT'), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             betSetting: { name: "Bet Setting", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting'), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 450, false, false, 1); } },
@@ -412,7 +416,7 @@ Fanex.ExtAcc.Customer = {
         this.ResetFlags();
 
         var itemsMember = {
-            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 894, 700, false, false, 1); } },
+            sportbook: { name: "Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT'), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1); } },
             ptSportbook: { name: "PT", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT'), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1); } },
             superEditSportbook: { name: "Super Edit Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/SuperMasterEditSB'), 'Super Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 894, 700, false, false, 1); } },
             masterEditSportbook: { name: "Master Edit Sportsbook", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.IsMultiple = false; Fanex.ExtAcc.Customer.IsFullInfo = true; Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/SuperMasterEditSB'), 'Master Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 894, 700, false, false, 1); } },
