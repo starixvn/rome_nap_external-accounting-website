@@ -192,6 +192,15 @@ Fanex.ExtAcc.Customer = {
             items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup'); } };
         }
 
+//        if (syncBingo) {
+//            if (disableBingo) {
+//                items.bingo = { name: "Bingo", className: "iconDisableEdit" };
+//            }
+//            else {
+//                items.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
+//            }
+//        }
+
         $.contextMenu({
             selector: '.editInfo',
             items: items,
@@ -240,11 +249,11 @@ Fanex.ExtAcc.Customer = {
                     itemsMaster.bingo = { name: "Bingo", className: "iconDisableEdit" };
                 }
                 else {
-                    itemsMaster.bingo = { name: "Bingo", className: "iconEnableEdit" };
+                    itemsMaster.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
                 }
             }
             else {
-                itemsMaster.bingo = { name: "Bingo", className: "iconUnsyncEdit" };
+                itemsMaster.bingo = { name: "Bingo", className: "iconUnsyncEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
             }
         }
 
@@ -347,11 +356,11 @@ Fanex.ExtAcc.Customer = {
                     itemsAgent.bingo = { name: "Bingo", className: "iconDisableEdit" };
                 }
                 else {
-                    itemsAgent.bingo = { name: "Bingo", className: "iconEnableEdit" };
+                    itemsAgent.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
                 }
             }
             else {
-                itemsAgent.bingo = { name: "Bingo", className: "iconUnsyncEdit" };
+                itemsAgent.bingo = { name: "Bingo", className: "iconUnsyncEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
             }
         }
 
@@ -456,11 +465,11 @@ Fanex.ExtAcc.Customer = {
                     itemsMember.bingo = { name: "Bingo", className: "iconDisableEdit" };
                 }
                 else {
-                    itemsMember.bingo = { name: "Bingo", className: "iconEnableEdit" };
+                    itemsMember.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
                 }
             }
             else {
-                itemsMember.bingo = { name: "Bingo", className: "iconUnsyncEdit" };
+                itemsMember.bingo = { name: "Bingo", className: "iconUnsyncEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
             }
         }
 
