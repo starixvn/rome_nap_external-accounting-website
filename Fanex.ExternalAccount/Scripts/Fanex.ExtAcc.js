@@ -94,7 +94,19 @@ Fanex.ExtAcc = {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
             $.ajax({ url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html('');
+
+                if (result.ErrorCode) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    $('#contentSplitter').html(result.ErrorMessage.formatErrorMessage());
+                    return;
+                }
+
                 $('#contentSplitter').html(result);
+
+                if (document.getElementById('btnLogin')) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    location.href = resolveClientUrl('Account/Login');
+                }
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
                     var interval = setInterval(function () {
@@ -102,6 +114,13 @@ Fanex.ExtAcc = {
                             clearInterval(interval);
 
                             Fanex.ExtAcc.Customer.Init();
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                if ($.trim($('#jqgrid').html()) == '') {
+                                    $('#btnSearch').click();
+                                }
+                            }, 2000);
                         }
                     }, 100);
                 }
@@ -114,6 +133,10 @@ Fanex.ExtAcc = {
                     console.log(data.responseText);
 
                 Fanex.ExtAcc.UnBlockUI();
+                if (data.ErrorCode) {
+                    $('#contentSplitter').html(data.ErrorMessage.formatErrorMessage());
+                    return;
+                }
             });
         }
         else {

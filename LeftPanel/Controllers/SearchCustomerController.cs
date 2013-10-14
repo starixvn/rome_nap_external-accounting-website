@@ -39,7 +39,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             ViewBag.UserId = CurrentSession.UserId;
 
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
-            model.TransferCondition(uplineId, id);
+            if (model != null)
+            {
+                model.GetProductStatuses(uplineId, id);
+            }
 
             return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
         }

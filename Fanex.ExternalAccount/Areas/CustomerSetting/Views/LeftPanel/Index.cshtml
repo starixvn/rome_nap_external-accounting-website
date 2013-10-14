@@ -143,11 +143,12 @@
             </ul>
             <div id="tab-1" class="auto" style="height: 100%">
                 <div class="floatLeft" ng-repeat="editItem in setting.editItems">
-                    <div class="settingEdit floatLeft" title="{{editItem.tooltip}}">{{editItem.text}}</div>
+                    <div ng-hide="{{editItem.key == 'EnablePoker'}}" class="settingEdit floatLeft" title="{{editItem.tooltip}}" ng-click="{{editItem.key}}()">{{editItem.text}}</div>
                 </div>
+                <br />
                 <div class="floatLeft" ng-repeat="enableItem in setting.enableItems">
                     <div class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                    <div class="floatLeft"><input type="checkbox" ng-model="enableItem.value" /></div>
+                    <div class="floatLeft"><input ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" ng-model="enableItem.value" ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" /></div>
                 </div>    
             </div>
             <div class="auto" id="tab-2" ng-controller="SettingController" ng-init="Init()">

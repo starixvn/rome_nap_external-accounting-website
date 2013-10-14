@@ -95,6 +95,7 @@ div
 {
     color: Red;
     background: none !important;
+    cursor: default !important;
 }
 .ui-tabs .ui-tabs-panel
 {

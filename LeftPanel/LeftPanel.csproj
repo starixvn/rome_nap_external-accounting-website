@@ -87,6 +87,7 @@
     <Compile Include="ViewModels\OnlineInfo.cs" />
     <Compile Include="ViewModels\OnlineList.cs" />
     <Compile Include="ViewModels\PersonalInfo.cs" />
+    <Compile Include="ViewModels\ProductStatuses.cs" />
     <Compile Include="ViewModels\Setting.cs" />
     <Compile Include="ViewModels\Status.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />

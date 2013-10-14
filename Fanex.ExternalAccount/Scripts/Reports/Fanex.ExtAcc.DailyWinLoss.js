@@ -374,15 +374,21 @@ Fanex.ExtAcc.DailyWinLoss = {
                             + "&date=" + this.date
                             + "&viewlevel=" + this.viewlevel;
 
-        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
+        Fanex.ExtAcc.BlockUI();
         $.ajax({
             context: $this,
             url: this.url + parameterUrl,
-            type: 'GET',
+            type: 'post',
             dataType: 'json',
             cache: false,
             beforesend: function (xhr) { },
             success: function (data) {
+                if (data.ErrorCode) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 350, 150, 'alertDWL');
+                    return;
+                }
+
                 $this.dataSource = data.rows;
                 $this.totalRows = data.rows.length;
                 $this.viewlevel = data.viewlevel;

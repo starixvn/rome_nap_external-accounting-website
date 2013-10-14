@@ -38,7 +38,7 @@ Fanex.ExtAcc.Form = {
             data = params;
         }
 
-        $.ajax({ url: url, data: data }).done(function (data) {
+        $.ajax({ url: url, data: data, type: 'post' }).done(function (data) {
             if (data.ErrorCode && data.ErrorCode == "1") {
                 Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
@@ -107,7 +107,7 @@ Fanex.ExtAcc.Form = {
         }
     },
 
-    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel) {
+    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel, closeClick) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
         var id = popupId ? popupId : 'windowPopup';
@@ -163,6 +163,9 @@ Fanex.ExtAcc.Form = {
             }],
             close: function (event) {
                 $self.Close(reloadOnClose, null, id);
+                if (typeof closeClick == 'function') {
+                    closeClick();
+                }
             }
         });
     },
