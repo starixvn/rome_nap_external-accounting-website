@@ -837,11 +837,12 @@ function SettingController($scope, $http) {
 
         if (actionName != '') {
             parent.Fanex.ExtAcc.BlockUI();
-
+            /*
             $http({ url: parent.resolveClientUrl(actionName), method: 'post', headers: { "X-Requested-With": "XMLHttpRequest"} })
             .success(function (result) {
-                parent.$('#contentSplitter').html(result);
-            });
+            parent.$('#contentSplitter').html(result);
+            });*/
+            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName));
         }
     };
 

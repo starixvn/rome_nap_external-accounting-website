@@ -83,6 +83,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult SuperAddNewMaster()
         {
             return this.PartialViewBase();
@@ -96,6 +97,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -135,6 +137,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Create)]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -168,6 +171,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult MasterAddNewAgent()
         {
             return this.PartialViewBase();
@@ -181,6 +185,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -220,6 +225,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Create)]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -253,6 +259,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult AgentAddNewMember()
         {
             return this.PartialViewBase();
@@ -266,6 +273,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -305,6 +313,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
+        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Create)]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
