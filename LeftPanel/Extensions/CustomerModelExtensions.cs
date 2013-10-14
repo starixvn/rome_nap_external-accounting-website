@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
@@ -448,12 +449,116 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="groupName">Group name.</param>
         /// <param name="username">Username of customer.</param>
         /// <returns>CustomerModel object.</returns>
-        public static CustomerModel TransferCondition(this CustomerModel model, string groupName, string username)
+        public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
+            ProductStatuses product = Get3rdPartyProducts(groupName, username);
+
+            if (product.RoleId == 4)
+            {
+                return model;
+            }
+
+            if (product.RoleId != 1 && product.DisableTransfer)
+            {                
+                model.RemoveProduct("Transfer");
+            }
+
+            if (!product.SyncBingo)
+            {
+                model.RemoveProduct("Bingo");
+            }
+
+            if (!product.SyncCasino)
+            {
+                model.RemoveProduct("Casino");
+            }
+
+            if (!product.SyncLiveCasino)
+            {
+                model.RemoveProduct("LiveCasino");
+            }
+
+            if (!product.AllowDoubleComm)
+            {
+                model.DisableProduct("DoubleComm");
+            }
+
+            if (product.DisableNumberGame)
+            {
+                model.DisableProduct("NumberGame");
+            }
+
+            if (!product.AllowOutright)
+            {
+                model.DisableProduct("Outright");
+            }
+
+            if (product.DisableVirtualSports)
+            {
+                model.DisableProduct("VirtualSports");
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Removes disabled and unsynchronized products.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="key">Key to specify item.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel RemoveProduct(this CustomerModel model, string key)
+        {
+            int index = 0;
+            for (int i = 0; i < model.Setting.Details.Count; i++)
+            {
+                if (model.Setting.Details.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != 0)
+            {
+                model.Setting.Details.RemoveAt(index);
+            }
+            
+            return model;
+        }
+
+        private static CustomerModel DisableProduct(this CustomerModel model, string key)
+        {
+            int index = 0;
+            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
+            {
+                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != 0)
+            {
+                model.Setting.EnableItems.ElementAt(index).Disabled = true;
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Gets third party product statuses.
+        /// </summary>
+        /// <param name="groupName">Group name to get.</param>
+        /// <param name="username">Username to search.</param>
+        /// <returns>ProductStatuses object.</returns>
+        private static ProductStatuses Get3rdPartyProducts(string groupName, string username)
+        {
+            ProductStatuses product = new ProductStatuses();            
             DataTable customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
             DataTable result = null;
             int srecommend = 0, mrecommend = 0, recommend = 0, custId = 0, roleId = 0;
-            bool syncCasino = false, syncBingo = false, syncLiveCasino = false;
 
             if (customerInfo != null)
             {
@@ -480,17 +585,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     result = new MemberService().GetData(recommend, custId, null, null, null);
                 }
 
-                syncBingo = result.Rows[0].ToBoolean("syncBingo");
-                syncCasino = result.Rows[0].ToBoolean("syncCasino");
-                syncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
-
-                if (roleId != 4 && roleId != 1 && Utils.ToBoolean(result.Rows[0]["disableTransfer"]))
-                {
-                    model.Setting.Details.RemoveAt(3);
-                }
+                product.RoleId = roleId;
+                product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
+                product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
+                product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");                
+                product.DisableTransfer = roleId == 4 ? false : result.Rows[0].ToBoolean("disableTransfer");
+                product.AllowDoubleComm = result.Rows[0].ToBoolean("doubleCommLosing");
+                product.DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports");
+                product.AllowOutright = !result.Rows[0].ToBoolean("disableOutright");
+                product.DisableNumberGame = result.Rows[0].ToBoolean("disableNumber");
             }
 
-            return model;
+            return product;
         }
 
         /// <summary>

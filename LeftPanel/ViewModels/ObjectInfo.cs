@@ -37,5 +37,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         /// </summary>
         /// <value>System.String object.</value>
         public string Tooltip { get; set; }
+
+        public bool Disabled { get; set; }
     }
 }

@@ -873,7 +873,7 @@ function SettingController($scope, $http) {
                 }
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById('DoubleComm').checked = allow;
                 }
             })
