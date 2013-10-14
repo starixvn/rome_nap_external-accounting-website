@@ -527,6 +527,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
+        /// <summary>
+        /// Disables product that is not enabled at upper customer.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="key">Key to specify product.</param>
+        /// <returns>CustomerModel object.</returns>
         private static CustomerModel DisableProduct(this CustomerModel model, string key)
         {
             int index = 0;
