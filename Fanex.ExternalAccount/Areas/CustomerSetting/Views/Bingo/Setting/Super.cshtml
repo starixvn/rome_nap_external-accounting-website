@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Super";
+    Layout = "~/Areas/CustomerSetting/Views/Bingo/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/Bingo/Scripts/Setting/SuperBingoSetting.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.pageRole = ptBingoCommon.adminRoleId;
+        window.targetRoleId = ptBingoCommon.superRoleId;
+    </script>
+}

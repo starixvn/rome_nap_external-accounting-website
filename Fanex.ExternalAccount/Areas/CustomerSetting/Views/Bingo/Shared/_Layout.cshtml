@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/bingostyle")
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <div class="maincontent_box">
+                <div class="errMsg" id="err"></div>
+            </div>
+            <div class="bg_table">
+                <div id="SettingContent">Loading...</div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+
+    <script type="text/javascript">
+        window.uplineId = '@Convert.ToInt32(Request["uplineId"])';
+        window.custId = '@Convert.ToInt32(Request["custId"])';
+        window.rootUrl = '@ViewBag.RootUrl';
+    </script>
+
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/bingosetting")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
