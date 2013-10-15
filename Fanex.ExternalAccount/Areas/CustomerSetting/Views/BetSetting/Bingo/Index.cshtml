@@ -27,8 +27,8 @@
         <div class="title C bold header">
             Update Bet Setting: @ViewBag.Username
         </div>
-        <div ng-hide="model.result.isSuccessful == true" style="color: Red; height: 25px; border: 1px solid #CCC" class="C">There is no information available.</div>
-        <table class="tableInfo" border="1" cellpadding="0" cellspacing="0" ng-hide="model.result.isSuccessful == false">
+        <div ng-hide="model.result.errorCode == 0" style="color: Red; height: 25px; border: 1px solid #CCC" class="C">There is no information available.</div>
+        <table class="tableInfo" border="1" cellpadding="0" cellspacing="0" ng-hide="model.result.errorCode != 0">
             <tr>
                 <td colspan="3" style="border: none">
                     <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
@@ -78,7 +78,7 @@
                 </td>
             </tr>
         </table>
-        <div style="text-align: right" ng-hide="model.result.isSuccessful == false" >
+        <div style="text-align: right" ng-hide="model.result.errorCode != 0" >
             <input class="buttonPopup" type="button" value="Submit" />
         </div>
     </div>

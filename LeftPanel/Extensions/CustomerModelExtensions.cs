@@ -453,12 +453,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
             ProductStatuses product = Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
-            model.UplineStatuses(product);
-
+            
             if (product.RoleId == 4)
             {
                 return model;
             }
+
+            model.UplineStatuses(product);
 
             if (product.RoleId != 1 && product.DisableTransfer)
             {                
