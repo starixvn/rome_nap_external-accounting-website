@@ -155,7 +155,7 @@
         return html + '</td></tr>';
     },
     updatePT: function (customer) {
-        var maxTransferCredit = $("#txtMaxTransferCredit").val()
+        var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
             showAlertMessage("err", "Invalid Max Transder Credit", 1);
             return;

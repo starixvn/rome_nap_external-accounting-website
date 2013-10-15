@@ -95,7 +95,7 @@
         return html + '</td></tr>';
     },
     updatePT: function (customer) {
-        var maxTransferCredit = $("#txtMaxTransferCredit").val()
+        var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
             showAlertMessage("err", "Invalid Max Transder Credit", 1);
             return;
@@ -168,8 +168,8 @@
                 }
             }
         });
-    
-        var oMin = $("#" + strMaxID.replace(strListMax,strListMin));
+
+        var oMin = $("#" + strMaxID.replace(strListMax, strListMin));
         var strMinID = oMin.attr("id");
         var MinValue = oMin.val();
         var MinValueMax = MaxValue;
@@ -177,7 +177,7 @@
         if (MinValue > MinValueMax) {
             MinValue = MinValueMax;
         }
-        oMin.attr("max",MinValueMax);
+        oMin.attr("max", MinValueMax);
         CreateOption(oMin, MinValue, MinValueMax, 0, 0.01, 2);
     },
     // Min PT onChange
@@ -186,14 +186,14 @@
         var MinID = Min.attr("id");
         var MinValue = Min.val();
         var Minlists = $(".Min");
-        Minlists.each(function() {
+        Minlists.each(function () {
             if ($(this).prop("id").indexOf(MinID + "_") >= 0) {
                 if (MinValue <= $(this).attr("max")) {
                     $(this).val(MinValue);
-                    $("#" + $(this).attr("id").replace(strListMin,strerrPTMin)).css("visibility","hidden");
+                    $("#" + $(this).attr("id").replace(strListMin, strerrPTMin)).css("visibility", "hidden");
                 }
                 else {
-                    $("#" + $(this).attr("id").replace(strListMin,strerrPTMin)).css("visibility","visible");
+                    $("#" + $(this).attr("id").replace(strListMin, strerrPTMin)).css("visibility", "visible");
                 }
             }
         });
@@ -203,12 +203,12 @@
         var strMaxID = oMax.attr("id");
         var MaxValue = oMax.val();
         var MaxValueMax = oMax.attr("max");
-        $("#" + strMaxID.replace(strListMax, strerrPT)).css("visibility","hidden");
-        $("#" + strMaxID.replace(strListMax, strerrPTMin)).css("visibility","hidden");
-        var oMin=$("#" + strMaxID.replace(strListMax, strListMin));
+        $("#" + strMaxID.replace(strListMax, strerrPT)).css("visibility", "hidden");
+        $("#" + strMaxID.replace(strListMax, strerrPTMin)).css("visibility", "hidden");
+        var oMin = $("#" + strMaxID.replace(strListMax, strListMin));
         var MinValue = oMin.val();
         var MinValueMax = MaxValue;
-    
+
         if (MinValue > MinValueMax) {
             MinValue = MinValueMax;
         }
@@ -284,15 +284,15 @@
                 agentBingoSetting.on_ChangePresetGameType(this);
             }
         });
-    
-        var oMax = $("#" + strPresetID.replace(strListPreset,strListMax));
+
+        var oMax = $("#" + strPresetID.replace(strListPreset, strListMax));
         var strMaxID = oMax.attr("id");
         var MaxValue = oMax.val();
-    
-        var MaxValueMax = roundNumber(PresetValueMax-PresetValue,2);
+
+        var MaxValueMax = roundNumber(PresetValueMax - PresetValue, 2);
         MaxValue = MaxValueMax;
-    
-        oMax.attr("max",MaxValueMax);
+
+        oMax.attr("max", MaxValueMax);
         CreateOption(oMax, MaxValue, MaxValueMax, 0, 0.01, 2);
         agentBingoSetting.on_ChangeMax(document.getElementById(strMaxID));
     },
@@ -301,18 +301,18 @@
         var strPresetID = oPreset.attr("id");
         var PresetValue = oPreset.val();
         var PresetValueMax = oPreset.attr("max");
-        $("#" + strPresetID.replace(strListPreset,strerrPT)).css("visibility","hidden");
-        $("#" + strPresetID.replace(strListPreset,strerrPTMin)).css("visibility","hidden");
-        var oMax = $("#" + strPresetID.replace(strListPreset,strListMax));
+        $("#" + strPresetID.replace(strListPreset, strerrPT)).css("visibility", "hidden");
+        $("#" + strPresetID.replace(strListPreset, strerrPTMin)).css("visibility", "hidden");
+        var oMax = $("#" + strPresetID.replace(strListPreset, strListMax));
         var MaxValue = oMax.val();
-    
-        var MaxValueMax = roundNumber(PresetValueMax-PresetValue,2);
-    
+
+        var MaxValueMax = roundNumber(PresetValueMax - PresetValue, 2);
+
         //if (MaxValue>MaxValueMax)
         //{
-        MaxValue=MaxValueMax;
+        MaxValue = MaxValueMax;
         //}
-        oMax.attr("max",MaxValueMax);
+        oMax.attr("max", MaxValueMax);
         CreateOption(oMax, MaxValue, MaxValueMax, 0, 0.01, 2);
     },
     // Comm onChange
@@ -321,10 +321,10 @@
         var CommId = Commlist.attr("id");
         var CommValue = Commlist.val();
         var Commlists = $(".select-comm");
-        Commlists.each(function() {
-           if ($(this).prop("id").indexOf(CommId + "_") >= 0) {
-               $(this).val(CommValue);
-           }
+        Commlists.each(function () {
+            if ($(this).prop("id").indexOf(CommId + "_") >= 0) {
+                $(this).val(CommValue);
+            }
         });
     }
 };

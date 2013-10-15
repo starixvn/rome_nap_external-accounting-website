@@ -11,7 +11,7 @@
                         </tr>\
                         <tr>\
                             <td class="r" style="width:20%">Username</td>\
-                            <td class="l" style="width:30%">' + custInfo.userName + '</td>\
+                            <td class="l" style="width:30%">' + (custInfo.userName ? custInfo.userName : '') + '</td>\
                             <td class="r" style="width:20%">Nick Name</td>\
                             <td class="l" style="width:30%">' + (custInfo.nickName ? custInfo.nickName : '') + '</td>\
                         </tr>\
@@ -52,7 +52,7 @@
                                     <td class="r" style="width:300px">\
                                         <b>Accumulated transferable amount</b>\
                                     </td>\
-                                    <td class="l" style="width:100px">' + betSetting.actualMaxTransfer + '</td>\
+                                    <td class="r" style="width:100px">' + parent.Fanex.ExtAcc.FormatNumber(betSetting.actualMaxTransfer) + '</td>\
                                     <td class="l" colspan="2">' + (showResetLink ? '<span onclick="ResetMaxTransfer(' + betSetting.iD + ')" class="canchange">Reset' : '') + '</td>\
                                 </tr>\
                                 <tr>\
@@ -61,10 +61,10 @@
                                     </td>\
                                     <td class="l" style="width:100px">';
             if (directDownline) {
-                html += '<input type="text" value="' + betSetting.maxTransferCredit + '" id="txtMaxTransferCredit">';
+                html += '<input type="text" value="' + parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit) + '" id="txtMaxTransferCredit" class="r" maxLength="14" onpaste="return false;" onkeypress="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)">';
             }
             else {
-                html += betSetting.maxTransferCredit;
+                html += parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit);
             }
             html += '</td>\
                                     <td class="l" colspan="2">\
@@ -73,7 +73,7 @@
                                 </tr>\
                                 <tr>\
                                      <td class="r" style="width:300px">&nbsp</td>\
-                                     <td class="l" style="width:100px">(' + betSetting.minLimit + ' - ' + (betSetting.maxLimit == 0 ? 'No limited' : betSetting.maxLimit) + ')</td>\
+                                     <td class="r" style="width:100px">(' + parent.Fanex.ExtAcc.FormatNumber(betSetting.minLimit) + ' - ' + (betSetting.maxLimit == 0 ? 'No limited' : parent.Fanex.ExtAcc.FormatNumber(betSetting.maxLimit)) + ')</td>\
                                      <td class="l" colspan="2">&nbsp</td>\
                                 </tr>\
                             </table>\
