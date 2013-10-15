@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Member";
+    Layout = "~/Areas/CustomerSetting/Views/Bingo/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/Bingo/Scripts/Setting/MemberBingoSetting.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.pageRole = ptBingoCommon.agentRoleId;
+        window.targetRoleId = ptBingoCommon.memberRoleId;
+    </script>
+}
