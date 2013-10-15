@@ -55,7 +55,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Bingo.Resources">
+    <Reference Include="Fanex.CustomerSetting.Module.Bingo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Bingo\Fanex.CustomerSetting.Module.Bingo.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Bingo.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Bingo\Fanex.CustomerSetting.Module.Bingo.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -65,6 +70,10 @@
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -116,6 +125,10 @@
       <HintPath>Dll\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\Dependencies\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
@@ -143,8 +156,14 @@
     <Reference Include="Sunplus.Bingo.Data">
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Bingo.Data.Entlib">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.Entlib.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Bingo.Data.LinqToSql">
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.LinqToSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.DataServices">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.DataServices.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Bingo.Entities">
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Entities.dll</HintPath>
@@ -1935,14 +1954,6 @@
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\customer-setting\Fanex.Toco\Module\Bingo\Bingo.csproj">
-      <Project>{BD242AA5-22D2-4B66-960F-1D7BB74EF8DD}</Project>
-      <Name>Bingo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\customer-setting\Fanex.Toco\Module\Racebook\Racebook.csproj">
-      <Project>{63D0DC31-9FEF-4BEE-9D43-E1E3A3BE42A5}</Project>
-      <Name>Racebook</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>

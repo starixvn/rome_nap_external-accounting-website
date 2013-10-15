@@ -362,6 +362,32 @@ function LeftPanelController($scope, $element) {
             parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
+
+    $scope.Bingo = function () {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var url = '';
+        switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?custId=' + custId);
+                break;
+            case 3:
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custid=' + custId);
+                break;
+            case 2:
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custid=' + custId);
+                break;
+            case 1:
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custid=' + custId);
+                break;
+            default:
+                break;
+        }
+
+        if (url !== '') {
+            parent.Fanex.ExtAcc.LoadMainIFrame(url);
+        }
+    };
 };
 
 function PersonalInfoController($scope, $http) {
