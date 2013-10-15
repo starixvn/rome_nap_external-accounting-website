@@ -59,7 +59,7 @@
                                     <td class="r" style="width:300px">\
                                         <b>Member Max Transfer Credit</b>\
                                     </td>\
-                                    <td class="l" style="width:100px">';
+                                    <td class="r" style="width:100px">';
             if (directDownline) {
                 html += '<input type="text" value="' + parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit) + '" id="txtMaxTransferCredit" class="r" maxLength="14" onpaste="return false;" onkeypress="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)">';
             }
@@ -80,20 +80,19 @@
                         </td>\
                     </tr>';
         }
-        html += '</table>';
+        //html += '</table>';
         return html;
     },
     renderIncentiveSetting: function (incentiveSetting) {
         var role = incentiveSetting.roleId;
         if (!ptBingoCommon.isDirectDownline || role === this.superRoleId) {
-            return '';
+            return '</table>';
         }
-        var html = '<table class="tblcollapse" style="width: 100%;">\
-                        <tr class="title">\
-                            <td>Incentive Setting</td>\
+        var html = '<tr class="title">\
+                            <td colspan="4">Incentive Setting</td>\
                         </tr>\
                         <tr>\
-                            <td class="c">\
+                            <td colspan="4" class="c">\
                                 <table cellpadding="4" cellspacing="0" border="0" width="100%" class="noneborder" style="height:30px">\
                                     <tr>\
                                         <td style="width:300px" class="r b">' + this.getIncentiveByRole(role) + ' Incentive</td>\
