@@ -185,6 +185,18 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <returns>Boolean object.</returns>
         private bool FunctionAuthorization(int userId, string functionKey, HttpRequestBase request)
         {
+            if (this.Function.Equals("Home", StringComparison.OrdinalIgnoreCase))
+            {
+                if (CurrentSession.Instance.IsLogin)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
             if (userId <= 0)
             {
                 return false;
