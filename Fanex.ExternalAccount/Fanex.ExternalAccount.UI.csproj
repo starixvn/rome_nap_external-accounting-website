@@ -1935,14 +1935,6 @@
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\customer-setting\Fanex.Toco\Module\Bingo\Bingo.csproj">
-      <Project>{BD242AA5-22D2-4B66-960F-1D7BB74EF8DD}</Project>
-      <Name>Bingo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\customer-setting\Fanex.Toco\Module\Racebook\Racebook.csproj">
-      <Project>{63D0DC31-9FEF-4BEE-9D43-E1E3A3BE42A5}</Project>
-      <Name>Racebook</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>
