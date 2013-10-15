@@ -78,8 +78,7 @@
 
             var settingContent = $('#SettingContent');
             settingContent.empty()
-                .append(ptBingoCommon.renderCustomerInfo(rs) + ptBingoCommon.renderBetSetting(rs))
-                .append(ptBingoCommon.renderIncentiveSetting(rs))
+                .append(ptBingoCommon.renderCustomerInfo(rs) + ptBingoCommon.renderBetSetting(rs) + ptBingoCommon.renderIncentiveSetting(rs))
                 .append(ptBingoCommon.renderPositionTaking(rs))
                 .append(ptBingoCommon.renderSubmitButtion(rs.syncBingo));
             AssignCommission();
