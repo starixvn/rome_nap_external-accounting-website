@@ -161,12 +161,22 @@ Fanex.ExtAcc.Customer.Settings = {
         $.ajax({
             url: resolveClientUrl('LiveCasino/' + action)
         }).success(function (result) {
+            if (result.ErrorCode && result.ErrorCode == "1") {
+                $('#tabs-7').css('display', 'block');
+                $('#tabs-7').html(result.ErrorMessage.formatErrorMessage());
+                Fanex.ExtAcc.UnBlockUI();
+                return;
+            }
+
             $('#tabs-7').css('display', 'block');
             $('#tabs-7').html(result);
+
         }).error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
-            }
+            }            
+
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
