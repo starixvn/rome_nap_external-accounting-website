@@ -453,6 +453,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
             ProductStatuses product = Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+            model.UplineStatuses(product);
 
             if (product.RoleId == 4)
             {
@@ -464,22 +465,20 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Transfer");
             }
 
-            if (!product.SyncBingo)
+            if (!product.UplineStatuses.SyncBingo)
             {
                 model.RemoveProduct("Bingo");
             }
 
-            if (!product.SyncCasino)
+            if (!product.UplineStatuses.SyncCasino)
             {
                 model.RemoveProduct("Casino");
             }
 
-            if (!product.SyncLiveCasino)
+            if (!product.UplineStatuses.SyncLiveCasino)
             {
                 model.RemoveProduct("LiveCasino");
-            }
-
-            model.UplineStatuses(product);
+            }            
 
             return model;
         }
