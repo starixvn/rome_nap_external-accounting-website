@@ -156,7 +156,8 @@
     <Reference Include="Sunplus.Bingo.Data">
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Data.Entlib">
+    <Reference Include="Sunplus.Bingo.Data.Entlib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.Entlib.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Bingo.Data.LinqToSql">
