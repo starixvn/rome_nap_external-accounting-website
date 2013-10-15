@@ -19,6 +19,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
@@ -451,7 +452,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
-            ProductStatuses product = Get3rdPartyProducts(groupName, username);
+            ProductStatuses product = Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
 
             if (product.RoleId == 4)
             {
@@ -478,24 +479,52 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("LiveCasino");
             }
 
-            if (!product.AllowDoubleComm)
+            model.UplineStatuses(product);
+
+            return model;
+        }
+
+        /// <summary>
+        /// Gets upper statuses.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="product">Product statuses.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel UplineStatuses(this CustomerModel model, ProductStatuses product)
+        {
+            if (!product.UplineStatuses.AllowDoubleComm)
             {
                 model.DisableProduct("DoubleComm");
             }
 
-            if (product.DisableNumberGame)
+            if (product.UplineStatuses.DisableNumberGame)
             {
-                model.DisableProduct("NumberGame");
+                model.DisableProduct("EnableNumberGame");
             }
 
-            if (!product.AllowOutright)
+            if (!product.UplineStatuses.AllowOutright)
             {
                 model.DisableProduct("Outright");
             }
 
-            if (product.DisableVirtualSports)
+            if (product.UplineStatuses.DisableVirtualSports)
             {
-                model.DisableProduct("VirtualSports");
+                model.DisableProduct("EnableVirtualSports");
+            }
+
+            if (product.UplineStatuses.DisableBingo)
+            {
+                model.DisableProduct("EnableBingo");
+            }
+
+            if (product.UplineStatuses.DisableCasino)
+            {
+                model.DisableProduct("EnableCasino");
+            }
+
+            if (product.UplineStatuses.DisableLiveCasino)
+            {
+                model.DisableProduct("EnableLiveCasino");
             }
 
             return model;
@@ -558,11 +587,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// </summary>
         /// <param name="groupName">Group name to get.</param>
         /// <param name="username">Username to search.</param>
+        /// <param name="uplineId">Upper customer id.</param>
         /// <returns>ProductStatuses object.</returns>
-        private static ProductStatuses Get3rdPartyProducts(string groupName, string username)
+        private static ProductStatuses Get3rdPartyProducts(string groupName, string username, int uplineId = 0)
         {
-            ProductStatuses product = new ProductStatuses();            
-            DataTable customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
+            IReportService report = new ReportService();
+            
+            DataTable customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
+            DataTable upperInfo = uplineId != 0 ? report.GetCustomerInfo(groupName, uplineId, null, true) : null;
             DataTable result = null;
             int srecommend = 0, mrecommend = 0, recommend = 0, custId = 0, roleId = 0;
 
@@ -581,25 +613,63 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 else if (roleId == 3)
                 {
                     result = new MasterService().GetData(srecommend, custId, null, null, null);
+                    upperInfo = new SuperService().GetData(null, uplineId, null, null, null, groupName);
                 }
                 else if (roleId == 2)
                 {
                     result = new AgentService().GetData(mrecommend, custId, null, null, null);
+                    upperInfo = new MasterService().GetData(srecommend, uplineId, null, null, null);
                 }
                 else
                 {
                     result = new MemberService().GetData(recommend, custId, null, null, null);
+                    upperInfo = result = new AgentService().GetData(mrecommend, uplineId, null, null, null);
                 }
 
-                product.RoleId = roleId;
-                product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
-                product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
-                product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");                
-                product.DisableTransfer = roleId == 4 ? false : result.Rows[0].ToBoolean("disableTransfer");
-                product.AllowDoubleComm = result.Rows[0].ToBoolean("doubleCommLosing");
-                product.DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports");
-                product.AllowOutright = !result.Rows[0].ToBoolean("disableOutright");
-                product.DisableNumberGame = result.Rows[0].ToBoolean("disableNumber");
+                return GetProductStatusDetail(roleId, result, upperInfo);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets detail statuses.
+        /// </summary>
+        /// <param name="roleId">Role id of customer to search.</param>
+        /// <param name="result">Current customer info.</param>
+        /// <param name="upperInfo">Upper customer info.</param>
+        /// <returns>ProductStatuses object.</returns>
+        private static ProductStatuses GetProductStatusDetail(int roleId, DataTable result, DataTable upperInfo)
+        {
+            ProductStatuses product = new ProductStatuses();
+            product.UplineStatuses = new ProductStatuses();
+            product.RoleId = roleId;
+            product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
+            product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
+            product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
+            product.DisableTransfer = roleId == 4 ? false : result.Rows[0].ToBoolean("disableTransfer");
+            product.AllowDoubleComm = result.Rows[0].ToBoolean("doubleCommLosing");
+            product.DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports");
+            product.AllowOutright = !result.Rows[0].ToBoolean("disableOutright");
+            product.DisableNumberGame = result.Rows[0].ToBoolean("disableNumber");
+            product.DisableBingo = result.Rows[0].ToBoolean("disableBingo");
+            product.DisableCasino = result.Rows[0].ToBoolean("disableCasino");
+            product.DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino");
+
+            if (roleId < 4)
+            {
+                product.UplineStatuses.RoleId = roleId + 1;
+                product.UplineStatuses.SyncBingo = upperInfo.Rows[0].ToBoolean("syncBingo");
+                product.UplineStatuses.SyncCasino = upperInfo.Rows[0].ToBoolean("syncCasino");
+                product.UplineStatuses.SyncLiveCasino = upperInfo.Rows[0].ToBoolean("syncLiveCasino");
+                product.UplineStatuses.DisableTransfer = roleId + 1 == 4 ? false : upperInfo.Rows[0].ToBoolean("disableTransfer");
+                product.UplineStatuses.AllowDoubleComm = upperInfo.Rows[0].ToBoolean("doubleCommLosing");
+                product.UplineStatuses.DisableVirtualSports = upperInfo.Rows[0].ToBoolean("disableVirtualSports");
+                product.UplineStatuses.AllowOutright = !upperInfo.Rows[0].ToBoolean("disableOutright");
+                product.UplineStatuses.DisableNumberGame = upperInfo.Rows[0].ToBoolean("disableNumber");
+                product.UplineStatuses.DisableBingo = upperInfo.Rows[0].ToBoolean("disableBingo");
+                product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
+                product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
             }
 
             return product;

@@ -14,6 +14,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
     /// </summary>
     public class ProductStatuses
     {
+        public ProductStatuses UplineStatuses
+        {
+            get;
+            set;
+        }
+
         public int RoleId
         {
             get;
@@ -63,6 +69,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         }
 
         public bool DisableNumberGame
+        {
+            get;
+            set;
+        }
+
+        public bool DisableCasino
+        {
+            get;
+            set;
+        }
+
+        public bool DisableBingo
+        {
+            get;
+            set;
+        }
+
+        public bool DisableLiveCasino
         {
             get;
             set;
