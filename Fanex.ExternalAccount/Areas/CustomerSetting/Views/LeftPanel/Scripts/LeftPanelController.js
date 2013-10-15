@@ -849,13 +849,13 @@ function SettingController($scope, $http) {
 
         switch (roleId) {
             case 2:
-                actionName = 'Customer/AgentAddNewMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value + '/' + parent.$('#selectedGroupName').html(); ;
+                actionName = 'Customer/AgentAddNewMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
                 break;
             case 3:
-                actionName = 'Customer/MasterAddNewAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value + '/' + parent.$('#selectedGroupName').html(); ;
+                actionName = 'Customer/MasterAddNewAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
                 break;
             case 4:
-                actionName = 'Customer/SuperAddNewMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value + '/' + parent.$('#selectedGroupName').html(); ;
+                actionName = 'Customer/SuperAddNewMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
                 break;
             default:
                 break;

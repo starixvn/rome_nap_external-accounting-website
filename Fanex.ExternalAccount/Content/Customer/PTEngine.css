@@ -619,3 +619,8 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 {
 	background-color: #fff !important;
 }
+td, TD
+{
+    white-space: normal; 
+    overflow: auto;
+}
