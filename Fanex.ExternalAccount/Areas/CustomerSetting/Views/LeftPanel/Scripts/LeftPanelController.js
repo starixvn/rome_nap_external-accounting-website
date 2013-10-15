@@ -334,20 +334,15 @@ function LeftPanelController($scope, $element) {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var height = 720;
         var url = '';
-        var title = $scope.model.personalInfo.currentLevel.value;
         switch (roleId) {
             case 4:
-                height = 620;
                 url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + custId);
                 break;
             case 3:
-                height = 775;
                 url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?custid=' + custId + '&uplineid=' + uplineId);
                 break;
             case 2:
-                height = 775;
                 url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?custid=' + custId + '&uplineid=' + uplineId);
                 break;
             case 1:
@@ -358,7 +353,6 @@ function LeftPanelController($scope, $element) {
         }
 
         if (url !== '') {
-            //parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Racing Setting ' + '<font color="#6dcff6">' + title + '</font>', 1050, height, false, null, 1);
             parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };

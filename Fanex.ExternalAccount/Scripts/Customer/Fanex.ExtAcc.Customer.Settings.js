@@ -99,6 +99,28 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetRacingPT: function () {
+        var roleId = Fanex.ExtAcc.Customer.Settings.CurrentLevel;
+        var custId = Fanex.ExtAcc.Customer.UserId;
+        var uplineId;
+        var url = '';
+        switch (roleId) {
+            case Fanex.ExtAcc.Customer.Settings.Master:
+                uplineId = Fanex.ExtAcc.Customer.superId;
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?custid=' + custId + '&uplineid=' + uplineId);
+                break;
+            case Fanex.ExtAcc.Customer.Settings.Agent:
+                uplineId = Fanex.ExtAcc.Customer.masterId;
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?custid=' + custId + '&uplineid=' + uplineId);
+                break;
+            case Fanex.ExtAcc.Customer.Settings.Member:
+                uplineId = Fanex.ExtAcc.Customer.agentId;
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?custid=' + custId + '&uplineid=' + uplineId);
+                break;
+            default:
+                break;
+        }
+
+        Fanex.ExtAcc.LoadTabIFrame(url, 'tabs-2');
     },
 
     GetRacingMinPT: function () {

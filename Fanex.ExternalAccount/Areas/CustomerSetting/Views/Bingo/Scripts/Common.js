@@ -1,36 +1,7 @@
 ﻿function PTBlockUI() {
-    /*if (parent.BlockUI) {
-        try { parent.BlockUI(); } catch (e) { }
-    }
-    //Called inside a frame set (#centerFr)
-    else {
-        if (parent.parent.BlockUI) {
-            parent.parent.BlockUI();
-        }
-    }
-    //Called from popup
-    if (opener) {
-        if (opener.BlockUI) {
-            opener.BlockUI();
-        }
-        opener.parent.BlockUI();
-    }*/
     parent.Fanex.ExtAcc.BlockUI();
 }
 function PTUnBlockUI() {
-    /*if (parent.jQuery && parent.jQuery.unblockUI) {
-        parent.jQuery.unblockUI();
-    }
-    //Called inside a frame set (#centerFr)
-    if (parent.parent.jQuery && parent.parent.jQuery.unblockUI) {
-        parent.parent.jQuery.unblockUI();
-    }
-    //Called from popup
-    if (opener) {
-        if (opener.parent.jQuery.unblockUI) {
-            opener.parent.jQuery.unblockUI();
-        }
-    }*/
     parent.Fanex.ExtAcc.UnBlockUI();
 }
 function uInteger(str) {

@@ -172,6 +172,12 @@ function ResetMaxTransfer(custId) {
                 }
             }
         },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.responseText) {
+                var errorObject = JSON.parse(jqXHR.responseText);
+                showAlertMessage('err', errorObject.errorMessage, 1);
+            }
+        },
         complete: function () {
             PTUnBlockUI();
         }

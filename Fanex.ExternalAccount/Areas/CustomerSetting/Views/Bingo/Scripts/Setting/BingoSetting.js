@@ -56,6 +56,12 @@
                     showAlertMessage('err', rs.ErrorMessage, 1);
                 }
             },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.responseText) {
+                    var errorObject = JSON.parse(jqXHR.responseText);
+                    showAlertMessage('err', errorObject.errorMessage, 1);
+                }
+            },
             complete: function () {
                 PTUnBlockUI();
             }
