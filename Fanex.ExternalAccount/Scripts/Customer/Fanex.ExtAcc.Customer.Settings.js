@@ -41,6 +41,9 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-3').hide();
         }
 
+        $('#tab6').hide();
+        $('#tabs-6').hide();
+
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
