@@ -146,10 +146,6 @@
     <Reference Include="Sunplus.Accounting.Core">
       <HintPath>..\Dependencies\Bingo\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Agent.Configurations, Version=1.0.4276.26261, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
-    </Reference>
     <Reference Include="Sunplus.Bingo.Core">
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Core.dll</HintPath>
     </Reference>

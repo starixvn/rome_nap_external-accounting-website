@@ -132,9 +132,6 @@
     <Reference Include="SPSRemoting">
       <HintPath>..\Dependencies\SPSRemoting.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Agent.Configurations">
-      <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
-    </Reference>
     <Reference Include="Sunplus.Core.Common">
       <HintPath>..\Dependencies\Sunplus.Core.Common.dll</HintPath>
     </Reference>
