@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
             set;
         }
 
-        public int GivenCredit
+        public decimal GivenCredit
         {
             get;
             set;
