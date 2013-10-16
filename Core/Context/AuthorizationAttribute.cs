@@ -54,6 +54,11 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <param name="filterContext">AuthorizationContext object.</param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            if (this.IsHomeAuthorized())
+            {
+                return;
+            }
+
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
             var response = filterContext.HttpContext.Response;
@@ -67,7 +72,6 @@ namespace Fanex.ExternalAccount.Core.Context
             if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
-
                 response.Redirect("~/Home/Index" + group);
             }
 
@@ -76,7 +80,6 @@ namespace Fanex.ExternalAccount.Core.Context
                 if (filterContext.HttpContext == null)
                 {
                     this.CloseConnection(filterContext);
-
                     return;
                 }
 
@@ -174,6 +177,11 @@ namespace Fanex.ExternalAccount.Core.Context
             }
 
             response.Redirect("~/Account/Login", true);
+        }
+
+        private bool IsHomeAuthorized()
+        {
+            return this.Function.Equals("Home", StringComparison.OrdinalIgnoreCase) && CurrentSession.Instance.IsLogin;
         }
 
         /// <summary>

@@ -1833,7 +1833,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AppSettings.ini" />
+    <Content Include="Configurations\appSettings.config" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Areas\Common\Views\Authenticate\AccessDenied.cshtml" />
@@ -1879,6 +1879,7 @@
     <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\SuperEditMember.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Bingo\Shared\_Layout.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
+    <Content Include="Configurations\connectionStrings.config" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />

@@ -10,11 +10,7 @@
 namespace Fanex.ExternalAccount.Utilities
 {
     using System;
-    using System.Collections.Generic;
     using System.Configuration;
-    using System.Linq;
-    using System.Text;
-    using System.Web;
     using Fanex.ExternalAccount.DTO;
 
     /// <summary>
@@ -41,7 +37,7 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
-                return GetValue("IsTest").Equals("true", StringComparison.OrdinalIgnoreCase);
+                return Utils.ToBoolean(GetValue("IsTest"));
             }
         }
 
@@ -227,7 +223,7 @@ namespace Fanex.ExternalAccount.Utilities
 
         private static string GetValue(string key)
         {
-            return Sunplus.Agent.Configurations.AppSettings.Configuration.Get(key);
+            return ConfigurationManager.AppSettings[key];
         }
     }
 }
