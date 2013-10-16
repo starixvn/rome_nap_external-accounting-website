@@ -144,25 +144,6 @@ Fanex.ExtAcc = {
         }
     },
 
-    LoadTabIFrame: function (url, container) {
-        this.BlockUI();
-
-        var containerObject = $('#' + container);
-        containerObject.html('');
-
-        var iframe = document.createElement('iframe');
-        iframe.setAttribute('id', 'mainIFrame');
-        iframe.setAttribute('src', url);
-        iframe.setAttribute('frameborder', 0);
-        iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
-        iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
-        iframe.setAttribute('style', 'overflow: auto');
-
-        containerObject.append(iframe);
-
-        this.UnBlockUI();
-    },
-
     FormatNumber: function (number) { // Format a number to 1,234,567.89
         number += '';
 

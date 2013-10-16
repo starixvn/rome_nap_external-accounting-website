@@ -3,6 +3,8 @@
 	background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
 	cursor: pointer;
+	font: Verdana,Arial,sans-serif;
+    font-size: 12px;
 	width: 80px;
 	height: 30px;
 	border: none !important;
