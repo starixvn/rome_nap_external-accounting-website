@@ -62,8 +62,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.UpperCustID = uplineId;
                 customerDetail.NoCSData = true;
                 customerDetail.IsEnablePT = true;
-                CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();                
-                DataTable dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, false);
+                CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
+                DataTable dt = null;
+                try
+                {
+                    dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, false);
+                }
+                catch (System.Exception)
+                { }
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
