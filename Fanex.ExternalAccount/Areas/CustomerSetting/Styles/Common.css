@@ -1,4 +1,8 @@
-﻿input[type=text]
+﻿html,body
+{
+     padding: 0 !important;
+}
+input[type=text]
 {
     font-size: 11px;
     margin-top: 1px;
