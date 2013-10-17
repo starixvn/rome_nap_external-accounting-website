@@ -382,6 +382,20 @@ function LeftPanelController($scope, $element) {
             parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
+
+    $scope.VirtualSports = function () {
+        //var roleId;
+        var personalObject = $scope.model.personalInfo;
+        var uplineRoleId = personalObject.uplineRoleId.value;
+        var uplineId = uplineRoleId > 4 ? personalObject.custId.value : personalObject.uplineId.value;
+        var targetCustId = personalObject.custId.value;
+        var targetRoleId = personalObject.roleId.value;
+
+        if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
+            var url = parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId);
+            parent.Fanex.ExtAcc.LoadMainFrame(url, undefined, true, false, true);
+        }
+    };
 };
 
 function PersonalInfoController($scope, $http) {

@@ -23,10 +23,9 @@
                 <div id="divCustInfo">
                 </div>
                 @Html.Partial("~/Areas/CustomerSetting/Views/Racebook/Setting/RacingSetting.cshtml")
-       
-                <div class="floatL display-none">
-                    <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
-                </div>
+            </div>
+            <div class="floatL display-none">
+                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
             </div>
         </div>
         @RenderBody()

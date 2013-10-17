@@ -33,8 +33,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         private bool _isChanged = false;
         private List<Fanex.ExternalAccount.DTO.Result> _result = new List<Fanex.ExternalAccount.DTO.Result>();
 
+        [HttpPost]
         [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
-        [HttpGet]
         public ActionResult EditSingle(PTVirtualSportsModel model)
         {
             return this.PartialViewBase(model);
@@ -45,21 +45,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         /// </summary>
         /// <param name="model">Model object.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
         [HttpGet]
+        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
         public ActionResult DataSource(PTVirtualSportsModel model)
         {
-            var currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = model.TargetCustId,
+                TargetRoleId = model.TargetRoleId,
                 CustId = model.CustId,
+                RoleId = model.RoleId,
                 FormId = FormType.EditPT,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
-                RoleId = model.RoleId,
-                TargetRoleId = model.TargetRoleId,
                 SiteName = SiteName,
                 SubAccId = 0,
                 UserName = CurrentSession.UserName.ToUpper()
@@ -80,22 +80,22 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         /// </summary>
         /// <param name="model">Model object.</param>
         /// <returns>ActionResult object.</returns>
+        [HttpPost]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Update)]
-        [ActionName("EditSingle"), HttpPost]
-        public ActionResult EditSinglePost(PTVirtualSportsUpdateModel model)
+        public ActionResult UpdateCustomerSetting(PTVirtualSportsUpdateModel model)
         {
-            var currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = model.TargetCustId,
+                TargetRoleId = model.TargetRoleId,
                 CustId = model.CustId,
+                RoleId = model.RoleId,
                 FormId = FormType.EditPT,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
-                RoleId = model.RoleId,
-                TargetRoleId = model.TargetRoleId,
                 SiteName = SiteName,
                 SubAccId = 0,
                 UserName = CurrentSession.UserName.ToUpper()

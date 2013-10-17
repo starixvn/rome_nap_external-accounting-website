@@ -230,6 +230,57 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetVirtualSportSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        var uplineId, uplineRoleId, targetCustId, targetRoleId;
+        targetRoleId = Fanex.ExtAcc.Customer.Settings.CurrentLevel;
+        if (targetRoleId == Fanex.ExtAcc.Customer.Master) {
+            uplineId = Fanex.ExtAcc.Customer.superId;
+            uplineRoleId = Fanex.ExtAcc.Customer.Super;
+        }
+        else if (targetRoleId == Fanex.ExtAcc.Customer.Agent) {
+            uplineId = Fanex.ExtAcc.Customer.masterId;
+            uplineRoleId = Fanex.ExtAcc.Customer.Master;
+        }
+        else {
+            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
+                uplineId = Fanex.ExtAcc.Customer.superId;
+                uplineRoleId = Fanex.ExtAcc.Customer.Super;
+            }
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
+                uplineId = Fanex.ExtAcc.Customer.masterId;
+                uplineRoleId = Fanex.ExtAcc.Customer.Master;
+            }
+            else {
+                uplineId = Fanex.ExtAcc.Customer.agentId;
+                uplineRoleId = Fanex.ExtAcc.Customer.Agent;
+            }
+        }
+
+        targetCustId = Fanex.ExtAcc.Customer.UserId;
+        if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
+            $.ajax({
+                type: 'POST',
+                url: resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId)
+            }).success(function (result) {
+                var container = $('#tabs-8');
+                if (result.ErrorCode && result.ErrorCode == "1") {
+                    container.css('display', 'block');
+                    container.html(result.ErrorMessage.formatErrorMessage());
+                    return;
+                }
+
+                container.css('display', 'block');
+                container.html(result);
+
+            }).error(function (data) {
+                if (typeof console != 'undefined') {
+                    console.log(data.responseText);
+                }
+            }).complete(function (jqXHR, textStatus) {
+                Fanex.ExtAcc.UnBlockUI();
+            });
+        }
     },
 
     EmptyAllTabs: function () {
