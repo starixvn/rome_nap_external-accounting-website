@@ -310,7 +310,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             var result = this._userService.GroupList();
 
-            return this.Json(result.Select(o => o.GroupName).ToArray(), JsonRequestBehavior.AllowGet);
+            return this.Json(result.Select(o => new { GroupId = o.GroupID, GroupName = o.GroupName }).ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
