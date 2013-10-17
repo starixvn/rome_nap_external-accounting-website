@@ -86,6 +86,23 @@
     <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="archive" Plain="0" />
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="main" Plain="0" />
     <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="archive" Plain="0" />
+    
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="main" Plain="0" />
+    
+    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="main" Plain="0" />
+    
+    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="main" Plain="0" />
+    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="main" Plain="0" />
+    
+    <Setting Key="Acc_CustomerSelRBStatus" SpName="Acc_CustomerSelRBStatus" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdRBStatus" SpName="Acc_CustomerUpdRBStatus" DbName="main" Plain="0" />
+
+    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus" DbName="main" Plain="0" />
+    <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="archive" Plain="0" />
   </Function>
   <Function Name="Customer List">
 		<Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="checkin" Plain="0" />
@@ -129,10 +146,7 @@
 		<Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="archive" Plain="0" />
 		<Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="main" Plain="0" />
 		<Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" Plain="0" />
-		<Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="archive" Plain="0" />
-		<Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="main" Plain="0" />
-		<Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus" DbName="main" Plain="0" />
-		<Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="archive" Plain="0" />
+		<Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="archive" Plain="0" />		
 	</Function>
 	<Function Name="Edit Commission">
 		<Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="main" Plain="0" />

@@ -17,6 +17,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -156,6 +157,32 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             ViewBag.CustId = custId;
             var result = this._service.CustomerSelectClearBalance(custId);
             return this.PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
+        }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
+        {
+            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+            this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
+            return this.JsonBase(
+                this._service.CloseCutomer(custId, close, clearCredit, custName), 
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
+        {
+            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+            this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
+            return this.JsonBase(
+                this._service.SuspendCustomer(custId, suspend),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
         }
     }
 }

@@ -150,5 +150,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.CustomerSelectClearBalance(custId);
         }
+
+        public override Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
+        {
+            return this._data.CloseCutomer(custId, close, clearCredit, custName);
+        }
+
+        public override Result SuspendCustomer(int custId, bool suspend)
+        {
+            return this._data.SuspendCustomer(custId, suspend);
+        }
     }
 }

@@ -91,5 +91,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool Closed
+        {
+            get;
+            set;
+        }
+
+        public bool Suspended
+        {
+            get;
+            set;
+        }
     }
 }
