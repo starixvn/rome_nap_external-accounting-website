@@ -192,8 +192,10 @@ Fanex.ExtAcc.Customer = {
             transferCondition: { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } }
         }
 
-        if (showBetSetting == '1' && $('#selectedGroupName').html() == 'ACCUT') {
-            items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 870, 600, false, null, 1, 'bettingLimitPopup'); } };
+        var allowBettingLimitGroups = eval(allowBetSettingGroups);
+
+        if (showBetSetting == '1' && allowBettingLimitGroups.contains(parseInt($('#selectedGroupIndex').html()))) {
+            items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 900, 660, false, null, 1, 'bettingLimitPopup'); } };
         }
 
         $.contextMenu({

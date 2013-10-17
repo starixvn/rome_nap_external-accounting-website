@@ -41,6 +41,9 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-3').hide();
         }
 
+        $('#tab6').hide();
+        $('#tabs-6').hide();
+
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
@@ -123,7 +126,7 @@ Fanex.ExtAcc.Customer.Settings = {
             }
         }
         var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId);
-        $('#tabs-2').height($('#leftFrame').height() - 35);
+        $('#tabs-2').height($('#leftFrame').height() - 10);
         $('#tabs-2').css('display', 'block');
         $('#racingFrame').attr('src', url);
     },
@@ -159,7 +162,7 @@ Fanex.ExtAcc.Customer.Settings = {
 
         var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId);
 
-        $('#tabs-4').height($('#leftFrame').height() - 30);
+        $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
         $('#casinoFrame').attr('src', url);
     },
@@ -184,7 +187,7 @@ Fanex.ExtAcc.Customer.Settings = {
             }
         }
         var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId);
-        $('#tabs-5').height($('#leftFrame').height() - 100);
+        $('#tabs-5').height($('#leftFrame').height() - 10);
         $('#tabs-5').css('display', 'block');
         $('#bingoFrame').attr('src', url);
     },

@@ -146,10 +146,6 @@
     <Reference Include="Sunplus.Accounting.Core">
       <HintPath>..\Dependencies\Bingo\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Agent.Configurations, Version=1.0.4276.26261, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
-    </Reference>
     <Reference Include="Sunplus.Bingo.Core">
       <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Core.dll</HintPath>
     </Reference>
@@ -1878,6 +1874,13 @@
     <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\Super.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\SuperEditMember.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Bingo\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\AccessDenied\AccessDenied.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Content.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
     <None Include="Content\Images\Thumbs.db" />

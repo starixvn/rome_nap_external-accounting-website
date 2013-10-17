@@ -123,17 +123,8 @@
     <Reference Include="RSACryptoPad">
       <HintPath>..\Dependencies\RSACryptoPad.dll</HintPath>
     </Reference>
-    <Reference Include="SignalR">
-      <HintPath>..\Dependencies\SignalR.dll</HintPath>
-    </Reference>
-    <Reference Include="SignalR.Hosting.AspNet">
-      <HintPath>..\Dependencies\SignalR.Hosting.AspNet.dll</HintPath>
-    </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\Dependencies\SPSRemoting.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Agent.Configurations">
-      <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Core.Common">
       <HintPath>..\Dependencies\Sunplus.Core.Common.dll</HintPath>
@@ -156,9 +147,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UMControllerLibrary">
-      <HintPath>..\Dependencies\UMControllerLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AccountController.cs" />

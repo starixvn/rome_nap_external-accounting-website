@@ -418,8 +418,16 @@ Fanex.ExtAcc = {
             $('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
+        if (document.getElementById('tabs-2')) {
+            $('#tabs-2').height($('#contentSplitter').height() - 40);
+        }
+
         if (document.getElementById('tabs-4')) {
-            $('#tabs-4').height($('#contentSplitter').height() - 55);
+            $('#tabs-4').height($('#contentSplitter').height() - 40);
+        }
+
+        if (document.getElementById('tabs-5')) {
+            $('#tabs-5').height($('#contentSplitter').height() - 40);
         }
 
         this.Resize();
@@ -450,8 +458,16 @@ Fanex.ExtAcc = {
         $('#leftFrame').height($('#contentSplitter').height() - 30);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
+        if (document.getElementById('tabs-2')) {
+            $('#tabs-2').height($('#contentSplitter').height() - 40);
+        }
+
         if (document.getElementById('tabs-4')) {
-            $('#tabs-4').height($('#contentSplitter').height() - 55);
+            $('#tabs-4').height($('#contentSplitter').height() - 40);
+        }
+
+        if (document.getElementById('tabs-5')) {
+            $('#tabs-5').height($('#contentSplitter').height() - 40);
         }
 
         // Update to cookie
