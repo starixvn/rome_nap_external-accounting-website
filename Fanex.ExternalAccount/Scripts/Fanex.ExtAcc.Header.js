@@ -40,7 +40,7 @@ Fanex.ExtAcc.Header = {
                     }
 
                     for (var i = 0; i < items.length; i++) {
-                        $("#ddlGroupName").append('<li class="divUL"><div class="sf-menu divLI" id="group' + Fanex.ExtAcc.ReplaceAll(items[i], ' ', '') + '" ignorehref="1">' + items[i] + '</div></li>');
+                        $("#ddlGroupName").append('<li class="divUL"><div class="sf-menu divLI" groupid="' + items[i].GroupId + '" id="group' + Fanex.ExtAcc.ReplaceAll(items[i].GroupName, ' ', '') + '" ignorehref="1">' + items[i].GroupName + '</div></li>');
                     }
 
                     $('#userMenu').superfish();
@@ -52,6 +52,8 @@ Fanex.ExtAcc.Header = {
                     $('#selectedGroup').html(Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', ' '));
                     $("#groupsMenu").superfish();
                     $("#groupsMenu").css('visibility', 'visible');
+                    var groupId = $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', ' ')).attr('groupid');
+                    $('#selectedGroupIndex').html(groupId);
 
                     $('#userMenu').bind('mouseover', function () {
                         $('#ddlGroupName').hide();
@@ -66,7 +68,7 @@ Fanex.ExtAcc.Header = {
                         $('#dllUsername').hide();
                         $('#userNameMenu').removeClass('sfHover');
                     });
-                    
+
                     $('#dllUsername').bind('click', function (event) {
                         $('#dllUsername').hide();
                     });
@@ -76,23 +78,24 @@ Fanex.ExtAcc.Header = {
                             $('#ddlGroupName').hide();
 
                             for (var i = 0; i < Fanex.ExtAcc.Header.GroupLength; i++) {
-                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i], ' ', '')).css('font-weight', 'normal');
-                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i], ' ', '')).css('color', '#acacac');
+                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i].GroupName, ' ', '')).css('font-weight', 'normal');
+                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i].GroupName, ' ', '')).css('color', '#acacac');
                             }
 
                             var id = event.target.id;
+                            var groupId = event.target.getAttribute('groupid');
                             selectedGroupName = event.target.innerHTML;
                             $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('font-weight', 'bold');
                             $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('color', '#fff');
                             $('#selectedGroup').html(selectedGroupName + '<span class="sf-sub-indicator"> »</span>');
-                            $('#selectedGroupIndex').html(id);
+                            $('#selectedGroupIndex').html(groupId);
                             $('#selectedGroupName').html(selectedGroupName);
 
                             if ((location.href.indexOf('Home/Index') != -1
                                 || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
                                 || location.href == (location.protocol + '//' + location.host + '/'))
                                 && !document.getElementById('customerListGrid')
-                                && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {                                
+                                && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {
                                 if (window.history.pushState) {
                                     window.history.pushState("object or string", "Title", location.href.substr(0, location.href.lastIndexOf('/')) + "/" + selectedGroupName);
                                 }

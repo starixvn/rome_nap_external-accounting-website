@@ -2,6 +2,10 @@
 {
      padding: 0 !important;
 }
+#tabs
+{
+    font-size: 11px !important;
+}
 input[type=text]
 {
     font-size: 11px;

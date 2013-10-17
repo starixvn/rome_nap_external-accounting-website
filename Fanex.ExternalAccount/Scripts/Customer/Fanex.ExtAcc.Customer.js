@@ -181,7 +181,7 @@ Fanex.ExtAcc.Customer = {
             casino: { name: "Casino", className: "iconViewEdit", callback: function () { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + Fanex.ExtAcc.Customer.UserId + '/0'), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1); } },
             liveCasino: { name: "Live Casino", className: "iconViewEdit", callback: function () {
                 Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditSuper'), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
-            } 
+            }
             },
             separator2: "-----",
             editInfo: { name: "Edit Info", height: 25, className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 406, 310, false); } },
@@ -189,7 +189,9 @@ Fanex.ExtAcc.Customer = {
             transferCondition: { name: "Transfer Condition", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1); } }
         }
 
-        if (showBetSetting == '1' && $('#selectedGroupName').html() == 'ACCUT') {
+        var allowBettingLimitGroups = eval(allowBetSettingGroups);
+
+        if (showBetSetting == '1' && allowBettingLimitGroups.contains(parseInt($('#selectedGroupIndex').html()))) {
             items.betSetting = { name: "Edit Betting Limit", className: "iconEnableEdit editInfoBg", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 900, 660, false, null, 1, 'bettingLimitPopup'); } };
         }
 
