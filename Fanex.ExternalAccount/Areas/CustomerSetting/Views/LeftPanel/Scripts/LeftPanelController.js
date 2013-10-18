@@ -965,7 +965,7 @@ function SettingController($scope, $http) {
             '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" />Clear All Credit';
 
         if (close) {
-            parent.Fanex.ExtAcc.Form.ConfirmBox('Confirmation',
+            parent.Fanex.ExtAcc.Form.ConfirmBox('Open Customer: <font color="##6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                 'Are you sure you want to change Closed status for this customer?',
                 460,
                 150,
@@ -1021,13 +1021,13 @@ function SettingController($scope, $http) {
                 });
         }
         else {
-            parent.Fanex.ExtAcc.Form.ConfirmBox('Close Customer',
+            parent.Fanex.ExtAcc.Form.ConfirmBox('Close Customer: <font color="##6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
             content,
             300,
             150,
             false,
             function () {
-                parent.Fanex.ExtAcc.Form.ConfirmBox('Confirmation',
+                parent.Fanex.ExtAcc.Form.ConfirmBox('Warning!!!',
                     'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
                     460,
                     150,
@@ -1079,7 +1079,7 @@ function SettingController($scope, $http) {
                     'confirmClose',
                     true,
                     function () {
-                        parent.Fanex.ExtAcc.Form.Closed(null, null, 'confirmClose');
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
                     });
             },
             function () {
@@ -1093,6 +1093,77 @@ function SettingController($scope, $http) {
             },
             true);
         }
+    };
+
+    $scope.Suspended = function (suspend, id) {
+        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !parent.allowBetSettingGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+            return;
+        }
+
+        var message = '';
+        var title = '';
+
+        if (suspend) {
+            message = 'Are you sure you want to change Suspended status for this customer? All downlines will be un-suspended as well';
+            title = 'Un-suspend Customer: <font color="##6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+        }
+        else {
+            message = "Are you sure you want to change Suspended status for this customer? Warning, all members under this agent can't place bet!";
+            title = 'Suspend Customer: <font color="##6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+        }
+
+        parent.Fanex.ExtAcc.Form.ConfirmBox(title,
+                message,
+                480,
+                150,
+                false,
+                function () {
+                    parent.Fanex.ExtAcc.BlockUI();
+
+                    $.ajax({
+                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateSuspendCutomer'),
+                        dataType: 'json',
+                        type: 'post',
+                        data: {
+                            custId: $scope.model.personalInfo.custId.value,
+                            uplineId: $scope.model.personalInfo.roleId.value == 4 ? userId : $scope.model.personalInfo.uplineId.value,
+                            suspend: !suspend
+                        }
+                    })
+                    .success(function (result) {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
+                        if (result.IsSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        }
+                        else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            document.getElementById(id).checked = suspend;
+                        }
+                    })
+                    .error(function (xhr) {
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
+                        document.getElementById(id).checked = suspend;
+                        if (typeof console != 'undefined') {
+                            console.log(xhr);
+                        }
+                    });
+                },
+                function () {
+                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
+                    document.getElementById(id).checked = suspend;
+                },
+                'popupSuspend',
+                true,
+                function () {
+                    document.getElementById(id).checked = suspend;
+                });
     };
 };
 
