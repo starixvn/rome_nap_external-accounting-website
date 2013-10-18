@@ -956,7 +956,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.Closed = function (close, id) {
-        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !parent.allowBetSettingGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+        var allowGroups = eval(parent.allowBetSettingGroups);
+        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
             return;
         }
 
@@ -1096,7 +1097,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.Suspended = function (suspend, id) {
-        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !parent.allowBetSettingGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+        var allowGroups = eval(parent.allowBetSettingGroups);
+        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
             return;
         }
 
