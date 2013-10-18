@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -18,6 +19,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -159,10 +161,29 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             return this.PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
         }
 
+        /// <summary>
+        /// Updates closed status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="close">Closed or not.</param>
+        /// <param name="clearCredit">Clear credit or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+            if (casinoCustomer.RoleId == Super && GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            {
+                return this.JsonBase(
+                    new Result(1, ViewLang.DontHavePermission), 
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+            }
+
             this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
             return this.JsonBase(
                 this._service.CloseCutomer(custId, close, clearCredit, custName), 
@@ -172,10 +193,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
+        /// <summary>
+        /// Updates suspended status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="suspend">Suspended or not.</param>
+        /// <returns>ActionResult object.</returns>
         [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+            if (casinoCustomer.RoleId == Super && GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            {
+                return this.JsonBase(
+                    new Result(1, ViewLang.DontHavePermission), 
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+            }
+
             this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
             return this.JsonBase(
                 this._service.SuspendCustomer(custId, suspend),
