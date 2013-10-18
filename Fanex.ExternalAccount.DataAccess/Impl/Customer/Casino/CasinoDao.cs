@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
 {
     using System.Collections;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using CasinoLibrary.SBAgent;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO.Customer.Casino;
@@ -27,15 +28,21 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
         /// <param name="ibcCustId">Customer id.</param>
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>CasinoCustomer object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
         {
             Hashtable param = new Hashtable();
             param.Add("custid", ibcCustId);
-            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", param, 300);
+            var uplineParam = new Hashtable();
+            uplineParam.Add("custid", uplineId);
+            DbResult dr = DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", param, 300);
+            var upline = uplineId != 0 ? DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", uplineParam, 300) : new DbResult(new Hashtable(), new DataSet());
+            DataRow row = null;
             CasinoCustomer customerDetail = new CasinoCustomer();
+            customerDetail.UplineDisabledCasino = uplineId != 0 ? (bool)upline.ResultSet.Tables[0].Rows[0]["disablecasino"] : false;
             if (dr.ResultSet.Tables[0].Rows.Count > 0)
             {
-                DataRow row = dr.ResultSet.Tables[0].Rows[0];
+                row = dr.ResultSet.Tables[0].Rows[0];
                 customerDetail.UserName = Utils.ToString(row["username"]);
                 customerDetail.UserName2 = Utils.ToString(row["username2"]);
                 customerDetail.FirstName = Utils.ToString(row["firstname"]);
@@ -51,31 +58,29 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.SIBCCustID = Utils.ToInt32(row["superid"]);
                 customerDetail.MIBCCustID = Utils.ToInt32(row["masterid"]);
                 customerDetail.AIBCCustID = Utils.ToInt32(row["agentid"]);
-                customerDetail.GivenCredit = Utils.ToDecimal(row["credit"]);
+                customerDetail.GivenCredit = Utils.ToDecimal(row["credit"]).Format();
                 customerDetail.CasinoSync = Utils.ToBoolean(row["synccasino"]);
                 customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
                 customerDetail.LiveCasinoSync = Utils.ToBoolean(row["synclivecasino"]);
-                customerDetail.LiveCasinoDisabled = Utils.ToBoolean(row["disablelivecasino"]);
+                customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
+                customerDetail.BingoDisabled = Utils.ToBoolean(row["disablebingo"]);
+                customerDetail.BingoSync = Utils.ToBoolean(row["syncbingo"]);
                 customerDetail.IBCCustID = Utils.ToInt32(row["custid"]);
+                customerDetail.UserPwd = Utils.ToString(row["userpwd"]);
                 customerDetail.UpperCustID = uplineId;
                 customerDetail.IsEnablePT = true;
-                DataTable dt = null;
-                try
-                {
-                    dt = new CasinoLibrary.SBAgent.Customer().GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, false);
-                }
-                catch (System.Exception)
-                {
-                }
-
-                if (dt != null && dt.Rows.Count > 0)
+                CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
+                DataTable dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, uplineId == 0);
+                if (customerDetail.RoleId != 4 && dt != null && dt.Rows.Count > 0)
                 {
                     customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxLimit"]);
                     customerDetail.MinTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MinLimit"]);
                     customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["DefMaxTransferCredit"]);
                 }
+
+                customerDetail.NoIBCData = false;
             }
-                        
+
             return customerDetail;
         }
 

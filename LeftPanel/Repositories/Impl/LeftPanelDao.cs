@@ -337,12 +337,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <param name="sync">Synchronize or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>Result object.</returns>
-        public Result EnableCasino(int id, bool enable, bool sync, string custName)
+        public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName)
         {
             var result = CasinoManager.Instance.UpdateCSStatus(
                 id, 
                 sync, 
                 !enable, 
+                enableDownline,
                 CurrentSession.Instance.UserId, 
                 CurrentContext.Instance.Ip4Address, 
                 0, 
@@ -464,6 +465,32 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 db.ExecuteNonQuery();
 
                 return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Allows master auto PT.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="allow">Allow or not.</param>
+        /// <returns>Result object.</returns>
+        public Result AutoMasterPT(int id, bool allow)
+        {
+            var param = new Hashtable();
+            param.Add("userid", CurrentSession.Instance.UserId);
+            param.Add("custid", id);
+            param.Add("disableautompt", !allow);
+            param.Add("language", "E");
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("ip", CurrentContext.Instance.Ip4Address);
+
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerUpdMaster_DisableAutoMPT"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+
+                return new Result(objDB.GetParameterValue("errcode"), objDB.GetParameterValue("errmsg"));
             }
         }
 

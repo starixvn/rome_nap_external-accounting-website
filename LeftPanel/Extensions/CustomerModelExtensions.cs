@@ -453,6 +453,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
             ProductStatuses product = Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+
+            if (!product.SyncBingo)
+            {
+                model.RemoveEnableProduct("EnableBingo");
+            }
+
+            if (!product.SyncCasino)
+            {
+                model.RemoveEnableProduct("EnableCasino");
+            }
+
+            if (!product.SyncLiveCasino)
+            {
+                model.RemoveEnableProduct("EnableLiveCasino");
+            }
             
             if (product.RoleId == 4)
             {
@@ -563,6 +578,32 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.Setting.Details.RemoveAt(index);
             }
             
+            return model;
+        }
+
+        /// <summary>
+        /// Removes unsynchronized products on setting tab.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="key">Key to specify item.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel RemoveEnableProduct(this CustomerModel model, string key)
+        {
+            int index = -1;
+            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
+            {
+                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1)
+            {
+                model.Setting.EnableItems.RemoveAt(index);
+            }
+
             return model;
         }
 

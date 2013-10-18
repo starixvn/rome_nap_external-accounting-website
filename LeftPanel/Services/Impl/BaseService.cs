@@ -144,7 +144,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             throw new NotImplementedException();
         }
 
-        public virtual Result EnableCasino(int id, bool enable, bool synce, string custName)
+        public virtual Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
         {
             throw new NotImplementedException();
         }
@@ -165,6 +165,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         }
 
         public virtual Result EnableVirtualSports(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public virtual Result AutoMasterPT(int id, bool allow)
         {
             throw new NotImplementedException();
         }
