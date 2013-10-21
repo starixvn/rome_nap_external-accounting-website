@@ -58,3 +58,6 @@
 {
 	vertical-align: top;
 }
+#idConfirm_popup{
+    height: 140px !important;
+}

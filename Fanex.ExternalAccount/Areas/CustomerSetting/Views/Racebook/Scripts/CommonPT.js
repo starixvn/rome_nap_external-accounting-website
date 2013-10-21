@@ -41,20 +41,20 @@ function gup(name) {
 }
 // Success=0, Error=1, Warning=2
 function showAlertMessage(containerid, msg, type) {
-
+    var errorElement = $('#' + containerid);
     switch (type) {
         case 0:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxscc'><div>" + msg + "</div></div>";
+            msg = '<div class="msgcorrect">' + msg + '</div>';
             break;
         case 1:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxerr'><div>" + msg + "</div></div>";
-            break;
         case 2:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>"; ;
+            msg = '<div class="msgerror">' + msg + '</div>';
             break;
         default:
-            break
+            return;
     }
+    errorElement.removeClass('display-none');
+    errorElement.html(msg);
     window.scroll(0, 0);
     parent.scroll(0, 0);
 }

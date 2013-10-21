@@ -44,6 +44,9 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(param),
+            beforeSend: function (jqXHR, settings) {
+                PTBlockUI();
+            },
             success: function (rs) {
                 if (rs.ErrorCode == 0) {
                     showAlertMessage('err', 'Updated Successfully', 0);
@@ -69,7 +72,7 @@
     },
     initHtml: function (rs) {
         if (rs.Result && rs.Result.ErrorCode > 0) {
-            $('#err').html('<div class="alertboxerr"><div>' + rs.Result.ErrorMessage + '</div></div>');
+            showAlertMessage('err', rs.Result.ErrorMessage, 1);
             $('.bg_table').addClass('hidden');
         }
         else {

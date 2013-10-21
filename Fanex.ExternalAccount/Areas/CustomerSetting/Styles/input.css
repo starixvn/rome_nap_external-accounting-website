@@ -23,3 +23,25 @@
 	border: none !important;
 	cursor: pointer;
 }
+.errMsg
+{
+	background-color: #ffedc1;
+	background-image: url("../Images/warning-icn.png");
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	line-height: 1.5;
+	text-align: left;
+	vertical-align: middle;
+	font-size: 13px;
+	clear: both;
+	white-space: pre-line;
+	margin-bottom: 5px;
+	border: 1px solid #d2a243;
+	padding: 5px 30px;
+	overflow: auto;
+}
+.msgerror{ color:#FF0000; }
+.msgcorrect{ color:#00f; }

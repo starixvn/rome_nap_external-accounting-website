@@ -58,17 +58,17 @@
         }
 
         if (isSuccess) {
-            result = '<div class="boxscc">' + result + '</div>';
             t1 = setTimeout(function () {
-                ptRacingCommon.clearMessage(containerid); 
-                parent.Fanex.ExtAcc.Form.Close(false); }, 3000);
+                parent.Fanex.ExtAcc.Form.Close(false);
+            }, 3000);
         }
         else {
-            result = '<div class="boxerr">' + result + '</div>';
             t2 = setTimeout("ptRacingCommon.clearSuccessMessages()", 3000);
         }
 
-        $("#".concat(containerid)).html(result);
+        var containerElement = $('#'.concat(containerid));
+        containerElement.removeClass('display-none');
+        containerElement.html(result);
 
         window.scroll(0, 0);
         parent.scroll(0, 0);
@@ -95,7 +95,9 @@
         clearTimeout(t2);
     },
     clearMessage: function (containerid) {
-        $("#" + containerid).html('');
+        var containerElement = $('#'.concat(containerid));
+        containerElement.addClass('display-none');
+        containerElement.html('');
     },
     afterUpdate: function () {
         var t = setTimeout(function () {

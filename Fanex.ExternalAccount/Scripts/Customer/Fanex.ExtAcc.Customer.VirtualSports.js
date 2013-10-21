@@ -354,8 +354,8 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
     afterUpdateSuccess: function (timeout) {
         t1 = setTimeout(function () {
-            $('#errMsg').css('display', 'none');
-            $('#errMsg').html('');
+//            $('#errMsg').css('display', 'none');
+//            $('#errMsg').html('');
             Fanex.ExtAcc.Form.Close(false);
         }, timeout);
     }
