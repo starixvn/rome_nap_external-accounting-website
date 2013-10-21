@@ -23,6 +23,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTRacing.Services;
+    using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -441,6 +442,42 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
+        }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        public ActionResult GetSecurityCode(int id, int roleId, string username)
+        {
+            ViewBag.custId = id;
+            ViewBag.roleId = roleId;
+            ViewBag.Username = username;
+            return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml");
+        }
+
+        /// <summary>
+        /// Updates security code.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="code">Security code.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>ActionResult object.</returns>
+        [HttpPost]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateSecurityCode(int id, string code, int roleId = 1)
+        {
+            string hashCode = Encryption.CfsEnCode(code);
+            if (roleId != Member)
+            {
+                var md5 = Fanex.Security.Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)");
+                hashCode = Fanex.Security.Cryptography.ComputeHash("SHA1", code, md5);
+            }
+
+            Result result = this._service.ResetSecurityCode(id, hashCode);
+            return this.JsonBase(
+                result, 
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
         }
     }
 }
