@@ -36,5 +36,25 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
 
         DataTable CustomerSelectClearBalance(int custId);
+
+        Result CloseCutomer(int custId, bool close, bool clearCredit, string custName);
+
+        Result SuspendCustomer(int custId, bool suspend);
+
+        Result AllowOutright(int custId, bool allow);
+
+        Result EnableRacing(int id, IList<ObjectInfo> sportTypes);
+
+        Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName);
+
+        Result EnableBingo(int id, bool enable, bool sync, bool enableDownline);
+
+        Result EnableNumberGame(int id, bool enable, bool enableDownline);
+
+        Result EnableLiveCasino(int id, bool enable, bool enableDownline);
+
+        Result EnableVirtualSports(int id, bool enable, bool enableDownline);
+
+        Result AutoMasterPT(int id, bool allow);
     }
 }

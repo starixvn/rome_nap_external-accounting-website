@@ -150,5 +150,55 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.CustomerSelectClearBalance(custId);
         }
+
+        public override Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
+        {
+            return this._data.CloseCutomer(custId, close, clearCredit, custName);
+        }
+
+        public override Result SuspendCustomer(int custId, bool suspend)
+        {
+            return this._data.SuspendCustomer(custId, suspend);
+        }
+
+        public override Result AllowOutright(int custId, bool allow)
+        {
+            return this._data.AllowOutright(custId, allow);
+        }
+
+        public override Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
+        {
+            return this._data.EnableBingo(id, enable, sync, enableDownline);
+        }
+
+        public override Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
+        {
+            return this._data.EnableCasino(id, enable, enableDownline, synce, custName);
+        }
+
+        public override Result EnableLiveCasino(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableLiveCasino(id, enable, enableDownline);
+        }
+
+        public override Result EnableNumberGame(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableNumberGame(id, enable, enableDownline);
+        }
+
+        public override Result EnableRacing(int id, IList<ObjectInfo> sportTypes)
+        {
+            return this._data.EnableRacing(id, sportTypes);
+        }
+
+        public override Result EnableVirtualSports(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableVirtualSports(id, enable, enableDownline);
+        }
+
+        public override Result AutoMasterPT(int id, bool allow)
+        {
+            return this._data.AutoMasterPT(id, allow);
+        }
     }
 }

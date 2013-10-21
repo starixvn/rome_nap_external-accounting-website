@@ -19,7 +19,7 @@ Fanex.ExtAcc.Form = {
         }
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: block; border: none; font-size:12px; z-index:999999; margin-right: ' + margin);
+        Form.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 99999; margin-right: ' + margin);
 
         DivContent.setAttribute('style', 'height: ' + (height - 80) + 'px');
 
@@ -100,25 +100,25 @@ Fanex.ExtAcc.Form = {
             }
         });
 
-        Frame.setAttribute('style', 'display: block; border: none; font-size:12px; z-index:999999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
+        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 99999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
 
         if (callBack && typeof callBack === 'function') {
             callBack();
         }
     },
 
-    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel, closeClick) {
+    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel, closeClick, isSubmit) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none;font-size:12px;z-index:9999999');
+        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 99999');
 
         DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px;line-height: 18px');
+        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px; line-height: 18px');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;
@@ -140,7 +140,7 @@ Fanex.ExtAcc.Form = {
             modal: true,
             buttons: [
             {
-                text: "Yes",
+                text: isSubmit ? "Submit" : "Yes",
                 click: function () {
                     if (okClickEvent && typeof okClickEvent === 'function') {
                         okClickEvent();
@@ -176,7 +176,7 @@ Fanex.ExtAcc.Form = {
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none;font-size:12px;z-index:9999999');
+        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 99999');
 
         DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
 

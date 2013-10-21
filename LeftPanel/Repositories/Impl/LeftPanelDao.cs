@@ -19,6 +19,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
 
@@ -239,6 +240,261 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
+        /// Closes a customer.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="close">Close or not.</param>
+        /// <param name="clearCredit">Clear credit or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>Result object.</returns>
+        public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClosed", 600))
+            {
+                Hashtable param = new Hashtable();
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("custid", custId);
+                param.Add("closed", close);
+                param.Add("language", "E");
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+                param.Add("ip", CurrentContext.Instance.Ip4Address);
+                objDb.AssignParamValues(param);
+
+                objDb.ExecuteNonQuery();
+                                
+                if (Utils.ToInt32(objDb.GetParameterValue("errcode")) <= 0)
+                {
+                    return this.ClearCredit(CurrentSession.Instance.UserId, custName);
+                }
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Suspends a customer.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="suspend">Suspended or not.</param>
+        /// <returns>Result object.</returns>
+        public Result SuspendCustomer(int custId, bool suspend)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerUpdSuspended"))
+            {
+                var param = new Hashtable();
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("custid", custId);
+                param.Add("suspended", suspend);
+                param.Add("language", "E");
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+                param.Add("ip", CurrentContext.Instance.Ip4Address);
+
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+
+                return new Result(objDB.GetParameterValue("errcode"), objDB.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Allows outright for customer.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="allow">Allow or not.</param>
+        /// <returns>Result object.</returns>
+        public Result AllowOutright(int custId, bool allow)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
+            {
+                var param = new Hashtable();
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("custid", custId);
+                param.Add("disableoutright", !allow);
+                param.Add("language", "E");
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+                param.Add("ip", CurrentContext.Instance.Ip4Address);
+
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
+
+        public Result EnableRacing(int id, IList<ObjectInfo> sportTypes)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Enable casino status.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="sync">Synchronize or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName)
+        {
+            var result = CasinoManager.Instance.UpdateCSStatus(
+                id, 
+                sync, 
+                !enable, 
+                enableDownline,
+                CurrentSession.Instance.UserId, 
+                CurrentContext.Instance.Ip4Address, 
+                0, 
+                "En", 
+                custName, 
+                string.Empty);
+
+            return new Result(result ? 0 : 1, result ? string.Empty : "Update casino status failed");
+        }
+
+        /// <summary>
+        /// Enables bingo status.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="sync">Synchronized or not.</param>
+        /// <param name="enableDownline">Enables down-line or not.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_UpdBingoStatus", 600))
+            {
+                Hashtable param = new Hashtable();
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("custid", id);
+                param.Add("disabledbingo", !enable);
+                param.Add("syncbg", sync);
+                param.Add("language", "E");
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+                param.Add("loginip", CurrentContext.Instance.Ip4Address);
+                param.Add("enabledownline", enableDownline);
+
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Enables number game.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enables or not.</param>
+        /// <param name="enableDownline">Enables down-line or not.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableNumberGame(int id, bool enable, bool enableDownline)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
+            {
+                var param = new Hashtable();
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("custid", id);
+                param.Add("disablenumber", !enable);
+                param.Add("language", "E");
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+                param.Add("ip", CurrentContext.Instance.Ip4Address);
+                param.Add("disabledownline", !enableDownline);
+
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Enables Live casino.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enables or not.</param>
+        /// <param name="enableDownline">Enables down-line or not.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableLiveCasino(int id, bool enable, bool enableDownline)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
+            {
+                Hashtable param = new Hashtable();
+                param.Add("userid", CurrentSession.Instance.UserId);
+                param.Add("custid", id);
+                param.Add("disabledlivecs", !enable);
+                param.Add("language", "E");
+                param.Add("ip", CurrentContext.Instance.Ip4Address);
+                param.Add("enabledownlineslivecs", enableDownline);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+
+                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Enables Virtual sports.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enables or not.</param>
+        /// <param name="enableDownline">Enables down-line or not.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableVirtualSports(int id, bool enable, bool enableDownline)
+        {
+            Hashtable param = new Hashtable();
+            param.Add("userid", CurrentSession.Instance.UserId);
+            param.Add("custid", id);
+            param.Add("disable", !enable);
+            param.Add("language", "E");
+            param.Add("ip", CurrentContext.Instance.Ip4Address);
+            param.Add("disabledownlines", !enableDownline);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableVS", 120))
+            {
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+
+                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
+        /// Allows master auto PT.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="allow">Allow or not.</param>
+        /// <returns>Result object.</returns>
+        public Result AutoMasterPT(int id, bool allow)
+        {
+            var param = new Hashtable();
+            param.Add("userid", CurrentSession.Instance.UserId);
+            param.Add("custid", id);
+            param.Add("disableautompt", !allow);
+            param.Add("language", "E");
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+            param.Add("ip", CurrentContext.Instance.Ip4Address);
+
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerUpdMaster_DisableAutoMPT"))
+            {
+                objDB.AssignParamValues(param);
+                objDB.ExecuteNonQuery();
+
+                return new Result(objDB.GetParameterValue("errcode"), objDB.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
         /// Gets master used credit.
         /// </summary>
         /// <param name="custId">Customer id.</param>
@@ -296,6 +552,31 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             }
 
             return items;
+        }
+
+        /// <summary>
+        /// Clears customer credit.
+        /// </summary>
+        /// <param name="userId">Customer id.</param>
+        /// <param name="username">Customer username.</param>
+        /// <returns>Result object.</returns>
+        private Result ClearCredit(int userId, string username = null)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("username", username);
+                hash.Add("userid", userId);
+                hash.Add("returnerrcode", 1);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", string.Empty);
+                hash.Add("ip", CurrentContext.Instance.Ip4Address);
+                objDb.AssignParamValues(hash);
+
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
         }
     }
 }

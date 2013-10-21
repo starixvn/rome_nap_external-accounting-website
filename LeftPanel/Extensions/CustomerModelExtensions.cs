@@ -453,6 +453,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
             ProductStatuses product = Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+
+            if (!product.SyncBingo)
+            {
+                model.RemoveEnableProduct("EnableBingo");
+            }
+
+            if (!product.SyncCasino)
+            {
+                model.RemoveEnableProduct("EnableCasino");
+            }
+
+            if (!product.SyncLiveCasino)
+            {
+                model.RemoveEnableProduct("EnableLiveCasino");
+            }
             
             if (product.RoleId == 4)
             {
@@ -527,6 +542,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.DisableProduct("EnableLiveCasino");
             }
 
+            if (product.UplineStatuses.Closed)
+            {
+                model.DisableProduct("Closed");
+            }
+
+            if (product.UplineStatuses.Suspended)
+            {
+                model.DisableProduct("Suspended");
+            }
+
             return model;
         }
 
@@ -538,7 +563,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel RemoveProduct(this CustomerModel model, string key)
         {
-            int index = 0;
+            int index = -1;
             for (int i = 0; i < model.Setting.Details.Count; i++)
             {
                 if (model.Setting.Details.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
@@ -548,11 +573,37 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 }
             }
 
-            if (index != 0)
+            if (index != -1)
             {
                 model.Setting.Details.RemoveAt(index);
             }
             
+            return model;
+        }
+
+        /// <summary>
+        /// Removes unsynchronized products on setting tab.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="key">Key to specify item.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel RemoveEnableProduct(this CustomerModel model, string key)
+        {
+            int index = -1;
+            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
+            {
+                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1)
+            {
+                model.Setting.EnableItems.RemoveAt(index);
+            }
+
             return model;
         }
 
@@ -564,7 +615,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel DisableProduct(this CustomerModel model, string key)
         {
-            int index = 0;
+            int index = -1;
             for (int i = 0; i < model.Setting.EnableItems.Count; i++)
             {
                 if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
@@ -574,9 +625,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 }
             }
 
-            if (index != 0)
+            if (index != -1)
             {
                 model.Setting.EnableItems.ElementAt(index).Disabled = true;
+                model.Setting.EnableItems.ElementAt(index).Tooltip = key.Equals("Closed", System.StringComparison.OrdinalIgnoreCase) ? 
+                    "Upline has been closed" : key.Equals("Suspended", System.StringComparison.OrdinalIgnoreCase) ? "Upline has been suspended" : "Upline has been disabled";
             }
 
             return model;
@@ -655,6 +708,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableBingo = result.Rows[0].ToBoolean("disableBingo");
             product.DisableCasino = result.Rows[0].ToBoolean("disableCasino");
             product.DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino");
+            product.Closed = result.Rows[0].ToBoolean("closed");
+            product.Suspended = result.Rows[0].ToBoolean("suspended");
 
             if (roleId < 4)
             {
@@ -670,6 +725,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableBingo = upperInfo.Rows[0].ToBoolean("disableBingo");
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
+                product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
+                product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
             }
 
             return product;

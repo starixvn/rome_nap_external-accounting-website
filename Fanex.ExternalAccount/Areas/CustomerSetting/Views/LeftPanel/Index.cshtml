@@ -148,7 +148,7 @@
                 <br />
                 <div class="floatLeft" ng-repeat="enableItem in setting.enableItems">
                     <div class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                    <div class="floatLeft"><input ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" ng-model="enableItem.value" ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" /></div>
+                    <div class="floatLeft"><input title="{{enableItem.tooltip}}" ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" ng-model="enableItem.value" ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" /></div>
                 </div>    
             </div>
             <div class="auto" id="tab-2" ng-controller="SettingController" ng-init="Init()">

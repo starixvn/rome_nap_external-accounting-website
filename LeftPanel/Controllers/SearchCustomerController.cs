@@ -9,7 +9,9 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
+    using System;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -17,6 +19,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -156,6 +160,157 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             ViewBag.CustId = custId;
             var result = this._service.CustomerSelectClearBalance(custId);
             return this.PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
+        }
+
+        /// <summary>
+        /// Updates closed status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="close">Closed or not.</param>
+        /// <param name="clearCredit">Clear credit or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
+        {
+            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+            if (casinoCustomer.RoleId == Super && !GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            {
+                return this.JsonBase(
+                    new Result(1, ViewLang.DontHavePermission), 
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+            }
+
+            this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
+            return this.JsonBase(
+                this._service.CloseCutomer(custId, close, clearCredit, custName), 
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Updates suspended status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="suspend">Suspended or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
+        {
+            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+            if (casinoCustomer.RoleId == Super && !GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            {
+                return this.JsonBase(
+                    new Result(1, ViewLang.DontHavePermission), 
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+            }
+
+            this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
+            return this.JsonBase(
+                this._service.SuspendCustomer(custId, suspend),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Updates outright status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="allow">Allow or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateOutright(int custId, bool allow)
+        {
+            return this.JsonBase(
+                this._service.AllowOutright(custId, allow),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Updates auto master PT status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="allow">Allow or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateAutoMPT(int custId, bool allow)
+        {
+            return this.JsonBase(
+                this._service.AutoMasterPT(custId, allow),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Updates casino status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
+        {
+            try
+            {
+                var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+                return this.JsonBase(
+                    this._service.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync, custName),
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+            }
+            catch (Exception ex)
+            {
+                return this.JsonBase(new { IsSuccess = ex.Message.Contains("Not casino") ? true : false, ErrorCode = 1, ErrorMessage = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Updates bingo status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateBingo(int custId, int uplineId, bool enable, bool enableDownline)
+        {
+            try
+            {
+                var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+                return this.JsonBase(
+                    this._service.EnableBingo(custId, enable, casinoCustomer.BingoSync, enableDownline),
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    });
+            }
+            catch (Exception ex)
+            {
+                return this.JsonBase(new { IsSuccess = ex.Message.Contains("Not casino") ? true : false, ErrorCode = 1, ErrorMessage = ex.Message });
+            }
         }
     }
 }

@@ -123,5 +123,55 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             throw new NotImplementedException();
         }
+
+        public virtual Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result SuspendCustomer(int custId, bool suspend)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result AllowOutright(int custId, bool allow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableRacing(int id, IList<ObjectInfo> sportTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableNumberGame(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableLiveCasino(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableVirtualSports(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public virtual Result AutoMasterPT(int id, bool allow)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
