@@ -4,18 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="Stylesheet" href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.css")" />
+    <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.css")" rel="stylesheet" type="text/css" />
     @Styles.Render("~/bundles/racingstyle")
     <link href="@Url.Content("~/Areas/CustomerSetting/Styles/input.css")" rel="stylesheet" type="text/css" />
 </head>
     <body>
         <div class="maincontent" style="width: 1012px;">
-            <div id="divShowInfo" class="maincontent_box" style="width:1012px;display:none;">
-                <div id="err" class="errMsg">
-                </div>
-                <div id="errMsg" class="error-message">
-                </div>
-            </div>
+            <div id="err" class="errMsg display-none"></div>
             <div class="floatL display-none">
                 <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
             </div>

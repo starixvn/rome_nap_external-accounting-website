@@ -11,7 +11,7 @@ button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="but
     border: none;
 }
 
-#err, #errMsg, #errfunc, #errTransfer, .errMsg
+#errMsg, #errfunc, #errTransfer
 {
     color: Red;
     font-weight: bold;
@@ -216,13 +216,6 @@ span.cannotchangeinternal:hover
     background: url(../images/C_content_tab.png) repeat-x bottom;
     text-align: left;
 }
-.maincontent_box
-{
-    padding: 4px 2px;
-    display: table;
-    width: 99%;
-    text-align: left;
-}
 .bg_table
 {
     background: #e6e9f0;
@@ -230,9 +223,7 @@ span.cannotchangeinternal:hover
     border: solid 1px #7c98a4;
     display: table;
     width: 99%;
-    margin-top: 2px;
 }
-
 
 .submenu
 {
@@ -288,4 +279,11 @@ span.cannotchangeinternal:hover
 .ui-datepicker-week-end
 {
     color: #FF0000 !important;
+}
+.maincontent_box
+{
+    padding: 4px 2px;
+    display: table;
+    width: 99%;
+    text-align: left;
 }

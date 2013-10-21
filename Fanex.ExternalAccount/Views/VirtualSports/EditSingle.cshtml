@@ -9,17 +9,16 @@
         rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/VirtualSports.css")"
         rel="stylesheet" type="text/css" />
+<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Languages.en.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BetType.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.GridHeader.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BettingLimit.js")" type="text/javascript"></script>
-<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
-<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.knockout-2.0.0.js")" type="text/javascript"></script>
 <script src="@Url.Content(string.Format("~/VirtualSports/DataSource?custid={0}&roleid={1}&targetcustid={2}&targetroleid={3}", Model.CustId, Model.RoleId, Model.TargetCustId, Model.TargetRoleId))"
         type="text/javascript"></script>
 <div class="minWidthCustomer">
-    <div id="errMsg" style="display: none;" class="errMsg"></div>
+    <div id="errMsg" class="errMsg" style="display:none;"></div>
     <div class="customerInfo">
         <div class="headerTab">
             <div id="saveStatus" class="saveDiv" data-bind="visible: @showEditLink">

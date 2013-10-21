@@ -11,13 +11,13 @@ button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="but
     border: none;
 }
 
-#err, #errMsg, #errfunc, #errTransfer, .errMsg
+#errfunc, #errTransfer
 {
     font-family: Verdana,Arial,sans-serif;
     font-size: 12px;
-    padding: 0px;
-    margin: 0px;
-    display: inline;
+    padding-left: 2px;
+    margin: 0;
+    display: block;
     overflow: hidden;
 }
 #clear
@@ -30,7 +30,7 @@ button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="but
     height: 2px;
     padding: 0px;
     margin: 0px;
-    display: inline;
+    display: block;
     overflow: hidden;
 }
 #fdate, #tdate
