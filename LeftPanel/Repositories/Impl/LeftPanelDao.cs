@@ -323,12 +323,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
-
-        public Result EnableRacing(int id, IList<ObjectInfo> sportTypes)
-        {
-            throw new System.NotImplementedException();
-        }
-
+                
         /// <summary>
         /// Enable casino status.
         /// </summary>
@@ -577,6 +572,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
-        }
+        }        
     }
 }
