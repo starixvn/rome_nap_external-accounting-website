@@ -20,7 +20,7 @@
         </tr>
         <tr ng-repeat="item in sport.betTypeGroups" ng-hide="sport.betTypeGroups.isHide" ng-init="item.disable = false; item.enable = !item.bettingCommSetting.disable; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.bettingCommSetting.disableDownlines; item.preValDownline = item.enableDownline">
             <td style="width: 50%">
-                <input type="checkbox" ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" ng-model="item.enable" ng-disabled="item.disable" /><span>Enable &nbsp;{{item.name}}</span>
+                <input type="checkbox" ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" ng-model="item.enable" ng-disabled="item.bettingCommSetting.disableUplines" /><span>Enable &nbsp;{{item.name}}</span>
             </td>
             <td>
                 <input type="checkbox" ng-change="item.bettingCommSetting.disableDownlines = !item.enableDownline" ng-model="item.enableDownline" ng-disabled="item.disableDownline" /><span>Enable Downlines</span>
