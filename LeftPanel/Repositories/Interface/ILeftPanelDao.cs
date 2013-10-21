@@ -55,5 +55,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
         Result EnableVirtualSports(int id, bool enable, bool enableDownline);
 
         Result AutoMasterPT(int id, bool allow);
+
+        Result ResetSecurityCode(int id, string code);
     }
 }

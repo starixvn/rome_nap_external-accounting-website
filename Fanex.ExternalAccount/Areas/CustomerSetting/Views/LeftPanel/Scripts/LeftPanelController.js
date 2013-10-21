@@ -1788,6 +1788,11 @@ function LoginController($scope) {
     $scope.ShowIp = function (ip) {
         parent.Fanex.ExtAcc.Customer.ShowIpInfo(ip);
     };
+
+    $scope.ResetSecurityCode = function (id, roleId, username) {
+        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username);
+        parent.Fanex.ExtAcc.LoadMainIFrame(url);
+    };
 };
 
 function OnlineListController($scope) {
