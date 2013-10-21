@@ -6,6 +6,7 @@
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
     });
+    string hide = ViewBag.roleId == 1 ? "true" : "false";
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
@@ -23,7 +24,7 @@
                 <input type="checkbox" ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" ng-model="item.enable" ng-disabled="item.bettingCommSetting.disableUplines" /><span>Enable &nbsp;{{item.name}}</span>
             </td>
             <td>
-                <input type="checkbox" ng-change="item.bettingCommSetting.disableDownlines = !item.enableDownline" ng-model="item.enableDownline" ng-disabled="item.disableDownline" /><span>Enable Downlines</span>
+                <input ng-hide="@hide" type="checkbox" ng-change="item.bettingCommSetting.disableDownlines = !item.enableDownline" ng-model="item.enableDownline" ng-disabled="item.disableDownline" /><span ng-hide="@hide">Enable Downlines</span>
             </td>
         </tr>
     </table>
