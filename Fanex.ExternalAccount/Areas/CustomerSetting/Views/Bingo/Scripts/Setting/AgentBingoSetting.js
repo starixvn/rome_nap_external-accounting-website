@@ -97,18 +97,18 @@
     updatePT: function (customer) {
         var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
-            showAlertMessage("err", "Invalid Max Transder Credit", 1);
+            Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
             return;
         }
         if (customer.maxLimit > 0) {
             if (customer.minLimit > maxTransferCredit || maxTransferCredit > customer.maxLimit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
         else {
             if (customer.minLimit > maxTransferCredit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }

@@ -157,19 +157,18 @@
     updatePT: function (customer) {
         var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
-            showAlertMessage("err", "Invalid Max Transder Credit", 1);
+            Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
             return;
         }
         if (customer.maxLimit > 0) {
             if (customer.minLimit > maxTransferCredit || maxTransferCredit > customer.maxLimit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
         else {
             if (customer.minLimit > maxTransferCredit) {
-                parent.Validators.show($('#txtMaxTransferCredit'), 'Invalid Max Transder Credit');
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
@@ -202,7 +201,7 @@
             //Loop to get PT setting GameType
             for (var j = 0; j < totalGameType; j++) {
                 var gametype = customer.gameKindList[i].gameTypeList[j];
-                var gametypeid = gametype.ID;
+                var gametypeid = gametype.iD;
                 totalBettingRange = gametype.bettingRangeList.length;
                 if (!customer.isUsedGameKind) {
                     var isAutoGameType = $("#" + strChkAutoPreset + "_" + gamekindid + "_" + gametypeid).prop("checked");
