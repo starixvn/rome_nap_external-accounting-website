@@ -1,0 +1,46 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@model Fanex.PTRacing.BusinessObjects.Customer
+@{
+    var statusModel = Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings()
+    {
+        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+    });
+    string hide = ViewBag.roleId == 1 ? "true" : "false";
+}
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Styles/EnableRacing.css")" rel="stylesheet" type="text/css" />
+<div id="ng-app" ng-app="racingStatusApp" ng-controller="RacingStatusController" style="display: none; width: 96%">
+    <div id="errMsg" style="display: none" class="errMsg">
+    </div>
+    <div style="margin-bottom: 5px" ng-repeat="sport in sportTypes">
+    <table class="tableInfo" cellpadding="0" cellspacing="0" border="0" ng-hide="sport.isHide">
+        <tr>
+            <td colspan="2" class="bold racingTitle">{{sport.name}}</td>
+        </tr>
+        <tr ng-repeat="item in sport.betTypeGroups" ng-hide="sport.betTypeGroups.isHide" ng-init="item.disable = false; item.enable = !item.bettingCommSetting.disable; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.bettingCommSetting.disableDownlines; item.preValDownline = item.enableDownline">
+            <td style="width: 50%">
+                <input type="checkbox" ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" ng-model="item.enable" ng-disabled="item.bettingCommSetting.disableUplines" /><span>Enable &nbsp;{{item.name}}</span>
+            </td>
+            <td>
+                <input ng-hide="@hide" type="checkbox" ng-change="item.bettingCommSetting.disableDownlines = !item.enableDownline" ng-model="item.enableDownline" ng-disabled="item.disableDownline" /><span ng-hide="@hide">Enable Downlines</span>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div style="text-align: right" >
+        <input class="buttonPopup" type="button" value="Submit" ng-click="Update()" style="margin-right: 0" />
+    </div>
+</div>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var model = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@statusModel'));
+    var custId = parseInt('@ViewBag.id');
+    var uplineId = parseInt('@ViewBag.uplineId');
+    var roleId = parseInt('@ViewBag.roleId');
+</script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Scripts/RacingStatusController.js")" type="text/javascript"></script>

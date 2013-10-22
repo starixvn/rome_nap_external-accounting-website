@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
     using System;
+    using System.Collections;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
@@ -21,6 +22,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
+    using Fanex.PTRacing.Services;
+    using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -311,6 +314,170 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             {
                 return this.JsonBase(new { IsSuccess = ex.Message.Contains("Not casino") ? true : false, ErrorCode = 1, ErrorMessage = ex.Message });
             }
+        }
+
+        /// <summary>
+        /// Updates enable virtual sports status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="enable">Allow or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateVirtualSports(int custId, bool enable, bool enableDownline)
+        {
+            return this.JsonBase(
+                this._service.EnableVirtualSports(custId, enable, enableDownline),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Updates enable number game status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="enable">Allow or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
+        {
+            return this.JsonBase(
+                this._service.EnableNumberGame(custId, enable, enableDownline),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Updates enable live casino status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="enable">Allow or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
+        {
+            return this.JsonBase(
+                this._service.EnableLiveCasino(custId, enable, enableDownline),
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+        }
+
+        /// <summary>
+        /// Gets racing status.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>ActionResult object.</returns>
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
+        {
+            ViewBag.roleId = roleId;
+            ViewBag.id = id;
+            ViewBag.uplineId = uplineId;
+            var bettingLimitService = new CustomerService();
+            var model = bettingLimitService.GetCustomer(new Fanex.PTRacing.BusinessObjects.RequestContext
+            {
+                CustId = uplineId, // upline id
+                AgentId = 0, // unknow
+                UserName = string.Empty,
+                TargetCustId = id,
+                AdminId = CurrentSession.UserId,
+                SubAccId = 0,
+                RoleId = roleId + 1,
+                CurrencyId = 0,
+                TargetRoleId = roleId,
+                IsNeutralSite = false,
+                FormId = Fanex.PTRacing.BusinessObjects.FormType.EditPT,
+                IP = CurrentContext.Ip4Address
+            });
+
+            return this.PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml");
+        }
+
+        /// <summary>
+        /// Edits the bet setting post.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="uplineId">The up-line identifier.</param>
+        /// <param name="txtCustomerObject">The text customer object.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>ActionResult object.</returns>
+        [HttpPost]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            var newSetting = JsonConvert.DeserializeObject<Fanex.PTRacing.BusinessObjects.Customer>(txtCustomerObject, settings);
+
+            var requestContext = new Fanex.PTRacing.BusinessObjects.RequestContext
+            {
+                CustId = uplineId, // upline id
+                AgentId = 0, // unknow
+                UserName = string.Empty,
+                TargetCustId = id,
+                AdminId = CurrentSession.UserId,
+                SubAccId = 0,
+                RoleId = roleId + 1,
+                CurrencyId = 0,
+                TargetRoleId = roleId,
+                IsNeutralSite = false,
+                FormId = Fanex.PTRacing.BusinessObjects.FormType.EditPT,
+                IP = CurrentContext.Ip4Address
+            };
+
+            var bettingLimitService = new Fanex.PTRacing.Services.CustomerService();
+            var oldSetting = bettingLimitService.GetCustomer(requestContext);
+            var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
+        }
+
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        public ActionResult GetSecurityCode(int id, int roleId, string username)
+        {
+            ViewBag.custId = id;
+            ViewBag.roleId = roleId;
+            ViewBag.Username = username;
+            return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml");
+        }
+
+        /// <summary>
+        /// Updates security code.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="code">Security code.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>ActionResult object.</returns>
+        [HttpPost]
+        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        public ActionResult UpdateSecurityCode(int id, string code, int roleId = 1)
+        {
+            string hashCode = Encryption.CfsEnCode(code);
+            if (roleId != Member)
+            {
+                var md5 = Fanex.Security.Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)");
+                hashCode = Fanex.Security.Cryptography.ComputeHash("SHA1", code, md5);
+            }
+
+            Result result = this._service.ResetSecurityCode(id, hashCode);
+            return this.JsonBase(
+                result, 
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
         }
     }
 }

@@ -393,6 +393,8 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Balance\Scripts\BalanceController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Scripts\RacingStatusController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Styles\EnableRacing.css" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\arrow-down-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\blue-arrow-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\btn-active.png" />
@@ -1814,6 +1816,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
+    <Folder Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\" />
+    <Folder Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Styles\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -1882,6 +1886,8 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Index.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
     <None Include="Content\Images\Thumbs.db" />

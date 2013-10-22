@@ -44,8 +44,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
 
         Result AllowOutright(int custId, bool allow);
 
-        Result EnableRacing(int id, IList<ObjectInfo> sportTypes);
-
         Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName);
 
         Result EnableBingo(int id, bool enable, bool sync, bool enableDownline);
@@ -57,5 +55,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
         Result EnableVirtualSports(int id, bool enable, bool enableDownline);
 
         Result AutoMasterPT(int id, bool allow);
+
+        Result ResetSecurityCode(int id, string code);
     }
 }

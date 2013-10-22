@@ -139,11 +139,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             throw new NotImplementedException();
         }
 
-        public virtual Result EnableRacing(int id, IList<ObjectInfo> sportTypes)
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
         {
             throw new NotImplementedException();
@@ -170,6 +165,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         }
         
         public virtual Result AutoMasterPT(int id, bool allow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result ResetSecurityCode(int id, string code)
         {
             throw new NotImplementedException();
         }

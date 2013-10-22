@@ -323,17 +323,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
-
-        public Result EnableRacing(int id, IList<ObjectInfo> sportTypes)
-        {
-            throw new System.NotImplementedException();
-        }
-
+                
         /// <summary>
         /// Enable casino status.
         /// </summary>
         /// <param name="id">Customer id.</param>
         /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-line or not.</param>
         /// <param name="sync">Synchronize or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>Result object.</returns>
@@ -495,6 +491,32 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
+        /// Resets security code.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="code">Security code.</param>
+        /// <returns>Result object.</returns>
+        public Result ResetSecurityCode(int id, string code)
+        {
+            Hashtable outputParams = new Hashtable();
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdSecurityCode"))
+            {
+                objDb.AddInParameter("Custid", System.Data.DbType.Int32, id);
+                objDb.AddInParameter("Userid", System.Data.DbType.Int32, CurrentSession.Instance.UserId);
+                objDb.AddInParameter("IsForcedChangeSecurityCode", System.Data.DbType.Boolean, true);
+                objDb.AddInParameter("Securitycode", System.Data.DbType.String, code);
+                objDb.AddInParameter("Language", System.Data.DbType.String, "En");
+                objDb.AddInParameter("IP", System.Data.DbType.String, CurrentContext.Instance.Ip4Address);
+                objDb.AddOutParameter("ErrCode", System.Data.DbType.Int32, 8);
+                objDb.AddOutParameter("ErrMsg", System.Data.DbType.String, 1000);
+                objDb.ExecuteNonQuery();
+                outputParams = objDb.GetOuputParams();
+
+                return new Result(outputParams["ErrCode"], outputParams["ErrMsg"]);
+            }
+        }
+
+        /// <summary>
         /// Gets master used credit.
         /// </summary>
         /// <param name="custId">Customer id.</param>
@@ -577,6 +599,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
-        }
+        }        
     }
 }
