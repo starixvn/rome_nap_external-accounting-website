@@ -90,7 +90,7 @@
             var gamekind = customer.gameKindList[i];
             var gamekindid = gamekind.iD;
             totalGameType = gamekind.gameTypeList.length;
-            var isAutoGameKind = $("#" + strChkAuto + "_" + gamekindid).attr("checked");
+            var isAutoGameKind = $("#" + strChkAuto + "_" + gamekindid).prop("checked");
 
             if (isAutoGameKind) {
                 customer.gameKindList[i].autoPositionTaking = roundNumber($("#" + strListSuperAuto + "_" + gamekindid).val(), 2);
@@ -108,7 +108,7 @@
                 var gametypeid = gametype.iD;
                 totalBettingRange = gametype.bettingRangeList.length;
                 if (!customer.isUsedGameKind) {
-                    var isAutoGameType = $("#" + strChkAuto + "_" + gamekindid + "_" + gametypeid).attr("checked");
+                    var isAutoGameType = $("#" + strChkAuto + "_" + gamekindid + "_" + gametypeid).prop("checked");
                     if (isAutoGameType) {
                         customer.gameKindList[i].gameTypeList[j].positionTaking = 0;
                         customer.gameKindList[i].gameTypeList[j].autoPositionTaking = roundNumber($("#" + strListSuperAuto + "_" + gamekindid + "_" + gametypeid).val(), 2);
@@ -123,7 +123,7 @@
                 for (var z = 0; z < totalBettingRange; z++) {
                     var bettingrange = customer.gameKindList[i].gameTypeList[j].bettingRangeList[z];
                     var bettingrangeid = bettingrange.ID;
-                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).attr("checked");
+                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).prop("checked");
                 }
             }
         }
@@ -204,7 +204,7 @@
     checkAutoPT: function (obj) {   
         var chkAuto = $(obj);
         var chkAutoID = chkAuto.attr("id");
-        if (chkAuto.attr("checked")) {
+        if (chkAuto.prop("checked")) {
             $("#" + chkAutoID.replace(strChkAuto,strListSuper)).attr("disabled","disabled");
             $("#" + chkAutoID.replace(strChkAuto,strListSuperAuto)).removeAttr("disabled");
         
@@ -236,7 +236,7 @@
     checkAutoPTGameType: function (obj) {
         var chkAuto = $(obj);
         var chkAutoID = chkAuto.attr("id");
-        if (chkAuto.attr("checked")) {
+        if (chkAuto.prop("checked")) {
             $("#" + chkAutoID.replace(strChkAuto,strListSuper)).attr("disabled","disabled");
             $("#" + chkAutoID.replace(strChkAuto,strListSuperAuto)).removeAttr("disabled");
         }

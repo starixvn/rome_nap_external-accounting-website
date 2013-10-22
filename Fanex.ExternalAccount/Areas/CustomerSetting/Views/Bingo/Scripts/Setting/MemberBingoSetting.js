@@ -110,7 +110,7 @@
                 for (var z = 0; z < totalBettingRange; z++) {
                     var bettingrange = customer.gameKindList[i].gameTypeList[j].bettingRangeList[z];
                     var bettingrangeid = bettingrange.ID;
-                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).attr("checked");
+                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).prop("checked");
                 }
             }
         }

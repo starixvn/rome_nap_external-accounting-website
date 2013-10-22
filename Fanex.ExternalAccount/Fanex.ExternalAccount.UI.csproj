@@ -381,7 +381,6 @@
     <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\sorting_desc.gif" />
     <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\undo.png" />
     <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\input.css" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Message.css" />
     <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\table.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditSuperController.js" />
@@ -482,7 +481,6 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_3_1.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_3_2.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_3_3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\error.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\excel.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\folder.png" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\help.png" />
@@ -512,7 +510,6 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\sucess.gif" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\undo.png" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\input.css" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Message.css" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\RacingSetting.css" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\table.css" />
     <Content Include="bootstrap\arrows-ffffff.png" />
@@ -1121,7 +1118,6 @@
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\multiple-remote.html" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\multiple.html" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\remote-jsonp.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\remote-with-cache.html" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\remote.html" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\xml.html" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\checkbox.html" />

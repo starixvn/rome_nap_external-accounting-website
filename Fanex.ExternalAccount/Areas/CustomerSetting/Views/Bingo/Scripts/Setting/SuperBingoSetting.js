@@ -101,7 +101,7 @@
         //Loop to get PT setting GameKind
         customer.maxTransferCredit = maxTransferCredit;
         customer.isAutoReset = $("#cbxAutoReset").prop("checked");
-        customer.isUsedGameKind = $("#chkGroupSetting").attr("checked");
+        customer.isUsedGameKind = $("#chkGroupSetting").prop("checked");
         for (var i = 0; i < totalGameKind; i++) {
             var gamekind = customer.gameKindList[i];
             gamekindid = gamekind.iD;
@@ -123,7 +123,7 @@
                 for (var z = 0; z < totalBettingRange; z++) {
                     var bettingrange = customer.gameKindList[i].gameTypeList[j].bettingRangeList[z];
                     bettingrangeid = bettingrange.iD;
-                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).attr("checked");
+                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).prop("checked");
                 }
             }
         }
