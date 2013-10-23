@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="auto" id="tabs-2" ng-controller="DownlineListController">
+            <div class="auto" id="tabs-2" ng-controller="DownlineListController" style="height: 208px">
                 <div id="downlines" style="overflow: auto" ng-hide="model.length == 0">
                     <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
                         <a class="detail2" href="javascript:;"  ng-click="SearchUser('{{user.text}}')">{{user.text}}</a>
