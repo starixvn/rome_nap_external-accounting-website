@@ -13,7 +13,8 @@ Fanex.ExtAcc.Account = {
     RecheckinXHR: null,
 
     Init: function () {
-        this.kickOutIntId = setInterval(this.GetValidateImage, 120000);
+        if (this.kickOutIntId == 0)
+            this.kickOutIntId = setInterval(this.GetValidateImage, 120000);
 
         if (document.forms.length > 0) {
             $('#UserName').focus();
@@ -41,7 +42,7 @@ Fanex.ExtAcc.Account = {
 
     GetValidateImage: function () {
         var objDate = new Date();
-        $("#imgCode").attr("src", "CaptchaImage/" + objDate.getMilliseconds());
+        $("#imgCode").attr("src", "CaptchaImage/" + (objDate.getMilliseconds() + objDate.getHours() + objDate.getMinutes() + objDate.getSeconds()));
     },
 
     SelectCurrencyGroup: function (selectedIndex) {
@@ -87,7 +88,7 @@ Fanex.ExtAcc.Account = {
                         });
                     } catch (e) {
                         location.href = resolveClientUrl('Account/Login');
-                    }                    
+                    }
                 }
                 else if (data == 2) {
                     location.href = resolveClientUrl('Account/Login');
