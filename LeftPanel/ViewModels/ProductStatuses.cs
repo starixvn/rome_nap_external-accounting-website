@@ -103,5 +103,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool HideVirtualSports
+        {
+            get;
+            set;
+        }
     }
 }

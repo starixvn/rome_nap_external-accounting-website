@@ -453,6 +453,28 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+            model.RemoveEnableProducts(product);
+            
+            if (product.RoleId == 4)
+            {
+                return model;
+            }
+
+            model.UplineStatuses(product);
+            model.RemoveProducts(product);
+            model.GetSuperMasterPtsOnMember(product);
+
+            return model;
+        }
+
+        /// <summary>
+        /// Removes Enable products.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="product">ProductStatuses item.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel RemoveEnableProducts(this CustomerModel model, ProductStatuses product)
+        {
             if (!product.SyncBingo)
             {
                 model.RemoveEnableProduct("EnableBingo");
@@ -467,15 +489,25 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.RemoveEnableProduct("EnableLiveCasino");
             }
-            
-            if (product.RoleId == 4)
+
+            if (product.HideVirtualSports)
             {
-                return model;
+                model.RemoveEnableProduct("EnableVirtualSports");
             }
 
-            model.UplineStatuses(product);
+            return model;
+        }
+
+        /// <summary>
+        /// Removes Detail products.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="product">ProductStatuses item.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel RemoveProducts(this CustomerModel model, ProductStatuses product)
+        {
             if (product.RoleId != 1 && product.DisableTransfer)
-            {                
+            {
                 model.RemoveProduct("Transfer");
             }
 
@@ -494,7 +526,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("LiveCasino");
             }
 
-            model.GetSuperMasterPtsOnMember(product);
+            if (product.UplineStatuses.HideVirtualSports)
+            {
+                model.RemoveProduct("VirtualSports");
+            }
+
             return model;
         }
 
@@ -769,6 +805,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino");
             product.Closed = result.Rows[0].ToBoolean("closed");
             product.Suspended = result.Rows[0].ToBoolean("suspended");
+            product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
@@ -792,6 +829,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
+                product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
             }
 
             return product;
