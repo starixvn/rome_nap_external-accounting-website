@@ -72,12 +72,11 @@
         });
     },
     initHtml: function (rs) {
+        $('.bg_table').addClass('hidden');
         if (rs.result && rs.result.errorCode > 0) {
-            showAlertMessage('err', rs.result.errorMessage, 1);
-            $('.bg_table').addClass('hidden');
+            showAlertMessage('err', 'Edit Bingo: ' + rs.result.errorMessage, 1);
         }
         else {
-            $('.bg_table').removeClass('hidden');
             rs.isGroupSetting = rs.isUsedGameKind;
 
             var settingContent = $('#SettingContent');
