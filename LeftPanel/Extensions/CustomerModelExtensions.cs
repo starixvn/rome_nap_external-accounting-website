@@ -434,9 +434,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["memberName"]), Text = "Member" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     {
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
-                        new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" },
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
+                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("agentID"), Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" }
                     };
             model.MemberSettings(ds);
 
@@ -452,8 +452,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
-            ProductStatuses product = Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
-
+            ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             if (!product.SyncBingo)
             {
                 model.RemoveEnableProduct("EnableBingo");
@@ -475,7 +474,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             model.UplineStatuses(product);
-
             if (product.RoleId != 1 && product.DisableTransfer)
             {                
                 model.RemoveProduct("Transfer");
@@ -494,8 +492,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (!product.UplineStatuses.SyncLiveCasino)
             {
                 model.RemoveProduct("LiveCasino");
-            }            
+            }
 
+            model.Setting.SuperPts = model.Setting.MasterPts =
+                model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
+                    o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
             return model;
         }
 
@@ -638,11 +639,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <summary>
         /// Gets third party product statuses.
         /// </summary>
+        /// <param name="model">CustomerModel item.</param>
         /// <param name="groupName">Group name to get.</param>
         /// <param name="username">Username to search.</param>
         /// <param name="uplineId">Upper customer id.</param>
         /// <returns>ProductStatuses object.</returns>
-        private static ProductStatuses Get3rdPartyProducts(string groupName, string username, int uplineId = 0)
+        private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, string groupName, string username, int uplineId = 0)
         {
             IReportService report = new ReportService();
             
@@ -679,7 +681,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     upperInfo = result = new AgentService().GetData(mrecommend, uplineId, null, null, null);
                 }
 
-                return GetProductStatusDetail(roleId, result, upperInfo);
+                return model.GetProductStatusDetail(roleId, result, upperInfo);
             }
 
             return null;
@@ -688,11 +690,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <summary>
         /// Gets detail statuses.
         /// </summary>
+        /// <param name="model">CustomerModel item.</param>
         /// <param name="roleId">Role id of customer to search.</param>
         /// <param name="result">Current customer info.</param>
         /// <param name="upperInfo">Upper customer info.</param>
         /// <returns>ProductStatuses object.</returns>
-        private static ProductStatuses GetProductStatusDetail(int roleId, DataTable result, DataTable upperInfo)
+        private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
         {
             ProductStatuses product = new ProductStatuses();
             product.UplineStatuses = new ProductStatuses();
@@ -710,6 +713,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino");
             product.Closed = result.Rows[0].ToBoolean("closed");
             product.Suspended = result.Rows[0].ToBoolean("suspended");
+
+            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
+            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
+            model.Setting.SuperPts = model.Setting.MasterPts =
+                model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
+                    o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
 
             if (roleId < 4)
             {
