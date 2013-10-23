@@ -186,7 +186,11 @@ function ResetMaxTransfer(custId) {
 
 function afterUpdate(timeout) {
     t1 = setTimeout(function () {
-		//$('#err').html('');
-        parent.Fanex.ExtAcc.Form.Close(false);
+        //$('#err').html('');
+        parent.Fanex.ExtAcc.Form.Close(false, undefined, undefined, function () {
+            if ($('#tdIsSyncData')) { // if has 'Enable Bingo' checkbox, need to remove it
+                $('#tdIsSyncData').remove();
+            }
+        });
     }, timeout);
 }

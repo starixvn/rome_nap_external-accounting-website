@@ -23,6 +23,7 @@
                 success: function (rs) {
                     if (rs) {
                         var response = JSON.parse(rs);
+                        response.uplineID = window.uplineId;
                         customerPTBingoSetting.initHtml(response);
                     }
                     else {

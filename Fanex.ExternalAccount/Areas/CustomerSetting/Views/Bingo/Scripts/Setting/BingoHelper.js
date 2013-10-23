@@ -39,9 +39,8 @@
         var html = '';
         if (betSetting.showBetSetting) {
             var directDownline = ptBingoCommon.isDirectDownline();
-            var showResetLink = !(window.pageRole === ptBingoCommon.adminRoleId && window.targetRoleId === ptBingoCommon.superRoleId)
-                || !directDownline
-                || !betSetting.syncBingo;
+            var superEditMaster = window.pageRole === ptBingoCommon.adminRoleId && window.targetRoleId === ptBingoCommon.superRoleId;
+            var dontShowResetLink = superEditMaster || !betSetting.syncBingo;
             html = '<tr class="title">\
                         <td colspan="4">Bet Setting</td>\
                     </tr>\
@@ -53,7 +52,7 @@
                                         <b>Accumulated transferable amount</b>\
                                     </td>\
                                     <td class="r" style="width:100px">' + parent.Fanex.ExtAcc.FormatNumber(betSetting.actualMaxTransfer) + '</td>\
-                                    <td class="l" colspan="2">' + (showResetLink ? '<span onclick="ResetMaxTransfer(' + betSetting.iD + ')" class="canchange">Reset' : '') + '</td>\
+                                    <td class="l" colspan="2">' + (!dontShowResetLink ? '<span onclick="ResetMaxTransfer(' + betSetting.iD + ')" class="canchange">Reset' : '') + '</td>\
                                 </tr>\
                                 <tr>\
                                     <td class="r" style="width:300px">\
@@ -80,12 +79,11 @@
                         </td>\
                     </tr>';
         }
-        //html += '</table>';
         return html;
     },
     renderIncentiveSetting: function (incentiveSetting) {
         var role = incentiveSetting.roleId;
-        if (!ptBingoCommon.isDirectDownline || role === this.superRoleId) {
+        if (!ptBingoCommon.isDirectDownline() || role === this.superRoleId) {
             return '</table>';
         }
         var html = '<tr class="title">\
@@ -98,7 +96,7 @@
                                         <td style="width:300px" class="r b">' + this.getIncentiveByRole(role) + ' Incentive</td>\
                                         <td class="l">\
                                             <select ' + (role === this.memberRoleId ? 'disabled="disabled"' : '') + ' id="listIncentiveRate" max="' + roundNumber(incentiveSetting.maxPayout, 2) + '" min="0" class="select-pt">\
-                                                <option value="' + roundNumber(incentiveSetting.incentiveRate, 2) + '" selected="true">' + roundNumber(incentiveSetting.IncentiveRate, 2) + '</option>\
+                                                <option value="' + roundNumber(incentiveSetting.incentiveRate, 2) + '" selected="true">' + roundNumber(incentiveSetting.incentiveRate, 2) + '</option>\
                                             </select>\
                                         </td>\
                                     </tr>\
@@ -160,7 +158,7 @@
     },
     renderBettingRange: function (gameKindBOId, generalId, bettingRange) {
         return '<span style="margin-right:6px;"><input type="checkbox"'
-            + (bettingRange.isChecked ? 'checked' : '') + ' id="chkStake_' + gameKindBOId + '_' + generalId + '">' + bettingRange.name + '</span>';
+            + (bettingRange.isChecked ? 'checked' : '') + ' id="chkStake_' + generalId + '">' + bettingRange.name + '</span>';
     },
     renderSubmitButtion: function (syncBingo) {
         if (ptBingoCommon.isDirectDownline() && window.targetRoleId === ptBingoCommon.superRoleId) {
@@ -169,7 +167,7 @@
 
         var html = '<table id="tblHideUpdate" style=" line-height: 25px;"><tr>';
         if (!syncBingo) {
-            html += '<td><label for="chkIsSyncData">Enable Bingo</label> <input type="checkbox" id="chkIsSyncData" onclick="IsSyncData(this)" /></td>';
+            html += '<td id="tdIsSyncData"><label for="chkIsSyncData">Enable Bingo</label> <input type="checkbox" id="chkIsSyncData" onclick="IsSyncData(this)" /></td>';
         }
         html += '<td><input type="button" id="buttonPopup" class="buttonPopup btnTop ' + (!syncBingo ? 'disabled' : '') + '" value="Submit"/></td>\
             </tr>\
