@@ -73,11 +73,10 @@
     },
     initHtml: function (rs) {
         if (rs.result && rs.result.errorCode > 0) {
-            showAlertMessage('err', rs.result.errorMessage, 1);
+            showAlertMessage('err', 'Edit Bingo: ' + rs.result.errorMessage, 1);
             $('.bg_table').addClass('hidden');
         }
         else {
-            $('.bg_table').removeClass('hidden');
             rs.isGroupSetting = rs.isUsedGameKind;
 
             var settingContent = $('#SettingContent');
