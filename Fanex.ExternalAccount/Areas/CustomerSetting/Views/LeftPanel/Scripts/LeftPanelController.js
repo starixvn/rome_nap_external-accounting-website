@@ -1769,6 +1769,156 @@ function SettingController($scope, $http) {
         var title = 'Update Racing Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 350, 350, false, null, 1, 'enableRacing');
     };
+
+    $scope.ViewSubTab = function (id) {
+        switch (id) {
+            case 'sub-edit':
+                if (!$('#sub-edit').hasClass('subTab-active'))
+                    $('#sub-edit').addClass('subTab-active');
+
+                $('#sub-min-max').removeClass('subTab-active');
+                $('#sub-super-pt').removeClass('subTab-active');
+                $('#sub-master-pt').removeClass('subTab-active');
+
+                $('#edit').show();
+                $('#minMax').hide();
+                $('#superPT').hide();
+                $('#masterPT').hide();
+
+                break;
+            case 'sub-min-max':
+                if (!$('#sub-min-max').hasClass('subTab-active'))
+                    $('#sub-min-max').addClass('subTab-active');
+
+                $('#sub-edit').removeClass('subTab-active');
+                $('#sub-super-pt').removeClass('subTab-active');
+                $('#sub-master-pt').removeClass('subTab-active');
+
+                $('#edit').hide();
+                $('#minMax').show();
+                $('#superPT').hide();
+                $('#masterPT').hide();
+
+                break;
+            case 'sub-super-pt':
+                if (!$('#sub-super-pt').hasClass('subTab-active'))
+                    $('#sub-super-pt').addClass('subTab-active');
+
+                $('#sub-min-max').removeClass('subTab-active');
+                $('#sub-edit').removeClass('subTab-active');
+                $('#sub-master-pt').removeClass('subTab-active');
+
+                $('#edit').hide();
+                $('#minMax').hide();
+                $('#superPT').show();
+                $('#masterPT').hide();
+
+                break;
+            case 'sub-master-pt':
+                if (!$('#sub-master-pt').hasClass('subTab-active'))
+                    $('#sub-master-pt').addClass('subTab-active');
+
+                $('#sub-min-max').removeClass('subTab-active');
+                $('#sub-super-pt').removeClass('subTab-active');
+                $('#sub-edit').removeClass('subTab-active');
+
+                $('#edit').hide();
+                $('#minMax').hide();
+                $('#superPT').hide();
+                $('#masterPT').show();
+
+                break;
+            default:
+                break;
+        }
+    };
+
+    $scope.MinSB = function () {        
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = $scope.model.personalInfo.uplineId.value;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT'));
+    };
+
+    $scope.MinRB = function () {
+    };
+
+    $scope.SuperPT = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB'));
+    };
+
+    $scope.SuperBingo = function () {
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value));
+    };
+
+    $scope.SuperCasino = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId));
+    };
+
+    $scope.SuperRacing = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
+    };
+
+    $scope.SuperLiveCasino = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/SuperEditMember'));
+    };
+
+    $scope.SuperVirtualSports = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
+    };
+
+    $scope.MasterPT = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB'));
+    };
+
+    $scope.MasterBingo = function () {
+    };
+
+    $scope.MasterCasino = function () {
+    };
+
+    $scope.MasterRacing = function () {
+    };
+
+    $scope.MasterLiveCasino = function () {
+    };
+
+    $scope.MasterVirtualSports = function () {
+    };
 };
 
 function LoginController($scope) {

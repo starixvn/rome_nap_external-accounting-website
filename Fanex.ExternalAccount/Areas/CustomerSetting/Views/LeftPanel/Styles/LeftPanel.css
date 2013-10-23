@@ -354,3 +354,30 @@ input
 {
     color: #2489CE !important;
 }
+.subTab-parent
+{
+    border: 1px solid #CCC;
+    border-right: none;  
+    float: left;
+}
+.subTab
+{
+    border: 1px solid #CCC;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    padding: 0 5px;
+    font-weight: bold;
+    background: url(../images/inactive-icn.png) no-repeat;
+    background-position: center right;
+    padding-right: 15px;
+    cursor: pointer;
+    background-color: #FFF;
+}
+.subTab-active
+{
+    color: #2489CE;
+    background: url(../images/active-icn.png) no-repeat;
+    background-position: center right;
+    background-color: #FFF;
+}

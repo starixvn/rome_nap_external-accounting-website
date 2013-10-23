@@ -22,6 +22,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             this.EditItems = new List<ObjectInfo>();
             this.SyncItems = new List<ObjectInfo>();
             this.Details = new List<ObjectInfo>();
+            this.MinMaxPts = new List<ObjectInfo>();
+            this.SuperPts = new List<ObjectInfo>();
+            this.MasterPts = new List<ObjectInfo>();
         }
 
         public List<ObjectInfo> EnableItems { get; set; }
@@ -31,5 +34,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public List<ObjectInfo> SyncItems { get; set; }
 
         public List<ObjectInfo> Details { get; set; }
+
+        public List<ObjectInfo> MinMaxPts { get; set; }
+
+        public List<ObjectInfo> SuperPts { get; set; }
+
+        public List<ObjectInfo> MasterPts { get; set; }
     }
 }

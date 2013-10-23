@@ -152,8 +152,32 @@
                 </div>    
             </div>
             <div class="auto" id="tab-2" ng-controller="SettingController" ng-init="Init()">
-                <div class="detail icn-right" ng-repeat="item in setting.details">
-                    <a ng-hide="item.isHide" ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
+                <div class="subTab-parent">
+                    <div ng-click="ViewSubTab('sub-edit')" id="sub-edit" class="floatLeft subTab subTab-active">Edit</div>
+                    <div ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="floatLeft subTab" ng-hide="model.personalInfo.roleId.value == 4 || model.personalInfo.roleId.value == 1">Min/Max PT</div>
+                    <div ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="floatLeft subTab" ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
+                    <div ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="floatLeft subTab" ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
+                </div>
+                <div style="clear: both"></div>
+                <div id="edit">
+                    <div class="detail icn-right" ng-repeat="item in setting.details">
+                        <a ng-hide="item.isHide" ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
+                    </div>
+                </div>
+                <div id="minMax" style="display: none">
+                    <div class="detail icn-right" ng-repeat="minMaxPt in setting.minMaxPts">
+                        <a ng-hide="minMaxPt.isHide" ng-click="{{minMaxPt.key}}()" href="javascript:;">{{minMaxPt.value}}</a>
+                    </div>
+                </div>
+                <div id="superPT" style="display: none">
+                    <div class="detail icn-right" ng-repeat="superPt in setting.superPts">
+                        <a ng-hide="superPt.isHide" ng-click="Super{{superPt.key}}()" href="javascript:;">{{superPt.value}}</a>
+                    </div>
+                </div>
+                <div id="masterPT" style="display: none">
+                    <div class="detail icn-right" ng-repeat="masterPt in setting.masterPts">
+                        <a ng-hide="masterPt.isHide" ng-click="Master{{masterPt.key}}()" href="javascript:;">{{masterPt.value}}</a>
+                    </div>
                 </div>    
             </div>
             <div class="auto" style="height: 100%" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
