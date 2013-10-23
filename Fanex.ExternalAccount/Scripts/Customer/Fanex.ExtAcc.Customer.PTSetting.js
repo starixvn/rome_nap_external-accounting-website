@@ -1583,10 +1583,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         Fanex.ExtAcc.Customer.PTSetting.ErrorMessage += msgs[i].formatErrorMessage() + '<br/>';
                     }
                 }
-
+                
                 if (success) {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         var timeout = setTimeout(function () {
+                            $('#errMsg').css('display', 'block');
+                            $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                             clearTimeout(timeout);
                             Fanex.ExtAcc.UnBlockUI();
@@ -1605,6 +1608,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         else {
                             if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
+                                    $('#errMsg').css('display', 'block');
+                                    $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
                                     Fanex.ExtAcc.UnBlockUI();
@@ -1656,6 +1662,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         else {
                             if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
+                                    $('#errMsg').css('display', 'block');
+                                    $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
                                     Fanex.ExtAcc.UnBlockUI();
