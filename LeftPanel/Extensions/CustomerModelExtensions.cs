@@ -494,9 +494,28 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("LiveCasino");
             }
 
+            model.GetSuperMasterPtsOnMember(product);
+            return model;
+        }
+
+        /// <summary>
+        /// Gets PT products on member level.
+        /// </summary>
+        /// <param name="model">CustomerModel item.</param>
+        /// <param name="product">ProductStatuses item.</param>
+        /// <returns>CustomerModel object.</returns>
+        private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
+        {
+            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino;
+
             model.Setting.SuperPts = model.Setting.MasterPts =
-                model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
-                    o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
+                   model.Setting.Details.Where(o => o.Key.ToString() == "PT" ||
+                       (o.Key.ToString() == "Casino" && syncCasino) ||
+                       (o.Key.ToString() == "Bingo" && syncBingo) ||
+                       (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
+                       o.Key.ToString() == "VirtualSports" ||
+                       o.Key.ToString() == "Racing").ToList();
+
             return model;
         }
 

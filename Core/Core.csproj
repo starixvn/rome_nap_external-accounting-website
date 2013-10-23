@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary">
+    <Reference Include="CasinoLibrary, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting">
@@ -46,9 +47,6 @@
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino">
-      <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -368,8 +368,10 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.Bingo = function () {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
+        var personalObject = $scope.model.personalInfo;
+        var roleId = personalObject.roleId.value;
+        var custId = personalObject.custId.value;
+        var uplineId = personalObject.uplineRoleId.value > 4 ? custId : personalObject.uplineId.value;
         var url = '';
         switch (roleId) {
             case 4:
@@ -388,7 +390,8 @@ function LeftPanelController($scope, $element) {
                 break;
         }
 
-        if (url !== '') {
+        if (url !== '' && uplineId > 0) {
+            url += '&uplineid=' + uplineId;
             parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
@@ -1861,7 +1864,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.SuperBingo = function () {
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value));
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
     };
 
     $scope.SuperCasino = function () {

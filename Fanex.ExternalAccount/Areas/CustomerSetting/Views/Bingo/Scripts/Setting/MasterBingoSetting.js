@@ -157,18 +157,18 @@
     updatePT: function (customer) {
         var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
-            showAlertMessage("err", "Invalid Max Transder Credit", 1);
+            Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
             return;
         }
         if (customer.maxLimit > 0) {
             if (customer.minLimit > maxTransferCredit || maxTransferCredit > customer.maxLimit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
         else {
             if (customer.minLimit > maxTransferCredit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
@@ -184,7 +184,7 @@
             var gamekind = customer.gameKindList[i];
             var gamekindid = gamekind.iD;
             totalGameType = gamekind.gameTypeList.length;
-            var isAutoGameKind = $("#" + strChkAutoPreset + "_" + gamekindid).attr("checked");
+            var isAutoGameKind = $("#" + strChkAutoPreset + "_" + gamekindid).prop("checked");
 
             if (isAutoGameKind) {
                 customer.gameKindList[i].autoPositionTaking = roundNumber($("#" + strListAutoPreset + "_" + gamekindid).val(), 2);
@@ -201,10 +201,10 @@
             //Loop to get PT setting GameType
             for (var j = 0; j < totalGameType; j++) {
                 var gametype = customer.gameKindList[i].gameTypeList[j];
-                var gametypeid = gametype.ID;
+                var gametypeid = gametype.iD;
                 totalBettingRange = gametype.bettingRangeList.length;
                 if (!customer.isUsedGameKind) {
-                    var isAutoGameType = $("#" + strChkAutoPreset + "_" + gamekindid + "_" + gametypeid).attr("checked");
+                    var isAutoGameType = $("#" + strChkAutoPreset + "_" + gamekindid + "_" + gametypeid).prop("checked");
                     if (isAutoGameType) {
                         customer.gameKindList[i].gameTypeList[j].autoPositionTaking = roundNumber($("#" + strListAutoPreset + "_" + gamekindid + "_" + gametypeid).val(), 2);
                         customer.gameKindList[i].gameTypeList[j].positionTakingUpline = 0;
@@ -222,7 +222,7 @@
                 for (var z = 0; z < totalBettingRange; z++) {
                     var bettingrange = customer.gameKindList[i].gameTypeList[j].bettingRangeList[z];
                     var bettingrangeid = bettingrange.iD;
-                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).attr("checked");
+                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).prop("checked");
                 }
             }
         }
@@ -470,7 +470,7 @@
     checkAutoPresetPTGameType: function (obj) {
         var chkAuto = $(obj);
         var chkAutoID = chkAuto.attr("id");
-        if (chkAuto.attr("checked")) {
+        if (chkAuto.prop("checked")) {
             $("#" + chkAutoID.replace(strChkAutoPreset, strListPreset)).attr("disabled", "disabled");
             $("#" + chkAutoID.replace(strChkAutoPreset, strListAutoPreset)).removeAttr("disabled");
 

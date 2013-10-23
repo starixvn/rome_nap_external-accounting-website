@@ -67,18 +67,18 @@
     updatePT: function (customer) {
         var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
-            showAlertMessage("err", "Invalid Max Transder Credit", 1);
+            Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
             return;
         }
         if (customer.maxLimit > 0) {
             if (customer.minLimit > maxTransferCredit || maxTransferCredit > customer.maxLimit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
         else {
             if (customer.minLimit > maxTransferCredit) {
-                showAlertMessage("err", "Invalid Max Transder Credit", 1);
+                Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
                 return;
             }
         }
@@ -110,7 +110,7 @@
                 for (var z = 0; z < totalBettingRange; z++) {
                     var bettingrange = customer.gameKindList[i].gameTypeList[j].bettingRangeList[z];
                     var bettingrangeid = bettingrange.ID;
-                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).attr("checked");
+                    customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).prop("checked");
                 }
             }
         }
