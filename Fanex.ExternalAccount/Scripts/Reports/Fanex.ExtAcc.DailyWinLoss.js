@@ -60,7 +60,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabSuper').click(function (e) {
-            console.log($this.supername);
             if ($this.supername != '') {
                 $this.ResetParameters();
                 $this.username = $this.supername;
@@ -78,7 +77,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabMaster').click(function (e) {
-            console.log($this.mastername);
             if ($this.mastername != '') {
                 $this.ResetParameters();
                 $this.username = $this.mastername;
@@ -328,7 +326,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         gridOption.bodyRows = bodyData;
         gridOption.pagerOption.totalItem = this.totalRows;
-
+                
         //// Asign Footer Data
         var footerData = [];
         footerData.push(
@@ -344,13 +342,14 @@ Fanex.ExtAcc.DailyWinLoss = {
             { Name: "MAgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumMAgTO, this.SumTotalTO) },
             { Name: "AgTO", Value: this.SumAgTO },
             { Name: "AgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumAgTO, this.SumTotalTO) },
-            { Name: "ComWinlost", Value: this.SumComTO },
+
+            { Name: "ComWinlost", Value: this.SumComWinlost },
             { Name: "ComWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumComWinlost, this.SumComTO) },
-            { Name: "SAgWinlost", Value: this.SumSAgTO },
+            { Name: "SAgWinlost", Value: this.SumSAgWinlost },
             { Name: "SAgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumSAgWinlost, this.SumSAgTO) },
-            { Name: "MAgWinlost", Value: this.SumMAgTO },
+            { Name: "MAgWinlost", Value: this.SumMAgWinlost },
             { Name: "MAgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumMAgWinlost, this.SumMAgTO) },
-            { Name: "AgWinlost", Value: this.SumAgTO },
+            { Name: "AgWinlost", Value: this.SumAgWinlost },
             { Name: "AgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumAgWinlost, this.SumAgTO) }
             ]
         });

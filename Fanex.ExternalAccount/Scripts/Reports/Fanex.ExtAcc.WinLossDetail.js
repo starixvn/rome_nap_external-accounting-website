@@ -57,7 +57,8 @@ Fanex.ExtAcc.WinLossDetail = {
             fromDayId: 'fromDay1',
             toDayId: 'toDay1',
             log: function (msg) {
-                console.warn(msg);
+                if (typeof console != 'undefined')
+                    console.warn(msg);
             }
         });
 
