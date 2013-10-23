@@ -5,11 +5,11 @@
     },
     getCustomerSetting: function () {
         var validCustID = window.custId && window.custId > 0;
-        var validRoleID = window.targetRoleId && window.targetRoleId > 0
+        var validRoleID = window.pageRole && window.pageRole > 0
         if (validCustID && validRoleID) {
             var param = {
                 custId: window.custId,
-                targetRoleId: window.targetRoleId
+                updatedByRoleID: window.pageRole
             };
             $.ajax({
                 type: 'POST',
@@ -72,8 +72,8 @@
         });
     },
     initHtml: function (rs) {
-        if (rs.Result && rs.Result.ErrorCode > 0) {
-            showAlertMessage('err', rs.Result.ErrorMessage, 1);
+        if (rs.result && rs.result.errorCode > 0) {
+            showAlertMessage('err', rs.result.errorMessage, 1);
             $('.bg_table').addClass('hidden');
         }
         else {
