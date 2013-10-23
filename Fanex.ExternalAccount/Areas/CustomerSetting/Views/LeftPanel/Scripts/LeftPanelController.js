@@ -1770,7 +1770,7 @@ function SettingController($scope, $http) {
             '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
             '&roleId=' + $scope.model.personalInfo.roleId.value);
         var title = 'Update Racing Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 350, 350, false, null, 1, 'enableRacing');
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 350, false, null, 1, 'enableRacing');
     };
 
     $scope.ViewSubTab = function (id) {
@@ -1910,18 +1910,32 @@ function SettingController($scope, $http) {
     };
 
     $scope.MasterBingo = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
     };
 
     $scope.MasterCasino = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId));
     };
 
     $scope.MasterRacing = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
     };
 
     $scope.MasterLiveCasino = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/MasterEditMember'));
     };
 
     $scope.MasterVirtualSports = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
     };
 };
 

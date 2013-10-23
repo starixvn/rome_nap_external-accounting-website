@@ -507,14 +507,51 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
             bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino;
-
-            model.Setting.SuperPts = model.Setting.MasterPts =
-                   model.Setting.Details.Where(o => o.Key.ToString() == "PT" ||
+            model.Setting.SuperPts.Clear();
+            model.Setting.MasterPts.Clear();
+            model.Setting.Details.ForEach(o =>
+            {
+                model.Setting.MasterPts.Add(new ObjectInfo
+                {
+                    Key = o.Key,
+                    Value = o.Value
+                });
+            });
+            model.Setting.MasterPts =
+                   model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT" ||
                        (o.Key.ToString() == "Casino" && syncCasino) ||
                        (o.Key.ToString() == "Bingo" && syncBingo) ||
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
                        o.Key.ToString() == "VirtualSports" ||
                        o.Key.ToString() == "Racing").ToList();
+                        
+            model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
+            model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
+            var casino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Casino");
+            var bingo = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Bingo");
+            var liveCasino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "LiveCasino");
+            var virtualSports = model.Setting.MasterPts.Where(o => o.Key.ToString() == "VirtualSports");
+            if (casino.Count() > 0)
+            {
+                casino.FirstOrDefault().Value = "Casino";
+            }
+
+            if (bingo.Count() > 0)
+            {
+                bingo.FirstOrDefault().Value = "Bingo";
+            }
+
+            if (liveCasino.Count() > 0)
+            {
+                liveCasino.FirstOrDefault().Value = "Live Casino";
+            }
+
+            if (virtualSports.Count() > 0)
+            {
+                virtualSports.FirstOrDefault().Value = "Virtual Sports";
+            }
+
+            model.Setting.SuperPts = model.Setting.MasterPts;
 
             return model;
         }

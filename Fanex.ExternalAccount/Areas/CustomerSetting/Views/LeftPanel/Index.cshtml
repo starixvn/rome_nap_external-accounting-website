@@ -213,7 +213,7 @@
                     </div>
                 </div>
                 <div class="clearBoth">
-                    <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" ng-click="ResetSecurityCode({{model.personalInfo.custId.value}}, {{model.personalInfo.roleId.value}}, '{{model.personalInfo.currentLevel.value}}')">Change</a>]</div>
+                    <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" ng-click="ResetSecurityCode({{model != null ? model.personalInfo.custId.value : 0}}, {{model != null ? model.personalInfo.roleId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Change</a>]</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[6].value}}</div>
                 </div>
                 <div class="clearBoth" ng-hide="{{length == 7}}">
