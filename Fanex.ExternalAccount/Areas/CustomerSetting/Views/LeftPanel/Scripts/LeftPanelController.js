@@ -135,8 +135,8 @@ function LeftPanelController($scope, $element) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    parent.Fanex.ExtAcc.Customer.Closed = parent.document.getElementById(id ? id : 'closed').checked;
+                    var _closed = parent.document.getElementById(id ? id : 'closed');
+                    parent.Fanex.ExtAcc.Customer.Closed = _closed ? _closed.checked : false;
 
                     parent.$(id ? '#' + id : '#closed').bind('click', function () {
                         var checkbox = this;
@@ -180,7 +180,8 @@ function LeftPanelController($scope, $element) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    parent.Fanex.ExtAcc.Customer.Suspended = parent.document.getElementById(id ? id : 'suspended').checked;
+                    var suspended = parent.document.getElementById(id ? id : 'suspended')
+                    parent.Fanex.ExtAcc.Customer.Suspended = suspended ? suspended.checked : false;
 
                     parent.$(id ? '#' + id : '#suspended').bind('click', function () {
                         var checkbox = this;
@@ -1942,6 +1943,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.SuperSBPT = function () {
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         var agentId = $scope.model.personalInfo.downlines[2].key;
@@ -1957,6 +1960,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.MasterSBPT = function () {
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         var agentId = $scope.model.personalInfo.downlines[2].key;
