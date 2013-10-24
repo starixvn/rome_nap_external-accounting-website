@@ -1,7 +1,6 @@
 ﻿/// <reference path="../_references.js" />
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
-    //alert("Fanex.ExtAcc.js module is required!")
-    Fanex = { ExtAcc: { Customer: { } } };
+    alert("Fanex.ExtAcc.js module is required!")
 }
 
 Fanex.ExtAcc.Customer.VirtualSports = {
@@ -127,7 +126,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
 
     Init: function () {
-        parent.Fanex.ExtAcc.BlockUI();
+        Fanex.ExtAcc.BlockUI();
 
         this.uplineId = context.custId;
         this.uplineRoleId = context.roleId;
@@ -167,7 +166,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         // using for both of multi & single
         this.InitArrays();
         this.InitUI();
-        parent.Fanex.ExtAcc.UnBlockUI();
+        Fanex.ExtAcc.UnBlockUI();
     },
 
     InitUI: function () {
