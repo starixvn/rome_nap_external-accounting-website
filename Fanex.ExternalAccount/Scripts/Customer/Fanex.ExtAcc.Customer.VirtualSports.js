@@ -1,6 +1,7 @@
 ﻿/// <reference path="../_references.js" />
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
-    alert("Fanex.ExtAcc.js module is required!")
+    //alert("Fanex.ExtAcc.js module is required!")
+    Fanex = { ExtAcc: { Customer: { } } };
 }
 
 Fanex.ExtAcc.Customer.VirtualSports = {
@@ -126,22 +127,10 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
 
     Init: function () {
-        Fanex.ExtAcc.BlockUI();
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case Fanex.ExtAcc.Customer.Master:
-                this.uplineId = Fanex.ExtAcc.Customer.superId;
-                this.uplineRoleId = Fanex.ExtAcc.Customer.Super;
-                break;
-            case Fanex.ExtAcc.Customer.Agent:
-                this.uplineId = Fanex.ExtAcc.Customer.masterId;
-                this.uplineRoleId = Fanex.ExtAcc.Customer.Master;
-                break;
-            case Fanex.ExtAcc.Customer.Member:
-                this.uplineId = Fanex.ExtAcc.Customer.agentId;
-                this.uplineRoleId = Fanex.ExtAcc.Customer.Agent;
-                break;
-        }
+        parent.Fanex.ExtAcc.BlockUI();
 
+        this.uplineId = context.custId;
+        this.uplineRoleId = context.roleId;
         Fanex.PTVirtualSports.CURRENT_CONTEXT = context;
         Fanex.PTVirtualSports.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
@@ -178,7 +167,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         // using for both of multi & single
         this.InitArrays();
         this.InitUI();
-        Fanex.ExtAcc.UnBlockUI();
+        parent.Fanex.ExtAcc.UnBlockUI();
     },
 
     InitUI: function () {
@@ -297,6 +286,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         if (id > 0) {
             isMulti = true;
         }
+
         var url = resolveClientUrl("VirtualSports/UpdateCustomerSetting?custId=") + this.uplineId + '&roleId=' + this.uplineRoleId + "&targetCustId=" + custid + "&targetRoleId=" + context.targetRoleId + "&updateType=" + this.updateType + "&isMulti=" + isMulti.toString();
         var parameters = ['oldCustomer=', JSON.stringify(this.oldCustomer), '&newCustomer=', JSON.stringify(this.newCustomer), '&otherSetting=', JSON.stringify(this.otherSetting)].join('');
 
@@ -354,8 +344,8 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
     afterUpdateSuccess: function (timeout) {
         t1 = setTimeout(function () {
-//            $('#errMsg').css('display', 'none');
-//            $('#errMsg').html('');
+            //            $('#errMsg').css('display', 'none');
+            //            $('#errMsg').html('');
             Fanex.ExtAcc.Form.Close(false);
         }, timeout);
     }

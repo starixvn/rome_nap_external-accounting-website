@@ -264,7 +264,7 @@ Fanex.ExtAcc.Customer = {
         if (superSyncBingo) {
             if (syncBingo) {
                 if (disableBingo) {
-                    itemsMaster.bingo = { name: "Bingo", className: "iconDisableEdit" };
+                    itemsMaster.bingo = { name: "Bingo", className: "iconDisableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
                 }
                 else {
                     itemsMaster.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
@@ -283,7 +283,7 @@ Fanex.ExtAcc.Customer = {
 
         if (!hideVirtualSport) {
             if (disableVirtualSport) {
-                itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit" };
+                itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.superId + '&roleId=' + Fanex.ExtAcc.Customer.Super + '&targetCustId=' + custId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
             }
             else {
                 itemsMaster.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.superId + '&roleId=' + Fanex.ExtAcc.Customer.Super + '&targetCustId=' + custId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
@@ -373,7 +373,7 @@ Fanex.ExtAcc.Customer = {
         if (masterSyncBingo) {
             if (syncBingo) {
                 if (disableBingo) {
-                    itemsAgent.bingo = { name: "Bingo", className: "iconDisableEdit" };
+                    itemsAgent.bingo = { name: "Bingo", className: "iconDisableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
                 }
                 else {
                     itemsAgent.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
@@ -390,7 +390,7 @@ Fanex.ExtAcc.Customer = {
 
         if (!hideVirtualSport) {
             if (disableVirtualSport) {
-                itemsAgent.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit" };
+                itemsAgent.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.masterId + '&roleId=' + Fanex.ExtAcc.Customer.Master + '&targetCustId=' + custId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Agent), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
             }
             else {
                 itemsAgent.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.masterId + '&roleId=' + Fanex.ExtAcc.Customer.Master + '&targetCustId=' + custId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Agent), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
@@ -452,7 +452,7 @@ Fanex.ExtAcc.Customer = {
         if (agentSyncBingo) {
             if (syncBingo) {
                 if (disableBingo) {
-                    itemsMember.bingo = { name: "Bingo", className: "iconDisableEdit" };
+                    itemsMember.bingo = { name: "Bingo", className: "iconDisableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
                 }
                 else {
                     itemsMember.bingo = { name: "Bingo", className: "iconEnableEdit", callback: function (key, opt) { Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1); } };
@@ -492,7 +492,7 @@ Fanex.ExtAcc.Customer = {
 
         if (!hideVirtualSport) {
             if (disableVirtualSport) {
-                itemsMember.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit" };
+                itemsMember.virtualSport = { name: "Virtual Sports", className: "iconDisableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.agentId + '&roleId=' + Fanex.ExtAcc.Customer.Agent + '&targetCustId=' + custId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
             }
             else {
                 itemsMember.virtualSport = { name: "Virtual Sports", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.agentId + '&roleId=' + Fanex.ExtAcc.Customer.Agent + '&targetCustId=' + custId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member), 'Edit Virtual Sports Setting <font color="#6dcff6">' + title + '</font>', 870, 700, false, null, 1); } };
@@ -2290,5 +2290,5 @@ Fanex.ExtAcc.Customer = {
 
 /*
 $(document).ready(function () {
-    Fanex.ExtAcc.Customer.Init();
+Fanex.ExtAcc.Customer.Init();
 })*/
