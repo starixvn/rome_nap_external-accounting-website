@@ -1793,8 +1793,8 @@ Fanex.ExtAcc.Customer = {
         }
         else if (this.CurrentLevel == this.Master) {
             menuItems = {
-                sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultiplePT(); } },
-                racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
+                sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultiplePT(); } }//,
+                //racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
             };
 
             if (this.superSyncCasino) {
@@ -1802,7 +1802,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (this.superSyncBingo) {
-                menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
+                //menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
             }
 
             if (!this.superDisableP2P) {
@@ -1816,7 +1816,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
+            //menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
 
             if (this.AllowDoubleCommMaster) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
@@ -1829,8 +1829,8 @@ Fanex.ExtAcc.Customer = {
             }
         } else if (this.CurrentLevel == this.Agent) {
             menuItems = {
-                sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultiplePT(); } },
-                racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
+                sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultiplePT(); } }//,
+                //racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
             };
 
             if (this.masterSyncCasino) {
@@ -1838,7 +1838,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (this.masterSyncBingo) {
-                menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
+                //menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
             }
 
             if (!this.masterDisableP2P) {
@@ -1852,7 +1852,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
+            //menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
 
             if (this.AllowDoubleCommAgent) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
@@ -1868,8 +1868,8 @@ Fanex.ExtAcc.Customer = {
             menuItems = {
                 sportbook: { name: "Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.ShowEditMultiplePT(); } },
                 superEditSportbook: { name: "Super Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = true; Fanex.ExtAcc.Customer.isMasterEditMember = false; Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(); } },
-                masterEditSportbook: { name: "Master Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(); } },
-                racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
+                masterEditSportbook: { name: "Master Edit Multiple Sportsbook", className: "iconEnableEdit", callback: function () { Fanex.ExtAcc.Customer.isSuperEditMember = false; Fanex.ExtAcc.Customer.isMasterEditMember = true; Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(); } }//,
+                //racing: { name: "Edit Multiple Racing", className: "iconEnableEdit" }
             };
 
             if (this.agentSyncCasino) {
@@ -1879,7 +1879,7 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (this.agentSyncBingo) {
-                menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
+                //menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
             }
 
             if (!this.agentDisableP2P) {
@@ -1907,7 +1907,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
+            //menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = { name: "Edit Multiple Double Comm", className: "iconEnableEdit",
