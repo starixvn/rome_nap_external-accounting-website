@@ -44,10 +44,12 @@ Fanex.ExtAcc.Form = {
                 return;
             }
             else {
-                DivContent.innerHTML = data;
+                //DivContent.innerHTML = data;
+                document.body.appendChild(Form);
+                $(DivContent).html(data);
             }
 
-            document.body.appendChild(Form);
+            //document.body.appendChild(Form);
             $('#' + id).dialog({
                 title: title,
                 height: height,

@@ -88,4 +88,5 @@ function Reset() {
     $('#securityCode').val('');
     $('#securityCodeConfirm').val('');
     $('#securityCode').focus();
+    document.getElementById('forceChange').checked = true;
 };
