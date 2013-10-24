@@ -547,11 +547,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
             {
-                model.Setting.MasterPts.Add(new ObjectInfo
-                {
-                    Key = o.Key,
-                    Value = o.Value
-                });
+                model.Setting.MasterPts.Add(new ObjectInfo { Key = o.Key, Value = o.Value });
             });
             model.Setting.MasterPts =
                    model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT" ||
@@ -560,11 +556,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
                        o.Key.ToString() == "VirtualSports" ||
                        o.Key.ToString() == "Racing").ToList();
-            model.Setting.MasterPts.Add(new ObjectInfo
-            {
-                Key = "SBPT",
-                Value = "Sportsbook's PT"
-            });
+            model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
             var casino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Casino");
@@ -592,7 +584,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;
-
             return model;
         }
 

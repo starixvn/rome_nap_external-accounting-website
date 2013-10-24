@@ -28,4 +28,17 @@ public static class eFunctions
 			public const string LiveCasinoBetting = "LiveCasinoBetting";
 			public const string CasinoBetting = "CasinoBetting";
 			public const string BingoBetting = "BingoBetting";
+			public const string CloseCustomer = "CloseCustomer";
+			public const string SuspendCustomer = "SuspendCustomer";
+			public const string AllowOutright = "AllowOutright";
+			public const string AllowAutoMPT = "AllowAutoMPT";
+			public const string EnableRacing = "EnableRacing";
+			public const string EnableCasino = "EnableCasino";
+			public const string EnableBingo = "EnableBingo";
+			public const string EnablePoker = "EnablePoker";
+			public const string EnableNumberGame = "EnableNumberGame";
+			public const string EnableVirtualSports = "EnableVirtualSports";
+			public const string EnableLiveCasino = "EnableLiveCasino";
+			public const string EnableDoubleComm = "EnableDoubleComm";
+			public const string UpdateCredit = "UpdateCredit";
 		}
