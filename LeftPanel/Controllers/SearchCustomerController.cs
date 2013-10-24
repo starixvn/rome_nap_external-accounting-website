@@ -462,7 +462,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <returns>ActionResult object.</returns>
         [HttpPost]
         [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
-        public ActionResult UpdateSecurityCode(int id, string code, int roleId = 1)
+        public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 1)
         {
             string hashCode = Encryption.CfsEnCode(code);
             if (roleId != Member)
@@ -471,7 +471,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 hashCode = Fanex.Security.Cryptography.ComputeHash("SHA1", code, md5);
             }
 
-            Result result = this._service.ResetSecurityCode(id, hashCode);
+            Result result = this._service.ResetSecurityCode(id, hashCode, force);
             return this.JsonBase(
                 result, 
                 new JsonSerializerSettings

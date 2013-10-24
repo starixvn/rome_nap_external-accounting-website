@@ -196,9 +196,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return this._data.AutoMasterPT(id, allow);
         }
 
-        public override Result ResetSecurityCode(int id, string code)
+        public override Result ResetSecurityCode(int id, string code, bool force)
         {
-            return this._data.ResetSecurityCode(id, code);
+            return this._data.ResetSecurityCode(id, code, force);
         }
     }
 }

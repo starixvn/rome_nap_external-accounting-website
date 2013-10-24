@@ -169,7 +169,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             throw new NotImplementedException();
         }
 
-        public virtual Result ResetSecurityCode(int id, string code)
+        public virtual Result ResetSecurityCode(int id, string code, bool force)
         {
             throw new NotImplementedException();
         }
