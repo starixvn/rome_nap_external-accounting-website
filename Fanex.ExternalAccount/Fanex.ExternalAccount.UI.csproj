@@ -276,6 +276,7 @@
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
     <Content Include="Areas\CustomerSetting\Styles\input.css" />
+    <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

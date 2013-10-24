@@ -135,8 +135,8 @@ function LeftPanelController($scope, $element) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    parent.Fanex.ExtAcc.Customer.Closed = parent.document.getElementById(id ? id : 'closed').checked;
+                    var _closed = parent.document.getElementById(id ? id : 'closed');
+                    parent.Fanex.ExtAcc.Customer.Closed = _closed ? _closed.checked : false;
 
                     parent.$(id ? '#' + id : '#closed').bind('click', function () {
                         var checkbox = this;
@@ -180,7 +180,8 @@ function LeftPanelController($scope, $element) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-                    parent.Fanex.ExtAcc.Customer.Suspended = parent.document.getElementById(id ? id : 'suspended').checked;
+                    var suspended = parent.document.getElementById(id ? id : 'suspended')
+                    parent.Fanex.ExtAcc.Customer.Suspended = suspended ? suspended.checked : false;
 
                     parent.$(id ? '#' + id : '#suspended').bind('click', function () {
                         var checkbox = this;
@@ -1939,6 +1940,40 @@ function SettingController($scope, $http) {
     $scope.MasterVirtualSports = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
+    };
+
+    $scope.SuperSBPT = function () {
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT'));
+    };
+
+    $scope.MasterSBPT = function () {
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT'));
     };
 };
 
