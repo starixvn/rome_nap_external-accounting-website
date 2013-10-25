@@ -310,7 +310,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                             object.isSuccess = false;
                         }
                         else if (item.errorCode == -2) { // update status successfully
-                            this.ReloadCheckboxes();
+                            Fanex.ExtAcc.Customer.VirtualSports.ReloadCheckboxes();
                         }
                     }
                 }
