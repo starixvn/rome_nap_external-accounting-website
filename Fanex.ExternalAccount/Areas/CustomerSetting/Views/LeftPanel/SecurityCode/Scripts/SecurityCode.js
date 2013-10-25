@@ -32,6 +32,7 @@
         data: {
             id: custId,
             code: $('#securityCode').val(),
+            force: document.getElementById('forceChange').checked,
             roleId: roleId
         }
     }).success(function (result) {
@@ -87,4 +88,5 @@ function Reset() {
     $('#securityCode').val('');
     $('#securityCodeConfirm').val('');
     $('#securityCode').focus();
+    document.getElementById('forceChange').checked = true;
 };

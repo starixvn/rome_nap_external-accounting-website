@@ -496,14 +496,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <param name="id">Customer id.</param>
         /// <param name="code">Security code.</param>
         /// <returns>Result object.</returns>
-        public Result ResetSecurityCode(int id, string code)
+        public Result ResetSecurityCode(int id, string code, bool force)
         {
             Hashtable outputParams = new Hashtable();
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdSecurityCode"))
             {
                 objDb.AddInParameter("Custid", System.Data.DbType.Int32, id);
                 objDb.AddInParameter("Userid", System.Data.DbType.Int32, CurrentSession.Instance.UserId);
-                objDb.AddInParameter("IsForcedChangeSecurityCode", System.Data.DbType.Boolean, true);
+                objDb.AddInParameter("IsForcedChangeSecurityCode", System.Data.DbType.Boolean, force);
                 objDb.AddInParameter("Securitycode", System.Data.DbType.String, code);
                 objDb.AddInParameter("Language", System.Data.DbType.String, "En");
                 objDb.AddInParameter("IP", System.Data.DbType.String, CurrentContext.Instance.Ip4Address);

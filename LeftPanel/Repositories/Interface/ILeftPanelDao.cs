@@ -56,6 +56,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
 
         Result AutoMasterPT(int id, bool allow);
 
-        Result ResetSecurityCode(int id, string code);
+        Result ResetSecurityCode(int id, string code, bool force);
     }
 }

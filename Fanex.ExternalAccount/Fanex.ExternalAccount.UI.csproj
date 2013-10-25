@@ -276,6 +276,8 @@
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
     <Content Include="Areas\CustomerSetting\Styles\input.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\SecurityCode.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Styles\SecurityCode.css" />
     <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1817,8 +1819,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
-    <Folder Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\" />
-    <Folder Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Styles\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
