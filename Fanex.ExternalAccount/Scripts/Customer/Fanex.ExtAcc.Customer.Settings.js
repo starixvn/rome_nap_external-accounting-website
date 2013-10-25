@@ -22,6 +22,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
         $('#tab6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
         $('#tab7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');
+        $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports == 'True' ? 'none' : 'block');
 
         /*$('#tabs-4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
         $('#tabs-5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
