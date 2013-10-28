@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
@@ -94,6 +95,81 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         /// <param name="newGivenCredit">New given credit.</param>
         /// <returns>Result object.</returns>
         public virtual Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual DataTable CustomerSelectClearBalance(int custId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result SuspendCustomer(int custId, bool suspend)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result AllowOutright(int custId, bool allow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableNumberGame(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableLiveCasino(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result EnableVirtualSports(int id, bool enable, bool enableDownline)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public virtual Result AutoMasterPT(int id, bool allow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Result ResetSecurityCode(int id, string code, bool force)
         {
             throw new NotImplementedException();
         }

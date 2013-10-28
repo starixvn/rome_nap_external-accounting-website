@@ -76,7 +76,7 @@ div
 .ui-tabs .ui-tabs-panel
 {
     padding: 2px;
-    max-height: 207px;
+    max-height: 210px;
     min-height: 160px;
     background-color: #F6F6F6;
 }
@@ -94,6 +94,8 @@ div
 .true
 {
     color: Red;
+    background: none !important;
+    cursor: default !important;
 }
 .ui-tabs .ui-tabs-panel
 {
@@ -146,7 +148,7 @@ div
 }
 .ui-helper-reset
 {
-    line-height: 0.4;
+    line-height: 0.8 !important;
     padding: 0;
 }
 .ui-tabs .ui-tabs-nav
@@ -164,7 +166,7 @@ div
 .settingTitle
 {
     float: left;
-    width: 111px;
+    width: 100px;
     margin: 0;
     padding: 0;
 }
@@ -263,15 +265,15 @@ div
 }
 .fiftyPercent
 {
-    width: 49.6%;
+    width: 48%;
 }
 .thirdtyThreePercent
 {
-    width: 32.9%;
+    width: 32%;
 }
 .onehundredPercent
 {
-    width: 99.9%;
+    width: 97%;
 }
 #btnCustList, #btnStatement, #btnBalance, .btnDetail
 {
@@ -302,7 +304,7 @@ div
 }
 .percent50
 {
-    width: 50%;
+    width: 49%;
 }
 .percent32
 {
@@ -310,7 +312,7 @@ div
 }
 .percent58
 {
-    width: 58%;
+    width: 56%;
 }
 .percent10
 {
@@ -322,7 +324,7 @@ div
 }
 .p58
 {
-    width: 58%;
+    width: 56%;
 }
 .p10
 {
@@ -343,4 +345,39 @@ div
 input
 {
     margin: 3px 3px 0 0;
+}
+.ui-state-default a
+{
+    color: #555 !important;
+}
+.ui-tabs-active a
+{
+    color: #2489CE !important;
+}
+.subTab-parent
+{
+    border: 1px solid #CCC;
+    border-right: none;  
+    float: left;
+}
+.subTab
+{
+    border: 1px solid #CCC;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    padding: 0 5px;
+    font-weight: bold;
+    background: url(../images/inactive-icn.png) no-repeat;
+    background-position: center right;
+    padding-right: 15px;
+    cursor: pointer;
+    background-color: #FFF;
+}
+.subTab-active
+{
+    color: #2489CE;
+    background: url(../images/active-icn.png) no-repeat;
+    background-position: center right;
+    background-color: #FFF;
 }

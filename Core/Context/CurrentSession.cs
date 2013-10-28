@@ -12,6 +12,7 @@
 namespace Fanex.ExternalAccount.Core.Context
 {
     using System.Web.UI;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
@@ -29,6 +30,7 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASCurrencyGroup = "EASCurrencyGroup";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
+        public const string EASGroupId = "EASGroupId";
 
         #endregion Constants
 
@@ -98,11 +100,17 @@ namespace Fanex.ExternalAccount.Core.Context
             {
                 return !string.IsNullOrWhiteSpace(this.UserName);
             }
+
+            set
+            {
+                this.Session["IsLogin"] = value;
+            }
         }
 
         public string NetSessionId
         {
             get { return this.Session.SessionID; }
+            set { this.Session["SessionID"] = value; }
         }
 
         public string Captcha
@@ -154,6 +162,19 @@ namespace Fanex.ExternalAccount.Core.Context
             set
             {
                 this.Session[EASITAdmin] = value;
+            }
+        }
+
+        public int GroupId
+        {
+            get
+            {
+                return Utils.ToInt32(this.Session[EASGroupId]);
+            }
+
+            set
+            {
+                this.Session[EASGroupId] = value;
             }
         }
     }

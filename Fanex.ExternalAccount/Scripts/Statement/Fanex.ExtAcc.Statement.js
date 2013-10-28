@@ -38,14 +38,14 @@ Fanex.ExtAcc.Statement = {
         $("#dtpFromDate").datepicker({
             changeYear: true,
             onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: '/Images/calendar.png', buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
         });
         $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
         $("#dtpToDate").datepicker({
             changeYear: true,
             onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: '/Images/calendar.png', buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
@@ -167,16 +167,22 @@ Fanex.ExtAcc.Statement = {
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate;
 
-        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
+        Fanex.ExtAcc.BlockUI();
 
         $.ajax({
             context: $this,
             url: this.url + parameterUrl,
-            type: 'GET',
+            type: 'post',
             dataType: 'json',
             cache: false,
             beforesend: function (xhr) { },
             success: function (data) {
+                if (data.ErrorCode) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 350, 150, 'alertStmt');
+                    return;
+                }
+
                 $this.dataSource = data.rows;
                 $this.totalRows = data.rows.length;
                 $('#StatementUsername').html(data.username);
@@ -190,10 +196,10 @@ Fanex.ExtAcc.Statement = {
                     $("#jqgrid").fanexGrid($this.Render());
                 }
 
-                $(document).ajaxStop($.unblockUI);
+                Fanex.ExtAcc.UnBlockUI();
             },
             error: function () {
-                $(document).ajaxStop($.unblockUI);
+                Fanex.ExtAcc.UnBlockUI();
             }
         })
     }

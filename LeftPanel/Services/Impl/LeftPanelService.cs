@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
+//   <change who="Andy.Nguyen" date="2013.9.26">View used credit and reset member credit</change>
 // </history>
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
@@ -123,6 +124,81 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public override DataRowCollection GetOnlineList(int custid)
         {
             return this._data.GetOnlineList(custid);
+        }
+
+        public override IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        {
+            return this._data.MasterAgentUsedCreditItems(custId, roleId);
+        }
+
+        public override IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+        {
+            return this._data.MemberUsedCreditItems(custId);
+        }
+
+        public override Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
+        {
+            return this._data.ResetMemberCredit(custId, agentId, closedOnly);
+        }
+        
+        public override Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
+        {
+            return this._data.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip);
+        }
+
+        public override DataTable CustomerSelectClearBalance(int custId)
+        {
+            return this._data.CustomerSelectClearBalance(custId);
+        }
+
+        public override Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
+        {
+            return this._data.CloseCutomer(custId, close, clearCredit, custName);
+        }
+
+        public override Result SuspendCustomer(int custId, bool suspend)
+        {
+            return this._data.SuspendCustomer(custId, suspend);
+        }
+
+        public override Result AllowOutright(int custId, bool allow)
+        {
+            return this._data.AllowOutright(custId, allow);
+        }
+
+        public override Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
+        {
+            return this._data.EnableBingo(id, enable, sync, enableDownline);
+        }
+
+        public override Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
+        {
+            return this._data.EnableCasino(id, enable, enableDownline, synce, custName);
+        }
+
+        public override Result EnableLiveCasino(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableLiveCasino(id, enable, enableDownline);
+        }
+
+        public override Result EnableNumberGame(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableNumberGame(id, enable, enableDownline);
+        }
+
+        public override Result EnableVirtualSports(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableVirtualSports(id, enable, enableDownline);
+        }
+
+        public override Result AutoMasterPT(int id, bool allow)
+        {
+            return this._data.AutoMasterPT(id, allow);
+        }
+
+        public override Result ResetSecurityCode(int id, string code, bool force)
+        {
+            return this._data.ResetSecurityCode(id, code, force);
         }
     }
 }

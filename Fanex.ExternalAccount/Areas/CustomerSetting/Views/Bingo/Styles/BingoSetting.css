@@ -1,0 +1,14 @@
+﻿.bg_table {
+    background-color: #FFFFFF!important;
+    border: none!important;
+}
+.tblcollapse .title td {
+    background-color: #F1F1A6!important;
+    color: #464646;
+    font-size: 12px;
+    height: 25px;
+}
+.tblcollapse tr, .tblcollapse td, .tblcollapse th {
+    border: 1px solid #CCCCCC!important;
+}
+.display-none {display:none;}

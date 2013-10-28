@@ -35,6 +35,7 @@ input[type="text"], input[type="password"]
 .minWidthCustomer
 {
 	width: 845px;
+	margin: 2px 0 0 2px;
 }
 .float_l
 {
@@ -487,8 +488,8 @@ input[type="text"], input[type="password"]
 {
 	font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-color: #E7F7FF;
-	border-left: 1px solid #CCC;
-	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC!important;
+	border-top: 1px solid #CCC!important;
 	font-size: 11px !important;
 	text-indent: 1px !important;
 }
@@ -534,7 +535,7 @@ input[type="text"], input[type="password"]
 	vertical-align: top;
 	cursor: pointer;
 	border: 1px solid #ccc;
-	background-image: url("../../Images/Content/arrowblue-icn.png");
+	background-image: url("../Images/Content/arrowblue-icn.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	width: 16px;
@@ -548,7 +549,7 @@ input[type="text"], input[type="password"]
 	vertical-align: top;
 	cursor: pointer;
 	border: 1px solid #ccc;
-	background-image: url("../../Images/Content/arrowdown-icn.png");
+	background-image: url("../Images/Content/arrowdown-icn.png");
 	background-repeat: no-repeat;
 	background-position: center center;
 	width: 16px;
@@ -618,4 +619,9 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 .BettingLimitLabel, .BettingLimitLabel1
 {
 	background-color: #fff !important;
+}
+td, TD
+{
+    white-space: normal; 
+    overflow: auto;
 }

@@ -3,25 +3,25 @@
 @model Fanex.ExternalAccount.ViewModel.Customer.PTVirtualSportsModel
 @{
     Layout = null;
+    string showEditLink = (Model.CustId != Model.TargetCustId).ToString().ToLower();
 }
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.css")"
         rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/VirtualSports.css")"
         rel="stylesheet" type="text/css" />
+<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Languages.en.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BetType.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.GridHeader.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BettingLimit.js")" type="text/javascript"></script>
-<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.knockout-2.0.0.js")" type="text/javascript"></script>
 <script src="@Url.Content(string.Format("~/VirtualSports/DataSource?custid={0}&roleid={1}&targetcustid={2}&targetroleid={3}", Model.CustId, Model.RoleId, Model.TargetCustId, Model.TargetRoleId))"
         type="text/javascript"></script>
-<div id="errMsg" style="display: none;" class="errMsg">
-</div>
 <div class="minWidthCustomer">
+    <div id="errMsg" class="errMsg" style="display:none;"></div>
     <div class="customerInfo">
         <div class="headerTab">
-            <div id="saveStatus" class="saveDiv">
+            <div id="saveStatus" class="saveDiv" data-bind="visible: @showEditLink">
                 <input id='btnSaveStatus' type="button" class="save" title="@ViewLang.SaveStatus" data-bind="click: saveStatus" />
             </div>
             <div>
@@ -93,7 +93,7 @@
     <div class="clearBlock">
     </div>
     <div class="headerBetSetting">
-        <div id="saveBetSetting" class="saveDiv">
+        <div id="saveBetSetting" class="saveDiv" data-bind="visible: @showEditLink">
             <input id='btnSaveBetSetting' type="button" class="save"
                     title="@ViewLang.SaveBetSetting" data-bind="click: saveBettingLimit" />
         </div>
@@ -106,7 +106,7 @@
     <div class="clearBlock">
     </div>
     <div class="headerPositionTaking">
-        <div id="savePositionTaking" class="saveDiv">
+        <div id="savePositionTaking" class="saveDiv" data-bind="visible: @showEditLink">
             <input id='btnSavePositionTaking' type="button" class="save"
                     title="@ViewLang.SavePositionTaking" data-bind="click: savePositionTaking" />
         </div>
@@ -118,7 +118,7 @@
     </div>
     <div class="clearBlock">
     </div>
-    <div style="float: right;">
+    <div style="float: right;" data-bind="visible: @showEditLink">
         <input id="btnSubmit" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
 </div>

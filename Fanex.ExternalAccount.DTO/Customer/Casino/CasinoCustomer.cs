@@ -14,13 +14,19 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
     /// </summary>
     public class CasinoCustomer
     {
+        public bool UplineDisabledCasino
+        {
+            get;
+            set;
+        }
+
         public bool EnableDownline
         {
             get;
             set;
         }
 
-        public int GivenCredit
+        public decimal GivenCredit
         {
             get;
             set;

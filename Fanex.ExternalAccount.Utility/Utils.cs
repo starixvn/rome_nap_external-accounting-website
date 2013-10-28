@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Utilities
 {
     using System;
     using System.Data;
+    using System.Web;
     using System.Web.Optimization;
 
     /// <summary>
@@ -707,6 +708,31 @@ namespace Fanex.ExternalAccount.Utilities
             return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
         }
 
+        public static string DecodeHtml(this DataRow obj, string fieldName)
+        {
+            return HttpUtility.HtmlDecode(obj.ToString(fieldName));
+        }
+
+        public static string EncodeHtml(this DataRow obj, string fieldName)
+        {
+            return HttpUtility.HtmlEncode(obj.ToString(fieldName));
+        }
+
+        public static string DecodeHtml(this string str)
+        {
+            return HttpUtility.HtmlDecode(str);
+        }
+
+        public static string EncodeHtml(this string str)
+        {
+            return HttpUtility.HtmlEncode(str);
+        }
+
+        public static string EncodeHtml(this object obj)
+        {
+            return HttpUtility.HtmlEncode(obj);
+        }
+
         /// <summary>
         /// Truncates a string to a certain length.
         /// </summary>
@@ -779,14 +805,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in cssLogin)
             {
-                bootstrapCssLogin.AddFile(item);
+                bootstrapCssLogin.Include(item);
             }
 
             bundles.Add(bootstrapCssLogin);
 
             foreach (var item in jssLogin)
             {
-                bootstrapJsLogin.AddFile(item);
+                bootstrapJsLogin.Include(item);
             }
 
             bundles.Add(bootstrapJsLogin);
@@ -807,14 +833,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -835,14 +861,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -863,14 +889,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -891,14 +917,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -919,14 +945,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);
@@ -947,14 +973,14 @@ namespace Fanex.ExternalAccount.Utilities
 
             foreach (var item in css)
             {
-                bootstrapCss.AddFile(item);
+                bootstrapCss.Include(item);
             }
 
             bundles.Add(bootstrapCss);
 
             foreach (var item in js)
             {
-                bootstrapJs.AddFile(item);
+                bootstrapJs.Include(item);
             }
 
             bundles.Add(bootstrapJs);

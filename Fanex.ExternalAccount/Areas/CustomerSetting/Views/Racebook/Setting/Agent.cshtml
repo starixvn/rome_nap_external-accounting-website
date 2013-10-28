@@ -1,0 +1,16 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Agent Racing Setting";
+    Layout = "~/Areas/CustomerSetting/Views/Racebook/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    @*@Scripts.Render("~/bundles/racingsetting/super")*@
+    <script type="text/javascript">
+        window.pageRole = ptRacingCommon.masterRoleId;
+        window.targetRoleId = ptRacingCommon.agentRoleId;
+            
+    </script>
+}

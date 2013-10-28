@@ -1,0 +1,120 @@
+﻿@using Fanex.PTEngine.BusinessObjects
+@using Fanex.CustomerSetting.Module.Core
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model Fanex.PTRacing.BusinessObjects.ICustomer
+@{
+    var bettingLimit = Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.None , new Newtonsoft.Json.JsonSerializerSettings
+    { 
+        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+    });
+
+    var id = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
+    var uplineId = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
+    var userId = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
+    var siteName = Request.RequestContext.RouteData.Values["siteName"];
+}
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Racing/Styles/Racing.css")" rel="stylesheet" type="text/css" />
+<div id="ng-app" ng-app="bettingApp" ng-controller="Fanex.CustomerSetting.Betting.Racing" ng-init="Init()" style="width: 815px">
+    <div id="errMsg" style="display: none" class="errMsg">
+    </div>
+    <div class="title C bold header">
+        Update Bet Setting: @ViewBag.Username
+    </div>
+    <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="title titleWidth2"></td>
+            <td class="title bold C betWidth2">Min Bet</td>
+            <td class="title bold C betWidth2">Max Bet</td>
+            <td class="title bold C betWidth2">Max Per Match</td>
+        </tr>
+        <tr id="{{betting.id}}" ng-hide="betting.isHide" ng-init="betting.bgClass = '';" ng-repeat="betting in bettingLimits">
+            <td colspan="4" class="noneBorderBottom noneBorderRight noneBorderTop">
+                <table class="tableInfo" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="subTitleWidth title noneBorderLeft noneBorderTop noneBorderBottom">{{betting.name}}</td>
+                        <td colspan="4" style="border: none">
+                            <div ng-hide="bet.isHide" ng-init="bet.bgClass=''; bet.className = bet.id == 41 && betting.id == 151" ng-repeat="bet in betting.betTypeGroups">
+                                <div id="_{{betting.id}}_{{bet.id}}" class="floatLeft {{bet.className}} {{bet.bgClass}} subTitleWidth2 title2 noneBorderLeft noneBorderTop" title="{{bet.title}}" ng-click="Copy(this)">{{bet.name}}</div>
+                                <div class="{{bet.bgClass}} floatLeft betWidth2 noneBorderLeft noneBorderTop">
+                                    <input id="txt{{betting.id}}{{bet.id}}Min" ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="bet.showminBetMin = bet.bettingCommSetting.minBetMin > 0; bet.minBetFormated = bet.bettingCommSetting.minBet.formatNumber(); bet.preValMinBet = bet.minBetFormated" type="text" class="BettingLimitTextBox" ng-model="bet.minBetFormated" ng-change="bet.bettingCommSetting.minBet = bet.minBetFormated.replaceAll(',', '').formatNumber()" />
+                                    <span ng-show="bet.showminBetMin">>= {{bet.bettingCommSetting.minBetMin.formatNumber()}}</span>
+                                </div>
+                                <div class="{{bet.bgClass}} floatLeft betWidth2 noneBorderLeft noneBorderTop">
+                                    <input id="txt{{betting.id}}{{bet.id}}Max" ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="bet.maxBetFormated = bet.bettingCommSetting.maxBet.formatNumber(); bet.preValMaxBet = bet.maxBetFormated" type="text" class="BettingLimitTextBox" ng-model="bet.maxBetFormated" ng-change="bet.bettingCommSetting.maxBet = bet.maxBetFormated.replaceAll(',', '').formatNumber()" />
+                                </div>
+                                <div class="{{bet.bgClass}} floatLeft betWidth2 noneBorderLeft noneBorderRight noneBorderTop">
+                                    <input id="txt{{betting.id}}{{bet.id}}MaxPerMatch" ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="bet.maxPerMatchFormated = bet.bettingCommSetting.maxPerMatch.formatNumber(); bet.preValMaxPerMatch = bet.maxPerMatchFormated" type="text" class="BettingLimitTextBox" ng-model="bet.maxPerMatchFormated" ng-change="bet.bettingCommSetting.maxPerMatch = bet.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>                
+        </tr>
+    </table>
+    <div style="text-align: right" >
+        <input id="btnRacing" class="buttonPopup" type="button" value="Submit" />
+    </div>
+</div>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var model = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@bettingLimit'));
+    var custId = parseInt('@id');
+    var uplineId = parseInt('@uplineId');
+    var userId = parseInt('@userId');
+    var siteName = '@siteName';
+    var syncCasino = '@ViewBag.SyncCasino';
+    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
+    var syncBingo = '@ViewBag.SyncBingo';
+
+    function toUrl(relativeUrl) {
+        return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
+    }
+
+    $(document).ready(function () {
+        if (syncCasino == 'False') {
+            $('#tab6').remove();
+        }
+
+        if (syncBingo == 'False') {
+            $('#tab5').remove();
+        }
+
+        if (syncLiveCasino == 'False') {
+            $('#tab4').remove();
+        }
+
+        $('#tab2').addClass('ui-tabs-active ui-state-active');
+        $('#tab1').removeClass('ui-tabs-active ui-state-active');
+        $('#tab3').removeClass('ui-tabs-active ui-state-active');
+        $('#tab4').removeClass('ui-tabs-active ui-state-active');
+        $('#tab5').removeClass('ui-tabs-active ui-state-active');
+        $('#tab6').removeClass('ui-tabs-active ui-state-active');
+
+        $('.buttonPopup').bind('click', function () {
+            Fanex.CustomerSetting.Betting.Racing.Update(function (data) {
+                if (data.errorCode == "0" || data.errorCode == "") {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        Fanex.CustomerSetting.Core.BlockUI();
+
+                        document.location.reload(true);
+                    }, 2000);
+                }
+            });
+        });
+    });
+</script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Racing/Scripts/RacingController.js")" type="text/javascript"></script>

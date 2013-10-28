@@ -17,14 +17,16 @@
   </ul>
   <div id="tabs-1" class="divTab">    
   </div>
-  <div id="tabs-2" class="divTab">    
+  <div id="tabs-2" class="divTab" style="padding: 0px">
+    <iframe id="racingFrame" height="100%" width="100%" frameborder="0" style="margin:0;padding:0;overflow:auto;"></iframe>       
   </div>
   <div id="tabs-3" class="divTab">    
   </div>
-  <div id="tabs-4" class="divTab" style="padding-right: 0; padding-bottom: 0">
+  <div id="tabs-4" class="divTab" style="padding: 0px">
     <iframe id="casinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>    
   </div>
-  <div id="tabs-5" class="divTab">    
+  <div id="tabs-5" class="divTab" style="padding: 0px">
+    <iframe id="bingoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>           
   </div>
   <div id="tabs-6" class="divTab">    
   </div>
@@ -59,6 +61,7 @@
     Fanex.ExtAcc.Customer.SyncBingo = '@ViewBag.SyncBingo';
     Fanex.ExtAcc.Customer.SyncLiveCasino = '@ViewBag.SyncLiveCasino';
     Fanex.ExtAcc.Customer.DisableP2P = '@ViewBag.DisableP2P';
+    Fanex.ExtAcc.Customer.HideVirtualSports = '@ViewBag.HideVirtualSports';
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 

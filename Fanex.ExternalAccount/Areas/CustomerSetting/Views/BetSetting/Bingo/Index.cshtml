@@ -1,0 +1,13 @@
+﻿@using Fanex.CustomerSetting.Module.Core
+@{
+    var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
+    var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
+    var userId = Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
+    var siteName = Request.RequestContext.RouteData.Values["siteName"];
+    
+    Layout = "~/Areas/CustomerSetting/Views/BetSetting/Shared/_Layout.cshtml";
+}
+@section Bingo{
+    <iframe width="100%" height="240px" frameborder="0" src="@Url.Content("~/CustomerSetting/BetSetting/BingoBetting/Content/" + id + "/" + uplineId + "/" + userId + "/" + siteName)">
+    </iframe>    
+}

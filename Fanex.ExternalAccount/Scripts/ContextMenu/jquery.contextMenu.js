@@ -364,10 +364,13 @@
                 var triggerAction = ((root.trigger == 'left' && button === 0) || (root.trigger == 'right' && button === 2));
 
                 // find the element that would've been clicked, wasn't the layer in the way
-                if (document.elementFromPoint && root.$layer) {
-                    root.$layer.hide();
-                    target = document.elementFromPoint(x - $win.scrollLeft(), y - $win.scrollTop());
-                    root.$layer.show();
+                if (document.elementFromPoint) {
+                    try {
+                        root.$layer.hide();
+                        target = document.elementFromPoint(x - $win.scrollLeft(), y - $win.scrollTop());
+                        root.$layer.show();
+                    } catch (e) {
+                    }
                 }
 
                 if (root.reposition && triggerAction) {
@@ -1153,39 +1156,42 @@
             }
             // re-check disabled for each item
             opt.$menu.children().each(function () {
-                var $item = $(this),
+                try {
+                    var $item = $(this),
                     key = $item.data('contextMenuKey'),
                     item = opt.items[key],
                     disabled = ($.isFunction(item.disabled) && item.disabled.call($trigger, key, root)) || item.disabled === true;
 
-                // dis- / enable item
-                $item[disabled ? 'addClass' : 'removeClass']('disabled');
+                    // dis- / enable item
+                    $item[disabled ? 'addClass' : 'removeClass']('disabled');
 
-                if (item.type) {
-                    // dis- / enable input elements
-                    $item.find('input, select, textarea').prop('disabled', disabled);
+                    if (item.type) {
+                        // dis- / enable input elements
+                        $item.find('input, select, textarea').prop('disabled', disabled);
 
-                    // update input states
-                    switch (item.type) {
-                        case 'text':
-                        case 'textarea':
-                            item.$input.val(item.value || "");
-                            break;
+                        // update input states
+                        switch (item.type) {
+                            case 'text':
+                            case 'textarea':
+                                item.$input.val(item.value || "");
+                                break;
 
-                        case 'checkbox':
-                        case 'radio':
-                            item.$input.val(item.value || "").prop('checked', !!item.selected);
-                            break;
+                            case 'checkbox':
+                            case 'radio':
+                                item.$input.val(item.value || "").prop('checked', !!item.selected);
+                                break;
 
-                        case 'select':
-                            item.$input.val(item.selected || "");
-                            break;
+                            case 'select':
+                                item.$input.val(item.selected || "");
+                                break;
+                        }
                     }
-                }
 
-                if (item.$menu) {
-                    // update sub-menu
-                    op.update.call($trigger, item, root);
+                    if (item.$menu) {
+                        // update sub-menu
+                        op.update.call($trigger, item, root);
+                    } 
+                } catch (e) {
                 }
             });
         },
@@ -1354,7 +1360,7 @@
                     .on('mousedown' + o.ns, o.selector, o, handle.mousedown)
                     .on('mouseup' + o.ns, o.selector, o, handle.mouseup);
                     break;
-                    */
+                    */ 
                 }
 
                 // create menu
@@ -1539,13 +1545,13 @@
 
             // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#concept-command
             switch (nodeName) {
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/interactive-elements.html#the-menu-element
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/interactive-elements.html#the-menu-element  
                 case 'menu':
                     item = { name: $node.attr('label'), items: {} };
                     counter = menuChildren(item.items, $node.children(), counter);
                     break;
 
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-a-element-to-define-a-command
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-a-element-to-define-a-command  
                 case 'a':
                     // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-button-element-to-define-a-command
                 case 'button':
@@ -1556,7 +1562,7 @@
                     };
                     break;
 
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-command-element-to-define-a-command
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-command-element-to-define-a-command  
 
                 case 'menuitem':
                 case 'command':

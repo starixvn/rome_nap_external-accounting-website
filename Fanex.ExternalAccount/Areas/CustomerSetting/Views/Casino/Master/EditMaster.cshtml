@@ -2,7 +2,6 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Core.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -14,14 +13,14 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" ng-app="settingApp" style="width: 1024px">
+<div id="ng-app" style="display: none; width: 1024px" ng-app="settingApp">
     <div id="errMsg" style="display: none;" class="errMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
     </div>
     <div id="names" style="display: none;" class="names">
     </div>    
-    <div style="text-align: right" >
+    <div>
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
     <div>
@@ -65,7 +64,7 @@
                             </tr>         
                             @if (isPtByGameType)
                             {                
-                            <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+                            <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes" ng-finish-render="rendered">
                                 <td colspan="6" style="border: none">
                                     <table class="tableInfo" cellpadding="0" cellspacing="0">
                                         <tr>
@@ -102,7 +101,7 @@
                             }
                             else
                             {
-		                    <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+		                    <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes" ng-finish-render="rendered">
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
@@ -119,7 +118,7 @@
             </table>            
         </div>
     </div>
-    <div style="text-align: right" >
+    <div>
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>
@@ -127,22 +126,12 @@
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
 
-    //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
-    var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
+    $(document).ready(function () {
+        //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
+        var casinoController = new CasinoController(uplineId, '');
 
-    $('.buttonPopup').bind('click', function () {
-        casinoController.Update(function (errorCode, errorMessage) {
-            if (errorCode == 0) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    try {
-                        parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-                        parent.Fanex.ExtAcc.Form.Close();
-                    }
-                    catch (e) { }
-                }, 1000);
-            }
+        $('.buttonPopup').bind('click', function () {
+            casinoController.Update();
         });
     });
 </script>

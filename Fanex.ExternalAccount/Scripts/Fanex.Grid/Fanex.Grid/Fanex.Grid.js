@@ -309,7 +309,27 @@
                     for (var colIndex1 = 0; colIndex1 < columnsHideLength; colIndex1++) {
                         var currentCol = options.columnsNeedHide[colIndex1];
                         //selector.push('.free-grid-td-' + currentCol);
-                        me.$grid.find('.free-grid-td-' + currentCol).addClass("grid-show-hide-column");
+                        me.$grid.find('.free-cell, .row_header_wrapper, .col_header, .grid-container').find('.free-grid-td-' + currentCol).addClass("grid-show-hide-column");
+                    }
+
+                    if (options.showFooter) {
+                        var footerLength = options.footerRows[0].Columns.length;
+                        var needHideCols = options.columnsNeedHide.clone();
+                        for (var ftColIndex = 0; ftColIndex < footerLength; ftColIndex++) {
+                            var currentCol = options.footerRows[0].Columns[ftColIndex];
+                            if (currentCol.MergeColNumber) {
+                                for (var nhIndex = 0; nhIndex < needHideCols.length; nhIndex++) {
+                                    if (ftColIndex < needHideCols[nhIndex]) {
+                                        needHideCols[nhIndex] -= currentCol.MergeColNumber - 1;
+                                    }
+                                }
+                            }
+                        }
+
+                        for (var nhIndex = 0; nhIndex < needHideCols.length; nhIndex++) {
+                            var currentCol = needHideCols[nhIndex];
+                            me.$grid.find('.row_footer, .col_footer').find('.free-grid-td-' + currentCol).addClass("grid-show-hide-column");
+                        }
                     }
                 }
                 catch (e) {

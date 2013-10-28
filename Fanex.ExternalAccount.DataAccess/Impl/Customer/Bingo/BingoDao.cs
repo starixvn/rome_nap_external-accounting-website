@@ -55,7 +55,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Bingo
             parameters.Add("errcode", 0);
             parameters.Add("errmsg", string.Empty);
 
-            DbResult result = DNAide.Data.DbHelper.Execute("Acc_UpdBingoStatus", parameters);
+            DbResult result = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Acc_UpdBingoStatus", parameters);
             errMsg = result.Outputs["errmsg"].ToString();
 
             return Convert.ToInt32(result.Outputs["errcode"]);

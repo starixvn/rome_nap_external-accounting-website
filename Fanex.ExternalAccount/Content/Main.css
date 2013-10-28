@@ -1493,3 +1493,39 @@ textarea
 .ui-state-active a, .ui-tabs-active a {
     color: #2489CE !important;
 }
+.R
+{
+    text-align: right;
+}
+.C
+{
+    text-align: center;
+}
+.odd
+{
+    background-color: #F6F6F6;
+}
+.total
+{
+    background-color: #DFEAFF;
+}
+.creditDetail
+{
+    padding-top: 5px; 
+    margin: 0 !important; 
+    vertical-align: middle; 
+    height: 28px !important;
+}
+.btnResetCredit
+{
+    width: auto !important;
+    margin-right:3px;
+}
+.grandTotal
+{
+    background-color: #F6F6F6 !important;
+}
+.defaultBgColor
+{
+    background-color: #fff !important;
+}

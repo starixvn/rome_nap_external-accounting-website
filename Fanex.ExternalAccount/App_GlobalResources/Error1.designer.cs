@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You&apos;re not authorized to view this page.
+        ///   Looks up a localized string similar to You are not authorized on this function.
         /// </summary>
         internal static string AccessDenied {
             get {

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="PTRacingGrid.xslt"?>
+<PTGrid name="ptGrid1">
+  <SportTypes>
+    <SportType id="151" name="Horse Racing" isHide="false" collapsed="false">
+      <BetTypeGroups>
+        <BetTypeGroup id="41" name="UK/Irish Tote" isHide="false" allowCurrencies="*">
+          <BetTypes>
+            <BetType id="41" name="Win">              
+            </BetType>
+            <BetType id="42" name="Place">
+            </BetType>
+          </BetTypes>
+        </BetTypeGroup>
+
+        <BetTypeGroup id="31" name="SA Tote" isHide="false" allowCurrencies="*">
+          <BetTypes>
+            <BetType id="31" name="Win">
+            </BetType>
+            <BetType id="32" name="Place">
+            </BetType>
+          </BetTypes>
+        </BetTypeGroup>
+
+        <BetTypeGroup id="51" name="Aust Tote" isHide="true" allowCurrencies="*">
+          <BetTypes>
+            <BetType id="51" name="Win">
+            </BetType>
+            <BetType id="52" name="Place">
+            </BetType>
+          </BetTypes>
+        </BetTypeGroup>
+      </BetTypeGroups>
+    </SportType>
+    
+    <SportType id="152" name="Greyhound" isHide="false" collapsed="true">
+      <BetTypeGroups>
+        <BetTypeGroup id="41" name="UK/Irish Tote" isHide="false" allowCurrencies="*">
+          <BetTypes>
+            <BetType id="41" name="Win">
+            </BetType>
+            <BetType id="42" name="Place">
+            </BetType>
+          </BetTypes>
+        </BetTypeGroup>
+
+        <BetTypeGroup id="51" name="Aust Tote" isHide="false" allowCurrencies="*">
+          <BetTypes>
+            <BetType id="51" name="Win">
+            </BetType>
+            <BetType id="52" name="Place">
+            </BetType>
+          </BetTypes>
+        </BetTypeGroup>
+      </BetTypeGroups>
+    </SportType>
+
+    <SportType id="153" name="Harness" isHide="false" collapsed="true">
+      <BetTypeGroups>
+        <BetTypeGroup id="51" name="Aust Tote" isHide="false" allowCurrencies="*">
+          <BetTypes>
+            <BetType id="51" name="Win">
+            </BetType>
+            <BetType id="52" name="Place">
+            </BetType>
+          </BetTypes>
+        </BetTypeGroup>
+      </BetTypeGroups>
+    </SportType>
+  </SportTypes>
+</PTGrid>

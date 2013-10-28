@@ -62,61 +62,115 @@ Fanex.Customer = {
         return found;
     },
 
-    ValidateMessage: function (elementInput, errorMessage, xPos, pointerXPos, isAnimate) {
+    // Password must be at least 6 in length and at least 2 characters and 2 digits
+    IsPassword: function (str, isMember) {
+        return Fanex.ExtAcc.Customer.validatePassword(str, isMember);
+    },
+
+    ShowTooltip: function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
+        // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
+        var hint = document.getElementById('fHintDown');
+        var hintPointer = null;
+        if (hint == null) {
+            var hint = document.createElement("SPAN");
+            hint.className = 'hint';
+            var hintMsg = document.createElement("SPAN");
+            hint.appendChild(hintMsg);
+            hintPointer = document.createElement("SPAN");
+            hintPointer.className = 'hint-pointerDown';
+            hint.appendChild(hintPointer);
+            hint.id = 'fHintDown';
+            hint.style.top = '10px';
+            hint.style.left = '10px';
+            hint.onclick = function () { // Hide onclick
+                hint.style.display = 'none';
+            };
+            document.body.appendChild(hint);
+        };
+        hintPointer = hint.lastChild;
+        hint.firstChild.innerHTML = message;
+        if (this.timeOutHideTooltip) {
+            clearTimeout(this.timeOutHideTooltip);
+            this.timeOutHideTooltip = null;
+        };
+        if (typeof (timeout) == 'undefined') {
+            timeout = 10000;
+        }
+        this.timeOutHideTooltip = setTimeout(function () {
+            if (hint == null) {
+                return;
+            }
+            hint.style.display = 'none';
+        }, timeout); // Auto hide in 10s
+        if (elementInput != null) {
+            if (typeof xPos == 'undefined') {
+                xPos = 0;
+            }
+            if (typeof pointerXPos == 'undefined') {
+                pointerXPos = 10;
+            }
+            if (typeof yPos == 'undefined') {
+                yPos = -45;
+            }
+            if (typeof (pointerYPos) == 'undefined') {
+                pointerYPos = 38;
+            }
+            if (typeof (height) == 'undefined') {
+                height = 18;
+            }
+            hint.style.height = height + 'px';
+            hintPointer.style.left = (pointerXPos + 'px');
+            hintPointer.style.top = (pointerYPos + 'px');
+            var pos = Validators.utils.findPos(elementInput);
+            hint.style.left = (pos[0] + xPos) + 'px';
+            hint.style.top = (pos[1] + yPos) + 'px';
+            elementInput.onchange = function () {
+                hint.style.display = 'none';
+            };
+            elementInput.focus();
+        };
+        hint.style.display = 'block';
+    },
+    ValidateMessage: function (elementInput, errorMessage, xPos, pointerXPos, isAnimate, height, direction, timeout) {
         // Alert
-        Validators.show(elementInput, errorMessage, xPos, pointerXPos);
+        if (direction == 'down') {
+            this.ShowTooltip(elementInput, errorMessage, xPos, pointerXPos, 30, -10, height, timeout);
+        }
+        else {
+            Validators.show(elementInput, errorMessage, xPos, pointerXPos, undefined, undefined, height, timeout);
+        }
         if (!isAnimate) {
             Validators.animate(elementInput);
         }
     },
-
-    // Password must be at least 6 in length and at least 2 characters and 2 digits
-    IsPassword: function (str) {
-        str = str.toLowerCase();
-        numbers = "0123456789";
-        var i = 0;
-        var nCount = 0;
-        while (i < str.length) {
-            (numbers.indexOf(str.substring(i, i + 1)) >= 0) ? nCount++ : false;
-            i++;
-        }
-        var validNumber = ((nCount > (str.length - 2)) || nCount < 2 || str.length < 6) ? false : true;
-
-        letters = "abcdefghijklmnopqrstuvwxyz";
-        i = 0;
-        nCount = 0;
-        while (i < str.length) {
-            (letters.indexOf(str.substring(i, i + 1)) >= 0) ? nCount++ : false;
-            i++;
-        }
-        var validLetter = ((nCount > (str.length - 2)) || nCount < 2 || str.length < 6) ? false : true;
-
-        return validNumber & validLetter;
-    },
-
     // Check pass call in keyup event
-    CheckPassword: function (pwdElement, iconElementId) {
-        if (pwdElement == null || pwdElement.value == undefined) return true;
-        var isPwd = this.IsPassword(pwdElement.value);
+    CheckPassword: function (pwdElement, iconElementId, isMember) {
+        if (pwdElement == null) return true;
+        var isPwd = this.IsPassword(pwdElement.value, isMember);
         var iconElement = document.getElementById(iconElementId);
-
         if (!iconElement) return false;
-
         if (isPwd) {
-            Validators.hide();
+            document.getElementById('fHintDown').style.display = 'none';
             iconElement.className = 'PwdSuccess';
         }
         else {
-            this.ValidateMessage(document.getElementById("password"), Language.ALERT_PASSWORD_REQUIRE, -315, 320, true);
+            if (isMember) {
+                var msg = "<span class='prewrap'>Password must be 6-10 characters without white-space and contain at least: <br/><br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 uppercase letter <br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 lowercase letter <br/> &nbsp;&nbsp;&nbsp;&nbsp;• 1 numeric digit <br/><br/>For example: 493abcDE, 59D7!4$h<br/>Notes: your password is cAsE sEnSiTiVe</span>";
+                this.ValidateMessage($("#password").get(0), msg, -215, 220, true, 140, 'down', 8000);
+            }
+            else {
+                var msg = "<span class='prewrap'>Password must be at least 8 characters without white-space and contain at least 3 of the following:<br/><br/> &nbsp;&nbsp;&nbsp;&nbsp;• Uppercase letter [A-Z] <br/> &nbsp;&nbsp;&nbsp;&nbsp;• Lowercase letter [a-z] <br/> &nbsp;&nbsp;&nbsp;&nbsp;• Numeric [0-9] <br/> &nbsp;&nbsp;&nbsp;&nbsp;• Special character (!,@,#,etc..)<br/><br/>For example: 59D7!4$h, 493abcDE<br/>Notes: your password is cAsE sEnSiTiVe</span>";
+                this.ValidateMessage($("#password").get(0), msg, -255, 260, true, 160, 'down', 8000);
+            }
+
             iconElement.className = 'PwdError';
         }
-
         return isPwd;
     },
 
     // Check values input: Password and Max Credit
-    CheckInfoValue: function () {
-        if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon")) {
+    CheckInfoValue: function (isMember) {
+        if (!this.CheckPassword(document.getElementById("password"), "spnNewPwdIcon", isMember)) {
             return false;
         }
 

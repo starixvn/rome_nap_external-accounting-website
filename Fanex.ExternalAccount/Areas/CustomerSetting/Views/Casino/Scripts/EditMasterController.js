@@ -296,6 +296,7 @@ function GameTypeController($scope) {
             m3 = gameType.$m3.selected;
 
             m3 = Math.min(maxM3, m3).ptRound();
+
             gameType.$m3.l4 = gameType.is3 ? gameType.s4 : (gameType.s4 - gameType.s3).ptRound();
             gameType.m3 = m3;
             gameType.$m3.min = gameType.$m3.max = gameType.$m3.selected = m3;

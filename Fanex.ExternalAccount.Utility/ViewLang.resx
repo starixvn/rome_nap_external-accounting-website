@@ -770,7 +770,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
     <value>Account was disabled</value>
   </data>
   <data name="DontHavePermission" xml:space="preserve">
-    <value>You don't have permission</value>
+    <value>You are not authorized on this function</value>
   </data>
   <data name="Enable" xml:space="preserve">
     <value>Enable</value>

@@ -29,6 +29,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     public class LiveCasinoController : LiveCasinoBase
     {
         [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        public ActionResult EditSuper()
+        {
+            return this.PartialViewBase();
+        }
+
+        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
         public ActionResult EditMaster()
         {
             return this.PartialViewBase();
@@ -56,6 +62,94 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult MasterEditMember()
         {
             return this.PartialViewBase();
+        }
+
+        /// <summary>
+        /// Updates settings.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <returns>ActionResult object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        public ActionResult EditSuperPost(int custId, int uplineId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            var settingModel = this.PtSetting.GetSuperSetting(custId, this.PtSetting.GetCustomerInfo(custId).ExChangeId);
+
+            var gameSetting = settingModel.GameSetting;
+
+            foreach (var item in gameSetting)
+            {
+                item.Name = RefData.GetBetTypeName(item.BetTypeId.ToString(), "en", string.Empty);
+            }
+
+            var liveCasinoModel = new LiveCasinoModel()
+            {
+                UplinePtSetting = new PTModel
+                {
+                    AutoPresetPT = settingModel.PTSetting.Upline.AutoPresetPT,
+                    Comm = settingModel.PTSetting.Upline.Comm,
+                    IsAutoPresetPT = settingModel.PTSetting.Upline.IsAutoPresetPT,
+                    IsAutoPresetPTChanged = settingModel.PTSetting.Upline.IsAutoPresetPTChanged,
+                    IsCommChanged = settingModel.PTSetting.Upline.IsCommChanged,
+                    IsDirty = settingModel.PTSetting.Upline.IsDirty,
+                    IsIsAutoPresetPTChanged = settingModel.PTSetting.Upline.IsIsAutoPresetPTChanged,
+                    IsMaxPTChanged = settingModel.PTSetting.Upline.IsMaxPTChanged,
+                    IsMinPTChanged = settingModel.PTSetting.Upline.IsMinPTChanged,
+                    IsPresetPTChanged = settingModel.PTSetting.Upline.IsPresetPTChanged,
+                    IsUpdateAllMember = settingModel.PTSetting.Upline.IsUpdateAllMember,
+                    MaxAutoPresetPT = settingModel.PTSetting.Upline.MaxAutoPresetPT,
+                    MaxPT = settingModel.PTSetting.Upline.MaxPT,
+                    MinPT = settingModel.PTSetting.Upline.MinPT,
+                    NewMemberPT = settingModel.PTSetting.Upline.NewMemberPT,
+                    PresetPT = settingModel.PTSetting.Upline.PresetPT
+                },
+                CustomerInfo = new Fanex.ExternalAccount.ViewModel.Customer.CustomerInfo
+                {
+                    CustomerId = settingModel.CustomerInfo.CustomerId,
+                    DisableLiveCasino = settingModel.CustomerInfo.DisableLiveCasino,
+                    ExChangeId = settingModel.CustomerInfo.ExChangeId,
+                    Fax = settingModel.CustomerInfo.Fax,
+                    FirstName = settingModel.CustomerInfo.FirstName,
+                    IsSyncLiveCasino = settingModel.CustomerInfo.IsSyncLiveCasino,
+                    LastName = settingModel.CustomerInfo.LastName,
+                    Limit = settingModel.CustomerInfo.Limit as MemberWinLimit,
+                    Mobile = settingModel.CustomerInfo.Mobile,
+                    NickName = settingModel.CustomerInfo.NickName,
+                    Phone = settingModel.CustomerInfo.Phone,
+                    RoleId = settingModel.CustomerInfo.RoleId,
+                    Site = settingModel.CustomerInfo.Site,
+                    UplineDisableLiveCasino = settingModel.CustomerInfo.UplineDisableLiveCasino,
+                    UserName = settingModel.CustomerInfo.UserName
+                },
+                GameSetting = gameSetting,
+                PtSetting = new PTModel
+                {
+                    AutoPresetPT = settingModel.PTSetting.AutoPresetPT,
+                    Comm = settingModel.PTSetting.Comm,
+                    IsAutoPresetPT = settingModel.PTSetting.IsAutoPresetPT,
+                    IsAutoPresetPTChanged = settingModel.PTSetting.IsAutoPresetPTChanged,
+                    IsCommChanged = settingModel.PTSetting.IsCommChanged,
+                    IsDirty = settingModel.PTSetting.IsDirty,
+                    IsIsAutoPresetPTChanged = settingModel.PTSetting.IsIsAutoPresetPTChanged,
+                    IsMaxPTChanged = settingModel.PTSetting.IsMaxPTChanged,
+                    IsMinPTChanged = settingModel.PTSetting.IsMinPTChanged,
+                    IsPresetPTChanged = settingModel.PTSetting.IsPresetPTChanged,
+                    IsUpdateAllMember = settingModel.PTSetting.IsUpdateAllMember,
+                    IsValid = settingModel.PTSetting.IsValid,
+                    MaxAutoPresetPT = settingModel.PTSetting.MaxAutoPresetPT,
+                    MaxPT = settingModel.PTSetting.MaxPT,
+                    MinPT = settingModel.PTSetting.MinPT,
+                    NewMemberPT = settingModel.PTSetting.NewMemberPT,
+                    PresetPT = settingModel.PTSetting.PresetPT
+                }
+            };
+
+            return this.JsonBase(liveCasinoModel, settings);
         }
 
         /// <summary>
