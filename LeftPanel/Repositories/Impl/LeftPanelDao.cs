@@ -22,7 +22,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Core.Base;
 
     /// <summary>
     /// TODO: Update summary.
