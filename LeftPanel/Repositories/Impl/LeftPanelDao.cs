@@ -495,6 +495,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// </summary>
         /// <param name="id">Customer id.</param>
         /// <param name="code">Security code.</param>
+        /// <param name="force">Force change or not.</param>
         /// <returns>Result object.</returns>
         public Result ResetSecurityCode(int id, string code, bool force)
         {
