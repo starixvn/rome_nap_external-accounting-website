@@ -10,9 +10,11 @@ Fanex.ExtAcc.Account = {
     kickOutIntId: 0,
     maxRetryTimes: 3,
     currentRetryTimes: 0,
+    RecheckinXHR: null,
 
     Init: function () {
-        this.kickOutIntId = setInterval(this.GetValidateImage, 120000);
+        if (this.kickOutIntId == 0)
+            this.kickOutIntId = setInterval(this.GetValidateImage, 120000);
 
         if (document.forms.length > 0) {
             $('#UserName').focus();
@@ -40,7 +42,7 @@ Fanex.ExtAcc.Account = {
 
     GetValidateImage: function () {
         var objDate = new Date();
-        $("#imgCode").attr("src", "CaptchaImage/" + objDate.getMilliseconds());
+        $("#imgCode").attr("src", "CaptchaImage/" + (objDate.getMilliseconds() + objDate.getHours() + objDate.getMinutes() + objDate.getSeconds()));
     },
 
     SelectCurrencyGroup: function (selectedIndex) {
@@ -69,28 +71,35 @@ Fanex.ExtAcc.Account = {
     },
 
     ReCheckin: function () {
-        $.ajax({
+        if (this.RecheckinXHR != null)
+            this.RecheckinXHR.abort();
+
+        this.RecheckinXHR = $.ajax({
             url: resolveClientUrl('Account/ReCheckIn'),
             type: 'GET',
             dataType: 'html',
             cache: false,
             success: function (data) {
-                this.currentRetryTimes = 0;
+                Fanex.ExtAcc.Account.currentRetryTimes = 0;
                 if (data == -1) {
-                    navigateToUrl('Account/Login');
-                    alert('You have logged in from another session or your login session has expired!');
+                    try {
+                        Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
+                            location.href = resolveClientUrl('Account/Login');
+                        });
+                    } catch (e) {
+                        location.href = resolveClientUrl('Account/Login');
+                    }
                 }
                 else if (data == 2) {
-                    navigateToUrl('Account/Login');
+                    location.href = resolveClientUrl('Account/Login');
                 }
+
+                Fanex.ExtAcc.Account.RecheckinXHR = null;
             },
             error: function (xhr, status, e) {
                 if (typeof console != 'undefined') console.log(e);
-                this.currentRetryTimes++;
-                if (this.currentRetryTimes >= this.maxRetryTimes) {
-                    clearInterval(this.kickOutIntId);
-                    window.location.replace(resolveClientUrl('Account/Login'));
-                }
+
+                Fanex.ExtAcc.Account.RecheckinXHR = null;
             }
         });
     }

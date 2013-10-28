@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 
         public TemplateSettings()
         {
-            this._dir = HttpContext.Current.Server.MapPath("~") + "ExcelTemplates\\Reports";
+            this._dir = HttpContext.Current.Server.MapPath("~/") + "ExcelTemplates\\Reports";
         }
 
         /// <summary>

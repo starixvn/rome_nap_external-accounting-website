@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
     /// </summary>
     public class ModuleRegistrator : AppAreaRegistrator 
     {
-        protected override string ControllerName
+        protected string ControllerName
         {
             get
             {
@@ -26,7 +26,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
             }
         }
 
-        protected override string ControllerNameSpace
+        protected string ControllerNameSpace
         {
             get
             {

@@ -38,7 +38,7 @@
             <div class="customerInfoBlock4 bdt0" id="divPassword">
                 <div class="float_l">
                     <input id="password" autocomplete="off" class="textBoxInfo" type="password" data-bind="value: customer.password"
-                        onkeyup="return Fanex.Customer.CheckPassword(this, 'spnNewPwdIcon');" maxlength="50" /></div>
+                        onkeyup="return Fanex.Customer.CheckPassword(this, 'spnNewPwdIcon', true);" maxlength="50" /></div>
                 <div class="float_l pt3">
                     <span id="spnNewPwdIcon">&nbsp;</span></div>
             </div>
@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>
-    @Html.Action("EditCommissionMember", "Sportsbook")
+    @Html.Action("EditCommissionMember", "SportsbookSetting")
     <div class="clear">
     </div>
     <br />

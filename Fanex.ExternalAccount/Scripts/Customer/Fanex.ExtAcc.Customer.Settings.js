@@ -22,12 +22,12 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
         $('#tab6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
         $('#tab7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');
+        $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports == 'True' ? 'none' : 'block');
 
-
-        $('#tabs-4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
+        /*$('#tabs-4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
         $('#tabs-5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
         $('#tabs-6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
-        $('#tabs-7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');
+        $('#tabs-7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');*/
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
@@ -41,6 +41,9 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tab3').hide();
             $('#tabs-3').hide();
         }
+
+        $('#tab6').hide();
+        $('#tabs-6').hide();
 
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
@@ -87,7 +90,7 @@ Fanex.ExtAcc.Customer.Settings = {
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditMinPT')
+            url: resolveClientUrl('SportsbookSetting/EditMinPT')
         }).success(function (result) {
             $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);
@@ -99,6 +102,34 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetRacingPT: function () {
+        var action = '';
+        var uplineId = 0;
+        if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            uplineId = Fanex.ExtAcc.Customer.superId;
+            action = 'Master';
+        }
+        else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            uplineId = Fanex.ExtAcc.Customer.masterId;
+            action = 'Agent';
+        }
+        else {
+            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
+                uplineId = Fanex.ExtAcc.Customer.superId;
+                action = 'SuperEditMember';
+            }
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
+                uplineId = Fanex.ExtAcc.Customer.masterId;
+                action = 'MasterEditMember';
+            }
+            else {
+                uplineId = Fanex.ExtAcc.Customer.agentId;
+                action = 'Member';
+            }
+        }
+        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId);
+        $('#tabs-2').height($('#leftFrame').height() - 10);
+        $('#tabs-2').css('display', 'block');
+        $('#racingFrame').attr('src', url);
     },
 
     GetRacingMinPT: function () {
@@ -132,12 +163,34 @@ Fanex.ExtAcc.Customer.Settings = {
 
         var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId);
 
-        $('#tabs-4').height($('#leftFrame').height() - 30);
+        $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
         $('#casinoFrame').attr('src', url);
     },
 
     GetBingoSetting: function () {
+        var action = '';
+        if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            action = 'Master';
+        }
+        else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            action = 'Agent';
+        }
+        else {
+            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
+                action = 'SuperEditMember';
+            }
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
+                action = 'MasterEditMember';
+            }
+            else {
+                action = 'Member';
+            }
+        }
+        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId);
+        $('#tabs-5').height($('#leftFrame').height() - 10);
+        $('#tabs-5').css('display', 'block');
+        $('#bingoFrame').attr('src', url);
     },
 
     GetPokerSetting: function () {
@@ -161,33 +214,94 @@ Fanex.ExtAcc.Customer.Settings = {
         $.ajax({
             url: resolveClientUrl('LiveCasino/' + action)
         }).success(function (result) {
+            if (result.ErrorCode && result.ErrorCode == "1") {
+                $('#tabs-7').css('display', 'block');
+                $('#tabs-7').html(result.ErrorMessage.formatErrorMessage());
+                Fanex.ExtAcc.UnBlockUI();
+                return;
+            }
+
             $('#tabs-7').css('display', 'block');
             $('#tabs-7').html(result);
+
         }).error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
             }
+
+            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
     GetVirtualSportSetting: function () {
+        Fanex.ExtAcc.BlockUI();
+
+        var uplineId, uplineRoleId, targetCustId, targetRoleId;
+        targetRoleId = Fanex.ExtAcc.Customer.Settings.CurrentLevel;
+        if (targetRoleId == Fanex.ExtAcc.Customer.Master) {
+            uplineId = Fanex.ExtAcc.Customer.superId;
+            uplineRoleId = Fanex.ExtAcc.Customer.Super;
+        }
+        else if (targetRoleId == Fanex.ExtAcc.Customer.Agent) {
+            uplineId = Fanex.ExtAcc.Customer.masterId;
+            uplineRoleId = Fanex.ExtAcc.Customer.Master;
+        }
+        else {
+            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
+                uplineId = Fanex.ExtAcc.Customer.superId;
+                uplineRoleId = Fanex.ExtAcc.Customer.Super;
+            }
+            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
+                uplineId = Fanex.ExtAcc.Customer.masterId;
+                uplineRoleId = Fanex.ExtAcc.Customer.Master;
+            }
+            else {
+                uplineId = Fanex.ExtAcc.Customer.agentId;
+                uplineRoleId = Fanex.ExtAcc.Customer.Agent;
+            }
+        }
+
+        targetCustId = Fanex.ExtAcc.Customer.UserId;
+        if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
+            $.ajax({
+                type: 'POST',
+                url: resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId)
+            }).success(function (result) {
+                var container = $('#tabs-8');
+                if (result.ErrorCode && result.ErrorCode == "1") {
+                    container.css('display', 'block');
+                    container.html(result.ErrorMessage.formatErrorMessage());
+                    return;
+                }
+
+                container.css('display', 'block');
+                container.html(result);
+
+            }).error(function (data) {
+                if (typeof console != 'undefined') {
+                    console.log(data.responseText);
+                }
+            }).complete(function (jqXHR, textStatus) {
+                Fanex.ExtAcc.UnBlockUI();
+            });
+        }
     },
 
     EmptyAllTabs: function () {
         $('#tabs-1').html('');
-        $('#tabs-2').html('');
+        //$('#tabs-2').html('');
         $('#tabs-3').html('');
         //$('#tabs-4').html('');
-        $('#tabs-5').html('');
+        //$('#tabs-5').html('');
         $('#tabs-6').html('');
         $('#tabs-7').html('');
         $('#tabs-8').html('');
 
         $('#tabs-1').css('display', 'none');
-        $('#tabs-2').css('display', 'none');
+        //$('#tabs-2').css('display', 'none');
         $('#tabs-3').css('display', 'none');
         //$('#tabs-4').css('display', 'none');
-        $('#tabs-5').css('display', 'none');
+        //$('#tabs-5').css('display', 'none');
         $('#tabs-6').css('display', 'none');
         $('#tabs-7').css('display', 'none');
         $('#tabs-8').css('display', 'none');

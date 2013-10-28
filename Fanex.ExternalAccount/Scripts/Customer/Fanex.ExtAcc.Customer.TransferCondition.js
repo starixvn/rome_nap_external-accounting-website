@@ -134,7 +134,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
     },
 
     ShowConfirm: function (title, message, width, height, okClickEvent) {
-        Fanex.ExtAcc.Form.ConfirmBox(title, message, width, height, false, okClickEvent, null, 'windowConfirm');
+        Fanex.ExtAcc.Form.ConfirmBox(title, message, width, height, false, okClickEvent, null, 'windowConfirm', true);
     }
 }
 

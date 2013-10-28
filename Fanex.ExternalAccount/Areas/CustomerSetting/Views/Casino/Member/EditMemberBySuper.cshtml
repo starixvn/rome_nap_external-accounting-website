@@ -2,7 +2,6 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Core.Context
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -14,14 +13,14 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" ng-app="settingApp" style="width: 1024px">
+<div id="ng-app" style="display: none; width: 1024px" ng-app="settingApp">
     <div id="errMsg" style="display: none;" class="errMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
     </div>
     <div id="names" style="display: none;" class="names">
     </div>    
-    <div style="text-align: right" >
+    <div>
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
     <div>
@@ -36,21 +35,21 @@
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
                     <td class="gameTypeWidth noneBorderL noneBorderTop">&nbsp;</td>
-                    <td class="ptTitle noneBorderTop tdWidth">Super Preset PT</td>
+                    <td class="ptTitle noneBorderTop tdWidth">Super Position Taking</td>
                     <td class="ptTitle noneBorderTop superAutoPtWidth">Super Auto PT</td>
-                    <td class="ptTitle noneBorderTop tdWidth">Master Preset PT</td>
-                    <td class="ptTitle noneBorderTop tdWidth">Agent Preset PT</td>
+                    <td class="ptTitle noneBorderTop tdWidth">Master Position Taking</td>
+                    <td class="ptTitle noneBorderTop tdWidth">Agent Position Taking</td>
                 </tr>
                 <tr ng-controller="GameGroupController" ng-repeat="gameGroup in customer.gameGroups" ng-finish-render="rendered">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="5" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C ptTitle noneBorderTop tdWidth">
-                                    <span enable="gameGroup.is3" class="spanPT" ptarea="true" min="n4" max="{{gameGroup.s4 - gameGroup.m3 - gameGroup.m2}}" selected="s3" ng-model="setting"></span>
+                                    <span islabel="{{gameGroup.is3}}" enable="gameGroup.is1" class="spanPT" ptarea="true" min="n3" max="{{gameGroup.s4 - gameGroup.m3 - gameGroup.m2}}" selected="s3" ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop superAutoPtWidth">
-                                    <input type="checkbox" ng-model="gameGroup.is3" />
-                                    <span enable="gameGroup.is3 == false" class="spanPT" ptarea="true" min="0" max="s4" selected="us3" ng-model="setting"></span>
+                                    <input type="checkbox" ng-model="gameGroup.is1" />
+                                    <span enable="gameGroup.is1 == false" class="spanPT" ptarea="false" min="0" max="s4" selected="us3" ng-model="setting"></span>
                                 </td>
                                 <td class="C noneBorderT tdWidth">
                                     <span>{{gameGroup.m3}}</span>
@@ -69,11 +68,11 @@
                                                 {{gameType.gameTypeName}}
                                             </td>
                                             <td class="C ptTitle noneBorderTop tdWidth">
-                                                <span showbutton="false" enable="gameType.is3" class="spanPT" ptarea="true" min="n4" max="{{gameType.s4 - gameType.m3 - gameType.m2}}" selected="s3" ng-model="setting"></span>
+                                                <span islabel="{{gameType.is3}}" showbutton="false" enable="gameType.is1" class="spanPT" ptarea="true" min="n3" max="{{gameType.s4 - gameType.m3 - gameType.m2}}" selected="s3" ng-model="setting"></span>
                                             </td>
                                             <td class="C ptTitle noneBorderTop superAutoPtWidth">
-                                                <input type="checkbox" ng-model="gameType.is3" />
-                                                <span showbutton="false" enable="gameType.is3 == false" class="spanPT" ptarea="true" min="0" max="s4" selected="us3" ng-model="setting"></span>
+                                                <input type="checkbox" ng-model="gameType.is1" />
+                                                <span showbutton="false" enable="gameType.is1 == false" class="spanPT" ptarea="true" min="0" max="s4" selected="us3" ng-model="setting"></span>
                                             </td>
                                             <td class="C noneBorderT tdWidth">
                                                 <span>{{gameType.m3}}</span>
@@ -112,7 +111,7 @@
             </table>            
         </div>
     </div>
-    <div style="text-align: right" >
+    <div>
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>
@@ -121,22 +120,10 @@
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
 
     //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
-    var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
+    var casinoController = new CasinoController(uplineId, '');
 
     $('.buttonPopup').bind('click', function () {
-        casinoController.Update(function (errorCode, errorMessage) {
-            if (errorCode == 0) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-
-                    try {
-                        parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
-                        parent.Fanex.ExtAcc.Form.Close();
-                    }
-                    catch (e) { }
-                }, 1000);
-            }
-        });
+        casinoController.Update();
     });
 
     var timeout = setTimeout(function () {

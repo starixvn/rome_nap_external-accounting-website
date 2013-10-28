@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Interface.Login;
@@ -40,8 +40,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         public AccountController(ILoginService userService, ICurrentSession currentSession, ICurrentContext currentContext)
         {
             this._userService = userService ?? new LoginService();
-            this._currentSession = currentSession ?? new CurrentSession();
-            this._currentContext = currentContext ?? new CurrentContext();
+            this._currentSession = currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
+            this._currentContext = currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
         }
 
         /// <summary>
@@ -88,10 +88,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         {
             if (this._currentSession.Captcha != null && this._currentSession.Captcha.Equals(model.Captcha, StringComparison.OrdinalIgnoreCase))
             {
-                CurrentContext.LoginErrorMessage = string.Empty;
-                var custId = 0;
-                var onuserId = 0;
-                var isIntAcc = true;
+                Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
+                int custId = 0, onuserId = 0;
+                bool isIntAcc = true;
                 var result = this._userService.Login(
                     model.UserName, 
                     model.Password, 
@@ -108,29 +107,26 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     out isIntAcc);
                 if (result != null && result.IsSuccess)
                 {
+                    var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
                     this._currentSession.UserName = model.UserName;
                     this._currentSession.UserId = custId;
                     this._currentSession.CustId = custId;
                     this._currentSession.OnUserId = onuserId;
                     this._currentSession.IsInternalAdmin = isIntAcc;
-                    this._currentSession.CurrencyGroup = (result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group).GroupName;
-                    this._currentSession.IsITAdmin = (result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group).GroupID == 1;
-                    if (isIntAcc || this._currentSession.IsITAdmin)
-                    {
-                        return this.RedirectToAction("ExternalGroup", "Account");
-                    }
-
-                    return this.RedirectToAction("Index", "Home");
+                    this._currentSession.GroupId = group.GroupID;
+                    this._currentSession.CurrencyGroup = group.GroupName;
+                    this._currentSession.IsITAdmin = group.GroupID == 1;
+                    return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    CurrentContext.LoginErrorMessage = result.ErrorMessage;
+                    Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
                     return this.PartialView(model);
                 }
             }
             else
             {
-                CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
+                Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
                 this._currentSession.UserName = string.Empty;
                 return this.PartialView(model);
             }
@@ -314,7 +310,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             var result = this._userService.GroupList();
 
-            return this.Json(result.Select(o => o.GroupName).ToArray(), JsonRequestBehavior.AllowGet);
+            return this.Json(result.Select(o => new { GroupId = o.GroupID, GroupName = o.GroupName }).ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -326,7 +322,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         private ActionResult SignOut(int onuserId, string userName)
         {
             this._userService.Logout(onuserId, userName);
-            CurrentContext.Instance.Context.Session.Abandon();
+            Fanex.ExternalAccount.Core.Context.CurrentContext.Instance.Context.Session.Abandon();
 
             return this.RedirectToAction("Login", "Account");
         }

@@ -8,63 +8,64 @@
         NullValueHandling = NullValueHandling.Ignore
     });
 
-    var userId = ViewBag.UserId;
+    var userId = ViewBag.UserId;    
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
-<div id="ng-app" ng-app="leftPanelApp" class="hidden">
-    <div id="leftPanel" class="clearBoth" ng-init="Init()" ng-controller="LeftPanelController">
-        <div ng-controller="PersonalInfoController" ng-init="model.hide = model != null" ng-hide="model.hide" class="red">There is no information.</div>        
-        <div id="usernameInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+<div id="ng-app" ng-app="leftPanelApp" class="hidden" style="display: none">
+    <div id="leftPanel" class="clearBoth" ng-controller="LeftPanelController">
+        <div ng-controller="NoInfoController" ng-init="model.hide = model != null" ng-hide="model.hide" class="red">There is no information.</div>        
+        <div id="usernameInfo" ng-controller="LineInfoController" ng-hide="{{model==null}}">
             <div class="headerLevel" ng-repeat="person in personalInfo.downlines">
                 <div class="title bold">{{person.text}}</div>
-                <div class="floatLeft bold detail" onclick="parent.Fanex.ExtAcc.ViewUser('{{person.value}}')">{{person.value}}</div>                
+                <div class="floatLeft bold detail" ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>                
                 <div class="floatRight home" ng-click="Login('{{person.value}}')">&nbsp;&nbsp;</div>
             </div>            
         </div>
         <div id="customerInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <div class="bold currentUser headerLevel">
-                <div class="floatLeft bold"><a class="detail2" href="javascript:;" onclick="parent.Fanex.ExtAcc.ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
+                <div class="floatLeft bold"><a class="detail2" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
                 <div id="personalInfo" class="floatRight userDown" ng-click="TooglePersonalInfo()">&nbsp;&nbsp;</div>
             </div>            
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.name.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.name.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.name.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.nickname.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.nickname.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.nickname.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.fax.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.fax.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.fax.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.phone.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.phone.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.phone.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
                     {{personalInfo.mobile.text}}</div>
-                <div class="floatLeft red bold">{{personalInfo.mobile.value}}</div>
+                <div class="floatLeft red bold">{{personalInfo.mobile.value.decodeHtml()}}</div>
             </div>
         </div>
-        <div id="viewInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
-            <input id="btnCustList" type="button" ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetCustomerList()" value="{{personalInfo.custList}}" />
+		<div class="clearBoth" style="display: inline"></div>
+        <div id="viewInfo" ng-controller="ViewInfoController" ng-hide="{{model==null}}">
+            <div id="btnCustList" ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetCustomerList()" style="height: 25px">{{personalInfo.custList.value}}</div>
             <input id="btnStatement" type="button" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetStatementList({{personalInfo.custId.value}})" value="Statement" />
             <input id="btnBalance" type="button" ng-hide="{{personalInfo.roleId.value != 2}}" class="floatLeft ui-state-default list {{className}} btnDetail" ng-click="GetBalance({{personalInfo.custId.value}})" value="Balance" />
         </div>        
-        <div id="balanceInfo" class="clearBoth" style="border:none" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
+        <div id="balanceInfo" class="clearBoth" style="border:none" ng-controller="BalanceDownlineInfoController" ng-hide="{{model==null}}">
             <ul class="tabs">
                 <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
                 <li id="tab2"><a href="#tabs-2">Downline List</a></li>
             </ul>
-            <div id="tabs-1" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
+            <div style="height: 208px" id="tabs-1" ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" ng-controller="BalanceController">
                 <div class="clearBoth">
                     <div class="balanceTitle">{{balanceInfo.currency.text}}</div>
                     <div class="floatLeftBalance R">{{balanceInfo.currency.value}}</div>
@@ -91,8 +92,8 @@
                     <div class="balanceTitle">{{balances[3].text}}</div>
                     <div class="{{myClass3}}" ng-init="myClass3 = balances[3].value < 0">
                         <div class="floatLeftBalance R">
-                            <a id="linkGivenCredit" href="javascript:;" ng-click="EditCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a>
-                            <input style="text-align: right; margin-right: 0" onblur="RevertCredit({{preVal}})" ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" value="{{balances[3].value.toFixed(2).formatNumber()}}" ng-hide="true" />
+                            <a id="linkGivenCredit" href="javascript:;" ng-click="EditCredit({{balances[3].value}})">{{balances[3].value.toFixed(2).formatNumber()}}</a>
+                            <input style="text-align: right; margin-right: 0" ng-blur="RevertCredit({{preVal}})" ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" ng-hide="true" />
                         </div>
                     </div>
                 </div>
@@ -121,10 +122,10 @@
                     </div>
                 </div>
             </div>
-            <div style="overflow: hidden" class="auto" id="tabs-2" ng-controller="DownlineListController">
-                <div id="downlines" style="overflow: auto">
+            <div class="auto" id="tabs-2" ng-controller="DownlineListController" style="height: 208px">
+                <div id="downlines" style="overflow: auto" ng-hide="model.length == 0">
                     <div ng-hide="{{model.length == 0}}" class="downlineTitle percent50" ng-repeat="user in model">
-                        <a class="detail2" href="javascript:;"  onclick="parent.Fanex.ExtAcc.ViewUser('{{user.text}}')">{{user.text}}</a>
+                        <a class="detail2" href="javascript:;"  ng-click="SearchUser('{{user.text}}')">{{user.text}}</a>
                     </div>
                 </div>
                 <div ng-hide="{{pages.length == 1 || model.length == 0}}" class="floatLeft" style="height: 20px">Page
@@ -140,21 +141,46 @@
                 <li><a href="#tab-3">Login</a></li>
                 <li><a href="#tab-4">Online List</a></li>
             </ul>
-            <div id="tab-1">
+            <div id="tab-1" class="auto" style="height: 100%">
                 <div class="floatLeft" ng-repeat="editItem in setting.editItems">
-                    <div class="settingEdit" title="{{editItem.tooltip}}">{{editItem.text}}</div>
+                    <div ng-hide="{{editItem.key == 'EnablePoker'}}" class="settingEdit floatLeft" title="{{editItem.tooltip}}" ng-click="{{editItem.key}}()">{{editItem.text}}</div>
                 </div>
+                <br />
                 <div class="floatLeft" ng-repeat="enableItem in setting.enableItems">
-                    <div class="settingTitle" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                    <div class="floatLeft"><input type="checkbox" ng-model="enableItem.value" /></div>
+                    <div class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
+                    <div class="floatLeft"><input title="{{enableItem.tooltip}}" ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" ng-model="enableItem.value" ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" /></div>
                 </div>    
             </div>
-            <div class="auto" id="tab-2" ng-controller="SettingController">
-                <div class="detail icn-right" ng-repeat="item in setting.details">
-                    <a ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
+            <div class="auto" id="tab-2" ng-controller="SettingController" ng-init="Init()">
+                <div class="subTab-parent">
+                    <div ng-click="ViewSubTab('sub-edit')" id="sub-edit" class="floatLeft subTab subTab-active">Edit</div>
+                    <div ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="floatLeft subTab" ng-hide="model.personalInfo.roleId.value == 4 || model.personalInfo.roleId.value == 1">Min/Max PT</div>
+                    <div ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="floatLeft subTab" ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
+                    <div ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="floatLeft subTab" ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
+                </div>
+                <div style="clear: both"></div>
+                <div id="edit">
+                    <div class="detail icn-right" ng-repeat="item in setting.details">
+                        <a ng-hide="item.isHide" ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
+                    </div>
+                </div>
+                <div id="minMax" style="display: none">
+                    <div class="detail icn-right" ng-repeat="minMaxPt in setting.minMaxPts">
+                        <a ng-hide="minMaxPt.isHide" ng-click="{{minMaxPt.key}}()" href="javascript:;">{{minMaxPt.value}}</a>
+                    </div>
+                </div>
+                <div id="superPT" style="display: none">
+                    <div class="detail icn-right" ng-repeat="superPt in setting.superPts">
+                        <a ng-hide="superPt.isHide" ng-click="Super{{superPt.key}}()" href="javascript:;">{{superPt.value}}</a>
+                    </div>
+                </div>
+                <div id="masterPT" style="display: none">
+                    <div class="detail icn-right" ng-repeat="masterPt in setting.masterPts">
+                        <a ng-hide="masterPt.isHide" ng-click="Master{{masterPt.key}}()" href="javascript:;">{{masterPt.value}}</a>
+                    </div>
                 </div>    
             </div>
-            <div class="auto" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
+            <div class="auto" style="height: 100%" id="tab-3" ng-controller="LoginController" ng-init="length = loginInfo.length">
                 <div class="clearBoth">
                     <div class="balanceTitle bold">{{loginInfo[0].text}}</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[0].value}}</div>
@@ -171,8 +197,8 @@
                     <div class="balanceTitle bold" title="{{loginInfo[3].tooltip}}">{{loginInfo[3].text}}</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[3].value}}</div>
                 </div>
-                <div class="clearBoth">
-                    <div class="balanceTitle bold">{{loginInfo[4].text}}&nbsp;[<a href="javascript:;" ng-click="ResetPassword({{model.personalInfo.custId.value}}, '{{model.personalInfo.currentLevel.value}}')">Change</a>]
+                <div class="clearBoth" ng-init="tmpId = model == null ? 0 : model.personalInfo.custId.value">
+                    <div class="balanceTitle bold">{{loginInfo[4].text}}&nbsp;[<a href="javascript:;" ng-click="ResetPassword({{tmpId}}, '{{model.personalInfo.currentLevel.value}}')">Change</a>]
                     </div>
                     <div class="floatLeftBalance normal R">
                             {{loginInfo[4].value}}
@@ -181,13 +207,13 @@
                 <div class="clearBoth">
                     <div class="balanceTitle bold">{{loginInfo[5].text}}</div>
                     <div class="floatLeftBalance normal R detail">
-                        <a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Customer.ShowIpInfo('{{loginInfo[5].value}}')">
+                        <a href="javascript:;" ng-click="ShowIp('{{loginInfo[5].value}}')">
                             {{loginInfo[5].value}}
                         </a>
                     </div>
                 </div>
                 <div class="clearBoth">
-                    <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" onclick="javascript:;">Change</a>]</div>
+                    <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" ng-click="ResetSecurityCode({{model != null ? model.personalInfo.custId.value : 0}}, {{model != null ? model.personalInfo.roleId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Change</a>]</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[6].value}}</div>
                 </div>
                 <div class="clearBoth" ng-hide="{{length == 7}}">
@@ -195,16 +221,16 @@
                     <div class="floatLeftBalance normal R">{{loginInfo[7].value}}</div>
                 </div>
             </div>
-            <div class="auto" id="tab-4" ng-controller="OnlineListController">
+            <div class="auto" id="tab-4" ng-controller="OnlineListController" style="height: 178px">
                 <div class="clearBoth">
                     <div class="floatLeft bold p10">No</div>
                     <div class="floatLeft bold p32">IP</div>
-                    <div class="floatLeft bold p58">Last Login</div>
+                    <div class="floatRight bold p58">Last Login</div>
                 </div>
                 <div ng-init="Init()" class="clearBoth" ng-hide="onlineList == null || onlineList.length == 0" ng-repeat="item in onlineList">
                     <div class="floatLeft percent10">{{item.index}}</div>
                     <div class="floatLeft percent32">
-                        <a href="javascript:;" onclick="javascript:parent.Fanex.ExtAcc.Customer.ShowIpInfo('{{item.iP.text}}')">
+                        <a href="javascript:;" ng-click="ShowIp('{{item.iP.text}}')">
                             {{item.iP.text}}
                         </a>
                     </div>
@@ -221,21 +247,21 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/LeftPanelController.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/CustomerSetting/LeftPanel/SearchCustomer/GetData/" + Request.RequestContext.RouteData.Values["id"] + "/" + Request.RequestContext.RouteData.Values["uplineId"] + "/" + Request.RequestContext.RouteData.Values["pageIndex"])">
+</script>
 <script type="text/javascript">
     var userId = parseInt('@userId');
-    var model = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@customerModel'));
-    $(document).ready(function () {
-        if (model) {
-            $('#balanceInfo').tabs();
-            $('#settingInfo').tabs();
 
-            if (model.personalInfo.roleId.value == 1)
-                $('#tab2').remove();
-        }
-        else {
-            $('#balanceInfo').remove();
-            $('#settingInfo').remove();
-        }
-    });
+    if (model) {
+        $('#balanceInfo').tabs();
+        $('#settingInfo').tabs();
+
+        if (model.personalInfo.roleId.value == 1)
+            $('#tab2').remove();
+    }
+    else {
+        $('#balanceInfo').remove();
+        $('#settingInfo').remove();
+    }
 </script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/LeftPanelController.js")" type="text/javascript"></script>

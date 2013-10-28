@@ -63,8 +63,27 @@ Fanex.ExtAcc = {
     leftMenuWidth: Cookie.get('layout_1') ? parseInt(Cookie.get('layout_1')) : 300,
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
+    SuggestionXHR: null,
 
-    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu) {
+    LoadMainIFrame: function (url) {
+        this.BlockUI();
+
+        $('#contentSplitter').html('');
+
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('id', 'mainIFrame');
+        iframe.setAttribute('src', url);
+        iframe.setAttribute('frameborder', 0);
+        iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
+        iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
+        iframe.setAttribute('style', 'overflow: auto');
+
+        $('#contentSplitter').append(iframe);
+
+        this.UnBlockUI();
+    },
+
+    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
 
         if (typeof id != 'undefined') {
@@ -72,15 +91,36 @@ Fanex.ExtAcc = {
         }
 
         if (!isMenu) {
-            $.ajax({ url: url + '/' + $('#selectedGroupName').html(), type: 'post', success: function (result) {
+            var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
+            $.ajax({ url: fullUrl, type: 'post', success: function (result) {
+                $('#contentSplitter').html('');
+
+                if (result.ErrorCode) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    $('#contentSplitter').html(result.ErrorMessage.formatErrorMessage());
+                    return;
+                }
+
                 $('#contentSplitter').html(result);
+
+                if (document.getElementById('btnLogin')) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    location.href = resolveClientUrl('Account/Login');
+                }
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
                     var interval = setInterval(function () {
-                        if (typeof Fanex.ExtAcc.Customer.Init != 'undefined') {
+                        if (document.getElementById('btnSearch')) {
                             clearInterval(interval);
 
                             Fanex.ExtAcc.Customer.Init();
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                if ($.trim($('#jqgrid').html()) == '') {
+                                    $('#btnSearch').click();
+                                }
+                            }, 2000);
                         }
                     }, 100);
                 }
@@ -93,6 +133,10 @@ Fanex.ExtAcc = {
                     console.log(data.responseText);
 
                 Fanex.ExtAcc.UnBlockUI();
+                if (data.ErrorCode) {
+                    $('#contentSplitter').html(data.ErrorMessage.formatErrorMessage());
+                    return;
+                }
             });
         }
         else {
@@ -135,14 +179,14 @@ Fanex.ExtAcc = {
     },
 
     BlockUI: function () {
-        if (!$this.BlockedUI) {
+        if (!this.BlockedUI) {
             $.blockUI({
                 message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
                 onBlock: function () {
-                    $this.BlockedUI = true;
+                    Fanex.ExtAcc.BlockedUI = true;
                 },
                 onUnblock: function () {
-                    $this.BlockedUI = false;
+                    Fanex.ExtAcc.BlockedUI = false;
                 }
             });
         }
@@ -210,10 +254,13 @@ Fanex.ExtAcc = {
     },
 
     InitSuggestion: function (txtUserName) {
+        if (this.SuggestionXHR != null)
+            this.SuggestionXHR.abort();
+
         var groupName = $('#selectedGroupName').html();
         var id = typeof txtUserName == 'undefined' ? '#txtUserName' : '#' + txtUserName;
 
-        $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
+        this.SuggestionXHR = $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
         .success(function (data) {
             var source = [];
 
@@ -224,11 +271,15 @@ Fanex.ExtAcc = {
             $(id).autocomplete({
                 source: source
             });
+
+            Fanex.ExtAcc.SuggestionXHR = null;
         })
         .error(function (err) {
-            if (typeof console != 'undefined') {
-                consolse.log(err);
+            if (typeof console != 'undefined' && err.statusText && err.statusText != "abort") {
+                console.log(err);
             }
+
+            Fanex.ExtAcc.SuggestionXHR = null;
         });
     },
 
@@ -287,6 +338,9 @@ Fanex.ExtAcc = {
             if (typeof e == 'undefined') e = window.event;
             var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
+                if (this.SuggestionXHR != null)
+                    this.SuggestionXHR.abort();
+
                 Fanex.ExtAcc.BlockUI();
                 var username = $.trim(this.value.encodeHtml());
                 this.value = '';
@@ -306,6 +360,9 @@ Fanex.ExtAcc = {
         });
 
         $('#btnSearchLeftPanel').bind('click', function () {
+            if (this.SuggestionXHR != null)
+                this.SuggestionXHR.abort();
+
             Fanex.ExtAcc.BlockUI();
             var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
             $('#txtLeftPanelUserName').val('');
@@ -356,8 +413,21 @@ Fanex.ExtAcc = {
         $('#leftFrame').height($('#contentSplitter').height() - 30);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
+        if (document.getElementById('mainIFrame')) {
+            $('#mainIFrame').width($('#contentSplitter').width() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
+        }
+
+        if (document.getElementById('tabs-2')) {
+            $('#tabs-2').height($('#contentSplitter').height() - 40);
+        }
+
         if (document.getElementById('tabs-4')) {
-            $('#tabs-4').height($('#contentSplitter').height() - 55);
+            $('#tabs-4').height($('#contentSplitter').height() - 40);
+        }
+
+        if (document.getElementById('tabs-5')) {
+            $('#tabs-5').height($('#contentSplitter').height() - 40);
         }
 
         this.Resize();
@@ -373,6 +443,11 @@ Fanex.ExtAcc = {
         $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
+        if (document.getElementById('mainIFrame')) {
+            $('#mainIFrame').width($('#contentSplitter').width() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
+        }
+
         try {
             $("#jqgrid").fanexGrid("resizeGrid");
         }
@@ -383,8 +458,16 @@ Fanex.ExtAcc = {
         $('#leftFrame').height($('#contentSplitter').height() - 30);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
+        if (document.getElementById('tabs-2')) {
+            $('#tabs-2').height($('#contentSplitter').height() - 40);
+        }
+
         if (document.getElementById('tabs-4')) {
-            $('#tabs-4').height($('#contentSplitter').height() - 55);
+            $('#tabs-4').height($('#contentSplitter').height() - 40);
+        }
+
+        if (document.getElementById('tabs-5')) {
+            $('#tabs-5').height($('#contentSplitter').height() - 40);
         }
 
         // Update to cookie

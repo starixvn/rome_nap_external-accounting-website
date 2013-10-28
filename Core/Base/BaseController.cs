@@ -12,10 +12,14 @@
 
 namespace Fanex.ExternalAccount.Core.Base
 {
+    using System;
     using System.IO;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -73,8 +77,8 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         protected BaseController()
         {
-            this._currentContext = new CurrentContext();
-            this._currentSession = new CurrentSession();
+            this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
+            this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
         }
 
         /// <summary>
@@ -85,7 +89,7 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             get
             {
-                return this._currentContext ?? new CurrentContext();
+                return this._currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
             }
         }
 
@@ -97,7 +101,7 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             get
             {
-                return this._currentSession ?? new CurrentSession();
+                return this._currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
             }
         }
 
@@ -167,6 +171,48 @@ namespace Fanex.ExternalAccount.Core.Base
             Response.Clear();
             Response.BinaryWrite(excelStream.GetBuffer());
             Response.End();
+        }
+
+        /// <summary>
+        /// Updates Casino statues.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="result">Result object.</param>
+        /// <param name="customer">Customer object.</param>
+        protected void UpdateCasinoStatus(int custId, Result result, Customer customer)
+        {
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0)
+            {
+                // Update Casino status for closed and suspended
+                var cust = new CasinoLibrary.SBAgent.Customer();
+                try
+                {
+                    cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates casino statuses.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="closed">Closed status.</param>
+        /// <param name="suspended">Suspended status.</param>
+        protected void UpdateCasinoStatus2(int custId, bool closed, bool suspended)
+        {
+            var cust = new CasinoLibrary.SBAgent.Customer();
+            try
+            {
+                cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         /// <summary>

@@ -47,7 +47,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         Fanex.ExtAcc.InitSuggestion();
 
-        $('#dtpWinLossDate').datepicker({ showOn: 'both', buttonImageOnly: true, buttonImage: '/Images/calendar.png', buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy' });
+        $('#dtpWinLossDate').datepicker({ showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy' });
         $("#dtpWinLossDate").val($.datepicker.formatDate('M dd, yy', new Date()));
 
         $('#Submit').click(function (e) {
@@ -60,7 +60,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabSuper').click(function (e) {
-            console.log($this.supername);
             if ($this.supername != '') {
                 $this.ResetParameters();
                 $this.username = $this.supername;
@@ -78,7 +77,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabMaster').click(function (e) {
-            console.log($this.mastername);
             if ($this.mastername != '') {
                 $this.ResetParameters();
                 $this.username = $this.mastername;
@@ -228,21 +226,21 @@ Fanex.ExtAcc.DailyWinLoss = {
         { HeaderText: 'Username', Name: 'Username', Width: 130, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); } },
         { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'ComTOPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'ComTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Super', Name: 'SAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'SAgTOPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'SAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Master', Name: 'MAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'MAgTOPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'MAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Agent', Name: 'AgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'AgTOPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'AgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Company', Name: 'ComWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'ComWinlostPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'ComWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Super', Name: 'SAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Master', Name: 'MAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Agent', Name: 'AgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'AgWinlostPercent', Width: 50, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+        { HeaderText: '%', Name: 'AgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     Render: function () {
         var gridOption = {
@@ -328,7 +326,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         gridOption.bodyRows = bodyData;
         gridOption.pagerOption.totalItem = this.totalRows;
-
+                
         //// Asign Footer Data
         var footerData = [];
         footerData.push(
@@ -344,13 +342,14 @@ Fanex.ExtAcc.DailyWinLoss = {
             { Name: "MAgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumMAgTO, this.SumTotalTO) },
             { Name: "AgTO", Value: this.SumAgTO },
             { Name: "AgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumAgTO, this.SumTotalTO) },
-            { Name: "ComWinlost", Value: this.SumComTO },
+
+            { Name: "ComWinlost", Value: this.SumComWinlost },
             { Name: "ComWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumComWinlost, this.SumComTO) },
-            { Name: "SAgWinlost", Value: this.SumSAgTO },
+            { Name: "SAgWinlost", Value: this.SumSAgWinlost },
             { Name: "SAgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumSAgWinlost, this.SumSAgTO) },
-            { Name: "MAgWinlost", Value: this.SumMAgTO },
+            { Name: "MAgWinlost", Value: this.SumMAgWinlost },
             { Name: "MAgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumMAgWinlost, this.SumMAgTO) },
-            { Name: "AgWinlost", Value: this.SumAgTO },
+            { Name: "AgWinlost", Value: this.SumAgWinlost },
             { Name: "AgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumAgWinlost, this.SumAgTO) }
             ]
         });
@@ -374,15 +373,21 @@ Fanex.ExtAcc.DailyWinLoss = {
                             + "&date=" + this.date
                             + "&viewlevel=" + this.viewlevel;
 
-        $.blockUI({ message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" alt="Loading" />' });
+        Fanex.ExtAcc.BlockUI();
         $.ajax({
             context: $this,
             url: this.url + parameterUrl,
-            type: 'GET',
+            type: 'post',
             dataType: 'json',
             cache: false,
             beforesend: function (xhr) { },
             success: function (data) {
+                if (data.ErrorCode) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 350, 150, 'alertDWL');
+                    return;
+                }
+
                 $this.dataSource = data.rows;
                 $this.totalRows = data.rows.length;
                 $this.viewlevel = data.viewlevel;

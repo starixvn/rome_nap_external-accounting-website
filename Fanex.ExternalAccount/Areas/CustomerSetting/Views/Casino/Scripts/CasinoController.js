@@ -34,6 +34,10 @@
         });
 
         Fanex.CustomerSetting.Core.ProcessDisplayMultiple(125, names);
+        names = names.substring(0, names.length - 2);
+
+        jQuery('#names').html(names);
+        jQuery('#names').show();
     }
     else {
         $('#arrowUpDown').hide();
@@ -66,6 +70,9 @@
         var actionName = '';
 
         switch (UplineRoleId) {
+            case 5:
+                actionName = 'Super/UpdateSuperPost';
+                break;
             case 4:
                 if (IsMaster) {
                     actionName = 'Master/UpdateMasterPost';
@@ -103,6 +110,7 @@
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
+        data.custName = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
 
         $.ajax({
             url: toUrl(actionName),
@@ -130,6 +138,7 @@
                     return false;
                 }
                 else {
+                    $('#errMsg').attr('class', 'successMsg');
                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                     $('#errMsg').show();
 
@@ -159,6 +168,7 @@
                         return false;
                     }
                     else {
+                        $('#errMsg').attr('class', 'successMsg');
                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                         $('#errMsg').show();
 
@@ -182,7 +192,12 @@
                 console.log(response);
             }
 
-            ErrorMessage += $(response.responseText)[1].text.formatErrorMessage() + '<br />';
+            if ($.parseJSON($(response)[0].responseText).errorCode) {
+                ErrorMessage += $.parseJSON($(response)[0].responseText).errorMessage.formatErrorMessage();
+            }
+            else {
+                ErrorMessage += $(response.responseText)[1].text.formatErrorMessage() + '<br />';
+            }
 
             if (!IsMultiple) {
                 if (ErrorMessage != '') {
@@ -199,6 +214,7 @@
                     return false;
                 }
                 else {
+                    $('#errMsg').attr('class', 'successMsg');
                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                     $('#errMsg').show();
 
@@ -228,6 +244,7 @@
                         return false;
                     }
                     else {
+                        $('#errMsg').attr('class', 'successMsg');
                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                         $('#errMsg').show();
 

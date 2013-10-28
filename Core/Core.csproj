@@ -12,6 +12,7 @@
     <AssemblyName>Fanex.ExternalAccount.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary">
+    <Reference Include="CasinoLibrary, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting">
@@ -40,17 +42,15 @@
     <Reference Include="CasinoUtility">
       <HintPath>..\Dependencies\CasinoUtility.dll</HintPath>
     </Reference>
-    <Reference Include="DNAide">
-      <HintPath>..\Dependencies\DNAide.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino">
-      <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Security.dll</HintPath>
@@ -63,6 +63,10 @@
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4894.26393, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation">
       <HintPath>..\Dependencies\FluentValidation.dll</HintPath>
@@ -89,8 +93,9 @@
       <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NotifyPropertyChanged">
       <HintPath>..\Dependencies\NotifyPropertyChanged.dll</HintPath>
@@ -136,8 +141,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Context\ExternalAccountAuthenticate.cs" />
-    <Compile Include="Context\ICurrentContext.cs" />
-    <Compile Include="Context\ICurrentSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

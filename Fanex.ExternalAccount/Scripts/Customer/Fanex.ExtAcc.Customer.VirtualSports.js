@@ -49,7 +49,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         customer.userNames = Fanex.ExtAcc.Customer.VirtualSports.usernames.join(", ");
         var updateType;
 
-        this.saveCustomer = function () { 
+        this.saveCustomer = function () {
             $('#windowPopup').scrollTop(0);
             updateType = Fanex.ExtAcc.Customer.VirtualSports.UpdateType.All;
             this.save.call(Fanex.ExtAcc.Customer.VirtualSports);
@@ -126,21 +126,10 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
 
     Init: function () {
-        switch (Fanex.ExtAcc.Customer.CurrentLevel) {
-            case Fanex.ExtAcc.Customer.Master:
-                this.uplineId = Fanex.ExtAcc.Customer.superId;
-                this.uplineRoleId = Fanex.ExtAcc.Customer.Super;
-                break;
-            case Fanex.ExtAcc.Customer.Agent:
-                this.uplineId = Fanex.ExtAcc.Customer.masterId;
-                this.uplineRoleId = Fanex.ExtAcc.Customer.Master;
-                break;
-            case Fanex.ExtAcc.Customer.Member:
-                this.uplineId = Fanex.ExtAcc.Customer.agentId;
-                this.uplineRoleId = Fanex.ExtAcc.Customer.Agent;
-                break;
-        }
+        Fanex.ExtAcc.BlockUI();
 
+        this.uplineId = context.custId;
+        this.uplineRoleId = context.roleId;
         Fanex.PTVirtualSports.CURRENT_CONTEXT = context;
         Fanex.PTVirtualSports.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
@@ -177,6 +166,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         // using for both of multi & single
         this.InitArrays();
         this.InitUI();
+        Fanex.ExtAcc.UnBlockUI();
     },
 
     InitUI: function () {
@@ -206,7 +196,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
             if (context.targetRoleId == 1) {
                 if (context.roleId == 4) {
                     document.getElementById("divEnabled").style.display = "none";
-                    document.getElementById$("lblEnabled").innerHTML = "";
+                    document.getElementById("lblEnabled").innerHTML = "";
                     document.getElementById("divDownline").style.display = "none";
                 }
                 else if (context.roleId == 3) {
@@ -295,7 +285,8 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         if (id > 0) {
             isMulti = true;
         }
-        var url = resolveClientUrl("VirtualSports/EditSingle?custId=") + this.uplineId + '&roleId=' + this.uplineRoleId + "&targetCustId=" + custid + "&targetRoleId=" + context.targetRoleId + "&updateType=" + this.updateType + "&isMulti=" + isMulti.toString();
+
+        var url = resolveClientUrl("VirtualSports/UpdateCustomerSetting?custId=") + this.uplineId + '&roleId=' + this.uplineRoleId + "&targetCustId=" + custid + "&targetRoleId=" + context.targetRoleId + "&updateType=" + this.updateType + "&isMulti=" + isMulti.toString();
         var parameters = ['oldCustomer=', JSON.stringify(this.oldCustomer), '&newCustomer=', JSON.stringify(this.newCustomer), '&otherSetting=', JSON.stringify(this.otherSetting)].join('');
 
         $.ajax({
@@ -308,8 +299,6 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                 // show loading
             },
             success: function (result) {
-                var ArrCodes = new Array();
-                var ArrMsgs = new Array();
                 var ArrUserName = new Array();
                 ArrUserName.push(username);
 
@@ -317,20 +306,16 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                     var len = result.length;
                     for (var i = 0; i < len; i++) {
                         var item = result[i];
-                        ArrCodes.push(item.errCode);
-                        ArrMsgs.push(item.errMsg);
-                        if (item.errCode >= 0) {
+                        if (item.errorCode >= 0) {
                             object.isSuccess = false;
                         }
-                        else if (item.errCode == -2) { // update status successfully
-                            this.ReloadCheckboxes();
+                        else if (item.errorCode == -2) { // update status successfully
+                            Fanex.ExtAcc.Customer.VirtualSports.ReloadCheckboxes();
                         }
                     }
                 }
                 else {
-                    ArrCodes.push(result.errCode);
-                    ArrMsgs.push(result.errMsg);
-                    if (result.errCode >= 0) {
+                    if (result.errorCode >= 0) {
                         object.isSuccess = false;
                     }
                 }
@@ -345,6 +330,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                 else {
                     if (object.isSuccess) {
                         object.oldCustomer = object.newCustomer;
+                        Fanex.ExtAcc.Customer.VirtualSports.afterUpdateSuccess(2000);
                     }
                     $.unblockUI(document);
                     $('#windowPopup').scrollTop(0);
@@ -354,6 +340,13 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                 $.unblockUI(document);
             }
         });
+    },
+    afterUpdateSuccess: function (timeout) {
+        t1 = setTimeout(function () {
+            //            $('#errMsg').css('display', 'none');
+            //            $('#errMsg').html('');
+            Fanex.ExtAcc.Form.Close(false);
+        }, timeout);
     }
 }
 

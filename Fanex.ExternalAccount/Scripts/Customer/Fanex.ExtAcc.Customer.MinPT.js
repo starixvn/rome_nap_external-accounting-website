@@ -22,7 +22,7 @@ Fanex.ExtAcc.Customer.MinPT = {
         data.parentId = editMinPTStatus == 'SuperEditMinPTMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/' + editMinPTStatus + 'Get'),
+            url: resolveClientUrl('SportsbookSetting/' + editMinPTStatus + 'Get'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -65,7 +65,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                     }
 
                     $.ajax({
-                        url: resolveClientUrl('Sportsbook/' + editMinPTStatus + 'Post'),
+                        url: resolveClientUrl('SportsbookSetting/' + editMinPTStatus + 'Post'),
                         data: para,
                         dataType: 'json',
                         type: 'post'

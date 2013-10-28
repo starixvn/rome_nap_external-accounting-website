@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 
         public TemplateSettings()
         {
-            this._dir = HttpContext.Current.Server.MapPath("~") + "\\ExcelTemplates\\Customer";
+            this._dir = HttpContext.Current.Server.MapPath("~/") + "\\ExcelTemplates\\Customer";
         }
 
         public string CustomerListPath(int roleId)

@@ -19,7 +19,7 @@ Fanex.ExtAcc.Form = {
         }
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: block; border: none; font-size:12px; z-index:999999; margin-right: ' + margin);
+        Form.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin);
 
         DivContent.setAttribute('style', 'height: ' + (height - 80) + 'px');
 
@@ -38,16 +38,18 @@ Fanex.ExtAcc.Form = {
             data = params;
         }
 
-        $.ajax({ url: url, data: data }).done(function (data) {
+        $.ajax({ url: url, data: data, type: 'post' }).done(function (data) {
             if (data.ErrorCode && data.ErrorCode == "1") {
                 Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }
             else {
-                DivContent.innerHTML = data;
+                //DivContent.innerHTML = data;
+                document.body.appendChild(Form);
+                $(DivContent).html(data);
             }
 
-            document.body.appendChild(Form);
+            //document.body.appendChild(Form);
             $('#' + id).dialog({
                 title: title,
                 height: height,
@@ -96,29 +98,29 @@ Fanex.ExtAcc.Form = {
             autoOpen: true,
             position: { my: "center", at: "center", of: window },
             close: function () {
-                $self.Close(reloadOnClose);
+                $self.Close(reloadOnClose, null, id);
             }
         });
 
-        Frame.setAttribute('style', 'display: block; border: none; font-size:12px; z-index:999999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
+        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
 
         if (callBack && typeof callBack === 'function') {
             callBack();
         }
     },
 
-    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId) {
+    ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel, closeClick, isSubmit) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none;font-size:12px;z-index:9999999');
+        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
 
         DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px;line-height: 18px');
+        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px; line-height: 18px');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;
@@ -140,7 +142,7 @@ Fanex.ExtAcc.Form = {
             modal: true,
             buttons: [
             {
-                text: "Yes",
+                text: isSubmit ? "Submit" : "Yes",
                 click: function () {
                     if (okClickEvent && typeof okClickEvent === 'function') {
                         okClickEvent();
@@ -151,7 +153,7 @@ Fanex.ExtAcc.Form = {
                 }
             },
             {
-                text: "No",
+                text: isCancel ? "Cancel" : "No",
                 click: function () {
                     if (cancelClickEvent && typeof cancelClickEvent === 'function') {
                         cancelClickEvent();
@@ -163,17 +165,20 @@ Fanex.ExtAcc.Form = {
             }],
             close: function (event) {
                 $self.Close(reloadOnClose, null, id);
+                if (typeof closeClick == 'function') {
+                    closeClick();
+                }
             }
         });
     },
 
-    Alert: function (title, message, width, height, popupId) {
+    Alert: function (title, message, width, height, popupId, okClick) {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none;font-size:12px;z-index:9999999');
+        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
 
         DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
 
@@ -203,10 +208,16 @@ Fanex.ExtAcc.Form = {
                 text: "OK",
                 click: function () {
                     $self.Close(null, null, id);
+                    if (typeof okClick == 'function') {
+                        okClick();
+                    }
                 }
             }],
             close: function (event) {
                 $self.Close(null, null, id);
+                if (typeof okClick == 'function') {
+                    okClick();
+                }
             }
         });
     },

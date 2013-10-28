@@ -22,7 +22,7 @@ namespace Fanex.ExternalAccount.Controllers.Home
     /// </summary>
     public class HomeController : BaseController
     {
-        [Authorization(Function = eFunctions.Reports, Policy = EPolicy.Read)]
+        [Authorization(Function = "Home", Policy = EPolicy.Read)]
         public ActionResult Index()
         {
             return this.ViewBase();

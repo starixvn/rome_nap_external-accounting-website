@@ -10,6 +10,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.SqlClient;
     using Fanex.Caching;
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
     using Fanex.ExternalAccount.DataAccess.Interface.Report;
@@ -65,16 +66,20 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
                 try
                 {
                     balanceUpDay = reportDao.Age_SelBalanceUpDay();
-
-                    if (balanceUpDay != null)
-                    {
-                        // Store in cache
-                        ReportService._cache.Set<DataTable>(ReportService.BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
-                    }
+                }
+                catch (SqlException ex)
+                {
+                    Logs.Error(ex.Message, ex);
                 }
                 catch (Exception ex)
                 {
-                    Logs.Error(ex.Message);
+                    Logs.Error(ex.Message, ex);
+                }
+                
+                if (balanceUpDay != null)
+                {
+                    // Store in cache
+                    ReportService._cache.Set<DataTable>(ReportService.BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
                 }
                                 
                 return balanceUpDay;

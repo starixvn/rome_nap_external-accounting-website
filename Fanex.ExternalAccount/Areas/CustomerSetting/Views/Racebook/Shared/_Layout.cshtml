@@ -1,0 +1,46 @@
+﻿@using Fanex.PTRacing
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/bundles/racingstyle")
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/input.css")" rel="stylesheet" type="text/css" />
+</head>
+    <body>
+        <div class="maincontent" style="width: 1012px;">
+            <div id="err" class="errMsg display-none"></div>
+            <div class="floatL display-none">
+                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+            </div>
+            <div class="bg_table" style="width: 1012px;">
+                <div id="divCustInfo">
+                </div>
+                @Html.Partial("~/Areas/CustomerSetting/Views/Racebook/Setting/RacingSetting.cshtml")
+            </div>
+            <div class="floatL display-none">
+                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+            </div>
+        </div>
+        @RenderBody()
+
+        <script type="text/javascript">
+            //var Roles=@Html.Raw(ViewBag.PageRole);
+
+            window.uplineId = '@Fanex.Common.Converter.ToInt(Request["uplineId"])';
+            window.custId = '@Fanex.Common.Converter.ToInt(Request["custId"])';
+            window.rootUrl = '@ViewBag.RootUrl';
+        </script>
+
+        @Scripts.Render("~/bundles/racingsetting")
+    
+        <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Languages.en.js")"></script>
+        <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.js")"></script>
+        <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BetTypeGroup.js")"></script>
+        <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BetType.js")"></script>
+        <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BettingCommSetting.js")"></script>
+    
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

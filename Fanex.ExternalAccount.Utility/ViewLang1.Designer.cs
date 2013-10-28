@@ -592,7 +592,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You don&apos;t have permission.
+        ///   Looks up a localized string similar to You are not authorized on this function.
         /// </summary>
         public static string DontHavePermission {
             get {

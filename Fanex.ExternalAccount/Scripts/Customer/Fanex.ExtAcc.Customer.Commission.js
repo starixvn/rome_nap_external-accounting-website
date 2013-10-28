@@ -36,7 +36,7 @@ Fanex.ExtAcc.Customer.Commission = {
         };
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditCommissionGet'),
+            url: resolveClientUrl('SportsbookSetting/EditCommissionGet'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -102,7 +102,7 @@ Fanex.ExtAcc.Customer.Commission = {
         }
 
         $.ajax({
-            url: resolveClientUrl('Sportsbook/EditCommissionPost'),
+            url: resolveClientUrl('SportsbookSetting/EditCommissionPost'),
             data: para,
             dataType: 'json',
             type: 'post'

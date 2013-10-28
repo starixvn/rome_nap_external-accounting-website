@@ -44,9 +44,6 @@
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Sunplus.Agent.Configurations">
-      <HintPath>..\Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
