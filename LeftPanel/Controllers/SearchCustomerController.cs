@@ -45,13 +45,36 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             ViewBag.UserId = CurrentSession.UserId;
 
+            return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml");
+        }
+
+        /// <summary>
+        /// Gets all info model of left panel.
+        /// </summary>
+        /// <param name="id">Username to view.</param>
+        /// <param name="uplineId">Upper id of customer.</param>
+        /// <param name="pageIndex">Current page index.</param>
+        /// <returns>View contains customer model.</returns>
+        public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        {
+            ViewBag.UserId = CurrentSession.UserId;
+
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
             if (model != null)
             {
                 model.GetProductStatuses(uplineId, id);
             }
 
-            return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml", model);
+            string result = "var model = " + JsonConvert.SerializeObject(
+                model, 
+                Formatting.None,                
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }) + ";";
+
+            return this.Content(result);
         }
 
         /// <summary>
@@ -458,6 +481,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// </summary>
         /// <param name="id">Customer id.</param>
         /// <param name="code">Security code.</param>
+        /// <param name="force">Force to change or not.</param>
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
