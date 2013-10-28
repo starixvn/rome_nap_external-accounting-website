@@ -393,15 +393,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
+        [Authorization(Function = eFunctions.EnableRacing, Policy = EPolicy.Read)]
+        public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
+        {
+            ViewBag.roleId = roleId;
+            ViewBag.id = id;
+            ViewBag.uplineId = uplineId;
+
+            return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml");
+        }
+
         /// <summary>
         /// Gets racing status.
         /// </summary>
         /// <param name="id">Customer id.</param>
         /// <param name="uplineId">Upper customer id.</param>
         /// <param name="roleId">Customer role id.</param>
-        /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EnableRacing, Policy = EPolicy.Read)]
-        public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
+        /// <returns>ActionResult object.</returns>        
+        public ActionResult GetRacingData(int id, int uplineId, int roleId)
         {
             ViewBag.roleId = roleId;
             ViewBag.id = id;
@@ -422,8 +431,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 FormId = Fanex.PTRacing.BusinessObjects.FormType.EditPT,
                 IP = CurrentContext.Ip4Address
             });
+            var result = "var model = " + JsonConvert.SerializeObject(
+                model, 
+                Formatting.None, 
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
+                }) + ";";
 
-            return this.PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml");
+            return this.Content(result);
         }
 
         /// <summary>
