@@ -181,6 +181,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("agentid", agentId);
                 param.Add("closedonly", closedOnly);
                 param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                param.Add("system", "EXTERNAL");
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
@@ -215,6 +216,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errmsg", string.Empty);
                 param.Add("cusstatus", !isCheckedAll ? string.Empty : "All");
                 param.Add("ip", ip);
+                param.Add("system", "EXTERNAL");
 
                 db.AssignParamValues(param);
                 db.ExecuteNonQuery();
@@ -495,6 +497,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// </summary>
         /// <param name="id">Customer id.</param>
         /// <param name="code">Security code.</param>
+        /// <param name="force">Force change or not.</param>
         /// <returns>Result object.</returns>
         public Result ResetSecurityCode(int id, string code, bool force)
         {
@@ -507,6 +510,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 objDb.AddInParameter("Securitycode", System.Data.DbType.String, code);
                 objDb.AddInParameter("Language", System.Data.DbType.String, "En");
                 objDb.AddInParameter("IP", System.Data.DbType.String, CurrentContext.Instance.Ip4Address);
+                objDb.AddInParameter("system", System.Data.DbType.String, "EXTERNAL");
                 objDb.AddOutParameter("ErrCode", System.Data.DbType.Int32, 8);
                 objDb.AddOutParameter("ErrMsg", System.Data.DbType.String, 1000);
                 objDb.ExecuteNonQuery();
@@ -593,6 +597,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", string.Empty);
                 hash.Add("ip", CurrentContext.Instance.Ip4Address);
+                hash.Add("system", "EXTERNAL");
                 objDb.AssignParamValues(hash);
 
                 objDb.ExecuteNonQuery();
