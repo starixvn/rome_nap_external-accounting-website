@@ -107,7 +107,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Up-line id of customer.</param>
         /// <param name="newGivenCredit">New given credit.</param>
         /// <returns>JSON object.</returns>
-        [HttpPost, Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [HttpPost, Authorization(Function = eFunctions.UpdateCredit, Policy = EPolicy.Update)]
         public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
             var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);
@@ -127,7 +127,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="id">Upper customer id.</param>
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.ClearCredit, Policy = EPolicy.Read)]
         public ActionResult UsedCreditPage(int id, int roleId)
         {
             ViewBag.CustId = id;
@@ -154,7 +154,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.ClearCredit, Policy = EPolicy.Update)]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
             var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
@@ -167,7 +167,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.UpdateBalance, Policy = EPolicy.Update)]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
         {
             var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
@@ -180,7 +180,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.UpdateBalance, Policy = EPolicy.Read)]
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
@@ -197,7 +197,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="clearCredit">Clear credit or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.CloseCustomer, Policy = EPolicy.Update)]
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -227,7 +227,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Upper customer id.</param>
         /// <param name="suspend">Suspended or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.SuspendCustomer, Policy = EPolicy.Update)]
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -256,7 +256,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custId">Customer id.</param>
         /// <param name="allow">Allow or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.AllowOutright, Policy = EPolicy.Update)]
         public ActionResult UpdateOutright(int custId, bool allow)
         {
             return this.JsonBase(
@@ -273,7 +273,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custId">Customer id.</param>
         /// <param name="allow">Allow or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.AllowAutoMPT, Policy = EPolicy.Update)]
         public ActionResult UpdateAutoMPT(int custId, bool allow)
         {
             return this.JsonBase(
@@ -293,7 +293,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.EnableCasino, Policy = EPolicy.Update)]
         public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
             try
@@ -320,7 +320,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Enable or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.EnableBingo, Policy = EPolicy.Update)]
         public ActionResult UpdateBingo(int custId, int uplineId, bool enable, bool enableDownline)
         {
             try
@@ -346,7 +346,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Allow or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.EnableVirtualSports, Policy = EPolicy.Update)]
         public ActionResult UpdateVirtualSports(int custId, bool enable, bool enableDownline)
         {
             return this.JsonBase(
@@ -364,7 +364,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Allow or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.EnableNumberGame, Policy = EPolicy.Update)]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
         {
             return this.JsonBase(
@@ -382,7 +382,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Allow or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.EnableLiveCasino, Policy = EPolicy.Update)]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
         {
             return this.JsonBase(
@@ -400,7 +400,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Upper customer id.</param>
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.EnableRacing, Policy = EPolicy.Read)]
         public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
         {
             ViewBag.roleId = roleId;
@@ -435,7 +435,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.EnableRacing, Policy = EPolicy.Update)]
         public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
         {
             var settings = new JsonSerializerSettings();
@@ -467,7 +467,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [Authorization(Function = eFunctions.UpdateSecurityCode, Policy = EPolicy.Read)]
         public ActionResult GetSecurityCode(int id, int roleId, string username)
         {
             ViewBag.custId = id;
@@ -485,7 +485,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [Authorization(Function = eFunctions.UpdateSecurityCode, Policy = EPolicy.Update)]
         public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 1)
         {
             string hashCode = Encryption.CfsEnCode(code);

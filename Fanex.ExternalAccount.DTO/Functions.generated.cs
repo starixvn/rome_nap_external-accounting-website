@@ -41,4 +41,7 @@ public static class eFunctions
 			public const string EnableLiveCasino = "EnableLiveCasino";
 			public const string EnableDoubleComm = "EnableDoubleComm";
 			public const string UpdateCredit = "UpdateCredit";
+			public const string UpdateSecurityCode = "UpdateSecurityCode";
+			public const string UpdateBalance = "UpdateBalance";
+			public const string ClearCredit = "ClearCredit";
 		}
