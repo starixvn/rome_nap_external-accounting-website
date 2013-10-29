@@ -114,7 +114,7 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.GetStatementList = function (custId) {
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index/' + custId));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index/' + custId + '/' + $scope.model.personalInfo.currentLevel.value));
     };
 
     $scope.PT = function () {

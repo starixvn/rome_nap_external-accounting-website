@@ -15,7 +15,7 @@ else
 <div>
     <div class="bgTitle titleForm">
         <div class="wlDetail">
-            Statement - <span id="StatementUsername"></span>
+            Statement - <span id="StatementUsername">@Request.RequestContext.RouteData.Values["username"]</span>
         </div>
     </div>
     <div class="bgTitle titleSearch pdr-normal">
