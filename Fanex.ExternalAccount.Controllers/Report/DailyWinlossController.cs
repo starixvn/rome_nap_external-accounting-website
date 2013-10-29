@@ -94,7 +94,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             if (this.CheckBelonging())
             {
                 // Expired Cache
-                if (this._cache.Get<List<DailyWinLoss>>(this._cacheList) == null)
+                if (!Config.IsCache || this._cache.Get<List<DailyWinLoss>>(this._cacheList) == null)
                 {
                     this.GetDailyWinLoss();
                 }

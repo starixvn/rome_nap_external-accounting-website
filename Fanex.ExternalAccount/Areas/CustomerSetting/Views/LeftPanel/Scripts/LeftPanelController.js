@@ -1579,7 +1579,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ConfirmBox(
             title,
             content,
-            350,
+            380,
             150,
             false,
             function () {
@@ -1646,7 +1646,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ConfirmBox(
         title,
         content,
-        350,
+        380,
         150,
         false,
         function () {
@@ -1713,7 +1713,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ConfirmBox(
         title,
         content,
-        350,
+        380,
         150,
         false,
         function () {
