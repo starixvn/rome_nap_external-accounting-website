@@ -32,5 +32,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public ObjectInfo Fax { get; set; }
 
         public ObjectInfo CustList { get; set; }
+
+        public ObjectInfo Status { get; set; }
+
+        public ObjectInfo BackgroundColor { get; set; }
     }
 }
