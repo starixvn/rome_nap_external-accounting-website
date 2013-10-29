@@ -542,7 +542,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
-            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino;
+            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
@@ -554,7 +554,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "Casino" && syncCasino) ||
                        (o.Key.ToString() == "Bingo" && syncBingo) ||
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
-                       o.Key.ToString() == "VirtualSports" ||
+                       (o.Key.ToString() == "VirtualSports" && !hideVS) ||
                        o.Key.ToString() == "Racing").ToList();
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";

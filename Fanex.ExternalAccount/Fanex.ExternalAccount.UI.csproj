@@ -286,6 +286,7 @@
     <Content Include="bundles\images\dec3_disable.gif" />
     <Content Include="bundles\images\dec4.gif" />
     <Content Include="bundles\images\dec4_disable.gif" />
+    <Content Include="bundles\images\Success.gif" />
     <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
