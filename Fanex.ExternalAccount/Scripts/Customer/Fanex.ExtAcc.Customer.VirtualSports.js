@@ -133,6 +133,13 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         Fanex.PTVirtualSports.CURRENT_CONTEXT = context;
         Fanex.PTVirtualSports.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
+        // decode html
+        customer.firstName = this.decodeHtml(customer.firstName);
+        customer.lastName = this.decodeHtml(customer.lastName);
+        customer.phone = this.decodeHtml(customer.phone);
+        customer.mobilePhone = this.decodeHtml(customer.mobilePhone);
+        customer.fax = this.decodeHtml(customer.fax);
+
         this.oldCustomer = Fanex.copy(customer);
         this.oldCustomer.firstName = null;
         this.oldCustomer.lastName = null;
@@ -343,10 +350,16 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
     afterUpdateSuccess: function (timeout) {
         t1 = setTimeout(function () {
-            //            $('#errMsg').css('display', 'none');
-            //            $('#errMsg').html('');
+            // $('#errMsg').css('display', 'none');
+            // $('#errMsg').html('');
             Fanex.ExtAcc.Form.Close(false);
         }, timeout);
+    },
+    decodeHtml: function (value) {
+        if (!value || value.length === 0) {
+            return '';
+        }
+        return Fanex.decodeHtml(Fanex.decodeHtml(value));
     }
 }
 

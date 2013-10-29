@@ -114,7 +114,7 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.GetStatementList = function (custId) {
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index/' + custId));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index/' + custId + '/' + $scope.model.personalInfo.currentLevel.value));
     };
 
     $scope.PT = function () {
@@ -1031,7 +1031,7 @@ function SettingController($scope, $http) {
         else {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Close Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
             content,
-            300,
+            350,
             150,
             false,
             function () {
@@ -1300,7 +1300,7 @@ function SettingController($scope, $http) {
         if (enable) {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Disable Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                     content,
-                    300,
+                    350,
                     150,
                     false,
                     function () {
@@ -1372,7 +1372,7 @@ function SettingController($scope, $http) {
         else {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Enable Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                 content,
-                300,
+                350,
                 150,
                 false,
                 function () {
@@ -1440,7 +1440,7 @@ function SettingController($scope, $http) {
         if (enable) {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Disable Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                 content,
-                300,
+                350,
                 150,
                 false,
                 function () {
@@ -1512,7 +1512,7 @@ function SettingController($scope, $http) {
         else {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Enable Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
             content,
-            300,
+            350,
             150,
             false,
             function () {
@@ -1579,7 +1579,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ConfirmBox(
             title,
             content,
-            300,
+            350,
             150,
             false,
             function () {
@@ -1646,7 +1646,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ConfirmBox(
         title,
         content,
-        300,
+        350,
         150,
         false,
         function () {
@@ -1713,7 +1713,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ConfirmBox(
         title,
         content,
-        300,
+        350,
         150,
         false,
         function () {

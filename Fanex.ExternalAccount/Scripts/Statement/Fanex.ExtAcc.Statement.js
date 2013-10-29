@@ -185,7 +185,7 @@ Fanex.ExtAcc.Statement = {
 
                 $this.dataSource = data.rows;
                 $this.totalRows = data.rows.length;
-                $('#StatementUsername').html(data.username);
+                //$('#StatementUsername').html(data.username);
 
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
