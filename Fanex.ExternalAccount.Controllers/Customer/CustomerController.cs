@@ -23,6 +23,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
     using Sunplus.Core.Common.IPs;
 
@@ -422,7 +423,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int roleId;
             this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result == null ? new DataTable() : result);
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result == null ? new DataTable() : result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 
@@ -451,7 +452,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
@@ -488,7 +489,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             this._cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 
@@ -533,7 +534,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             this._cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 
@@ -575,7 +576,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             this._cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 

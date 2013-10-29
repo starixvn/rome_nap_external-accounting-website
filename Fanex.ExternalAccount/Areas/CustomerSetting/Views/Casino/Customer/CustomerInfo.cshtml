@@ -2,14 +2,7 @@
 @using Fanex.CustomerSetting.Module.Casino.Entities
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@model CasinoCustomer
-@{
-    var customer = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
-    {
-        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-        NullValueHandling = NullValueHandling.Ignore
-    });
-    
+@{    
     var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
     var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
 }
@@ -93,8 +86,8 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js")" type="text/javascript"></script>   
+    <script src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData/" + id + "/" + uplineId)" type="text/javascript"></script>
      <script type="text/javascript">
-        var customerModel = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@customer'));
         var custId = '@id';
         var uplineId = '@uplineId';
 
