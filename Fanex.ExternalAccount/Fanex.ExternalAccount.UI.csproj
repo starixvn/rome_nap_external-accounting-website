@@ -278,6 +278,14 @@
     <Content Include="Areas\CustomerSetting\Styles\input.css" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\SecurityCode.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Styles\SecurityCode.css" />
+    <Content Include="bundles\images\dec1.gif" />
+    <Content Include="bundles\images\dec1_disable.jpg" />
+    <Content Include="bundles\images\dec2.gif" />
+    <Content Include="bundles\images\dec2_disable.gif" />
+    <Content Include="bundles\images\dec3.gif" />
+    <Content Include="bundles\images\dec3_disable.gif" />
+    <Content Include="bundles\images\dec4.gif" />
+    <Content Include="bundles\images\dec4_disable.gif" />
     <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -703,6 +711,10 @@
     <Content Include="Images\bg-menubar.png" />
     <Content Include="Images\bg-Title-Grid.png" />
     <Content Include="Images\bgGrid.png" />
+    <Content Include="Images\b_add.jpg" />
+    <Content Include="Images\b_down.jpg" />
+    <Content Include="Images\b_sub.jpg" />
+    <Content Include="Images\b_up.jpg" />
     <Content Include="Images\calendar.png" />
     <Content Include="Images\Content\addnew-btn.png" />
     <Content Include="Images\Content\arrow-down-icn.png" />
