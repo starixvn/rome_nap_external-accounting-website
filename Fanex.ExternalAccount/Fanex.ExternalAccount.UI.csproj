@@ -658,6 +658,7 @@
     <Content Include="Content\Images\report.png" />
     <Content Include="Content\Images\save.png" />
     <Content Include="Content\Images\scoremap.png" />
+    <Content Include="Content\Images\Success.gif" />
     <Content Include="Content\Images\success.png" />
     <Content Include="Content\Images\transfer.png" />
     <Content Include="Content\Images\ui-bg_flat_0_aaaaaa_40x100.png" />

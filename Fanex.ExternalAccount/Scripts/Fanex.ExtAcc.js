@@ -51,6 +51,9 @@ String.prototype.formatErrorMessage = function () {
         msg = '<div style="float: left; color: Blue; font-weight: bold">' + username + ':</div><br /><font color="#ff5411">' + preMsg.substring(preMsg.indexOf(':') + 1, preMsg.length) + orgMsg + subMsg + '</font>';
     }
 
+    $('#errMsg').addClass('errMsg');
+    $('#errMsg').removeClass('successMsg');
+
     var ret = preMsg.length > 0 && !hasUsername ? formatMsg : msg;
 
     return ret;

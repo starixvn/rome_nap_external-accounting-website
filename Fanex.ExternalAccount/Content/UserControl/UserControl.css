@@ -189,6 +189,29 @@
 	height: 25px;
 	width: 50px;
 }
+.successMsg
+{
+    background-color: #ffedc1;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-image: url("../Images/success.gif");
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	line-height: 1.5;
+	text-align: left;
+	vertical-align: middle; /*color: #ff5411;*/
+	font-size: 13px;
+	clear: both;
+	padding-left: 30px;
+	white-space: pre-line;
+	margin-bottom: 5px;
+	border: 1px solid #ccc;
+	min-height: 25px;
+	padding-top: 5px;
+	max-height: 180px;
+	overflow: auto;
+}
 .errMsg
 {
 	background-color: #ffedc1;
