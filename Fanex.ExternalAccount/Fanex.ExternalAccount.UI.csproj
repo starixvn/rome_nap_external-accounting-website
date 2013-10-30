@@ -286,7 +286,8 @@
     <Content Include="bundles\images\dec3_disable.gif" />
     <Content Include="bundles\images\dec4.gif" />
     <Content Include="bundles\images\dec4_disable.gif" />
-    <Content Include="bundles\images\Success.gif" />
+    <Content Include="bundles\images\Sucess.gif" />
+    <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1902,6 +1903,7 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
     <None Include="Content\Images\Thumbs.db" />

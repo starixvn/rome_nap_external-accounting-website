@@ -825,7 +825,7 @@ function DownlineListController($scope, $http) {
                 $scope.maxHeight = '178px';
 
                 $('#downlines').scrollTop(0);
-                $('#downlines').css('height', $scope.maxHeight);
+                $('#downlines').css('height', ($scope.pages.length > 1 ? $scope.maxHeight : '208px'));
 
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
