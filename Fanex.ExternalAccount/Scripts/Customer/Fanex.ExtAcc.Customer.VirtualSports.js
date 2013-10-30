@@ -359,7 +359,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         if (!value || value.length === 0) {
             return '';
         }
-        return Fanex.decodeHtml(Fanex.decodeHtml(value));
+        return Fanex.decodeHtml(value);
     }
 }
 

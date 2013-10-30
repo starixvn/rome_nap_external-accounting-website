@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
             if (this._custId > 0 && this.CheckBelonging())
             {
                 // Expired Cache
-                if (this._cache.Get<List<Statement>>(this._cacheList) == null)
+                if (!Config.IsCache || this._cache.Get<List<Statement>>(this._cacheList) == null)
                 {
                     this.GetStatement();
                 }

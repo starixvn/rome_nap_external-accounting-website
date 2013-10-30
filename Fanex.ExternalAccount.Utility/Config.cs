@@ -203,6 +203,14 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static bool IsCache
+        {
+            get
+            {
+                return Utils.ToBoolean(GetValue("IsCache"));
+            }
+        }
+
         /// <summary>
         /// Gets maintenance information.
         /// </summary>

@@ -126,7 +126,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 if (this._viewlevel == 1)
                 {
                     // Expired Cache
-                    if (this._cache.Get<List<WinLossDetailAg>>(this._cacheList) == null)
+                    if (!Config.IsCache || this._cache.Get<List<WinLossDetailAg>>(this._cacheList) == null)
                     {
                         this.GetData();
                     }
@@ -148,7 +148,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 else if (this._viewlevel == 2)
                 {
                     // Expired Cache
-                    if (this._cache.Get<List<WinLossDetailMAg>>(this._cacheList) == null)
+                    if (!Config.IsCache || this._cache.Get<List<WinLossDetailMAg>>(this._cacheList) == null)
                     {
                         this.GetData();
                     }
@@ -170,7 +170,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 else
                 {
                     // Expired Cache
-                    if (this._cache.Get<List<WinLossDetail>>(this._cacheList) == null)
+                    if (!Config.IsCache || this._cache.Get<List<WinLossDetail>>(this._cacheList) == null)
                     {
                         this.GetData();
                     }

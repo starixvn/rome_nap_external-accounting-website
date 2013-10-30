@@ -33,7 +33,8 @@ Fanex.ExtAcc.Header = {
 
                     // Get current Group Name
                     var indexes = location.href.split('/');
-                    var selectedGroupName = indexes[indexes.length - 1];
+                    var groupNameSelected = indexes[indexes.length - 1];
+                    var selectedGroupName = groupNameSelected == '' ? items[0].GroupName : groupNameSelected;
 
                     if (selectedGroupName.indexOf('#') != -1) {
                         selectedGroupName = selectedGroupName.split('#')[1];

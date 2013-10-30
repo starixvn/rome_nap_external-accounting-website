@@ -13,19 +13,19 @@
                         </tr>\
                         <tr>\
                             <td class="r" style="width:15%">First Name</td>\
-                            <td class="l" style="width:35%">' + this.decodeHtml(custInfo.firstName) + '</td>\
+                            <td class="l" style="width:35%">' + custInfo.firstName + '</td>\
                             <td class="r" style="width:15%">Last Name</td>\
-                            <td class="l" style="width:35%">' + this.decodeHtml(custInfo.lastName) + '</td>\
+                            <td class="l" style="width:35%">' + custInfo.lastName + '</td>\
                         </tr>\
                         <tr>\
                             <td class="r" style="width:15%">Phone</td>\
-                            <td class="l" style="width:35%">' + this.decodeHtml(custInfo.phone) + '</td>\
+                            <td class="l" style="width:35%">' + custInfo.phone + '</td>\
                             <td class="r" style="width:15%">Mobile Phone</td>\
-                            <td class="l" style="width:35%">' + this.decodeHtml(custInfo.mobilePhone) + '</td>\
+                            <td class="l" style="width:35%">' + custInfo.mobilePhone + '</td>\
                         </tr>\
                         <tr>\
                             <td class="r" style="width:15%">Fax</td>\
-                            <td class="l" style="width:35%">' + this.decodeHtml(custInfo.fax) + '</td>\
+                            <td class="l" style="width:35%">' + custInfo.fax + '</td>\
                             <td class="r" style="width:15%">&nbsp;</td>\
                             <td class="l" style="width:35%">&nbsp;</td>\
                         </tr>\
@@ -103,12 +103,6 @@
         var t = setTimeout(function () {
             customerPTRacingSetting.init();
         }, 3000);
-    },
-    decodeHtml: function (value) {
-        if (!value || value.length === 0) {
-            return '';
-        }
-        return parent.Fanex.decodeHtml(value); ;
     }
 };
 

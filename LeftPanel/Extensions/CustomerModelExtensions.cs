@@ -259,6 +259,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             var tableCustomer = ds.Tables[0];
             var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
+            var enabled = tableCustomer.Rows[0].ToBoolean("enabled");
+            var closed = tableCustomer.Rows[0].ToBoolean("closed");
+            var suspended = tableCustomer.Rows[0].ToBoolean("suspended");
+            var status = "This account was ";
+            var color = "background-color: #";
             model.PersonalInfo = new PersonalInfo
             {
                 CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
@@ -269,7 +274,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Phone = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["phone"]), Text = "Phone" },
                 RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
-                CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" }
+                CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
+                Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status + "closed" : suspended ? status + "suspended" : string.Empty },
+                BackgroundColor = new ObjectInfo { Value = !enabled ? color + "a0a97a" : closed ? color + "ccc" : suspended ? color + "f8ded7" : string.Empty }
             };
 
             return model;
@@ -542,7 +549,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
-            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino;
+            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
@@ -554,7 +561,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "Casino" && syncCasino) ||
                        (o.Key.ToString() == "Bingo" && syncBingo) ||
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
-                       o.Key.ToString() == "VirtualSports" ||
+                       (o.Key.ToString() == "VirtualSports" && !hideVS) ||
                        o.Key.ToString() == "Racing").ToList();
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
@@ -803,7 +810,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
-            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
+            //// model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts =
                 model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
                     o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();

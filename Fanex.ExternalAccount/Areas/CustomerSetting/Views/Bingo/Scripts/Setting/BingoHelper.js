@@ -17,19 +17,19 @@
                         </tr>\
                         <tr>\
                             <td class="r">First Name</td>\
-                            <td class="l">' + this.decodeHtml(custInfo.firstName) + '</td>\
+                            <td class="l">' + custInfo.firstName + '</td>\
                             <td class="r">Last Name</td>\
-                            <td class="l">' + this.decodeHtml(custInfo.lastName) + '</td>\
+                            <td class="l">' + custInfo.lastName + '</td>\
                         </tr>\
                         <tr>\
                             <td class="r">Mobile Phone</td>\
-                            <td class="l">' + this.decodeHtml(custInfo.mobilePhone) + '</td>\
+                            <td class="l">' + custInfo.mobilePhone + '</td>\
                             <td class="r">Fax</td>\
-                            <td class="l">' + this.decodeHtml(custInfo.fax) + '</td>\
+                            <td class="l">' + custInfo.fax + '</td>\
                         </tr>\
                         <tr>\
                             <td class="r">Phone</td>\
-                            <td class="l">' + this.decodeHtml(custInfo.phone) + '</td>\
+                            <td class="l">' + custInfo.phone + '</td>\
                             <td class="l">&nbsp</td>\
                             <td class="l">&nbsp</td>\
                         </tr>';
@@ -176,11 +176,5 @@
     },
     isDirectDownline: function () {
         return (window.pageRole - window.targetRoleId) === 1;
-    },
-    decodeHtml: function (value) {
-        if (!value || value.length === 0) {
-            return '';
-        }
-        return parent.Fanex.decodeHtml(value); ;
     }
 };
