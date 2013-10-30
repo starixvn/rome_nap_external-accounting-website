@@ -772,9 +772,34 @@ String.prototype.formatErrorMessage = function () {
     var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
     '<font color="#ff5411">' + subMsg + '</font>';
 
+    $('#errMsg').addClass('errMsg');
+    $('#errMsg').removeClass('successMsg');
+
+    $('#err').addClass('errMsg');
+    $('#err').removeClass('successMsg');
 
     return formatMsg;
 };
+
+String.prototype.formatErrMsg = function () {
+    $('#errMsg').addClass('errMsg');
+    $('#errMsg').removeClass('successMsg');
+
+    $('#err').addClass('errMsg');
+    $('#err').removeClass('successMsg');
+
+    return this;
+};
+
+String.prototype.formatSuccessMessage = function () {
+    $('#errMsg').removeClass('errMsg');
+    $('#errMsg').addClass('successMsg');
+
+    $('#err').removeClass('errMsg');
+    $('#err').addClass('successMsg');
+
+    return this;
+}
 
 String.prototype.decodeHtml = function () {
     var str = this;

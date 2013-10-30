@@ -1089,13 +1089,13 @@ function showAlertMessage(containerid, msg, type) {
     switch(type)
     {
         case 0:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxscc'><div>" + msg + "</div></div>";
+            document.getElementById(containerid).innerHTML = "<div class='alertboxscc'><div>" + msg.formatSuccessMessage() + "</div></div>";
           break;
         case 1:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxerr'><div>" + msg + "</div></div>";
+            document.getElementById(containerid).innerHTML = "<div class='alertboxerr'><div>" + msg.formatErrMsg() + "</div></div>";
           break;
         case 2:
-            document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>"; ;
+            document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg.formatErrMsg() + "</div></div>"; ;
           break;    
         default:
           break
