@@ -916,7 +916,7 @@ function SettingController($scope, $http) {
         msg,
         450,
         170,
-        false, 
+        false,
         function () {
             parent.Fanex.ExtAcc.BlockUI();
 
@@ -935,7 +935,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
+                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());                                                
                     }, 2000);
                 }
                 else {
@@ -952,7 +952,7 @@ function SettingController($scope, $http) {
                     console.log(xhr);
                 }
             });
-        }, 
+        },
         function () {
             parent.Fanex.ExtAcc.Form.Close();
             document.getElementById(id).checked = allow;
@@ -1001,7 +1001,7 @@ function SettingController($scope, $http) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                document.location.reload(true);
+                                parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                             }, 2000);
                         }
                         else {
@@ -1064,7 +1064,7 @@ function SettingController($scope, $http) {
                                 var timeout = setTimeout(function () {
                                     clearTimeout(timeout);
                                     parent.Fanex.ExtAcc.UnBlockUI();
-                                    document.location.reload(true);
+                                    parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                                 }, 2000);
                             }
                             else {
@@ -1147,7 +1147,7 @@ function SettingController($scope, $http) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                document.location.reload(true);
+                                parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                             }, 2000);
                         }
                         else {
@@ -1204,7 +1204,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
+                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                         }, 2000);
                     }
                     else {
@@ -1261,7 +1261,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
+                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                         }, 2000);
                     }
                     else {
@@ -1334,7 +1334,7 @@ function SettingController($scope, $http) {
                                         var timeout = setTimeout(function () {
                                             clearTimeout(timeout);
                                             parent.Fanex.ExtAcc.UnBlockUI();
-                                            document.location.reload(true);
+                                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                                         }, 2000);
                                     }
                                     else {
@@ -1398,7 +1398,7 @@ function SettingController($scope, $http) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                document.location.reload(true);
+                                parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                             }, 2000);
                         }
                         else {
@@ -1474,7 +1474,7 @@ function SettingController($scope, $http) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         parent.Fanex.ExtAcc.UnBlockUI();
-                                        document.location.reload(true);
+                                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                                     }, 2000);
                                 }
                                 else {
@@ -1538,7 +1538,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
+                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                         }, 2000);
                     }
                     else {
@@ -1604,7 +1604,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
+                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                         }, 2000);
                     }
                     else {
@@ -1671,7 +1671,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
+                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                     }, 2000);
                 }
                 else {
@@ -1738,7 +1738,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
+                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
                     }, 2000);
                 }
                 else {
