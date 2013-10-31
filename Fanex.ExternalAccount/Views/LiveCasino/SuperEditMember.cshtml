@@ -1,8 +1,8 @@
 ﻿<link href="@Url.Content("~/Content/Customer/LiveCasino.css")" rel="stylesheet" type="text/css" />
 <div style="width: 863px; margin: 2px 0 0 2px">
-<div id="warningMsg" class="errMsg" style="display: none">
+<div id="warningMsg" class="successMsg" style="display: none">
 </div>
-<div id="errMsg" style="display: none;" class="errMsg">
+<div id="errMsg" style="display: none;" class="successMsg">
 </div>
 <div id="arrowUpDown" class="collapse">
 </div>
@@ -60,7 +60,7 @@
         <div class="customerInfoBlock1" style="margin: 0px; font-weight: bold">
             Fax</div>
         <div class="customerInfoBlock2" style="width: 240px">
-            <span data-bind="text: Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.fax"></span>
+            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.fax)"></span>
         </div>
         <div class="customerInfoBlock3" style="width: 180px; font-weight: bold">
             

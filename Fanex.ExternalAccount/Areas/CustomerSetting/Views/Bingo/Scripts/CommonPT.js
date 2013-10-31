@@ -48,11 +48,11 @@ function showAlertMessage(containerid, msg, type) {
     var errorElement = $('#' + containerid);
     switch (type) {
         case 0:
-            msg = '<div class="msgcorrect">' + msg + '</div>';
+            msg = '<div class="msgcorrect">' + msg.formatSuccessMessage() + '</div>';
             break;
         case 1:
         case 2:
-            msg = '<div class="msgerror">' + msg + '</div>';
+            msg = '<div class="msgerror">' + msg.formatErrMsg() + '</div>';
             break;
         default:
             return;

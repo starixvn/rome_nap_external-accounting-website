@@ -286,7 +286,7 @@
     <Content Include="bundles\images\dec3_disable.gif" />
     <Content Include="bundles\images\dec4.gif" />
     <Content Include="bundles\images\dec4_disable.gif" />
-    <Content Include="bundles\images\Sucess.gif" />
+    <Content Include="bundles\images\sucess.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
@@ -658,7 +658,7 @@
     <Content Include="Content\Images\report.png" />
     <Content Include="Content\Images\save.png" />
     <Content Include="Content\Images\scoremap.png" />
-    <Content Include="Content\Images\success.png" />
+    <Content Include="Content\Images\success.gif" />
     <Content Include="Content\Images\transfer.png" />
     <Content Include="Content\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\Images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -1014,6 +1014,7 @@
     <Content Include="Images\right.png" />
     <Content Include="Images\showMargin.png" />
     <Content Include="Images\sort.png" />
+    <Content Include="Images\Success.gif" />
     <Content Include="Images\super-btn.png" />
     <Content Include="PTEngine\BettingLimit.xml" />
     <Content Include="PTEngine\PTGrid.xml" />

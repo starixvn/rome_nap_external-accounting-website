@@ -51,10 +51,20 @@ String.prototype.formatErrorMessage = function () {
         msg = '<div style="float: left; color: Blue; font-weight: bold">' + username + ':</div><br /><font color="#ff5411">' + preMsg.substring(preMsg.indexOf(':') + 1, preMsg.length) + orgMsg + subMsg + '</font>';
     }
 
+    $('#errMsg').addClass('errMsg');
+    $('#errMsg').removeClass('successMsg');
+
     var ret = preMsg.length > 0 && !hasUsername ? formatMsg : msg;
 
     return ret;
 };
+
+String.prototype.formatSuccessMessage = function () {
+    $('#errMsg').removeClass('errMsg');
+    $('#errMsg').addClass('successMsg');
+
+    return this;
+}
 
 Fanex.ExtAcc = {
     $this: null,
@@ -669,10 +679,10 @@ Fanex.ExtAcc = {
         if (msgs instanceof Array) {
             for (var i = 0; i < msgs.length; i++) {
                 if (msgs[i].errorCode == "" || msgs[i].errorCode == "0" || parseInt(msgs[i].errorCode) <= 0 || (msgs[i].isSuccess && msgs[i].isSuccess == true)) {
-                    msg += '<font color="Blue">' + msgs[i].errorMessage + '</font><br />';
+                    msg += '<font color="Blue">' + msgs[i].errorMessage.formatSuccessMessage() + '</font><br />';
                 }
                 else {
-                    msg += '<font color="Red">' + msgs[i].errorMessage + '</font><br />';
+                    msg += '<font color="Red">' + msgs[i].errorMessage.formatErrorMessage() + '</font><br />';
                 }
             }
 
@@ -680,10 +690,10 @@ Fanex.ExtAcc = {
         }
         else if (msgs instanceof Object) {
             if (msgs.errorCode == "" || msgs.errorCode == "0" || parseInt(msgs.errorCode) <= 0 || (msgs.isSuccess && msgs.isSuccess == true)) {
-                return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + '<font color="Blue">' + msgs.errorMessage + '</font><br />';
+                return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + '<font color="Blue">' + msgs.errorMessage.formatSuccessMessage() + '</font><br />';
             }
             else {
-                return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + '<font color="Red">' + msgs.errorMessage + '</font><br />';
+                return '<font color="Blue" style="font-weight: bold">' + username + ':</font><br />' + '<font color="Red">' + msgs.errorMessage.formatErrorMessage() + '</font><br />';
             }
         }
 

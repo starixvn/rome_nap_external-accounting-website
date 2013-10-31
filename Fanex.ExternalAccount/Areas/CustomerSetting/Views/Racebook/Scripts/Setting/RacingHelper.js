@@ -77,13 +77,13 @@
     formatHtmlErrorMessage: function (msg, type) {
         switch (type) {
             case 0:
-                return "<div class='msgcorrect'>" + msg + "</div>";
+                return "<div class='msgcorrect'>" + msg.formatSuccessMessage() + "</div>";
                 break;
             case 1:
-                return "<div class='msgerror'>" + msg + "</div>";
+                return "<div class='msgerror'>" + msg.formatErrMsg() + "</div>";
                 break;
             case 2:
-                return "<div class='msgwarning'>" + msg + "</div>";
+                return "<div class='msgwarning'>" + msg.formatErrMsg() + "</div>";
                 break;
             default:
                 return "";
