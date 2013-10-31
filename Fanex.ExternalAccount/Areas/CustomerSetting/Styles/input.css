@@ -68,6 +68,9 @@
 }
 .msgerror{ color:#FF0000; }
 .msgcorrect{ color:#00f; }
+#idConfirm_popupBody, #idConfirm_popupFooter {
+	background-color: #fff !important;
+}
 #idConfirm_yesButton, #idConfirm_noButton {
 	background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
@@ -96,4 +99,10 @@
 }
 #idConfirm_popupFooter {
 	text-align: right !important;
+}
+#idConfirm_popup, #idConfirm_shadow {
+	height: 124px !important;
+}
+#idConfirm_popupTitle {
+	height: 22px !important;
 }
