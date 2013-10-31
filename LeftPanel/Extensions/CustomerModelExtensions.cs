@@ -206,7 +206,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.OnlineList.Onlines.Add(new OnlineInfo
                 {
                     IP = new ObjectInfo { Text = row["ip"].ToString() },
-                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToString("MM/dd/yyyy HH:mm:ss tt") }
+                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt") }
                 });
             }
 
@@ -227,12 +227,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.Login = new List<ObjectInfo>
                 {
                     new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["site"]), Text = "Site" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToString("M/d/yyyy H:mm tt"), Text = "Created Date" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Login" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToString("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToString("M/d/yyyy H:mm tt"), Text = "Password" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Created Date" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Login" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Password" },
                     new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["lastloginip"]), Text = "Last Login IP" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToString("M/d/yyyy H:mm tt"), Text = "Security Code" },
+                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Security Code" },
                 };
 
             if (roleId != 1)
