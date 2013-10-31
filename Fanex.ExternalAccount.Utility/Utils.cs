@@ -985,5 +985,15 @@ namespace Fanex.ExternalAccount.Utilities
 
             bundles.Add(bootstrapJs);
         }
+
+        public static string ToStringExt(this DateTime date, string format = "MM/dd/yyyy HH:mm:ss tt")
+        {
+            if (date.Equals(DateTime.MinValue))
+            {
+                return string.Empty;
+            }
+
+            return date.ToString(format);
+        }
     }
 }
