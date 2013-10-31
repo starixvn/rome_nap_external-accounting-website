@@ -286,7 +286,8 @@
     <Content Include="bundles\images\dec3_disable.gif" />
     <Content Include="bundles\images\dec4.gif" />
     <Content Include="bundles\images\dec4_disable.gif" />
-    <Content Include="bundles\images\Success.gif" />
+    <Content Include="bundles\images\sucess.gif" />
+    <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -657,7 +658,7 @@
     <Content Include="Content\Images\report.png" />
     <Content Include="Content\Images\save.png" />
     <Content Include="Content\Images\scoremap.png" />
-    <Content Include="Content\Images\success.png" />
+    <Content Include="Content\Images\success.gif" />
     <Content Include="Content\Images\transfer.png" />
     <Content Include="Content\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\Images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -1013,6 +1014,7 @@
     <Content Include="Images\right.png" />
     <Content Include="Images\showMargin.png" />
     <Content Include="Images\sort.png" />
+    <Content Include="Images\Success.gif" />
     <Content Include="Images\super-btn.png" />
     <Content Include="PTEngine\BettingLimit.xml" />
     <Content Include="PTEngine\PTGrid.xml" />
@@ -1902,6 +1904,7 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
     <None Include="Content\Images\Thumbs.db" />
