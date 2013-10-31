@@ -58,7 +58,7 @@
 {
 	vertical-align: top;
 }
-#idConfirm_popup{
-    height: 140px !important;
+#idConfirm_popup, #idConfirm_shadow {
+	height: 140px !important;
 }
 .PTBox { text-align:left; }
