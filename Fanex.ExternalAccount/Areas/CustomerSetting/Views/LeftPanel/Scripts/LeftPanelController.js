@@ -796,8 +796,6 @@ function DownlineListController($scope, $http) {
     }
 
     $scope.Init = function () {
-        $('#downlines').css('height', ($scope.pages.length > 1 ? '178px' : '208px'));
-
         if ($scope.pages && $scope.pages.length > 1) {
             for (var i = 1; i <= $scope.pages.length; i++) {
                 $('#link-' + i).removeClass('pageSelected');
@@ -935,7 +933,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());                                                
+                        document.location.reload(true);                                                
                     }, 2000);
                 }
                 else {
@@ -1001,7 +999,7 @@ function SettingController($scope, $http) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                                document.location.reload(true);
                             }, 2000);
                         }
                         else {
@@ -1064,7 +1062,7 @@ function SettingController($scope, $http) {
                                 var timeout = setTimeout(function () {
                                     clearTimeout(timeout);
                                     parent.Fanex.ExtAcc.UnBlockUI();
-                                    parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                                    document.location.reload(true);
                                 }, 2000);
                             }
                             else {
@@ -1147,7 +1145,7 @@ function SettingController($scope, $http) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                                document.location.reload(true);
                             }, 2000);
                         }
                         else {
@@ -1204,7 +1202,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                            document.location.reload(true);
                         }, 2000);
                     }
                     else {
@@ -1261,7 +1259,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                            document.location.reload(true);
                         }, 2000);
                     }
                     else {
@@ -1334,7 +1332,7 @@ function SettingController($scope, $http) {
                                         var timeout = setTimeout(function () {
                                             clearTimeout(timeout);
                                             parent.Fanex.ExtAcc.UnBlockUI();
-                                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                                            document.location.reload(true);
                                         }, 2000);
                                     }
                                     else {
@@ -1398,7 +1396,7 @@ function SettingController($scope, $http) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                                document.location.reload(true);
                             }, 2000);
                         }
                         else {
@@ -1474,7 +1472,7 @@ function SettingController($scope, $http) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         parent.Fanex.ExtAcc.UnBlockUI();
-                                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                                        document.location.reload(true);
                                     }, 2000);
                                 }
                                 else {
@@ -1538,7 +1536,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                            document.location.reload(true);
                         }, 2000);
                     }
                     else {
@@ -1604,7 +1602,7 @@ function SettingController($scope, $http) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                            document.location.reload(true);
                         }, 2000);
                     }
                     else {
@@ -1671,7 +1669,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                        document.location.reload(true);
                     }, 2000);
                 }
                 else {
@@ -1738,7 +1736,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.$('#leftFrame').attr('src', document.URL.split('?')[0] + '?v=' + new Date().toGMTString());
+                        document.location.reload(true);
                     }, 2000);
                 }
                 else {
@@ -1871,28 +1869,16 @@ function SettingController($scope, $http) {
 
     $scope.SuperBingo = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
     };
 
     $scope.SuperCasino = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId));
     };
 
     $scope.SuperRacing = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
     };
 
@@ -1900,7 +1886,6 @@ function SettingController($scope, $http) {
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/SuperEditMember'));
@@ -1908,10 +1893,6 @@ function SettingController($scope, $http) {
 
     $scope.SuperVirtualSports = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
     };
 
@@ -1934,37 +1915,23 @@ function SettingController($scope, $http) {
 
     $scope.MasterBingo = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
     };
 
     $scope.MasterCasino = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId));
     };
 
     $scope.MasterRacing = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
     };
 
     $scope.MasterLiveCasino = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/MasterEditMember'));
@@ -1972,10 +1939,6 @@ function SettingController($scope, $http) {
 
     $scope.MasterVirtualSports = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
     };
 

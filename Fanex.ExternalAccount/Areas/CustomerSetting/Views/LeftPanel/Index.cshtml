@@ -25,7 +25,7 @@
         </div>
         <div id="customerInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <div class="bold currentUser headerLevel">
-                <div class="floatLeft bold"><a title="{{personalInfo.status.tooltip}}" style="{{personalInfo.backgroundColor.value}}" class="detail2" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
+                <div class="floatLeft bold"><a title="{{personalInfo.status.tooltip}}" class="detail2 {{personalInfo.backgroundColor.value}}" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
                 <div id="personalInfo" class="floatRight userDown" ng-click="TooglePersonalInfo()">&nbsp;&nbsp;</div>
             </div>            
             <div class="clearBoth">

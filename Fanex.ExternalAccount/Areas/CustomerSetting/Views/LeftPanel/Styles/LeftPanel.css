@@ -381,3 +381,15 @@ input
     background-position: center right;
     background-color: #FFF;
 }
+.disabled
+{
+    background-color: #a0a97a;
+}
+.closed
+{
+    background-color: #ccc;
+}
+.suspended
+{
+    background-color: #f8ded7;
+}
