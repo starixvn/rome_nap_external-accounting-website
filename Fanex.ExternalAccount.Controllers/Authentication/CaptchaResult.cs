@@ -79,5 +79,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             return img;
         }
+
+        public override void ExecuteResult(ControllerContext context)
+        {            
+        }
     }
 }

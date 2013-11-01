@@ -43,7 +43,13 @@
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="IBCFile">
+      <HintPath>..\_Dependency\UM\IBCFile.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="SPSRemoting">
+      <HintPath>..\_Dependency\UM\SPSRemoting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -53,6 +59,9 @@
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+    <Reference Include="UMControllerLibrary">
+      <HintPath>..\_Dependency\UM\UMControllerLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckRequest.cs" />

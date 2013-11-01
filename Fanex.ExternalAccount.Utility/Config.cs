@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Utilities
     using System;
     using System.Configuration;
     using Fanex.ExternalAccount.DTO;
+    using Sunplus.UMControllerLibrary;
 
     /// <summary>
     /// TODO: Update summary.
@@ -53,7 +54,11 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
-                return Utils.ToBoolean(GetValue("IsUM"));
+                var um = new UMController();
+
+                return Utils.ToBoolean(GetValue("IsUM")) || 
+                    um.isUnderMaintainence((int)Sites.AccountSite) ||
+                    um.isUnderMaintainence((int)Sites.Credit);
             }
         }
 
