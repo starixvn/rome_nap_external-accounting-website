@@ -54,7 +54,7 @@
                         <td>
                         </td>
                         <td>
-                            @Html.TextBoxFor(m => m.Captcha, new { @autocomplete = "off", @class = "captchaText text bgLoginControl", @maxlength = 4, @width = "80px" })&nbsp;<span><img src="@Url.Action("CaptchaImage")" id="imgCode" alt="" class="captcha" onclick="Fanex.ExtAcc.Account.GetValidateImage()" /></span>
+                            @Html.TextBoxFor(m => m.Captcha, new { @autocomplete = "off", @class = "captchaText text bgLoginControl", @maxlength = 4, @width = "80px" })&nbsp;<span><img src="@Url.Content("~/Images/loading.gif")" id="imgCode" alt="" class="captcha" onclick="Fanex.ExtAcc.Account.GetValidateImage()" /></span>
                         </td>
                     </tr>
                     <tr>

@@ -140,7 +140,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         public ActionResult CaptchaImage(string prefix, bool noisy = true)
         {        
-            return new CaptchaResult();
+            return this.Content(new CaptchaResult().GetValiationImage(this.ControllerContext));
         }
 
         #region Logout
