@@ -13,7 +13,7 @@ Fanex.ExtAcc.Account = {
     RecheckinXHR: null,
 
     Init: function () {
-        if (this.RecheckinXHR == null) {
+        if (this.RecheckinXHR == null && document.URL.toLowerCase().indexOf("account/login") != -1) {
             setInterval(this.ReCheckin, 10000);
         }
 
