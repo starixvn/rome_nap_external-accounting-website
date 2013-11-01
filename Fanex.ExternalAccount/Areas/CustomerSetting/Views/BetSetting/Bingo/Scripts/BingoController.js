@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Bingo = function ($scope, $element) {
     $scope.model = model;
+
+    if (!model)
+        return;
+
     $scope.gameKinds = $scope.model.gameKindList;
 
     $scope.Init = function () {

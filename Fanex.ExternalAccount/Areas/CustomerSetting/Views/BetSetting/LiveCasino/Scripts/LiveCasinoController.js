@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.LiveCasino = function ($scope, $element) {
     $scope.model = model;
+
+    if (!model)
+        return;
+
     $scope.gameTypes = $scope.model.bettingLimits;
 
     $scope.ChangeLimit = function (scope) {

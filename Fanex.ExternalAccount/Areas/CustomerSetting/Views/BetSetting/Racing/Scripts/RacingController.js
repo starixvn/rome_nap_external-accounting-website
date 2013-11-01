@@ -7,6 +7,9 @@ Fanex.CustomerSetting.Betting = {};
 Fanex.CustomerSetting.Betting.Racing = function ($scope, $element) {
     $scope.model = model;
 
+    if (!model)
+        return;
+
     $scope.bettingLimits = $scope.model.settings.sportTypes;
 
     $scope.Init = function () {

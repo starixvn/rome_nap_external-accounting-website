@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
     $scope.model = model;
+    
+    if (!model)
+        return;
+
     $scope.customerModel = model != null ? model.customerModel : null;
     $scope.gameKinds = model != null ? $scope.model.settingModel.gameGroups : null;
 

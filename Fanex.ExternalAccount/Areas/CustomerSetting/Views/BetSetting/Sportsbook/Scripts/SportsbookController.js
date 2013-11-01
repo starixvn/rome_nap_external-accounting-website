@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
     $scope.model = model;
+
+    if (!model)
+        return;
+
     $scope.bettingLimits = $scope.model.bettingLimitItems;
 
     var length = $scope.model.bettingLimitItems.length;
