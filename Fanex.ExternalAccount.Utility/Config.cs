@@ -66,7 +66,10 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
-                return GetValue("TimeFrom");
+                var um = new UMController();
+                var time = um.GetUMTimeSetting()[0];
+
+                return IsUM ? time == string.Empty ? GetValue("TimeFrom") : time : string.Empty;
             }
         }
 
@@ -74,7 +77,10 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
-                return GetValue("TimeTo");
+                var um = new UMController();
+                var time = um.GetUMTimeSetting()[1];
+
+                return IsUM ? time == string.Empty ? GetValue("TimeTo") : time : string.Empty;
             }
         }
 

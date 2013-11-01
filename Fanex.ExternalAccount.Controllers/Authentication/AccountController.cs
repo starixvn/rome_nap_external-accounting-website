@@ -175,8 +175,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             if (maintenanceInfo.IsDownTime)
             {
-                this._currentContext.Context.Session.Abandon();
-                this.SignOut(onuserId, this._currentSession.UserName);
+                if (this._currentSession.IsLogin)
+                {
+                    this._currentContext.Context.Session.Abandon();
+                    this.SignOut(onuserId, this._currentSession.UserName);
+                }
+
                 return (int)StatusKickedOut.Maintenance;
             }
 
