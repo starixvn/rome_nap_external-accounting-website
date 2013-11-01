@@ -31,7 +31,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         private ICurrentSession _currentSession = Fanex.ExternalAccount.Core.Context.CurrentSession.Instance;
 
         private ICurrentContext _currentContext = Fanex.ExternalAccount.Core.Context.CurrentContext.Instance;
-                        
+                
         /// <summary>
         /// Gets login page.
         /// </summary>

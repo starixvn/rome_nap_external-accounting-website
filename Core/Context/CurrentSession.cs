@@ -31,7 +31,9 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
+        
         private static string _captcha = string.Empty;
+        private static ICurrentSession _currentSession = null;
 
         #endregion Constants
 
@@ -39,7 +41,7 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return new CurrentSession();
+                return _currentSession ?? new CurrentSession();
             }
         }
 

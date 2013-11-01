@@ -22,7 +22,7 @@ Fanex.ExtAcc.Account = {
                 clearTimeout(timeout);
 
                 $.ajax({
-                    url: resolveClientUrl('Account/CaptchaImage'),
+                    url: resolveClientUrl('Account/CaptchaImage?ver=' + new Date().toGMTString()),
                     type: 'post'
                 }).success(function (result) {
                     $('#imgCode').attr('src', 'data:image/jpeg;base64,' + result);
@@ -63,7 +63,7 @@ Fanex.ExtAcc.Account = {
             clearTimeout(timeout);
 
             $.ajax({
-                url: resolveClientUrl('Account/CaptchaImage'),
+                url: resolveClientUrl('Account/CaptchaImage?ver=' + new Date().toGMTString()),
                 type: 'post'
             }).success(function (result) {
                 $('#imgCode').attr('src', 'data:image/jpeg;base64,' + result);
