@@ -21,7 +21,7 @@ namespace Fanex.ExternalAccount.Core.Context
     public class CurrentSession : Page, ICurrentSession
     {
         #region Constants
-
+        
         public const string EASUsername = "EASUsername";
         public const string EASCustId = "EASCustId";
         public const string EASUserId = "EASUserId";
@@ -31,6 +31,7 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
+        private static string _captcha = string.Empty;
 
         #endregion Constants
 
@@ -117,11 +118,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToString(this.Session[EASCaptcha]);
+                return _captcha;
             }
 
             set
             {
+                _captcha = value;
                 this.Session[EASCaptcha] = value;
             }
         }

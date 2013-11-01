@@ -26,24 +26,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// </summary>
     public class AccountController : Controller
     {
-        private ILoginService _userService = null;
+        private ILoginService _userService = new LoginService();
 
-        private ICurrentSession _currentSession = null;
+        private ICurrentSession _currentSession = Fanex.ExternalAccount.Core.Context.CurrentSession.Instance;
 
-        private ICurrentContext _currentContext = null;
-
-        public AccountController()
-            : this(null, null, null)
-        {
-        }
-
-        public AccountController(ILoginService userService, ICurrentSession currentSession, ICurrentContext currentContext)
-        {
-            this._userService = userService ?? new LoginService();
-            this._currentSession = currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
-            this._currentContext = currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
-        }
-
+        private ICurrentContext _currentContext = Fanex.ExternalAccount.Core.Context.CurrentContext.Instance;
+                        
         /// <summary>
         /// Gets login page.
         /// </summary>
