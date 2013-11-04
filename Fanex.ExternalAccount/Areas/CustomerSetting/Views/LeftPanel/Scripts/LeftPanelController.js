@@ -796,6 +796,8 @@ function DownlineListController($scope, $http) {
     }
 
     $scope.Init = function () {
+        $('#downlines').css('height', ($scope.pages.length > 1 ? '178px' : '208px'));
+
         if ($scope.pages && $scope.pages.length > 1) {
             for (var i = 1; i <= $scope.pages.length; i++) {
                 $('#link-' + i).removeClass('pageSelected');

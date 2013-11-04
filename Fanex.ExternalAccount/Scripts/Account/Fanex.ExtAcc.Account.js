@@ -17,7 +17,7 @@ Fanex.ExtAcc.Account = {
             setInterval(this.ReCheckin, 10000);
         }
 
-        if (this.kickOutIntId == 0) {
+        if (this.kickOutIntId == 0 && document.URL.toLowerCase().indexOf("account/login") != -1) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
 
@@ -35,6 +35,24 @@ Fanex.ExtAcc.Account = {
         if (document.forms.length > 0) {
             $('#UserName').focus();
             document.forms[0].onsubmit = function () {
+                if ($('#UserName').val().toString().search(/^[<\s\s*>]/) != -1) {
+                    $('#UserName').focus();
+                    Validators.show($('#UserName').get(0), 'Not allow HTML TAG');
+                    return false;
+                }
+
+                if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
+                    $('#Password').focus();
+                    Validators.show($('#Password').get(0), 'Not allow HTML TAG');
+                    return false;
+                }
+
+                if ($('#Captcha').val().toString().search(/^[<\s\s*>]/) != -1) {
+                    $('#Captcha').focus();
+                    Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
+                    return false;
+                }
+
                 if ($('#UserName').val() == '') {
                     $('#UserName').focus();
                     Validators.show($('#UserName').get(0), 'This field is required');
@@ -112,14 +130,14 @@ Fanex.ExtAcc.Account = {
                             Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
                                 location.href = resolveClientUrl('Account/Login');
                             });
-                        }                        
+                        }
                     } catch (e) {
                         location.href = resolveClientUrl('Account/Login');
                     }
                 }
                 else if (data == 2) {
                     location.href = resolveClientUrl('Account/Login');
-                } 
+                }
 
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
             },

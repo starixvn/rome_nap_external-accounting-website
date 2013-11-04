@@ -56,9 +56,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                var group = this._currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
+                var group = this._currentSession.IsInternalAdmin ? this._userService.GroupList().First().GroupName : string.Empty;
 
-                return this.Redirect("~/Home/Index" + group);
+                return this.Redirect("~/Home/Index/" + group);
             }
 
             return this.PartialView(new Login());

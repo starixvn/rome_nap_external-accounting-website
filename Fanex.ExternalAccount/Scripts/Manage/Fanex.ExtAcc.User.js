@@ -426,6 +426,18 @@ Fanex.ExtAcc.User = {
     },
 
     ResetPwd: function (isOwner) {
+        if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
+            $('#Password').focus();
+            Validators.show($('#Password').get(0), 'Not allow HTML TAG');
+            return false;
+        }
+
+        if ($('#confirmPwd').val().toString().search(/^[<\s\s*>]/) != -1) {
+            $('#confirmPwd').focus();
+            Validators.show($('#confirmPwd').get(0), 'Not allow HTML TAG');
+            return false;
+        }
+
         if (!Validators.validateInput($('#Password').val())) {
             $('#Password').focus();
             Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
@@ -437,7 +449,7 @@ Fanex.ExtAcc.User = {
             Validators.show($('#confirmPwd').get(0), 'This field is required');
             return false;
         }
-
+        
         if ($('#confirmPwd').val() !== $('#Password').val()) {
             $('#confirmPwd').focus();
             Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
