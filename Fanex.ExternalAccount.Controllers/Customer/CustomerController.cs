@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.CustomerSetting.IP.Utils;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -25,8 +26,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
-    using Sunplus.Core.Common.IPs;
-
+    
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -613,9 +613,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var ipinfo = new IPInfo()
             {
                 IP = ip,
-                City = info.City,
-                Country = info.CountryLong,
-                Flag = info.CountryShort + ".gif",
+                City = string.IsNullOrWhiteSpace(info.ipCity) ? string.Empty : info.ipCity,
+                Country = string.IsNullOrWhiteSpace(info.countryLONG) ? string.Empty : info.countryLONG,
+                Flag = string.IsNullOrWhiteSpace(info.countrySHORT) ? "-.gif" : info.countrySHORT + ".gif",
                 Info = string.Format(ViewLang.IPNote, ip)
             };
 

@@ -56,6 +56,9 @@
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.IP">
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.IP.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core">
       <HintPath>..\Fanex.ExternalAccount\Dll\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
@@ -125,9 +128,6 @@
     </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\Dependencies\SPSRemoting.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Core.Common">
-      <HintPath>..\Dependencies\Sunplus.Core.Common.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
