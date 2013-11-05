@@ -1886,6 +1886,7 @@ function SettingController($scope, $http) {
 
     $scope.SuperLiveCasino = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
@@ -1932,6 +1933,7 @@ function SettingController($scope, $http) {
 
     $scope.MasterLiveCasino = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
