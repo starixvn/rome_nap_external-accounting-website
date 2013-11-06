@@ -19,7 +19,7 @@
 
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/GetSetting"),
+            url: "GetSetting",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
@@ -35,11 +35,11 @@
     getCustomerInfo: function () {
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/GetCustomerInfo"),
+            url: "GetCustomerInfo",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"requestContext":' + JSON.stringify(customerPTRacingSetting.context) + '}',
-            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
+            beforeSend: function (jqXHR, settings) { Fanex.CustomerSetting.Core.BlockUI(); },
             success: function (stringCustomer) {
                 customerPTRacingSetting.currentSetting = JSON.parse(stringCustomer);
                 customerPTRacingSetting.oldSetting = JSON.parse(stringCustomer);
@@ -47,7 +47,7 @@
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Customer Error", 1);
-            }, complete: function (jqXHR, textStatus) { parent.Fanex.ExtAcc.UnBlockUI(); }
+            }, complete: function (jqXHR, textStatus) { Fanex.CustomerSetting.Core.UnBlockUI(); }
         });
     },
     initHtml: function () {
@@ -102,7 +102,7 @@
     updateAllSettings: function () {
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/UpdateCustomerSetting"),
+            url: "UpdateCustomerSetting",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"oldSettings":' + JSON.stringify(customerPTRacingSetting.oldSetting) +
@@ -110,7 +110,7 @@
                 ', "currentContext":' + JSON.stringify(customerPTRacingSetting.context) +
                 ', "otherSettings":' + JSON.stringify(customerPTRacingSetting.otherSettings) +
                 '}',
-            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
+            beforeSend: function (jqXHR, settings) { Fanex.CustomerSetting.Core.BlockUI(); },
             success: function (result) {
                 $('#divShowInfo').show();
 
@@ -120,7 +120,7 @@
                 else {
                     ptRacingCommon.renderErrorMessage('err', result);
                 }
-                parent.Fanex.ExtAcc.UnBlockUI();
+                Fanex.CustomerSetting.Core.UnBlockUI();
             }
             , error: function (response) {
                 var ErrorMessage = '';
@@ -134,7 +134,7 @@
 
                 $('#divShowInfo').show();
                 showAlertMessage("err", ErrorMessage, 1);
-                parent.Fanex.ExtAcc.UnBlockUI();
+                Fanex.CustomerSetting.Core.UnBlockUI();
             }
         });
     },

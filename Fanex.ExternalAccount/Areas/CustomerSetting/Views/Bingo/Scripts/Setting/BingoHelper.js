@@ -51,7 +51,7 @@
                                     <td class="r" style="width:300px">\
                                         <b>Accumulated transferable amount</b>\
                                     </td>\
-                                    <td class="r" style="width:100px">' + parent.Fanex.ExtAcc.FormatNumber(betSetting.actualMaxTransfer) + '</td>\
+                                    <td class="r" style="width:100px">' + Fanex.CustomerSetting.Core.FormatNumber(betSetting.actualMaxTransfer) + '</td>\
                                     <td class="l" colspan="2">' + (!dontShowResetLink ? '<span onclick="ResetMaxTransfer(' + betSetting.iD + ')" class="canchange">Reset' : '') + '</td>\
                                 </tr>\
                                 <tr>\
@@ -60,10 +60,10 @@
                                     </td>\
                                     <td class="r" style="width:100px">';
             if (directDownline) {
-                html += '<input type="text" value="' + parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit) + '" id="txtMaxTransferCredit" class="r" maxLength="14" onpaste="return false;" onkeypress="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)">';
+                html += '<input type="text" value="' + Fanex.CustomerSetting.Core.FormatNumber(betSetting.maxTransferCredit) + '" id="txtMaxTransferCredit" class="r" maxLength="14" onpaste="return false;" onkeypress="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)">';
             }
             else {
-                html += parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit);
+                html += Fanex.CustomerSetting.Core.FormatNumber(betSetting.maxTransferCredit);
             }
             html += '</td>\
                                     <td class="l" colspan="2">\
@@ -72,7 +72,7 @@
                                 </tr>\
                                 <tr>\
                                      <td class="r" style="width:300px">&nbsp</td>\
-                                     <td class="r" style="width:100px">(' + parent.Fanex.ExtAcc.FormatNumber(betSetting.minLimit) + ' - ' + (betSetting.maxLimit == 0 ? 'No limited' : parent.Fanex.ExtAcc.FormatNumber(betSetting.maxLimit)) + ')</td>\
+                                     <td class="r" style="width:100px">(' + Fanex.CustomerSetting.Core.FormatNumber(betSetting.minLimit) + ' - ' + (betSetting.maxLimit == 0 ? 'No limited' : Fanex.CustomerSetting.Core.FormatNumber(betSetting.maxLimit)) + ')</td>\
                                      <td class="l" colspan="2">&nbsp</td>\
                                 </tr>\
                             </table>\
