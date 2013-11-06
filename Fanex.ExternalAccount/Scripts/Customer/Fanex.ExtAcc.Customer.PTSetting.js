@@ -1119,7 +1119,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
@@ -1269,7 +1269,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
@@ -1418,7 +1418,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
@@ -1576,7 +1576,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
