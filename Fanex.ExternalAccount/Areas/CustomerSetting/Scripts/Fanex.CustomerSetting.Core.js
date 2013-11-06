@@ -606,7 +606,9 @@ String.prototype.formatErrorMessage = function () {
     var preMsg = msg.substring(0, indexOfStartParenthesis);
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
-    var tmp = msg.substring(indexOfStartParenthesis, indexOfStartParenthesis + 4);
+    if ($.isNumeric(orgMsg.substring(1, orgMsg.length - 1))) {
+        orgMsg = '(' + orgMsg.substring(1, orgMsg.length - 1).formatNumber() + ')';
+    }
 
     var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
     '<font color="#ff5411">' + subMsg + '</font>';

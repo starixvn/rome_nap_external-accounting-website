@@ -102,7 +102,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             };
 
             var customerService = new CustomerService();
-            ICustomer oldCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[0]);
+            ICustomer oldCustomer = customerService.GetCustomer(currentContext);
             ICustomer newCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[1]);
             Hashtable otherSetting = JsonConvert.DeserializeObject<Hashtable>(Request.Form[2]);
             if (model.IsMulti)

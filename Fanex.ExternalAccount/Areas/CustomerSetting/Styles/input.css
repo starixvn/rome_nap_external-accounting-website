@@ -1,4 +1,44 @@
-﻿.buttonPopup, .ui-button, button[type=button]
+﻿.names
+{
+	font-weight: bold;
+	text-align: justify;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 5px;
+}
+.collapse
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../Images/arrowblue-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.expand
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../Images/arrowdown-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.buttonPopup, .ui-button, button[type=button]
 {
 	background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
