@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using Fanex.ExternalAccount.DTO;
     using Sunplus.UMControllerLibrary;
@@ -219,6 +220,22 @@ namespace Fanex.ExternalAccount.Utilities
             get
             {
                 return Utils.ToBoolean(GetValue("IsCache"));
+            }
+        }
+
+        public static IList<int> AdminUsersEditSuperStatus
+        {
+            get
+            {
+                string[] ids = GetValue("AdminUsersEditSuperStatus").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                IList<int> adminIds = new List<int>();
+
+                foreach (var id in ids)
+                {
+                    adminIds.Add(Utils.ToInt32(id));
+                }
+
+                return adminIds;
             }
         }
 

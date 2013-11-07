@@ -201,7 +201,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer.RoleId == Super && !GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            if (casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
                 return this.JsonBase(
                     new Result(1, ViewLang.DontHavePermission), 
@@ -231,7 +231,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer.RoleId == Super && !GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            if (casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
                 return this.JsonBase(
                     new Result(1, ViewLang.DontHavePermission), 

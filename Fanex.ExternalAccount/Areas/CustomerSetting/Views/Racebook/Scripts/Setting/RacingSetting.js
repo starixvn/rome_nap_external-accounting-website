@@ -170,11 +170,6 @@
                         parent.Fanex.ExtAcc.UnBlockUI();
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
-
-                            document.location.reload(true);
-                        }, 3000);
                     }
                 }
             }
@@ -213,11 +208,6 @@
                         parent.Fanex.ExtAcc.UnBlockUI();
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
-
-                            document.location.reload(true);
-                        }, 3000);
                     }
                 }
             }

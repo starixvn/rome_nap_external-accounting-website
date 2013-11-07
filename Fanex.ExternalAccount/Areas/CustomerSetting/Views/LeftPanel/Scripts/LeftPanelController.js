@@ -861,6 +861,7 @@ function SettingController($scope, $http) {
         if ($scope.setting != null) {
             var groupName = parent.$('#selectedGroupName').html();
             var allowGroups = eval(parent.allowBetSettingGroups);
+            var allowAdmins = eval(parent.allowAdminEditSuperStatus);
             for (var i = 0; i < $scope.setting.details.length; i++) {
                 if ($scope.setting.details[i].key == 'Poker' ||
                     ($scope.setting.details[i].key == 'Transfer' && $scope.model.personalInfo.roleId.value == 1) ||
@@ -871,7 +872,7 @@ function SettingController($scope, $http) {
 
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed' || $scope.setting.enableItems[i].key == 'Suspended') &&
-                    (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+                    !allowAdmins.contains(parseInt(parent.userId))) {
                     $scope.setting.enableItems[i].disabled = true;
                     $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
                 } 
@@ -965,8 +966,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.Closed = function (close, id) {
-        var allowGroups = eval(parent.allowBetSettingGroups);
-        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+        var allowAdmins = eval(parent.allowAdminEditSuperStatus);
+        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId))) {
             return;
         }
 
@@ -1106,8 +1107,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.Suspended = function (suspend, id) {
-        var allowGroups = eval(parent.allowBetSettingGroups);
-        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+        var allowAdmins = eval(parent.allowAdminEditSuperStatus);
+        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId))) {
             return;
         }
 
