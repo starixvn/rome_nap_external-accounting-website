@@ -6,9 +6,9 @@
     oldSetting: {},
     currentSetting: {},
     otherSettings: null,
-    isMultiple: parent.Fanex.ExtAcc.Customer.IsMultiple,
-    CustInfos: parent.Fanex.ExtAcc.Customer.IsMultiple ? parent.Fanex.ExtAcc.Customer.IdsAndNames() : [],
-    Usernames: parent.Fanex.ExtAcc.Customer.IsMultiple ? parent.Fanex.ExtAcc.Customer.Usernames : [],
+    isMultiple: parent.Fanex.ExtAcc.Customer ? parent.Fanex.ExtAcc.Customer.IsMultiple : false,
+    CustInfos: parent.Fanex.ExtAcc.Customer ? parent.Fanex.ExtAcc.Customer.IsMultiple ? parent.Fanex.ExtAcc.Customer.IdsAndNames() : [] : [],
+    Usernames: parent.Fanex.ExtAcc.Customer ? parent.Fanex.ExtAcc.Customer.IsMultiple ? parent.Fanex.ExtAcc.Customer.Usernames : [] : [],
     Error: '',
     Success: true,
     init: function () {
