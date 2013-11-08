@@ -1016,6 +1016,7 @@
     <Content Include="Images\sort.png" />
     <Content Include="Images\Success.gif" />
     <Content Include="Images\super-btn.png" />
+    <Content Include="Images\UnderMaintenance.gif" />
     <Content Include="PTEngine\BettingLimit.xml" />
     <Content Include="PTEngine\PTGrid.xml" />
     <Content Include="PTEngine\PTRacingGrid.xml" />

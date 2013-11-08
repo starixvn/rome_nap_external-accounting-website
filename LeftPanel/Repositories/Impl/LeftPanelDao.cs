@@ -586,6 +586,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <param name="userId">Customer id.</param>
         /// <param name="username">Customer username.</param>
         /// <returns>Result object.</returns>
+        [Authorization(Function = eFunctions.ClearCredit, Policy = EPolicy.Update)]
         private Result ClearCredit(int userId, string username = null)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
