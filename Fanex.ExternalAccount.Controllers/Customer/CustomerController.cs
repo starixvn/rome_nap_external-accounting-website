@@ -500,7 +500,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     total = 1, 
                     page = 1, 
                     records = result.Rows.Count, 
-                    rows = ret, roleId = roleId, srecommend = srecommend, 
+                    rows = customerInfo != null ? ret : "[]", roleId = roleId, srecommend = srecommend, 
                     mrecommend = mrecommend, recommend = recommend, custId = custId 
                 });
         }
@@ -541,8 +541,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             return this.JsonBase(
                 new 
-                { 
-                    total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, srecommend = srecommend, 
+                {
+                    total = 1,
+                    page = 1,
+                    records = result.Rows.Count,
+                    rows = customerInfo != null ? ret : "[]",
+                    roleId = roleId,
+                    srecommend = srecommend, 
                     mrecommend = mrecommend, recommend = recommend, custId = custId 
                 });
         }
@@ -583,8 +588,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             return this.JsonBase(
                 new 
-                { 
-                    total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, 
+                {
+                    total = 1,
+                    page = 1,
+                    records = result.Rows.Count,
+                    rows = customerInfo != null ? ret : "[]",
+                    roleId = roleId, 
                     srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId 
                 });
         }

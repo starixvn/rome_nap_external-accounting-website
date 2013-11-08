@@ -699,9 +699,10 @@ function BalanceController($scope, $http) {
         $scope.model = null;
     }
 
-    $scope.EditCredit = function (value) {
+    $scope.EditCredit = function () {
+        var value = $('#linkGivenCredit').html();
         $('#linkGivenCredit').hide();
-        $('#givenCredit').val(value.toFixed(2).formatNumber())
+        $('#givenCredit').val(value.replaceAll(',', '').toFixed(2).formatNumber())
         $('#givenCredit').show();
         $('#givenCredit').focus();
     };
@@ -753,7 +754,7 @@ function BalanceController($scope, $http) {
                 if (result.isSuccess) {
                     $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
                     $('#givenCredit').val(value);
-                    $('#givenCredit').attr('onblur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
+                    $('#givenCredit').attr('ng-blur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
                 }
                 else {
                     $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());

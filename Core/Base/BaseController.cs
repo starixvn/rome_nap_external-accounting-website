@@ -18,6 +18,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Web.SessionState;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
@@ -213,6 +214,13 @@ namespace Fanex.ExternalAccount.Core.Base
             catch (Exception)
             {
             }
+        }
+
+        protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
+        {
+            var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
+
+            return result != null && result.Rows.Count > 0;
         }
 
         /// <summary>
