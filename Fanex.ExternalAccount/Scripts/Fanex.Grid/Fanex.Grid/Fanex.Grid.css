@@ -224,6 +224,14 @@
     overflow-y: hidden;
 }
 
+.freegrid .y-scrollbar-fix-width {
+        width: 17.5px !important;
+    }
+
+.freegrid .x-scrollbar-fix-height {
+        height: 17.5px !important;
+    }
+
 .freegrid .scrollx
 {
     overflow-x: auto;
