@@ -265,7 +265,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
                 objDb.ExecuteNonQuery();
                                 
-                if (Utils.ToInt32(objDb.GetParameterValue("errcode")) <= 0)
+                if (Utils.ToInt32(objDb.GetParameterValue("errcode")) <= 0 && clearCredit)
                 {
                     return this.ClearCredit(CurrentSession.Instance.UserId, custName);
                 }

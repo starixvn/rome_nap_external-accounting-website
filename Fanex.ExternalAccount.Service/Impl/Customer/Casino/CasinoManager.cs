@@ -209,8 +209,15 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
-        {            
-            return this._casino.GetCustInfoIBC(custid, uplineId);
+        {
+            try
+            {
+                return this._casino.GetCustInfoIBC(custid, uplineId);
+            }
+            catch (Exception)
+            {
+                return null; // In case of not casino's customer.
+            }
         }
 
         /// <summary>
