@@ -226,7 +226,7 @@ namespace Fanex.ExternalAccount.Core.Base
             var hasGroup = CurrentSession.IsInternalAdmin ? groups.ToList().Any(o => o.GroupName.ToLower() == groupname.ToLower()) :
                 groups.ToList().Any(o => o.GroupName.ToLower() == CurrentSession.CurrencyGroup.ToLower());
 
-            return result != null && result.Rows.Count > 0 && hasGroup;
+            return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
 
         /// <summary>
