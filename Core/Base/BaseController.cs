@@ -223,10 +223,10 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
-            var hasGroup = CurrentSession.IsInternalAdmin ? groups.ToList().Any(o => o.GroupName.ToLower() == groupname.ToLower()) :
-                groups.ToList().Any(o => o.GroupName.ToLower() == CurrentSession.CurrencyGroup.ToLower());
+            var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.ToLower() == groupname.ToLower()) :
+                groups.Where(o => o.GroupID == CurrentSession.GroupId).First().GroupName.ToLower() == groupname.ToLower();
 
-            return result != null && result.Rows.Count > 0 && hasGroup;
+            return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
 
         /// <summary>
