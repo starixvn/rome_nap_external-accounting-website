@@ -135,9 +135,9 @@ Fanex.ExtAcc = {
             $.ajax({ url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html('');
 
-                if (result.ErrorCode) {
+                if (result.errorCode) {
                     Fanex.ExtAcc.UnBlockUI();
-                    $('#contentSplitter').html(result.ErrorMessage.formatErrorMessage());
+                    $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
                     return;
                 }
 
@@ -173,8 +173,8 @@ Fanex.ExtAcc = {
                     console.log(data.responseText);
 
                 Fanex.ExtAcc.UnBlockUI();
-                if (data.ErrorCode) {
-                    $('#contentSplitter').html(data.ErrorMessage.formatErrorMessage());
+                if (data.errorCode) {
+                    $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
                     return;
                 }
             });

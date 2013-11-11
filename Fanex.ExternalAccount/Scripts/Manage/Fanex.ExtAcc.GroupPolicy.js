@@ -221,9 +221,9 @@ Fanex.ExtAcc.GroupPolicy = {
             },
             success: function (result) {
                 var json = $.parseJSON(result);
-                if (!json.IsSuccess) {
+                if (!json.isSuccess) {
                     $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(json.ErrorMessage);
+                    $('#errMsg').html(json.errorMessage);
                     Fanex.ExtAcc.UnBlockUI();
                 }
                 else {

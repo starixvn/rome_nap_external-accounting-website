@@ -177,9 +177,9 @@ Fanex.ExtAcc.Statement = {
             cache: false,
             beforesend: function (xhr) { },
             success: function (data) {
-                if (data.ErrorCode) {
+                if (data.errorCode) {
                     Fanex.ExtAcc.UnBlockUI();
-                    Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 350, 150, 'alertStmt');
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 350, 150, 'alertStmt');
                     return;
                 }
 

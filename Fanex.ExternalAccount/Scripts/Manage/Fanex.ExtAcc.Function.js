@@ -418,11 +418,11 @@ Fanex.ExtAcc.Function = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -492,11 +492,11 @@ Fanex.ExtAcc.Function = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -518,10 +518,10 @@ Fanex.ExtAcc.Function = {
 
         $.ajax({ url: resolveClientUrl('Function/UpdateStatus/?funcId=' + funcId + '&isTest=' + isActive), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
-                alert(data.ErrorMessage);
+                alert(data.errorMessage);
             }
             else {
                 var timeout = setTimeout(function () {
@@ -539,9 +539,9 @@ Fanex.ExtAcc.Function = {
     Delete: function (funcId) {
         $.ajax({ url: resolveClientUrl('Function/Delete/?funcId=' + funcId), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(true);

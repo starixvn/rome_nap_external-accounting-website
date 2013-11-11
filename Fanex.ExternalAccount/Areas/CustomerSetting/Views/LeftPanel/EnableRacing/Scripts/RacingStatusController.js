@@ -46,7 +46,7 @@ function RacingStatusController($scope) {
                 roleId: roleId
             }
         })
-        .success(function (data) {
+        .success(function (data) {            
             var errorCodes = data.errorCode.split('\u0007');
             var success = true;
 
@@ -74,16 +74,9 @@ function RacingStatusController($scope) {
             }
 
             parent.Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (data) {
+        }).error(function (data) {
             if (typeof console != 'undefined')
-                console.log(data);
-
-            if (JSON.parse(data.responseText).ErrorCode) {
-                $('#errMsg').attr('class', 'errMsg');
-                $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
-                $('#errMsg').show();
-            }
+                console.log(data);            
 
             parent.Fanex.ExtAcc.UnBlockUI();
         });

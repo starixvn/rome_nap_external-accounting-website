@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Fanex.CustomerSetting.Module.Core.Web;
@@ -22,6 +23,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// Base controller for controller to inherit.
@@ -133,6 +135,7 @@ namespace Fanex.ExternalAccount.Core.Base
             {
                 settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
+                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             }
 
             return this.JsonExt(data, settings);
@@ -218,9 +221,12 @@ namespace Fanex.ExternalAccount.Core.Base
 
         protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
+            var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
+            var hasGroup = CurrentSession.IsInternalAdmin ? groups.ToList().Any(o => o.GroupName.ToLower() == groupname.ToLower()) :
+                groups.ToList().Any(o => o.GroupName.ToLower() == CurrentSession.CurrencyGroup.ToLower());
 
-            return result != null && result.Rows.Count > 0;
+            return result != null && result.Rows.Count > 0 && hasGroup;
         }
 
         /// <summary>

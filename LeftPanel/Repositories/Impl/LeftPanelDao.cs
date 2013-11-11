@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
     using System.Collections.Generic;
     using System.Data;
     using System.Web;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.Data;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.Core.Context;
@@ -586,7 +587,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <param name="userId">Customer id.</param>
         /// <param name="username">Customer username.</param>
         /// <returns>Result object.</returns>
-        [Authorization(Function = eFunctions.ClearCredit, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         private Result ClearCredit(int userId, string username = null)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))

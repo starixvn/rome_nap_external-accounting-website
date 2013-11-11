@@ -294,7 +294,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         }
 
         var url = resolveClientUrl("VirtualSports/UpdateCustomerSetting?custId=") + this.uplineId + '&roleId=' + this.uplineRoleId + "&targetCustId=" + custid + "&targetRoleId=" + context.targetRoleId + "&updateType=" + this.updateType + "&isMulti=" + isMulti.toString();
-        var parameters = ['oldCustomer=', JSON.stringify(this.oldCustomer), '&newCustomer=', JSON.stringify(this.newCustomer), '&otherSetting=', JSON.stringify(this.otherSetting)].join('');
+        var parameters = ['oldCustomer=', JSON.stringify(this.oldCustomer), '&newCustomer=', JSON.stringify(this.newCustomer), '&otherSetting=', JSON.stringify(this.otherSetting), '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName].join('');
 
         $.ajax({
             url: url,

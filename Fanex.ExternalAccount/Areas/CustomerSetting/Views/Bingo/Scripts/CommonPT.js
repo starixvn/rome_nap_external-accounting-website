@@ -160,15 +160,15 @@ function ResetMaxTransfer(custId) {
         },
         success: function (rs) {
             if (rs) {
-                if (rs.ErrorCode == 0) {
+                if (rs.errorCode == 0) {
                     showAlertMessage('err', 'Reset Max Transfer Successfully', 0);
                     afterUpdate(2000);
                 }
-                else if (rs.ErrorCode == 500) {
-                    showAlertMessage('err', rs.ErrorMessage, 1);
+                else if (rs.errorCode == 500) {
+                    showAlertMessage('err', rs.errorMessage, 1);
                 }
                 else {
-                    showAlertMessage('err', rs.ErrorMessage, 1);
+                    showAlertMessage('err', rs.errorMessage, 1);
                 }
             }
         },

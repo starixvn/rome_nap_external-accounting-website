@@ -935,7 +935,7 @@ function SettingController($scope, $http) {
             })
             .success(function (result) {
                 parent.Fanex.ExtAcc.Form.Close();
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -944,7 +944,7 @@ function SettingController($scope, $http) {
                 }
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById('DoubleComm').checked = allow;
                 }
             })
@@ -1001,7 +1001,7 @@ function SettingController($scope, $http) {
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                        if (result.IsSuccess) {
+                        if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -1011,7 +1011,7 @@ function SettingController($scope, $http) {
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = close;
                         }
                     })
@@ -1064,7 +1064,7 @@ function SettingController($scope, $http) {
                         .success(function (result) {
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            if (result.IsSuccess) {
+                            if (result.isSuccess) {
                                 var timeout = setTimeout(function () {
                                     clearTimeout(timeout);
                                     parent.Fanex.ExtAcc.UnBlockUI();
@@ -1075,7 +1075,7 @@ function SettingController($scope, $http) {
                                 parent.Fanex.ExtAcc.UnBlockUI();
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                                parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                                 document.getElementById(id).checked = close;
                             }
                         })
@@ -1147,7 +1147,7 @@ function SettingController($scope, $http) {
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                        if (result.IsSuccess) {
+                        if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -1157,7 +1157,7 @@ function SettingController($scope, $http) {
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = suspend;
                         }
                     })
@@ -1204,7 +1204,7 @@ function SettingController($scope, $http) {
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1214,7 +1214,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = allow;
                     }
                 })
@@ -1261,7 +1261,7 @@ function SettingController($scope, $http) {
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1271,7 +1271,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = allow;
                     }
                 })
@@ -1334,7 +1334,7 @@ function SettingController($scope, $http) {
                                 .success(function (result) {
                                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
                                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                                    if (result.IsSuccess) {
+                                    if (result.isSuccess) {
                                         var timeout = setTimeout(function () {
                                             clearTimeout(timeout);
                                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1344,7 +1344,7 @@ function SettingController($scope, $http) {
                                     else {
                                         parent.Fanex.ExtAcc.UnBlockUI();
                                         parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
-                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                                         document.getElementById(id).checked = enable;
                                     }
                                 })
@@ -1398,7 +1398,7 @@ function SettingController($scope, $http) {
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                        if (result.IsSuccess) {
+                        if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -1408,7 +1408,7 @@ function SettingController($scope, $http) {
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = enable;
                         }
                     })
@@ -1474,7 +1474,7 @@ function SettingController($scope, $http) {
                             .success(function (result) {
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                                if (result.IsSuccess) {
+                                if (result.isSuccess) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -1484,7 +1484,7 @@ function SettingController($scope, $http) {
                                 else {
                                     parent.Fanex.ExtAcc.UnBlockUI();
                                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
-                                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                                     document.getElementById(id).checked = enable;
                                 }
                             })
@@ -1538,7 +1538,7 @@ function SettingController($scope, $http) {
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1548,7 +1548,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = enable;
                     }
                 })
@@ -1604,7 +1604,7 @@ function SettingController($scope, $http) {
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1614,7 +1614,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = enable;
                     }
                 })
@@ -1671,7 +1671,7 @@ function SettingController($scope, $http) {
             .success(function (result) {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupLC');
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -1681,7 +1681,7 @@ function SettingController($scope, $http) {
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById(id).checked = enable;
                 }
             })
@@ -1738,7 +1738,7 @@ function SettingController($scope, $http) {
             .success(function (result) {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupVS');
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -1748,7 +1748,7 @@ function SettingController($scope, $http) {
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById(id).checked = enable;
                 }
             })

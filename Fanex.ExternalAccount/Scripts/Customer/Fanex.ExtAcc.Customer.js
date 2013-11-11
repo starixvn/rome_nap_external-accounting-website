@@ -109,6 +109,12 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.InitSuggestion();
     },
 
+    GroupName: function () {
+        var data = new Object();
+        data.groupName = $('#selectedGroupName').html();
+        return data;
+    },
+
     GetParams: function () {
         var enabled = false;
         var closed = false;
@@ -558,16 +564,17 @@ Fanex.ExtAcc.Customer = {
             homePhone: Fanex.ExtAcc.EscapeHtml(homePhone),
             mobilePhone: Fanex.ExtAcc.EscapeHtml(mobilePhone),
             email: Fanex.ExtAcc.EscapeHtml(email),
-            fax: Fanex.ExtAcc.EscapeHtml(fax)
+            fax: Fanex.ExtAcc.EscapeHtml(fax),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({ url: resolveClientUrl(editUrl), data: data, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 $('#errMsg').show();
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
                 Fanex.ExtAcc.UnBlockUI();
             }
             else {
@@ -1040,11 +1047,14 @@ Fanex.ExtAcc.Customer = {
 
         Fanex.ExtAcc.BlockUI();
 
-        $.ajax({ url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val()), type: 'POST' })
+        $.ajax({ url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val()),
+            type: 'POST',
+            data: Fanex.ExtAcc.Customer.GroupName()
+        })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
@@ -1099,18 +1109,19 @@ Fanex.ExtAcc.Customer = {
             type: 'post',
             data: {
                 custid: parseInt(custids[current]),
-                allow: allow
+                allow: allow,
+                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
             }
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Alert('Error', result.ErrorMessage, 400, 150, 'alert');
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage, 400, 150, 'alert');
                 Fanex.ExtAcc.Form.Close();
             }
             else {
-                if (!result.IsSuccess) {
-                    Fanex.ExtAcc.Customer.MultipleDblCommError += (result.ErrorCode == '600' ? ('Account ' + Fanex.ExtAcc.Customer.Names()[current] + ' was disableed<br />') : (result.ErrorMessage + '<br/>'));
+                if (!result.isSuccess) {
+                    Fanex.ExtAcc.Customer.MultipleDblCommError += (result.errorCode == '600' ? ('Account ' + Fanex.ExtAcc.Customer.Names()[current] + ' was disableed<br />') : (result.errorMessage + '<br/>'));
                 }
 
                 if (current == len) {
@@ -1186,11 +1197,12 @@ Fanex.ExtAcc.Customer = {
                     type: 'post',
                     data: {
                         custid: custid,
-                        allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm')
+                        allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm'),
+                        groupName: Fanex.ExtAcc.Customer.GroupName().groupName
                     }
                 })
                 .success(function (result) {
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             Fanex.ExtAcc.Customer.CallBackCustomerList();
@@ -1199,7 +1211,7 @@ Fanex.ExtAcc.Customer = {
                     }
                     else {
                         Fanex.ExtAcc.UnBlockUI();
-                        Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
+                        Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                     }
                 })
                 .error(function (xhr) {

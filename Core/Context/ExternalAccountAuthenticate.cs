@@ -10,11 +10,14 @@
 namespace Fanex.ExternalAccount.Core.Context
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
@@ -25,34 +28,35 @@ namespace Fanex.ExternalAccount.Core.Context
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ExternalAccountAuthenticate : ActionFilterAttribute, IAuthenticate
+    public class ExternalAccountAuthenticate : AuthorizeAttribute, IAuthenticate
     {
         private readonly ILoginService _userService = new LoginService();
         private readonly ICachingService _cachingService = new CachingService();
-
+        private bool _isAjax = true;
         private HttpRequest _request = null;
         private HttpResponse _response = null;
+        private IList<Group> _groups = null;
 
         public ExternalAccountAuthenticate()
         {
-            var context = CurrentContext.Instance.Context;
-
-            this._request = context.Request;
-            this._response = context.Response;
-
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
 
-            if (!currentSession.IsLogin && !this._request.RawUrl.ToLower().Contains("login"))
+            this._request = currentContext.Context.Request;
+            this._response = currentContext.Context.Response;
+
+            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 this._response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && this._request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && this._request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) || 
+                (currentSession.IsLogin && currentContext.Context.Request.RawUrl.Equals("/")))
             {
-                var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
+                this._groups = new LoginService().GroupList().ToList();
+                var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
 
-                this._response.Redirect("~/Home/Index" + group);
+                currentContext.Context.Response.Redirect("~/Home/Index" + group);
             }
         }
 
@@ -66,60 +70,61 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get;
             set;
-        }        
+        }
+
+        public bool IsAjaxRequest
+        {
+            get { return this._isAjax; }
+            set { this._isAjax = value; }
+        }
 
         /// <summary>
-        /// Action executing context.
+        /// Authorizes action.
         /// </summary>
-        /// <param name="filterContext">Filter context.</param>
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        /// <param name="filterContext">AuthorizationContext object.</param>
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            var context = CurrentContext.Instance.Context;
-
-            this._request = context.Request;
-            this._response = context.Response;
-
+            this._groups = new LoginService().GroupList().ToList();
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
+            var response = filterContext.HttpContext.Response;
+            var request = filterContext.HttpContext.Request;
 
-            if (!currentSession.IsLogin && !this._request.RawUrl.ToLower().Contains("login"))
+            if (this.IsHomeAuthorized())
             {
-                this._response.Redirect("~/Account/Login");
+                return;
             }
 
-            if ((currentSession.IsLogin && this._request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && this._request.RawUrl.Equals("/")))
+            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
             {
-                var group = currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
+                response.Redirect("~/Account/Login");
+            }
 
-                this._response.Redirect("~/Home/Index" + group);
+            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            {
+                var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
+                response.Redirect("~/Home/Index" + group);
             }
 
             try
             {
-                if (context == null)
-                {
-                    this.CloseConnection(context);
-
-                    return;
-                }
-
                 var principal = filterContext.HttpContext.User;
 
                 if (object.ReferenceEquals(principal, null) || object.ReferenceEquals(principal.Identity.AuthenticationType, null))
                 {
-                    this.CloseConnection(context);
+                    this.CloseConnection(filterContext);
                     return;
                 }
 
                 if (!this.FunctionAuthorization(currentSession.UserId, this.Function, this._request))
                 {
-                    this.CloseConnection(context);
+                    this.CloseConnection(filterContext);
                     return;
                 }
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex, this._response);
+                this.ProcessException(ex, response);
             }
         }
 
@@ -144,18 +149,19 @@ namespace Fanex.ExternalAccount.Core.Context
         }
 
         /// <summary>
-        /// Close connection.
+        /// Closes connection.
         /// </summary>
-        /// <param name="httpContext">HttpContext object.</param>
-        private void CloseConnection(HttpContext httpContext)
+        /// <param name="filterContext">AuthorizationContext object.</param>
+        private void CloseConnection(AuthorizationContext filterContext)
         {
-            var response = httpContext.Response;
-            var request = httpContext.Request;
+            var response = filterContext.HttpContext.Response;
+            var request = filterContext.HttpContext.Request;
 
             try
             {
-                if (httpContext == null
-                    || httpContext.Request == null)
+                if (filterContext == null
+                    || filterContext.HttpContext == null
+                    || filterContext.HttpContext.Request == null)
                 {
                     this.SignOut(response);
                     return;
@@ -167,18 +173,24 @@ namespace Fanex.ExternalAccount.Core.Context
                     return;
                 }
 
-                if (request.Headers["X-Requested-With"] != null && request.Headers["X-Requested-With"].Equals("XMLHttpRequest"))
+                if (this.IsAjaxRequest)
                 {
-                    httpContext.Response.ContentType = "application/json";
-                    httpContext.Response.Write(new { IsSuccess = false, ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission });
-                }
-                else if (!httpContext.Request.IsAuthenticated)
-                {
-                    this.SignOut(response);
+                    filterContext.Result = new JsonResult()
+                    {
+                        Data = new { isSuccess = false, errorCode = "1", errorMessage = ViewLang.DontHavePermission },
+                        ContentEncoding = Encoding.UTF8,
+                        ContentType = "application/json",
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        MaxJsonLength = int.MaxValue,
+                        RecursionLimit = int.MaxValue
+                    };
                 }
                 else
                 {
-                    response.Redirect("~/home/index", true);
+                    filterContext.Result = new PartialViewResult()
+                    {
+                        ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
+                    };
                 }
             }
             catch (Exception ex)
@@ -190,8 +202,8 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <summary>
         /// Sign out session.
         /// </summary>
-        /// <param name="response">HttpResponse object.</param>
-        private void SignOut(HttpResponse response)
+        /// <param name="response">Response object.</param>
+        private void SignOut(HttpResponseBase response)
         {
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
@@ -211,29 +223,29 @@ namespace Fanex.ExternalAccount.Core.Context
             response.Redirect("~/Account/Login", true);
         }
 
+        private bool IsHomeAuthorized()
+        {
+            return this.Function.Equals("Home", StringComparison.OrdinalIgnoreCase) && CurrentSession.Instance.IsLogin;
+        }
+
         /// <summary>
         /// Authorizes function.
         /// </summary>
         /// <param name="userId">Admin user id.</param>
         /// <param name="functionKey">Function key.</param>
-        /// <param name="request">HttpRequest object.</param>
+        /// <param name="request">Request object.</param>
         /// <returns>Boolean object.</returns>
         private bool FunctionAuthorization(int userId, string functionKey, HttpRequest request)
         {
-            if (userId <= 0)
-            {
-                return false;
-            }
-
             var userCache = this._cachingService.GetUserCache(userId);
+            var menuList = userCache.MenuList;
             var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") && 
-                !request.RawUrl.ToLower().Contains("exporttoexcel") && 
-                !(request.Headers["X-Requested-With"] != null && 
-                request.Headers["X-Requested-With"].Equals("XMLHttpRequest")))
+
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
+                !request.RawUrl.ToLower().Contains("exporttoexcel") && !this.IsAjaxRequest)
             {
-                hasPerm = userCache.MenuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) && 
+                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) &&
                     request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
             }
 
@@ -248,10 +260,8 @@ namespace Fanex.ExternalAccount.Core.Context
                 switch (this.Policy)
                 {
                     case AuthenticateAction.AuthenticationType.Read:
-                        if (firstItem.Policy == EPolicy.Create ||
-                            firstItem.Policy == EPolicy.Delete ||
-                            firstItem.Policy == EPolicy.Update ||
-                            firstItem.Policy == EPolicy.Read)
+                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
+                            firstItem.Policy == EPolicy.Create)
                         {
                             return true;
                         }
@@ -270,7 +280,13 @@ namespace Fanex.ExternalAccount.Core.Context
             return false;
         }
 
-        private void ProcessException(Exception ex, HttpResponse response, string category = "ExternalAccount")
+        /// <summary>
+        /// Processes exception.
+        /// </summary>
+        /// <param name="ex">Exception object.</param>
+        /// <param name="response">Response object.</param>
+        /// <param name="category">Category string.</param>
+        private void ProcessException(Exception ex, HttpResponseBase response, string category = "ExternalAccount")
         {
             LogService.Error(ex.Message, category, ex);
 

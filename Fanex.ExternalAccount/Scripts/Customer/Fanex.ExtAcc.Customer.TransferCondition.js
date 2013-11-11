@@ -101,7 +101,8 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
             var data = {
                 transferOption: str,
-                custId: custId
+                custId: custId,
+                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
             };
 
             Fanex.ExtAcc.BlockUI();
@@ -112,14 +113,14 @@ Fanex.ExtAcc.Customer.TransferCondition = {
                 dataType: 'json'
             })
             .success(function (result) {
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                     Fanex.ExtAcc.Form.Close(false);
                     Fanex.ExtAcc.UnBlockUI();
                 }
                 else {
                     $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
                     Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                 }

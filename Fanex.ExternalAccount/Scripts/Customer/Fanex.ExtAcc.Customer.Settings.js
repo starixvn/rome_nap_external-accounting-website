@@ -214,9 +214,9 @@ Fanex.ExtAcc.Customer.Settings = {
         $.ajax({
             url: resolveClientUrl('LiveCasino/' + action)
         }).success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == "1") {
+            if (result.errorCode && result.errorCode == "1") {
                 $('#tabs-7').css('display', 'block');
-                $('#tabs-7').html(result.ErrorMessage.formatErrorMessage());
+                $('#tabs-7').html(result.errorMessage.formatErrorMessage());
                 Fanex.ExtAcc.UnBlockUI();
                 return;
             }
@@ -268,9 +268,9 @@ Fanex.ExtAcc.Customer.Settings = {
                 url: resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId)
             }).success(function (result) {
                 var container = $('#tabs-8');
-                if (result.ErrorCode && result.ErrorCode == "1") {
+                if (result.errorCode && result.errorCode == "1") {
                     container.css('display', 'block');
-                    container.html(result.ErrorMessage.formatErrorMessage());
+                    container.html(result.errorMessage.formatErrorMessage());
                     return;
                 }
 
