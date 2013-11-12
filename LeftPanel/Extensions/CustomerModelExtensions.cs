@@ -809,7 +809,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
-            //// model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
+            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts =
                 model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
                     o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();

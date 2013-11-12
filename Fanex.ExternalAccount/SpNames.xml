@@ -222,6 +222,10 @@
 
       <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="archive"  />
       <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="main"  />
+      
+      <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="archive" Plain="0"/>
+      <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="archive" Plain="0"/>
+      <Setting Key="UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="main" Plain="0"/>
   </Function>
   <Function Name="Bingo Setting">
       <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="main"/>
