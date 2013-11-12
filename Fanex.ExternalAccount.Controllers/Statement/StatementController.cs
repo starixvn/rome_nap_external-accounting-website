@@ -68,7 +68,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         public ActionResult GetStatement()
         {
             this.GetRequestPage();
-            if (this._custId > 0 && this.CheckBelonging())
+            if (this._custId > 0 && this.IsBelong(this._groupname, this._custId, null, true))
             {
                 return this.LoadDataStatement();
             }
@@ -84,7 +84,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         public void GetExportToExcel()
         {
             this.GetRequestPage();
-            if (this._custId > 0 && this.CheckBelonging())
+            if (this._custId > 0 && this.IsBelong(this._groupname, this._custId, null, true))
             {
                 // Expired Cache
                 if (!Config.IsCache || this._cache.Get<List<Statement>>(this._cacheList) == null)
@@ -113,25 +113,6 @@ namespace Fanex.ExternalAccount.Controllers.Statement
             this._listStatement = this._statementService.GetStatement(this._custId, this._fromDate, this._toDate);
             this._cache.Set<List<Statement>>(this._cacheList, this._listStatement, 120);
             return this.JsonBase(new { rows = this._listStatement, username = this._username }, new Newtonsoft.Json.JsonSerializerSettings());
-        }
-
-        /// <summary>
-        /// Checks belonging.
-        /// </summary>
-        /// <returns>Boolean object.</returns>
-        private bool CheckBelonging()
-        {
-            IReportService reportService = new ReportService();
-            DataTable customerInfo = reportService.GetCustomerInfo(this._groupname, this._custId, string.Empty, true);
-            if (customerInfo != null)
-            {
-                this._username = Utils.ToString(customerInfo.Rows[0]["username"]);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

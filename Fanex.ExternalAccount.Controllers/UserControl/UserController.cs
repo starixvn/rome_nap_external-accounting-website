@@ -24,6 +24,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -215,6 +216,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 
         public ActionResult ResetPwdOwner(int userId, string pwd)
         {
+            if (userId != CurrentSession.UserId)
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var result = this._userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
 
             return this.JsonBase(result);
@@ -222,10 +228,13 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
         public ActionResult ResetPasswordOwner(int id)
         {
+            if (id != CurrentSession.UserId)
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var model = this._userService.GetUserById(id);
-
             ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
-
             return this.PartialViewBase(model);
         }
 

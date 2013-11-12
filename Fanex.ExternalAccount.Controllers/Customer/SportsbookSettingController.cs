@@ -34,6 +34,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSetting()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
@@ -46,6 +51,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSettingMasterGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -80,6 +90,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSettingAgentGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -114,6 +129,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSettingMemberGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -184,24 +204,44 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommission()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionDetail()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionMemberDetail()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
@@ -214,6 +254,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -293,12 +338,22 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPT(/*int custId, int parentId*/)
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperMasterEditSB()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
@@ -311,6 +366,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTSuperGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -350,6 +410,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -452,6 +517,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTAgentGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -554,6 +624,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTMemberGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -655,6 +730,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -755,6 +835,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -852,12 +937,22 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMultiplePT()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperMasterEditMultiplePTMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
@@ -868,6 +963,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMinPT()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
@@ -880,6 +980,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -925,6 +1030,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,

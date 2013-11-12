@@ -90,7 +90,7 @@ Fanex.ExtAcc.Customer.Settings = {
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
-            url: resolveClientUrl('SportsbookSetting/EditMinPT')
+            url: resolveClientUrl('SportsbookSetting/EditMinPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html())
         }).success(function (result) {
             $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);
@@ -228,7 +228,7 @@ Fanex.ExtAcc.Customer.Settings = {
         }
 
         $.ajax({
-            url: resolveClientUrl('LiveCasino/' + action)
+            url: resolveClientUrl('LiveCasino/' + action + '?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html())
         }).success(function (result) {
             if (result.errorCode && result.errorCode == "1") {
                 $('#tabs-7').css('display', 'block');
@@ -281,7 +281,7 @@ Fanex.ExtAcc.Customer.Settings = {
         if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
             $.ajax({
                 type: 'POST',
-                url: resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId)
+                url: resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId + '&groupName=' + $('#selectedGroupName').html())
             }).success(function (result) {
                 var container = $('#tabs-8');
                 if (result.errorCode && result.errorCode == "1") {

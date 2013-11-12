@@ -692,6 +692,7 @@
     <Content Include="Dll\DNAide.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.BetSetting.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Bingo.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Bingo.Resources.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Casino.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Core.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.LeftPanel.dll" />

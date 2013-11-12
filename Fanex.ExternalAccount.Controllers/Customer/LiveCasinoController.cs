@@ -31,36 +31,66 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSuper()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMaster()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditAgent()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.PartialViewBase();
         }
 
@@ -74,6 +104,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSuperPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -162,6 +197,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMasterPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -250,6 +290,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditAgentPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -338,6 +383,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMemberPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -426,6 +476,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditMemberPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -552,6 +607,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditMemberPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();

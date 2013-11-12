@@ -62,6 +62,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.uplineId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/EditSuperPost'),
@@ -70,6 +71,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -132,6 +141,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.uplineId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/EditMasterPost'),
@@ -140,6 +150,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -345,6 +363,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.uplineId = Fanex.ExtAcc.Customer.masterId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/EditAgentPost'),
@@ -353,6 +372,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -557,6 +584,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.uplineId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/EditMemberPost'),
@@ -565,6 +593,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -687,6 +723,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.uplineId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/SuperEditMemberPost'),
@@ -695,6 +732,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 
@@ -844,6 +889,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.uplineId = Fanex.ExtAcc.Customer.masterId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('LiveCasino/MasterEditMemberPost'),
@@ -852,6 +898,14 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             //Assign data for global variable
             Fanex.ExtAcc.Customer.LiveCasino.customer = data;
 

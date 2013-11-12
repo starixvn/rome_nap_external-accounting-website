@@ -22,7 +22,7 @@ Array.prototype.contains = function (item) {
 };
 
 function LeftPanelController($scope, $element) {
-    $scope.model = model;    
+    $scope.model = model;
 
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -47,7 +47,7 @@ function LeftPanelController($scope, $element) {
                     var params = "groupName=" + data.groupName
                     + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
-                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
+                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
                     parent.document.location.href = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
                 });
 
@@ -221,7 +221,7 @@ function LeftPanelController($scope, $element) {
             }
         };
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
 
         parent.Fanex.ExtAcc.Customer.Init = function () {
             //Prevent loading group name
@@ -267,11 +267,11 @@ function LeftPanelController($scope, $element) {
 
     $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditInfo/?custId=' + $scope.model.personalInfo.custId.value), parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 406, 310, false);
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditInfo/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 406, 310, false);
     };
 
     $scope.Transfer = function () {
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
     };
 
     $scope.Casino = function () {
@@ -297,7 +297,7 @@ function LeftPanelController($scope, $element) {
         }
 
         if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url);
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '/' + parent.$('#selectedGroupName').html());
         }
     };
 
@@ -318,23 +318,23 @@ function LeftPanelController($scope, $element) {
 
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('LiveCasino/EditSuper/' + $scope.model.personalInfo.custId.value + '/' + uplineId);
+                url = parent.resolveClientUrl('LiveCasino/EditSuper/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + uplineId + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             case 3:
-                url = parent.resolveClientUrl('LiveCasino/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('LiveCasino/EditMaster/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + $scope.model.personalInfo.uplineId.value + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             case 2:
-                url = parent.resolveClientUrl('LiveCasino/EditAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('LiveCasino/EditAgent/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + $scope.model.personalInfo.uplineId.value + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             case 1:
-                url = parent.resolveClientUrl('LiveCasino/EditMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('LiveCasino/EditMember/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + $scope.model.personalInfo.uplineId.value + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             default:
                 break;
         }
 
         if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainFrame(url);
+            parent.Fanex.ExtAcc.LoadMainFrame(url, null, null, null, true);
         }
     };
 
@@ -353,23 +353,23 @@ function LeftPanelController($scope, $element) {
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?id=' + custId);
                 break;
             case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?custid=' + custId + '&uplineid=' + uplineId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?id=' + custId + '&uplineid=' + uplineId);
                 break;
             case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?custid=' + custId + '&uplineid=' + uplineId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?id=' + custId + '&uplineid=' + uplineId);
                 break;
             case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?custid=' + custId + '&uplineid=' + uplineId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?id=' + custId + '&uplineid=' + uplineId);
                 break;
             default:
                 break;
         }
 
         if (url !== '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url);
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
     };
 
@@ -381,23 +381,23 @@ function LeftPanelController($scope, $element) {
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?custId=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?id=' + custId);
                 break;
             case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custid=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?id=' + custId);
                 break;
             case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custid=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?id=' + custId);
                 break;
             case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custid=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + custId);
                 break;
             default:
                 break;
         }
 
         if (url !== '' && uplineId > 0) {
-            url += '&uplineid=' + uplineId;
+            url += '&uplineid=' + uplineId + '&groupName=' + parent.$('#selectedGroupName').html();
             parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
@@ -411,7 +411,7 @@ function LeftPanelController($scope, $element) {
         var targetRoleId = personalObject.roleId.value;
 
         if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
-            var url = parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId);
+            var url = parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId + "&groupName=" + parent.$('#selectedGroupName').html());
             parent.Fanex.ExtAcc.LoadMainFrame(url, undefined, true, false, true);
         }
     };
@@ -889,13 +889,13 @@ function SettingController($scope, $http) {
 
         switch (roleId) {
             case 2:
-                actionName = 'Customer/AgentAddNewMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
+                actionName = 'Customer/AgentAddNewMember/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             case 3:
-                actionName = 'Customer/MasterAddNewAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
+                actionName = 'Customer/MasterAddNewAgent/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             case 4:
-                actionName = 'Customer/SuperAddNewMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
+                actionName = 'Customer/SuperAddNewMaster/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             default:
                 break;
@@ -903,12 +903,7 @@ function SettingController($scope, $http) {
 
         if (actionName != '') {
             parent.Fanex.ExtAcc.BlockUI();
-            /*
-            $http({ url: parent.resolveClientUrl(actionName), method: 'post', headers: { "X-Requested-With": "XMLHttpRequest"} })
-            .success(function (result) {
-            parent.$('#contentSplitter').html(result);
-            });*/
-            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName));
+            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName), null, null, null, true);
         }
     };
 
@@ -930,7 +925,8 @@ function SettingController($scope, $http) {
                 type: 'post',
                 data: {
                     custid: $scope.model.personalInfo.custId.value,
-                    allow: !allow
+                    allow: !allow,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
@@ -1850,7 +1846,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = $scope.model.personalInfo.uplineId.value;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MinRB = function () {
@@ -1864,8 +1860,8 @@ function SettingController($scope, $http) {
         }
 
         if (typeUrl !== '') {
-            var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?custId=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
-            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url));
+            var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + '&groupName=' + parent.$('#selectedGroupName').html()));
         }
     };
 
@@ -1883,12 +1879,12 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperBingo = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperCasino = function () {
@@ -1898,7 +1894,7 @@ function SettingController($scope, $http) {
 
     $scope.SuperRacing = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperLiveCasino = function () {
@@ -1909,12 +1905,12 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/SuperEditMember'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperVirtualSports = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterPT = function () {
@@ -1931,12 +1927,12 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterBingo = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterCasino = function () {
@@ -1946,7 +1942,7 @@ function SettingController($scope, $http) {
 
     $scope.MasterRacing = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterLiveCasino = function () {
@@ -1957,12 +1953,12 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/MasterEditMember'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterVirtualSports = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperSBPT = function () {
@@ -1979,7 +1975,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterSBPT = function () {
@@ -1996,7 +1992,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 };
 
@@ -2011,7 +2007,7 @@ function LoginController($scope) {
 
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
     };
 
     $scope.ShowIp = function (ip) {

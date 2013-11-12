@@ -35,8 +35,8 @@ Fanex.ExtAcc.Header = {
                     var indexes = location.href.split('/');
                     var groupNameSelected = indexes[indexes.length - 1];
                     var hasGroup = false;
-                    items.forEach(function (i, v) {
-                        if (i.GroupName == groupNameSelected)
+                    $(items).each(function (i, v) {
+                        if (v.GroupName == groupNameSelected)
                             hasGroup = true;
                     });
                     var selectedGroupName = groupNameSelected == '' || !hasGroup ? items[0].GroupName : groupNameSelected;

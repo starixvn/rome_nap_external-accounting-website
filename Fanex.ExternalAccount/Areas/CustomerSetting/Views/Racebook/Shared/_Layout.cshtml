@@ -30,7 +30,7 @@
             //var Roles=@Html.Raw(ViewBag.PageRole);
 
             window.uplineId = '@Fanex.Common.Converter.ToInt(Request["uplineId"])';
-            window.custId = '@Fanex.Common.Converter.ToInt(Request["custId"])';
+            window.custId = '@Fanex.Common.Converter.ToInt(Request["id"])';
             window.rootUrl = '@ViewBag.RootUrl';
         </script>
         <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Languages.en.js")"></script>

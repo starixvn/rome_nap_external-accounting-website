@@ -19,6 +19,7 @@ namespace Fanex.ExternalAccount.Core.Context
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
+    using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
@@ -146,6 +147,17 @@ namespace Fanex.ExternalAccount.Core.Context
             }
 
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
+        }
+
+        public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
+        {
+            groupName = string.IsNullOrWhiteSpace(groupName) ? string.Empty : groupName;
+            var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
+            var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
+            var hasGroup = CurrentSession.Instance.IsInternalAdmin ? groups.Any(o => o.GroupName.ToLower() == groupName.ToLower()) :
+                groups.Where(o => o.GroupID == CurrentSession.Instance.GroupId).First().GroupName.ToLower() == groupName.ToLower();
+
+            return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
 
         /// <summary>
@@ -291,6 +303,6 @@ namespace Fanex.ExternalAccount.Core.Context
             LogService.Error(ex.Message, category, ex);
 
             this.SignOut(response);
-        }
+        }        
     }
 }

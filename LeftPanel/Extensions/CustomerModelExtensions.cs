@@ -793,6 +793,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             ProductStatuses product = new ProductStatuses();
             product.UplineStatuses = new ProductStatuses();
             product.RoleId = roleId;
+            if (result.Rows.Count == 0)
+            {
+                return product;
+            }
+
             product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
             product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
             product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
@@ -807,14 +812,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.Closed = result.Rows[0].ToBoolean("closed");
             product.Suspended = result.Rows[0].ToBoolean("suspended");
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
-
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts =
                 model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
                     o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
 
-            if (roleId < 4)
+            if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
                 product.UplineStatuses.SyncBingo = upperInfo.Rows[0].ToBoolean("syncBingo");

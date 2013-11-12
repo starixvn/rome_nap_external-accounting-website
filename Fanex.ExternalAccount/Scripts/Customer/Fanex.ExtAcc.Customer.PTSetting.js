@@ -214,6 +214,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTSuperGet'),
@@ -222,6 +223,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             $('#buttonPopup').remove();
             $('#buttonPopup2').remove();
             $('#arrowUpDown').remove();
@@ -263,6 +272,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTMasterGet'),
@@ -271,6 +281,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM3 = false;
@@ -414,6 +432,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.masterId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTAgentGet'),
@@ -422,6 +441,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM2 = false;
@@ -575,6 +602,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTMemberGet'),
@@ -583,6 +611,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
@@ -707,6 +743,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
         data.agentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/SuperEditPTMemberGet'),
@@ -715,6 +752,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
@@ -797,6 +842,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.masterId;
         data.agentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/MasterEditPTMemberGet'),
@@ -805,6 +851,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
