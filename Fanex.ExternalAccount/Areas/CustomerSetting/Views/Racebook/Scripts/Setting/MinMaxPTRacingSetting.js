@@ -18,7 +18,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'CustomerSetting/RaceBook/RacingSetting/GetMinMaxPTSetting',
+            url: parent.resolveClientUrl('CustomerSetting/RaceBook/RacingSetting/GetMinMaxPTSetting'),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(param),
@@ -47,7 +47,7 @@
             var data = JSON.stringify({ setting: this.currentSetting, targetRoleId: window.targetRoleId });
             $.ajax({
                 type: 'POST',
-                url: 'CustomerSetting/RaceBook/RacingSetting/UpdateMinMaxPT',
+                url: parent.resolveClientUrl('CustomerSetting/RaceBook/RacingSetting/UpdateMinMaxPT'),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 data: data,
@@ -66,7 +66,7 @@
         }
     },
     afterUpdatePT: function (result) {
-        var message = result.ErrorCode === 0 ? 'Updated successfully' : result.ErrorMessage;
+        var message = result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage;
         showAlertMessage('err', message, result.ErrorCode === 0 ? 0 : 1);
         window.setTimeout(function () {
             minMaxPTRacingSetting.getMinMaxPTSetting();
