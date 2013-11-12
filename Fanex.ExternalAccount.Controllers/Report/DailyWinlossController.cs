@@ -66,7 +66,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._recommend = CheckRequest.GetIntRequest("recommend", 0);
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._winlostDate.ToString();
 
-            if (this.CheckBelonging())
+            if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 if (this._custId != 0)
                 {
@@ -93,7 +93,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this.GetRequestPage();
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._winlostDate.ToString();
 
-            if (this.CheckBelonging())
+            if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 // Expired Cache
                 if (!Config.IsCache || this._cache.Get<List<DailyWinLoss>>(this._cacheList) == null)
@@ -214,50 +214,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     new { viewlevel = 1, srecommend = _srecommend, mrecommend = _mrecommend, recommend = _custId, rows = _listDailyWinLoss }, 
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
-        }
-
-        /// <summary>
-        /// Checks belonging.
-        /// </summary>
-        /// <returns>Boolean object.</returns>
-        private bool CheckBelonging()
-        {
-            if (!string.IsNullOrEmpty(this._username))
-            {
-                DataTable customerInfo = this._reportService.GetCustomerInfo(this._groupname, this._custId, this._username, true);
-                if (customerInfo != null)
-                {
-                    this._roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                    if (this._roleId == 4)
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                    }
-                    else if (this._roleId == 3)
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                    }
-                    else if (this._roleId == 2)
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                        this._recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                    }
-                    else
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                        this._recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                        this._memberId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        }        
     }
 }

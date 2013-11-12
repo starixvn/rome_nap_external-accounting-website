@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._filterParams = new FilterController().AsCollection();
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
 
-            if (this.CheckBelonging())
+            if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 this._sortingOrderList = this._reportService.GetSortingOrderList(this._groupname);
 
@@ -122,7 +122,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + 
                 this._fromDate.ToString() + this._toDate.ToString();
 
-            if (this.CheckBelonging())
+            if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 if (this._viewlevel == 1)
                 {

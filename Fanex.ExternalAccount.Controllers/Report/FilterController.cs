@@ -83,7 +83,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// <returns>ActionResult object.</returns>
         public ActionResult GetSuggestedUserName()
         {
-            if (string.IsNullOrEmpty(CheckRequest.GetStringRequest("groupname", string.Empty)))
+            string groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
+
+            if (string.IsNullOrEmpty(groupName) || !this.IsBelong(groupName, 0, null, true))
             {
                 return this.JsonBase(new { username = string.Empty });
             }

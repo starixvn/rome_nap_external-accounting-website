@@ -75,17 +75,19 @@
 
             $('#tabs').tabs({ selected: index });
 
-            if (!custInfo.sycCasino) {
+            var custInfo = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@custInfo'));
+
+            if (!custInfo.syncCasino) {
                 $('#tab6').remove();
                 $('#tabs-6').remove();
             }
 
-            if (!custInfo.sycBingo) {
+            if (!custInfo.syncBingo) {
                 $('#tab5').remove();
                 $('#tabs-5').remove();
             }
 
-            if (!custInfo.sycLiveCasino) {
+            if (!custInfo.syncLiveCasino) {
                 $('#tab4').remove();
                 $('#tabs-4').remove();
             }
@@ -94,8 +96,7 @@
         var custId = parseInt('@id');
         var uplineId = parseInt('@uplineId');
         var userId = parseInt('@userId');
-        var siteName = '@siteName';
-        var custInfo = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@custInfo'));
+        var siteName = '@siteName';        
     </script>
     </body>
 </html>
