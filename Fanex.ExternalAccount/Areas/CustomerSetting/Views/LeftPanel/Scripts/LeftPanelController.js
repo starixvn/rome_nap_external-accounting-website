@@ -1865,7 +1865,7 @@ function SettingController($scope, $http) {
 
         if (typeUrl !== '') {
             var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?custId=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
-            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(url));
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url));
         }
     };
 
