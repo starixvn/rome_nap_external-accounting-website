@@ -621,21 +621,21 @@ Fanex.ExtAcc.Customer.Casino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode != 0) {
+            if (result.errorCode != 0) {
                 if (!Fanex.ExtAcc.Customer.Casino.IsMultiple) {
-                    Fanex.ExtAcc.Customer.Casino.ErrorMessage += result.ErrorMessage.formatErrorMessage() + '<br />';
+                    Fanex.ExtAcc.Customer.Casino.errorMessage += result.errorMessage.formatErrorMessage() + '<br />';
                 }
                 else {
-                    Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[idx] + ":</font><br />" + result.ErrorMessage.formatErrorMessage() + '<br /><br />';
+                    Fanex.ExtAcc.Customer.Casino.errorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[idx] + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
                 }
             }
 
             if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (idx != null && idx == Fanex.ExtAcc.Customer.Ids().length - 1)) {
-                if (Fanex.ExtAcc.Customer.Casino.ErrorMessage != '') {
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.ErrorMessage);
+                if (Fanex.ExtAcc.Customer.Casino.errorMessage != '') {
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.errorMessage);
                     $('#errMsg').show();
 
-                    Fanex.ExtAcc.Customer.Casino.ErrorMessage = '';
+                    Fanex.ExtAcc.Customer.Casino.errorMessage = '';
                 }
                 else {
                     Fanex.ExtAcc.Form.Close();
@@ -654,19 +654,19 @@ Fanex.ExtAcc.Customer.Casino = {
             }
 
             if (!Fanex.ExtAcc.Customer.Casino.IsMultiple) {
-                Fanex.ExtAcc.Customer.Casino.ErrorMessage += "Not Casino\'s customer<br />".formatErrorMessage() + '<br />';
+                Fanex.ExtAcc.Customer.Casino.errorMessage += "Not Casino\'s customer<br />".formatErrorMessage() + '<br />';
             }
             else {
-                Fanex.ExtAcc.Customer.Casino.ErrorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[idx] + ":</font><br />" + " Not Casino\'s customer<br /><br />".formatErrorMessage();
+                Fanex.ExtAcc.Customer.Casino.errorMessage += '<font color="Blue" style="font-weight: bold">' + Fanex.ExtAcc.Customer.Names()[idx] + ":</font><br />" + " Not Casino\'s customer<br /><br />".formatErrorMessage();
             }
 
             if (!Fanex.ExtAcc.Customer.Casino.IsMultiple || (idx != null && idx == Fanex.ExtAcc.Customer.Ids().length - 1)) {
-                if (Fanex.ExtAcc.Customer.Casino.ErrorMessage != '') {
-                    $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.ErrorMessage);
+                if (Fanex.ExtAcc.Customer.Casino.errorMessage != '') {
+                    $('#errMsg').html(Fanex.ExtAcc.Customer.Casino.errorMessage);
                     $('#errMsg').show();
 
 
-                    Fanex.ExtAcc.Customer.Casino.ErrorMessage = '';
+                    Fanex.ExtAcc.Customer.Casino.errorMessage = '';
                 }
                 else {
                     Fanex.ExtAcc.Customer.CallBackCustomerList();

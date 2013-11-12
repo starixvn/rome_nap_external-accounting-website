@@ -34,7 +34,12 @@ Fanex.ExtAcc.Header = {
                     // Get current Group Name
                     var indexes = location.href.split('/');
                     var groupNameSelected = indexes[indexes.length - 1];
-                    var selectedGroupName = groupNameSelected == '' ? items[0].GroupName : groupNameSelected;
+                    var hasGroup = false;
+                    items.forEach(function (i, v) {
+                        if (i.GroupName == groupNameSelected)
+                            hasGroup = true;
+                    });
+                    var selectedGroupName = groupNameSelected == '' || !hasGroup ? items[0].GroupName : groupNameSelected;
 
                     if (selectedGroupName.indexOf('#') != -1) {
                         selectedGroupName = selectedGroupName.split('#')[1];
@@ -73,7 +78,7 @@ Fanex.ExtAcc.Header = {
                     $('#dllUsername').bind('click', function (event) {
                         $('#dllUsername').hide();
                     });
-
+                    
                     $("#ddlGroupName").bind('click', function (event) {
                         if (event.target.id.indexOf('group') == 0) {
                             $('#ddlGroupName').hide();

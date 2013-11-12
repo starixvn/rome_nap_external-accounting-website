@@ -39,8 +39,8 @@ Fanex.ExtAcc.Form = {
         }
 
         $.ajax({ url: url, data: data, type: 'post' }).done(function (data) {
-            if (data.ErrorCode && data.ErrorCode == "1") {
-                Fanex.ExtAcc.Form.Alert('Error', data.ErrorMessage.formatErrorMessage(), 300, 150, 'alert');
+            if (data.errorCode && data.errorCode == "1") {
+                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }
             else {

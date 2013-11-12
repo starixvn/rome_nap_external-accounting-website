@@ -4,6 +4,32 @@ if (typeof Fanex == 'undefined') {
     Fanex = {};
 }
 
+String.prototype.FormatNumber = function (number) {
+    number += '';
+
+    x = number.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+};
+
+String.prototype.formatNumber = function (number) {
+    number += '';
+
+    x = number.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+};
+
 String.prototype.decodeHtml = function () {
     var str = this;
     return $("<div/>").html(str).text();
@@ -34,6 +60,10 @@ String.prototype.formatErrorMessage = function () {
     var tmp = msg.substring(indexOfStartParenthesis, indexOfStartParenthesis + 4);
     var hasUsername = preMsg.indexOf(':') != -1;
     var username = '';
+
+    if ($.isNumeric(orgMsg.substring(1, orgMsg.length - 1))) {
+        orgMsg = '(' + orgMsg.substring(1, orgMsg.length - 1).formatNumber() + ')';
+    }
 
     if (hasUsername) {
         username = preMsg.substring(0, preMsg.indexOf(':'));
@@ -105,9 +135,9 @@ Fanex.ExtAcc = {
             $.ajax({ url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html('');
 
-                if (result.ErrorCode) {
+                if (result.errorCode) {
                     Fanex.ExtAcc.UnBlockUI();
-                    $('#contentSplitter').html(result.ErrorMessage.formatErrorMessage());
+                    $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
                     return;
                 }
 
@@ -143,8 +173,8 @@ Fanex.ExtAcc = {
                     console.log(data.responseText);
 
                 Fanex.ExtAcc.UnBlockUI();
-                if (data.ErrorCode) {
-                    $('#contentSplitter').html(data.ErrorMessage.formatErrorMessage());
+                if (data.errorCode) {
+                    $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
                     return;
                 }
             });

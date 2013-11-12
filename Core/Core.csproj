@@ -135,7 +135,6 @@
     <Compile Include="Base\CustomerBase.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Base\LiveCasinoBase.cs" />
-    <Compile Include="Context\AuthorizationAttribute.cs" />
     <Compile Include="Context\CurrentContext.cs" />
     <Compile Include="Context\CurrentSession.cs">
       <SubType>ASPXCodeBehind</SubType>

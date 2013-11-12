@@ -1061,7 +1061,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             uplineId: uplineId,
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1071,9 +1072,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1187,7 +1188,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 uplineRoleId: Fanex.ExtAcc.Customer.CurrentLevel + 1,
                 custId: idx == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[idx]),
                 uplineId: uplineId,
-                customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+                customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
             };
 
             $.ajax({
@@ -1197,9 +1199,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 dataType: 'json'
             })
             .success(function (result) {
-                if (result.ErrorCode && result.ErrorCode == '1') {
+                if (result.errorCode && result.errorCode == '1') {
                     $('#errMsg').show();
-                    $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                    $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                     Fanex.ExtAcc.UnBlockUI();
                 }
@@ -1245,8 +1247,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     RenderPtCommErrorMessage: function (data) {
-        var codes = data.ErrorCode.split('\u0007');
-        var msgs = data.ErrorMessage.split('\u0007');
+        var codes = data.errorCode.split('\u0007');
+        var msgs = data.errorMessage.split('\u0007');
         var error = '';
 
         for (var i = 0; i < codes.length - 1; i++) {
@@ -1280,8 +1282,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
         }
 
-        if (error == '' && data.ErrorMessage != '') {
-            error = data.ErrorMessage.formatErrorMessage() + '<br />';
+        if (error == '' && data.errorMessage != '') {
+            error = data.errorMessage.formatErrorMessage() + '<br />';
         }
 
         return error == '' ? '<font color="Blue">Position Taking/Commission: Updated successfully</font><br />' : error;
@@ -1290,8 +1292,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     RenderMemberWinLimitMessage: function (data) {
         var error = '<font color="Blue">Member Win Limit: Updated successfully</font><br />';
 
-        if (data.ErrorCode != "0") {
-            error = '<font color="Red">Member Win Limit: ' + data.ErrorMessage.formatErrorMessage() + '</font><br />';
+        if (data.errorCode != "0") {
+            error = '<font color="Red">Member Win Limit: ' + data.errorMessage.formatErrorMessage() + '</font><br />';
         }
 
         return error;
@@ -1301,8 +1303,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var error = '';
 
         for (var i = 0; i < data.length; i++) {
-            if (data[i].ErrorCode != '' && data[i].ErrorCode != 'GS0000' && parseInt(data[i].ErrorCode) != 0) {
-                error += data[i].ErrorMessage.formatErrorMessage() + '<br />';
+            if (data[i].errorCode != '' && data[i].errorCode != 'GS0000' && parseInt(data[i].errorCode) != 0) {
+                error += data[i].errorMessage.formatErrorMessage() + '<br />';
             }
         }
 
@@ -1332,7 +1334,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : Fanex.ExtAcc.Customer.CustIds.split(',')[i],
             uplineId: Fanex.ExtAcc.Customer.superId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1342,9 +1345,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1403,7 +1406,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.superId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1413,9 +1417,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1497,7 +1501,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1507,9 +1512,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1569,7 +1574,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1579,9 +1585,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1653,7 +1659,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.agentId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1663,9 +1670,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1723,7 +1730,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.agentId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1733,9 +1741,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1758,11 +1766,11 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 }
 
                 if (result.length == 4) {
-                    if (st.ErrorCode == '' || st.ErrorCode == '0' || st.ErrorCode == "0") {
+                    if (st.errorCode == '' || st.errorCode == '0' || st.errorCode == "0") {
                         stMsg = '<font color="Blue">Enable: Updated successfully</font><br />';
                     }
                     else {
-                        stMsg = '<font color="Red">Enable: ' + st.ErrorMessage.formatErrorMessage() + '</font><br />'
+                        stMsg = '<font color="Red">Enable: ' + st.errorMessage.formatErrorMessage() + '</font><br />'
                     }
                 }
 
@@ -1822,7 +1830,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.superId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1832,9 +1841,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1890,7 +1899,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.superId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1900,9 +1910,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -1978,7 +1988,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -1988,9 +1999,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
@@ -2046,7 +2057,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
         var data = {
             custId: i == null ? Fanex.ExtAcc.Customer.UserId : parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]),
             uplineId: Fanex.ExtAcc.Customer.masterId,
-            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer)
+            customer: JSON.stringify(Fanex.ExtAcc.Customer.LiveCasino.customer),
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -2056,9 +2068,9 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
 
                 Fanex.ExtAcc.UnBlockUI();
             }

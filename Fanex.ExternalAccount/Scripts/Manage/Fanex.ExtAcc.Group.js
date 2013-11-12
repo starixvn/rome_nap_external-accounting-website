@@ -205,11 +205,11 @@ Fanex.ExtAcc.Group = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -252,11 +252,11 @@ Fanex.ExtAcc.Group = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -277,8 +277,8 @@ Fanex.ExtAcc.Group = {
     Activate: function (groupId, isActive) {
         $.ajax({ url: resolveClientUrl('Group/UpdateStatus/?groupId=' + groupId + '&isActive=' + isActive), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
-                alert(data.ErrorMessage);
+            if (!data.isSuccess) {
+                alert(data.errorMessage);
             }
             else {
                 Fanex.ExtAcc.Form.Close(true);
@@ -294,10 +294,10 @@ Fanex.ExtAcc.Group = {
 
         $.ajax({ url: resolveClientUrl('Group/Delete/?groupId=' + groupId), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
-                alert(data.ErrorMessage);
+                alert(data.errorMessage);
             }
             else {
                 var timeout = setTimeout(function () {

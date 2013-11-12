@@ -16,8 +16,8 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
@@ -96,7 +96,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="custId">Customer id.</param>
         /// <returns>MemberWinLimit object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetMemberWinLimit(int custId)
         {
             var settings = new JsonSerializerSettings();

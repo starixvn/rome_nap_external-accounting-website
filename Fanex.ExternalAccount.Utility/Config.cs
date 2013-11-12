@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using Fanex.ExternalAccount.DTO;
     using Sunplus.UMControllerLibrary;
@@ -54,34 +55,26 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
-                var um = new UMController();
+                var um = new UMBusiness();
+                string from = string.Empty, to = string.Empty;
+                bool isUM = um.isUnderMaintainence(Sites.AccountSite, Config.LBUrl, ref from, ref to) || Utils.ToBoolean(GetValue("IsUM"));
+                TimeFrom = string.IsNullOrWhiteSpace(from) ? GetValue("TimeFrom") : from; 
+                TimeTo = string.IsNullOrWhiteSpace(to) ? GetValue("TimeTo") : to;
 
-                return Utils.ToBoolean(GetValue("IsUM")) || 
-                    um.isUnderMaintainence((int)Sites.AccountSite) ||
-                    um.isUnderMaintainence((int)Sites.Credit);
+                return isUM;
             }
         }
 
         public static string TimeFrom
         {
-            get
-            {
-                var um = new UMController();
-                var time = um.GetUMTimeSetting()[0];
-
-                return IsUM ? time == string.Empty ? GetValue("TimeFrom") : time : string.Empty;
-            }
+            get;
+            set;
         }
 
         public static string TimeTo
         {
-            get
-            {
-                var um = new UMController();
-                var time = um.GetUMTimeSetting()[1];
-
-                return IsUM ? time == string.Empty ? GetValue("TimeTo") : time : string.Empty;
-            }
+            get;
+            set;
         }
 
         public static bool Recheckin
@@ -219,6 +212,22 @@ namespace Fanex.ExternalAccount.Utilities
             get
             {
                 return Utils.ToBoolean(GetValue("IsCache"));
+            }
+        }
+
+        public static IList<int> AdminUsersEditSuperStatus
+        {
+            get
+            {
+                string[] ids = GetValue("AdminUsersEditSuperStatus").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                IList<int> adminIds = new List<int>();
+
+                foreach (var id in ids)
+                {
+                    adminIds.Add(Utils.ToInt32(id));
+                }
+
+                return adminIds;
             }
         }
 

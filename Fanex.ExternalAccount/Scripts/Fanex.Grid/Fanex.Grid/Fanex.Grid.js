@@ -1861,6 +1861,12 @@
                 var currentRowHeaderStyle = rowHeaderContainer.attr('style');
                 rowHeaderContainer.css("overflow", "hidden !important");
             }
+
+            ////fix bug scoll in IE
+            if (ub.msie) {
+                yscrollbar.addClass("y-scrollbar-fix-width");
+                xscrollbar.addClass("x-scrollbar-fix-height");
+            }
         });
     };
 

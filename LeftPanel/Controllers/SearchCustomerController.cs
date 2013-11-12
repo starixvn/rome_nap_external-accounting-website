@@ -59,6 +59,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             ViewBag.UserId = CurrentSession.UserId;
 
+            if (!this.IsBelong(uplineId, 0, id, true))
+            {
+                return this.Content("var model = null;");
+            }
+
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
             if (model != null)
             {
@@ -89,6 +94,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             ViewBag.UserId = CurrentSession.UserId;
 
+            if (!this.IsBelong(uplineId, 0, id, true))
+            {
+                return this.Content("var model = null;");
+            }
+
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
 
             return this.JsonBase(
@@ -107,7 +117,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Up-line id of customer.</param>
         /// <param name="newGivenCredit">New given credit.</param>
         /// <returns>JSON object.</returns>
-        [HttpPost, Authorization(Function = eFunctions.UpdateCredit, Policy = EPolicy.Update)]
+        [HttpPost, ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
             var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);
@@ -127,7 +137,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="id">Upper customer id.</param>
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ClearCredit, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult UsedCreditPage(int id, int roleId)
         {
             ViewBag.CustId = id;
@@ -154,7 +164,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
         }
 
-        [Authorization(Function = eFunctions.ClearCredit, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
             var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
@@ -167,7 +177,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
-        [Authorization(Function = eFunctions.UpdateBalance, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
         {
             var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
@@ -180,7 +190,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
-        [Authorization(Function = eFunctions.UpdateBalance, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
@@ -197,11 +207,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="clearCredit">Clear credit or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CloseCustomer, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer.RoleId == Super && !GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
                 return this.JsonBase(
                     new Result(1, ViewLang.DontHavePermission), 
@@ -211,7 +221,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                     });
             }
 
-            this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
+            if (casinoCustomer != null)
+            {
+                this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
+            }
+
             return this.JsonBase(
                 this._service.CloseCutomer(custId, close, clearCredit, custName), 
                 new JsonSerializerSettings
@@ -227,11 +241,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Upper customer id.</param>
         /// <param name="suspend">Suspended or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.SuspendCustomer, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer.RoleId == Super && !GroupConfigurations.AllowBettingGroups.Contains(CurrentSession.GroupId))
+            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
                 return this.JsonBase(
                     new Result(1, ViewLang.DontHavePermission), 
@@ -241,7 +255,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                     });
             }
 
-            this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
+            if (casinoCustomer != null)
+            {
+                this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
+            }
+
             return this.JsonBase(
                 this._service.SuspendCustomer(custId, suspend),
                 new JsonSerializerSettings
@@ -256,7 +274,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custId">Customer id.</param>
         /// <param name="allow">Allow or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.AllowOutright, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateOutright(int custId, bool allow)
         {
             return this.JsonBase(
@@ -273,7 +291,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custId">Customer id.</param>
         /// <param name="allow">Allow or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.AllowAutoMPT, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateAutoMPT(int custId, bool allow)
         {
             return this.JsonBase(
@@ -293,7 +311,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EnableCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
             try
@@ -320,7 +338,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Enable or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EnableBingo, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableBingo, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateBingo(int custId, int uplineId, bool enable, bool enableDownline)
         {
             try
@@ -346,7 +364,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Allow or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EnableVirtualSports, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableVirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateVirtualSports(int custId, bool enable, bool enableDownline)
         {
             return this.JsonBase(
@@ -364,7 +382,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Allow or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EnableNumberGame, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
         {
             return this.JsonBase(
@@ -382,7 +400,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enable">Allow or not.</param>
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EnableLiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
         {
             return this.JsonBase(
@@ -393,7 +411,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
-        [Authorization(Function = eFunctions.EnableRacing, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
         {
             ViewBag.roleId = roleId;
@@ -452,7 +470,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
-        [Authorization(Function = eFunctions.EnableRacing, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
         {
             var settings = new JsonSerializerSettings();
@@ -484,7 +502,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
         }
 
-        [Authorization(Function = eFunctions.UpdateSecurityCode, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult GetSecurityCode(int id, int roleId, string username)
         {
             ViewBag.custId = id;
@@ -502,7 +520,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
-        [Authorization(Function = eFunctions.UpdateSecurityCode, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 1)
         {
             string hashCode = Encryption.CfsEnCode(code);

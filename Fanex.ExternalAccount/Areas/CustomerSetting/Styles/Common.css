@@ -82,7 +82,7 @@ input[type=text]
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle; /*color: #ff5411;*/
-	font-size: 13px;
+	font-size: 13px !important;
 	clear: both;
 	padding-left: 30px;
 	white-space: pre-line;
@@ -339,7 +339,7 @@ select,.select
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle; /*color: #ff5411;*/
-	font-size: 13px;
+	font-size: 13px !important;
 	clear: both;
 	padding-left: 30px;
 	white-space: pre-line;

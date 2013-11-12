@@ -60,7 +60,8 @@ Fanex.ExtAcc.Customer.MinPT = {
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
                             parentId: editMinPTStatus == 'SuperEditMinPTMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId,
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
                         };
                     }
 
@@ -71,7 +72,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                         type: 'post'
                     })
                     .success(function (result) {
-                        if (result.ErrorCode == 0) {
+                        if (result.errorCode == 0) {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
@@ -87,7 +88,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                             Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -103,7 +104,7 @@ Fanex.ExtAcc.Customer.MinPT = {
         .error(function (xhr, status, err) {
             Fanex.ExtAcc.UnBlockUI();
         });
-    },
+    }
 }
 
 $(document).ready(function () {
