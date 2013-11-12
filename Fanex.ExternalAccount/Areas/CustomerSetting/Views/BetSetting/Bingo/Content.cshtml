@@ -128,8 +128,10 @@
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
 
-                        Fanex.CustomerSetting.Core.BlockUI();
+                        $('#ng-app').hide();
 
+                        Fanex.CustomerSetting.Core.BlockUI();
+                        
                         document.location.reload(true);
                     }, 2000);
                 }

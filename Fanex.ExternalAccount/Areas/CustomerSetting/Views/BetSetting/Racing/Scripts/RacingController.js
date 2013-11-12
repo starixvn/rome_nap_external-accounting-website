@@ -242,7 +242,7 @@ Fanex.CustomerSetting.Betting.Racing.Update = function (ondone) {
         }
     })
     .success(function (data) {
-        var errorCodes = data.errorCode.split('\u0007');
+        var errorCodes = data.errorCode.toString().indexOf('\u0007') != -1 ? data.errorCode.split('\u0007') : [ data.errorCode ];
         var success = true;
 
         $(errorCodes).each(function (i, error) {
