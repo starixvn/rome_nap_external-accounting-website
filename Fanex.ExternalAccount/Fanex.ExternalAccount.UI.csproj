@@ -718,6 +718,8 @@
     <Content Include="Images\bg-menubar.png" />
     <Content Include="Images\bg-Title-Grid.png" />
     <Content Include="Images\bgGrid.png" />
+    <Content Include="Images\btn-bgsubmit-hover.png" />
+    <Content Include="Images\btn-bgsubmit-original.png" />
     <Content Include="Images\b_add.jpg" />
     <Content Include="Images\b_down.jpg" />
     <Content Include="Images\b_sub.jpg" />

@@ -1,9 +1,17 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
 @{
     var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
     var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
     var userId = Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
-    var siteName = Request.RequestContext.RouteData.Values["siteName"];    
+    var siteName = Request.RequestContext.RouteData.Values["siteName"];
+    var customer = new Fanex.CustomerSetting.Module.BetSetting.Services.Impl.CustomerService();
+    var custInfo = JsonConvert.SerializeObject(customer.UserInfo(id), Formatting.None, new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = NullValueHandling.Ignore
+    });    
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +25,7 @@
         <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
     </head>
     <body>
-    <div id="tabs" style="float: left; width: 850px; display: none; border: none">
+    <div id="tabs" style="float: left; width: 850px; border: none">
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
@@ -57,7 +65,7 @@
         }
 
         $(document).ready(function () {
-            var url = document.URL.toLowerCase();            
+            var url = document.URL.toLowerCase();
             var index = url.indexOf('sportsbook') != -1 ? 0 :
                 url.indexOf('racingbetting') != -1 ? 1 :
                 url.indexOf('virtualsportsbetting') != -1 ? 2 :
@@ -66,12 +74,28 @@
                 url.indexOf('casinobetting') != -1 ? 5 : 0;
 
             $('#tabs').tabs({ selected: index });
+
+            if (!custInfo.sycCasino) {
+                $('#tab6').remove();
+                $('#tabs-6').remove();
+            }
+
+            if (!custInfo.sycBingo) {
+                $('#tab5').remove();
+                $('#tabs-5').remove();
+            }
+
+            if (!custInfo.sycLiveCasino) {
+                $('#tab4').remove();
+                $('#tabs-4').remove();
+            }
         });
 
         var custId = parseInt('@id');
         var uplineId = parseInt('@uplineId');
         var userId = parseInt('@userId');
         var siteName = '@siteName';
+        var custInfo = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@custInfo'));
     </script>
     </body>
 </html>
