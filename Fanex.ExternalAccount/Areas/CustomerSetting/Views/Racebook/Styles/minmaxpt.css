@@ -26,3 +26,4 @@ select.pt { width: 60px; }
     font-weight: bold;
 }
 .display-none { display: none; }
+.floatR { float: right; }
