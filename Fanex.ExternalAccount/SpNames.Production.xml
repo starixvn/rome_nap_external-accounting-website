@@ -205,6 +205,10 @@
 
     <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="DBTXN.bodb02.bodbExtAccNet"  />
+
+    <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+    <Setting Key="UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0"/>
   </Function>
   <Function Name="Bingo Setting">
     <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBTXN.bodb02.bodbExtAccNet"/>
