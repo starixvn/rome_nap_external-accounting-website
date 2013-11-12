@@ -809,6 +809,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
+            Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
             Fanex.ExtAcc.Customer.PTSetting.ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
 

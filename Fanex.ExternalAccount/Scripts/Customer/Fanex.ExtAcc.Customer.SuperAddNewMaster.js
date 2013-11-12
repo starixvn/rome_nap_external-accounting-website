@@ -162,15 +162,15 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
 
-                                Fanex.ExtAcc.AutoInsertCasino(result.CustId, parseInt($('#parentId').val()), $('#parentUsername').val());
-                                Fanex.ExtAcc.AutoInsertBingo(result.CustId, parseInt($('#parentId').val()), $('#parentUsername').val());
-                                Fanex.ExtAcc.AutoInsertLiveCasino(result.CustId, parseInt($('#parentId').val()), 4, $('#selectedGroupName').html());
+                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
+                                Fanex.ExtAcc.AutoInsertBingo(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
+                                Fanex.ExtAcc.AutoInsertLiveCasino(result.custId, parseInt($('#parentId').val()), 4, $('#selectedGroupName').html());
 
                                 timeout = setInterval(function () {
                                     if (Fanex.ExtAcc.AutoInsertCompleted) {
                                         clearInterval(timeout);
 
-                                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.CustId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
+                                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
                                     }
                                 }, 100);
 

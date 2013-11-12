@@ -726,13 +726,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult TransferCondition()
         {
             return this.PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
             ViewBag.CustId = custId;
@@ -741,7 +741,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))

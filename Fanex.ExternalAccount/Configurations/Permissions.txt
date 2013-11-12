@@ -41,3 +41,4 @@ UpdateCredit // +/- credit for customer
 UpdateSecurityCode
 UpdateBalance // Clear balance when transfer
 ClearCredit // Clear credit when close account
+Transfer

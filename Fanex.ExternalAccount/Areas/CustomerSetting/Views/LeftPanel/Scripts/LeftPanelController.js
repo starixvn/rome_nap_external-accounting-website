@@ -1854,6 +1854,19 @@ function SettingController($scope, $http) {
     };
 
     $scope.MinRB = function () {
+        var typeUrl = '';
+        var roleId = $scope.model.personalInfo.roleId.value;
+        if (roleId === 3) { // master
+            typeUrl = 'MasterMinMaxPT';
+        }
+        else if (roleId === 2) { // agent
+            typeUrl = 'AgentMinMaxPT';
+        }
+
+        if (typeUrl !== '') {
+            var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?custId=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
+            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(url));
+        }
     };
 
     $scope.SuperPT = function () {
