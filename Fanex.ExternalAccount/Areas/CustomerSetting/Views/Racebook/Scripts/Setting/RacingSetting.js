@@ -135,6 +135,7 @@
                 ', "newSettings":' + JSON.stringify(customerPTRacingSetting.currentSetting) +
                 ', "currentContext":' + JSON.stringify(ctx) +
                 ', "otherSettings":' + JSON.stringify(customerPTRacingSetting.otherSettings) +
+                ', "groupName": "' + parent.$('#selectedGroupName').html() + '"' +
                 '}',
             beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
             success: function (result) {

@@ -44,7 +44,7 @@
             Fanex.CustomerSetting.Core.BlockUI();
             minMaxPTRacingSetting.setParamUpdatePT();
 
-            var data = JSON.stringify({ setting: this.currentSetting, targetRoleId: window.targetRoleId });
+            var data = JSON.stringify({ setting: this.currentSetting, targetRoleId: window.targetRoleId, groupName: parent.$('#selectedGroupName').html() });
             $.ajax({
                 type: 'POST',
                 url: parent.resolveClientUrl('CustomerSetting/RaceBook/RacingSetting/UpdateMinMaxPT'),

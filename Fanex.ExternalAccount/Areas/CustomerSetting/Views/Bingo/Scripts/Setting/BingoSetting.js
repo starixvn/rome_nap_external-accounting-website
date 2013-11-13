@@ -38,7 +38,7 @@
         }
     },
     ajaxUpdatePT: function (customer) {
-        var param = { customer: customer, updatedByRoleID: window.pageRole };
+        var param = { customer: customer, updatedByRoleID: window.pageRole, groupName: parent.$('#selectedGroupName').html() };
         $.ajax({
             type: 'POST',
             url: 'UpdateCustomerSetting',
