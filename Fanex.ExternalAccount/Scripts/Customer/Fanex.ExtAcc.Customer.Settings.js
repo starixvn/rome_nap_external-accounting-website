@@ -126,7 +126,7 @@ Fanex.ExtAcc.Customer.Settings = {
                 action = 'Member';
             }
         }
-        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId);
+        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
         $('#tabs-2').height($('#leftFrame').height() - 10);
         $('#tabs-2').css('display', 'block');
         $('#racingFrame').attr('src', url);
@@ -144,7 +144,7 @@ Fanex.ExtAcc.Customer.Settings = {
         }
 
         if (typeUrl !== '') {
-            var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?custId=' + custId + '&roleId=' + roleId);
+            var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + custId + '&roleId=' + roleId + '&groupName=' + $('#selectedGroupName').html());
             $('#tabs-3').height($('#leftFrame').height() - 10);
             $('#tabs-3').css('display', 'block');
             $('#minMaxracingFrame').attr('src', url);
@@ -177,7 +177,7 @@ Fanex.ExtAcc.Customer.Settings = {
             return [''];
         };
 
-        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId);
+        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html());
 
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
@@ -203,7 +203,7 @@ Fanex.ExtAcc.Customer.Settings = {
                 action = 'Member';
             }
         }
-        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId);
+        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html());
         $('#tabs-5').height($('#leftFrame').height() - 10);
         $('#tabs-5').css('display', 'block');
         $('#bingoFrame').attr('src', url);

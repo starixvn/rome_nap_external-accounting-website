@@ -36,7 +36,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -206,7 +206,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -217,7 +217,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -228,7 +228,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -239,7 +239,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -340,7 +340,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -351,7 +351,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -939,7 +939,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
@@ -965,7 +965,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             return this.PartialViewBase();
