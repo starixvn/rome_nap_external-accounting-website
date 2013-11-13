@@ -47,7 +47,8 @@ function Update() {
                     data: {
                         custId: custId,
                         custIds: custIds,
-                        isCheckedAll: isCheckedAll
+                        isCheckedAll: isCheckedAll,
+                        groupName: parent.$('#selectedGroupName').html()
                     },
                     type: 'post'
                 }).success(function (result) {

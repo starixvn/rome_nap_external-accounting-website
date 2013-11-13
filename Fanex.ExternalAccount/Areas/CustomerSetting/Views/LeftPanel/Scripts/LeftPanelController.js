@@ -469,7 +469,7 @@ function PersonalInfoController($scope, $http) {
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -604,7 +604,7 @@ function ViewInfoController($scope, $http) {
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -673,7 +673,7 @@ function BalanceDownlineInfoController($scope, $http) {
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -714,7 +714,7 @@ function BalanceController($scope, $http) {
         parent.Fanex.ExtAcc.BlockUI();
 
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -741,7 +741,7 @@ function BalanceController($scope, $http) {
         if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
             $http({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value),
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post',
                 headers: { "X-Requested-With": "XMLHttpRequest" }
             })
@@ -992,7 +992,8 @@ function SettingController($scope, $http) {
                             uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                             close: !close,
                             clearCredit: false,
-                            custName: $scope.model.personalInfo.currentLevel.value
+                            custName: $scope.model.personalInfo.currentLevel.value,
+                            groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
@@ -1054,7 +1055,8 @@ function SettingController($scope, $http) {
                                 uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                                 close: !close,
                                 clearCredit: parent.$('#clearCredit').get(0).checked,
-                                custName: $scope.model.personalInfo.currentLevel.value
+                                custName: $scope.model.personalInfo.currentLevel.value,
+                                groupName: parent.$('#selectedGroupName').html()
                             }
                         })
                         .success(function (result) {
@@ -1138,7 +1140,8 @@ function SettingController($scope, $http) {
                         data: {
                             custId: $scope.model.personalInfo.custId.value,
                             uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                            suspend: !suspend
+                            suspend: !suspend,
+                            groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
@@ -1195,7 +1198,8 @@ function SettingController($scope, $http) {
                     type: 'post',
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
-                        allow: !allow
+                        allow: !allow,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
@@ -1252,7 +1256,8 @@ function SettingController($scope, $http) {
                     type: 'post',
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
-                        allow: !allow
+                        allow: !allow,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
@@ -1324,7 +1329,8 @@ function SettingController($scope, $http) {
                                         uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                                         enable: !enable,
                                         enableDownline: false,
-                                        custName: $scope.model.personalInfo.currentLevel.value
+                                        custName: $scope.model.personalInfo.currentLevel.value,
+                                        groupName: parent.$('#selectedGroupName').html()
                                     }
                                 })
                                 .success(function (result) {
@@ -1389,7 +1395,8 @@ function SettingController($scope, $http) {
                             uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                             enable: !enable,
                             enableDownline: parent.$('#enableDownline').get(0).checked,
-                            custName: $scope.model.personalInfo.currentLevel.value
+                            custName: $scope.model.personalInfo.currentLevel.value,
+                            groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
@@ -1464,7 +1471,8 @@ function SettingController($scope, $http) {
                                     uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                                     enable: !enable,
                                     enableDownline: false,
-                                    custName: $scope.model.personalInfo.currentLevel.value
+                                    custName: $scope.model.personalInfo.currentLevel.value,
+                                    groupName: parent.$('#selectedGroupName').html()
                                 }
                             })
                             .success(function (result) {
@@ -1529,7 +1537,8 @@ function SettingController($scope, $http) {
                         uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                         enable: !enable,
                         enableDownline: parent.$('#enableDownline').get(0).checked,
-                        custName: $scope.model.personalInfo.currentLevel.value
+                        custName: $scope.model.personalInfo.currentLevel.value,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
@@ -1594,7 +1603,8 @@ function SettingController($scope, $http) {
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
                         enable: !enable,
-                        enableDownline: parent.$('#enableDownline').get(0).checked
+                        enableDownline: parent.$('#enableDownline').get(0).checked,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
@@ -1661,7 +1671,8 @@ function SettingController($scope, $http) {
                 data: {
                     custId: $scope.model.personalInfo.custId.value,
                     enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked
+                    enableDownline: parent.$('#enableDownline').get(0).checked,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
@@ -1728,7 +1739,8 @@ function SettingController($scope, $http) {
                 data: {
                     custId: $scope.model.personalInfo.custId.value,
                     enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked
+                    enableDownline: parent.$('#enableDownline').get(0).checked,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
@@ -1774,7 +1786,7 @@ function SettingController($scope, $http) {
     $scope.EnableRacing = function () {
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetEnableRacing?id=' + $scope.model.personalInfo.custId.value +
             '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
-            '&roleId=' + $scope.model.personalInfo.roleId.value);
+            '&roleId=' + $scope.model.personalInfo.roleId.value + '&groupName=' + parent.$('#selectedGroupName').html());
         var title = 'Update Racing Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 350, false, null, 1, 'enableRacing');
     };
@@ -2015,7 +2027,7 @@ function LoginController($scope) {
     };
 
     $scope.ResetSecurityCode = function (id, roleId, username) {
-        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username);
+        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
     };
 };

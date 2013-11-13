@@ -43,7 +43,8 @@ function RacingStatusController($scope) {
                 id: custId,
                 uplineId: uplineId,
                 txtCustomerObject: JSON.stringify(model),
-                roleId: roleId
+                roleId: roleId,
+                groupName: parent.$('#selectedGroupName').html()
             }
         })
         .success(function (data) {            

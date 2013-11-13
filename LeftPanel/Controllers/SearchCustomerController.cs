@@ -120,6 +120,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [HttpPost, ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
             return this.JsonBase(
@@ -140,6 +145,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult UsedCreditPage(int id, int roleId)
         {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
             ViewBag.CustId = id;
 
             if (roleId == Super || roleId == Master)
@@ -164,9 +174,20 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
         }
 
+        /// <summary>
+        /// Resets member credit.
+        /// </summary>
+        /// <param name="agentId">Agent customer id.</param>
+        /// <param name="closedOnly">Resets closed account only.</param>
+        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
+            if (!this.IsBelong(Request["groupName"], agentId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
             return this.JsonBase(
                 result, 
@@ -177,9 +198,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
+        /// <summary>
+        /// Clears balance.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="custIds">Customer id list.</param>
+        /// <param name="isCheckedAll">Checks all or not.</param>
+        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
             return this.JsonBase(
                 result,
@@ -193,6 +226,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SelectClearBalance(int custId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
             ViewBag.CustId = custId;
             var result = this._service.CustomerSelectClearBalance(custId);
             return this.PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
@@ -210,6 +248,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
             if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
@@ -244,6 +287,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
             if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
@@ -277,6 +325,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateOutright(int custId, bool allow)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.JsonBase(
                 this._service.AllowOutright(custId, allow),
                 new JsonSerializerSettings
@@ -294,6 +347,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateAutoMPT(int custId, bool allow)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.JsonBase(
                 this._service.AutoMasterPT(custId, allow),
                 new JsonSerializerSettings
@@ -314,6 +372,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -341,6 +404,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.EnableBingo, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateBingo(int custId, int uplineId, bool enable, bool enableDownline)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -367,6 +435,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.EnableVirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateVirtualSports(int custId, bool enable, bool enableDownline)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.JsonBase(
                 this._service.EnableVirtualSports(custId, enable, enableDownline),
                 new JsonSerializerSettings
@@ -385,6 +458,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.JsonBase(
                 this._service.EnableNumberGame(custId, enable, enableDownline),
                 new JsonSerializerSettings
@@ -403,6 +481,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             return this.JsonBase(
                 this._service.EnableLiveCasino(custId, enable, enableDownline),
                 new JsonSerializerSettings
@@ -411,9 +494,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 });
         }
 
+        /// <summary>
+        /// Gets enable racing page.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
         {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
             ViewBag.roleId = roleId;
             ViewBag.id = id;
             ViewBag.uplineId = uplineId;
@@ -473,6 +568,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
         {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -502,9 +602,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
         }
 
+        /// <summary>
+        /// Gets security code page.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="roleId">Customer role id.</param>
+        /// <param name="username">Customer username.</param>
+        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult GetSecurityCode(int id, int roleId, string username)
         {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
             ViewBag.custId = id;
             ViewBag.roleId = roleId;
             ViewBag.Username = username;
@@ -523,6 +635,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 1)
         {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+            }
+
             string hashCode = Encryption.CfsEnCode(code);
             if (roleId != Member)
             {
