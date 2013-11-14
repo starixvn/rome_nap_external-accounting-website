@@ -2081,15 +2081,25 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Customer.directSuperId = result.srecommend;
                     Fanex.ExtAcc.Customer.directMasterId = result.mrecommend;
                     Fanex.ExtAcc.Customer.directAgentId = result.recommend;
-                    Fanex.ExtAcc.Customer.custId = result.custId;
+                    Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
+                    Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
 
                     if (result.roleId == 4) {
                         Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
                     } else if (result.roleId == 3) {
+                        Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
+                        Fanex.ExtAcc.Customer.superSyncBingo = result.syncBingo;
+                        Fanex.ExtAcc.Customer.superSyncLiveCasino = result.syncLiveCasino;
                         Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
                     } else if (result.roleId == 2) {
+                        Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
+                        Fanex.ExtAcc.Customer.masterSyncBingo = result.syncBingo;
+                        Fanex.ExtAcc.Customer.masterSyncLiveCasino = result.syncLiveCasino;
                         Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
                     } else {
+                        Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
+                        Fanex.ExtAcc.Customer.agentSyncBingo = result.syncBingo;
+                        Fanex.ExtAcc.Customer.agentSyncLiveCasino = result.syncLiveCasino;
                         Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
                     }
                 } else {

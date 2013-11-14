@@ -417,17 +417,35 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool? isExportExcel = null)
         {
             DataTable result;
-            int srecommend;
-            int mrecommend;
-            int recommend;
-            int custId;
-            int roleId;
+            int srecommend, mrecommend, recommend, custId, roleId;
             this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
-
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
                 result == null ? new DataTable() : result, 
                 Formatting.None, 
                 new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+            bool syncCasino = true, syncBingo = true, syncLiveCasino = true, allowDoubleComm = true;
+
+            if (roleId > 0 && roleId < 4)
+            {
+                DataTable userInfo = null;                
+                switch (roleId)
+                {
+                    case Master:
+                        userInfo = this._superService.GetData(null, srecommend, null, null, null, groupName);
+                        break;
+                    case Agent:
+                        userInfo = this._masterService.GetData(srecommend, mrecommend, null, null, null);
+                        break;
+                    case Member:
+                        userInfo = this._agentService.GetData(mrecommend, recommend, null, null, null);
+                        break;
+                }
+                
+                syncBingo = userInfo.Rows[0].ToBoolean("syncBingo");
+                syncCasino = userInfo.Rows[0].ToBoolean("syncCasino");
+                syncLiveCasino = userInfo.Rows[0].ToBoolean("syncLiveCasino");
+                allowDoubleComm = userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
+            }
 
             return this.JsonBase(
                 new 
@@ -440,7 +458,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     srecommend = srecommend, 
                     mrecommend = mrecommend, 
                     recommend = recommend, 
-                    custId = custId 
+                    custId = custId,
+                    syncCasino = syncCasino,
+                    syncBingo = syncBingo,
+                    syncLiveCasino = syncLiveCasino,
+                    allowDoubleComm = allowDoubleComm
                 });
         }
 
