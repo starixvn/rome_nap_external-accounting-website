@@ -223,7 +223,7 @@ Fanex.ExtAcc.GroupPolicy = {
                 var json = $.parseJSON(result);
                 if (!json.isSuccess) {
                     $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(json.errorMessage);
+                    $('#errMsg').html(json.errorMessage.formatErrorMessage());
                     Fanex.ExtAcc.UnBlockUI();
                 }
                 else {

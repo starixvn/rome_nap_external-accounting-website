@@ -218,7 +218,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             if (userId != CurrentSession.UserId)
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var result = this._userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
@@ -230,7 +230,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             if (id != CurrentSession.UserId)
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var model = this._userService.GetUserById(id);

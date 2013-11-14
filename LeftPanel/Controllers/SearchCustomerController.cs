@@ -122,7 +122,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);
@@ -147,7 +147,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             ViewBag.CustId = id;
@@ -185,7 +185,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], agentId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
@@ -210,7 +210,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
@@ -228,7 +228,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             ViewBag.CustId = custId;
@@ -250,7 +250,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -289,7 +289,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -327,7 +327,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.JsonBase(
@@ -349,7 +349,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.JsonBase(
@@ -374,7 +374,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             try
@@ -406,7 +406,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             try
@@ -437,7 +437,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.JsonBase(
@@ -460,7 +460,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.JsonBase(
@@ -483,7 +483,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.JsonBase(
@@ -506,7 +506,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             ViewBag.roleId = roleId;
@@ -570,7 +570,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -614,7 +614,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             ViewBag.custId = id;
@@ -637,7 +637,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             string hashCode = Encryption.CfsEnCode(code);

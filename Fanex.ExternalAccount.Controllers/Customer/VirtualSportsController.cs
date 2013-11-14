@@ -40,7 +40,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         {
             if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase(model);
@@ -93,7 +93,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         {
             if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             IRequestContext currentContext = new RequestContext()

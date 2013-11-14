@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System;
     using System.IO;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using Fanex.CustomerSetting.Module.Core.Web;
@@ -227,6 +228,35 @@ namespace Fanex.ExternalAccount.Core.Base
                 groups.Where(o => o.GroupID == CurrentSession.GroupId).First().GroupName.ToLower() == groupname.ToLower();
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
+        }
+
+        /// <summary>
+        /// Returns denied action.
+        /// </summary>
+        /// <param name="request">Request context.</param>
+        /// <returns>ActionResult object.</returns>
+        protected ActionResult ActionDenied(HttpRequestBase request)
+        {
+            if (request.IsAjaxRequest())
+            {
+                return new JsonResult
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new
+                    {
+                        errorCode = 1,
+                        errorMessage = ViewLang.DontHavePermission,
+                        isSuccess = false
+                    }
+                };
+            }
+            else
+            {
+                return new ViewResult
+                {
+                    ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
+                };
+            }
         }
 
         /// <summary>

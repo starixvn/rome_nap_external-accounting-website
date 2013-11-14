@@ -36,7 +36,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -53,7 +53,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -92,7 +92,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -131,7 +131,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -171,7 +171,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -206,7 +206,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -217,7 +217,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -228,7 +228,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -239,7 +239,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -256,7 +256,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -295,7 +295,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -340,7 +340,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -351,7 +351,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -368,7 +368,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -412,7 +412,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -460,7 +460,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var mult = Request["isMult"];
@@ -519,7 +519,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -567,7 +567,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var mult = Request["isMult"];
@@ -626,7 +626,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -672,7 +672,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var mult = Request["isMult"];
@@ -732,7 +732,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -779,7 +779,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var para = Request["para"];
@@ -837,7 +837,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
@@ -884,7 +884,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var para = Request["para"];
@@ -939,7 +939,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -950,7 +950,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -965,7 +965,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
-                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return this.ActionDenied(this.Request);
             }
 
             return this.PartialViewBase();
@@ -982,7 +982,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var context = new RequestContext()
@@ -1032,7 +1032,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var context = new RequestContext()
@@ -1083,7 +1083,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
@@ -1119,7 +1119,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = ViewLang.DontHavePermission, IsSuccess = false });
+                return this.ActionDenied(this.Request);
             }
 
             var settings = new JsonSerializerSettings();
