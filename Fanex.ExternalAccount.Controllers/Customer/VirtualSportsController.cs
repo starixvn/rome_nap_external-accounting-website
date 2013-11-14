@@ -38,7 +38,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSingle(PTVirtualSportsModel model)
         {
-            if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))
+            if (!this.IsBelong(Request["groupName"], model.CustId, null, true))
             {
                 return this.ActionDenied(this.Request);
             }
@@ -91,7 +91,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateCustomerSetting(PTVirtualSportsUpdateModel model)
         {
-            if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))
+            if (!this.IsBelong(Request["groupName"], model.CustId, null, true))
             {
                 return this.ActionDenied(this.Request);
             }
