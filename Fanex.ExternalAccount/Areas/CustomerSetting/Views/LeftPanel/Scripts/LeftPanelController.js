@@ -1901,7 +1901,7 @@ function SettingController($scope, $http) {
 
     $scope.SuperCasino = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperRacing = function () {
@@ -1949,7 +1949,7 @@ function SettingController($scope, $http) {
 
     $scope.MasterCasino = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterRacing = function () {
