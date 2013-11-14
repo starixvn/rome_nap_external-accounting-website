@@ -102,7 +102,8 @@
             userId: CustomerInfo.userId,
             username: CustomerInfo.username,
             settingModel: JSON.stringify(SettingModel),
-            customerModel: JSON.stringify(CustomerModel)
+            customerModel: JSON.stringify(CustomerModel),
+            groupName: parent.$('#selectedGroupName').html()
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
