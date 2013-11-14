@@ -34,6 +34,9 @@ Fanex.ExtAcc.Customer.Settings = {
             Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
         }
         else {
+            // Loads first tab (Racing PT)
+            Fanex.ExtAcc.Customer.Settings.GetRacingPT();
+
             $('#tab1').hide();
             $('#tabs-1').hide();
             $('#tabs').tabs({ selected: 1 });
@@ -94,12 +97,10 @@ Fanex.ExtAcc.Customer.Settings = {
         }).success(function (result) {
             $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);
-            Fanex.ExtAcc.UnBlockUI();
         }).error(function (data) {
             if (typeof console != 'undefined') {
                 console.log(data.responseText);
             }
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -128,7 +129,7 @@ Fanex.ExtAcc.Customer.Settings = {
                 action = 'Member';
             }
         }
-        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?custid=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId);
         $('#tabs-2').height($('#leftFrame').height() - 10);
         $('#tabs-2').css('display', 'block');
         $('#racingFrame').attr('src', url);
@@ -146,7 +147,7 @@ Fanex.ExtAcc.Customer.Settings = {
         }
 
         if (typeUrl !== '') {
-            var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + custId + '&roleId=' + roleId + '&groupName=' + $('#selectedGroupName').html());
+            var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?custId=' + custId + '&roleId=' + roleId);
             $('#tabs-3').height($('#leftFrame').height() - 10);
             $('#tabs-3').css('display', 'block');
             $('#minMaxracingFrame').attr('src', url);
@@ -179,7 +180,7 @@ Fanex.ExtAcc.Customer.Settings = {
             return [''];
         };
 
-        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId);
 
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
@@ -188,24 +189,30 @@ Fanex.ExtAcc.Customer.Settings = {
 
     GetBingoSetting: function () {
         var action = '';
+        var uplineId = 0;
         if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             action = 'Master';
+            uplineId = Fanex.ExtAcc.Customer.superId;
         }
         else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             action = 'Agent';
+            uplineId = Fanex.ExtAcc.Customer.masterId;
         }
         else {
             if (Fanex.ExtAcc.Customer.isSuperEditMember) {
                 action = 'SuperEditMember';
+                uplineId = Fanex.ExtAcc.Customer.superId;
             }
             else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
                 action = 'MasterEditMember';
+                uplineId = Fanex.ExtAcc.Customer.masterId;
             }
             else {
                 action = 'Member';
+                uplineId = Fanex.ExtAcc.Customer.agentId;
             }
         }
-        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.Settings.UserId + '&uplineId=' + uplineId);
         $('#tabs-5').height($('#leftFrame').height() - 10);
         $('#tabs-5').css('display', 'block');
         $('#bingoFrame').attr('src', url);

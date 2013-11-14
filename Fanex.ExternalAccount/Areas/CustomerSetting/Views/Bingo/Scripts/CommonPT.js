@@ -45,20 +45,21 @@ function gup(name) {
 }
 // Success=0, Error=1, Warning=2
 function showAlertMessage(containerid, msg, type) {
+    var message = '';
     var errorElement = $('#' + containerid);
     switch (type) {
         case 0:
-            msg = '<div class="msgcorrect">' + msg.formatSuccessMessage() + '</div>';
+            message = '<div class="msgcorrect">' + msg.formatSuccessMessage() + '</div>';
             break;
         case 1:
         case 2:
-            msg = '<div class="msgerror">' + msg.formatErrMsg() + '</div>';
+            message = '<div class="msgerror">' + msg.formatErrMsg() + '</div>';
             break;
         default:
             return;
     }
     errorElement.removeClass('display-none');
-    errorElement.html(msg);
+    errorElement.html(message);
     window.scroll(0, 0);
     parent.scroll(0, 0);
 }
