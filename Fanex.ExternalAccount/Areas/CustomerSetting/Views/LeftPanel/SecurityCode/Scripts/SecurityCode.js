@@ -33,7 +33,8 @@
             id: custId,
             code: $('#securityCode').val(),
             force: document.getElementById('forceChange').checked,
-            roleId: roleId
+            roleId: roleId,
+            groupName: parent.$('#selectedGroupName').html()
         }
     }).success(function (result) {
         if (result.isSuccess) {

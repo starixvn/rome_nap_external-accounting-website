@@ -648,12 +648,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             Result result = this._service.ResetSecurityCode(id, hashCode, force);
-            return this.JsonBase(
-                result, 
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(result);
         }
     }
 }
