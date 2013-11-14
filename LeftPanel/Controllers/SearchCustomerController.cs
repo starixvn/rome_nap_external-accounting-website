@@ -101,13 +101,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
 
-            return this.JsonBase(
-                model,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(model);
         }
 
         /// <summary>
@@ -127,13 +121,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
-            return this.JsonBase(
-                model, 
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(model);
         }
 
         /// <summary>
@@ -189,13 +177,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
-            return this.JsonBase(
-                result, 
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(result);
         }
 
         /// <summary>
@@ -214,13 +196,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
-            return this.JsonBase(
-                result,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(result);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -256,12 +232,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
             if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
-                return this.JsonBase(
-                    new Result(1, ViewLang.DontHavePermission), 
-                    new JsonSerializerSettings
-                    {
-                        NullValueHandling = NullValueHandling.Ignore
-                    });
+                return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
             }
 
             if (casinoCustomer != null)
@@ -269,12 +240,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
             }
 
-            return this.JsonBase(
-                this._service.CloseCutomer(custId, close, clearCredit, custName), 
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.CloseCutomer(custId, close, clearCredit, custName));
         }
 
         /// <summary>
@@ -295,12 +261,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
             if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId))
             {
-                return this.JsonBase(
-                    new Result(1, ViewLang.DontHavePermission), 
-                    new JsonSerializerSettings
-                    {
-                        NullValueHandling = NullValueHandling.Ignore
-                    });
+                return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
             }
 
             if (casinoCustomer != null)
@@ -308,12 +269,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
             }
 
-            return this.JsonBase(
-                this._service.SuspendCustomer(custId, suspend),
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.SuspendCustomer(custId, suspend));
         }
 
         /// <summary>
@@ -330,12 +286,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.ActionDenied(this.Request);
             }
 
-            return this.JsonBase(
-                this._service.AllowOutright(custId, allow),
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.AllowOutright(custId, allow));
         }
 
         /// <summary>
@@ -352,12 +303,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.ActionDenied(this.Request);
             }
 
-            return this.JsonBase(
-                this._service.AutoMasterPT(custId, allow),
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.AutoMasterPT(custId, allow));
         }
 
         /// <summary>
@@ -380,12 +326,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return this.JsonBase(
-                    this._service.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync, custName),
-                    new JsonSerializerSettings
-                    {
-                        NullValueHandling = NullValueHandling.Ignore
-                    });
+                return this.JsonBase(this._service.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync, custName));
             }
             catch (Exception ex)
             {
@@ -412,12 +353,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return this.JsonBase(
-                    this._service.EnableBingo(custId, enable, casinoCustomer.BingoSync, enableDownline),
-                    new JsonSerializerSettings
-                    {
-                        NullValueHandling = NullValueHandling.Ignore
-                    });
+                return this.JsonBase(this._service.EnableBingo(custId, enable, casinoCustomer.BingoSync, enableDownline));
             }
             catch (Exception ex)
             {
@@ -440,12 +376,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.ActionDenied(this.Request);
             }
 
-            return this.JsonBase(
-                this._service.EnableVirtualSports(custId, enable, enableDownline),
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.EnableVirtualSports(custId, enable, enableDownline));
         }
 
         /// <summary>
@@ -463,12 +394,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.ActionDenied(this.Request);
             }
 
-            return this.JsonBase(
-                this._service.EnableNumberGame(custId, enable, enableDownline),
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.EnableNumberGame(custId, enable, enableDownline));
         }
 
         /// <summary>
@@ -486,12 +412,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.ActionDenied(this.Request);
             }
 
-            return this.JsonBase(
-                this._service.EnableLiveCasino(custId, enable, enableDownline),
-                new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return this.JsonBase(this._service.EnableLiveCasino(custId, enable, enableDownline));
         }
 
         /// <summary>
