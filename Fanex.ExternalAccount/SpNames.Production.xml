@@ -87,6 +87,20 @@
     <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelRBStatus" SpName="Acc_CustomerSelRBStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdRBStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />    
+    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
@@ -130,10 +144,7 @@
     <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />    
   </Function>
   <Function Name="Edit Commission">
     <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
