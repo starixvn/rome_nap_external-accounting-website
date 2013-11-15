@@ -1,6 +1,17 @@
 ﻿var customerPTBingoSetting = {
     context: {},
+    isMultiple: false,
+    CustInfos: [],
+    Usernames: [],
+    Error: '',
+    Success: true,
     init: function () {
+        try {
+            this.isMultiple = parent.Fanex.ExtAcc.Customer.IsMultiple;
+            this.CustInfos = parent.Fanex.ExtAcc.Customer.IdsAndNames();
+            this.Usernames = parent.Fanex.ExtAcc.Customer.Usernames;
+        } catch (e) {
+        }
         this.getCustomerSetting();
     },
     getCustomerSetting: function () {

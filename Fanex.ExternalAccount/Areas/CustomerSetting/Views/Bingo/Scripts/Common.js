@@ -1,8 +1,15 @@
 ﻿function PTBlockUI() {
-    parent.Fanex.ExtAcc.BlockUI();
+    try {
+        parent.Fanex.ExtAcc.BlockUI();
+    }
+    catch (e) {
+    }
 }
 function PTUnBlockUI() {
-    parent.Fanex.ExtAcc.UnBlockUI();
+    try {
+        parent.Fanex.ExtAcc.UnBlockUI();
+    } catch (e) {
+    }
 }
 function uInteger(str) {
     str = str.replace(/^\s+|\s+$/g, '');

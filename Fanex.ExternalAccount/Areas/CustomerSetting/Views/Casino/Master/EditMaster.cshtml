@@ -126,12 +126,12 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditMasterController.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
-
-    $(document).ready(function () {
+    try {
         var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
 
         $('.buttonPopup').bind('click', function () {
             casinoController.Update();
         });
-    });
+    } catch(e) {
+    }
 </script>

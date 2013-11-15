@@ -18,12 +18,12 @@
 
         $.ajax({
             type: 'POST',
-            url: parent.resolveClientUrl('CustomerSetting/RaceBook/RacingSetting/GetMinMaxPTSetting'),
+            url: 'GetMinMaxPTSetting',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(param),
             beforeSend: function (jqXHR, settings) {
-                parent.Fanex.ExtAcc.BlockUI();
+                PTBlockUI();
             },
             success: function (data, textStatus, jqXHR) {
                 if (data) {
@@ -35,19 +35,19 @@
                 showAlertMessage('err', 'Init context error.', 1);
             },
             complete: function (jqXHR, textStatus) {
-                parent.Fanex.ExtAcc.UnBlockUI();
+                PTUnBlockUI();
             }
         });
     },
     updatePT: function () {
         if (window.targetRoleId === this.roleId.masterMinMax || window.targetRoleId === this.roleId.agentMinMax) {
-            parent.Fanex.ExtAcc.BlockUI();
+            PTBlockUI();
             minMaxPTRacingSetting.setParamUpdatePT();
 
             var data = JSON.stringify({ setting: this.currentSetting, targetRoleId: window.targetRoleId, groupName: parent.$('#selectedGroupName').html() });
             $.ajax({
                 type: 'POST',
-                url: parent.resolveClientUrl('CustomerSetting/RaceBook/RacingSetting/UpdateMinMaxPT'),
+                url: 'UpdateMinMaxPT',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 data: data,
@@ -60,7 +60,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) { },
                 complete: function (jqXHR, textStatus) {
-                    parent.Fanex.ExtAcc.UnBlockUI();
+                    PTUnBlockUI();
                 }
             });
         }

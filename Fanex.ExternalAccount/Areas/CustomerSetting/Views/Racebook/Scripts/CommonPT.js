@@ -1,4 +1,18 @@
-﻿/*Alert message*/
+﻿function PTBlockUI() {
+    try {
+        parent.Fanex.ExtAcc.BlockUI();
+    }
+    catch (e) {
+    }
+}
+function PTUnBlockUI() {
+    try {
+        parent.Fanex.ExtAcc.UnBlockUI();
+    } catch (e) {
+    }
+}
+
+/*Alert message*/
 var lblPasswordRequire = 'Password must have at least 6 characters, including at least 2 numbers and at least 2 digits. (e.g:pass22)';
 var alertPasswordEmpty = 'Sorry, password can not be empty!!!'; 
 var alertUserName = 'Please Enter User Name.';

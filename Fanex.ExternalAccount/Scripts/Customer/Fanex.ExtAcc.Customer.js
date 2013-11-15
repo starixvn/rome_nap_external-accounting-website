@@ -2876,7 +2876,7 @@ Fanex.ExtAcc.Customer = {
                     name: "Edit Multiple Racing",
                     className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/master?id=' + info.custId + '&uplineid=' + info.uplineId), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/master?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
                     }
                 }
             };
@@ -2935,7 +2935,7 @@ Fanex.ExtAcc.Customer = {
                     name: "Edit Multiple Racing",
                     className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/agent?id=' + info.custId + '&uplineid=' + info.uplineId), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/agent?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
                     }
                 }
             };
@@ -3013,21 +3013,21 @@ Fanex.ExtAcc.Customer = {
                     name: "Edit Multiple Racing",
                     className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/member?id=' + info.custId + '&uplineid=' + info.uplineId), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/member?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
                     }
                 },
                 racingSuper: {
                     name: "Super Edit Multiple Racing",
                     className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + info.custId + '&uplineid=' + info.uplineId), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Racing Setting' : 'Super Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Racing Setting' : 'Super Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
                     }
                 },
                 racingMaster: {
                     name: "Master Edit Multiple Racing",
                     className: "iconEnableEdit",
                     callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + info.custId + '&uplineid=' + info.uplineId), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Racing Setting' : 'Master Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Racing Setting' : 'Master Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
                     }
                 },
                 separate1: "------"
@@ -3198,18 +3198,18 @@ Fanex.ExtAcc.Customer = {
 
         switch (this.CurrentLevel) {
             case this.Master:
-                actionName += 'Master/EditMaster/' + this.Ids()[0] + '/' + this.superId;
+                actionName += 'Master/EditMaster/' + this.Ids()[0] + '/' + this.superId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
                 break;
             case this.Agent:
-                actionName += 'Agent/EditAgent/' + this.Ids()[0] + '/' + this.masterId;
+                actionName += 'Agent/EditAgent/' + this.Ids()[0] + '/' + this.masterId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
                 break;
             case this.Member:
                 if (this.isSuperEditMember)
-                    actionName += 'Member/EditMemberBySuper/' + this.Ids()[0] + '/' + this.superId;
+                    actionName += 'Member/EditMemberBySuper/' + this.Ids()[0] + '/' + this.superId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
                 else if (this.isMasterEditMember)
-                    actionName += 'Member/EditMemberByMaster/' + this.Ids()[0] + '/' + this.masterId;
+                    actionName += 'Member/EditMemberByMaster/' + this.Ids()[0] + '/' + this.masterId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
                 else
-                    actionName += 'Member/EditMember/' + this.Ids()[0] + '/' + this.agentId;
+                    actionName += 'Member/EditMember/' + this.Ids()[0] + '/' + this.agentId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
                 break;
             default:
                 break;

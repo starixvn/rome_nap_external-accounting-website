@@ -6,16 +6,22 @@
     oldSetting: {},
     currentSetting: {},
     otherSettings: null,
-    isMultiple: parent.Fanex.ExtAcc.Customer ? parent.Fanex.ExtAcc.Customer.IsMultiple : false,
-    CustInfos: parent.Fanex.ExtAcc.Customer ? parent.Fanex.ExtAcc.Customer.IsMultiple ? parent.Fanex.ExtAcc.Customer.IdsAndNames() : [] : [],
-    Usernames: parent.Fanex.ExtAcc.Customer ? parent.Fanex.ExtAcc.Customer.IsMultiple ? parent.Fanex.ExtAcc.Customer.Usernames : [] : [],
+    isMultiple: false,
+    CustInfos: [],
+    Usernames: [],
     Error: '',
     Success: true,
     init: function () {
+        try {
+            this.isMultiple = parent.Fanex.ExtAcc.Customer.IsMultiple;
+            this.CustInfos = parent.Fanex.ExtAcc.Customer.IdsAndNames();
+            this.Usernames = parent.Fanex.ExtAcc.Customer.Usernames;
+        } catch (e) {
+        }
         this.getContextObject();
     },
     getContextObject: function () {
-        parent.Fanex.ExtAcc.BlockUI();
+        PTBlockUI();
 
         var param = {
             uplineId: window.uplineId,
@@ -36,7 +42,7 @@
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Context Error", 1);
-                parent.Fanex.ExtAcc.UnBlockUI();
+                PTUnBlockUI();
             }
         });
     },
@@ -47,17 +53,17 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"requestContext":' + JSON.stringify(customerPTRacingSetting.context) + '}',
-            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
+            beforeSend: function (jqXHR, settings) { PTBlockUI(); },
             success: function (stringCustomer) {
                 customerPTRacingSetting.currentSetting = JSON.parse(stringCustomer);
                 customerPTRacingSetting.oldSetting = JSON.parse(stringCustomer);
                 customerPTRacingSetting.initHtml();
-                parent.Fanex.ExtAcc.UnBlockUI();
+                PTUnBlockUI();
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Customer Error", 1);
-                parent.Fanex.ExtAcc.UnBlockUI();
-            }, complete: function (jqXHR, textStatus) { parent.Fanex.ExtAcc.UnBlockUI(); }
+                PTUnBlockUI();
+            }, complete: function (jqXHR, textStatus) { PTUnBlockUI(); }
         });
     },
     initHtml: function () {
@@ -114,7 +120,7 @@
         var isUpdateAllMember = this.ptSetting.Validate(this.currentSetting.settings, false);
         this.currentSetting.settings = this.ptSetting.Save();
         if (!isUpdateAllMember) {
-            parent.Fanex.ExtAcc.BlockUI();
+            PTBlockUI();
             customerPTRacingSetting.updateAllSettings(this.isMultiple ? 0 : null);
         }
     },
@@ -137,7 +143,7 @@
                 ', "otherSettings":' + JSON.stringify(customerPTRacingSetting.otherSettings) +
                 ', "groupName": "' + parent.$('#selectedGroupName').html() + '"' +
                 '}',
-            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
+            beforeSend: function (jqXHR, settings) { PTBlockUI(); },
             success: function (result) {
                 if (!customerPTRacingSetting.isMultiple) {
                     $('#divShowInfo').show();
@@ -148,7 +154,7 @@
                     else {
                         ptRacingCommon.renderErrorMessage('err', result);
                     }
-                    parent.Fanex.ExtAcc.UnBlockUI();
+                    PTUnBlockUI();
                 }
                 else {
                     if (typeof (result.errorCode) != 'undefined') {
@@ -168,7 +174,7 @@
                     else {
                         $('#divShowInfo').show();
                         showAlertMessage("err", customerPTRacingSetting.Error, (customerPTRacingSetting.Success ? 0 : 1));
-                        parent.Fanex.ExtAcc.UnBlockUI();
+                        PTUnBlockUI();
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
                     }
@@ -189,7 +195,7 @@
 
                     $('#divShowInfo').show();
                     showAlertMessage("err", ErrorMessage, 1);
-                    parent.Fanex.ExtAcc.UnBlockUI();
+                    PTUnBlockUI();
                 }
                 else {
                     if ($.parseJSON($(response)[0].responseText).errorCode) {
@@ -206,7 +212,7 @@
                     else {
                         $('#divShowInfo').show();
                         showAlertMessage("err", customerPTRacingSetting.Error, (customerPTRacingSetting.Error == '' ? 0 : 1));
-                        parent.Fanex.ExtAcc.UnBlockUI();
+                        PTUnBlockUI();
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
                     }
