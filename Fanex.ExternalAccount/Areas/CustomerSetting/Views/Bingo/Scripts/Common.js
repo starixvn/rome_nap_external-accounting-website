@@ -1,8 +1,8 @@
 ﻿function PTBlockUI() {
-    Fanex.CustomerSetting.Core.BlockUI();
+    parent.Fanex.ExtAcc.BlockUI();
 }
 function PTUnBlockUI() {
-    Fanex.CustomerSetting.Core.UnBlockUI();
+    parent.Fanex.ExtAcc.UnBlockUI();
 }
 function uInteger(str) {
     str = str.replace(/^\s+|\s+$/g, '');

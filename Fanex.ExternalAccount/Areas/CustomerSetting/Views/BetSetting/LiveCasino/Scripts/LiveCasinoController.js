@@ -92,3 +92,7 @@ Fanex.CustomerSetting.Betting.LiveCasino.Update = function (ondone) {
         }
     });
 };
+
+$(document).ready(function () {
+    $($('#winLimit').get(0).options[0]).remove();
+});

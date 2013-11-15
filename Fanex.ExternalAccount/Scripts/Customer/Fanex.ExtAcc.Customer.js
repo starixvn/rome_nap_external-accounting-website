@@ -335,16 +335,25 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
                     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/master?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Racing Setting <font color="#6dcff6">' + title + '</font>', 1050, 775, false, null, 1);
                 }
             },
-            //minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
+            minPTRacing: {
+                name: "Min PT",
+                className: "iconEnableEdit",
+                callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    var url = 'CustomerSetting/Racebook/RacingSetting/MasterMinMaxPT?id=' + Fanex.ExtAcc.Customer.UserId + '&roleId=' + Fanex.ExtAcc.Customer.CurrentLevel;
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + '&groupName=' + $('#selectedGroupName').html()), 'Edit Min PT Racing: <font color="#6dcff6">' + title + '</font>', 980, 680);
+                }
+            },
             separator1: "-----"
         };
 
+        var has3rdParty = false;
         if (superSyncCasino) {
+            has3rdParty = true;
             if (syncCasino) {
                 if (disableCasino) {
                     itemsMaster.casino = {
@@ -381,6 +390,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (superSyncLiveCasino) {
+            has3rdParty = true;
             if (syncLiveCasino) {
                 if (disableLiveCasino) {
                     itemsMaster.liveCasino = {
@@ -417,6 +427,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (superSyncBingo) {
+            has3rdParty = true;
             if (syncBingo) {
                 if (disableBingo) {
                     itemsMaster.bingo = {
@@ -459,6 +470,7 @@ Fanex.ExtAcc.Customer = {
         var ret = this.CustomerInfo();
 
         if (!hideVirtualSport) {
+            has3rdParty = true;
             if (disableVirtualSport) {
                 itemsMaster.virtualSport = {
                     name: "Virtual Sports",
@@ -482,7 +494,8 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        itemsMaster.separator2 = "-----";
+        if (has3rdParty)
+            itemsMaster.separator2 = "-----";
         itemsMaster.editInfo = {
             name: "Edit Info",
             className: "iconEnableEdit editInfoBg",
@@ -591,11 +604,22 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/agent?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Racing Setting <font color="#6dcff6">' + title + '</font>', 1050, 775, false, null, 1);
                 }
             },
-            //minPTRacing: { name: "Min PT", className: "iconEnableEdit" },
+            minPTRacing: {
+                name: "Min PT",
+                className: "iconEnableEdit",
+                callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    var url = 'CustomerSetting/Racebook/RacingSetting/AgentMinMaxPT?id=' + Fanex.ExtAcc.Customer.UserId + '&roleId=' + Fanex.ExtAcc.Customer.CurrentLevel;
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + '&groupName=' + $('#selectedGroupName').html()), 'Edit Min PT Racing: <font color="#6dcff6">' + title + '</font>', 980, 680);
+                }
+            },
             separator1: "-----"
         };
 
+        var has3rdParty = false;
         if (masterSyncCasino) {
+            has3rdParty = true;
             if (syncCasino) {
                 if (disableCasino) {
                     itemsAgent.casino = {
@@ -650,6 +674,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (masterSyncLiveCasino) {
+            has3rdParty = true;
             if (syncLiveCasino) {
                 if (disableLiveCasino) {
                     itemsAgent.liveCasino = {
@@ -686,6 +711,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (masterSyncBingo) {
+            has3rdParty = true;
             if (syncBingo) {
                 if (disableBingo) {
                     itemsAgent.bingo = {
@@ -726,6 +752,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!hideVirtualSport) {
+            has3rdParty = true;
             if (disableVirtualSport) {
                 itemsAgent.virtualSport = {
                     name: "Virtual Sports",
@@ -749,7 +776,8 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        itemsAgent.separator2 = "-----";
+        if (has3rdParty)
+            itemsAgent.separator2 = "-----";
         itemsAgent.editInfo = {
             name: "Edit Info",
             className: "iconEnableEdit editInfoBg",
@@ -851,7 +879,9 @@ Fanex.ExtAcc.Customer = {
             separator1: "-----"
         };
 
+        var has3rdParty = false;
         if (agentSyncCasino) {
+            has3rdParty = true;
             if (syncCasino) {
                 if (disableCasino) {
                     itemsMember.casino = {
@@ -888,6 +918,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (agentSyncBingo) {
+            has3rdParty = true;
             if (syncBingo) {
                 if (disableBingo) {
                     itemsMember.bingo = {
@@ -928,6 +959,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (agentSyncLiveCasino) {
+            has3rdParty = true;
             if (syncLiveCasino) {
                 if (disableLiveCasino) {
                     itemsMember.liveCasino = {
@@ -964,6 +996,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (!hideVirtualSport) {
+            has3rdParty = true;
             if (disableVirtualSport) {
                 itemsMember.virtualSport = {
                     name: "Virtual Sports",
@@ -987,7 +1020,8 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        itemsMember.separator5 = "-----";
+        if (has3rdParty)
+            itemsMember.separator5 = "-----";
         itemsMember.editInfo = {
             name: "Edit Info",
             className: "iconEnableEdit editInfoBg",

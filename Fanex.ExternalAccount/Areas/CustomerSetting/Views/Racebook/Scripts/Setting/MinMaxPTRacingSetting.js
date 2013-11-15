@@ -23,7 +23,7 @@
             dataType: 'json',
             data: JSON.stringify(param),
             beforeSend: function (jqXHR, settings) {
-                Fanex.CustomerSetting.Core.BlockUI();
+                parent.Fanex.ExtAcc.BlockUI();
             },
             success: function (data, textStatus, jqXHR) {
                 if (data) {
@@ -35,13 +35,13 @@
                 showAlertMessage('err', 'Init context error.', 1);
             },
             complete: function (jqXHR, textStatus) {
-                Fanex.CustomerSetting.Core.UnBlockUI();
+                parent.Fanex.ExtAcc.UnBlockUI();
             }
         });
     },
     updatePT: function () {
         if (window.targetRoleId === this.roleId.masterMinMax || window.targetRoleId === this.roleId.agentMinMax) {
-            Fanex.CustomerSetting.Core.BlockUI();
+            parent.Fanex.ExtAcc.BlockUI();
             minMaxPTRacingSetting.setParamUpdatePT();
 
             var data = JSON.stringify({ setting: this.currentSetting, targetRoleId: window.targetRoleId, groupName: parent.$('#selectedGroupName').html() });
@@ -60,7 +60,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) { },
                 complete: function (jqXHR, textStatus) {
-                    Fanex.CustomerSetting.Core.UnBlockUI();
+                    parent.Fanex.ExtAcc.UnBlockUI();
                 }
             });
         }
