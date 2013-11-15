@@ -35,15 +35,15 @@
         <tr ng-model="betting.bgClass" class="{{betting.bgClass}}" id="{{betting.resourceKey}}" ng-hide="betting.isNumberGame" ng-init="betting.bgClass = ''; betting.isNumberGame = betting.resourceKey == 'numbergame'; betting.className = betting.id == 1 || betting.id == 2" ng-repeat="betting in bettingLimits">
             <td title="{{betting.title}}" id="_{{betting.resourceKey}}" class="title {{betting.className}} {{betting.bgClass}}" ng-click="Copy(this)">{{betting.name}}</td>
             <td>
-                <input id="txt{{betting.resourceKey}}Min" ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showminBetMax = betting.minBetMax > 0; betting.minBetFormated = betting.minBet.formatNumber(); betting.preValMinBet = betting.minBetFormated" type="text" class="BettingLimitTextBox" ng-model="betting.minBetFormated" ng-change="betting.minBet = betting.minBetFormated.replaceAll(',', '').formatNumber()" />
+                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}Min" ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showminBetMax = betting.minBetMax > 0; betting.minBetFormated = betting.minBet.formatNumber(); betting.preValMinBet = betting.minBetFormated" type="text" class="BettingLimitTextBox" ng-model="betting.minBetFormated" ng-change="betting.minBet = betting.minBetFormated.replaceAll(',', '').formatNumber()" />
                 <span ng-show="betting.showminBetMax">>={{betting.minBetMax.formatNumber()}}</span>
             </td>
             <td>
-                <input id="txt{{betting.resourceKey}}Max" ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxBetMin = betting.maxBetMin > 0; betting.maxBetFormated = betting.maxBet.formatNumber(); betting.preValMaxBet = betting.maxBetFormated" type="text" class="BettingLimitTextBox" ng-model="betting.maxBetFormated" ng-change="betting.maxBet = betting.maxBetFormated.replaceAll(',', '').formatNumber()" />
+                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}Max" ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxBetMin = betting.maxBetMin > 0; betting.maxBetFormated = betting.maxBet.formatNumber(); betting.preValMaxBet = betting.maxBetFormated" type="text" class="BettingLimitTextBox" ng-model="betting.maxBetFormated" ng-change="betting.maxBet = betting.maxBetFormated.replaceAll(',', '').formatNumber()" />
                 <span ng-show="betting.showmaxBetMin"><={{betting.maxBetMin.formatNumber()}}</span>
             </td>
             <td>
-                <input id="txt{{betting.resourceKey}}MaxPerMatch" ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxPerMatchMax = betting.maxPerMatchMax > 0; betting.maxPerMatchFormated = betting.maxPerMatch.formatNumber(); betting.preValMaxPerMatch = betting.maxPerMatchFormated" type="text" class="BettingLimitTextBox" ng-model="betting.maxPerMatchFormated" ng-change="betting.maxPerMatch = betting.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
+                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPerMatch" ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxPerMatchMax = betting.maxPerMatchMax > 0; betting.maxPerMatchFormated = betting.maxPerMatch.formatNumber(); betting.preValMaxPerMatch = betting.maxPerMatchFormated" type="text" class="BettingLimitTextBox" ng-model="betting.maxPerMatchFormated" ng-change="betting.maxPerMatch = betting.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
                 <span ng-show="betting.showmaxPerMatchMax"><={{betting.maxPerMatchMax.formatNumber()}}</span>
             </td>
         </tr>
@@ -59,19 +59,19 @@
                     </tr>
                     <tr>                        
                         <td class="noneBorderBottom">
-                            <input id="txt{{betting.resourceKey}}Min1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showminBetMax = betting.minBetMax > 0; betting.minBetFormated = betting.minBet.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.minBetFormated" ng-change="betting.minBet = betting.minBetFormated.replaceAll(',', '').formatNumber()" />
+                            <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}Min1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showminBetMax = betting.minBetMax > 0; betting.minBetFormated = betting.minBet.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.minBetFormated" ng-change="betting.minBet = betting.minBetFormated.replaceAll(',', '').formatNumber()" />
                             <span ng-show="betting.showminBetMax">>={{betting.minBetMax.formatNumber()}}</span>
                         </td>
                         <td class="noneBorderBottom">
-                            <input id="txt{{betting.resourceKey}}Max1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxBetMin = betting.maxBetMin > 0; betting.maxBetFormated = betting.maxBet.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.maxBetFormated" ng-change="betting.maxBet = betting.maxBetFormated.replaceAll(',', '').formatNumber()" />
+                            <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}Max1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxBetMin = betting.maxBetMin > 0; betting.maxBetFormated = betting.maxBet.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.maxBetFormated" ng-change="betting.maxBet = betting.maxBetFormated.replaceAll(',', '').formatNumber()" />
                             <span ng-show="betting.showmaxBetMin"><={{betting.maxBetMin.formatNumber()}}</span>
                         </td>
                         <td class="noneBorderBottom">
-                            <input id="txt{{betting.resourceKey}}MaxPerMatch1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxPerMatchMax = betting.maxPerMatchMax > 0; betting.maxPerMatchFormated = betting.maxPerMatch.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.maxPerMatchFormated" ng-change="betting.maxPerMatch = betting.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
+                            <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPerMatch1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxPerMatchMax = betting.maxPerMatchMax > 0; betting.maxPerMatchFormated = betting.maxPerMatch.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.maxPerMatchFormated" ng-change="betting.maxPerMatch = betting.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
                             <span ng-show="betting.showmaxPerMatchMax"><={{betting.maxPerMatchMax.formatNumber()}}</span>
                         </td>
                         <td class="noneBorderBottom noneBorderRight">
-                            <input id="txt{{betting.resourceKey}}MaxPerBall1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxPerBallMax = betting.maxPerBallMax > 0; betting.maxPerBallFormated = betting.maxPerBall.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.maxPerBallFormated" ng-change="betting.maxPerBall = betting.maxPerBallFormated.replaceAll(',', '').formatNumber()" />
+                            <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPerBall1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="betting.showmaxPerBallMax = betting.maxPerBallMax > 0; betting.maxPerBallFormated = betting.maxPerBall.formatNumber()" type="text" class="BettingLimitTextBox" ng-model="betting.maxPerBallFormated" ng-change="betting.maxPerBall = betting.maxPerBallFormated.replaceAll(',', '').formatNumber()" />
                             <span ng-show="betting.showmaxPerBallMax"><={{betting.maxPerBallMax.formatNumber()}}</span>
                         </td>
                     </tr>
@@ -79,7 +79,7 @@
             </td>            
         </tr>
     </table>
-    <div style="text-align: right" >
+    <div style="text-align: right">
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>
