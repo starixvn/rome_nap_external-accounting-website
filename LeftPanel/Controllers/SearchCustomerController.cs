@@ -130,7 +130,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="id">Upper customer id.</param>
         /// <param name="roleId">Customer role id.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UsedCreditPage(int id, int roleId)
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
@@ -199,7 +199,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             return this.JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult SelectClearBalance(int custId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
