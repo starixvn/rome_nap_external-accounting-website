@@ -18,6 +18,9 @@
     },
 
     renderCustomerInfo: function (custInfo) {
+        if (customerPTBingoSetting.isMultiple)
+            return '<table class="tblcollapse" style="width: 100%;">';
+
         var html = '<table class="tblcollapse" style="width: 100%;">\
                         <tr class="title">\
                             <td colspan="4">Customer Information</td>\

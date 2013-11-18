@@ -96,6 +96,9 @@ function CustomerController($scope, $element) {
             if (result.errorCode == 0) {
                 $('#errMsg').html('<font color="Blue">Reset max transfer successfully</font>'.formatSuccessMessage());
                 $('#errMsg').show();
+                setTimeout(function () {
+                    document.location.reload(true);
+                }, 2000);
             }
             else {
                 $('#errMsg').html(result.errorMessage.formatErrorMessage());

@@ -149,7 +149,7 @@ function AssignPT() {
 }
 
 function ResetMaxTransfer(custId) {
-    var param = { custId: custId, modifiedUserId: parent.userId, modifiedUsername: parent.username };
+    var param = { custId: custId, modifiedUserId: parent.userId, modifiedUsername: parent.username, groupName: parent.$('#selectedGroupName').html() };
     $.ajax({
         type: 'POST',
         url: 'ResetMaxTransfer',

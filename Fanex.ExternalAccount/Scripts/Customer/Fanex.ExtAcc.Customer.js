@@ -2892,7 +2892,13 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (this.superSyncBingo) {
-                //menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
+                menuItems.bingo = {
+                    name: "Edit Multiple Bingo",
+                    className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                    }
+                };
             }
 
             if (!this.superDisableP2P) {
@@ -2951,7 +2957,13 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (this.masterSyncBingo) {
-                //menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
+                menuItems.bingo = {
+                    name: "Edit Multiple Bingo",
+                    className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                    }
+                };
             }
 
             if (!this.masterDisableP2P) {
@@ -3063,8 +3075,28 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (this.agentSyncBingo) {
-                //menuItems.bingo = { name: "Edit Multiple Bingo", className: "iconEnableEdit" };
-                //menuItems.separate3 = "------";
+                menuItems.bingo = {
+                    name: "Edit Multiple Bingo",
+                    className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                    }
+                };
+                menuItems.sbingo = {
+                    name: "Super Edit Multiple Bingo",
+                    className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Bingo Setting' : 'Super Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                    }
+                };
+                menuItems.mbingo = {
+                    name: "Master Edit Multiple Bingo",
+                    className: "iconEnableEdit",
+                    callback: function (key, opt) {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Bingo Setting' : 'Master Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                    }
+                };
+                menuItems.separate3 = "------";
             }
 
             if (!this.agentDisableP2P) {

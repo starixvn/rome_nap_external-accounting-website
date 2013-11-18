@@ -16,7 +16,15 @@
     },
     getCustomerSetting: function () {
         var validCustID = window.custId && window.custId > 0;
-        var validRoleID = window.pageRole && window.pageRole > 0
+        var validRoleID = window.pageRole && window.pageRole > 0;
+        if (!this.isMultiple) {
+            $('#arrowUpDown').hide();
+        }
+        else {
+            $('#arrowUpDown').show();
+            Fanex.CustomerSetting.Core.ProcessDisplayMultiple(125, this.Usernames);
+        }
+
         if (validCustID && validRoleID) {
             var param = {
                 custId: window.custId,
@@ -48,8 +56,13 @@
             });
         }
     },
-    ajaxUpdatePT: function (customer) {
+    ajaxUpdatePT: function (customer, index) {
         var param = { customer: customer, updatedByRoleID: window.pageRole, groupName: parent.$('#selectedGroupName').html() };
+        if (index != null) {
+            param.customer.iD = parseInt(this.CustInfos.Ids[index]);
+            param.customer.userName = this.CustInfos.Names[index];
+        }
+
         $.ajax({
             type: 'POST',
             url: 'UpdateCustomerSetting',
@@ -60,25 +73,65 @@
                 PTBlockUI();
             },
             success: function (rs) {
-                if (rs.errorCode == 0) {
-                    showAlertMessage('err', 'Updated Successfully', 0);
-                    afterUpdate(2000);
+                if (index == null) {
+                    if (rs.errorCode == 0) {
+                        showAlertMessage('err', 'Updated successfully', 0);
+                        afterUpdate(2000);
+                    }
+                    else {
+                        showAlertMessage('err', rs.errorMessage, 1);
+                    }
                 }
-                else if (rs.errorCode == 500) {
-                    showAlertMessage('err', rs.errorMessage, 1);
-                }
-                else {
-                    showAlertMessage('err', rs.errorMessage, 1);
+                else {                    
+                    customerPTBingoSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTBingoSetting.CustInfos.Names[index] + ':</font><br />';
+                    ++index;
+                    if (rs.errorCode == 0) {
+                        customerPTBingoSetting.Error += '<font color="Blue">Updated successfully</font><br /><br />';
+                    }
+                    else {
+                        customerPTBingoSetting.Success = false;
+                        customerPTBingoSetting.Error += rs.errorMessage.formatErrorMessage() + '<br /><br />';
+                    }
+                    if (index < customerPTBingoSetting.CustInfos.Ids.length) {
+                        customerPTBingoSetting.ajaxUpdatePT(customer, index);
+                    }
+                    else {
+                        showAlertMessage('err', customerPTBingoSetting.Error, customerPTBingoSetting.Success ? 0 : 1);
+                        if (customerPTBingoSetting.Success)
+                            afterUpdate(2000);
+
+                        customerPTBingoSetting.Error = '';
+                        customerPTBingoSetting.Success = true;
+                    }
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                if (jqXHR.responseText) {
-                    var errorObject = JSON.parse(jqXHR.responseText);
-                    showAlertMessage('err', errorObject.errorMessage, 1);
+                if (index == null) {
+                    if (jqXHR.responseText) {
+                        var errorObject = JSON.parse(jqXHR.responseText);
+                        showAlertMessage('err', errorObject.errorMessage, 1);
+                    }
+                }
+                else {
+                    customerPTBingoSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTBingoSetting.CustInfos.Names[index] + ':</font><br /><br />';
+                    ++index;
+                    if (index < customerPTBingoSetting.CustInfos.Ids.length) {
+                        customerPTBingoSetting.ajaxUpdatePT(customer, index);
+                    }
+                    else {
+                        showAlertMessage('err', customerPTBingoSetting.Error, customerPTBingoSetting.Success ? 0 : 1);
+                        if (customerPTBingoSetting.Success)
+                            afterUpdate(2000);
+
+                        customerPTBingoSetting.Error = '';
+                        customerPTBingoSetting.Success = true;
+                    }
                 }
             },
             complete: function () {
-                PTUnBlockUI();
+                if (index == null || index >= customerPTBingoSetting.CustInfos.Ids.length) {
+                    PTUnBlockUI();
+                }
             }
         });
     },

@@ -64,7 +64,7 @@
         });
         return html + '</td></tr>';
     },
-    updatePT: function (customer) {
+    updatePT: function (customer, index) {
         var maxTransferCredit = parent.Fanex.ExtAcc.ReplaceAll($("#txtMaxTransferCredit").val(), ',', '');
         if (!uInteger(maxTransferCredit)) {
             Validators.show($('#txtMaxTransferCredit').get(0), 'Invalid Max Transfer Credit', undefined, undefined, 3000);
@@ -114,7 +114,7 @@
                 }
             }
         }
-        customerPTBingoSetting.ajaxUpdatePT(customer);
+        customerPTBingoSetting.ajaxUpdatePT(customer, index);
     },
     ReducePT: function (id, step) {
         var obj = $("#" + id);
