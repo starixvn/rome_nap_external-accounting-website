@@ -16,6 +16,8 @@ Fanex.ExtAcc.Customer.Settings = {
     CurrentLevel: parseInt(Fanex.ExtAcc.Customer.CurrentLevel),
 
     Init: function () {
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();
 
         $('#tab4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
@@ -23,11 +25,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
         $('#tab7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports == 'True' ? 'none' : 'block');
-
-        /*$('#tabs-4').css('display', Fanex.ExtAcc.Customer.SyncCasino == 'True' ? 'block' : 'none');
-        $('#tabs-5').css('display', Fanex.ExtAcc.Customer.SyncBingo == 'True' ? 'block' : 'none');
-        $('#tabs-6').css('display', Fanex.ExtAcc.Customer.DisableP2P == 'True' ? 'none' : 'block');
-        $('#tabs-7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino == 'True' ? 'block' : 'none');*/
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
@@ -91,9 +88,9 @@ Fanex.ExtAcc.Customer.Settings = {
 
     GetSportsbookMinPT: function () {
         Fanex.ExtAcc.BlockUI();
-
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         $.ajax({
-            url: resolveClientUrl('SportsbookSetting/EditMinPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html())
+            url: resolveClientUrl('SportsbookSetting/EditMinPT?custId=' + Fanex.ExtAcc.Customer.Settings.UserId + '&groupName=' + $('#selectedGroupName').html())
         }).success(function (result) {
             $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);
@@ -107,6 +104,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetRacingPT: function () {
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
         var uplineId = 0;
         if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
@@ -131,16 +129,17 @@ Fanex.ExtAcc.Customer.Settings = {
                 action = 'Member';
             }
         }
-        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?id=' + this.UserId + '&uplineid=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
         $('#tabs-2').height($('#leftFrame').height() - 10);
         $('#tabs-2').css('display', 'block');
         $('#racingFrame').attr('src', url);
     },
 
     GetRacingMinPT: function () {
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         var typeUrl = '';
-        var custId = Fanex.ExtAcc.Customer.Settings.UserId;
-        var roleId = Fanex.ExtAcc.Customer.Settings.CurrentLevel;
+        var custId = this.UserId;
+        var roleId = this.CurrentLevel;
         if (roleId === 3) { // master
             typeUrl = 'MasterMinMaxPT';
         }
@@ -157,32 +156,28 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetCasinoSetting: function () {
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
 
-        if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             action = 'Master/EditMaster';
         }
-        else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             action = 'Agent/EditAgent';
         }
         else {
-            if (Fanex.ExtAcc.Customer.isSuperEditMember)
-                action = 'Member/EditMemberBySuper';
-            else if (Fanex.ExtAcc.Customer.isMasterEditMember)
-                action = 'Member/EditMemberByMaster';
-            else
-                action = 'Member/EditMember';
+            action = 'Member/EditMember';
         }
 
         Fanex.ExtAcc.Customer.Ids = function () {
-            return [Fanex.ExtAcc.Customer.UserId];
+            return [this.UserId];
         };
 
         Fanex.ExtAcc.Customer.Names = function () {
             return [''];
         };
 
-        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + this.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html());
 
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
@@ -190,31 +185,22 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetBingoSetting: function () {
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
         var uplineId = 0;
-        if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             action = 'Master';
             uplineId = Fanex.ExtAcc.Customer.superId;
         }
-        else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             action = 'Agent';
             uplineId = Fanex.ExtAcc.Customer.masterId;
         }
         else {
-            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
-                action = 'SuperEditMember';
-                uplineId = Fanex.ExtAcc.Customer.superId;
-            }
-            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
-                action = 'MasterEditMember';
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-            }
-            else {
-                action = 'Member';
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-            }
+            action = 'Member';
+            uplineId = Fanex.ExtAcc.Customer.agentId;
         }
-        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?id=' + Fanex.ExtAcc.Customer.Settings.UserId + '&uplineId=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?id=' + this.UserId + '&uplineId=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
         $('#tabs-5').height($('#leftFrame').height() - 10);
         $('#tabs-5').css('display', 'block');
         $('#bingoFrame').attr('src', url);
@@ -225,13 +211,13 @@ Fanex.ExtAcc.Customer.Settings = {
 
     GetLiveCasinoSetting: function () {
         Fanex.ExtAcc.BlockUI();
-
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
 
-        if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             action = 'EditMaster';
         }
-        else if (Fanex.ExtAcc.Customer.Settings.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             action = 'EditAgent';
         }
         else {
@@ -239,7 +225,7 @@ Fanex.ExtAcc.Customer.Settings = {
         }
 
         $.ajax({
-            url: resolveClientUrl('LiveCasino/' + action + '?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html())
+            url: resolveClientUrl('LiveCasino/' + action + '?custId=' + Fanex.ExtAcc.Customer.Settings.UserId + '&groupName=' + $('#selectedGroupName').html())
         }).success(function (result) {
             if (result.errorCode && result.errorCode == "1") {
                 $('#tabs-7').css('display', 'block');
@@ -262,9 +248,9 @@ Fanex.ExtAcc.Customer.Settings = {
 
     GetVirtualSportSetting: function () {
         Fanex.ExtAcc.BlockUI();
-
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
         var uplineId, uplineRoleId, targetCustId, targetRoleId;
-        targetRoleId = Fanex.ExtAcc.Customer.Settings.CurrentLevel;
+        targetRoleId = this.CurrentLevel;
         if (targetRoleId == Fanex.ExtAcc.Customer.Master) {
             uplineId = Fanex.ExtAcc.Customer.superId;
             uplineRoleId = Fanex.ExtAcc.Customer.Super;
@@ -274,21 +260,11 @@ Fanex.ExtAcc.Customer.Settings = {
             uplineRoleId = Fanex.ExtAcc.Customer.Master;
         }
         else {
-            if (Fanex.ExtAcc.Customer.isSuperEditMember) {
-                uplineId = Fanex.ExtAcc.Customer.superId;
-                uplineRoleId = Fanex.ExtAcc.Customer.Super;
-            }
-            else if (Fanex.ExtAcc.Customer.isMasterEditMember) {
-                uplineId = Fanex.ExtAcc.Customer.masterId;
-                uplineRoleId = Fanex.ExtAcc.Customer.Master;
-            }
-            else {
-                uplineId = Fanex.ExtAcc.Customer.agentId;
-                uplineRoleId = Fanex.ExtAcc.Customer.Agent;
-            }
+            uplineId = Fanex.ExtAcc.Customer.agentId;
+            uplineRoleId = Fanex.ExtAcc.Customer.Agent;
         }
 
-        targetCustId = Fanex.ExtAcc.Customer.UserId;
+        targetCustId = this.UserId;
         if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
             $.ajax({
                 type: 'POST',
@@ -316,19 +292,11 @@ Fanex.ExtAcc.Customer.Settings = {
 
     EmptyAllTabs: function () {
         $('#tabs-1').html('');
-        //$('#tabs-2').html('');
-        //$('#tabs-3').html('');
-        //$('#tabs-4').html('');
-        //$('#tabs-5').html('');
         $('#tabs-6').html('');
         $('#tabs-7').html('');
         $('#tabs-8').html('');
 
         $('#tabs-1').css('display', 'none');
-        //$('#tabs-2').css('display', 'none');
-        //$('#tabs-3').css('display', 'none');
-        //$('#tabs-4').css('display', 'none');
-        //$('#tabs-5').css('display', 'none');
         $('#tabs-6').css('display', 'none');
         $('#tabs-7').css('display', 'none');
         $('#tabs-8').css('display', 'none');

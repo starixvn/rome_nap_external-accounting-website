@@ -275,6 +275,10 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.Casino = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var url = '';
@@ -347,6 +351,10 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.Racing = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
@@ -374,6 +382,10 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.Bingo = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         var personalObject = $scope.model.personalInfo;
         var roleId = personalObject.roleId.value;
         var custId = personalObject.custId.value;
@@ -403,6 +415,10 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.VirtualSports = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         //var roleId;
         var personalObject = $scope.model.personalInfo;
         var uplineRoleId = personalObject.uplineRoleId.value;
