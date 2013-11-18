@@ -391,7 +391,11 @@ Fanex.ExtAcc = {
 
                 $('#leftFrame').ready(function () {
                     Fanex.ExtAcc.UnBlockUI();
-                })
+                });
+
+                setTimeout(function () {
+                    $('#txtLeftPanelUserName').focus();
+                }, 100);
 
                 return true;
             } else {
@@ -413,7 +417,7 @@ Fanex.ExtAcc = {
 
             $('#leftFrame').ready(function () {
                 Fanex.ExtAcc.UnBlockUI();
-            })
+            });
         });
 
         $('#txtLeftPanelUserName').keyup(function (e) {
