@@ -15,6 +15,7 @@
 	z-index: 999999;
 	font-size: 12px;
 	height: 13px;
+	background-color: #ffc;
 }
 
 /* The pointer image is hadded by using another span */
