@@ -30,6 +30,7 @@ Fanex.ExtAcc.Customer = {
     AllowDoubleCommMaster: false,
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
+    HideVirtualSports: false,
 
     superSyncCasino: false,
     superSyncBingo: false,
@@ -278,6 +279,7 @@ Fanex.ExtAcc.Customer = {
         this.TransferCondition = transferCondition;
         Fanex.ExtAcc.Customer.UserId = custId;
         this.TitleEditInfo = title;
+        this.HideVirtualSports = hideVirtualSport;
 
         this.ResetFlags();
 
@@ -544,6 +546,7 @@ Fanex.ExtAcc.Customer = {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
+        this.HideVirtualSports = hideVirtualSport;
 
         this.ResetFlags();
 
@@ -825,6 +828,7 @@ Fanex.ExtAcc.Customer = {
         this.UserId = custId;
         this.TitleEditInfo = title;
         this.IsMultiple = false;
+        this.HideVirtualSports = hideVirtualSport;
 
         this.ResetFlags();
 
@@ -2915,7 +2919,15 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            //menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
+            if(!this.HideVirtualSports){
+                menuItems.virtualSport = {
+                    name: "Edit Multiple Virtual Sports",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.superId + '&roleId=' + Fanex.ExtAcc.Customer.Super + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Master + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Virtual Sports Setting' : 'Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 870, 700, false, null, 1);
+                    }
+                };
+            }
 
             if (this.AllowDoubleCommMaster) {
                 menuItems.doubleComm = {
@@ -2980,7 +2992,15 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            //menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
+            if (!this.HideVirtualSports) {
+                menuItems.virtualSport = {
+                    name: "Edit Multiple Virtual Sports",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.masterId + '&roleId=' + Fanex.ExtAcc.Customer.Master + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Agent + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Virtual Sports Setting' : 'Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 870, 700, false, null, 1);
+                    }
+                };
+            }
 
             if (this.AllowDoubleCommAgent) {
                 menuItems.doubleComm = {
@@ -3135,8 +3155,34 @@ Fanex.ExtAcc.Customer = {
                 menuItems.separate5 = "------";
             }
 
-            //menuItems.virtualSport = { name: "Edit Multiple Virtual Sports", className: "iconEnableEdit" };
-            //menuItems.separate6 = "------";
+            if (!this.HideVirtualSports) {
+                menuItems.virtualSport = {
+                    name: "Edit Multiple Virtual Sports",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.agentId + '&roleId=' + Fanex.ExtAcc.Customer.Agent + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Virtual Sports Setting' : 'Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 870, 700, false, null, 1);
+                    }
+                };
+                menuItems.svirtualSport = {
+                    name: "Super Edit Multiple Virtual Sports",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.superId + '&roleId=' + Fanex.ExtAcc.Customer.Super + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Virtual Sports Setting' : 'Super Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 870, 700, false, null, 1);
+                    }
+                };
+                menuItems.mvirtualSport = {
+                    name: "Master Edit Multiple Virtual Sports",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.masterId + '&roleId=' + Fanex.ExtAcc.Customer.Master + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Virtual Sports Setting' : 'Master Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 870, 700, false, null, 1);
+                    }
+                };
+                menuItems.separate6 = "------";
+            }            
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {

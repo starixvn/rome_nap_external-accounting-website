@@ -116,11 +116,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             ICustomer oldCustomer = customerService.GetCustomer(currentContext);
             ICustomer newCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[1]);
             Hashtable otherSetting = JsonConvert.DeserializeObject<Hashtable>(Request.Form[2]);
-            if (model.IsMulti)
-            {
-                oldCustomer = customerService.GetCustomer(currentContext);
-            }
-
+            
             switch (model.UpdateType)
             {
                 case 0:

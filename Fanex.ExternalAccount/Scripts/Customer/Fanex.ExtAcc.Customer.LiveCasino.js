@@ -1184,7 +1184,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 }
 
                 var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
-                bettingLimitItem += '&nbsp;<div style="float: left"><input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="' + type + '" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span></div>';
+                bettingLimitItem += '&nbsp;&nbsp;<div style="float: left"><input name="gameRow' + i + '" style="vertical-align: middle;margin-bottom: 3px;" id="' + gameSetting[i].bettingLimit[j].id + '" type="' + type + '" ' + selected + '/><span>' + gameSetting[i].bettingLimit[j].text + '</span></div>';
             }
 
             var row = '<div class="customerInfoBlock1" style="margin: 0px">' +
