@@ -44,4 +44,5 @@ public static class eFunctions
 			public const string UpdateSecurityCode = "UpdateSecurityCode";
 			public const string UpdateBalance = "UpdateBalance";
 			public const string ClearCredit = "ClearCredit";
+			public const string Transfer = "Transfer";
 		}

@@ -56,7 +56,7 @@
         });
         return html + '</td></tr>';
     },
-    updatePT: function (customer) {
+    updatePT: function (customer, index) {
         PTBlockUI();
         var totalGameKind = customer.gameKindList.length;
         var totalGameType;
@@ -84,7 +84,7 @@
                 }
             }
         }
-        customerPTBingoSetting.ajaxUpdatePT(customer);
+        customerPTBingoSetting.ajaxUpdatePT(customer, index);
     },
     on_ChangeMasterPT: function (obj) {
         var oMaster = $(obj);

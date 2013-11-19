@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
     $scope.model = model;
+    
+    if (!model)
+        return;
+
     $scope.customerModel = model != null ? model.customerModel : null;
     $scope.gameKinds = model != null ? $scope.model.settingModel.gameGroups : null;
 
@@ -67,9 +71,9 @@ Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
         if (typeof console != 'undefined')
             console.log(data);
 
-        if (JSON.parse(data.responseText).ErrorCode) {
+        if (JSON.parse(data.responseText).errorCode) {
             $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
+            $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
             $('#errMsg').show();
         }
 

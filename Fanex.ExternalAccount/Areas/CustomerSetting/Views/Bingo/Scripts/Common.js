@@ -1,8 +1,15 @@
 ﻿function PTBlockUI() {
-    parent.Fanex.ExtAcc.BlockUI();
+    try {
+        parent.Fanex.ExtAcc.BlockUI();
+    }
+    catch (e) {
+    }
 }
 function PTUnBlockUI() {
-    parent.Fanex.ExtAcc.UnBlockUI();
+    try {
+        parent.Fanex.ExtAcc.UnBlockUI();
+    } catch (e) {
+    }
 }
 function uInteger(str) {
     str = str.replace(/^\s+|\s+$/g, '');
@@ -23,24 +30,25 @@ function IsSyncData(obj) {
 }
 function updateBingoPTSetting() {
     var customer = customerPTBingoSetting.context;
+    var index = customerPTBingoSetting.isMultiple ? 0 : null;
     if (customer) {
         if (ptBingoCommon.isDirectDownline()) {
             var role = customer.roleId;
             switch (role) {
                 case ptBingoCommon.superRoleId:
-                    superBingoSetting.updatePT(customer);
+                    superBingoSetting.updatePT(customer, index);
                     break;
 
                 case ptBingoCommon.masterRoleId:
-                    masterBingoSetting.updatePT(customer);
+                    masterBingoSetting.updatePT(customer, index);
                     break;
 
                 case ptBingoCommon.agentRoleId:
-                    agentBingoSetting.updatePT(customer);
+                    agentBingoSetting.updatePT(customer, index);
                     break;
 
                 case ptBingoCommon.memberRoleId:
-                    memberBingoSetting.updatePT(customer);
+                    memberBingoSetting.updatePT(customer, index);
                     break;
 
                 default:
@@ -49,10 +57,10 @@ function updateBingoPTSetting() {
         }
         else {
             if (window.pageRole === ptBingoCommon.superRoleId) {
-                superEditMemberBingoSetting.updatePT(customer);
+                superEditMemberBingoSetting.updatePT(customer, index);
             }
             else if (window.pageRole === ptBingoCommon.masterRoleId) {
-                masterEditMemberBingoSetting.updatePT(customer);
+                masterEditMemberBingoSetting.updatePT(customer, index);
             }
         }
     }

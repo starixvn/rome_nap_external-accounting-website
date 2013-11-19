@@ -19,7 +19,11 @@
         type="text/javascript"></script>
 <div class="minWidthCustomer">
     <div id="errMsg" class="errMsg" style="display:none;"></div>
-    <div class="customerInfo">
+    <div id="arrowUpDown" class="collapse" style="display: none;">
+    </div>
+    <div id="names" style="display: none;" class="names">
+    </div>
+    <div class="customerInfo" id="generalInfo">
         <div class="headerTab">
             <div id="saveStatus" class="saveDiv" data-bind="visible: @showEditLink">
                 <input id='btnSaveStatus' type="button" class="save" title="@ViewLang.SaveStatus" data-bind="click: saveStatus" />
@@ -28,7 +32,7 @@
                 @ViewLang.generalInformation
             </div>
         </div>
-        <div class="clearBlock">
+        <div class="clearBlock general">
             <div class="customerInfoBlock1 b">
                 @ViewLang.Username
             </div>
@@ -42,7 +46,7 @@
                 <span data-bind="text: customer.userName2"></span>
             </div>
         </div>
-        <div class="clearBlock">
+        <div class="clearBlock general">
             <div class="customerInfoBlock1 b">
                 @ViewLang.Firstname
             </div>
@@ -56,7 +60,7 @@
                 <span data-bind="text: customer.phone"></span>
             </div>
         </div>
-        <div class="clearBlock">
+        <div class="clearBlock general">
             <div class="customerInfoBlock1 b">
                 @ViewLang.Lastname
             </div>
@@ -70,7 +74,7 @@
                 <span data-bind="text: customer.mobilePhone"></span>
             </div>
         </div>
-        <div class="clearBlock">
+        <div class="clearBlock general">
             <div class="customerInfoBlock1 b">
                 @ViewLang.Fax
             </div>
@@ -80,7 +84,20 @@
             <div class="customerInfoBlock3 b" id="lblEnabled">
                 @ViewLang.Enable
             </div>
-            <div class="customerInfoBlock4">
+            <div class="customerInfoBlock4" id="divStatus">
+                <div id="divEnabled" style="float: left; padding-right: 5px">
+                    <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports" />
+                </div>
+                <div id="divDownline" class="b">
+                    <input id="chkDownline" type="checkbox" data-bind="checked: !customer.statusSetting.disableDownlinesVirtualSports" />@ViewLang.Downlines
+                </div>
+            </div>
+        </div>
+        <div class="clearBlock" id="multiple">
+            <div class="customerInfoBlockVS b R" id="lblEnabled" style="padding-right: 5px;">
+                @ViewLang.Enable
+            </div>
+            <div class="customerInfoBlockVS">
                 <div id="divEnabled" style="float: left; padding-right: 5px;">
                     <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports" />
                 </div>

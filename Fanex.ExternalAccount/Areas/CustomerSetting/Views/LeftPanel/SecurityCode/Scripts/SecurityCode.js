@@ -33,17 +33,18 @@
             id: custId,
             code: $('#securityCode').val(),
             force: document.getElementById('forceChange').checked,
-            roleId: roleId
+            roleId: roleId,
+            groupName: parent.$('#selectedGroupName').html()
         }
     }).success(function (result) {
-        if (result.IsSuccess) {
+        if (result.isSuccess) {
             $('#errMsg').attr('class', 'successMsg');
             $('#errMsg').html('<font color="Blue">Updated successfully</font>');
             $('#errMsg').show();
         }
         else {
             $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+            $('#errMsg').html(result.errorMessage.formatErrorMessage());
             $('#errMsg').show();
         }
 

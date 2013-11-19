@@ -6,10 +6,23 @@
     oldSetting: {},
     currentSetting: {},
     otherSettings: null,
+    isMultiple: false,
+    CustInfos: [],
+    Usernames: [],
+    Error: '',
+    Success: true,
     init: function () {
+        try {
+            this.isMultiple = parent.Fanex.ExtAcc.Customer.IsMultiple;
+            this.CustInfos = parent.Fanex.ExtAcc.Customer.IdsAndNames();
+            this.Usernames = parent.Fanex.ExtAcc.Customer.Usernames;
+        } catch (e) {
+        }
         this.getContextObject();
     },
     getContextObject: function () {
+        PTBlockUI();
+
         var param = {
             uplineId: window.uplineId,
             targetCustId: window.custId,
@@ -19,7 +32,7 @@
 
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/GetSetting"),
+            url: "GetSetting",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
@@ -29,32 +42,43 @@
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Context Error", 1);
+                PTUnBlockUI();
             }
         });
     },
     getCustomerInfo: function () {
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/GetCustomerInfo"),
+            url: "GetCustomerInfo",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"requestContext":' + JSON.stringify(customerPTRacingSetting.context) + '}',
-            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
+            beforeSend: function (jqXHR, settings) { PTBlockUI(); },
             success: function (stringCustomer) {
                 customerPTRacingSetting.currentSetting = JSON.parse(stringCustomer);
                 customerPTRacingSetting.oldSetting = JSON.parse(stringCustomer);
                 customerPTRacingSetting.initHtml();
+                PTUnBlockUI();
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Customer Error", 1);
-            }, complete: function (jqXHR, textStatus) { parent.Fanex.ExtAcc.UnBlockUI(); }
+                PTUnBlockUI();
+            }, complete: function (jqXHR, textStatus) { PTUnBlockUI(); }
         });
     },
     initHtml: function () {
         if (window.targetRoleId !== ptRacingCommon.superRoleId) {
             $('.floatL').removeClass('display-none');
         }
-        ptRacingCommon.renderCustomerInfo(customerPTRacingSetting.getPageName(window.targetRoleId), customerPTRacingSetting.currentSetting);
+
+        if (!this.isMultiple) {
+            $('#arrowUpDown').hide();
+            ptRacingCommon.renderCustomerInfo(customerPTRacingSetting.getPageName(window.targetRoleId), customerPTRacingSetting.currentSetting);
+        }
+        else {
+            Fanex.CustomerSetting.Core.ProcessDisplayMultiple(125, this.Usernames);
+        }
+
         $('#bettingCommContainer').html('');
         if (this.currentSetting && this.currentSetting.settings &&
             this.currentSetting.settings.sportTypes && this.currentSetting.settings.sportTypes.length > 0) {
@@ -96,45 +120,103 @@
         var isUpdateAllMember = this.ptSetting.Validate(this.currentSetting.settings, false);
         this.currentSetting.settings = this.ptSetting.Save();
         if (!isUpdateAllMember) {
-            customerPTRacingSetting.updateAllSettings();
+            PTBlockUI();
+            customerPTRacingSetting.updateAllSettings(this.isMultiple ? 0 : null);
         }
     },
-    updateAllSettings: function () {
+    updateAllSettings: function (index) {
+        var currentContext = customerPTRacingSetting.context;
+        var newContext = customerPTRacingSetting.context;
+        if (index != null)
+            newContext.targetCustId = this.CustInfos.Ids[index];
+
+        var ctx = index == null ? currentContext : newContext;
+
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl("CustomerSetting/Racebook/RacingSetting/UpdateCustomerSetting"),
+            url: "UpdateCustomerSetting",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: '{"oldSettings":' + JSON.stringify(customerPTRacingSetting.oldSetting) +
                 ', "newSettings":' + JSON.stringify(customerPTRacingSetting.currentSetting) +
-                ', "currentContext":' + JSON.stringify(customerPTRacingSetting.context) +
+                ', "currentContext":' + JSON.stringify(ctx) +
                 ', "otherSettings":' + JSON.stringify(customerPTRacingSetting.otherSettings) +
+                ', "groupName": "' + parent.$('#selectedGroupName').html() + '"' +
                 '}',
-            beforeSend: function (jqXHR, settings) { parent.Fanex.ExtAcc.BlockUI(); },
+            beforeSend: function (jqXHR, settings) { PTBlockUI(); },
             success: function (result) {
-                $('#divShowInfo').show();
+                if (!customerPTRacingSetting.isMultiple) {
+                    $('#divShowInfo').show();
 
-                if (typeof (result.errorCode) != 'undefined') {
-                    showAlertMessage("err", result.errorMessage, 1);
+                    if (typeof (result.errorCode) != 'undefined') {
+                        showAlertMessage("err", result.errorMessage, 1);
+                    }
+                    else {
+                        ptRacingCommon.renderErrorMessage('err', result);
+                    }
+                    PTUnBlockUI();
                 }
                 else {
-                    ptRacingCommon.renderErrorMessage('err', result);
+                    if (typeof (result.errorCode) != 'undefined') {
+                        customerPTRacingSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTRacingSetting.CustInfos.Names[index] + ':</font><br />' + result.errorMessage + '<br />';
+                        customerPTRacingSetting.Success = false;
+                    }
+                    else {
+                        var msg = customerPTRacingSetting.checkError(result);
+                        customerPTRacingSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTRacingSetting.CustInfos.Names[index] + ':</font><br />' + msg.message + '<br />';
+                        customerPTRacingSetting.Success = customerPTRacingSetting.Success && msg.success;
+                    }
+
+                    if (index < customerPTRacingSetting.CustInfos.Ids.length - 1) {
+                        ++index;
+                        customerPTRacingSetting.updateAllSettings(index);
+                    }
+                    else {
+                        $('#divShowInfo').show();
+                        showAlertMessage("err", customerPTRacingSetting.Error, (customerPTRacingSetting.Success ? 0 : 1));
+                        PTUnBlockUI();
+                        customerPTRacingSetting.Error = '';
+                        customerPTRacingSetting.Success = true;
+                    }
                 }
-                parent.Fanex.ExtAcc.UnBlockUI();
             }
             , error: function (response) {
-                var ErrorMessage = '';
-                
-                if ($.parseJSON($(response)[0].responseText).errorCode) {
-                    ErrorMessage += '<font color="red">' + $.parseJSON($(response)[0].responseText).errorMessage + '</font><br />';
+                customerPTRacingSetting.Success = false;
+
+                if (!customerPTRacingSetting.isMultiple) {
+                    var ErrorMessage = '';
+
+                    if ($.parseJSON($(response)[0].responseText).errorCode) {
+                        ErrorMessage += '<font color="red">' + $.parseJSON($(response)[0].responseText).errorMessage + '</font><br />';
+                    }
+                    else {
+                        ErrorMessage += '<font color="red">' + $(response.responseText)[1].text + '</font><br />';
+                    }
+
+                    $('#divShowInfo').show();
+                    showAlertMessage("err", ErrorMessage, 1);
+                    PTUnBlockUI();
                 }
                 else {
-                    ErrorMessage += '<font color="red">' + $(response.responseText)[1].text + '</font><br />';
-                }
+                    if ($.parseJSON($(response)[0].responseText).errorCode) {
+                        customerPTRacingSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTRacingSetting.CustInfos.Names[index] + ':</font><br />' + '<font color="red">' + $.parseJSON($(response)[0].responseText).errorMessage + '</font><br />';
+                    }
+                    else {
+                        customerPTRacingSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTRacingSetting.CustInfos.Names[index] + ':</font><br />' + '<font color="red">' + $(response.responseText)[1].text + '</font><br />';
+                    }
 
-                $('#divShowInfo').show();
-                showAlertMessage("err", ErrorMessage, 1);
-                parent.Fanex.ExtAcc.UnBlockUI();
+                    if (index < customerPTRacingSetting.CustInfos.Ids.length - 1) {
+                        ++index;
+                        customerPTRacingSetting.updateAllSettings(index);
+                    }
+                    else {
+                        $('#divShowInfo').show();
+                        showAlertMessage("err", customerPTRacingSetting.Error, (customerPTRacingSetting.Error == '' ? 0 : 1));
+                        PTUnBlockUI();
+                        customerPTRacingSetting.Error = '';
+                        customerPTRacingSetting.Success = true;
+                    }
+                }
             }
         });
     },
@@ -157,6 +239,34 @@
             default:
                 return "Member";
         }
+    },
+
+    checkError: function (ErrorHandler) {
+        var isError500 = true;
+        var isSuccess = true;
+        var result = '';
+        if (ErrorHandler != null && ErrorHandler.length > 0) {
+            $.each(ErrorHandler, function (index, Result) {
+                if (Result.errorCode == 100 || Result.errorCode == 99 || Result.errorCode == 98) {
+                    if (isError500) {
+                        result += ptRacingCommon.formatHtmlErrorMessage(Result.errorMessage, 2);
+                    }
+                    isSuccess = false;
+                }
+                else if (Result.errorCode > 0) {
+                    if (isError500) {
+                        result += ptRacingCommon.formatHtmlErrorMessage(Result.errorMessage, 1);
+                    }
+                    isSuccess = false;
+                }
+                else {
+                    result += ptRacingCommon.formatHtmlErrorMessage(Result.errorMessage, 0);
+                }
+                if (Result.errorCode == 500) isError500 = false;
+            });
+        }
+
+        return { message: result, success: isSuccess };
     }
 
 };

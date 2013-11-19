@@ -263,7 +263,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var closed = tableCustomer.Rows[0].ToBoolean("closed");
             var suspended = tableCustomer.Rows[0].ToBoolean("suspended");
             var status = "This account was ";
-            var color = "background-color: #";
             model.PersonalInfo = new PersonalInfo
             {
                 CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
@@ -276,7 +275,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
                 CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
                 Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status + "closed" : suspended ? status + "suspended" : string.Empty },
-                BackgroundColor = new ObjectInfo { Value = !enabled ? color + "a0a97a" : closed ? color + "ccc" : suspended ? color + "f8ded7" : string.Empty }
+                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? "closed" : suspended ? "suspended" : string.Empty }
             };
 
             return model;
@@ -794,6 +793,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             ProductStatuses product = new ProductStatuses();
             product.UplineStatuses = new ProductStatuses();
             product.RoleId = roleId;
+            if (result.Rows.Count == 0)
+            {
+                return product;
+            }
+
             product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
             product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
             product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
@@ -808,14 +812,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.Closed = result.Rows[0].ToBoolean("closed");
             product.Suspended = result.Rows[0].ToBoolean("suspended");
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
-
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
-            //// model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
+            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts =
                 model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
                     o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
 
-            if (roleId < 4)
+            if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
                 product.UplineStatuses.SyncBingo = upperInfo.Rows[0].ToBoolean("syncBingo");

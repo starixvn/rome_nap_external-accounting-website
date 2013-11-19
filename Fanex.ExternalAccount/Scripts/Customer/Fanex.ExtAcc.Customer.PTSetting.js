@@ -208,12 +208,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
     GetSuperPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
 
         var data = new Object();
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTSuperGet'),
@@ -222,6 +223,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             $('#buttonPopup').remove();
             $('#buttonPopup2').remove();
             $('#arrowUpDown').remove();
@@ -257,12 +266,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
     GetMasterPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
 
         var data = new Object();
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTMasterGet'),
@@ -271,6 +281,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM3 = false;
@@ -408,12 +426,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
     GetAgentPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
 
         var data = new Object();
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.masterId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTAgentGet'),
@@ -422,6 +441,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
             var isChangeM2 = false;
@@ -569,12 +596,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
     GetMemberPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
-        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
 
         var data = new Object();
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTMemberGet'),
@@ -583,6 +611,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
@@ -707,6 +743,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
         data.agentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/SuperEditPTMemberGet'),
@@ -715,6 +752,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
@@ -797,6 +842,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.masterId;
         data.agentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/MasterEditPTMemberGet'),
@@ -805,10 +851,19 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
+            Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
             Fanex.ExtAcc.Customer.PTSetting.ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
 
@@ -1097,6 +1152,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
+
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/SuperUpdateMasterPTPost'),
             data: data,
@@ -1104,26 +1161,26 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
 
-                var codes = result.ErrorCode.split('\u0007');
-                var msgs = result.ErrorMessage.split('\u0007');
+                var codes = result.errorCode.split('\u0007');
+                var msgs = result.errorMessage.split('\u0007');
                 var success = true;
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage += msgs[i].formatErrorMessage() + '<br/>';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage += msgs[i].formatErrorMessage() + '<br/>';
                     }
                 }
 
@@ -1150,7 +1207,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperUpdateMasterPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
@@ -1170,10 +1227,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1187,21 +1244,21 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
-                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
                         hasBetSettingError = true;
                         break;
                         }
                         }
                         */
-                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage == '') {
+                        if (Fanex.ExtAcc.Customer.PTSetting.errorMessage == '') {
                             Fanex.ExtAcc.Form.Close(false);
                         }
                         else {
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
                     else {
@@ -1209,7 +1266,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperUpdateMasterPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
@@ -1222,10 +1279,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1247,6 +1304,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
+
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/MasterUpdateAgentPTPost'),
             data: data,
@@ -1254,26 +1313,26 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
 
-                var codes = result.ErrorCode.split('\u0007');
-                var msgs = result.ErrorMessage.split('\u0007');
+                var codes = result.errorCode.split('\u0007');
+                var msgs = result.errorMessage.split('\u0007');
                 var success = true;
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage += msgs[i].formatErrorMessage() + '<br/>';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage += msgs[i].formatErrorMessage() + '<br/>';
                     }
                 }
 
@@ -1300,7 +1359,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.MasterUpdateAgentPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
@@ -1320,10 +1379,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1336,21 +1395,21 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
-                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
                         hasBetSettingError = true;
                         break;
                         }
                         }
                         */
-                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage == '') {
+                        if (Fanex.ExtAcc.Customer.PTSetting.errorMessage == '') {
                             Fanex.ExtAcc.Form.Close(false);
                         }
                         else {
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
                     else {
@@ -1358,7 +1417,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.MasterUpdateAgentPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
@@ -1371,10 +1430,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1396,6 +1455,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
+
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/AgentUpdateMemberPTPost'),
             data: data,
@@ -1403,26 +1464,26 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
 
-                var codes = result.ErrorCode.split('\u0007');
-                var msgs = result.ErrorMessage.split('\u0007');
+                var codes = result.errorCode.split('\u0007');
+                var msgs = result.errorMessage.split('\u0007');
                 var success = true;
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage += msgs[i].formatErrorMessage() + '<br/>';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage += msgs[i].formatErrorMessage() + '<br/>';
                     }
                 }
 
@@ -1448,7 +1509,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.AgentUpdateMemberPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
@@ -1468,10 +1529,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1485,21 +1546,21 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
-                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                        if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
                         hasBetSettingError = true;
                         break;
                         }
                         }
                         */
-                        if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage == '') {
+                        if (Fanex.ExtAcc.Customer.PTSetting.errorMessage == '') {
                             Fanex.ExtAcc.Form.Close(false);
                         }
                         else {
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                         }
 
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                         Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                     }
                     else {
@@ -1507,7 +1568,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.AgentUpdateMemberPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                                     clearTimeout(timeout);
@@ -1520,10 +1581,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1554,6 +1615,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             data.custId = parseInt(Fanex.ExtAcc.Customer.CustIds.split(',')[i]);
         }
 
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
+
         $.ajax({
             url: resolveClientUrl(urlPost),
             data: data,
@@ -1561,29 +1624,29 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
         .success(function (result) {
-            if (result.ErrorCode && result.ErrorCode == '1') {
+            if (result.errorCode && result.errorCode == '1') {
                 $('#errMsg').show();
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage() + '<br />');
+                $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
                 Fanex.ExtAcc.UnBlockUI();
             }
             else {
                 Fanex.ExtAcc.Customer.PTSetting.CustIdIndex++;
 
-                var codes = result.ErrorCode.split('\u0007');
-                var msgs = result.ErrorMessage.split('\u0007');
+                var codes = result.errorCode.split('\u0007');
+                var msgs = result.errorMessage.split('\u0007');
                 var success = true;
                 var error = '';
 
                 for (var i = 0; i < codes.length; i++) {
-                    if (parseInt(codes[i]) > 0) {
+                    if (parseInt(codes[i]) > 0 && parseInt(codes[i]) != 1000) {
                         success = false;
 
                         error += msgs[i] + '<br/>';
-                        Fanex.ExtAcc.Customer.PTSetting.ErrorMessage += msgs[i].formatErrorMessage() + '<br/>';
+                        Fanex.ExtAcc.Customer.PTSetting.errorMessage += msgs[i].formatErrorMessage() + '<br/>';
                     }
                 }
-                
+
                 if (success) {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         var timeout = setTimeout(function () {
@@ -1606,7 +1669,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     $('#errMsg').css('display', 'block');
                                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
@@ -1625,10 +1688,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }
@@ -1641,7 +1704,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         var hasBetSettingError = false;
 
                         for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.BetSettings.length; i++) {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.indexOf(Fanex.ExtAcc.Customer.PTSetting.BetSettings[i]) != -1) {
                                 hasBetSettingError = true;
                                 break;
                             }
@@ -1652,7 +1715,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         }
                         else {
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                            $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                         }
                     }
                     else {
@@ -1660,7 +1723,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.ExtAcc.Customer.PTSetting.SuperMasterUpdateMemberPT(null, data, Fanex.ExtAcc.Customer.PTSetting.CustIdIndex, customer);
                         }
                         else {
-                            if (Fanex.ExtAcc.Customer.PTSetting.ErrorMessage.length == 0) {
+                            if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     $('#errMsg').css('display', 'block');
                                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
@@ -1676,10 +1739,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
-                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.ErrorMessage);
+                                $('#errMsg').html(Fanex.ExtAcc.Customer.PTSetting.errorMessage);
                             }
 
-                            Fanex.ExtAcc.Customer.PTSetting.ErrorMessage = '';
+                            Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
                         }
                     }

@@ -38,22 +38,22 @@
         var result = '';
         if (ErrorHandler != null && ErrorHandler.length > 0) {
             $.each(ErrorHandler, function (index, Result) {
-                if (Result.ErrorCode == 100 || Result.ErrorCode == 99 || Result.ErrorCode == 98) {
+                if (Result.errorCode == 100 || Result.errorCode == 99 || Result.errorCode == 98) {
                     if (isError500) {
-                        result += ptRacingCommon.formatHtmlErrorMessage(Result.ErrorMessage, 2);
+                        result += ptRacingCommon.formatHtmlErrorMessage(Result.errorMessage, 2);
                     }
                     isSuccess = false;
                 }
-                else if (Result.ErrorCode > 0) {
+                else if (Result.errorCode > 0) {
                     if (isError500) {
-                        result += ptRacingCommon.formatHtmlErrorMessage(Result.ErrorMessage, 1);
+                        result += ptRacingCommon.formatHtmlErrorMessage(Result.errorMessage, 1);
                     }
                     isSuccess = false;
                 }
                 else {
-                    result += ptRacingCommon.formatHtmlErrorMessage(Result.ErrorMessage, 0);
+                    result += ptRacingCommon.formatHtmlErrorMessage(Result.errorMessage, 0);
                 }
-                if (Result.ErrorCode == 500) isError500 = false;
+                if (Result.errorCode == 500) isError500 = false;
             });
         }
 

@@ -45,20 +45,21 @@ function gup(name) {
 }
 // Success=0, Error=1, Warning=2
 function showAlertMessage(containerid, msg, type) {
+    var message = '';
     var errorElement = $('#' + containerid);
     switch (type) {
         case 0:
-            msg = '<div class="msgcorrect">' + msg.formatSuccessMessage() + '</div>';
+            message = '<div class="msgcorrect">' + msg.formatSuccessMessage() + '</div>';
             break;
         case 1:
         case 2:
-            msg = '<div class="msgerror">' + msg.formatErrMsg() + '</div>';
+            message = '<div class="msgerror">' + msg.formatErrMsg() + '</div>';
             break;
         default:
             return;
     }
     errorElement.removeClass('display-none');
-    errorElement.html(msg);
+    errorElement.html(message);
     window.scroll(0, 0);
     parent.scroll(0, 0);
 }
@@ -148,7 +149,7 @@ function AssignPT() {
 }
 
 function ResetMaxTransfer(custId) {
-    var param = { custId: custId, modifiedUserId: parent.userId, modifiedUsername: parent.username };
+    var param = { custId: custId, modifiedUserId: parent.userId, modifiedUsername: parent.username, groupName: parent.$('#selectedGroupName').html() };
     $.ajax({
         type: 'POST',
         url: 'ResetMaxTransfer',
@@ -160,15 +161,15 @@ function ResetMaxTransfer(custId) {
         },
         success: function (rs) {
             if (rs) {
-                if (rs.ErrorCode == 0) {
+                if (rs.errorCode == 0) {
                     showAlertMessage('err', 'Reset Max Transfer Successfully', 0);
                     afterUpdate(2000);
                 }
-                else if (rs.ErrorCode == 500) {
-                    showAlertMessage('err', rs.ErrorMessage, 1);
+                else if (rs.errorCode == 500) {
+                    showAlertMessage('err', rs.errorMessage, 1);
                 }
                 else {
-                    showAlertMessage('err', rs.ErrorMessage, 1);
+                    showAlertMessage('err', rs.errorMessage, 1);
                 }
             }
         },

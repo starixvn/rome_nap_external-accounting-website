@@ -26,24 +26,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// </summary>
     public class AccountController : Controller
     {
-        private ILoginService _userService = null;
+        private ILoginService _userService = new LoginService();
 
-        private ICurrentSession _currentSession = null;
+        private ICurrentSession _currentSession = Fanex.ExternalAccount.Core.Context.CurrentSession.Instance;
 
-        private ICurrentContext _currentContext = null;
-
-        public AccountController()
-            : this(null, null, null)
-        {
-        }
-
-        public AccountController(ILoginService userService, ICurrentSession currentSession, ICurrentContext currentContext)
-        {
-            this._userService = userService ?? new LoginService();
-            this._currentSession = currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
-            this._currentContext = currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
-        }
-
+        private ICurrentContext _currentContext = Fanex.ExternalAccount.Core.Context.CurrentContext.Instance;
+                
         /// <summary>
         /// Gets login page.
         /// </summary>
@@ -68,9 +56,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                var group = this._currentSession.IsInternalAdmin ? "/ACCDDD" : string.Empty;
+                var group = this._currentSession.IsInternalAdmin ? this._userService.GroupList().First().GroupName : string.Empty;
 
-                return this.Redirect("~/Home/Index" + group);
+                return this.Redirect("~/Home/Index/" + group);
             }
 
             return this.PartialView(new Login());
@@ -140,7 +128,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         public ActionResult CaptchaImage(string prefix, bool noisy = true)
         {        
-            return new CaptchaResult();
+            return this.Content(new CaptchaResult().GetValiationImage(this.ControllerContext));
         }
 
         #region Logout
@@ -175,8 +163,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             if (maintenanceInfo.IsDownTime)
             {
-                this._currentContext.Context.Session.Abandon();
-                this.SignOut(onuserId, this._currentSession.UserName);
+                if (this._currentSession.IsLogin)
+                {
+                    this._currentContext.Context.Session.Abandon();
+                    this.SignOut(onuserId, this._currentSession.UserName);
+                }
+
                 return (int)StatusKickedOut.Maintenance;
             }
 

@@ -12,9 +12,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.LiveCasinoSetting.Model;
@@ -28,39 +28,69 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     /// </summary>
     public class LiveCasinoController : LiveCasinoBase
     {
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSuper()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMaster()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditAgent()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
@@ -71,9 +101,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSuperPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -159,9 +194,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMasterPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -247,9 +287,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditAgentPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -335,9 +380,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMemberPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -423,9 +473,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditMemberPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -549,9 +604,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditMemberPost(int custId, int uplineId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -656,9 +716,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateMasterPTPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMasterPT(custId, uplineId, customer);
 
@@ -679,9 +744,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateAgentPTPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
@@ -702,9 +772,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateMemberPTPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
@@ -725,9 +800,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperUpdateMemberPTPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
 
             return this.JsonBase(
@@ -744,9 +824,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterUpdateMemberPTPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
 
             return this.JsonBase(
@@ -763,9 +848,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateMasterLiveCasinoPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMasterPT(custId, uplineId, customer);
 
@@ -799,9 +889,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateAgentLiveCasinoPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
@@ -835,9 +930,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
@@ -882,9 +982,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperUpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.SuperUpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
@@ -914,9 +1019,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterUpdateMemberLiveCasinoPost(int custId, int uplineId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.MasterUpdateMemberPT(custId, uplineId, customer);
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
@@ -946,9 +1056,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custId">Customer id.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateMemberWinLimitPost(int uplineId, int custId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
 
@@ -967,9 +1082,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custId">Customer id.</param>
         /// <param name="customer">JSON string settings.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.LiveCasino, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateGameSettingPost(int uplineRoleId, int uplineId, int custId, string customer)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
 
             // Process manually sync

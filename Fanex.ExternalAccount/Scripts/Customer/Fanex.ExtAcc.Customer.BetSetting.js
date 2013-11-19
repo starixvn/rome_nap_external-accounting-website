@@ -23,6 +23,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditBetSettingMasterGet'),
@@ -39,7 +40,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     if (!bettingLimit.Validate()) return;
 
@@ -52,7 +53,8 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
                             parentId: Fanex.ExtAcc.Customer.superId,
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
                         };
                     }
 
@@ -62,7 +64,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         dataType: 'json'
                     })
                     .success(function (result) {
-                        if (result.ErrorCode == 0) {
+                        if (result.errorCode == 0) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 Fanex.ExtAcc.UnBlockUI();
@@ -74,7 +76,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -99,6 +101,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.masterId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditBetSettingAgentGet'),
@@ -115,7 +118,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     if (!bettingLimit.Validate()) return;
 
@@ -138,7 +141,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         dataType: 'json'
                     })
                     .success(function (result) {
-                        if (result.ErrorCode == 0) {
+                        if (result.errorCode == 0) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 Fanex.ExtAcc.UnBlockUI();
@@ -150,7 +153,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -173,6 +176,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.agentId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditBetSettingMemberGet'),
@@ -189,7 +193,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             bettingLimit.Render(bettingLimitContainer);
 
             var BetSettingModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     if (!bettingLimit.Validate()) return;
 
@@ -212,7 +216,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         dataType: 'json'
                     })
                     .success(function (result) {
-                        if (result.ErrorCode == 0) {
+                        if (result.errorCode == 0) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 Fanex.ExtAcc.UnBlockUI();
@@ -224,7 +228,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {

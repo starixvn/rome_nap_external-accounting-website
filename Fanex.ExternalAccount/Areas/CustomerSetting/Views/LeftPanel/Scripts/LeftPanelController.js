@@ -22,7 +22,7 @@ Array.prototype.contains = function (item) {
 };
 
 function LeftPanelController($scope, $element) {
-    $scope.model = model;    
+    $scope.model = model;
 
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -47,7 +47,7 @@ function LeftPanelController($scope, $element) {
                     var params = "groupName=" + data.groupName
                     + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
-                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
+                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
                     parent.document.location.href = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
                 });
 
@@ -221,7 +221,7 @@ function LeftPanelController($scope, $element) {
             }
         };
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
 
         parent.Fanex.ExtAcc.Customer.Init = function () {
             //Prevent loading group name
@@ -267,14 +267,18 @@ function LeftPanelController($scope, $element) {
 
     $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditInfo/?custId=' + $scope.model.personalInfo.custId.value), parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 406, 310, false);
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditInfo/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 406, 310, false);
     };
 
     $scope.Transfer = function () {
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
     };
 
     $scope.Casino = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var url = '';
@@ -297,7 +301,7 @@ function LeftPanelController($scope, $element) {
         }
 
         if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url);
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '/' + parent.$('#selectedGroupName').html());
         }
     };
 
@@ -310,29 +314,31 @@ function LeftPanelController($scope, $element) {
 
         parent.Fanex.ExtAcc.Customer.CurrentLevel = roleId;
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         parent.Fanex.ExtAcc.Customer.UserId = parent.window.id = custId;
         parent.window.uplineId = parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
         parent.window.CurrentLevel = roleId;
 
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('LiveCasino/EditSuper/' + $scope.model.personalInfo.custId.value + '/' + uplineId);
+                url = parent.resolveClientUrl('LiveCasino/EditSuper/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + uplineId + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             case 3:
-                url = parent.resolveClientUrl('LiveCasino/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('LiveCasino/EditMaster/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + $scope.model.personalInfo.uplineId.value + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             case 2:
-                url = parent.resolveClientUrl('LiveCasino/EditAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('LiveCasino/EditAgent/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + $scope.model.personalInfo.uplineId.value + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             case 1:
-                url = parent.resolveClientUrl('LiveCasino/EditMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('LiveCasino/EditMember/?custId=' + $scope.model.personalInfo.custId.value + '&uplineId=' + $scope.model.personalInfo.uplineId.value + "&groupName=" + parent.$('#selectedGroupName').html());
                 break;
             default:
                 break;
         }
 
         if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainFrame(url);
+            parent.Fanex.ExtAcc.LoadMainFrame(url, null, null, null, true);
         }
     };
 
@@ -345,33 +351,41 @@ function LeftPanelController($scope, $element) {
     };
 
     $scope.Racing = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?custId=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?id=' + custId);
                 break;
             case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?custid=' + custId + '&uplineid=' + uplineId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?id=' + custId + '&uplineid=' + uplineId);
                 break;
             case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?custid=' + custId + '&uplineid=' + uplineId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?id=' + custId + '&uplineid=' + uplineId);
                 break;
             case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?custid=' + custId + '&uplineid=' + uplineId);
+                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?id=' + custId + '&uplineid=' + uplineId);
                 break;
             default:
                 break;
         }
 
         if (url !== '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url);
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
     };
 
     $scope.Bingo = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         var personalObject = $scope.model.personalInfo;
         var roleId = personalObject.roleId.value;
         var custId = personalObject.custId.value;
@@ -379,28 +393,32 @@ function LeftPanelController($scope, $element) {
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?custId=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?id=' + custId);
                 break;
             case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?custid=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?id=' + custId);
                 break;
             case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?custid=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?id=' + custId);
                 break;
             case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?custid=' + custId);
+                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + custId);
                 break;
             default:
                 break;
         }
 
         if (url !== '' && uplineId > 0) {
-            url += '&uplineid=' + uplineId;
+            url += '&uplineid=' + uplineId + '&groupName=' + parent.$('#selectedGroupName').html();
             parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
 
     $scope.VirtualSports = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
         //var roleId;
         var personalObject = $scope.model.personalInfo;
         var uplineRoleId = personalObject.uplineRoleId.value;
@@ -409,7 +427,7 @@ function LeftPanelController($scope, $element) {
         var targetRoleId = personalObject.roleId.value;
 
         if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
-            var url = parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId);
+            var url = parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId + "&groupName=" + parent.$('#selectedGroupName').html());
             parent.Fanex.ExtAcc.LoadMainFrame(url, undefined, true, false, true);
         }
     };
@@ -467,7 +485,7 @@ function PersonalInfoController($scope, $http) {
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -602,7 +620,7 @@ function ViewInfoController($scope, $http) {
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -671,7 +689,7 @@ function BalanceDownlineInfoController($scope, $http) {
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -697,9 +715,10 @@ function BalanceController($scope, $http) {
         $scope.model = null;
     }
 
-    $scope.EditCredit = function (value) {
+    $scope.EditCredit = function () {
+        var value = $('#linkGivenCredit').html();
         $('#linkGivenCredit').hide();
-        $('#givenCredit').val(value.toFixed(2).formatNumber())
+        $('#givenCredit').val(value.replaceAll(',', '').toFixed(2).formatNumber())
         $('#givenCredit').show();
         $('#givenCredit').focus();
     };
@@ -711,7 +730,7 @@ function BalanceController($scope, $http) {
         parent.Fanex.ExtAcc.BlockUI();
 
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -738,7 +757,7 @@ function BalanceController($scope, $http) {
         if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
             $http({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value),
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post',
                 headers: { "X-Requested-With": "XMLHttpRequest" }
             })
@@ -751,7 +770,7 @@ function BalanceController($scope, $http) {
                 if (result.isSuccess) {
                     $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
                     $('#givenCredit').val(value);
-                    $('#givenCredit').attr('onblur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
+                    $('#givenCredit').attr('ng-blur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
                 }
                 else {
                     $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());
@@ -861,6 +880,7 @@ function SettingController($scope, $http) {
         if ($scope.setting != null) {
             var groupName = parent.$('#selectedGroupName').html();
             var allowGroups = eval(parent.allowBetSettingGroups);
+            var allowAdmins = eval(parent.allowAdminEditSuperStatus);
             for (var i = 0; i < $scope.setting.details.length; i++) {
                 if ($scope.setting.details[i].key == 'Poker' ||
                     ($scope.setting.details[i].key == 'Transfer' && $scope.model.personalInfo.roleId.value == 1) ||
@@ -871,7 +891,7 @@ function SettingController($scope, $http) {
 
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed' || $scope.setting.enableItems[i].key == 'Suspended') &&
-                    (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+                    !allowAdmins.contains(parseInt(parent.userId))) {
                     $scope.setting.enableItems[i].disabled = true;
                     $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
                 } 
@@ -885,13 +905,13 @@ function SettingController($scope, $http) {
 
         switch (roleId) {
             case 2:
-                actionName = 'Customer/AgentAddNewMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
+                actionName = 'Customer/AgentAddNewMember/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             case 3:
-                actionName = 'Customer/MasterAddNewAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
+                actionName = 'Customer/MasterAddNewAgent/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             case 4:
-                actionName = 'Customer/SuperAddNewMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.currentLevel.value;
+                actionName = 'Customer/SuperAddNewMaster/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             default:
                 break;
@@ -899,12 +919,7 @@ function SettingController($scope, $http) {
 
         if (actionName != '') {
             parent.Fanex.ExtAcc.BlockUI();
-            /*
-            $http({ url: parent.resolveClientUrl(actionName), method: 'post', headers: { "X-Requested-With": "XMLHttpRequest"} })
-            .success(function (result) {
-            parent.$('#contentSplitter').html(result);
-            });*/
-            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName));
+            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName), null, null, null, true);
         }
     };
 
@@ -916,7 +931,7 @@ function SettingController($scope, $http) {
         msg,
         450,
         170,
-        false, 
+        false,
         function () {
             parent.Fanex.ExtAcc.BlockUI();
 
@@ -926,21 +941,22 @@ function SettingController($scope, $http) {
                 type: 'post',
                 data: {
                     custid: $scope.model.personalInfo.custId.value,
-                    allow: !allow
+                    allow: !allow,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
                 parent.Fanex.ExtAcc.Form.Close();
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
+                        document.location.reload(true);                                                
                     }, 2000);
                 }
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById('DoubleComm').checked = allow;
                 }
             })
@@ -952,7 +968,7 @@ function SettingController($scope, $http) {
                     console.log(xhr);
                 }
             });
-        }, 
+        },
         function () {
             parent.Fanex.ExtAcc.Form.Close();
             document.getElementById(id).checked = allow;
@@ -965,8 +981,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.Closed = function (close, id) {
-        var allowGroups = eval(parent.allowBetSettingGroups);
-        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+        var allowAdmins = eval(parent.allowAdminEditSuperStatus);
+        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId))) {
             return;
         }
 
@@ -992,12 +1008,13 @@ function SettingController($scope, $http) {
                             uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                             close: !close,
                             clearCredit: false,
-                            custName: $scope.model.personalInfo.currentLevel.value
+                            custName: $scope.model.personalInfo.currentLevel.value,
+                            groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                        if (result.IsSuccess) {
+                        if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -1007,7 +1024,7 @@ function SettingController($scope, $http) {
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = close;
                         }
                     })
@@ -1054,13 +1071,14 @@ function SettingController($scope, $http) {
                                 uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                                 close: !close,
                                 clearCredit: parent.$('#clearCredit').get(0).checked,
-                                custName: $scope.model.personalInfo.currentLevel.value
+                                custName: $scope.model.personalInfo.currentLevel.value,
+                                groupName: parent.$('#selectedGroupName').html()
                             }
                         })
                         .success(function (result) {
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            if (result.IsSuccess) {
+                            if (result.isSuccess) {
                                 var timeout = setTimeout(function () {
                                     clearTimeout(timeout);
                                     parent.Fanex.ExtAcc.UnBlockUI();
@@ -1071,7 +1089,7 @@ function SettingController($scope, $http) {
                                 parent.Fanex.ExtAcc.UnBlockUI();
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                                parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                                 document.getElementById(id).checked = close;
                             }
                         })
@@ -1106,8 +1124,8 @@ function SettingController($scope, $http) {
     };
 
     $scope.Suspended = function (suspend, id) {
-        var allowGroups = eval(parent.allowBetSettingGroups);
-        if ($scope.model.personalInfo.roleId.value == 4 && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html())))) {
+        var allowAdmins = eval(parent.allowAdminEditSuperStatus);
+        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId))) {
             return;
         }
 
@@ -1138,12 +1156,13 @@ function SettingController($scope, $http) {
                         data: {
                             custId: $scope.model.personalInfo.custId.value,
                             uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                            suspend: !suspend
+                            suspend: !suspend,
+                            groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                        if (result.IsSuccess) {
+                        if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -1153,7 +1172,7 @@ function SettingController($scope, $http) {
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = suspend;
                         }
                     })
@@ -1195,12 +1214,13 @@ function SettingController($scope, $http) {
                     type: 'post',
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
-                        allow: !allow
+                        allow: !allow,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1210,7 +1230,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = allow;
                     }
                 })
@@ -1252,12 +1272,13 @@ function SettingController($scope, $http) {
                     type: 'post',
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
-                        allow: !allow
+                        allow: !allow,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1267,7 +1288,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = allow;
                     }
                 })
@@ -1324,13 +1345,14 @@ function SettingController($scope, $http) {
                                         uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                                         enable: !enable,
                                         enableDownline: false,
-                                        custName: $scope.model.personalInfo.currentLevel.value
+                                        custName: $scope.model.personalInfo.currentLevel.value,
+                                        groupName: parent.$('#selectedGroupName').html()
                                     }
                                 })
                                 .success(function (result) {
                                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
                                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                                    if (result.IsSuccess) {
+                                    if (result.isSuccess) {
                                         var timeout = setTimeout(function () {
                                             clearTimeout(timeout);
                                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1340,7 +1362,7 @@ function SettingController($scope, $http) {
                                     else {
                                         parent.Fanex.ExtAcc.UnBlockUI();
                                         parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
-                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                                         document.getElementById(id).checked = enable;
                                     }
                                 })
@@ -1389,12 +1411,13 @@ function SettingController($scope, $http) {
                             uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                             enable: !enable,
                             enableDownline: parent.$('#enableDownline').get(0).checked,
-                            custName: $scope.model.personalInfo.currentLevel.value
+                            custName: $scope.model.personalInfo.currentLevel.value,
+                            groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                        if (result.IsSuccess) {
+                        if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -1404,7 +1427,7 @@ function SettingController($scope, $http) {
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = enable;
                         }
                     })
@@ -1464,13 +1487,14 @@ function SettingController($scope, $http) {
                                     uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                                     enable: !enable,
                                     enableDownline: false,
-                                    custName: $scope.model.personalInfo.currentLevel.value
+                                    custName: $scope.model.personalInfo.currentLevel.value,
+                                    groupName: parent.$('#selectedGroupName').html()
                                 }
                             })
                             .success(function (result) {
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
                                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                                if (result.IsSuccess) {
+                                if (result.isSuccess) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -1480,7 +1504,7 @@ function SettingController($scope, $http) {
                                 else {
                                     parent.Fanex.ExtAcc.UnBlockUI();
                                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
-                                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                                     document.getElementById(id).checked = enable;
                                 }
                             })
@@ -1529,12 +1553,13 @@ function SettingController($scope, $http) {
                         uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                         enable: !enable,
                         enableDownline: parent.$('#enableDownline').get(0).checked,
-                        custName: $scope.model.personalInfo.currentLevel.value
+                        custName: $scope.model.personalInfo.currentLevel.value,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1544,7 +1569,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = enable;
                     }
                 })
@@ -1594,13 +1619,14 @@ function SettingController($scope, $http) {
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
                         enable: !enable,
-                        enableDownline: parent.$('#enableDownline').get(0).checked
+                        enableDownline: parent.$('#enableDownline').get(0).checked,
+                        groupName: parent.$('#selectedGroupName').html()
                     }
                 })
                 .success(function (result) {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
-                    if (result.IsSuccess) {
+                    if (result.isSuccess) {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             parent.Fanex.ExtAcc.UnBlockUI();
@@ -1610,7 +1636,7 @@ function SettingController($scope, $http) {
                     else {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = enable;
                     }
                 })
@@ -1661,13 +1687,14 @@ function SettingController($scope, $http) {
                 data: {
                     custId: $scope.model.personalInfo.custId.value,
                     enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked
+                    enableDownline: parent.$('#enableDownline').get(0).checked,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupLC');
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -1677,7 +1704,7 @@ function SettingController($scope, $http) {
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById(id).checked = enable;
                 }
             })
@@ -1728,13 +1755,14 @@ function SettingController($scope, $http) {
                 data: {
                     custId: $scope.model.personalInfo.custId.value,
                     enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked
+                    enableDownline: parent.$('#enableDownline').get(0).checked,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupVS');
-                if (result.IsSuccess) {
+                if (result.isSuccess) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
@@ -1744,7 +1772,7 @@ function SettingController($scope, $http) {
                 else {
                     parent.Fanex.ExtAcc.UnBlockUI();
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById(id).checked = enable;
                 }
             })
@@ -1774,7 +1802,7 @@ function SettingController($scope, $http) {
     $scope.EnableRacing = function () {
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetEnableRacing?id=' + $scope.model.personalInfo.custId.value +
             '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
-            '&roleId=' + $scope.model.personalInfo.roleId.value);
+            '&roleId=' + $scope.model.personalInfo.roleId.value + '&groupName=' + parent.$('#selectedGroupName').html());
         var title = 'Update Racing Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 350, false, null, 1, 'enableRacing');
     };
@@ -1846,10 +1874,23 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = $scope.model.personalInfo.uplineId.value;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MinRB = function () {
+        var typeUrl = '';
+        var roleId = $scope.model.personalInfo.roleId.value;
+        if (roleId === 3) { // master
+            typeUrl = 'MasterMinMaxPT';
+        }
+        else if (roleId === 2) { // agent
+            typeUrl = 'AgentMinMaxPT';
+        }
+
+        if (typeUrl !== '') {
+            var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + '&groupName=' + parent.$('#selectedGroupName').html()));
+        }
     };
 
     $scope.SuperPT = function () {
@@ -1866,53 +1907,50 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperBingo = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperCasino = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId));
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperRacing = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId));
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperLiveCasino = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/SuperEditMember'));
-    };
-
-    $scope.SuperVirtualSports = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+    };
+
+    $scope.SuperVirtualSports = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterPT = function () {
@@ -1929,34 +1967,31 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterBingo = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterCasino = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId));
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterRacing = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId));
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterLiveCasino = function () {
@@ -1967,16 +2002,15 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/MasterEditMember'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('LiveCasino/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterVirtualSports = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName='));
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperSBPT = function () {
@@ -1993,7 +2027,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterSBPT = function () {
@@ -2010,7 +2044,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT'));
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 };
 
@@ -2025,7 +2059,7 @@ function LoginController($scope) {
 
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
     };
 
     $scope.ShowIp = function (ip) {
@@ -2033,7 +2067,7 @@ function LoginController($scope) {
     };
 
     $scope.ResetSecurityCode = function (id, roleId, username) {
-        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username);
+        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
     };
 };

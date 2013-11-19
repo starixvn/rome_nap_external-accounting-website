@@ -3,6 +3,7 @@
         _create: function () {
             var self = this;
             var select = this.element.hide();
+            var wasOpen = true;
             var input = $("<input>")
 				.insertAfter(select)
 				.autocomplete({
@@ -19,17 +20,17 @@
 				        }));
 				    },
 				    delay: 0,
-                    select: function (event, ui) {
-                        if (!ui.item) {
-                            // remove invalid value, as it didn't match anything
-                            $(this).val("");
-                            return false;
-                        }
-                        select.val(ui.item.id);
-                        self._trigger("selected", event, {
-                            item: select.find("[value='" + ui.item.id + "']")
-                        });
-                    },
+				    select: function (event, ui) {
+				        if (!ui.item) {
+				            // remove invalid value, as it didn't match anything
+				            $(this).val("");
+				            return false;
+				        }
+				        select.val(ui.item.id);
+				        self._trigger("selected", event, {
+				            item: select.find("[value='" + ui.item.id + "']")
+				        });
+				    },
 				    minLength: 0
 				})
 				.addClass("ui-widget ui-widget-content ui-corner-left");
@@ -44,16 +45,21 @@
 			    text: false
 			}).removeClass("ui-corner-all")
 			.addClass("ui-corner-right ui-button-icon")
-			.click(function () {
-			    // close if already visible
-			    if (input.autocomplete("widget").is(":visible")) {
-			        input.autocomplete("close");
-			        return;
-			    }
-			    // pass empty string as value to search for, displaying all results
-			    input.autocomplete("search", "");
-			    input.focus();
-			});
+			.mousedown(function () {
+			    wasOpen = input.autocomplete("widget").is(":visible");
+			})
+            .mouseenter(function () {
+                wasOpen = input.autocomplete("widget").is(":visible");
+            })
+            .click(function () {
+                input.focus();
+                // Close if already visible
+                if (wasOpen) {
+                    return;
+                }
+                // Pass empty string as value to search for, displaying all results
+                input.autocomplete("search", "");
+            });
         }
     });
 

@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.LiveCasino = function ($scope, $element) {
     $scope.model = model;
+
+    if (!model)
+        return;
+
     $scope.gameTypes = $scope.model.bettingLimits;
 
     $scope.ChangeLimit = function (scope) {
@@ -75,9 +79,9 @@ Fanex.CustomerSetting.Betting.LiveCasino.Update = function (ondone) {
         if (typeof console != 'undefined')
             console.log(data);
 
-        if (JSON.parse(data.responseText).ErrorCode) {
+        if (JSON.parse(data.responseText).errorCode) {
             $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
+            $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
             $('#errMsg').show();
         }
 
@@ -88,3 +92,7 @@ Fanex.CustomerSetting.Betting.LiveCasino.Update = function (ondone) {
         }
     });
 };
+
+$(document).ready(function () {
+    $($('#winLimit').get(0).options[0]).remove();
+});

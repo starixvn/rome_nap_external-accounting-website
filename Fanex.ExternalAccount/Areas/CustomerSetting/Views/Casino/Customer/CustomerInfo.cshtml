@@ -64,7 +64,9 @@
     <table cellpadding="0" cellspacing="0" class="tableInfo">
         <tr>
             <td style="width: 40%" class="noneBorderLeft tdTitleRight">Accumulated transferable amount</td>
-            <td class="noneBorderRight"><span style="margin-left: 4px">{{CustomerModel.totalWinLoss.formatNumber()}}</span></td>
+            <td class="noneBorderRight"><span style="margin-left: 4px; float: left; width: 130px">{{CustomerModel.totalWinLoss.formatNumber()}}</span>
+                <div ng-hide="CustomerModel.roleId == 4" style="float: left; color: #0066CC; cursor: pointer" ng-click="Reset()">Reset</div>
+            </td>
         </tr>
         <tr>
             <td class="noneBorderLeft tdTitleRight">Member Max Transfer Credit</td>

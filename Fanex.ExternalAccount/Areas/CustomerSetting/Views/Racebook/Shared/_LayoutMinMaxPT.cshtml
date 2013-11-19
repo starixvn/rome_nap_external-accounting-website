@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/bundles/minmax-ptracingstyle")
+        <link href="@Url.Content("~/Areas/CustomerSetting/Views/Racebook/Styles/minmaxpt.css")" rel="stylesheet" />
+        @RenderSection("styles", required: false)
+    </head>
+    <body>
+        <div class="main">
+            <div class="maincontent" style="width: 950px">
+                <div id="err" class="errMsg display-none"></div>
+                <div class="floatR display-none">
+                    <input type="button" onclick="return minMaxPTRacingSetting.updatePT();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+                </div>
+                <br style="clear: both;" />
+                <div id="SettingContent">
+                    @RenderBody()
+                </div>
+                <div class="floatR display-none">
+                    <input type="button" onclick="return minMaxPTRacingSetting.updatePT();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            window.custId = '@Request["id"]';
+            window.roleId = '@Request["roleId"]';
+        </script>
+        @Scripts.Render("~/bundles/minmax_ptracingsetting")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

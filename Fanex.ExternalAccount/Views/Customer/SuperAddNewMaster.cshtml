@@ -1,8 +1,8 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
 @{
-    var parentUsername = Request.RequestContext.RouteData.Values["username"] == null ?
-        Request.RequestContext.RouteData.Values["groupname"].ToString() : Request.RequestContext.RouteData.Values["username"].ToString();
+    var parentUsername = Request["username"] == null ?
+        Request["groupname"].ToString() : Request["username"].ToString();
 }
 
     <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
@@ -124,7 +124,7 @@
     <div class="blockBtn">
         <input id="btnSubmitFooter" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
-    <input type="hidden" id="parentId" value="@Request.RequestContext.RouteData.Values["id"]" />
+    <input type="hidden" id="parentId" value="@Request["custId"]" />
     <input type="hidden" id="parentUsername" value="@parentUsername" />
 </div>
 

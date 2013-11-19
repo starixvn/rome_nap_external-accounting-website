@@ -1,4 +1,18 @@
-﻿/*Alert message*/
+﻿function PTBlockUI() {
+    try {
+        parent.Fanex.ExtAcc.BlockUI();
+    }
+    catch (e) {
+    }
+}
+function PTUnBlockUI() {
+    try {
+        parent.Fanex.ExtAcc.UnBlockUI();
+    } catch (e) {
+    }
+}
+
+/*Alert message*/
 var lblPasswordRequire = 'Password must have at least 6 characters, including at least 2 numbers and at least 2 digits. (e.g:pass22)';
 var alertPasswordEmpty = 'Sorry, password can not be empty!!!'; 
 var alertUserName = 'Please Enter User Name.';
@@ -58,9 +72,12 @@ function showAlertMessage(containerid, msg, type) {
     window.scroll(0, 0);
     parent.scroll(0, 0);
 }
+function clearAlertMessage(containerid){
+    var $alertMessage = $('#' + containerid);
+    $alertMessage.html('');
+    $alertMessage.addClass('display-none');
+}
 /*Global function*/
-
-
 
 //Create option for select control
 ////obj: jquery object 
@@ -144,5 +161,16 @@ function AssignPT() {
                 var min = $(this).attr("min");
                 CreateOption($(this), curr, max, min, 0.01, 2);
             }
+    });
+}
+
+function AssignMinMaxPT() {
+    jQuery.each($(".pt"), function () {
+        if ($("#" + $(this).attr("id") + " option").size() <= 1) {
+            var curr = $(this).val();
+            var max = $(this).attr("max");
+            var min = $(this).attr("min");
+            CreateOption($(this), curr, max, min, 0.1, 2);
+        }
     });
 }

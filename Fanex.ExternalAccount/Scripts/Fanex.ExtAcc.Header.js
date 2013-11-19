@@ -34,7 +34,13 @@ Fanex.ExtAcc.Header = {
                     // Get current Group Name
                     var indexes = location.href.split('/');
                     var groupNameSelected = indexes[indexes.length - 1];
-                    var selectedGroupName = groupNameSelected == '' ? items[0].GroupName : groupNameSelected;
+                    groupNameSelected = Fanex.ExtAcc.ReplaceAll(groupNameSelected, "%20", " ");
+                    var hasGroup = false;
+                    $(items).each(function (i, v) {
+                        if (v.GroupName == groupNameSelected)
+                            hasGroup = true;
+                    });
+                    var selectedGroupName = groupNameSelected == '' || !hasGroup ? items[0].GroupName : groupNameSelected;
 
                     if (selectedGroupName.indexOf('#') != -1) {
                         selectedGroupName = selectedGroupName.split('#')[1];

@@ -74,7 +74,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
             }
 
-            return this.JsonBase(list);
+            return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());
         }
 
         /// <summary>
@@ -83,7 +83,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// <returns>ActionResult object.</returns>
         public ActionResult GetSuggestedUserName()
         {
-            if (string.IsNullOrEmpty(CheckRequest.GetStringRequest("groupname", string.Empty)))
+            string groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
+
+            if (string.IsNullOrEmpty(groupName) || !this.IsBelong(groupName, 0, null, true))
             {
                 return this.JsonBase(new { username = string.Empty });
             }
@@ -94,7 +96,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 CheckRequest.GetStringRequest("username", string.Empty), 
                 CheckRequest.GetStringRequest("groupname", string.Empty));
             
-            return this.JsonBase(users);
+            return this.JsonBase(users, new Newtonsoft.Json.JsonSerializerSettings());
         }
     }
 }

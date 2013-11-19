@@ -293,11 +293,11 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -335,11 +335,11 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
@@ -375,11 +375,11 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
@@ -404,10 +404,10 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl('User/UpdateStatus/?userId=' + userId + '&isActive=' + isActive), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
-                alert(data.ErrorMessage);
+                alert(data.errorMessage);
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
@@ -426,6 +426,18 @@ Fanex.ExtAcc.User = {
     },
 
     ResetPwd: function (isOwner) {
+        if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
+            $('#Password').focus();
+            Validators.show($('#Password').get(0), 'Not allow HTML TAG');
+            return false;
+        }
+
+        if ($('#confirmPwd').val().toString().search(/^[<\s\s*>]/) != -1) {
+            $('#confirmPwd').focus();
+            Validators.show($('#confirmPwd').get(0), 'Not allow HTML TAG');
+            return false;
+        }
+
         if (!Validators.validateInput($('#Password').val())) {
             $('#Password').focus();
             Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
@@ -437,7 +449,7 @@ Fanex.ExtAcc.User = {
             Validators.show($('#confirmPwd').get(0), 'This field is required');
             return false;
         }
-
+        
         if ($('#confirmPwd').val() !== $('#Password').val()) {
             $('#confirmPwd').focus();
             Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
@@ -450,10 +462,10 @@ Fanex.ExtAcc.User = {
 
         $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 console.log($('#errMsg'));
                 $('table tr td div#errMsg').css('display', 'block');
-                $('table tr td div#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('table tr td div#errMsg').html(data.errorMessage.formatErrorMessage());
 
             }
             else {

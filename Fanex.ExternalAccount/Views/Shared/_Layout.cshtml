@@ -6,8 +6,14 @@
 @{
     var groupId = CurrentSession.Instance.GroupId;
     var groups = Fanex.CustomerSetting.Security.Authenticate.GroupConfigurations.AllowBettingGroups;
+    var admins = Config.AdminUsersEditSuperStatus;
     var showBetSetting = groups.Contains(groupId) ? 1 : 0;
     var allowBetSettingGroups = Newtonsoft.Json.JsonConvert.SerializeObject(groups, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
+    {
+        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+    });
+    var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
@@ -16,14 +22,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <title>External Accounting Site</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <meta name="author" content="Nathan Smith" />
     <meta name="copyright" content="Licensed under GPL and MIT." />
     <meta name="description" content="Adapt.js serves CSS based on screen width." />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <title>External Accounting Site</title>
     <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
     @if (HttpContext.Current.IsDebuggingEnabled)
@@ -49,8 +54,7 @@
 </head>
 <body>
     <div id="groupName" style="display: none">@CurrentSession.Instance.CurrencyGroup</div>
-    <div id="selectedGroupIndex" style="display: none">
-    </div>
+    <div id="selectedGroupIndex" style="display: none">@CurrentSession.Instance.GroupId</div>
     <div id="selectedGroupName" style="display: none">
     </div>
     <div id="container">
@@ -171,6 +175,7 @@
 
         var showBetSetting = '@showBetSetting';
         var allowBetSettingGroups = '@allowBetSettingGroups';
+        var allowAdminEditSuperStatus = '@allowAdminEditSuperStatus';
         var userId = '@CurrentSession.Instance.UserId';
         var username = '@CurrentSession.Instance.UserName';
         var menuTitles = '{"ResetPwd" : "@ViewLang.ResetPassword", "CreateExistUser" : "@ViewLang.AddExistingUser", "CreateUser" : "@ViewLang.NewUser", "EditUser" : "@ViewLang.EditUserInfo", "Edit": "@ViewLang.EditMenu", "Activate": "@ViewLang.Activate", "Delete": "@ViewLang.Delete", "Create" : "@ViewLang.NewMenu", "Deactivate" : "@ViewLang.Deactivate", "EditGroup" : "@ViewLang.EditGroup", "EditFunction":"@ViewLang.EditFunction", "CreateFunction" : "@ViewLang.NewFunction"}';

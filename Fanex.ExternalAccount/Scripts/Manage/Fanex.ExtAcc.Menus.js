@@ -250,11 +250,11 @@ Fanex.ExtAcc.Menus = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -319,11 +319,11 @@ Fanex.ExtAcc.Menus = {
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
                 var timeout = setTimeout(function () {
@@ -345,10 +345,10 @@ Fanex.ExtAcc.Menus = {
 
         $.ajax({ url: resolveClientUrl('Menu/UpdateStatus/?menuId=' + menuId + '&isActive=' + isActive), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
-                alert(data.ErrorMessage);
+                alert(data.errorMessage);
             }
             else {
                 var timeout = setTimeout(function () {
@@ -370,10 +370,10 @@ Fanex.ExtAcc.Menus = {
 
         $.ajax({ url: resolveClientUrl('Menu/Delete/?menuId=' + menuId), type: 'POST' })
         .done(function (data) {
-            if (!data.IsSuccess) {
+            if (!data.isSuccess) {
                 Fanex.ExtAcc.UnBlockUI();
 
-                alert(data.ErrorMessage);
+                alert(data.errorMessage);
             }
             else {
                 var timeout = setTimeout(function () {

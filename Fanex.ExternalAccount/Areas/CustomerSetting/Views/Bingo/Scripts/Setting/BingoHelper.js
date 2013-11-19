@@ -4,7 +4,23 @@
     masterRoleId: 3,
     agentRoleId: 2,
     memberRoleId: 1,
+    FormatNumber: function (number) { // Format a number to 1,234,567.89
+        number += '';
+
+        x = number.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    },
+
     renderCustomerInfo: function (custInfo) {
+        if (customerPTBingoSetting.isMultiple)
+            return '<table class="tblcollapse" style="width: 100%;">';
+
         var html = '<table class="tblcollapse" style="width: 100%;">\
                         <tr class="title">\
                             <td colspan="4">Customer Information</td>\
@@ -51,7 +67,7 @@
                                     <td class="r" style="width:300px">\
                                         <b>Accumulated transferable amount</b>\
                                     </td>\
-                                    <td class="r" style="width:100px">' + parent.Fanex.ExtAcc.FormatNumber(betSetting.actualMaxTransfer) + '</td>\
+                                    <td class="r" style="width:100px">' + this.FormatNumber(betSetting.actualMaxTransfer) + '</td>\
                                     <td class="l" colspan="2">' + (!dontShowResetLink ? '<span onclick="ResetMaxTransfer(' + betSetting.iD + ')" class="canchange">Reset' : '') + '</td>\
                                 </tr>\
                                 <tr>\
@@ -60,10 +76,10 @@
                                     </td>\
                                     <td class="r" style="width:100px">';
             if (directDownline) {
-                html += '<input type="text" value="' + parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit) + '" id="txtMaxTransferCredit" class="r" maxLength="14" onpaste="return false;" onkeypress="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)">';
+                html += '<input type="text" value="' + this.FormatNumber(betSetting.maxTransferCredit) + '" id="txtMaxTransferCredit" class="r" maxLength="14" onpaste="return false;" onkeypress="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return parent.Fanex.ExtAcc.CheckNumber(event, this, this)">';
             }
             else {
-                html += parent.Fanex.ExtAcc.FormatNumber(betSetting.maxTransferCredit);
+                html += this.FormatNumber(betSetting.maxTransferCredit);
             }
             html += '</td>\
                                     <td class="l" colspan="2">\
@@ -72,7 +88,7 @@
                                 </tr>\
                                 <tr>\
                                      <td class="r" style="width:300px">&nbsp</td>\
-                                     <td class="r" style="width:100px">(' + parent.Fanex.ExtAcc.FormatNumber(betSetting.minLimit) + ' - ' + (betSetting.maxLimit == 0 ? 'No limited' : parent.Fanex.ExtAcc.FormatNumber(betSetting.maxLimit)) + ')</td>\
+                                     <td class="r" style="width:100px">(' + this.FormatNumber(betSetting.minLimit) + ' - ' + (betSetting.maxLimit == 0 ? 'No limited' : this.FormatNumber(betSetting.maxLimit)) + ')</td>\
                                      <td class="l" colspan="2">&nbsp</td>\
                                 </tr>\
                             </table>\

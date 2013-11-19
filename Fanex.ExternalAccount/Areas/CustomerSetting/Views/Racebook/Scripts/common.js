@@ -1,4 +1,18 @@
-﻿IBC = [];
+﻿function PTBlockUI() {
+    try {
+        parent.Fanex.ExtAcc.BlockUI();
+    }
+    catch (e) {
+    }
+}
+function PTUnBlockUI() {
+    try {
+        parent.Fanex.ExtAcc.UnBlockUI();
+    } catch (e) {
+    }
+}
+
+IBC = [];
 IBC.addEvent = function(el, evname, func) {
     if (el.attachEvent) { // IE
         el.attachEvent("on" + evname, func);

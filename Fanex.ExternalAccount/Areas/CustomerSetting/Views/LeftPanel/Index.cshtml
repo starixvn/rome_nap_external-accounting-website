@@ -25,7 +25,7 @@
         </div>
         <div id="customerInfo" ng-controller="PersonalInfoController" ng-hide="{{model==null}}">
             <div class="bold currentUser headerLevel">
-                <div class="floatLeft bold"><a title="{{personalInfo.status.tooltip}}" style="{{personalInfo.backgroundColor.value}}" class="detail2" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
+                <div class="floatLeft bold"><a title="{{personalInfo.status.tooltip}}" class="detail2 {{personalInfo.backgroundColor.value}}" href="javascript:;" ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
                 <div id="personalInfo" class="floatRight userDown" ng-click="TooglePersonalInfo()">&nbsp;&nbsp;</div>
             </div>            
             <div class="clearBoth">
@@ -92,7 +92,7 @@
                     <div class="balanceTitle">{{balances[3].text}}</div>
                     <div class="{{myClass3}}" ng-init="myClass3 = balances[3].value < 0">
                         <div class="floatLeftBalance R">
-                            <a id="linkGivenCredit" href="javascript:;" ng-click="EditCredit({{balances[3].value}})">{{balances[3].value.toFixed(2).formatNumber()}}</a>
+                            <a id="linkGivenCredit" href="javascript:;" ng-click="EditCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a>
                             <input style="text-align: right; margin-right: 0" ng-blur="RevertCredit({{preVal}})" ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" ng-hide="true" />
                         </div>
                     </div>

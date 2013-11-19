@@ -20,6 +20,7 @@ Fanex.ExtAcc.Customer.MinPT = {
         var data = new Object();
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = editMinPTStatus == 'SuperEditMinPTMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId;
+        data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/' + editMinPTStatus + 'Get'),
@@ -28,6 +29,14 @@ Fanex.ExtAcc.Customer.MinPT = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             customer = result.customer;
             var context = result.context;
 
@@ -38,10 +47,10 @@ Fanex.ExtAcc.Customer.MinPT = {
             ptGrid.Render(document.getElementById('ptContainer'));
 
             var CustomerModel = function () {
-                this.saveCustomer = function () { 
+                this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
                     // EscapeHTML String
-                     Fanex.ExtAcc.BlockUI();
+                    Fanex.ExtAcc.BlockUI();
 
                     customer.firstName = customer.firstName.escapeHtml();
                     customer.lastName = customer.lastName.escapeHtml();
@@ -60,7 +69,8 @@ Fanex.ExtAcc.Customer.MinPT = {
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
                             parentId: editMinPTStatus == 'SuperEditMinPTMaster' ? Fanex.ExtAcc.Customer.superId : Fanex.ExtAcc.Customer.masterId,
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
                         };
                     }
 
@@ -71,7 +81,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                         type: 'post'
                     })
                     .success(function (result) {
-                        if (result.ErrorCode == 0) {
+                        if (result.errorCode == 0) {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
@@ -87,7 +97,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                             Fanex.ExtAcc.UnBlockUI();
 
                             $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
                     })
                     .error(function (xhr, status, err) {
@@ -103,7 +113,7 @@ Fanex.ExtAcc.Customer.MinPT = {
         .error(function (xhr, status, err) {
             Fanex.ExtAcc.UnBlockUI();
         });
-    },
+    }
 }
 
 $(document).ready(function () {

@@ -71,7 +71,48 @@ function CustomerController($scope, $element) {
                 if ($scope.Enabled) {
                     $('#downline').html($scope.Level + '&nbsp;' + "<font color='Red'>(Casino downlines will be disabled as well)</font>");
                 }
-            } 
+            }
         }
+    },
+
+    $scope.Reset = function () {
+        if ($scope.CustomerModel.roleId == 4) {
+            return;
+        }
+
+        try {
+            Fanex.CustomerSetting.Core.BlockUI();
+        }
+        catch (e) {
+        }
+
+        $.ajax({
+            url: toUrl('CasinoCustomer/ResetMaxTransfer'),
+            data: {
+                id: $scope.CustomerModel.iBCCustID,
+                groupName: parent.$('#selectedGroupName').html()
+            }
+        }).success(function (result) {
+            if (result.errorCode == 0) {
+                $('#errMsg').html('<font color="Blue">Reset max transfer successfully</font>'.formatSuccessMessage());
+                $('#errMsg').show();
+                setTimeout(function () {
+                    document.location.reload(true);
+                }, 2000);
+            }
+            else {
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                $('#errMsg').show();
+            }
+        }).error(function (data) {
+            if (typeof console != 'undefined')
+                console.log(data);
+        }).complete(function (data) {
+            try {
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        });
     }
 }

@@ -14,6 +14,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.CustomerSetting.IP.Utils;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -25,8 +27,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
-    using Sunplus.Core.Common.IPs;
-
+    
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -39,6 +40,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private readonly CustomerService _customerService = new CustomerService();
         private string _cacheList = string.Empty;
         private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        
+        #region Super Add New Master
 
         /// <summary>
         /// Checks username.
@@ -46,7 +49,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="username">Customer username.</param>
         /// <param name="parentRoleId">Parent role id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult CheckUsername(string username, int parentRoleId)
         {
             int errCode = 0;
@@ -67,9 +70,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 errCode = 101;
                 errMsg = ViewLang.notExist;
             }
-            
+
             return this.JsonBase(
-                new { errCode = errCode, errMsg = errCode }, 
+                new { errCode = errCode, errMsg = errCode },
                 new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -77,14 +80,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 });
         }
 
-        #region Super Add New Master
-
         /// <summary>
         /// Gets add new super page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperAddNewMaster()
         {
             return this.PartialViewBase();
@@ -97,8 +98,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -137,8 +138,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Create)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -171,8 +172,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Gets agent page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterAddNewAgent()
         {
             return this.PartialViewBase();
@@ -185,8 +186,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -225,8 +226,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Create)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -259,8 +260,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Get member page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentAddNewMember()
         {
             return this.PartialViewBase();
@@ -273,8 +274,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="parentUsername">Parent username.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Read)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -313,8 +314,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">Customer object model.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.CreateNew, Policy = EPolicy.Create)]
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Create)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -345,7 +346,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Gets customer list page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult CustomerList()
         {
             return this.PartialViewBase();
@@ -387,7 +388,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Sets cache list.
         /// </summary>
         /// <param name="result">Customer data.</param>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public void SetCacheList(DataTable result)
         {
             if (result != null)
@@ -406,7 +407,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="username">Customer username.</param>
         /// <param name="isExportExcel">Export excel or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SearchListPost(
             string groupName = "ACCDDD", 
             bool? enabled = null, 
@@ -416,17 +417,35 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool? isExportExcel = null)
         {
             DataTable result;
-            int srecommend;
-            int mrecommend;
-            int recommend;
-            int custId;
-            int roleId;
+            int srecommend, mrecommend, recommend, custId, roleId;
             this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
-
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
                 result == null ? new DataTable() : result, 
                 Formatting.None, 
                 new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+            bool syncCasino = true, syncBingo = true, syncLiveCasino = true, allowDoubleComm = true;
+
+            if (roleId > 0 && roleId < 4)
+            {
+                DataTable userInfo = null;                
+                switch (roleId)
+                {
+                    case Master:
+                        userInfo = this._superService.GetData(null, srecommend, null, null, null, groupName);
+                        break;
+                    case Agent:
+                        userInfo = this._masterService.GetData(srecommend, mrecommend, null, null, null);
+                        break;
+                    case Member:
+                        userInfo = this._agentService.GetData(mrecommend, recommend, null, null, null);
+                        break;
+                }
+                
+                syncBingo = userInfo.Rows[0].ToBoolean("syncBingo");
+                syncCasino = userInfo.Rows[0].ToBoolean("syncCasino");
+                syncLiveCasino = userInfo.Rows[0].ToBoolean("syncLiveCasino");
+                allowDoubleComm = userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
+            }
 
             return this.JsonBase(
                 new 
@@ -439,11 +458,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     srecommend = srecommend, 
                     mrecommend = mrecommend, 
                     recommend = recommend, 
-                    custId = custId 
+                    custId = custId,
+                    syncCasino = syncCasino,
+                    syncBingo = syncBingo,
+                    syncLiveCasino = syncLiveCasino,
+                    allowDoubleComm = allowDoubleComm
                 });
         }
 
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperListPost(
             string groupName = "ACCDDD", 
             int? custId = null, 
@@ -452,7 +475,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool? suspended = null)
         {
             this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
-            var result = this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() : 
+                this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
 
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
@@ -469,10 +493,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = this._masterService.GetData(srecommend, custId, enabled, closed, suspended);
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true) ? new DataTable() :
+                this._masterService.GetData(srecommend, custId, enabled, closed, suspended);
 
             var superId = Utils.ToInt32(srecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), superId, null, true);
@@ -514,10 +539,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>        
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() : 
+                this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), masterId, null, true);
@@ -541,8 +567,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             return this.JsonBase(
                 new 
-                { 
-                    total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, srecommend = srecommend, 
+                {
+                    total = 1,
+                    page = 1,
+                    records = result.Rows.Count,
+                    rows = ret,
+                    roleId = roleId,
+                    srecommend = srecommend, 
                     mrecommend = mrecommend, recommend = recommend, custId = custId 
                 });
         }
@@ -556,10 +587,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = this._memberService.GetData(recommend, custId, enabled, closed, suspended);
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() : 
+                this._memberService.GetData(recommend, custId, enabled, closed, suspended);
 
             var agentId = Utils.ToInt32(recommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), agentId, null, true);
@@ -583,8 +615,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             return this.JsonBase(
                 new 
-                { 
-                    total = 1, page = 1, records = result.Rows.Count, rows = ret, roleId = roleId, 
+                {
+                    total = 1,
+                    page = 1,
+                    records = result.Rows.Count,
+                    rows = ret,
+                    roleId = roleId, 
                     srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId 
                 });
         }
@@ -594,7 +630,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <param name="ip">IP address.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
             if (ip.Equals("::1", StringComparison.OrdinalIgnoreCase))
@@ -613,9 +649,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var ipinfo = new IPInfo()
             {
                 IP = ip,
-                City = info.City,
-                Country = info.CountryLong,
-                Flag = info.CountryShort + ".gif",
+                City = string.IsNullOrWhiteSpace(info.ipCity) ? string.Empty : info.ipCity,
+                Country = string.IsNullOrWhiteSpace(info.countryLONG) ? string.Empty : info.countryLONG,
+                Flag = string.IsNullOrWhiteSpace(info.countrySHORT) ? "-.gif" : info.countrySHORT + ".gif",
                 Info = string.Format(ViewLang.IPNote, ip)
             };
 
@@ -628,9 +664,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custid">Customer id.</param>
         /// <param name="allow">Allow double commission or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
+            if (!this.IsBelong(Request["groupName"], custid, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var result = this._superService.ConfigDoubleComm(
                 custid,
                 allow,
@@ -655,9 +696,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <param name="custId">Customer id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditInfo(int custId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var model = this._customerService.UserInfo(custId);
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
@@ -680,9 +726,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="email">Email address.</param>
         /// <param name="fax">Fax number.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult EditInfoPost(int custId, string firstName, string lastName, string homePhone, string mobilePhone, string email, string fax)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var result = this._customerService.EditUserInfo(
                     custId, 
                     firstName, 
@@ -699,39 +750,63 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id)
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             ViewBag.RoleId = id;
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult TransferCondition()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             ViewBag.CustId = custId;
             var model = this._masterService.GetTransferOption(custId);
-
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var result = this._masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
 
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ResetPassword(int custId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var user = this._customerService.UserInfo(custId);
             return this.PartialViewBase(user);
         }
@@ -742,9 +817,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custId">Customer id.</param>
         /// <param name="password">Password characters.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.EditCustomer, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdatePassword(int custId, string password)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var result = this._customerService.ResetPassword(
                 custId,
                 password,
@@ -777,7 +857,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageCustomer, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetExportToExcel(
             int? currentLevel = null, 
             string groupName = "ACCDDD", 
@@ -845,7 +925,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
                 if (this._cache.Get<DataTable>(this._cacheList) == null)
                 {
-                    this.SetCacheList(this._superService.GetData(null, custId, enabled, closed, suspended, groupName));
+                    this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(custId), null, true) ? new DataTable() :
+                        this._superService.GetData(null, custId, enabled, closed, suspended, groupName));
                 }
             }
             else if (currentLevel == 3)
@@ -854,7 +935,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this._cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
                 if (this._cache.Get<DataTable>(this._cacheList) == null)
                 {
-                    this.SetCacheList(this._masterService.GetData(srecommend, custId, enabled, closed, suspended));
+                    this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(srecommend), null, true) ? new DataTable() : 
+                        this._masterService.GetData(srecommend, custId, enabled, closed, suspended));
                 }
             }
             else if (currentLevel == 2)
@@ -863,7 +945,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this._cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
                 if (this._cache.Get<DataTable>(this._cacheList) == null)
                 {
-                    this.SetCacheList(this._agentService.GetData(mrecommend, custId, enabled, closed, suspended));
+                    this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(mrecommend), null, true) ? new DataTable() : 
+                        this._agentService.GetData(mrecommend, custId, enabled, closed, suspended));
                 }
             }
             else if (currentLevel == 1)
@@ -872,7 +955,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this._cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
                 if (this._cache.Get<DataTable>(this._cacheList) == null)
                 {
-                    this.SetCacheList(this._memberService.GetData(recommend, custId, enabled, closed, suspended));
+                    this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(recommend), null, true) ? new DataTable() :
+                        this._memberService.GetData(recommend, custId, enabled, closed, suspended));
                 }
             }
         }
@@ -922,22 +1006,22 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
                 if (roleId == 4)
                 {
-                    result = this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
+                    result = !this.IsBelong(groupName, custId, null, true) ? new DataTable() : this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
                     this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended;
                 }
                 else if (roleId == 3)
                 {
-                    result = this._masterService.GetData(srecommend, custId, enabled, closed, suspended);
+                    result = !this.IsBelong(groupName, srecommend, null, true) ? new DataTable() : this._masterService.GetData(srecommend, custId, enabled, closed, suspended);
                     this._cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended;
                 }
                 else if (roleId == 2)
                 {
-                    result = this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
+                    result = !this.IsBelong(groupName, mrecommend, null, true) ? new DataTable() : this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
                     this._cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended;
                 }
                 else
                 {
-                    result = this._memberService.GetData(recommend, custId, enabled, closed, suspended);
+                    result = !this.IsBelong(groupName, recommend, null, true) ? new DataTable() : this._memberService.GetData(recommend, custId, enabled, closed, suspended);
                     this._cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended;
                 }
             }

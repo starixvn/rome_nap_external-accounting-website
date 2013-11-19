@@ -39,10 +39,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     },
 
     IsMultiple: function () {
-        if (this.custids != null && this.custids != undefined && this.custids.length > 1)
-            return true;
-
-        return false;
+        return Fanex.ExtAcc.Customer.IsMultiple;
     },
 
     CustomerModel: function (customer) {
@@ -127,6 +124,14 @@ Fanex.ExtAcc.Customer.VirtualSports = {
 
     Init: function () {
         Fanex.ExtAcc.BlockUI();
+        this.InitArrays();
+
+        if (!Fanex.ExtAcc.Customer.IsMultiple) {
+            $('#multiple').remove();
+        } else {
+            $('.general').remove();
+            Fanex.ExtAcc.Customer.ProcessDisplayMultiple(80);
+        }
 
         this.uplineId = context.custId;
         this.uplineRoleId = context.roleId;
@@ -171,7 +176,6 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         }
 
         // using for both of multi & single
-        this.InitArrays();
         this.InitUI();
         Fanex.ExtAcc.UnBlockUI();
     },
@@ -188,13 +192,10 @@ Fanex.ExtAcc.Customer.VirtualSports = {
 
         if (this.IsMultiple()) {
             if (context.targetRoleId == 1) {
-                if (context.roleId == 4) {
-                    document.getElementById("divStatus").style.display = "none";
+                if (context.roleId != 2) {
+                    $('#generalInfo').hide();
                 }
-                else if (context.roleId == 3) {
-                    document.getElementById("divStatus").style.display = "none";
-                }
-                else if (context.roleId == 2) {
+                else {
                     document.getElementById("divDownline").style.display = "none";
                 }
             }
@@ -282,19 +283,17 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     UpdateSettings: function () {
         this.isSuccess = true;
         Fanex.ExtAcc.BlockUI();
-        this.UpdateCustSettings(0);
+        $('#errMsg').html('');
+        this.UpdateCustSettings(this.IsMultiple() ? 0 : null);
     },
     UpdateCustSettings: function (id) {
         var object = this;
-        var custid = this.custids[id];
-        var username = this.usernames[id];
+        var custid = id != null ? this.custids[id] : context.targetCustId;
+        var username = id != null ? this.usernames[id] : customer.userName;
         var isMulti = false;
-        if (id > 0) {
-            isMulti = true;
-        }
 
         var url = resolveClientUrl("VirtualSports/UpdateCustomerSetting?custId=") + this.uplineId + '&roleId=' + this.uplineRoleId + "&targetCustId=" + custid + "&targetRoleId=" + context.targetRoleId + "&updateType=" + this.updateType + "&isMulti=" + isMulti.toString();
-        var parameters = ['oldCustomer=', JSON.stringify(this.oldCustomer), '&newCustomer=', JSON.stringify(this.newCustomer), '&otherSetting=', JSON.stringify(this.otherSetting)].join('');
+        var parameters = ['oldCustomer=', JSON.stringify(this.oldCustomer), '&newCustomer=', JSON.stringify(this.newCustomer), '&otherSetting=', JSON.stringify(this.otherSetting), '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName].join('');
 
         $.ajax({
             url: url,
@@ -314,37 +313,43 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                     for (var i = 0; i < len; i++) {
                         var item = result[i];
                         if (item.errorCode >= 0) {
-                            object.isSuccess = false;
+                            Fanex.ExtAcc.Customer.VirtualSports.isSuccess = false;
                         }
                         else if (item.errorCode == -2) { // update status successfully
                             Fanex.ExtAcc.Customer.VirtualSports.ReloadCheckboxes();
                         }
                     }
                 }
-                else {
-                    if (result.errorCode >= 0) {
-                        object.isSuccess = false;
-                    }
+                else if (result.errorCode >= 0) {
+                    Fanex.ExtAcc.Customer.VirtualSports.isSuccess = false;
                 }
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(Fanex.ExtAcc.FormatErrorMessage(ArrUserName, result));
+                $('#errMsg').append(Fanex.ExtAcc.FormatErrorMessage(ArrUserName, result));
 
-                id++;
-                if (id < object.custids.length) {
-                    updateCustSettings(id);
+                if (id != null) {
+                    id++;
+                    if (id < object.custids.length) {
+                        Fanex.ExtAcc.Customer.VirtualSports.UpdateCustSettings(id);
+                    }
+                    else {
+                        if (Fanex.ExtAcc.Customer.VirtualSports.isSuccess) {
+                            object.oldCustomer = object.newCustomer;
+                            ''.formatSuccessMessage();
+                        }
+                        else {
+                            ''.formatErrorMessage();
+                        }
+                        Fanex.ExtAcc.UnBlockUI();
+                        $('#windowPopup').scrollTop(0);
+                    }
                 }
                 else {
-                    if (object.isSuccess) {
-                        object.oldCustomer = object.newCustomer;
-                        Fanex.ExtAcc.Customer.VirtualSports.afterUpdateSuccess(2000);
-                    }
-                    $.unblockUI(document);
-                    $('#windowPopup').scrollTop(0);
+                    Fanex.ExtAcc.UnBlockUI();
                 }
             },
             error: function () {
-                $.unblockUI(document);
+                Fanex.ExtAcc.UnBlockUI();
             }
         });
     },

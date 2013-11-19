@@ -10,8 +10,10 @@
 namespace Fanex.ExternalAccount.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using Fanex.ExternalAccount.DTO;
+    using Sunplus.UMControllerLibrary;
 
     /// <summary>
     /// TODO: Update summary.
@@ -53,24 +55,26 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
-                return Utils.ToBoolean(GetValue("IsUM"));
+                var um = new UMBusiness();
+                string from = string.Empty, to = string.Empty;
+                bool isUM = um.isUnderMaintainence(Sites.AccountSite, Config.LBUrl, ref from, ref to) || Utils.ToBoolean(GetValue("IsUM"));
+                TimeFrom = string.IsNullOrWhiteSpace(from) ? GetValue("TimeFrom") : from; 
+                TimeTo = string.IsNullOrWhiteSpace(to) ? GetValue("TimeTo") : to;
+
+                return isUM;
             }
         }
 
         public static string TimeFrom
         {
-            get
-            {
-                return GetValue("TimeFrom");
-            }
+            get;
+            set;
         }
 
         public static string TimeTo
         {
-            get
-            {
-                return GetValue("TimeTo");
-            }
+            get;
+            set;
         }
 
         public static bool Recheckin
@@ -208,6 +212,22 @@ namespace Fanex.ExternalAccount.Utilities
             get
             {
                 return Utils.ToBoolean(GetValue("IsCache"));
+            }
+        }
+
+        public static IList<int> AdminUsersEditSuperStatus
+        {
+            get
+            {
+                string[] ids = GetValue("AdminUsersEditSuperStatus").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                IList<int> adminIds = new List<int>();
+
+                foreach (var id in ids)
+                {
+                    adminIds.Add(Utils.ToInt32(id));
+                }
+
+                return adminIds;
             }
         }
 

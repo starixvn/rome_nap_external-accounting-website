@@ -34,10 +34,6 @@
         });
 
         Fanex.CustomerSetting.Core.ProcessDisplayMultiple(125, names);
-        names = names.substring(0, names.length - 2);
-
-        jQuery('#names').html(names);
-        jQuery('#names').show();
     }
     else {
         $('#arrowUpDown').hide();
@@ -106,7 +102,8 @@
             userId: CustomerInfo.userId,
             username: CustomerInfo.username,
             settingModel: JSON.stringify(SettingModel),
-            customerModel: JSON.stringify(CustomerModel)
+            customerModel: JSON.stringify(CustomerModel),
+            groupName: parent.$('#selectedGroupName').html()
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];

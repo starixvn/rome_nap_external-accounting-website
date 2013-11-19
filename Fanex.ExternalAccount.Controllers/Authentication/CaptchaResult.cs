@@ -60,7 +60,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// Execute result.
         /// </summary>
         /// <param name="context">ControllerContext object.</param>
-        public override void ExecuteResult(ControllerContext context)
+        /// <returns>String object.</returns>
+        public string GetValiationImage(ControllerContext context)
         {
             var bmp = new Bitmap(100, 30);
             var g = Graphics.FromImage(bmp);
@@ -71,9 +72,16 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             g.DrawString(randomString, new Font("Courier", 16), new SolidBrush(Color.Black), 17, 2);
 
             var response = context.HttpContext.Response;
-            response.ContentType = "image/jpeg";
-            bmp.Save(response.OutputStream, ImageFormat.Jpeg);
-            bmp.Dispose();
+            var stream = new System.IO.MemoryStream();
+            bmp.Save(stream, ImageFormat.Jpeg);
+            var bytes = stream.ToArray();
+            var img = Convert.ToBase64String(bytes);
+
+            return img;
+        }
+
+        public override void ExecuteResult(ControllerContext context)
+        {            
         }
     }
 }

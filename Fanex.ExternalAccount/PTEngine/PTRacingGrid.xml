@@ -22,7 +22,7 @@
           </BetTypes>
         </BetTypeGroup>
 
-        <BetTypeGroup id="51" name="Aust Tote" isHide="true" allowCurrencies="*">
+        <BetTypeGroup id="51" name="Aust Tote" isHide="false" allowCurrencies="*">
           <BetTypes>
             <BetType id="51" name="Win">
             </BetType>

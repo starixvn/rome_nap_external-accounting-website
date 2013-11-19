@@ -7,6 +7,9 @@ Fanex.CustomerSetting.Betting = {};
 Fanex.CustomerSetting.Betting.VirtualSports = function ($scope, $element) {
     $scope.model = model;
 
+    if (!model)
+        return;
+
     $scope.bettingLimits = $scope.model.bettingLimit.bettingLimitItems;
 };
 
@@ -140,9 +143,9 @@ Fanex.CustomerSetting.Betting.VirtualSports.Update = function (ondone) {
         if (typeof console != 'undefined')
             console.log(data);
 
-        if (JSON.parse(data.responseText).ErrorCode) {
+        if (JSON.parse(data.responseText).errorCode) {
             $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
+            $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
             $('#errMsg').show();
         }
 

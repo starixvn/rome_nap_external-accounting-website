@@ -278,6 +278,10 @@
     <Content Include="Areas\CustomerSetting\Styles\input.css" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\SecurityCode.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Styles\SecurityCode.css" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\AgentMinMaxPT.js" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MasterMinMaxPT.js" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MinMaxPTRacingSetting.js" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\minmaxpt.css" />
     <Content Include="bundles\images\dec1.gif" />
     <Content Include="bundles\images\dec1_disable.jpg" />
     <Content Include="bundles\images\dec2.gif" />
@@ -648,7 +652,7 @@
     <Content Include="Content\Images\info.gif" />
     <Content Include="Content\Images\info.png" />
     <Content Include="Content\Images\lastGoal.gif" />
-    <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\Loading.gif" />
     <Content Include="Content\Images\loading1.gif" />
     <Content Include="Content\Images\Login\warning-icn.png" />
     <Content Include="Content\Images\member.png" />
@@ -687,6 +691,8 @@
     <Content Include="Dll\CasinoLibrary.dll" />
     <Content Include="Dll\DNAide.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.BetSetting.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Bingo.dll" />
+    <Content Include="Dll\Fanex.CustomerSetting.Module.Bingo.Resources.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Casino.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.Core.dll" />
     <Content Include="Dll\Fanex.CustomerSetting.Module.LeftPanel.dll" />
@@ -713,6 +719,8 @@
     <Content Include="Images\bg-menubar.png" />
     <Content Include="Images\bg-Title-Grid.png" />
     <Content Include="Images\bgGrid.png" />
+    <Content Include="Images\btn-bgsubmit-hover.png" />
+    <Content Include="Images\btn-bgsubmit-original.png" />
     <Content Include="Images\b_add.jpg" />
     <Content Include="Images\b_down.jpg" />
     <Content Include="Images\b_sub.jpg" />
@@ -1016,6 +1024,7 @@
     <Content Include="Images\sort.png" />
     <Content Include="Images\Success.gif" />
     <Content Include="Images\super-btn.png" />
+    <Content Include="Images\UnderMaintenance.gif" />
     <Content Include="PTEngine\BettingLimit.xml" />
     <Content Include="PTEngine\PTGrid.xml" />
     <Content Include="PTEngine\PTRacingGrid.xml" />
@@ -1905,8 +1914,12 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\AgentMinMaxPT.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\MasterMinMaxPT.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Shared\_LayoutMinMaxPT.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
+    <Content Include="Areas\CustomerSetting\Views\Shared\_LayoutMinMaxPT.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -1940,6 +1953,7 @@
     <Content Include="IbcKeys\Web.config" />
     <Content Include="PTEngine\PTRacingMappingSection.config" />
     <Content Include="PTEngine\RacingBettingCommSettingMappingSection.config" />
+    <Content Include="PTEngine\RacingSection.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />

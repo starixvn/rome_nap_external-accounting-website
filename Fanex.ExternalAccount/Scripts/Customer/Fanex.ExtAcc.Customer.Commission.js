@@ -32,7 +32,8 @@ Fanex.ExtAcc.Customer.Commission = {
         Fanex.ExtAcc.BlockUI();
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
-            parentId: parentId
+            parentId: parentId,
+            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
         $.ajax({
@@ -42,6 +43,14 @@ Fanex.ExtAcc.Customer.Commission = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.errorCode && result.errorCode == "1") {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+
+                return;
+            }
+
             commission = result.commission;
             var context = result.context;
             if ($this.currentLevel == 1) {
@@ -97,7 +106,8 @@ Fanex.ExtAcc.Customer.Commission = {
                 custId: Fanex.ExtAcc.Customer.UserId,
                 parentId: Fanex.ExtAcc.Customer.superId,
                 currentLevel: $this.currentLevel,
-                txtCustomerObject: text
+                txtCustomerObject: text,
+                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
             };
         }
 
@@ -108,7 +118,7 @@ Fanex.ExtAcc.Customer.Commission = {
             type: 'post'
         })
         .success(function (result) {
-            if (result.ErrorCode == 0) {
+            if (result.errorCode == 0) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
 
@@ -133,7 +143,7 @@ Fanex.ExtAcc.Customer.Commission = {
                 Fanex.ExtAcc.UnBlockUI();
 
                 $('#errMsg').css('display', 'block');
-                $('#errMsg').html(result.ErrorMessage.formatErrorMessage());
+                $('#errMsg').html(result.errorMessage.formatErrorMessage());
             }
         })
         .error(function (xhr, status, err) {

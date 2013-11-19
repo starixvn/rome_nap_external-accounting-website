@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -34,9 +35,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         private List<Fanex.ExternalAccount.DTO.Result> _result = new List<Fanex.ExternalAccount.DTO.Result>();
 
         [HttpPost]
-        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSingle(PTVirtualSportsModel model)
         {
+            if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase(model);
         }
 
@@ -46,7 +52,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         /// <param name="model">Model object.</param>
         /// <returns>ActionResult object.</returns>
         [HttpGet]
-        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult DataSource(PTVirtualSportsModel model)
         {
             IRequestContext currentContext = new RequestContext()
@@ -82,9 +88,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         /// <returns>ActionResult object.</returns>
         [HttpPost]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [Authorization(Function = eFunctions.VirtualSports, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateCustomerSetting(PTVirtualSportsUpdateModel model)
         {
+            if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             IRequestContext currentContext = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -102,14 +113,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
             };
 
             var customerService = new CustomerService();
-            ICustomer oldCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[0]);
+            ICustomer oldCustomer = customerService.GetCustomer(currentContext);
             ICustomer newCustomer = JsonConvert.DeserializeObject<Customer>(Request.Form[1]);
             Hashtable otherSetting = JsonConvert.DeserializeObject<Hashtable>(Request.Form[2]);
-            if (model.IsMulti)
-            {
-                oldCustomer = customerService.GetCustomer(currentContext);
-            }
-
+            
             switch (model.UpdateType)
             {
                 case 0:

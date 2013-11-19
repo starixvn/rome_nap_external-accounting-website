@@ -12,6 +12,8 @@
         <div class="maincontent">
             <div class="maincontent_box">
                 <div id="err" class="errMsg display-none"></div>
+                <div id="arrowUpDown" class="collapse display-none"></div>
+                <div id="names" style="display: none;" class="names"></div>            
             </div>
             <div class="bg_table">
                 <div id="SettingContent">Loading...</div>
@@ -19,18 +21,16 @@
         </div>
     </div>
     @RenderBody()
-
     <script type="text/javascript">
         window.uplineId = '@Convert.ToInt32(Request["uplineId"])';
-        window.custId = '@Convert.ToInt32(Request["custId"])';
+        window.custId = '@Convert.ToInt32(Request["id"])';
         window.rootUrl = '@ViewBag.RootUrl';
     </script>
-
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
-    @Scripts.Render("~/bundles/bingosetting")
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/bingosetting")
     @RenderSection("scripts", required: false)
 </body>
 </html>

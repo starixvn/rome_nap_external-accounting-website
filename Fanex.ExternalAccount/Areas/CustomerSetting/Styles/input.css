@@ -1,4 +1,44 @@
-﻿.buttonPopup, .ui-button, button[type=button]
+﻿.names
+{
+	font-weight: bold;
+	text-align: justify;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 5px;
+}
+.collapse
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../Images/arrowblue-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.expand
+{
+	float: right;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-image: url("../Images/arrowdown-icn.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 16px;
+	height: 16px;
+	border-right: none;
+	border-top: none;
+}
+.buttonPopup, .ui-button, button[type=button]
 {
 	background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
@@ -51,7 +91,7 @@
 	background-color: #ffedc1;
 	background-image: url("../Images/warning-icn.png");
 	background-repeat: no-repeat;
-	background-position: 5px center;
+	background-position: 5px 5px;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -68,6 +108,9 @@
 }
 .msgerror{ color:#FF0000; }
 .msgcorrect{ color:#00f; }
+#idConfirm_popupBody, #idConfirm_popupFooter {
+	background-color: #fff !important;
+}
 #idConfirm_yesButton, #idConfirm_noButton {
 	background: url(../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
@@ -96,4 +139,10 @@
 }
 #idConfirm_popupFooter {
 	text-align: right !important;
+}
+#idConfirm_popup, #idConfirm_shadow {
+	height: 124px !important;
+}
+#idConfirm_popupTitle {
+	height: 22px !important;
 }

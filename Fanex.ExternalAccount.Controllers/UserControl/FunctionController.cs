@@ -15,9 +15,9 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
@@ -34,7 +34,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// Get function list page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
             var internalGroup = new GroupService().GetListGroup()
@@ -53,7 +53,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// Gets data of function list page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult FunctionListPost()
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -94,7 +94,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 }
             }
 
-            return this.JsonBase(new { total = 1, page = 1, records = funcsOrder.Count(), rows = funcsOrder });
+            return this.JsonBase(new { total = 1, page = 1, records = funcsOrder.Count(), rows = funcsOrder }, new Newtonsoft.Json.JsonSerializerSettings());
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// </summary>
         /// <param name="id">Function id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditFunction(int id)
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -159,7 +159,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// Add new function.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AddFunction()
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -188,7 +188,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.PartialViewBase(model);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult Edit(int funcId, string name, string desc, int parentId, string parent, int order, string oldGroups, string groups)
         {
             var result = this._funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, oldGroups, groups);
@@ -196,7 +196,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Create)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult Add(string name, string key, string desc, int parentId, string parent, int order, string groups)
         {
             var funcId = 0;
@@ -206,7 +206,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateStatus(int funcId, bool isTest)
         {
             var result = this._funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
@@ -220,7 +220,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="funcId">Function id.</param>
         /// <param name="addNew">Specify is add new function or not.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.ManageFunction, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult PolicyList(int funcId, bool addNew = false)
         {
             var groups = this._funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
@@ -258,7 +258,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                     });
             }
 
-            return this.JsonBase(groups);
+            return this.JsonBase(groups, new Newtonsoft.Json.JsonSerializerSettings());
         }
     }
 }

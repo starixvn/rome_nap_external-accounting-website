@@ -15,9 +15,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport;
     using Fanex.ExternalAccount.Service.Impl.Report;
@@ -56,7 +56,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
         #endregion Init WinLossDetail
 
-        [Authorization(Function = eFunctions.WinlossDetail, Policy = EPolicy.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
             return this.PartialViewBase();
@@ -77,7 +77,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// Gets report data.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.WinlossDetail, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetData()
         {
             this.GetRequestPage();
@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._filterParams = new FilterController().AsCollection();
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
 
-            if (this.CheckBelonging())
+            if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 this._sortingOrderList = this._reportService.GetSortingOrderList(this._groupname);
 
@@ -106,8 +106,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     new 
                     { 
                         viewlevel = 5, srecommend = this._srecommend, mrecommend = this._mrecommend, 
-                        recommend = this._recommend, rows = string.Empty, sortingorderlist = this._sortingOrderList 
-                    });
+                        recommend = this._recommend, rows = string.Empty, sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
         }
 
@@ -121,7 +122,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + 
                 this._fromDate.ToString() + this._toDate.ToString();
 
-            if (this.CheckBelonging())
+            if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 if (this._viewlevel == 1)
                 {
@@ -253,8 +254,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     new 
                     { 
                         viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, 
-                        rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList 
-                    });
+                        rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
             else if (this._roleId == 3)
             {
@@ -272,8 +274,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         srecommend = this._srecommend, 
                         mrecommend = this._mrecommend, 
                         rows = this._listWinLossDetail, 
-                        sortingorderlist = this._sortingOrderList 
-                    });
+                        sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
             else if (this._roleId == 2)
             {
@@ -292,8 +295,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         mrecommend = this._mrecommend, 
                         recommend = this._recommend, 
                         rows = this._listWinLossDetailMAg, 
-                        sortingorderlist = this._sortingOrderList 
-                    });
+                        sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
             else
             {
@@ -312,8 +316,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         mrecommend = this._mrecommend, 
                         recommend = this._recommend, 
                         rows = this._listWinLossDetailAg, 
-                        sortingorderlist = this._sortingOrderList 
-                    });
+                        sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
         }
 
@@ -329,7 +334,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(this._custId, 0, this._fromDate, this._toDate, this._filterParams);
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
-                return this.JsonBase(new { viewlevel = 3, srecommend = this._custId, rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList });
+                return this.JsonBase(
+                    new { viewlevel = 3, srecommend = this._custId, rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
             else if (this._viewlevel == 3)
             {
@@ -340,8 +347,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     new 
                     { 
                         viewlevel = 2, srecommend = this._srecommend, mrecommend = this._custId, rows = this._listWinLossDetailMAg, 
-                        sortingorderlist = this._sortingOrderList 
-                    });
+                        sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
             else
             {
@@ -356,8 +364,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         mrecommend = this._mrecommend, 
                         recommend = this._custId, 
                         rows = this._listWinLossDetailAg, 
-                        sortingorderlist = this._sortingOrderList 
-                    });
+                        sortingorderlist = this._sortingOrderList
+                    }, 
+                    new Newtonsoft.Json.JsonSerializerSettings());
             }
         }
     }

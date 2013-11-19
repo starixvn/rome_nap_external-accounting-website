@@ -11,11 +11,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     using System.Collections;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTEngine.Services;
     using Newtonsoft.Json;
@@ -30,9 +31,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Bet Setting
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSetting()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
@@ -42,9 +48,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSettingMasterGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -76,9 +87,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSettingAgentGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -110,9 +126,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditBetSettingMemberGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -145,9 +166,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult EditBetSettingPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 
@@ -175,27 +201,47 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Edit Commission
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommission()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionDetail()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionMemberDetail()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
@@ -205,9 +251,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommissionGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -239,9 +290,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="currentLevel">Current level.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult EditCommissionPost(int custId, int parentId, int currentLevel, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 
@@ -279,15 +335,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region PT Setting
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPT(/*int custId, int parentId*/)
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperMasterEditSB()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
@@ -297,9 +363,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTSuperGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -336,9 +407,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -379,9 +455,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="isUpdateAllMember">Is update all member.</param>
         /// <param name="newPositionTaking">New position taking.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var mult = Request["isMult"];
             var para = Request["para"];
             var param = new Hashtable();
@@ -433,9 +514,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTAgentGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -476,14 +562,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="isUpdateAllMember">Is update all member.</param>
         /// <param name="newPositionTaking">New position taking.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var mult = Request["isMult"];
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
-
             settings.NullValueHandling = NullValueHandling.Ignore;
 
             if (!string.IsNullOrWhiteSpace(para))
@@ -531,9 +621,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditPTMemberGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -572,14 +667,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var mult = Request["isMult"];
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
-
             settings.NullValueHandling = NullValueHandling.Ignore;
 
             if (!string.IsNullOrWhiteSpace(para))
@@ -628,9 +727,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="agentId">Agent's id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -670,9 +774,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
@@ -723,9 +832,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="agentId">Agent's id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var setting = new Fanex.PTEngine.Services.CustomerService();
             var context = new RequestContext()
             {
@@ -765,9 +879,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
@@ -815,15 +934,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Multiple PT Setting
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMultiplePT()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperMasterEditMultiplePTMember()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
@@ -831,9 +960,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Edit Min PT
 
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditMinPT()
         {
+            if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             return this.PartialViewBase();
         }
 
@@ -843,9 +977,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -888,9 +1027,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="custId">Customer id.</param>
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var context = new RequestContext()
             {
                 AdminId = CurrentSession.UserId,
@@ -934,9 +1078,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 
@@ -965,9 +1114,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
-        [Authorization(Function = eFunctions.Sportsbook, Policy = EPolicy.Update)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 
