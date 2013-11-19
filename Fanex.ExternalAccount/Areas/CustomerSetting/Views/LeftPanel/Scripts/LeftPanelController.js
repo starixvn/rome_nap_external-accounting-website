@@ -1911,16 +1911,25 @@ function SettingController($scope, $http) {
     };
 
     $scope.SuperBingo = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperCasino = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperRacing = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
@@ -1937,6 +1946,9 @@ function SettingController($scope, $http) {
     };
 
     $scope.SuperVirtualSports = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
@@ -1959,16 +1971,25 @@ function SettingController($scope, $http) {
     };
 
     $scope.MasterBingo = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterCasino = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterRacing = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
@@ -1985,6 +2006,9 @@ function SettingController($scope, $http) {
     };
 
     $scope.MasterVirtualSports = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
