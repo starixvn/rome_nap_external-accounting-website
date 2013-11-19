@@ -13,7 +13,7 @@
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	z-index: 1003;
+	z-index: 999999;
 	font-size: 12px;
 	height: 13px;
 }
@@ -27,7 +27,7 @@
 	width: 20px;
 	height: 19px;
 	background: url('../images/Content/pointer.png') left top no-repeat;
-	z-index: 1004;
+	z-index: 999999;
 }
 
 .hint .hint-pointer-down
@@ -38,5 +38,5 @@
 	width: 20px;
 	height: 19px;
 	background: url('../images/Content/pointerDown.png') left top no-repeat;
-	z-index: 1004;
+	z-index: 999999;
 }
