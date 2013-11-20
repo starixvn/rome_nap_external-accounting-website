@@ -22,3 +22,8 @@ span>select
     vertical-align: top;
     margin-top: 2px;
 }
+span>input[type=checkbox]
+{
+    vertical-align: top !important;
+    margin-top: 3px;
+}
