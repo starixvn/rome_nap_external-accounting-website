@@ -13,3 +13,12 @@ input[type=radio]
 {
     margin-left: 5px;
 }
+span>input[type=button]
+{
+    margin-top: 2px !important;
+}
+span>select
+{
+    vertical-align: top;
+    margin-top: 2px;
+}

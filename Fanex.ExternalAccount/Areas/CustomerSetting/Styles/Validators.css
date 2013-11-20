@@ -8,7 +8,7 @@
 	margin-top: -4px;
 	border: 1px solid #c93;
 	padding: 10px 12px; /* to fix IE6, I can't just declare a background-color,     I must do a bg image, too!  So I'm duplicating the pointer.gif     image, and positioning it so that it doesn't show up     within the box */
-	background: #ffc url('../images/pointer.png') no-repeat 10px 38px;
+	background-color: #ffc;
 	white-space: nowrap;
 	border-radius: 5px;
 	-moz-border-radius: 5px;

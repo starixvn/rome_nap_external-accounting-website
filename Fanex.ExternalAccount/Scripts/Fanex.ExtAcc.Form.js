@@ -223,6 +223,8 @@ Fanex.ExtAcc.Form = {
     },
 
     Close: function (reload, delay, popupId, callBack) {
+        Validators.hide();
+
         var delayTime = delay ? delay : 100;
         var id = popupId ? popupId : 'windowPopup';
 
