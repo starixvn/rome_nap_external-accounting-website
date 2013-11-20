@@ -13,7 +13,7 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" style="display: none; width: 1024px" ng-app="settingApp">
+<div id="ng-app" style="display: none; width: 1024px" data-ng-app="settingApp">
     <div id="errMsg" style="display: none;" class="successMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
@@ -30,55 +30,55 @@
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
             Postition Taking
         </div>                                                                                                                                                                                                                                                                                                                                                            
-        <div style="border-right: none" id="settingContainer" ng-controller="EditSuperController">
+        <div style="border-right: none" id="settingContainer" data-ng-controller="EditSuperController">
             <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
-                    <td class="gameTypeWidth noneBorderL noneBorderTop R"><input type="checkbox" ng-init="customer.preAuto = customer.isPtByGameType; customer.isUnchecked = !customer.isPtByGameType" ng-model="customer.isUnchecked" ng-click="customer.isPtByGameType = !customer.isUnchecked"/></td>
+                    <td class="gameTypeWidth noneBorderL noneBorderTop R"><input type="checkbox" data-ng-init="customer.preAuto = customer.isPtByGameType; customer.isUnchecked = !customer.isPtByGameType" data-ng-model="customer.isUnchecked" data-ng-click="customer.isPtByGameType = !customer.isUnchecked"/></td>
                     <td class="ptTitle noneBorderTop tdWidthSuper">Super Max Position Taking</td>
                     <td class="ptTitle noneBorderTop tdWidthSuper">Super Min Position Taking</td>
                     <td class="ptTitle noneBorderTop tdWidthSuper">Super Commission</td>
                 </tr>
-                <tr ng-controller="GameGroupController" ng-repeat="gameGroup in customer.gameGroups" ng-finish-render="rendered" ng-hide="gameGroup.gameGroupName == 'P2P'">
+                <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered" data-ng-hide="gameGroup.gameGroupName == 'P2P'">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="4" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C ptTitle noneBorderTop tdWidthSuper">
-                                    <span class="spanPT" ptarea="true" min="0" max="s4" selected="s3" ng-model="setting"></span>
+                                    <span class="spanPT" ptarea="true" min="0" max="s4" selected="s3" data-ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop tdWidthSuper">
-                                    <span class="spanPT" ptarea="true" min="0" max="s3" selected="n3" ng-model="setting"></span>
+                                    <span class="spanPT" ptarea="true" min="0" max="s3" selected="n3" data-ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop tdWidthSuper" style="border-right: 0px none">
-                                    <span class="spanPT" ptarea="true" min="0" max="sco" selected="mco" ng-model="setting" iscomm = "true"></span>
+                                    <span class="spanPT" ptarea="true" min="0" max="sco" selected="mco" data-ng-model="setting" iscomm = "true"></span>
                                 </td>
                             </tr>         
                             @if (isPtByGameType)
                             {                
-                            <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+                            <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
                                 <td colspan="6" style="border: none">
                                     <table class="tableInfo" cellpadding="0" cellspacing="0">
-                                        <tr ng-hide="customer.isUnchecked">
+                                        <tr data-ng-hide="customer.isUnchecked">
                                             <td rowspan="2" class="gameTypeWidth R noneBorderL noneBorderT">
                                                 {{gameType.gameTypeName}}
                                             </td>
                                             <td class="C noneBorderT tdWidthSuper">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="s3" ng-model="setting"></span>
+                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="s3" data-ng-model="setting"></span>
                                             </td>
                                             <td class="C noneBorderT tdWidthSuper">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s3" selected="n3" ng-model="setting"></span>
+                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s3" selected="n3" data-ng-model="setting"></span>
                                             </td>
                                             <td class="noneBorderR C noneBorderT noneBorderRight tdWidthSuper">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="sco" selected="mco" ng-model="setting" iscomm = "true"></span>
+                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="sco" selected="mco" data-ng-model="setting" iscomm = "true"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="gameTypeWidth R noneBorderL noneBorderT" ng-hide="customer.isUnchecked == false">
+                                            <td class="gameTypeWidth R noneBorderL noneBorderT" data-ng-hide="customer.isUnchecked == false">
                                                 {{gameType.gameTypeName}}
                                             </td>
                                             <td colspan="3" class="noneBorderRight noneBorderT"><span>Betting Limit: </span>
-                                                <span ng-controller="BettingLimitController" ng-repeat="stake in gameType.bettingLimits">
-                                                    <input type="checkbox" ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                                <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
+                                                    <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -88,13 +88,13 @@
                             }
                             else
                             {
-		                    <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+		                    <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
                                 <td colspan="3" class="noneBorderR"><span>Betting Limit: </span>
-                                    <span ng-controller="BettingLimitController" ng-repeat="stake in gameType.bettingLimits">
-                                        <input type="checkbox" ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                    <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
+                                        <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                     </span>
                                 </td>
                             </tr>

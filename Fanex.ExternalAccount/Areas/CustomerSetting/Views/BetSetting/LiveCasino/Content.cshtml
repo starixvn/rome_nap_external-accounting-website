@@ -19,7 +19,7 @@
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/LiveCasino/Styles/LiveCasino.css")" rel="stylesheet" type="text/css" />
-<div id="ng-app" ng-app="bettingApp" ng-controller="Fanex.CustomerSetting.Betting.LiveCasino" style="width: 815px; display: none">
+<div id="ng-app" data-ng-app="bettingApp" data-ng-controller="Fanex.CustomerSetting.Betting.LiveCasino" style="width: 815px; display: none">
         <div id="warningMsg" style="display: none; color: Red" class="errMsg">Unchecking all stake levels will affect and apply to all downlines</div>
         <div id="errMsg" style="display: none" class="errMsg">
         </div>
@@ -35,13 +35,13 @@
             <tr>
                 <td class="bold R">Maximum Win</td>
                 <td class="bold">
-                    <select id="winLimit" style="width: 80px !important" ng-model="limit" ng-change="model.memberWinLimit.maxWinLimit = limit">
-                        <option value="{{limit}}" ng-repeat="limit in model.memberWinLimit.limits" ng-init="isUnlimited = limit == 0; limitText = isUnlimited ? 'Unlimited' : limit + 'X'" ng-selected="limit == model.memberWinLimit.maxWinLimit">{{limitText}}</option>
+                    <select id="winLimit" style="width: 80px !important" data-ng-model="limit" data-ng-change="model.memberWinLimit.maxWinLimit = limit">
+                        <option value="{{limit}}" data-ng-repeat="limit in model.memberWinLimit.limits" data-ng-init="isUnlimited = limit == 0; limitText = isUnlimited ? 'Unlimited' : limit + 'X'" data-ng-selected="limit == model.memberWinLimit.maxWinLimit">{{limitText}}</option>
                     </select>
                     &nbsp;<span class="normal">on given credit</span>
                 </td>
                 <td class="bold">
-                    <input type="checkbox" id="chkDailyAutoReset" ng-model="model.memberWinLimit.isDailyAutoReset" />
+                    <input type="checkbox" id="chkDailyAutoReset" data-ng-model="model.memberWinLimit.isDailyAutoReset" />
                     <label class="normal" for="chkDailyAutoReset">Daily auto reset limit (at 12 noon GMT + 8)</label>
                 </td>
             </tr>
@@ -52,11 +52,11 @@
                 <td class="bold R">Game Type</td>
                 <td class="bold" colspan="2">Betting Limit</td>
             </tr>
-            <tr ng-repeat="gameType in gameTypes">
+            <tr data-ng-repeat="gameType in gameTypes">
                 <td class="R">{{gameType.name}}</td>
                 <td colspan="2">
-                    <div class="floatLeft" ng-repeat="betting in gameType.bettingLimit">
-                        <input type="checkbox" ng-model="betting.isSelected" ng-init="changed = betting.isSelected" ng-click="betting.isDirty = changed != betting.isSelected; ChangeLimit(this)" />
+                    <div class="floatLeft" data-ng-repeat="betting in gameType.bettingLimit">
+                        <input type="checkbox" data-ng-model="betting.isSelected" data-ng-init="changed = betting.isSelected" data-ng-click="betting.isDirty = changed != betting.isSelected; ChangeLimit(this)" />
                         <span>{{betting.text}}</span>
                     </div>
                 </td>

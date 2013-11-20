@@ -14,7 +14,7 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" style="display: none; width: 1024px" ng-app="settingApp">
+<div id="ng-app" style="display: none; width: 1024px" data-ng-app="settingApp">
     <div id="errMsg" style="display: none;" class="successMsg">
     </div>
     <div id="arrowUpDown" class="collapse">
@@ -31,7 +31,7 @@
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
             Postition Taking
         </div>                                                                                                                                                                                                                                                                                                                                                            
-        <div style="border-right: none" id="settingContainer" ng-controller="EditMemberController">
+        <div style="border-right: none" id="settingContainer" data-ng-controller="EditMemberController">
             <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
@@ -39,20 +39,20 @@
                     <td class="ptTitle noneBorderTop memberWidth">Agent Preset PT</td>
                     <td class="ptTitle noneBorderTop memberWidth">Member Commission</td>
                 </tr>
-                <tr ng-controller="GameGroupController" ng-repeat="gameGroup in customer.gameGroups" ng-finish-render="rendered">
+                <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="5" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C ptTitle noneBorderTop memberWidth">
-                                    <span class="spanPT" ptarea="true" min="n2" max="m2" selected="m1" ng-model="setting"></span>
+                                    <span class="spanPT" ptarea="true" min="n2" max="m2" selected="m1" data-ng-model="setting"></span>
                                 </td>
                                 <td class="C ptTitle noneBorderTop memberWidth" style="border-right: 0px none">
-                                    <span class="spanPT" ptarea="true" min="0" max="aco" selected="co" ng-model="setting" iscomm = "true"></span>
+                                    <span class="spanPT" ptarea="true" min="0" max="aco" selected="co" data-ng-model="setting" iscomm = "true"></span>
                                 </td>
                             </tr>         
                             @if (isPtByGameType)
                             {                
-                            <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+                            <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
                                 <td colspan="5" style="border: none">
                                     <table class="tableInfo" cellpadding="0" cellspacing="0">
                                         <tr>
@@ -60,16 +60,16 @@
                                                 {{gameType.gameTypeName}}
                                             </td>
                                             <td class="C noneBorderT memberWidth">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="n2" max="m2" selected="m1" ng-model="setting"></span>
+                                                <span class="spanPT" showbutton="false" ptarea="true" min="n2" max="m2" selected="m1" data-ng-model="setting"></span>
                                             </td>
                                             <td class="noneBorderR C noneBorderT noneBorderRight memberWidth">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="aco" selected="co" ng-model="setting" iscomm = "true"></span>
+                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="aco" selected="co" data-ng-model="setting" iscomm = "true"></span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="noneBorderRight"><span>Betting Limit: </span>
-                                                <span ng-controller="BettingLimitController" ng-repeat="stake in gameType.bettingLimits">
-                                                    <input type="checkbox" ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                                <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
+                                                    <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -79,13 +79,13 @@
                             }
                             else
                             {
-		                    <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+		                    <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
                                 <td colspan="4" class="noneBorderR"><span>Betting Limit: </span>
-                                    <span ng-controller="BettingLimitController" ng-repeat="stake in gameType.bettingLimits">
-                                        <input type="checkbox" ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                    <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
+                                        <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                     </span>
                                 </td>
                             </tr>
