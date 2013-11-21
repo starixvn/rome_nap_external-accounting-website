@@ -13,7 +13,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
     Saved: false,
     IsUpdateAllMember: false,
     NewPtTaking: 0.0,
-    ErrorMessage: '',
+    errorMessage: '',
     CustIdIndex: 0,
     BetSettings: ['min bet', 'max bet', 'max per match', 'max per ball'],
 
@@ -2434,6 +2434,10 @@ function extendPTEngine() {
         if (document.getElementById('windowPopup')) {
             var parent = document.getElementById('windowPopup');
 
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        } else if (document.getElementById('contentSplitter')) {
+            var parent = document.getElementById('contentSplitter');
             curleft -= parent.scrollLeft;
             curtop -= parent.scrollTop;
         }

@@ -238,12 +238,45 @@ namespace Fanex.ExternalAccount.Controllers.Report
         }
 
         /// <summary>
+        /// Checks input customer values.
+        /// </summary>
+        /// <returns>Boolean object.</returns>
+        private bool CheckSearchCustomer()
+        {
+            if (!string.IsNullOrWhiteSpace(this._username))
+            {
+                var custInfo = this._reportService.GetCustomerInfo(this._groupname, 0, this._username, true);
+                if (custInfo == null || custInfo.Rows.Count == 0)
+                {
+                    return false;
+                }
+
+                this._roleId = custInfo.Rows[0].ToInt32("roleid");
+                this._srecommend = custInfo.Rows[0].ToInt32("srecommend");
+                this._mrecommend = custInfo.Rows[0].ToInt32("mrecommend");
+                this._recommend = custInfo.Rows[0].ToInt32("recommend");
+                this._memberId = custInfo.Rows[0].ToInt32("custid");
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Search data.
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private ActionResult GetWinLossDetailSearch()
         {
+            if (!this.CheckSearchCustomer())
+            {
+                return this.JsonBase(
+                    new 
+                    { 
+                        viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, rows = string.Empty, sortingorderlist = this._sortingOrderList 
+                    });
+            }
+
             if (this._roleId > 3)
             {
                 this._listWinLossDetail = this._reportService.GetWinLossDetail(

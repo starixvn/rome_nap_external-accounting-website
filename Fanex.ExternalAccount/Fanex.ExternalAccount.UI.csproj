@@ -1067,7 +1067,6 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Casino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.LiveCasino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
@@ -1991,7 +1990,6 @@
     <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
-    <Content Include="Views\Casino\EditCasino.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
   </ItemGroup>

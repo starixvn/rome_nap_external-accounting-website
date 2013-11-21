@@ -57,7 +57,7 @@ function Update() {
                         var timeout = setTimeout(function () {
                             clearTimeout(timeout);
                             $.ajax({
-                                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId),
+                                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
                                 type: 'post'
                             })
                             .success(function (result) {

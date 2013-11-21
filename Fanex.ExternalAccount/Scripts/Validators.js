@@ -216,6 +216,11 @@ var Validators = {
                 curleft -= parent.scrollLeft;
                 curtop -= parent.scrollTop;
             }
+            else if (document.getElementById('contentSplitter')) {
+                var parent = document.getElementById('contentSplitter');
+                curleft -= parent.scrollLeft;
+                curtop -= parent.scrollTop;
+            }
 
             return [curleft, curtop];
         },

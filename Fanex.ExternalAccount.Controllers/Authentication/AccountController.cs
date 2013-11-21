@@ -26,12 +26,19 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// </summary>
     public class AccountController : Controller
     {
-        private ILoginService _userService = new LoginService();
+        private ILoginService _userService = null;
 
-        private ICurrentSession _currentSession = Fanex.ExternalAccount.Core.Context.CurrentSession.Instance;
+        private ICurrentSession _currentSession = null;
 
-        private ICurrentContext _currentContext = Fanex.ExternalAccount.Core.Context.CurrentContext.Instance;
-                
+        private ICurrentContext _currentContext = null;
+
+        public AccountController()
+        {
+            this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
+            this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+            this._userService = new LoginService();
+        }
+
         /// <summary>
         /// Gets login page.
         /// </summary>
@@ -164,8 +171,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             if (maintenanceInfo.IsDownTime)
             {
                 if (this._currentSession.IsLogin)
-                {
-                    this._currentContext.Context.Session.Abandon();
+                {                    
                     this.SignOut(onuserId, this._currentSession.UserName);
                 }
 
@@ -314,7 +320,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         private ActionResult SignOut(int onuserId, string userName)
         {
             this._userService.Logout(onuserId, userName);
-            Fanex.ExternalAccount.Core.Context.CurrentContext.Instance.Context.Session.Abandon();
+            this._currentContext.Context.Session.Abandon();
 
             return this.RedirectToAction("Login", "Account");
         }

@@ -12,7 +12,8 @@
                 type: 'post',
                 data: {
                     agentId: agentId,
-                    closedOnly: true
+                    closedOnly: true,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
@@ -22,7 +23,7 @@
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2');
+                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
                     $.ajax({
                         url: url,
                         type: 'post'
@@ -68,7 +69,8 @@ function ResetAllAccountCredit(agentId) {
                 type: 'post',
                 data: {
                     agentId: agentId,
-                    closedOnly: false
+                    closedOnly: false,
+                    groupName: parent.$('#selectedGroupName').html()
                 }
             })
             .success(function (result) {
@@ -78,7 +80,7 @@ function ResetAllAccountCredit(agentId) {
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2');
+                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
                     $.ajax({
                         url: url,
                         type: 'post'
