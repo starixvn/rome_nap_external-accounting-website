@@ -81,6 +81,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 var selected = min;
                 // $ + 'selected' attribute
                 var obj = scope[attrs.ngModel][source];
+                if (!obj) return;
                 obj.min = min;
                 obj.max = max;
                 obj.selected = selected;
@@ -91,7 +92,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             function render() {
                 var obj = scope[attrs.ngModel][source];
 
-                if (obj.pts.length > 1) return;
+                if (!obj || !obj.pts || obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
                 var max = source == "$m3" && scope[attrs.ngModel].is3 ?
@@ -112,7 +113,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 }, false, isComm);
             }
 
-            var template = "<select data-ng-blur=\"" + source + "blur($event)\" data-ng-touchstart=\"" + source + "focus($event)\" data-ng-mouseenter=\"" + source + "focus($event)\" data-ng-change=\"" + source + "change($event, setting." + source + ")\" class='input-small' data-ng-disabled='" + attrs.enable + "' data-ng-model='setting." + source + ".selected' data-ng-options='pt for pt in setting." + source + ".pts'>" +
+            var template = "<select ng-blur=\"" + source + "blur($event)\" ng-touchstart=\"" + source + "focus($event)\" ng-mouseenter=\"" + source + "focus($event)\" ng-change=\"" + source + "change($event, setting." + source + ")\" class='input-small' ng-disabled='" + attrs.enable + "' ng-model='setting." + source + ".selected' ng-options='pt for pt in setting." + source + ".pts'>" +
                             "</select>";
 
             if (attrs.islabel == "true") {
@@ -122,20 +123,26 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             else {
                 if (attrs.showbutton != "false") {
                     template +=
-                            "<input class='btnPTDown' data-ng-touchstart=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" data-ng-click=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" class='btn' data-ng-disabled='" + attrs.enable + "' />" +
-                            "<input class='btnPTUp' data-ng-touchstart=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" data-ng-click=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" class='btn' data-ng-disabled='" + attrs.enable + "' />" +
-                            "<input class='btnPTSub' data-ng-touchstart=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\" data-ng-click=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' data-ng-disabled='" + attrs.enable + "' />" +
-                            "<input class='btnPTAdd' data-ng-touchstart=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\" data-ng-click=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' data-ng-disabled='" + attrs.enable + "' />";
+                            "<input class='btnPTDown' ng-touchstart=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
+                            "<input class='btnPTUp' ng-touchstart=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
+                            "<input class='btnPTSub' ng-touchstart=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />" +
+                            "<input class='btnPTAdd' ng-touchstart=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />";
                 }
                 else {
                     template +=
-                            "<span data-ng-init=\"setting." + source + ".warning=false\" data-ng-model=\"setting." + source + ".warning\" data-ng-show=\"setting." + source + ".warning\" style=\"color: Red\">*</span>";
+                            "<span ng-init=\"setting." + source + ".warning=false\" ng-model=\"setting." + source + ".warning\" ng-show=\"setting." + source + ".warning\" style=\"color: Red\">*</span>";
                 }
             }
 
             scope[source + "change"] = function (event, source) {
-                scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
-                scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
+                try {                    
+                    scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
+                    if (typeof attrs.warning != 'undefined')
+                        scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
+                } catch (e) {
+                    if (typeof console != 'undefined')
+                        console.log(e);
+                }
             }
 
             scope[source + "up"] = function (event, source, step, isComm) {

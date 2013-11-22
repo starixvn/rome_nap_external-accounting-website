@@ -59,7 +59,7 @@ var Validators = {
             hintPointer.style.top = (pointerYPos + 'px');
             var pos = Validators.utils.findPosRelativeToViewport(elementInput);
             hint.style.left = (pos[0] + xPos) + 'px';
-            hint.style.top = (pos[1] + yPos) + 'px';
+            hint.style.top = (pos[1] + yPos < 0 ? 0 : pos[1] + yPos) + 'px';
             elementInput.onchange = function () {
                 hint.style.display = 'none';
             };
