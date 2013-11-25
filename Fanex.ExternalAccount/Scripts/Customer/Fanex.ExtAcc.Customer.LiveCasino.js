@@ -746,7 +746,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //PT Renderring
             //PT values
             var uplineMin = data.superPtSetting.minPT;
-            var uplineMax = data.superPtSetting.maxPT;
+            var uplineMax = data.superPtSetting.maxAutoPresetPT;
             var uplinePreset = data.superPtSetting.presetPT;
             var uplineAutoPreset = data.superPtSetting.autoPresetPT;
             var min = data.superPtSetting.minPT;
@@ -766,7 +766,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render Super auto preset pt
-            PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+            PT_RenderCombo(document.getElementById('pt_2'), 0, uplineMax, 0.01, uplineAutoPreset);
             if (!data.superPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
@@ -912,7 +912,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //PT Renderring
             //PT values
             var uplineMin = data.masterPtSetting.minPT;
-            var uplineMax = data.masterPtSetting.maxPT;
+            var uplineMax = data.masterPtSetting.maxAutoPresetPT;
             var uplinePreset = data.masterPtSetting.presetPT;
             var uplineAutoPreset = data.masterPtSetting.autoPresetPT;
             var min = data.masterPtSetting.minPT;
@@ -932,7 +932,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render master auto preset pt
-            PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+            PT_RenderCombo(document.getElementById('pt_2'), 0, uplineMax, 0.01, uplineAutoPreset);
             if (!data.masterPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }

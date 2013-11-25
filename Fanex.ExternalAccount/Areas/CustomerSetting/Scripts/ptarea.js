@@ -135,14 +135,10 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             }
 
             scope[source + "change"] = function (event, source) {
-                try {                    
-                    scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
-                    if (typeof attrs.warning != 'undefined')
-                        scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
-                } catch (e) {
-                    if (typeof console != 'undefined')
-                        console.log(e);
-                }
+                if (!source) return;
+                scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
+                if (typeof attrs.warning != 'undefined')
+                    scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
             }
 
             scope[source + "up"] = function (event, source, step, isComm) {
@@ -210,6 +206,18 @@ module.directive('ngFocus', ['$parse', function ($parse) {
         var fn = $parse(attr['ngFocus']);
         element[0].addEventListener = element[0].addEventListener || element[0].attachEvent;
         element[0].addEventListener('focus', function (event) {
+            scope.$apply(function () {
+                fn(scope, { $event: event });
+            });
+        });
+    };
+} ]);
+
+module.directive('ngChange', ['$parse', function ($parse) {
+    return function (scope, element, attr) {
+        var fn = $parse(attr['ngChange']);
+        element[0].addEventListener = element[0].addEventListener || element[0].attachEvent;
+        element[0].addEventListener('change', function (event) {
             scope.$apply(function () {
                 fn(scope, { $event: event });
             });

@@ -234,8 +234,10 @@ Fanex.ExtAcc.WinLossDetail = {
         });
 
         $('#exporttoexcel').click(function () {
-            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params;
+            Fanex.ExtAcc.WinLossDetail.getParameterProducts();
+            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
+            '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
+            document.location.href = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
         });
 
         $('#ViewHistoryReport').click(function () {
