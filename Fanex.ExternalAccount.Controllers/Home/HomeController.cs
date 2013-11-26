@@ -27,5 +27,12 @@ namespace Fanex.ExternalAccount.Controllers.Home
         {
             return this.ViewBase();
         }
+
+        public ActionResult TestLog()
+        {
+            Logging.LogService.Error("Testing, this is an exception!!!", "ExternalAccount");
+
+            return this.ViewBase();
+        }
     }
 }

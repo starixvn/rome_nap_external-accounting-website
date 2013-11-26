@@ -83,6 +83,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// <summary>
         /// Gets report data.
         /// </summary>
+        /// <param name="viewLevel">Current level of customer.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetData(int viewLevel = 0)

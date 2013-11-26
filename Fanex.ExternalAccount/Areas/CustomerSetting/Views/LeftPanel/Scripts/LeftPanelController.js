@@ -316,9 +316,8 @@ function LeftPanelController($scope, $element) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.UserId = parent.window.id = custId;
-        parent.window.uplineId = parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
-        parent.window.CurrentLevel = roleId;
+        parent.Fanex.ExtAcc.Customer.UserId = custId;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
 
         switch (roleId) {
             case 4:

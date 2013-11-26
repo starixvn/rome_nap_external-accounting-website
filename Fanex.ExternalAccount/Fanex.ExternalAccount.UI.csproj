@@ -1992,6 +1992,7 @@
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
+    <Content Include="Views\Home\TestLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

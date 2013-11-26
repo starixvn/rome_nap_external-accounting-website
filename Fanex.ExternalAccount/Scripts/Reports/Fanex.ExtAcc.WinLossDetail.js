@@ -47,7 +47,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.groupName = $('#selectedGroupName').html();
         this.ResetParameters();
         this.username = Fanex.encodeHtml($("#txtUserName").val());
-        this.Databind()
+        this.Databind(this.username);
     },
     initMonthlyCalendar: function () {
         $('#monPickr1').monPickr({
@@ -236,7 +236,7 @@ Fanex.ExtAcc.WinLossDetail = {
         $('#exporttoexcel').click(function () {
             Fanex.ExtAcc.WinLossDetail.getParameterProducts();
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
-            '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
+            '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + Fanex.ExtAcc.WinLossDetail.username;
             document.location.href = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
         });
 
@@ -678,7 +678,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.custId = custId;
         //$("#txtUserName").val('');
         this.username = '';
-        this.Databind();
+        this.Databind(this.username);
     },
     InitShowHideControls: function (status) {
         $("#headlineDaily").css('display', status);
@@ -702,10 +702,8 @@ Fanex.ExtAcc.WinLossDetail = {
             this.todate = $('#monPickr1').monPickr("getToDate", "MM/dd/yyyy");
         }
     },
-    Databind: function () {
-        if ($("#txtUserName").val() != '') {
-            this.username = Fanex.encodeHtml($("#txtUserName").val());
-        }
+    Databind: function (username) {
+        this.username = !username ? '' : username;
         this.GetFromDateToDate();
         this.groupName = $('#selectedGroupName').html();
 

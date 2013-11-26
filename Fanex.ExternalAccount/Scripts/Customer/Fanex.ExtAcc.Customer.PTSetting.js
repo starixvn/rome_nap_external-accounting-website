@@ -319,8 +319,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            window.CurrentLevel = null;
-
             Fanex.ExtAcc.UnBlockUI();
         });
     },

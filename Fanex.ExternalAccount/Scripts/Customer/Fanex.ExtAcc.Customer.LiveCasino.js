@@ -12,13 +12,13 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     Error: '',
 
     Init: function () {
-        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super || (window.CurrentLevel && window.CurrentLevel == 4)) {
+        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
             this.GetSuperSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master || (window.CurrentLevel && window.CurrentLevel == 3)) {
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent || (window.CurrentLevel && window.CurrentLevel == 2)) {
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             this.GetAgentSetting();
         }
         else {
@@ -2352,7 +2352,7 @@ function checkPT(el) {
         var pt4 = document.getElementById("pt_4");
 
         if (pt3)
-            PT_RenderCombo(pt3, 0, (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
+            PT_RenderCombo(pt3, 0, Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.maxPT.toFixed(2), 0.01, pt3.options[pt3.selectedIndex].value);
         if (pt4)
             PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
     }
