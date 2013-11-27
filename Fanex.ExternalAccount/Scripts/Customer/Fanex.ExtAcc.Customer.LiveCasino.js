@@ -802,7 +802,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     if (document.getElementById('pt_1'))
-                        Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+                        Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.minPT : $('#pt_1').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.autoPresetPT = $('#pt_2').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.isAutoPresetPT = isChecked;
 
@@ -965,7 +965,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     if (document.getElementById('pt_1'))
-                        Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+                        Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.minPT : $('#pt_1').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.autoPresetPT = $('#pt_2').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.isAutoPresetPT = isChecked;
 
@@ -1871,7 +1871,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var isChecked = document.getElementById('chkAutoPT').checked;
         if (document.getElementById('pt_1'))
-            Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+            Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.minPT : $('#pt_1').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.autoPresetPT = $('#pt_2').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.isAutoPresetPT = isChecked;
 
@@ -2030,7 +2030,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var isChecked = document.getElementById('chkAutoPT').checked;
         if (document.getElementById('pt_1'))
-            Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+            Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.minPT : $('#pt_1').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.autoPresetPT = $('#pt_2').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.isAutoPresetPT = isChecked;
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();

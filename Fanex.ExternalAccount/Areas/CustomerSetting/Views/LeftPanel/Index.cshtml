@@ -91,10 +91,11 @@
                 <div class="clearBoth">
                     <div class="balanceTitle">{{balances[3].text}}</div>
                     <div class="{{myClass3}}" data-ng-init="myClass3 = balances[3].value < 0">
-                        <div class="floatLeftBalance R">
+                        <div class="floatLeftBalance R" data-ng-hide="{{model.isUpdateCredit == false}}">
                             <a id="linkGivenCredit" href="javascript:;" data-ng-click="EditCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a>
                             <input style="text-align: right; margin-right: 0" data-ng-blur="RevertCredit({{preVal}})" data-ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" data-ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" data-ng-hide="true" />
                         </div>
+                        <div style="color: #2489CE" title="You are not authorized on this function" class="floatLeftBalance R" data-ng-hide="{{model.isUpdateCredit == true}}">{{balances[3].value.toFixed(2).formatNumber()}}</div>
                     </div>
                 </div>
                 <div data-ng-hide="{{isHide}}" class="clearBoth">

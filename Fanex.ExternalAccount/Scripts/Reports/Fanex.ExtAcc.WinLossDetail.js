@@ -457,6 +457,7 @@ Fanex.ExtAcc.WinLossDetail = {
             marginRight: 2,
             bottomBorderWidth: 0,
             showDistinctRow: false,
+            allowTruncate: true,
             sortOption:
             {
                 afterGridSorted: function (rows) {

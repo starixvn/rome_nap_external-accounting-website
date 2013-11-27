@@ -901,6 +901,7 @@ function SettingController($scope, $http) {
     $scope.AddNew = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var actionName = '';
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
 
         switch (roleId) {
             case 2:

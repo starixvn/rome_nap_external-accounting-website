@@ -38,7 +38,7 @@
         <div class="customerInfoBlock1">
             Max Credit</div>
         <div class="customerInfoBlock2">
-            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" />
+            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
             <span id="minCreditId">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" /></span>
         </div>
         <div class="customerInfoBlock3">
@@ -50,7 +50,7 @@
         <div class="customerInfoBlock1">
             Master Max Credit</div>
         <div class="customerInfoBlock2">
-            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" />
+            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
             <span id="minCreditId">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" /></span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
         </div>
         <div class="customerInfoBlock3">
@@ -65,7 +65,7 @@
                     Closed</label>
             </div>
             <div class="customerInfoBlock2">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
         <div class="customerInfoBlock3">
@@ -73,13 +73,13 @@
                 Suspended</label>
         </div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" /></div>
+            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 && hasSuspend == 1 ? true : false, attr: { title: hasSuspend == 1 ? '' : 'You are not authorized on this function'}" /></div>
     </div>
     <div id="agentSection">
         <div class="customerInfoBlock1">
             Agent Max Credit</div>
         <div class="customerInfoBlock2">
-            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" />
+            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
             <span id="minCreditId">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" /></span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
         </div>
         <div class="customerInfoBlock3">
@@ -91,7 +91,7 @@
         <div class="customerInfoBlock1">
             Member Max Credit</div>
         <div class="customerInfoBlock2">
-            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="memberCredit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMaxCredit)" />
+            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="memberCredit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMaxCredit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
             <span id="minCreditId">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMinCredit)" id="minCreditMember" /></span>&nbsp;and&nbsp;</span> &lt;= <span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" id="maxCreditMember"></span>
         </div>
         <div class="customerInfoBlock3">
@@ -99,7 +99,7 @@
                 Suspended</label>
         </div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" /></div>
+            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 && hasSuspend == 1 ? true : false, attr: { title: hasSuspend == 1 ? '' : 'You are not authorized on this function'}" /></div>
     </div>
     <div id="agentSection3">
         <div class="customerInfoBlock1">
@@ -111,14 +111,14 @@
                 Closed</label>
         </div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
         </div>
     </div>
     <div id="memberSection">
         <div class="customerInfoBlock1">
             Given Credit</div>
         <div class="customerInfoBlock2">
-            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" />
+            <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" type="text" id="credit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
             <span id="minCreditId" class="hide">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.minCredit)" id="minCredit" /></span>&lt;= <span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.maxCredit)" id="maxCredit"></span>
         </div>
         <div class="customerInfoBlock3">
@@ -137,7 +137,7 @@
                 Closed</label>
         </div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
         </div>
     </div>
     <div id="memberSection3">
@@ -150,7 +150,7 @@
                 Suspended</label>
         </div>
         <div class="customerInfoBlock4" style="width: 210px">
-            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" /></div>
+            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 && hasSuspend == 1 ? true : false, attr: { title: hasSuspend == 1 ? '' : 'You are not authorized on this function'}" /></div>
     </div>
 </div>
 <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
@@ -165,7 +165,7 @@
             </td>
             <td>
                 <div>
-                    <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" /></div>
+                    <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" /></div>
             </td>
         </tr>
     </table>

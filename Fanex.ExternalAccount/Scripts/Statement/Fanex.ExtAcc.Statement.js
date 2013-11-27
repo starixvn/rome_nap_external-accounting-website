@@ -104,7 +104,8 @@ Fanex.ExtAcc.Statement = {
                 totalItem: $this.totalRows,
                 itemsPerPage: 100
             },
-            showDistinctRow: false
+            showDistinctRow: false,
+            allowTruncate: true
         };
 
         //// Assing BodyData

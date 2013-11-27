@@ -69,7 +69,7 @@
             <div class="customerInfoBlock1">
                 @ViewLang.AgentMaxCredit</div>
             <div class="customerInfoBlock2">
-                <input type="text" id="credit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, this)" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(customer.credit)" />
+                <input type="text" id="credit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, this)" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(customer.credit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
                 <span id="minCreditId">&gt;=<span data-bind="text: customer.minCreditTemp" id="minCredit"></span>&nbsp;@ViewLang.and&nbsp;</span>
                 <= <span data-bind="text: customer.maxCredit" id="maxCredit"></span>
             </div>
@@ -83,7 +83,7 @@
                 @ViewLang.MemberMaxCredit</div>
             <div class="customerInfoBlock2">
                 <input type="text" id="memberMaxCredit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this)" maxlength="14" class="textBoxCredit textBoxInfo"
-                    data-bind="value: Fanex.ExtAcc.FormatNumber(customer.memberMaxCredit)" />
+                    data-bind="value: Fanex.ExtAcc.FormatNumber(customer.memberMaxCredit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
                 <span id="minMemberMaxCreditId">&gt;=<span data-bind="text: customer.memberMinCredit"
                     id="lblMinCredit"></span>&nbsp;@ViewLang.and&nbsp;</span><= <span data-bind="text: customer.credit"
                         id="maxCreditMember"></span>
@@ -92,7 +92,7 @@
                 <label for="suspended">
                     @ViewLang.Suspended</label></div>
             <div class="customerInfoBlock4">
-                <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: (customer.statusSetting.uplineSuspended || customer.statusSetting.uplineClosed) ? false : true" /></div>
+                <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: (customer.statusSetting.uplineSuspended || customer.statusSetting.uplineClosed || hasSuspend == 0) ? false : true, attr: { title: hasSuspend == 1 ? '' : 'You are not authorized on this function'}" /></div>
         </div>
         <div class="clear" style="display:none">
             <div class="customerInfoBlock1">
@@ -104,7 +104,7 @@
                     @ViewLang.Closed</label>
             </div>
             <div class="customerInfoBlock4">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: customer.statusSetting.uplineClosed ? false : true" />
+                <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: customer.statusSetting.uplineClosed || hasClose == 0 ? false : true, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
     </div>

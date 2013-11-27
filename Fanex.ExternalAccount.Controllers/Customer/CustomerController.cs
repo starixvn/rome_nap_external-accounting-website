@@ -162,6 +162,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int masterId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
 
+            if (string.IsNullOrWhiteSpace(result.ErrorCode))
+            {
+                this.UpdateCasinoStatus(masterId, result, customer);
+            }
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
         }
         #endregion Super Add New Master
@@ -249,6 +254,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             int agentId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewAgent(customer, requestContext, out agentId);
+
+            if (string.IsNullOrWhiteSpace(result.ErrorCode))
+            {
+                this.UpdateCasinoStatus(agentId, result, customer);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
         }
@@ -338,6 +348,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int memberId = -1;
             var result = new Fanex.PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
 
+            if (string.IsNullOrWhiteSpace(result.ErrorCode))
+            {
+                this.UpdateCasinoStatus(memberId, result, customer);
+            }
+
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
         }
         #endregion Agent Add New Member
@@ -420,7 +435,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int srecommend, mrecommend, recommend, custId, roleId;
             this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
-                result == null ? new DataTable() : result, 
+                result == null ? new DataTable() : this.CheckVNIP(result), 
                 Formatting.None, 
                 new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
             bool syncCasino = true, syncBingo = true, syncLiveCasino = true, allowDoubleComm = true;
@@ -478,8 +493,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() : 
                 this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
-
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
+                this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
@@ -517,7 +532,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             this._cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
+                this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 
@@ -563,7 +579,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             this._cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
+                this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 
@@ -611,7 +628,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             this._cacheList = "CacheList" + recommend + custId + enabled + closed + suspended;
             this.SetCacheList(result);
 
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(result, Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
+                this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
                 new 
@@ -633,6 +651,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
+            if (IpUtils.IsVnIp(ip) && !this.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read, Request))
+            {
+                return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
             if (ip.Equals("::1", StringComparison.OrdinalIgnoreCase))
             {
                 return this.PartialViewBase(new IPInfo
