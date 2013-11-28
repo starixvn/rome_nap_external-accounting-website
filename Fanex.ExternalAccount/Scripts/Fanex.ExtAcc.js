@@ -674,31 +674,42 @@ Fanex.ExtAcc = {
         });
     },
 
-    CheckNumber: function (evt, ele, agentCredit) {
-        ele.value = Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.ReplaceAll(ele.value, ',', ''));
+    CheckNumber: function (event, ele, isFloat) {
+        var evt = event ? event : window.event; // Fix for IE7
 
-        if (agentCredit) {
-            Fanex.ExtAcc.CheckConstraintAgentCredits(agentCredit);
+        if (evt.keyCode === 9) return true; // Ignore TAB key
+
+        var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
+        var value = obj.value;
+
+        if (value == '') return true;
+
+        var num;
+        var dotPosition = 0;
+        var afterDot;
+        var caretPosition = getCaret(obj);
+
+        num = value.toString().replace(/\$|\,/g, '');
+        dotPosition = num.indexOf(".");
+        if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+            afterDot = num.substring(dotPosition + 1, num.length).replace(/[^0-9]/g, '');
+            num = num.substring(0, dotPosition);
+        }
+        num = num.formatFloat();
+        if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+            eval(obj).value = num + "." + afterDot;
+            num = obj.value;
+        } else {
+            eval(obj).value = num;
         }
 
-        var charCode = (evt.which) ? evt.which : event.keyCode;
-        var ret = true;
-
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            ret = false;
+        if (num.length > value.length) {
+            caretPosition = caretPosition + 1;
         }
 
-        if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
-            while (ele.value.indexOf('0') == 0 && ele.value.length > 1) {
-                ele.value = ele.value.substring(1);
-                ele.value = Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.ReplaceAll(ele.value, ',', ''));
-            }
-        }
-        else if (ele && ele.value.length == 0) {
-            ele.value = '0';
-        }
+        setCaret(obj, caretPosition);
 
-        return ret;
+        return true;
     },
 
     CheckConstraintAgentCredits: function (agentCredit) {
@@ -733,6 +744,80 @@ Fanex.ExtAcc = {
 
         return '';
     }
+};
+
+function setCaret(oField, iCaretPos) {
+    // IE Support
+    if (document.selection) {
+        oField.focus();
+        // Create empty selection range
+        var oSel = document.selection.createRange();
+        // Move selection start and end to desired position
+        oSel.moveStart('character', iCaretPos);
+        oSel.moveEnd('character', iCaretPos - oField.value.length);
+        oSel.select();
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0') {
+        oField.selectionStart = iCaretPos;
+        oField.selectionEnd = iCaretPos;
+        oField.focus();
+    }
+};
+
+function getCaret(oField) {
+    var iCaretPos = 0;
+    // IE Support
+    if (document.selection) {
+        oField.focus();
+        // To get cursor position, get empty selection range
+        var oSel = document.selection.createRange();
+        // Move selection start to 0 position
+        oSel.moveStart('character', -oField.value.length);
+        iCaretPos = oSel.text.length;
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0')
+        iCaretPos = oField.selectionStart;
+    // Return results
+    return (iCaretPos);
+};
+
+String.prototype.formatFloat = function () {
+    var number = this;
+
+    if (number == '') return 0;
+    var sign;
+    if (isNaN(number)) {
+        number = '';
+    }
+
+    sign = (number == (number = Math.abs(number)));
+    number = Math.floor(number * 100 + 0.50000000001);
+    number = Math.floor(number / 100).toString();
+
+    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3); i++) {
+        number = number.substring(0, number.length - (4 * i + 3)) + ',' + number.substring(number.length - (4 * i + 3));
+    }
+
+    return (((sign) ? '' : '-') + number);
+};
+
+String.prototype.toFixed = function (precision, optionals) {
+    var value = parseFloat(this);
+
+    var power = Math.pow(10, precision),
+            output;
+
+    // Multiply up by precision, round accurately, then divide and use native toFixed():
+    output = (Math.round(value * power) / power).toFixed(precision);
+
+    if (optionals) {
+        var optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
+        output = output.replace(optionalsRegExp, '');
+    }
+
+    return output;
 };
 
 $(document).ready(function () {
