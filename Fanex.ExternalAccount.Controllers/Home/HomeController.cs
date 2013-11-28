@@ -32,9 +32,6 @@ namespace Fanex.ExternalAccount.Controllers.Home
         [ExternalAccountAuthenticate(Function = "Home", Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult Index()
         {
-            Response.AppendHeader("Content-Encoding", "gzip");
-            Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
-
             var maintenanceInfo = Config.GetMaintenanceInfo();
 
             if (maintenanceInfo.IsDownTime)
