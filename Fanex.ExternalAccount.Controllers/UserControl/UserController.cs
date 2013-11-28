@@ -32,6 +32,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     public class UserController : BaseController
     {
         private readonly IUserService _userService = new UserService();
+        private readonly CachingService _cache = new CachingService();
 
         /// <summary>
         /// Gets user list.
@@ -300,6 +301,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
             var result = this._userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy, CurrentContext.Ip4Address);
+            if (result.IsSuccess)
+            {
+                this._cache.RemoveUserCache(CurrentSession.UserId);
+            }
 
             return this.JsonBase(result);
         }
@@ -310,7 +315,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             var encryption = new RSACryptoPad.EncryptionThread();
             var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks);
             param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
-            var url = ConfigurationManager.AppSettings["int_agent_url"].ToString() + "?params=" + param;
+            var url = Config.InternalLoginUrl + "?params=" + param;
 
             return this.JsonBase(new { errorCode = 0, url = url });
         }

@@ -28,10 +28,12 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     public class GroupController : BaseController
     {
         private IGroupService _groupService = null;
+        private CachingService _cache = null;
 
         public GroupController()
         {
             this._groupService = this._groupService ?? new GroupService();
+            this._cache = this._cache ?? new CachingService();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -182,6 +184,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            if (result.IsSuccess)
+            {
+                this._cache.RemoveUserCache(CurrentSession.UserId);
+            }
 
             return this.JsonBase(result);
         }

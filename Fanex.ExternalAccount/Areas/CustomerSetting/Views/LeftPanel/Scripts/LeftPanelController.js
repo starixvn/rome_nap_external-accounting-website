@@ -986,9 +986,11 @@ function SettingController($scope, $http) {
             return;
         }
 
+        var disableClearCredit = parent.hasClearCredit == 1 ? '' : 'disabled="disabled"';
+        var title = disableClearCredit ? 'You are not authorized on this function' : '';
         var checked = !close ? 'checked="checked"' : "";
         var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />Closed' +
-            '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" />Clear All Credit';
+            '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" title="' + title + '" ' + disableClearCredit + ' />Clear All Credit';
 
         if (close) {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Open Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
