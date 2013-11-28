@@ -277,13 +277,13 @@ width:60px;
 	width:60px;
 	}
 
-.btn-inc1{cursor:pointer; width:16px; height:16px; background:url(../../../images/b_up.jpg) no-repeat; border:none}
+.btn-inc1{cursor:pointer; width:16px; height:16px; background:url(../images/b_up.jpg) no-repeat; border:none}
 input[disabled].btn-inc1{background:url(images/dec1_disable.jpg) no-repeat !important;}
-.btn-inc10{cursor:pointer; width:16px; height:16px; background:url(../../../images/b_add.jpg) no-repeat; border:none}
+.btn-inc10{cursor:pointer; width:16px; height:16px; background:url(../images/b_add.jpg) no-repeat; border:none}
 input[disabled].btn-inc10{background:url(images/dec3_disable.gif) no-repeat !important;}
-.btn-dec1{cursor:pointer; width:16px; height:16px; background:url(../../../images/b_down.jpg) no-repeat; border:none}
+.btn-dec1{cursor:pointer; width:16px; height:16px; background:url(../images/b_down.jpg) no-repeat; border:none}
 input[disabled].btn-dec1{background:url(images/dec2_disable.gif) no-repeat !important;}
-.btn-dec10{cursor:pointer; width:16px; height:16px; background:url(../../../images/b_sub.jpg) no-repeat; border:none}
+.btn-dec10{cursor:pointer; width:16px; height:16px; background:url(../images/b_sub.jpg) no-repeat; border:none}
 input[disabled].btn-dec10{background:url(images/dec4_disable.gif) no-repeat !important;}
 
 .custBtn1{background:transparent url(images/btUpdateL.gif) no-repeat top left; width:26px; height:24px; cursor:pointer;}

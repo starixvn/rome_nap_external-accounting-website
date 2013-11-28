@@ -8,7 +8,7 @@
     init: function () {
         try {
             this.isMultiple = parent.Fanex.ExtAcc.Customer.IsMultiple;
-            this.CustInfos = parent.Fanex.ExtAcc.Customer.IdsAndNames();
+            this.CustInfos = !this.isMultiple ? [] : parent.Fanex.ExtAcc.Customer.IdsAndNames();
             this.Usernames = parent.Fanex.ExtAcc.Customer.Usernames;
         } catch (e) {
         }
@@ -82,7 +82,7 @@
                         showAlertMessage('err', rs.errorMessage, 1);
                     }
                 }
-                else {                    
+                else {
                     customerPTBingoSetting.Error += '<font color="Blue" style="font-weight: bold">' + customerPTBingoSetting.CustInfos.Names[index] + ':</font><br />';
                     ++index;
                     if (rs.errorCode == 0) {
@@ -160,6 +160,6 @@
     }
 };
 
-$(function () {
+$(document).ready(function () {
     customerPTBingoSetting.init();
 });
