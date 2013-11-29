@@ -145,12 +145,13 @@ Fanex.ExtAcc.Customer = {
         data.srecommend = this.superId;
         data.mrecommend = this.masterId;
         data.recommend = this.agentId;
-        data.custId = null;
         data.groupName = $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html();
         data.enabled = enabled;
         data.closed = closed;
         data.suspended = suspended;
         data.username = Fanex.encodeHtml($('#txtUserName').val());
+        data.roleId = this.CurrentLevel;
+        data.custId = data.username == '' ? null : this.UserId;
 
         return data;
     },
@@ -2086,7 +2087,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     SearchList: function () {
-        if ($('#txtUserName').val() == '') {
+        if ($('#txtUserName').val() == '' && this.CurrentLevel == this.Super) {
             this.GetSuperList();
         } else {
             this.GetSearchList();
@@ -2144,7 +2145,6 @@ Fanex.ExtAcc.Customer = {
                     $('#msgNoinfo').css('display', 'block');
                     $('#jqgrid').css('display', 'none');
                     $('#exporttoexcel').css('display', 'none');
-                    $('#breadcrumbs').css('display', 'none');
 
                     Fanex.ExtAcc.UnBlockUI();
                 }
@@ -2919,7 +2919,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            if(!this.HideVirtualSports){
+            if (!this.HideVirtualSports) {
                 menuItems.virtualSport = {
                     name: "Edit Multiple Virtual Sports",
                     className: "iconEnableEdit",
@@ -3182,7 +3182,7 @@ Fanex.ExtAcc.Customer = {
                     }
                 };
                 menuItems.separate6 = "------";
-            }            
+            }
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {
