@@ -6,6 +6,7 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 Fanex.ExtAcc.Statement = {
     groupName: '',
     custId: $('#CustId').val(),
+    username: $('#username').val(),
     fromdate: new Date(),
     todate: new Date(),
     url: resolveClientUrl('Statement/GetStatement'),
@@ -63,7 +64,7 @@ Fanex.ExtAcc.Statement = {
         });
 
         $('#exporttoexcel').click(function () {
-            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName;
+            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
             document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
         });
 

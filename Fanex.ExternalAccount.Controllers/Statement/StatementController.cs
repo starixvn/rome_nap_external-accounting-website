@@ -51,13 +51,14 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         }
 
         public void GetRequestPage()
-        {            
+        {
+            this._username = CheckRequest.GetStringRequest("username", string.Empty);
             this._custId = CheckRequest.GetIntRequest("custid", 0);
             this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ? 
                 CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
             this._fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
-            this._cacheList = "CacheList" + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
+            this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
         }
 
         /// <summary>

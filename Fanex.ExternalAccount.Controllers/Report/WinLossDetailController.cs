@@ -55,6 +55,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         private int _pageSize = 50;
         private int _totalPages = 1;
         private string _products = string.Empty;
+        private string _formatedProducts = string.Empty;
 
         #endregion Init WinLossDetail
 
@@ -70,6 +71,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         public void GetRequestPage()
         {
             this._products = string.Empty;
+            this._formatedProducts = string.Empty;
             this._username = CheckRequest.GetStringRequest("username", string.Empty);
             this._viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             this._custId = CheckRequest.GetIntRequest("custid", 0);
@@ -77,7 +79,39 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
             this._filterParams = new FilterController().AsCollection();
-            this._filterParams.ToList().ForEach(o => { this._products += o.Key + o.Value; });
+
+            var list = new List<KeyValuePair<string, string>>();
+            
+            list.Add(new KeyValuePair<string, string>("showAll", ViewLang.All));
+            list.Add(new KeyValuePair<string, string>("showSB", ViewLang.Sportsbook));
+            list.Add(new KeyValuePair<string, string>("showCasino", ViewLang.Casino));
+            list.Add(new KeyValuePair<string, string>("showRB", ViewLang.Racing));
+            list.Add(new KeyValuePair<string, string>("showBI", ViewLang.Bingo));
+            list.Add(new KeyValuePair<string, string>("showNG", ViewLang.NumberGame));
+            list.Add(new KeyValuePair<string, string>("showP2P", ViewLang.Poker));
+            list.Add(new KeyValuePair<string, string>("showLiveCasino", ViewLang.LiveCasino));
+
+            if (Config.IsShowVirtualSports)
+            {
+                list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
+            }
+
+            this._filterParams.ToList().ForEach(o => 
+            { 
+                this._products += o.Key + o.Value;
+                list.ForEach(p =>
+                {
+                    if (p.Key != "showAll" && o.Value && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                    {
+                        this._formatedProducts += p.Value + ", ";
+                    }
+                });
+            });
+
+            if (this._formatedProducts.Length > 0)
+            {
+                this._formatedProducts = this._formatedProducts.Substring(0, this._formatedProducts.Length - 2);
+            }
         }
 
         /// <summary>
@@ -150,7 +184,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         !getNew ? this._viewlevel : 1, 
                         this._fromDate.ToString("MMM, dd yyyy"), 
                         this._toDate.ToString("MMM, dd yyyy"));
-                    var excelStream = builder.Build();
+                    var excelStream = builder.Build(this._formatedProducts);
                     if (excelStream != null)
                     {
                         this.ExportToExcel(
@@ -174,7 +208,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         level, 
                         this._fromDate.ToString("MMM, dd yyyy"), 
                         this._toDate.ToString("MMM, dd yyyy"));
-                    var excelStream = builder.Build();
+                    var excelStream = builder.Build(this._formatedProducts);
                     if (excelStream != null)
                     {
                         this.ExportToExcel(
@@ -199,7 +233,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                         level, 
                         this._fromDate.ToString("MMM, dd yyyy"), 
                         this._toDate.ToString("MMM, dd yyyy"));
-                    var excelStream = builder.Build();
+                    var excelStream = builder.Build(this._formatedProducts);
                     if (excelStream != null)
                     {
                         this.ExportToExcel(
@@ -209,51 +243,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 }
             }
         }
-
-        /// <summary>
-        /// Checks belonging.
-        /// </summary>
-        /// <returns>Boolean object.</returns>
-        private bool CheckBelonging()
-        {
-            if (!string.IsNullOrEmpty(this._username))
-            {
-                DataTable customerInfo = this._reportService.GetCustomerInfo(this._groupname, this._custId, this._username, true);
-                if (customerInfo != null)
-                {
-                    this._roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                    if (this._roleId == 4)
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                    }
-                    else if (this._roleId == 3)
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                    }
-                    else if (this._roleId == 2)
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                        this._recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                    }
-                    else
-                    {
-                        this._srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                        this._mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                        this._recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                        this._memberId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
+        
         /// <summary>
         /// Checks input customer values.
         /// </summary>
