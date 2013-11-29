@@ -54,7 +54,7 @@ namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
             int colId = 0;
 
             // Header
-            string mainTitle = " Statement " + this._builder.Username + " From " + this._builder.FromDate + " To " + this._builder.ToDate;
+            string mainTitle = " Statement - " + this._builder.Username + " - From " + this._builder.FromDate + " To " + this._builder.ToDate;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
