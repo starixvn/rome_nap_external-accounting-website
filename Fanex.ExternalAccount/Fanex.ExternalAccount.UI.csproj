@@ -39,13 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary">
+      <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="DNAide, Version=2.1.4478.20125, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\DNAide.dll</HintPath>
+      <HintPath>..\Dependencies\CasinoUtility.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.96, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -53,7 +52,7 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Bingo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -65,7 +64,7 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,15 +72,15 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Fanex.CustomerSetting.Module.Racebook.Resources.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Racebook.Resources.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Fanex.CustomerSetting.Security.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
@@ -101,33 +100,28 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
-    <Reference Include="GotDotNet.ApplicationBlocks.Data, Version=3.1.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    <Reference Include="GotDotNet.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
-    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\IBCCrypt.dll</HintPath>
+    <Reference Include="IBCCrypt">
+      <HintPath>..\Dependencies\IBCCrypt.dll</HintPath>
     </Reference>
-    <Reference Include="IBCDBLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\IBCDBLibrary.dll</HintPath>
+      <HintPath>..\Dependencies\IBCFile.dll</HintPath>
     </Reference>
-    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\ILogger.dll</HintPath>
+    <Reference Include="ILogger">
+      <HintPath>..\Dependencies\ILogger.dll</HintPath>
     </Reference>
     <Reference Include="LiveCasinoLibrary, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Bingo\LiveCasinoLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\Dependencies\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=3.1.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -176,9 +170,8 @@
     <Reference Include="Sunplus.Core.LoggingLib">
       <HintPath>..\Dependencies\Bingo\Sunplus.Core.LoggingLib.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\Sunplus.Libraries.AOP.dll</HintPath>
+    <Reference Include="Sunplus.Libraries.AOP">
+      <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -259,9 +252,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dll\WebGrease.dll</HintPath>
+    <Reference Include="WebGrease">
+      <HintPath>..\Dependencies\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -688,27 +680,6 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
-    <Content Include="Dll\CasinoLibrary.dll" />
-    <Content Include="Dll\DNAide.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.BetSetting.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.Bingo.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.Bingo.Resources.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.Casino.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.Core.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.LeftPanel.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.ProgressiveBonus.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.Racebook.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Module.Racebook.Resources.dll" />
-    <Content Include="Dll\Fanex.CustomerSetting.Security.dll" />
-    <Content Include="Dll\GotDotNet.ApplicationBlocks.Data.dll" />
-    <Content Include="Dll\IBCCrypt.dll" />
-    <Content Include="Dll\IBCDBLibrary.dll" />
-    <Content Include="Dll\ILogger.dll" />
-    <Content Include="Dll\log4net.dll" />
-    <Content Include="Dll\Microsoft.ApplicationBlocks.Data.dll" />
-    <Content Include="Dll\NetUtility.dll" />
-    <Content Include="Dll\Sunplus.Libraries.AOP.dll" />
-    <Content Include="Dll\WebGrease.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrow-icn-right.png" />
@@ -1067,7 +1038,6 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Casino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.LiveCasino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
@@ -1991,9 +1961,9 @@
     <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
-    <Content Include="Views\Casino\EditCasino.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
+    <Content Include="Views\Home\TestLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

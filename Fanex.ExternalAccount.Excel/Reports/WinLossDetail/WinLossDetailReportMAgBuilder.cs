@@ -39,14 +39,15 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
         /// <summary>
         /// Builds report.
         /// </summary>
+        /// <param name="products">Products list.</param>
         /// <returns>MemoryStream object.</returns>
-        public MemoryStream Build()
+        public MemoryStream Build(string products = null)
         {
             TemplateReport report = null;
             TemplateSettings settings = new TemplateSettings();
             string filePath = settings.WinLossDetailPath(this.RoleId);
 
-            report = new WinLossDetailReportMAg(filePath, this);
+            report = new WinLossDetailReportMAg(filePath, this, products);
 
             if (report != null)
             {

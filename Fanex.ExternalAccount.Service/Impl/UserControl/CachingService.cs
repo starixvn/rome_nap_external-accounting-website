@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
         /// Removes user cache.
         /// </summary>
         /// <param name="userId">Admin user id.</param>
-        internal void RemoveUserCache(int userId)
+        public void RemoveUserCache(int userId)
         {
             UserCache.Remove(userId.ToString());
         }

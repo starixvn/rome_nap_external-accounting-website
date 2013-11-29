@@ -87,6 +87,8 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetSportsbookMinPT: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         $.ajax({
@@ -104,6 +106,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetRacingPT: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
         var uplineId = 0;
@@ -136,6 +139,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetRacingMinPT: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var typeUrl = '';
         var custId = this.UserId;
@@ -156,6 +160,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetCasinoSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
 
@@ -185,6 +190,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetBingoSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
         var uplineId = 0;
@@ -210,6 +216,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetLiveCasinoSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
@@ -247,6 +254,7 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     GetVirtualSportSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var uplineId, uplineRoleId, targetCustId, targetRoleId;

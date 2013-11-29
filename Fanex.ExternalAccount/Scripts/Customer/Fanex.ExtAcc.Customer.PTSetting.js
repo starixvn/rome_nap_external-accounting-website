@@ -3,6 +3,68 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
+Validators.show = function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
+    // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
+    var hideTimeout = timeout ? timeout : 1000;
+    var hint = document.getElementById('fHint');
+    var hintPointer = null;
+    if (hint == null) {
+        var hint = document.createElement("SPAN");
+        hint.className = 'hint';
+        var hintMsg = document.createElement("SPAN");
+        hint.appendChild(hintMsg);
+        hintPointer = document.createElement("SPAN");
+        hintPointer.className = 'hint-pointer';
+        hint.appendChild(hintPointer);
+        hint.id = 'fHint';
+        hint.style.top = '10px';
+        hint.style.left = '10px';
+        hint.style.zIndex = 999999;
+        hint.onclick = function () { // Hide onclick
+            hint.style.display = 'none';
+        };
+        document.body.appendChild(hint);
+    };
+    hintPointer = hint.lastChild;
+    hint.firstChild.innerHTML = message;
+    if (this.timeOutHideTooltip) {
+        clearTimeout(this.timeOutHideTooltip);
+        this.timeOutHideTooltip = null;
+    };
+    this.timeOutHideTooltip = setTimeout(function () {
+        hint.style.display = 'none';
+    }, hideTimeout); // Auto hide in 1s
+    if (elementInput != null) {
+        if (typeof xPos == 'undefined') {
+            xPos = 0;
+        }
+        if (typeof pointerXPos == 'undefined') {
+            pointerXPos = 10;
+        }
+        if (typeof yPos == 'undefined') {
+            yPos = -45;
+        }
+        if (typeof (pointerYPos) == 'undefined') {
+            pointerYPos = 38;
+        }
+        if (typeof (height) == 'undefined') {
+            height = 18;
+        }
+        hint.style.height = height + 'px';
+        hintPointer.style.left = (pointerXPos + 'px');
+        hintPointer.style.top = (pointerYPos + 'px');
+        var pos = Validators.utils.findPosRelativeToViewport(elementInput);
+        hint.style.left = (pos[0] + xPos) + 'px';
+        hint.style.top = (pos[1] + yPos < 0 ? 0 : pos[1] + yPos) + 'px';
+        elementInput.onchange = function () {
+            hint.style.display = 'none';
+        };
+        elementInput.focus();
+    };
+    //hint.style.minHeight = '18px';
+    hint.style.display = 'block';
+}
+
 Fanex.ExtAcc.Customer.PTSetting = {
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
     IsFullInfo: Fanex.ExtAcc.Customer.IsFullInfo,
@@ -13,7 +75,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
     Saved: false,
     IsUpdateAllMember: false,
     NewPtTaking: 0.0,
-    ErrorMessage: '',
+    errorMessage: '',
     CustIdIndex: 0,
     BetSettings: ['min bet', 'max bet', 'max per match', 'max per ball'],
 
@@ -257,8 +319,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
         })
         .error(function (xhr, status, err) {
-            window.CurrentLevel = null;
-
             Fanex.ExtAcc.UnBlockUI();
         });
     },
@@ -2434,6 +2494,10 @@ function extendPTEngine() {
         if (document.getElementById('windowPopup')) {
             var parent = document.getElementById('windowPopup');
 
+            curleft -= parent.scrollLeft;
+            curtop -= parent.scrollTop;
+        } else if (document.getElementById('contentSplitter')) {
+            var parent = document.getElementById('contentSplitter');
             curleft -= parent.scrollLeft;
             curtop -= parent.scrollTop;
         }

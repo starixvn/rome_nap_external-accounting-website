@@ -7,7 +7,7 @@ var Validators = {
         // Validate with expr
         // Show message and animate background color
     },
-    show: function (elementInput, message, xPos, pointerXPos, timeout) {
+    show: function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
         // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
         var hideTimeout = timeout ? timeout : 1000;
         var hint = document.getElementById('fHint');
@@ -45,13 +45,21 @@ var Validators = {
             if (typeof pointerXPos == 'undefined') {
                 pointerXPos = 10;
             }
-
-            hint.style.backgroundPositionX = (pointerXPos + 'px');
+            if (typeof yPos == 'undefined') {
+                yPos = -45;
+            }
+            if (typeof (pointerYPos) == 'undefined') {
+                pointerYPos = 38;
+            }
+            if (typeof (height) == 'undefined') {
+                height = 18;
+            }
+            hint.style.height = height + 'px';
             hintPointer.style.left = (pointerXPos + 'px');
-
+            hintPointer.style.top = (pointerYPos + 'px');
             var pos = Validators.utils.findPosRelativeToViewport(elementInput);
             hint.style.left = (pos[0] + xPos) + 'px';
-            hint.style.top = (pos[1] - 40) + 'px';
+            hint.style.top = (pos[1] + yPos < 0 ? 0 : pos[1] + yPos) + 'px';
             elementInput.onchange = function () {
                 hint.style.display = 'none';
             };
@@ -130,6 +138,11 @@ var Validators = {
             var hint = document.getElementById('fHint');
             hint.style.display = 'none';
         }
+
+        if (document.getElementById('fHintDown')) {
+            var hint = document.getElementById('fHintDown');
+            hint.style.display = 'none';
+        }
     },
     animate: function (input) {
         var previousColor = input.style.color;
@@ -200,6 +213,11 @@ var Validators = {
             if (document.getElementById('windowPopup')) {
                 var parent = document.getElementById('windowPopup');
 
+                curleft -= parent.scrollLeft;
+                curtop -= parent.scrollTop;
+            }
+            else if (document.getElementById('contentSplitter')) {
+                var parent = document.getElementById('contentSplitter');
                 curleft -= parent.scrollLeft;
                 curtop -= parent.scrollTop;
             }

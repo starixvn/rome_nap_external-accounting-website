@@ -398,14 +398,12 @@ Fanex.CustomerSetting.Core = {
     },
 
     CheckNumber: function (event, ele, isFloat) {
-        var value = ele.value;
-
         var evt = event ? event : window.event; // Fix for IE7
+
         if (evt.keyCode === 9) return true; // Ignore TAB key
+
         var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
         var value = obj.value;
-        value = !$.isNumeric(this.ReplaceAll(value, ',', '')) ? '' : value;
-        obj.value = value;
 
         if (value == '') return true;
 
@@ -416,30 +414,23 @@ Fanex.CustomerSetting.Core = {
 
         num = value.toString().replace(/\$|\,/g, '');
         dotPosition = num.indexOf(".");
-
         if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
             afterDot = num.substring(dotPosition + 1, num.length).replace(/[^0-9]/g, '');
             num = num.substring(0, dotPosition);
         }
-
         num = num.formatFloat();
-
         if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
             eval(obj).value = num + "." + afterDot;
             num = obj.value;
         } else {
             eval(obj).value = num;
         }
+
         if (num.length > value.length) {
             caretPosition = caretPosition + 1;
         }
 
-        if (evt.keyCode == 8 && num.substring(caretPosition - 1, caretPosition) == ',') {
-            setCaret(obj, caretPosition - 1);
-        }
-        else {
-            setCaret(obj, caretPosition);
-        }
+        setCaret(obj, caretPosition);
 
         return true;
     },

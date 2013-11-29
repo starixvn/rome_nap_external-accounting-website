@@ -131,21 +131,11 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public bool AllowRead(string action)
         {
-            if (action.Contains("SearchCustomer"))
-            {
-                return true;
-            }
-
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
         public bool AllowUpdate(string action)
         {
-            if (action.Contains("SearchCustomer"))
-            {
-                return true;
-            }
-
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 

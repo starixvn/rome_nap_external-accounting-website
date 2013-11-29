@@ -12,13 +12,13 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     Error: '',
 
     Init: function () {
-        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super || (window.CurrentLevel && window.CurrentLevel == 4)) {
+        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
             this.GetSuperSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master || (window.CurrentLevel && window.CurrentLevel == 3)) {
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             this.GetMasterSetting();
         }
-        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent || (window.CurrentLevel && window.CurrentLevel == 2)) {
+        else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             this.GetAgentSetting();
         }
         else {
@@ -746,7 +746,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //PT Renderring
             //PT values
             var uplineMin = data.superPtSetting.minPT;
-            var uplineMax = data.superPtSetting.maxPT;
+            var uplineMax = data.superPtSetting.maxAutoPresetPT;
             var uplinePreset = data.superPtSetting.presetPT;
             var uplineAutoPreset = data.superPtSetting.autoPresetPT;
             var min = data.superPtSetting.minPT;
@@ -766,7 +766,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render Super auto preset pt
-            PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+            PT_RenderCombo(document.getElementById('pt_2'), 0, uplineMax, 0.01, uplineAutoPreset);
             if (!data.superPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
@@ -802,7 +802,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     if (document.getElementById('pt_1'))
-                        Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+                        Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.minPT : $('#pt_1').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.autoPresetPT = $('#pt_2').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.isAutoPresetPT = isChecked;
 
@@ -912,7 +912,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //PT Renderring
             //PT values
             var uplineMin = data.masterPtSetting.minPT;
-            var uplineMax = data.masterPtSetting.maxPT;
+            var uplineMax = data.masterPtSetting.maxAutoPresetPT;
             var uplinePreset = data.masterPtSetting.presetPT;
             var uplineAutoPreset = data.masterPtSetting.autoPresetPT;
             var min = data.masterPtSetting.minPT;
@@ -932,7 +932,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render master auto preset pt
-            PT_RenderCombo(document.getElementById('pt_2'), uplineMin, uplineMax, 0.01, uplineAutoPreset);
+            PT_RenderCombo(document.getElementById('pt_2'), 0, uplineMax, 0.01, uplineAutoPreset);
             if (!data.masterPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
@@ -965,7 +965,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                     // Set PT values
                     var isChecked = document.getElementById('chkAutoPT').checked;
                     if (document.getElementById('pt_1'))
-                        Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+                        Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.minPT : $('#pt_1').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.autoPresetPT = $('#pt_2').val();
                     Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.isAutoPresetPT = isChecked;
 
@@ -1871,7 +1871,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var isChecked = document.getElementById('chkAutoPT').checked;
         if (document.getElementById('pt_1'))
-            Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+            Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.minPT : $('#pt_1').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.autoPresetPT = $('#pt_2').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.superPtSetting.isAutoPresetPT = isChecked;
 
@@ -2030,7 +2030,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
         var isChecked = document.getElementById('chkAutoPT').checked;
         if (document.getElementById('pt_1'))
-            Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? 0 : $('#pt_1').val();
+            Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.presetPT = isChecked ? Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.minPT : $('#pt_1').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.autoPresetPT = $('#pt_2').val();
         Fanex.ExtAcc.Customer.LiveCasino.customer.masterPtSetting.isAutoPresetPT = isChecked;
         Fanex.ExtAcc.Customer.LiveCasino.customer.customerInfo.groupName = $('#selectedGroupName').html();
@@ -2352,7 +2352,7 @@ function checkPT(el) {
         var pt4 = document.getElementById("pt_4");
 
         if (pt3)
-            PT_RenderCombo(pt3, 0, (Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.maxPT - parseFloat(pt1.options[pt1.selectedIndex].value).toFixed(2)), 0.01, pt3.options[pt3.selectedIndex].value);
+            PT_RenderCombo(pt3, 0, Fanex.ExtAcc.Customer.LiveCasino.customer.uplinePtSetting.maxPT.toFixed(2), 0.01, pt3.options[pt3.selectedIndex].value);
         if (pt4)
             PT_RenderCombo(pt4, 0, pt3.options[pt3.selectedIndex].value, 0.01, pt4.options[pt4.selectedIndex].value);
     }

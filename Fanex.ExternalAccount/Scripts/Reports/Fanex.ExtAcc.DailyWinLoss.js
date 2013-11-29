@@ -271,6 +271,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             marginRight: 2,
             bottomBorderWidth: 0,
             showDistinctRow: false,
+            allowTruncate: true,
             columnsNeedHide: [12, 14, 16, 18],
             showColumnsShowHide: !$this.hidedMargin
         };

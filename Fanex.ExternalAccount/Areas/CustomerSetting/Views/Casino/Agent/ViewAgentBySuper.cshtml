@@ -13,7 +13,7 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" style="display: none; width: 1024px" ng-app="settingApp">
+<div id="ng-app" style="display: none; width: 1024px" data-ng-app="settingApp">
     <div id="info">
         @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
     </div>    
@@ -21,7 +21,7 @@
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
             Postition Taking
         </div>                                                                                                                                                                                                                                                                                                                                                            
-        <div style="border-right: none" id="settingContainer" ng-controller="ViewAgentController">
+        <div style="border-right: none" id="settingContainer" data-ng-controller="ViewAgentController">
             <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
@@ -29,7 +29,7 @@
                     <td class="ptTitle noneBorderTop memberWidth">Master Preset PT</td>
                     <td class="ptTitle noneBorderTop memberWidth">Agent Preset PT</td>
                 </tr>
-                <tr ng-controller="GameGroupController" ng-repeat="gameGroup in customer.gameGroups" ng-finish-render="rendered">
+                <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="5" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
@@ -42,7 +42,7 @@
                             </tr>         
                             @if (isPtByGameType)
                             {                
-                            <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+                            <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
                                 <td colspan="5" style="border: none">
                                     <table class="tableInfo" cellpadding="0" cellspacing="0">
                                         <tr>
@@ -58,8 +58,8 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="noneBorderRight"><span>Betting Limit: </span>
-                                                <span ng-controller="BettingLimitController" ng-repeat="stake in gameType.bettingLimits">
-                                                    <input type="checkbox" ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                                <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
+                                                    <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -69,13 +69,13 @@
                             }
                             else
                             {
-		                    <tr ng-controller="GameTypeController" ng-repeat="gameType in gameGroup.gameTypes">
+		                    <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
                                 <td colspan="4" class="noneBorderR"><span>Betting Limit: </span>
-                                    <span ng-controller="BettingLimitController" ng-repeat="stake in gameType.bettingLimits">
-                                        <input type="checkbox" ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                    <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
+                                        <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                     </span>
                                 </td>
                             </tr>

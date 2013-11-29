@@ -14,7 +14,7 @@
     init: function () {
         try {
             this.isMultiple = parent.Fanex.ExtAcc.Customer.IsMultiple;
-            this.CustInfos = parent.Fanex.ExtAcc.Customer.IdsAndNames();
+            this.CustInfos = !this.isMultiple ? [] : parent.Fanex.ExtAcc.Customer.IdsAndNames();
             this.Usernames = parent.Fanex.ExtAcc.Customer.Usernames;
         } catch (e) {
         }
@@ -271,6 +271,6 @@
 
 };
 
-$(function () {
+$(document).ready(function () {
     customerPTRacingSetting.init();
 });

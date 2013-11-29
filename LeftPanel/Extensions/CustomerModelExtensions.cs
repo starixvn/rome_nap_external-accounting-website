@@ -12,13 +12,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
 
@@ -151,6 +154,53 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         }
 
         /// <summary>
+        /// Checks authorize on function of an admin.
+        /// </summary>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="functionKey">Function key.</param>
+        /// <param name="policy">Policy permission.</param>
+        /// <returns>Boolean object.</returns>
+        public static bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy)
+        {
+            var userCache = new CachingService().GetUserCache(userId);
+            var menuList = userCache.MenuList;
+            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
+            var hasPerm = true;
+
+            hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url)).Count() > 0;
+
+            if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
+            {
+                return false;
+            }
+
+            if (foundItems.Count() > 0)
+            {
+                var firstItem = foundItems.First();
+                switch (policy)
+                {
+                    case AuthenticateAction.AuthenticationType.Read:
+                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
+                            firstItem.Policy == EPolicy.Create)
+                        {
+                            return true;
+                        }
+
+                        break;
+                    case AuthenticateAction.AuthenticationType.Host:
+                        if (firstItem.Policy == EPolicy.Read)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Gets down-line list.
         /// </summary>
         /// <param name="model">CustomerModel object data.</param>
@@ -205,7 +255,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.OnlineList.Onlines.Add(new OnlineInfo
                 {
-                    IP = new ObjectInfo { Text = row["ip"].ToString() },
+                    IP = new ObjectInfo { Text = CheckVNIP(row.ToString("ip")) },
                     LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt") }
                 });
             }
@@ -231,7 +281,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Login" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Password" },
-                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["lastloginip"]), Text = "Last Login IP" },
+                    new ObjectInfo { Value = CheckVNIP(tableCustomer.Rows[0].ToString("lastloginip")), Text = "Last Login IP" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Security Code" },
                 };
 
@@ -304,6 +354,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit" },
                     }
             };
+            model.BalanceInfo.IsUpdateCredit = IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
 
             return model;
         }
@@ -1093,5 +1144,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             return model;
         }
+
+        private static string CheckVNIP(string ip)
+        {
+            return string.IsNullOrWhiteSpace(ip) || (
+                IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)) ? string.Empty : ip;
+        }        
     }
 }

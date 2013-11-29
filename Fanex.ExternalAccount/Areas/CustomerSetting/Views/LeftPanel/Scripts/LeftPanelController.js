@@ -316,9 +316,8 @@ function LeftPanelController($scope, $element) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.UserId = parent.window.id = custId;
-        parent.window.uplineId = parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
-        parent.window.CurrentLevel = roleId;
+        parent.Fanex.ExtAcc.Customer.UserId = custId;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
 
         switch (roleId) {
             case 4:
@@ -902,6 +901,7 @@ function SettingController($scope, $http) {
     $scope.AddNew = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var actionName = '';
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
 
         switch (roleId) {
             case 2:
@@ -986,9 +986,11 @@ function SettingController($scope, $http) {
             return;
         }
 
+        var disableClearCredit = parent.hasClearCredit == 1 ? '' : 'disabled="disabled"';
+        var title = disableClearCredit ? 'You are not authorized on this function' : '';
         var checked = !close ? 'checked="checked"' : "";
         var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />Closed' +
-            '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" />Clear All Credit';
+            '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" title="' + title + '" ' + disableClearCredit + ' />Clear All Credit';
 
         if (close) {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Open Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',

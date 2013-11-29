@@ -19,14 +19,14 @@
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Bingo/Styles/Bingo.css")" rel="stylesheet" type="text/css" />
-<div id="ng-app" ng-app="bettingApp" ng-controller="Fanex.CustomerSetting.Betting.Bingo" ng-init="Init()" style="width: 815px; display: none">
+<div id="ng-app" data-ng-app="bettingApp" data-ng-controller="Fanex.CustomerSetting.Betting.Bingo" data-ng-init="Init()" style="width: 815px; display: none">
     <div id="errMsg" style="display: none" class="errMsg">
     </div>
     <div class="title C bold header">
         Update Bet Setting: @ViewBag.Username
     </div>
-    <div ng-hide="model.result.errorCode == 0" style="color: Red; height: 25px; border: 1px solid #CCC" class="C">There is no information available.</div>
-    <table class="tableInfo" border="1" cellpadding="0" cellspacing="0" ng-hide="model.result.errorCode != 0">
+    <div data-ng-hide="model.result.errorCode == 0" style="color: Red; height: 25px; border: 1px solid #CCC" class="C">There is no information available.</div>
+    <table class="tableInfo" border="1" cellpadding="0" cellspacing="0" data-ng-hide="model.result.errorCode != 0">
         <tr>
             <td colspan="3" style="border: none">
                 <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
@@ -37,8 +37,8 @@
                     <tr>
                         <td class="bold R">Member Max Transfer Credit</td>
                         <td>
-                            <input id="maxTransferCredit" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" type="text" ng-model="model.maxTransferCredit" style="text-align: left" value="{{model.maxTransferCredit.formatNumber()}}" />
-                            <input id="chkDailyAutoReset" type="checkbox" ng-model="model.isAutoReset" />
+                            <input id="maxTransferCredit" oncut="return false;" onpaste="return false;" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" type="text" data-ng-model="model.maxTransferCredit" style="text-align: left" value="{{model.maxTransferCredit.formatNumber()}}" />
+                            <input id="chkDailyAutoReset" type="checkbox" data-ng-model="model.isAutoReset" />
                             <label class="normal" for="chkDailyAutoReset">Daily auto reset limit (at 12 noon GMT + 8)</label>
                         </td>
                     </tr>
@@ -52,18 +52,18 @@
         <tr>
             <td colspan="3" style="border: none">
                 <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
-                    <tr ng-repeat="gameKind in gameKinds">
+                    <tr data-ng-repeat="gameKind in gameKinds">
                         <td class="widthBingoTitle noneBorderTop bold">{{gameKind.name}}</td>
                         <td class="noneBorderTop" style="border: none">
                             <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
-                                <tr ng-repeat="gameType in gameKind.gameTypeList">
+                                <tr data-ng-repeat="gameType in gameKind.gameTypeList">
                                     <td class="widthBingoTitle noneBorderLeft noneBorderTop">{{gameType.name}}</td>
                                     <td class="noneBorderLeft noneBorderTop">
                                         <div class="floatLeft">                                              
                                             <div class="floatLeft">Betting Limit:&nbsp;</div>
-                                            <div class="floatLeft" ng-repeat="betting in gameType.bettingRangeList">
+                                            <div class="floatLeft" data-ng-repeat="betting in gameType.bettingRangeList">
                                                 <div class="floatLeft">
-                                                    <input type="checkbox" ng-model="betting.isChecked" /><span>{{betting.name}}</span>
+                                                    <input type="checkbox" data-ng-model="betting.isChecked" /><span>{{betting.name}}</span>
                                                 </div>                                        
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
             </td>
         </tr>
     </table>
-    <div style="text-align: right" ng-hide="model.result.errorCode != 0" >
+    <div style="text-align: right" data-ng-hide="model.result.errorCode != 0" >
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>

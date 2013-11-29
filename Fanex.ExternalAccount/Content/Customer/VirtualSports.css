@@ -59,3 +59,9 @@
 	vertical-align: top;
 }
 .PTBox { text-align:left; }
+.noInfoBlock
+{
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 11px !important;
+}

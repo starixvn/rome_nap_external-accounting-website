@@ -20,11 +20,13 @@ namespace Fanex.ExternalAccount.Excel
     public abstract class TemplateReport : IDisposable
     {
         private HSSFWorkbook _hssfWorkbook;
+        private string _products;
 
-        public TemplateReport(string filePath)
+        public TemplateReport(string filePath, string products = null)
         {
             FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             this._hssfWorkbook = new HSSFWorkbook(file);
+            this._products = products;
         }
 
         ~TemplateReport()
@@ -38,6 +40,14 @@ namespace Fanex.ExternalAccount.Excel
             get
             {
                 return this._hssfWorkbook;
+            }
+        }
+
+        public string Products
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(this._products) ? string.Empty : this._products;
             }
         }
 

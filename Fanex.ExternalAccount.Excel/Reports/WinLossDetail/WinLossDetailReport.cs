@@ -21,8 +21,8 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
     {
         private WinLossDetailReportBuilder _builder;
 
-        public WinLossDetailReport(string filePath, WinLossDetailReportBuilder builder)
-            : base(filePath)
+        public WinLossDetailReport(string filePath, WinLossDetailReportBuilder builder, string products = null)
+            : base(filePath, products)
         {
             this._builder = builder;
         }
@@ -71,6 +71,8 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
             {
                 mainTitle += " Win Loss Detail From " + this._builder.FromDate + " To " + this._builder.ToDate;
             }
+
+            mainTitle += " - " + this.Products;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 

@@ -106,6 +106,7 @@
                 // determine contextMenu position
                 var offset = this.offset();
                 offset.top += this.outerHeight();
+                offset.top = offset.top < 0 ? 0 : offset.top;
                 offset.left += this.outerWidth() / 2 - $menu.outerWidth() / 2;
                 $menu.css(offset);
             }
@@ -139,6 +140,8 @@
             if (offset.left + width > right) {
                 offset.left -= width;
             }
+
+            offset.top = offset.top < 0 ? 0 : offset.top;
 
             opt.$menu.css(offset);
         },
@@ -1190,7 +1193,7 @@
                     if (item.$menu) {
                         // update sub-menu
                         op.update.call($trigger, item, root);
-                    } 
+                    }
                 } catch (e) {
                 }
             });
@@ -1545,13 +1548,13 @@
 
             // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#concept-command
             switch (nodeName) {
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/interactive-elements.html#the-menu-element  
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/interactive-elements.html#the-menu-element   
                 case 'menu':
                     item = { name: $node.attr('label'), items: {} };
                     counter = menuChildren(item.items, $node.children(), counter);
                     break;
 
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-a-element-to-define-a-command  
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-a-element-to-define-a-command   
                 case 'a':
                     // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-button-element-to-define-a-command
                 case 'button':
@@ -1562,7 +1565,7 @@
                     };
                     break;
 
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-command-element-to-define-a-command  
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-command-element-to-define-a-command   
 
                 case 'menuitem':
                 case 'command':

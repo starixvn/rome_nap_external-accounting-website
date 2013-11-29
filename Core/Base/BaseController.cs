@@ -13,14 +13,19 @@
 namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
+    using System.Data;
     using System.IO;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
@@ -184,7 +189,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="custId">Customer id.</param>
         /// <param name="result">Result object.</param>
         /// <param name="customer">Customer object.</param>
-        protected void UpdateCasinoStatus(int custId, Result result, Customer customer)
+        protected void UpdateCasinoStatus(int custId, Fanex.PTEngine.BusinessObjects.Result result, Customer customer)
         {
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0)
             {
@@ -192,8 +197,15 @@ namespace Fanex.ExternalAccount.Core.Base
                 var cust = new CasinoLibrary.SBAgent.Customer();
                 try
                 {
-                    cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
-                    cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                    {
+                        cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    }
+
+                    if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                    {
+                        cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    }
                 }
                 catch (Exception)
                 {
@@ -208,12 +220,19 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         protected void UpdateCasinoStatus2(int custId, bool closed, bool suspended)
-        {
+        {   
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
-                cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                {
+                    cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                }
+
+                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                {
+                    cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                }
             }
             catch (Exception)
             {
@@ -257,6 +276,87 @@ namespace Fanex.ExternalAccount.Core.Base
                     ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
                 };
             }
+        }
+
+        /// <summary>
+        /// Checks authorize on function of an admin.
+        /// </summary>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="functionKey">Function key.</param>
+        /// <param name="policy">Policy permission.</param>
+        /// <param name="request">HttpRequestBase object.</param>
+        /// <returns>Boolean object.</returns>
+        protected bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy, HttpRequestBase request)
+        {
+            var userCache = new CachingService().GetUserCache(userId);
+            var menuList = userCache.MenuList;
+            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
+            var hasPerm = true;
+
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
+                !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
+            {
+                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) &&
+                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+            }
+
+            if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
+            {
+                return false;
+            }
+
+            if (foundItems.Count() > 0)
+            {
+                var firstItem = foundItems.First();
+                switch (policy)
+                {
+                    case AuthenticateAction.AuthenticationType.Read:
+                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
+                            firstItem.Policy == EPolicy.Create)
+                        {
+                            return true;
+                        }
+
+                        break;
+                    case AuthenticateAction.AuthenticationType.Host:
+                        if (firstItem.Policy == EPolicy.Read)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks and remove IPVN if admin does not have ViewVNIP permission.
+        /// </summary>
+        /// <param name="table">DataTable customer.</param>
+        /// <returns>DataTable object.</returns>
+        protected DataTable CheckVNIP(DataTable table)
+        {
+            if (object.ReferenceEquals(null, table) || table.Rows.Count == 0)
+            {
+                return table;
+            }
+
+            foreach (DataRow row in table.Rows)
+            {
+                if (string.IsNullOrWhiteSpace(row.ToString("lastloginip")) || !IpUtils.IsVnIp(row.ToString("lastloginip")))
+                {
+                    continue;
+                }
+
+                if (!this.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read, Request))
+                {
+                    row["lastloginip"] = string.Empty;
+                }
+            }
+
+            return table;
         }
 
         /// <summary>

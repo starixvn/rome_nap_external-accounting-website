@@ -19,7 +19,7 @@
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Racing/Styles/Racing.css")" rel="stylesheet" type="text/css" />
-<div id="ng-app" ng-app="bettingApp" ng-controller="Fanex.CustomerSetting.Betting.Racing" ng-init="Init()" style="width: 815px; display: none">
+<div id="ng-app" data-ng-app="bettingApp" data-ng-controller="Fanex.CustomerSetting.Betting.Racing" data-ng-init="Init()" style="width: 815px; display: none">
     <div id="errMsg" style="display: none" class="errMsg">
     </div>
     <div class="title C bold header">
@@ -32,23 +32,23 @@
             <td class="title bold C betWidth2">Max Bet</td>
             <td class="title bold C betWidth2">Max Per Match</td>
         </tr>
-        <tr id="{{betting.id}}" ng-hide="betting.isHide" ng-init="betting.bgClass = '';" ng-repeat="betting in bettingLimits">
+        <tr id="{{betting.id}}" data-ng-hide="betting.isHide" data-ng-init="betting.bgClass = '';" data-ng-repeat="betting in bettingLimits">
             <td colspan="4" class="noneBorderBottom noneBorderRight noneBorderTop">
                 <table class="tableInfo" cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="subTitleWidth title noneBorderLeft noneBorderTop noneBorderBottom">{{betting.name}}</td>
                         <td colspan="4" style="border: none">
-                            <div ng-hide="bet.isHide" ng-init="bet.bgClass=''; bet.className = bet.id == 41 && betting.id == 151" ng-repeat="bet in betting.betTypeGroups">
-                                <div id="_{{betting.id}}_{{bet.id}}" class="floatLeft {{bet.className}} {{bet.bgClass}} subTitleWidth2 title2 noneBorderLeft noneBorderTop" title="{{bet.title}}" ng-click="Copy(this)">{{bet.name}}</div>
+                            <div data-ng-hide="bet.isHide" data-ng-init="bet.bgClass=''; bet.className = bet.id == 41 && betting.id == 151" data-ng-repeat="bet in betting.betTypeGroups">
+                                <div id="_{{betting.id}}_{{bet.id}}" class="floatLeft {{bet.className}} {{bet.bgClass}} subTitleWidth2 title2 noneBorderLeft noneBorderTop" title="{{bet.title}}" data-ng-click="Copy(this)">{{bet.name}}</div>
                                 <div class="{{bet.bgClass}} floatLeft betWidth2 noneBorderLeft noneBorderTop">
-                                    <input style="text-align: right; width: 100px" id="txt{{betting.id}}{{bet.id}}Min" ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="bet.showminBetMin = bet.bettingCommSetting.minBetMin > 0; bet.minBetFormated = bet.bettingCommSetting.minBet.formatNumber(); bet.preValMinBet = bet.minBetFormated" type="text" class="BettingLimitTextBox" ng-model="bet.minBetFormated" ng-change="bet.bettingCommSetting.minBet = bet.minBetFormated.replaceAll(',', '').formatNumber()" />
-                                    <span ng-show="bet.showminBetMin">>= {{bet.bettingCommSetting.minBetMin.formatNumber()}}</span>
+                                    <input style="text-align: right; width: 100px" id="txt{{betting.id}}{{bet.id}}Min" data-ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" data-ng-init="bet.showminBetMin = bet.bettingCommSetting.minBetMin > 0; bet.minBetFormated = bet.bettingCommSetting.minBet.formatNumber(); bet.preValMinBet = bet.minBetFormated" type="text" class="BettingLimitTextBox" data-ng-model="bet.minBetFormated" data-ng-change="bet.bettingCommSetting.minBet = bet.minBetFormated.replaceAll(',', '').formatNumber()" />
+                                    <span data-ng-show="bet.showminBetMin">>= {{bet.bettingCommSetting.minBetMin.formatNumber()}}</span>
                                 </div>
                                 <div class="{{bet.bgClass}} floatLeft betWidth2 noneBorderLeft noneBorderTop">
-                                    <input style="text-align: right; width: 100px" id="txt{{betting.id}}{{bet.id}}Max" ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="bet.maxBetFormated = bet.bettingCommSetting.maxBet.formatNumber(); bet.preValMaxBet = bet.maxBetFormated" type="text" class="BettingLimitTextBox" ng-model="bet.maxBetFormated" ng-change="bet.bettingCommSetting.maxBet = bet.maxBetFormated.replaceAll(',', '').formatNumber()" />
+                                    <input style="text-align: right; width: 100px" id="txt{{betting.id}}{{bet.id}}Max" data-ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" data-ng-init="bet.maxBetFormated = bet.bettingCommSetting.maxBet.formatNumber(); bet.preValMaxBet = bet.maxBetFormated" type="text" class="BettingLimitTextBox" data-ng-model="bet.maxBetFormated" data-ng-change="bet.bettingCommSetting.maxBet = bet.maxBetFormated.replaceAll(',', '').formatNumber()" />
                                 </div>
                                 <div class="{{bet.bgClass}} floatLeft betWidth2 noneBorderLeft noneBorderRight noneBorderTop">
-                                    <input style="text-align: right; width: 100px" id="txt{{betting.id}}{{bet.id}}MaxPerMatch" ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" ng-init="bet.maxPerMatchFormated = bet.bettingCommSetting.maxPerMatch.formatNumber(); bet.preValMaxPerMatch = bet.maxPerMatchFormated" type="text" class="BettingLimitTextBox" ng-model="bet.maxPerMatchFormated" ng-change="bet.bettingCommSetting.maxPerMatch = bet.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
+                                    <input style="text-align: right; width: 100px" id="txt{{betting.id}}{{bet.id}}MaxPerMatch" data-ng-readonly="bet.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" data-ng-init="bet.maxPerMatchFormated = bet.bettingCommSetting.maxPerMatch.formatNumber(); bet.preValMaxPerMatch = bet.maxPerMatchFormated" type="text" class="BettingLimitTextBox" data-ng-model="bet.maxPerMatchFormated" data-ng-change="bet.bettingCommSetting.maxPerMatch = bet.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
                                 </div>
                             </div>
                         </td>

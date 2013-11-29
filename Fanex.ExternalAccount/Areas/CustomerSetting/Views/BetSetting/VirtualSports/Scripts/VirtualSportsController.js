@@ -105,6 +105,20 @@ Fanex.CustomerSetting.Betting.VirtualSports.Update = function (ondone) {
         }
     })
     .success(function (data) {
+        if (data.errorCode && data.errorCode >= 0) {
+            $('#errMsg').attr('class', 'errMsg');
+            $('#errMsg').html(data.errorMessage.formatErrorMessage());
+            $('#errMsg').show();
+
+            Fanex.CustomerSetting.Core.UnBlockUI();
+
+            if (typeof ondone == 'function') {
+                ondone({ errorCode: "1" });
+            }
+
+            return;
+        }
+
         var errorCodes = data.resultBetSetting;
         var errorMessage = '';
         var success = true;

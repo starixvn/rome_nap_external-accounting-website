@@ -76,7 +76,7 @@ function CustomerController($scope, $element) {
     },
 
     $scope.Reset = function () {
-        if ($scope.CustomerModel.roleId == 4) {
+        if ($scope.CustomerModel.roleId == 4 || ($scope.CustomerModel.uplineRoleId == 4 && $scope.CustomerModel.roleId == 2)) {
             return;
         }
 

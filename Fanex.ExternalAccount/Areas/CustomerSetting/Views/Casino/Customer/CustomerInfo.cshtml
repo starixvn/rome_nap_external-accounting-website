@@ -9,7 +9,7 @@
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" rel="stylesheet" type="text/css" />
-<div class="custInfo" ng-controller="CustomerController">
+<div class="custInfo" data-ng-controller="CustomerController">
     <div class="headerPositionTaking noneBorderLR custInfoHeader">
         General Information</div>
     <div id="userInfo">
@@ -38,11 +38,11 @@
             <td class="tdTitleRight">Enable Casino</td>
             <td class="noneBorderRight">                
                 <div style="float: left; height: 24px">
-                    <input type="checkbox" id="chkEnable" ng-click="EnableClicked()" style="margin-top: 5px" ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" ng-model="CustomerModel.casinoEnabled" ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
+                    <input type="checkbox" id="chkEnable" data-ng-click="EnableClicked()" style="margin-top: 5px" data-ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" data-ng-model="CustomerModel.casinoEnabled" data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" data-ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
                     <label for="chkEnable" id="downline"></label>                    
-                    <span ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline && CustomerModel.roleId != 1">
-                        <input type="checkbox" id="chkEnableDownline" ng-model="CustomerModel.enableDownline" ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    
-                        <label for="chkEnableDownline" id="enableDownlineText" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline">Previous enabled downlines</label>
+                    <span data-ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" data-ng-model="CustomerModel.showDownline" data-ng-show="CustomerModel.showDownline && CustomerModel.roleId != 1">
+                        <input type="checkbox" id="chkEnableDownline" data-ng-model="CustomerModel.enableDownline" data-ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    
+                        <label for="chkEnableDownline" id="enableDownlineText" data-ng-model="CustomerModel.showDownline" data-ng-show="CustomerModel.showDownline">Previous enabled downlines</label>
                     </span>
                 </div>                
             </td>
@@ -51,11 +51,11 @@
     </div>
     <div id="statusInfo" class="statusInfo"><span class="tdTitleRight">Enable Casino:</span>
         <span style="height: 24px">
-            <input type="checkbox" id="chkEnable" ng-click="EnableClicked()" style="margin-top: 5px" ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" ng-model="CustomerModel.casinoEnabled" ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
+            <input type="checkbox" id="chkEnable" data-ng-click="EnableClicked()" style="margin-top: 5px" data-ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" data-ng-model="CustomerModel.casinoEnabled" data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" data-ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
             <label for="chkEnable" id="downline"></label>                    
-            <span ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline">
-                <input type="checkbox" id="chkEnableDownline" ng-model="CustomerModel.enableDownline" ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    
-                <label for="chkEnableDownline" id="enableDownlineText" ng-model="CustomerModel.showDownline" ng-show="CustomerModel.showDownline">Previous enabled downlines</label>
+            <span data-ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" data-ng-model="CustomerModel.showDownline" data-ng-show="CustomerModel.showDownline">
+                <input type="checkbox" id="chkEnableDownline" data-ng-model="CustomerModel.enableDownline" data-ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    
+                <label for="chkEnableDownline" id="enableDownlineText" data-ng-model="CustomerModel.showDownline" data-ng-show="CustomerModel.showDownline">Previous enabled downlines</label>
             </span>
         </span>                
     </div>
@@ -65,14 +65,14 @@
         <tr>
             <td style="width: 40%" class="noneBorderLeft tdTitleRight">Accumulated transferable amount</td>
             <td class="noneBorderRight"><span style="margin-left: 4px; float: left; width: 130px">{{CustomerModel.totalWinLoss.formatNumber()}}</span>
-                <div ng-hide="CustomerModel.roleId == 4" style="float: left; color: #0066CC; cursor: pointer" ng-click="Reset()">Reset</div>
+                <div data-ng-hide="CustomerModel.roleId == 4 || (CustomerModel.uplineRoleId == 4 && CustomerModel.roleId == 2)" style="float: left; color: #0066CC; cursor: pointer" data-ng-click="Reset()">Reset</div>
             </td>
         </tr>
         <tr>
             <td class="noneBorderLeft tdTitleRight">Member Max Transfer Credit</td>
             <td class="noneBorderRight">
-                <div style="float: left; height: 24px"><input id="maxTransfer" oncut="return false;" onpaste="return false;" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="13" type="text" ng-init="CustomerModel.maxTransferFormated = CustomerModel.maxTransferCredit.formatNumber()" ng-change="CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated" ng-model="CustomerModel.maxTransferFormated" /></div>
-                <div style="float: left; height: 24px;"><input id="isAutoReset" type="checkbox" ng-model="CustomerModel.isAutoReset" /><label for="isAutoReset">Daily auto reset limit (at 12 noon GMT+8)</label></div>
+                <div style="float: left; height: 24px"><input id="maxTransfer" oncut="return false;" onpaste="return false;" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="13" type="text" data-ng-init="CustomerModel.maxTransferFormated = CustomerModel.maxTransferCredit.formatNumber()" data-ng-change="CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated" data-ng-model="CustomerModel.maxTransferFormated" /></div>
+                <div style="float: left; height: 24px;"><input id="isAutoReset" type="checkbox" data-ng-model="CustomerModel.isAutoReset" /><label for="isAutoReset">Daily auto reset limit (at 12 noon GMT+8)</label></div>
             </td>           
         </tr>
         <tr>

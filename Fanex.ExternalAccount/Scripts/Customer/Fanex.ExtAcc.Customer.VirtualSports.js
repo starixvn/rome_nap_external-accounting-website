@@ -160,7 +160,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         }
         else {
             document.getElementById("bettingLimitContainer").className = "noInfoBlock";
-            document.getElementById("bettingLimitContainer").innerHTML = Language.NOINFO;
+            document.getElementById("bettingLimitContainer").innerHTML = "There is no information available";
             document.getElementById("btnSubmit").disabled = true;
         }
 
@@ -171,7 +171,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         }
         else {
             document.getElementById("positionTaking").className = "noInfoBlock";
-            document.getElementById("positionTaking").innerHTML = Language.NOINFO;
+            document.getElementById("positionTaking").innerHTML = "There is no information available";
             document.getElementById("btnSubmit").disabled = true;
         }
 

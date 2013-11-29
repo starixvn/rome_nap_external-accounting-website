@@ -41,6 +41,7 @@ else
     </div>
     <div id='msgNoinfo'>There is no data.</div>
     <input type="hidden" id="CustId" value="@Request.RequestContext.RouteData.Values["id"]" />
+    <input type="hidden" id="username" value="@Request.RequestContext.RouteData.Values["username"]" />
 </div>
 @if (HttpContext.Current.IsDebuggingEnabled)
 {

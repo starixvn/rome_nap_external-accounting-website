@@ -22,7 +22,7 @@ function GameGroupController($scope) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
             // Change game group PT
-            var min = gameGroup.n4;
+            var min = gameGroup.n3;
             var max = gameGroup.s4;
 
             var selected = Math.min(max, newValue);
@@ -43,7 +43,7 @@ function GameGroupController($scope) {
                 for (var i = 0; i < c; i++) {
                     var gameType = $scope.gameGroup.gameTypes[i];
 
-                    min = gameType.n4;
+                    min = gameType.n3;
                     max = gameType.s4;
 
                     // Set warning for s3 if break pt rule
@@ -67,7 +67,7 @@ function GameGroupController($scope) {
         $scope.$watch("setting.is3", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
-            var min = gameGroup.n4;
+            var min = gameGroup.n3;
             var max = gameGroup.s4 - gameGroup.m3 - gameGroup.m2;
             var selected = gameGroup.s3;
 

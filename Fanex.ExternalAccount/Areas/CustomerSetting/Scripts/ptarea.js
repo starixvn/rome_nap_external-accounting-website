@@ -81,6 +81,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 var selected = min;
                 // $ + 'selected' attribute
                 var obj = scope[attrs.ngModel][source];
+                if (!obj) return;
                 obj.min = min;
                 obj.max = max;
                 obj.selected = selected;
@@ -91,7 +92,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             function render() {
                 var obj = scope[attrs.ngModel][source];
 
-                if (obj.pts.length > 1) return;
+                if (!obj || !obj.pts || obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
                 var max = source == "$m3" && scope[attrs.ngModel].is3 ?
@@ -134,8 +135,10 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             }
 
             scope[source + "change"] = function (event, source) {
+                if (!source) return;
                 scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
-                scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
+                if (typeof attrs.warning != 'undefined')
+                    scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
             }
 
             scope[source + "up"] = function (event, source, step, isComm) {
@@ -203,6 +206,18 @@ module.directive('ngFocus', ['$parse', function ($parse) {
         var fn = $parse(attr['ngFocus']);
         element[0].addEventListener = element[0].addEventListener || element[0].attachEvent;
         element[0].addEventListener('focus', function (event) {
+            scope.$apply(function () {
+                fn(scope, { $event: event });
+            });
+        });
+    };
+} ]);
+
+module.directive('ngChange', ['$parse', function ($parse) {
+    return function (scope, element, attr) {
+        var fn = $parse(attr['ngChange']);
+        element[0].addEventListener = element[0].addEventListener || element[0].attachEvent;
+        element[0].addEventListener('change', function (event) {
             scope.$apply(function () {
                 fn(scope, { $event: event });
             });
