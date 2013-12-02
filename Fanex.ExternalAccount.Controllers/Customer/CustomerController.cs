@@ -86,6 +86,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperAddNewMaster()
         {
             return this.PartialViewBase();
@@ -100,6 +101,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -140,6 +142,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -179,6 +182,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterAddNewAgent()
         {
             return this.PartialViewBase();
@@ -193,6 +197,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -233,6 +238,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -272,6 +278,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentAddNewMember()
         {
             return this.PartialViewBase();
@@ -286,6 +293,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
         {
             var context = new RequestContext()
@@ -326,6 +334,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();

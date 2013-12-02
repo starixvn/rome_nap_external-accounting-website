@@ -105,6 +105,14 @@ Fanex.ExtAcc = {
     AutoInsertCount: 0,
     SuggestionXHR: null,
 
+    DecodeHtml: function (str) {
+        return $("<div/>").html(str).text();
+    },
+
+    EncodeHtml: function (str) {
+        return $('<div/>').text(str).html();
+    },
+
     LoadMainIFrame: function (url) {
         this.BlockUI();
 

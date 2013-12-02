@@ -127,8 +127,14 @@ Fanex.ExtAcc.Account = {
                 if (data == -1) {
                     try {
                         if (typeof Fanex.ExtAcc.Form != 'undefined') {
-                            Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
-                                location.href = resolveClientUrl('Account/Login');
+                            if (document.getElementById('windowPopup'))
+                                $('#windowPopup').html('You have logged in from another session or your login session has expired!'); // Prevent opening popup if any
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
+                                    location.href = resolveClientUrl('Account/Login');
+                                }, 1000);
                             });
                         }
                     } catch (e) {
