@@ -63,6 +63,8 @@ Fanex.ExtAcc.Statement = {
             $this.CallSubmit();
         });
 
+        $('#exporttoexcel').hide();
+
         $('#exporttoexcel').click(function () {
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
             document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
@@ -190,6 +192,7 @@ Fanex.ExtAcc.Statement = {
                 //$('#StatementUsername').html(data.username);
 
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
+                $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');

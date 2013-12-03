@@ -217,6 +217,21 @@
       </BetTypeGroupSets>
     </SportType>
 
+    <SportType id="154" name="HR Fixed Odds">
+      <BetTypeGroupSets>
+        <BetTypeGroupSet isLive="false">
+          <BetTypeGroups>
+            <BetTypeGroup>
+              <BetTypes>
+                <BetType id="20" name="Money Line">
+                </BetType>
+              </BetTypes>
+            </BetTypeGroup>
+          </BetTypeGroups>
+        </BetTypeGroupSet>
+      </BetTypeGroupSets>
+    </SportType>
+
     <SportType id="161" name="Number Game" resourcekey="numbergame">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false" showGroupSetLabel="true">

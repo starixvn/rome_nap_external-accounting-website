@@ -912,7 +912,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
 
             var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(
-                this._cache.Get<DataTable>(this._cacheList), 
+                this.CheckVNIP(this._cache.Get<DataTable>(this._cacheList)), 
                 false, 
                 status, 
                 Convert.ToInt32(currentLevel));
@@ -952,45 +952,46 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool? suspended = null)
         {
             string username = Request["username"];
+            int? id = string.IsNullOrWhiteSpace(username) ? null : custId;
             switch (currentLevel)
             {
                 case 4:
                     fileName = "SuperList";
-                    this._cacheList = "CacheList" + groupName + (string.IsNullOrWhiteSpace(username) ? 0 : custId) + enabled + closed + suspended + Request["username"];
+                    this._cacheList = "CacheList" + groupName + id + enabled + closed + suspended + username;
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(custId), null, true) ? new DataTable() :
-                            this._superService.GetData(null, custId, enabled, closed, suspended, groupName));
+                            this._superService.GetData(null, id, enabled, closed, suspended, groupName));
                     }
 
                     break;
                 case 3:
                     fileName = "MasterList";
-                    this._cacheList = "CacheList" + groupName + srecommend + (string.IsNullOrWhiteSpace(username) ? 0 : custId) + enabled + closed + suspended + username;
+                    this._cacheList = "CacheList" + groupName + srecommend + id + enabled + closed + suspended + username;
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(srecommend), null, true) ? new DataTable() :
-                            this._masterService.GetData(srecommend, custId, enabled, closed, suspended));
+                            this._masterService.GetData(srecommend, id, enabled, closed, suspended));
                     }
 
                     break;
                 case 2:
                     fileName = "AgentList";
-                    this._cacheList = "CacheList" + groupName + mrecommend + (string.IsNullOrWhiteSpace(username) ? 0 : custId) + enabled + closed + suspended + username;
+                    this._cacheList = "CacheList" + groupName + mrecommend + id + enabled + closed + suspended + username;
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
-                            this._agentService.GetData(mrecommend, custId, enabled, closed, suspended));
+                            this._agentService.GetData(mrecommend, id, enabled, closed, suspended));
                     }
 
                     break;
                 default:
                     fileName = "MemberList";
-                    this._cacheList = "CacheList" + groupName + recommend + (string.IsNullOrWhiteSpace(username) ? 0 : custId) + enabled + closed + suspended + username;
+                    this._cacheList = "CacheList" + groupName + recommend + id + enabled + closed + suspended + username;
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(recommend), null, true) ? new DataTable() :
-                            this._memberService.GetData(recommend, custId, enabled, closed, suspended));
+                            this._memberService.GetData(recommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1054,19 +1055,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 {
                     case 4:
                         result = !IsBelong(groupName, custId, null, true) ? null : this._superService.GetData(null, custId == 0 ? id : custId, enabled, closed, suspended, groupName);
-                        this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
+                        this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + username;
                         break;
                     case 3:
                         result = !IsBelong(groupName, srecommend, null, true) ? null : this._masterService.GetData(srecommend, custId == 0 ? id : custId, enabled, closed, suspended);
-                        this._cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended + Request["username"];
+                        this._cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended + username;
                         break;
                     case 2:
                         result = !IsBelong(groupName, mrecommend, null, true) ? null : this._agentService.GetData(mrecommend, custId == 0 ? id : custId, enabled, closed, suspended);
-                        this._cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended + Request["username"];
+                        this._cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended + username;
                         break;
                     default:
                         result = !IsBelong(groupName, recommend, null, true) ? null : this._memberService.GetData(recommend, custId == 0 ? id : custId, enabled, closed, suspended);
-                        this._cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended + Request["username"];
+                        this._cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended + username;
                         break;
                 }
             }

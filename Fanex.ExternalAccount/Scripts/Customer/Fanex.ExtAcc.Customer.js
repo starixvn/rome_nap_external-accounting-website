@@ -1128,7 +1128,8 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/SuperListPost');
 
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -1291,7 +1292,8 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -1461,7 +1463,8 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -1631,7 +1634,8 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/MemberListPost');
 
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
