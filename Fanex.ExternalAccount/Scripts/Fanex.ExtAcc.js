@@ -128,7 +128,10 @@ Fanex.ExtAcc = {
 
         $('#contentSplitter').append(iframe);
 
-        this.UnBlockUI();
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            Fanex.ExtAcc.UnBlockUI();
+        }, 2000);
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
@@ -163,14 +166,15 @@ Fanex.ExtAcc = {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
-                                if ($.trim($('#jqgrid').html()) == '') {
+                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading) {
                                     $('#btnSearch').click();
                                 }
                             }, 2000);
                         }
                     }, 100);
                 }
-            }})
+            }
+            })
             .error(function (data) {
                 if (typeof console != undefined)
                     console.log(data.responseText);
