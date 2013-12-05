@@ -3,6 +3,26 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
+Validators.validateName = function (str) {
+    var reg = /^[A-z0-9 ]+$/;
+
+    if (!reg.test(str)) {
+        return false;
+    }
+
+    return true;
+};
+
+Validators.validateKey = function (str) {
+    var reg = /^[A-z0-9]+$/;
+
+    if (!reg.test(str)) {
+        return false;
+    }
+
+    return true;
+};
+
 Validators.validateNumber = function (value) {
     if (value && value != "") {
         value = value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
