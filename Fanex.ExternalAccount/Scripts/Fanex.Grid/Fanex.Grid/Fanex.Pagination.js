@@ -190,7 +190,7 @@
                     //                goto.css("top", "-25px");
                     var gotoOffset = goto.offset();
                     goto.offset({
-                        top: (gotoOffset.top - 25),
+                        top: (offset.top - 25),
                         left: (offset.left + (w - gotow) / 2)
                     });
                 });

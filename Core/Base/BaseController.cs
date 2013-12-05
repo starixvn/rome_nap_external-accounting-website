@@ -207,8 +207,9 @@ namespace Fanex.ExternalAccount.Core.Base
                         cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Logs.Error(ex.Message, "ExternalAccount", ex);
                 }
             }
         }
@@ -234,8 +235,9 @@ namespace Fanex.ExternalAccount.Core.Base
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
             }
         }
 
