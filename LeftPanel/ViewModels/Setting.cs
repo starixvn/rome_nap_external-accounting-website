@@ -19,8 +19,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public Setting()
         {
             this.EnableItems = new List<ObjectInfo>();
-            this.EditItems = new List<ObjectInfo>();
             this.SyncItems = new List<ObjectInfo>();
+            this.EditItems = new List<ObjectInfo>();
             this.Details = new List<ObjectInfo>();
             this.MinMaxPts = new List<ObjectInfo>();
             this.SuperPts = new List<ObjectInfo>();
@@ -29,9 +29,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 
         public List<ObjectInfo> EnableItems { get; set; }
 
-        public List<ObjectInfo> EditItems { get; set; }
-
         public List<ObjectInfo> SyncItems { get; set; }
+
+        public List<ObjectInfo> EditItems { get; set; }
 
         public List<ObjectInfo> Details { get; set; }
 

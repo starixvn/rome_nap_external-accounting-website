@@ -210,16 +210,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
         /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
         {
-            try
-            {
-                return this._casino.GetCustInfoIBC(custid, uplineId);
-            }
-            catch (Exception ex)
-            {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
-
-                return null; // In case of not casino's customer.
-            }
+            return this._casino.GetCustInfoIBC(custid, uplineId);
         }
 
         /// <summary>

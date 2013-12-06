@@ -72,6 +72,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
             Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
             Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+            Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
 
             Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), null, customer.newUserName);
 

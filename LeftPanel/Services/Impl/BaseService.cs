@@ -116,5 +116,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public abstract Result AutoMasterPT(int id, bool allow);
 
         public abstract Result ResetSecurityCode(int id, string code, bool force);
+
+        public abstract Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
     }
 }

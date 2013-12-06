@@ -109,5 +109,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool DisableHRFixedOdds
+        {
+            get;
+            set;
+        }
     }
 }

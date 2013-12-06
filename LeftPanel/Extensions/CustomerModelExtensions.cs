@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -650,6 +651,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel item.</param>
         /// <param name="product">Product statuses.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel UplineStatuses(this CustomerModel model, ProductStatuses product)
         {
             if (!product.UplineStatuses.AllowDoubleComm)
@@ -670,6 +672,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableVirtualSports)
             {
                 model.DisableProduct("EnableVirtualSports");
+            }
+
+            if (product.UplineStatuses.DisableHRFixedOdds)
+            {
+                model.DisableProduct("EnableHRFixedOdds");
             }
 
             if (product.UplineStatuses.DisableBingo)
@@ -863,12 +870,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.Closed = result.Rows[0].ToBoolean("closed");
             product.Suspended = result.Rows[0].ToBoolean("suspended");
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
+            product.DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts =
-                model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || o.Key.ToString() == "Bingo" ||
-                    o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
-
+            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || 
+                o.Key.ToString() == "Bingo" || o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
@@ -886,6 +892,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
+                product.UplineStatuses.DisableHRFixedOdds = upperInfo.Rows[0].ToBoolean("disableHRFixedOdds");
             }
 
             return product;
@@ -897,6 +904,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel object extension.</param>
         /// <param name="tableCustomer">Customer data.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer)
         {
             model.Setting = new Setting
@@ -917,18 +925,22 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
+                            },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             }
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                         },
                 SyncItems = new List<ObjectInfo>
                         {
                             new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
                             new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
                             new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
+                        },
+                EditItems = new List<ObjectInfo>
+                        {
+                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
+                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -978,6 +990,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="tableCustomer">Customer data.</param>
         /// <param name="tableCash">Cash info table.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel MasterSettings(this CustomerModel model, DataTable tableCustomer, DataTable tableCash = null)
         {
             model.Setting = new Setting
@@ -1000,17 +1013,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
                             },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
                             new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
                             new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
                             new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
+                        },
+                EditItems = new List<ObjectInfo>
+                        {
+                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
+                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -1036,6 +1053,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel object extension.</param>
         /// <param name="ds">Customer data.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel AgentSettings(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -1058,17 +1076,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
                             },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
                             new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
                             new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
                             new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
+                        },
+                EditItems = new List<ObjectInfo>
+                        {
+                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
+                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -1094,6 +1116,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel object extension.</param>
         /// <param name="ds">Customer data.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel MemberSettings(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -1117,17 +1140,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
                             },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
                             new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
                             new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
                             new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
+                        },
+                EditItems = new List<ObjectInfo>
+                        {
+                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
+                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                         },
                 Details = new List<ObjectInfo>
                         {
