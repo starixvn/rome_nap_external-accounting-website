@@ -4,6 +4,12 @@
     <table width="100%" border="0" cellpadding="2">
         <tr>
             <td>
+                <div id="errMsg" style="display: none;" class="successMsg">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 @Html.Action("EditCommission", "SportsbookSetting")
                 <div id="commissionContainer">
                 </div>
@@ -15,13 +21,7 @@
                     <input id="btnUpdate" class="buttonPopup" type="button" value="Update" />
                 </div>
             </td>
-        </tr>
-        <tr>
-            <td>
-                <div id="errMsg" style="display: none;" class="successMsg">
-                </div>
-            </td>
-        </tr>
+        </tr>        
     </table>
 </div>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>

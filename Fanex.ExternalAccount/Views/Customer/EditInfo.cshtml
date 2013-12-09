@@ -4,6 +4,12 @@
 <div>
     <table width="100%" border="0" cellpadding="2">
         <tr>
+            <td colspan="4">
+                <div id="errMsg" style="display: none;" class="successMsg">
+                </div>
+            </td>
+        </tr>
+        <tr>
             <td style="text-align: right">
                 @Html.HiddenFor(m => m.CustId) @Html.LabelFor(m => m.FirstName, ViewLang.Firstname, new { @class = "divMargin" })
             </td>
@@ -60,13 +66,7 @@
                     <input class="buttonPopup" type="button" value="Update" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
                 </div>
             </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <div id="errMsg" style="display: none;" class="successMsg">
-                </div>
-            </td>
-        </tr>
+        </tr>        
     </table>
 </div>
 <script type="text/javascript">
