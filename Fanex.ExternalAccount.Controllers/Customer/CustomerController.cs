@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="username">Customer username.</param>
         /// <param name="parentRoleId">Parent role id.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult CheckUsername(string username, int parentRoleId)
         {
             int errCode = 0;
@@ -370,7 +370,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Gets customer list page.
         /// </summary>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult CustomerList()
         {
             return this.PartialViewBase();
@@ -412,7 +412,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// Sets cache list.
         /// </summary>
         /// <param name="result">Customer data.</param>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public void SetCacheList(DataTable result)
         {
             if (result != null)
@@ -431,7 +431,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="username">Customer username.</param>
         /// <param name="isExportExcel">Export excel or not.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SearchListPost(
             string groupName = "ACCDDD", 
             bool? enabled = null, 
@@ -490,7 +490,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperListPost(
             string groupName = "ACCDDD", 
             int? custId = null, 
@@ -517,7 +517,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true) ? new DataTable() :
@@ -564,7 +564,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>        
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() : 
@@ -613,7 +613,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() : 
@@ -657,7 +657,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// </summary>
         /// <param name="ip">IP address.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
             if (IpUtils.IsVnIp(ip) && !this.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read, Request))
@@ -889,7 +889,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetExportToExcel(
             int? currentLevel = null, 
             string groupName = "ACCDDD", 
