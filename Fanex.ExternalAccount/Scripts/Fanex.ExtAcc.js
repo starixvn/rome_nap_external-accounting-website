@@ -227,6 +227,9 @@ Fanex.ExtAcc = {
 
     BlockUI: function () {
         if (!this.BlockedUI) {
+            $(document).scrollTop(0);
+            $('#windowPopup').scrollTop(0);
+            $('#contentSplitter').scrollTop(0);
             $.blockUI({
                 message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
                 onBlock: function () {

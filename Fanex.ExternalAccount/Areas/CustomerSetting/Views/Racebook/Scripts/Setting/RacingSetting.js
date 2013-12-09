@@ -155,6 +155,11 @@
                         ptRacingCommon.renderErrorMessage('err', result);
                     }
                     PTUnBlockUI();
+
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        document.location.reload(true);
+                    }, 2000);
                 }
                 else {
                     if (typeof (result.errorCode) != 'undefined') {
@@ -177,6 +182,11 @@
                         PTUnBlockUI();
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
+
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+                            document.location.reload(true);
+                        }, 2000);
                     }
                 }
             }
@@ -196,6 +206,11 @@
                     $('#divShowInfo').show();
                     showAlertMessage("err", ErrorMessage, 1);
                     PTUnBlockUI();
+
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        document.location.reload(true);
+                    }, 2000);
                 }
                 else {
                     if ($.parseJSON($(response)[0].responseText).errorCode) {
@@ -215,6 +230,11 @@
                         PTUnBlockUI();
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
+
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+                            document.location.reload(true);
+                        }, 2000);
                     }
                 }
             }

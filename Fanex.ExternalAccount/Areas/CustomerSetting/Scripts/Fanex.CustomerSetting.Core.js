@@ -352,6 +352,9 @@ Fanex.CustomerSetting.Core = {
 
     BlockUI: function () {
         if (!this.BlockedUI) {
+            $(document).scrollTop(0);
+            $('#windowPopup').scrollTop(0);
+            $('#contentSplitter').scrollTop(0);
             $.blockUI({
                 message: '<div class="loading"></div>',
                 onBlock: function () {
