@@ -349,7 +349,7 @@ Fanex.ExtAcc = {
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
         $('#leftSplitter').height($('#contentSplitter').height());
-        $('#leftFrame').height($('#contentSplitter').height() - 35);
+        $('#leftFrame').height($('#contentSplitter').height() - 40);
         $('#mainFrame').height($('#contentSplitter').height() - 35);
 
         $('#splitterBar').click(function (event) {
@@ -413,7 +413,7 @@ Fanex.ExtAcc = {
             }
         });
 
-        $('#btnSearchLeftPanel').bind('click', function () {
+        $('#searchPanel').bind('click', function () {
             if (this.SuggestionXHR != null)
                 this.SuggestionXHR.abort();
 
@@ -464,7 +464,7 @@ Fanex.ExtAcc = {
         };
 
         $('#leftSplitter').height($('#contentSplitter').height());
-        $('#leftFrame').height($('#contentSplitter').height() - 30);
+        $('#leftFrame').height($('#contentSplitter').height() - 35);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
         if (document.getElementById('mainIFrame')) {
@@ -509,7 +509,7 @@ Fanex.ExtAcc = {
         }
 
         $('#leftSplitter').height($('#contentSplitter').height() + 5);
-        $('#leftFrame').height($('#contentSplitter').height() - 30);
+        $('#leftFrame').height($('#contentSplitter').height() - 35);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
         if (document.getElementById('tabs-2')) {
