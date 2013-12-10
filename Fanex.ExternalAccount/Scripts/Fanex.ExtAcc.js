@@ -4,6 +4,15 @@ if (typeof Fanex == 'undefined') {
     Fanex = {};
 }
 
+String.prototype.replaceAll = function (args, replace) {
+    var src = this;
+    while (src.indexOf(args) != -1) {
+        src = src.replace(args, replace);
+    }
+
+    return src;
+};
+
 String.prototype.FormatNumber = function (number) {
     number += '';
 
@@ -392,7 +401,7 @@ Fanex.ExtAcc = {
                     this.SuggestionXHR.abort();
 
                 Fanex.ExtAcc.BlockUI();
-                var username = $.trim(this.value.encodeHtml());
+                var username = this.value.formatString();
                 this.value = '';
 
                 $('.ui-autocomplete').hide();
@@ -418,7 +427,7 @@ Fanex.ExtAcc = {
                 this.SuggestionXHR.abort();
 
             Fanex.ExtAcc.BlockUI();
-            var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
+            var username = $('#txtLeftPanelUserName').val().toString().formatString();
             $('#txtLeftPanelUserName').val('');
 
             $('.ui-autocomplete').hide();
@@ -442,6 +451,7 @@ Fanex.ExtAcc = {
     ViewUser: function (username, pageIndex) {
         this.BlockUI();
 
+        username = username.formatString();
         $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html() + '/' + pageIndex));
 
         $('#leftFrame').ready(function () {
@@ -828,6 +838,12 @@ String.prototype.toFixed = function (precision, optionals) {
     }
 
     return output;
+};
+
+String.prototype.formatString = function () {
+    var src = this;
+
+    return src.search(/^[<\s\s*>]/) == -1 ? src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '') : '';
 };
 
 $(document).ready(function () {
