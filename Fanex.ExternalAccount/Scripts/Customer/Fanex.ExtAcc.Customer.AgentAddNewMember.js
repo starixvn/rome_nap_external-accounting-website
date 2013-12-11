@@ -76,6 +76,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
+                Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
             }
             else {
                 $("#textBoxDiscountAsian").val(commission.discount);
@@ -83,6 +84,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
+                Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
 
                 $this.currentStatusClose = customer.statusSetting.closed;
                 $this.currentStatusSuspend = customer.statusSetting.suspended;
@@ -119,6 +121,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     customer.commissionSetting.playerDiscount1x2 = $("#discount1x2").val();
                     customer.commissionSetting.playerDiscountCs = $("#discountCS").val();
                     customer.commissionSetting.playerDiscountNumber = $("#discountNumber").val();
+                    customer.commissionSetting.playerDiscountHRFixedOdds = $("#discountHRFixedOdds").val();
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                     // EscapeHTML String

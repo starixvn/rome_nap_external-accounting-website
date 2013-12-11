@@ -69,13 +69,21 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.UserPwd = Utils.ToString(row["userpwd"]);
                 customerDetail.UpperCustID = uplineId;
                 customerDetail.IsEnablePT = true;
-                CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
-                DataTable dt = !customerDetail.CasinoSync ? null : customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, uplineId == 0);
-                if (customerDetail.RoleId != 4 && dt != null && dt.Rows.Count > 0)
+
+                try
                 {
-                    customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxLimit"]);
-                    customerDetail.MinTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MinLimit"]);
-                    customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["DefMaxTransferCredit"]);
+                    CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
+                    DataTable dt = !customerDetail.CasinoSync ? null : customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, uplineId == 0);
+                    if (customerDetail.RoleId != 4 && dt != null && dt.Rows.Count > 0)
+                    {
+                        customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxLimit"]);
+                        customerDetail.MinTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MinLimit"]);
+                        customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["DefMaxTransferCredit"]);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    Logs.Error(ex.Message, "ExternalAccount", ex);
                 }
 
                 customerDetail.NoIBCData = false;

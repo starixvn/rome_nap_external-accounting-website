@@ -152,7 +152,14 @@
                         showAlertMessage("err", result.errorMessage, 1);
                     }
                     else {
-                        ptRacingCommon.renderErrorMessage('err', result);
+                        customerPTRacingSetting.Success = ptRacingCommon.renderErrorMessage('err', result);
+
+                        if (customerPTRacingSetting.Success) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                document.location.reload(true);
+                            }, 2000);
+                        }
                     }
                     PTUnBlockUI();
                 }
@@ -175,6 +182,14 @@
                         $('#divShowInfo').show();
                         showAlertMessage("err", customerPTRacingSetting.Error, (customerPTRacingSetting.Success ? 0 : 1));
                         PTUnBlockUI();
+
+                        if (customerPTRacingSetting.Success) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                document.location.reload(true);
+                            }, 2000);
+                        }
+
                         customerPTRacingSetting.Error = '';
                         customerPTRacingSetting.Success = true;
                     }

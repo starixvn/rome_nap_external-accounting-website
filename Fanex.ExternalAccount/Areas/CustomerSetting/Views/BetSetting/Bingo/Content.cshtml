@@ -76,7 +76,7 @@
             </td>
         </tr>
     </table>
-    <div style="text-align: right" data-ng-hide="model.result.errorCode != 0" >
+    <div style="text-align: right" data-ng-hide="model == null || model.result.errorCode != 0" >
         <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>

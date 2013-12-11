@@ -1,4 +1,15 @@
 ﻿@using Fanex.PTEngine
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@{
+    var SyncCasino = ViewBag.SyncCasino;
+    var SyncBingo = ViewBag.SyncBingo;
+    var SyncLiveCasino = ViewBag.SyncLiveCasino;
+    var DisableP2P = ViewBag.DisableP2P;
+    var HideVirtualSports = ViewBag.HideVirtualSports;
+    var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports };
+    var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
+}
 <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />    
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
@@ -49,6 +60,8 @@
         Fanex.ExtAcc.Customer = {};
     }
 
+    var custStatus = $.parseJSON(Fanex.ExtAcc.DecodeHtml('@statusJSON'));
+    
     Fanex.ExtAcc.Customer.CurrentLevel = '@ViewBag.CurrentLevel';
     Fanex.ExtAcc.Customer.IsMultiple = false;
     Fanex.ExtAcc.Customer.UserId = '@ViewBag.UserId';
@@ -56,11 +69,11 @@
     Fanex.ExtAcc.Customer.Agent = 2;
     Fanex.ExtAcc.Customer.Member = 1;
     Fanex.ExtAcc.Customer.superId = Fanex.ExtAcc.Customer.masterId = Fanex.ExtAcc.Customer.agentId = '@ViewBag.UplineId';
-    Fanex.ExtAcc.Customer.SyncCasino = '@ViewBag.SyncCasino';
-    Fanex.ExtAcc.Customer.SyncBingo = '@ViewBag.SyncBingo';
-    Fanex.ExtAcc.Customer.SyncLiveCasino = '@ViewBag.SyncLiveCasino';
-    Fanex.ExtAcc.Customer.DisableP2P = '@ViewBag.DisableP2P';
-    Fanex.ExtAcc.Customer.HideVirtualSports = '@ViewBag.HideVirtualSports';
+    Fanex.ExtAcc.Customer.SyncCasino = custStatus.syncCasino;
+    Fanex.ExtAcc.Customer.SyncBingo = custStatus.syncBingo;
+    Fanex.ExtAcc.Customer.SyncLiveCasino = custStatus.syncLiveCasino;
+    Fanex.ExtAcc.Customer.DisableP2P = custStatus.disableP2P;
+    Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 

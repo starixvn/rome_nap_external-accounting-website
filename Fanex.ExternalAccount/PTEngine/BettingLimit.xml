@@ -92,6 +92,16 @@
       <MaxPerMatchMax></MaxPerMatchMax>
     </BettingLimitItem>
 
+    <BettingLimitItem id="154" name="HR Fixed Odds" key="HR Fixed Odds" resourcekey="HRFixedOdds">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+
     <BettingLimitItem id="161" name="Number Game" key="Number Game" resourcekey="numbergame">
       <MinBet></MinBet>
       <MaxBet></MaxBet>

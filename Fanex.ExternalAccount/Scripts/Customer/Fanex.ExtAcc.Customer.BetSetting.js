@@ -131,7 +131,8 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
                             parentId: Fanex.ExtAcc.Customer.masterId,
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
                         };
                     }
 
@@ -206,7 +207,8 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         var para = {
                             custId: Fanex.ExtAcc.Customer.UserId,
                             parentId: Fanex.ExtAcc.Customer.agentId,
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName
                         };
                     }
 

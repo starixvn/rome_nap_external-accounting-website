@@ -106,12 +106,13 @@
         <div id='mainContent'>
             <div id="mainSplitter">
                 <div class="splitter-panel" id="leftSplitter">
-                    <div style="float: left" id="search" class="search">
+                    <div id="search" class="search searchLeftPanel">
                         <div style="float: left">
-                            <input class="usernameInput" style="height: 19px; padding-top: 2px; margin: 1px" maxlength="50" id="txtLeftPanelUserName" type="text" autocomplete="off" /></div>
-                        <div style="float: left">
-                            <input style="padding: 0; margin: 0" class="buttonPopup" id="btnSearchLeftPanel" type="button" value="Search" /></div>
+                            <input placeholder="username" class="searchButton usernameInput" style="height: 19px;" maxlength="50" id="txtLeftPanelUserName" type="text" autocomplete="off" /></div>                        
+                        <div class="btnSearchPanel" id="searchPanel" title="Search"></div>
                     </div>
+                    <div style="height: 1px; background-color: #ccc; margin-top: 3px">                            
+                        </div>
                     <div>
                         <iframe id="leftFrame" width="100%" frameborder="0" style="overflow: auto">
                         </iframe>

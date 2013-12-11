@@ -3,6 +3,120 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
+Validators.validateName = function (str) {
+    var reg = /^[A-z0-9 ]+$/;
+
+    if (!reg.test(str)) {
+        return false;
+    }
+
+    return true;
+};
+
+Validators.validateKey = function (str) {
+    var reg = /^[A-z0-9]+$/;
+
+    if (!reg.test(str)) {
+        return false;
+    }
+
+    return true;
+};
+
+Validators.validateNumber = function (value) {
+    if (value && value != "") {
+        value = value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        var intRegex = /^\d+$/;
+
+        if (!intRegex.test(value)) {
+            return false;
+        }
+
+        return true;
+    } else {
+        return false;
+    }
+};
+
+Validators.validateInput = function (value) {
+    if (value && value != "") {
+        value = value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+
+        if (value != "")
+            return true;
+
+        return false;
+    }
+
+    return false;
+};
+
+Validators.showDown = function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
+    // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
+    var hint = document.getElementById('fHintDown');
+    var hintPointer = null;
+    if (hint == null) {
+        var hint = document.createElement("SPAN");
+        hint.className = 'hint';
+        var hintMsg = document.createElement("SPAN");
+        hint.appendChild(hintMsg);
+        hintPointer = document.createElement("SPAN");
+        hintPointer.className = 'hint-pointer-down';
+        hint.appendChild(hintPointer);
+        hint.id = 'fHintDown';
+        hint.style.top = '10px';
+        hint.style.left = '10px';
+        hint.style.zIndex = 999999;
+        hint.onclick = function () { // Hide onclick
+            hint.style.display = 'none';
+        };
+        document.body.appendChild(hint);
+    };
+    hintPointer = hint.lastChild;
+    hint.firstChild.innerHTML = message;
+    if (this.timeOutHideTooltip) {
+        clearTimeout(this.timeOutHideTooltip);
+        this.timeOutHideTooltip = null;
+    };
+    if (typeof (timeout) == 'undefined') {
+        timeout = 1000;
+    }
+    this.timeOutHideTooltip = setTimeout(function () {
+        if (hint == null) {
+            return;
+        }
+        hint.style.display = 'none';
+    }, timeout); // Auto hide in 1s
+    if (elementInput != null) {
+        if (typeof xPos == 'undefined') {
+            xPos = 0;
+        }
+        if (typeof pointerXPos == 'undefined') {
+            pointerXPos = 10;
+        }
+        if (typeof yPos == 'undefined') {
+            yPos = -45;
+        }
+        if (typeof (pointerYPos) == 'undefined') {
+            pointerYPos = 38;
+        }
+        if (typeof (height) == 'undefined') {
+            height = 18;
+        }
+        hint.style.height = height + 'px';
+        hintPointer.style.left = (pointerXPos + 'px');
+        hintPointer.style.top = (pointerYPos + 'px');
+        var pos = Validators.utils.findPosRelativeToViewport(elementInput);
+        hint.style.left = (pos[0] + xPos) + 'px';
+        hint.style.top = (pos[1] + yPos) + 'px';
+        elementInput.onchange = function () {
+            hint.style.display = 'none';
+        };
+        elementInput.focus();
+    };
+    hint.style.display = 'block';
+};
+
 Fanex.ExtAcc.Group = {
     DataFields: null,
 

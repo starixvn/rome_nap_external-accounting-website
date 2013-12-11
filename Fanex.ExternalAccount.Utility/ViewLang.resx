@@ -808,4 +808,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="UpdatedSuccessfully" xml:space="preserve">
     <value>Updated successfully</value>
   </data>
+  <data name="HRFixedOdds" xml:space="preserve">
+    <value>HR Fixed Odds</value>
+  </data>
 </root>

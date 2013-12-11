@@ -207,8 +207,9 @@ namespace Fanex.ExternalAccount.Core.Base
                         cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Logs.Error(ex.Message, "ExternalAccount", ex);
                 }
             }
         }
@@ -234,8 +235,9 @@ namespace Fanex.ExternalAccount.Core.Base
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
             }
         }
 
@@ -335,24 +337,27 @@ namespace Fanex.ExternalAccount.Core.Base
         /// Checks and remove IPVN if admin does not have ViewVNIP permission.
         /// </summary>
         /// <param name="table">DataTable customer.</param>
+        /// <param name="ipFieldName">Field name contains IP address.</param>
         /// <returns>DataTable object.</returns>
-        protected DataTable CheckVNIP(DataTable table)
+        protected DataTable CheckVNIP(DataTable table, string ipFieldName = null)
         {
-            if (object.ReferenceEquals(null, table) || table.Rows.Count == 0)
+            string fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
+            if (object.ReferenceEquals(null, table) || table.Rows.Count == 0 || !table.Columns.Contains(fieldName))
             {
                 return table;
             }
-
+                        
             foreach (DataRow row in table.Rows)
             {
-                if (string.IsNullOrWhiteSpace(row.ToString("lastloginip")) || !IpUtils.IsVnIp(row.ToString("lastloginip")))
+                string ip = row.ToString(fieldName);
+                if (string.IsNullOrWhiteSpace(ip) || !IpUtils.IsVnIp(ip))
                 {
                     continue;
                 }
 
                 if (!this.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read, Request))
                 {
-                    row["lastloginip"] = string.Empty;
+                    row[fieldName] = string.Empty;
                 }
             }
 

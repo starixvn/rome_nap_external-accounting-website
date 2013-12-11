@@ -522,6 +522,36 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
+        /// Enables HR Fixed Odds.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-line or not.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableHRFixedOdds(int id, bool enable, bool enableDownline)
+        {
+            Hashtable param = new Hashtable();
+            param.Add("userid", CurrentSession.Instance.UserId);
+            param.Add("custid", id);
+            param.Add("disablehrfixedodds", !enable);
+            param.Add("enabledownlineshrfixedodds", enableDownline);
+            param.Add("language", "E");
+            param.Add("ip", CurrentContext.Instance.Ip4Address);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableHRFixedOdds", 120))
+            {
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+                var errorCode = Utils.ToString(db.GetParameterValue("errcode"));
+                var errorMessage = Utils.ToString(db.GetParameterValue("errmsg"));
+
+                return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+            }
+        }
+
+        /// <summary>
         /// Gets master used credit.
         /// </summary>
         /// <param name="custId">Customer id.</param>
@@ -606,6 +636,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
-        }        
+        }
     }
 }

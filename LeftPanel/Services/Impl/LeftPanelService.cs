@@ -200,5 +200,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.ResetSecurityCode(id, code, force);
         }
+
+        public override Result EnableHRFixedOdds(int id, bool enable, bool enableDownline)
+        {
+            return this._data.EnableHRFixedOdds(id, enable, enableDownline);
+        }
     }
 }

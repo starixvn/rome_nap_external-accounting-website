@@ -101,6 +101,7 @@
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />    
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode_xtest" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
@@ -200,14 +201,12 @@
     <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Racing Setting">
-    <!--<Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="DBAGE.bodb02.bodbExtAccNet"  />-->
     <Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="DBAGE.bodb02.bodbExtAccNet"  />
 
-    <!--<Setting Key="Acc_CustomerUpdSuperHR_All" SpName="Acc_CustomerUpdSuperHR_All" DbName="DBTXN.bodb02.bodbExtAccNet"  />-->
     <Setting Key="Acc_CustomerUpdMasterHR_All" SpName="Acc_CustomerUpdMasterHR_All" DbName="DBTXN.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerUpdAgentHR_All" SpName="Acc_CustomerUpdAgentHR_All" DbName="DBTXN.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerUpdMemberHR_All" SpName="Acc_CustomerUpdMemberHR_All" DbName="DBTXN.bodb02.bodbExtAccNet"  />
@@ -223,7 +222,6 @@
   </Function>
   <Function Name="Bingo Setting">
     <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBTXN.bodb02.bodbExtAccNet"/>
-    <!--Third party-->
     <Setting Key="BG_Acc_MT_GetBingoPT" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1"  />
     <Setting Key="BG_TP_User_CustSetting_GetCustSetting" SpName="TP_User_CustSetting_GetCustSetting" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_User_CustSetting_GetDefaultMaxTransfer" SpName="TP_User_CustSetting_GetDefaultMaxTransfer" DbName="CS_LBBackupDB" Plain="1" />

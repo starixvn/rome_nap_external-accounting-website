@@ -55,6 +55,7 @@ Fanex.ExtAcc.Customer = {
     Closed: false,
     Suspended: false,
     TransferCondition: false,
+    IsLoading: false,
 
     URL: '',
     MultipleDblCommError: '',
@@ -67,6 +68,10 @@ Fanex.ExtAcc.Customer = {
     MessageUnSuspended: 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.',
 
     Init: function () {
+        if (this.IsLoading)
+            return;
+
+        this.IsLoading = true;
         //Prevent loading group name
         var timeout = setInterval(function () {
             if ($.trim($('#selectedGroupName').html()) != '') {
@@ -145,12 +150,13 @@ Fanex.ExtAcc.Customer = {
         data.srecommend = this.superId;
         data.mrecommend = this.masterId;
         data.recommend = this.agentId;
-        data.custId = null;
         data.groupName = $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html();
         data.enabled = enabled;
         data.closed = closed;
         data.suspended = suspended;
         data.username = Fanex.encodeHtml($('#txtUserName').val());
+        data.roleId = this.CurrentLevel;
+        data.custId = data.username == '' ? null : this.UserId;
 
         return data;
     },
@@ -318,7 +324,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 450, false, false, 1);
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 490, false, false, 1);
                 }
             },
             commission: {
@@ -327,7 +333,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 225, false, false, 1);
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 250, false, false, 1);
                 }
             },
             separator: "-----",
@@ -585,7 +591,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 450, false, false, 1);
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 490, false, false, 1);
                 }
             },
             commission: {
@@ -594,7 +600,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 225, false, false, 1);
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 250, false, false, 1);
                 }
             },
             separator: "-----",
@@ -858,7 +864,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 450, false, false, 1);
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 490, false, false, 1);
                 }
             },
             commission: {
@@ -867,7 +873,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionMemberDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 305, false, false, 1);
+                    Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionMemberDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 350, false, false, 1);
                 }
             },
             separator: "-----",
@@ -1127,7 +1133,8 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/SuperListPost');
 
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -1267,12 +1274,12 @@ Fanex.ExtAcc.Customer = {
                 dataType: 'json',
                 type: 'post'
             })
-                .success(function (result) {
-                    Fanex.ExtAcc.Customer.RenderSuperList(result);
-                })
-                .error(function (xhr, status, err) {
-                    Fanex.ExtAcc.UnBlockUI();
-                });
+            .success(function (result) {
+                Fanex.ExtAcc.Customer.RenderSuperList(result);
+            })
+            .error(function (xhr, status, err) {
+                Fanex.ExtAcc.UnBlockUI();
+            });
         }
     },
 
@@ -1290,7 +1297,8 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/MasterListPost');
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -1460,7 +1468,8 @@ Fanex.ExtAcc.Customer = {
 
         var url = resolveClientUrl('Customer/AgentListPost');
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -1630,7 +1639,8 @@ Fanex.ExtAcc.Customer = {
         var url = resolveClientUrl('Customer/MemberListPost');
 
         var data = this.GetParams();
-        data.custId = this.custId = custId == 'undefined' ? null : custId;
+        this.custId = custId == 'undefined' ? null : custId;
+        data.custId = data.username == '' ? null : custId;
 
         if (custId == undefined) {
             this.directSuperId = null;
@@ -2086,7 +2096,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     SearchList: function () {
-        if ($('#txtUserName').val() == '') {
+        if ($('#txtUserName').val() == '' && this.CurrentLevel == this.Super) {
             this.GetSuperList();
         } else {
             this.GetSearchList();
@@ -2106,49 +2116,48 @@ Fanex.ExtAcc.Customer = {
             dataType: 'json',
             type: 'post'
         })
-            .success(function (result) {
-                var rows = $.parseJSON(result.rows);
-                var options = null;
-                var bodyRows = [];
+        .success(function (result) {
+            var rows = $.parseJSON(result.rows);
+            var options = null;
+            var bodyRows = [];
 
-                Fanex.ExtAcc.Customer.DataSource = rows;
+            Fanex.ExtAcc.Customer.DataSource = rows;
 
-                if (result.roleId != 0 && rows.length > 0) {
-                    var custId = rows[0].custid;
+            if (result.roleId != 0 && rows.length > 0) {
+                var custId = rows[0].custid;
 
-                    Fanex.ExtAcc.Customer.directSuperId = result.srecommend;
-                    Fanex.ExtAcc.Customer.directMasterId = result.mrecommend;
-                    Fanex.ExtAcc.Customer.directAgentId = result.recommend;
-                    Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
-                    Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
+                Fanex.ExtAcc.Customer.directSuperId = result.srecommend;
+                Fanex.ExtAcc.Customer.directMasterId = result.mrecommend;
+                Fanex.ExtAcc.Customer.directAgentId = result.recommend;
+                Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
+                Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
 
-                    if (result.roleId == 4) {
-                        Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
-                    } else if (result.roleId == 3) {
-                        Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
-                        Fanex.ExtAcc.Customer.superSyncBingo = result.syncBingo;
-                        Fanex.ExtAcc.Customer.superSyncLiveCasino = result.syncLiveCasino;
-                        Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
-                    } else if (result.roleId == 2) {
-                        Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
-                        Fanex.ExtAcc.Customer.masterSyncBingo = result.syncBingo;
-                        Fanex.ExtAcc.Customer.masterSyncLiveCasino = result.syncLiveCasino;
-                        Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
-                    } else {
-                        Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
-                        Fanex.ExtAcc.Customer.agentSyncBingo = result.syncBingo;
-                        Fanex.ExtAcc.Customer.agentSyncLiveCasino = result.syncLiveCasino;
-                        Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
-                    }
+                if (result.roleId == 4) {
+                    Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
+                } else if (result.roleId == 3) {
+                    Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
+                    Fanex.ExtAcc.Customer.superSyncBingo = result.syncBingo;
+                    Fanex.ExtAcc.Customer.superSyncLiveCasino = result.syncLiveCasino;
+                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
+                } else if (result.roleId == 2) {
+                    Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
+                    Fanex.ExtAcc.Customer.masterSyncBingo = result.syncBingo;
+                    Fanex.ExtAcc.Customer.masterSyncLiveCasino = result.syncLiveCasino;
+                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
                 } else {
-                    $('#msgNoinfo').css('display', 'block');
-                    $('#jqgrid').css('display', 'none');
-                    $('#exporttoexcel').css('display', 'none');
-                    $('#breadcrumbs').css('display', 'none');
-
-                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
+                    Fanex.ExtAcc.Customer.agentSyncBingo = result.syncBingo;
+                    Fanex.ExtAcc.Customer.agentSyncLiveCasino = result.syncLiveCasino;
+                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
                 }
-            });
+            } else {
+                $('#msgNoinfo').css('display', 'block');
+                $('#jqgrid').css('display', 'none');
+                $('#exporttoexcel').css('display', 'none');
+
+                Fanex.ExtAcc.UnBlockUI();
+            }
+        });
     },
 
     RenderSuperList: function (dataSource) {
@@ -2312,6 +2321,8 @@ Fanex.ExtAcc.Customer = {
                 $("#jqgrid").fanexGrid("resizeGrid");
             } catch (err) { }
         }
+
+        this.IsLoading = false;
     },
 
     RenderMasterList: function (dataSource) {
@@ -2919,7 +2930,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            if(!this.HideVirtualSports){
+            if (!this.HideVirtualSports) {
                 menuItems.virtualSport = {
                     name: "Edit Multiple Virtual Sports",
                     className: "iconEnableEdit",
@@ -3182,7 +3193,7 @@ Fanex.ExtAcc.Customer = {
                     }
                 };
                 menuItems.separate6 = "------";
-            }            
+            }
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {

@@ -6,6 +6,8 @@
     var subFuncs = (IEnumerable<Function>)ViewBag.UserSubFunc;
 }
 <div style="height: 25px; font-weight: bold;">@ViewLang.Username: <font color="#4b91be">@ViewBag.Username</font></div>
+<div id="errMsg" style="margin: 5px 0px 30px 0px; display: none;" class="successMsg">
+</div>
 <table id="tblInner" style="width: 100%">
     <tr>
         <th rowspan="2">
@@ -191,7 +193,5 @@
 </table>
 <div style="float: right; margin: 5px 0px 30px 0px">
     <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.UserPolicy.SaveUserPolicy()" />
-</div>
-<div id="errMsg" style="margin: 5px 0px 30px 0px; display: none;" class="successMsg">
 </div>
 <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.UserPolicy.js")" type="text/javascript"></script>

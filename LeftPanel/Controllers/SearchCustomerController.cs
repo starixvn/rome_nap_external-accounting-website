@@ -41,7 +41,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Upper id of customer.</param>
         /// <param name="pageIndex">Current page index.</param>
         /// <returns>View contains customer model.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageCustomer, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
@@ -570,6 +570,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             Result result = this._service.ResetSecurityCode(id, hashCode, force);
+            return this.JsonBase(result);
+        }
+
+        /// <summary>
+        /// Updates enable status of HR Fixed Odds.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-line or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableHRFixedOdds, Policy = AuthenticateAction.AuthenticationType.Host)]
+        public ActionResult UpdateHRFixedOdds(int id, bool enable, bool enableDownline)
+        {
+            if (!this.IsBelong(Request["groupName"], id, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
+            Result result = this._service.EnableHRFixedOdds(id, enable, enableDownline);
+
             return this.JsonBase(result);
         }
     }

@@ -4,6 +4,15 @@ if (typeof Fanex == 'undefined') {
     Fanex = {};
 }
 
+String.prototype.replaceAll = function (args, replace) {
+    var src = this;
+    while (src.indexOf(args) != -1) {
+        src = src.replace(args, replace);
+    }
+
+    return src;
+};
+
 String.prototype.FormatNumber = function (number) {
     number += '';
 
@@ -105,6 +114,14 @@ Fanex.ExtAcc = {
     AutoInsertCount: 0,
     SuggestionXHR: null,
 
+    DecodeHtml: function (str) {
+        return $("<div/>").html(str).text();
+    },
+
+    EncodeHtml: function (str) {
+        return $('<div/>').text(str).html();
+    },
+
     LoadMainIFrame: function (url) {
         this.BlockUI();
 
@@ -120,12 +137,13 @@ Fanex.ExtAcc = {
 
         $('#contentSplitter').append(iframe);
 
-        this.UnBlockUI();
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            Fanex.ExtAcc.UnBlockUI();
+        }, 2000);
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
-        this.BlockUI();
-
         if (typeof id != 'undefined') {
             $('#' + id).hide();
         }
@@ -157,15 +175,13 @@ Fanex.ExtAcc = {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
-                                if ($.trim($('#jqgrid').html()) == '') {
+                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading) {
                                     $('#btnSearch').click();
                                 }
                             }, 2000);
                         }
                     }, 100);
                 }
-
-                Fanex.ExtAcc.UnBlockUI();
             }
             })
             .error(function (data) {
@@ -220,6 +236,9 @@ Fanex.ExtAcc = {
 
     BlockUI: function () {
         if (!this.BlockedUI) {
+            $(document).scrollTop(0);
+            $('#windowPopup').scrollTop(0);
+            $('#contentSplitter').scrollTop(0);
             $.blockUI({
                 message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
                 onBlock: function () {
@@ -339,7 +358,7 @@ Fanex.ExtAcc = {
         $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
         $('#leftSplitter').height($('#contentSplitter').height());
-        $('#leftFrame').height($('#contentSplitter').height() - 35);
+        $('#leftFrame').height($('#contentSplitter').height() - 40);
         $('#mainFrame').height($('#contentSplitter').height() - 35);
 
         $('#splitterBar').click(function (event) {
@@ -382,7 +401,7 @@ Fanex.ExtAcc = {
                     this.SuggestionXHR.abort();
 
                 Fanex.ExtAcc.BlockUI();
-                var username = $.trim(this.value.encodeHtml());
+                var username = this.value.formatString();
                 this.value = '';
 
                 $('.ui-autocomplete').hide();
@@ -403,12 +422,12 @@ Fanex.ExtAcc = {
             }
         });
 
-        $('#btnSearchLeftPanel').bind('click', function () {
+        $('#searchPanel').bind('click', function () {
             if (this.SuggestionXHR != null)
                 this.SuggestionXHR.abort();
 
             Fanex.ExtAcc.BlockUI();
-            var username = $.trim($('#txtLeftPanelUserName').val().toString().encodeHtml());
+            var username = $('#txtLeftPanelUserName').val().toString().formatString();
             $('#txtLeftPanelUserName').val('');
 
             $('.ui-autocomplete').hide();
@@ -432,6 +451,7 @@ Fanex.ExtAcc = {
     ViewUser: function (username, pageIndex) {
         this.BlockUI();
 
+        username = username.formatString();
         $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index/' + (username == '' ? "''" : username) + '/' + $('#selectedGroupName').html() + '/' + pageIndex));
 
         $('#leftFrame').ready(function () {
@@ -454,7 +474,7 @@ Fanex.ExtAcc = {
         };
 
         $('#leftSplitter').height($('#contentSplitter').height());
-        $('#leftFrame').height($('#contentSplitter').height() - 30);
+        $('#leftFrame').height($('#contentSplitter').height() - 35);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
         if (document.getElementById('mainIFrame')) {
@@ -499,7 +519,7 @@ Fanex.ExtAcc = {
         }
 
         $('#leftSplitter').height($('#contentSplitter').height() + 5);
-        $('#leftFrame').height($('#contentSplitter').height() - 30);
+        $('#leftFrame').height($('#contentSplitter').height() - 35);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
         if (document.getElementById('tabs-2')) {
@@ -818,6 +838,12 @@ String.prototype.toFixed = function (precision, optionals) {
     }
 
     return output;
+};
+
+String.prototype.formatString = function () {
+    var src = this;
+
+    return src.search(/^[<\s\s*>]/) == -1 ? src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '') : '';
 };
 
 $(document).ready(function () {

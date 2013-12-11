@@ -6,6 +6,7 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.LiveCasino = function ($scope, $element) {
     $scope.model = model;
+    $scope.allUnchecked = false;
 
     if (!model)
         return;
@@ -14,26 +15,25 @@ Fanex.CustomerSetting.Betting.LiveCasino = function ($scope, $element) {
 
     $scope.ChangeLimit = function (scope) {
         var gameTypes = scope.gameTypes;
-        var allUnchecked = true;
+        $scope.allUnchecked = false;
 
         for (var i = 0; i < gameTypes.length; i++) {
             var bettings = gameTypes[i].bettingLimit;
+            var uncheckCount = 0;
 
-            if (scope.gameType.id == gameTypes[i].id) {
-                for (var j = 0; j < bettings.length; j++) {
-                    if (bettings[j].isSelected) {
-                        allUnchecked = false;
-                        break;
-                    }
+            for (var j = 0; j < bettings.length; j++) {
+                if (!bettings[j].isSelected) {
+                    ++uncheckCount;
                 }
+            }
 
-                if (!allUnchecked) {
-                    break;
-                }
+            if (uncheckCount == bettings.length) {
+                $scope.allUnchecked = true;
+                break;
             }
         }
 
-        if (allUnchecked) {
+        if ($scope.allUnchecked) {
             $('#warningMsg').show();
         }
         else {
