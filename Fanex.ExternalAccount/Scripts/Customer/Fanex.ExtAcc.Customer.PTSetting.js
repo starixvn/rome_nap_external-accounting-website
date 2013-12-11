@@ -1088,7 +1088,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             checkBox.setAttribute('id', 'bettingLimit' + i);
             checkBox.onclick = function (event) {
                 var item = this.id.toString();
-                var id = item.substring(12, 13);
+                var id = item.substring(12);
                 if (this.checked) {
                     reEnableChildren(items[id].element, 0);
                 }
@@ -1151,6 +1151,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         var j = 0;
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
+            var doc = document.getElementById('ptContainer');
 
             for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.ptGrid.items.length; i++) {
                 var checkBox = document.createElement('input');
@@ -1160,7 +1161,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 checkBox.onclick = function (event) {
                     var items = Fanex.ExtAcc.Customer.PTSetting.ptGrid.items;
                     var item = this.id.toString();
-                    var id = item.substring(14, 15);
+                    var id = item.substring(14);
 
                     if (this.checked) {
                         disableSportType(id, false);
@@ -1213,9 +1214,12 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         event.stopPropagation();
                     }
                 }
-                var doc = document.getElementById('ptContainer');
 
-                doc.childNodes[1].childNodes[j].childNodes[0].insertBefore(checkBox, doc.childNodes[1].childNodes[j].childNodes[0].firstChild);
+                if (doc.childNodes[0].childNodes[j])
+                    doc.childNodes[0].childNodes[j].childNodes[0].insertBefore(checkBox, doc.childNodes[0].childNodes[j].childNodes[0].firstChild);
+                else
+                    doc.childNodes[1].childNodes[j].childNodes[0].insertBefore(checkBox, doc.childNodes[1].childNodes[j].childNodes[0].firstChild);
+
                 j += 2;
             }
         }, 2000);
