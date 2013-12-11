@@ -1201,62 +1201,64 @@ function SettingController($scope, $http) {
             };
 
     $scope.Outright = function (allow, id) {
-            var title = '';
-            var message = allow ? 'Are you sure you want to change Outright status for this customer? Warning, all members under this agent can\'t place Outright bet!' : 'Are you sure you want to change Outright status for this customer?';
-            title = allow ? ('Disallow Outright: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>') : ('Allow Outright: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>');                    
-            parent.Fanex.ExtAcc.Form.ConfirmBox(title,
-            message,
-            480,
-            150,
-            false,
-            function () {
-                parent.Fanex.ExtAcc.BlockUI();
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var title = '';
+        var subtitle = roleId == 1 ? 'Warning, this member can\'t place Outright bet!' : 'Warning, all members under this agent can\'t place Outright bet!';
+        var message = allow ? 'Are you sure you want to change Outright status for this customer? ' + subtitle : 'Are you sure you want to change Outright status for this customer?';
+        title = allow ? ('Disallow Outright: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>') : ('Allow Outright: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>');
+        parent.Fanex.ExtAcc.Form.ConfirmBox(title,
+        message,
+        480,
+        150,
+        false,
+        function () {
+            parent.Fanex.ExtAcc.BlockUI();
 
-                $.ajax({
-                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateOutright'),
-                    dataType: 'json',
-                    type: 'post',
-                    data: {
-                        custId: $scope.model.personalInfo.custId.value,
-                        allow: !allow,
-                        groupName: parent.$('#selectedGroupName').html()
-                    }
-                })
-                .success(function (result) {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                    if (result.isSuccess) {
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
-                            parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
-                        }, 2000);
-                    }
-                    else {
+            $.ajax({
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateOutright'),
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    custId: $scope.model.personalInfo.custId.value,
+                    allow: !allow,
+                    groupName: parent.$('#selectedGroupName').html()
+                }
+            })
+            .success(function (result) {
+                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
+                if (result.isSuccess) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                        document.getElementById(id).checked = allow;
-                    }
-                })
-                .error(function (xhr) {
+                        document.location.reload(true);
+                    }, 2000);
+                }
+                else {
                     parent.Fanex.ExtAcc.UnBlockUI();
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                     document.getElementById(id).checked = allow;
-                    if (typeof console != 'undefined') {
-                        console.log(xhr);
-                    }
-                });
-            },
-            function () {
+                }
+            })
+            .error(function (xhr) {
+                parent.Fanex.ExtAcc.UnBlockUI();
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
                 document.getElementById(id).checked = allow;
-            },
-            'popupOutright',
-            null,
-            function () {
-                document.getElementById(id).checked = allow;
+                if (typeof console != 'undefined') {
+                    console.log(xhr);
+                }
             });
-    };
+        },
+        function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
+            document.getElementById(id).checked = allow;
+        },
+        'popupOutright',
+        null,
+        function () {
+            document.getElementById(id).checked = allow;
+        });
+            };
 
     $scope.AutoPT = function (allow, id) {
         var message = 'Are you sure you want to change Auto Master PT status for this customer?';
