@@ -843,7 +843,7 @@ String.prototype.toFixed = function (precision, optionals) {
 String.prototype.formatString = function () {
     var src = this;
 
-    return src.search(/^[<\s\s*>]/) == -1 ? src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '') : '';
+    return src.search(/^[<\s\s*>]/) == -1 ? $.trim(src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '')) : '';
 };
 
 $(document).ready(function () {

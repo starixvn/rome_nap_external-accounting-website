@@ -13,49 +13,16 @@
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;
-    using System.Linq;
-    using System.Text;
-    using System.Web;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CaptchaResult : ActionResult
+    public class CaptchaResult
     {
-        /// <summary>
-        /// Gets captcha string.
-        /// </summary>
-        /// <param name="length">Length of captcha.</param>
-        /// <returns>String object.</returns>
-        public string GetCaptchaString(int length)
-        {
-            var varZero = '0';
-            var varNine = '9';
-            var varA = 'A';
-            var varZ = 'Z';
-            var varCount = 0;
-            var varRandomNumber = 0;
-            var strCaptchaString = string.Empty;
-            var random = new Random(System.DateTime.Now.Millisecond);
-
-            while (varCount < length)
-            {
-                varRandomNumber = random.Next(varZero, varZ);
-                if ((varRandomNumber >= varZero && varRandomNumber <= varNine) || (varRandomNumber >= varA && varRandomNumber <= varZ))
-                {
-                    strCaptchaString = strCaptchaString + (char)varRandomNumber;
-                    varCount = varCount + 1;
-                }
-            }
-
-            return strCaptchaString;
-        }
-
         /// <summary>
         /// Execute result.
         /// </summary>
@@ -80,8 +47,33 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             return img;
         }
 
-        public override void ExecuteResult(ControllerContext context)
-        {            
-        }
+        /// <summary>
+        /// Gets captcha string.
+        /// </summary>
+        /// <param name="length">Length of captcha.</param>
+        /// <returns>String object.</returns>
+        private string GetCaptchaString(int length)
+        {
+            var varZero = '0';
+            var varNine = '9';
+            var varA = 'A';
+            var varZ = 'Z';
+            var varCount = 0;
+            var varRandomNumber = 0;
+            var strCaptchaString = string.Empty;
+            var random = new Random(System.DateTime.Now.Millisecond);
+
+            while (varCount < length)
+            {
+                varRandomNumber = random.Next(varZero, varZ);
+                if ((varRandomNumber >= varZero && varRandomNumber <= varNine) || (varRandomNumber >= varA && varRandomNumber <= varZ))
+                {
+                    strCaptchaString = strCaptchaString + (char)varRandomNumber;
+                    varCount = varCount + 1;
+                }
+            }
+
+            return strCaptchaString;
+        }        
     }
 }

@@ -1830,7 +1830,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configurations\appSettings.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Areas\Common\Views\Authenticate\AccessDenied.cshtml" />
     <Content Include="Areas\Common\Views\Home\Index.cshtml" />
@@ -1936,10 +1935,6 @@
     <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
     <Content Include="Views\Customer\EditTransferCondition.cshtml" />
     <Content Include="Views\Customer\ResetPassword.cshtml" />
-    <Content Include="Views\Shared\_LeftMenu.cshtml" />
-    <Content Include="Views\Shared\_SettingBox.cshtml" />
-    <Content Include="Views\Shared\_SearchBox.cshtml" />
-    <Content Include="Views\Shared\_BalanceBox.cshtml" />
     <Content Include="Views\SportsbookSetting\EditBetSetting.cshtml" />
     <Content Include="Views\SportsbookSetting\EditCommission.cshtml" />
     <Content Include="Views\SportsbookSetting\EditPT.cshtml" />
