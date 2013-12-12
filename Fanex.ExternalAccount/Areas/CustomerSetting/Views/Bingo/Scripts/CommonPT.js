@@ -193,5 +193,9 @@ function afterUpdate(timeout) {
                 $('#tdIsSyncData').remove();
             }
         });
+
+        if (!document.getElementById('windowPopup')) {
+            document.location.reload(true);
+        }
     }, timeout);
 }

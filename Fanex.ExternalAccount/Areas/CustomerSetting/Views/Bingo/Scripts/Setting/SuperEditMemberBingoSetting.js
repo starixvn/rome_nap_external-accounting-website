@@ -61,7 +61,7 @@
                         </select>\
                     </td>\
                     <td>\
-                        <input class="chkauto" type="checkbox"' + (gameTypeBO.isAutoPositionTaking ? 'checked' : '') + ' onclick="masterBingoSetting.checkAutoPTGameType(this)" id="chkAuto_' + id + '">\
+                        <input class="chkauto" type="checkbox"' + (gameTypeBO.isAutoPositionTaking ? 'checked' : '') + ' onclick="superEditMemberBingoSetting.checkAutoPTGameType(this)" id="chkAuto_' + id + '">\
                     </td>\
                     <td class="gametypePT c">\
                         <select id="listSuperAutoPT_' + id + '" max="0.9" min="0" class="select-pt SuperAuto_' + id + '"' + (!gameTypeBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
@@ -214,7 +214,7 @@
             jQuery.each($(".chkauto"), function() {
                 if ($(this).prop("id").indexOf(chkAutoID) >= 0) {
                     $(this).attr("checked","checked");
-                    superEditMemberBingoSetting.CheckAutoPTGameType(this);
+                    superEditMemberBingoSetting.checkAutoPTGameType(this);
                  }
             });
         }
@@ -228,7 +228,7 @@
             jQuery.each($(".chkauto"), function() {
                 if ($(this).prop("id").indexOf(chkAutoID)>=0) {
                     $(this).removeAttr("checked");
-                    superEditMemberBingoSetting.CheckAutoPTGameType(this);
+                    superEditMemberBingoSetting.checkAutoPTGameType(this);
                 }
             });
         }
