@@ -893,7 +893,23 @@ function SettingController($scope, $http) {
                     !allowAdmins.contains(parseInt(parent.userId))) {
                     $scope.setting.enableItems[i].disabled = true;
                     $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
-                } 
+                }
+            }
+
+            for (var i = 0; i < $scope.setting.masterPts.length; i++) {
+                for (var j = 0; j < $scope.setting.syncItems.length; j++) {
+                    if ($scope.setting.syncItems[j].key == "Sync" + $scope.setting.masterPts[i].key) {
+                        if (!$scope.setting.syncItems[j].value) {
+                            $scope.setting.masterPts[i].isHide = true;
+                        }
+                    }
+
+                    if ($scope.setting.syncItems[j].key == "Sync" + $scope.setting.superPts[i].key) {
+                        if (!$scope.setting.syncItems[j].value) {
+                            $scope.setting.superPts[i].isHide = true;
+                        }
+                    }
+                }
             }
         }
     };
