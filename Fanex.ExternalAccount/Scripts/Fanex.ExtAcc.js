@@ -175,7 +175,7 @@ Fanex.ExtAcc = {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
-                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading) {
+                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
                                     $('#btnSearch').click();
                                 }
                             }, 2000);

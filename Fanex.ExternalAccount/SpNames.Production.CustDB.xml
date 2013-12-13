@@ -189,7 +189,7 @@
     <Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMasterVS_Positiontaking" SpName="Acc_CustomerUpdMasterVS_Positiontaking" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdAgentVS_PositionTaking" SpName="Acc_CustomerUpdAgentVS_PositionTaking" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_Positiontaking" SpName="Acc_CustomerUpdMemberVS_Positiontaking" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMemberVS_Positiontaking" SpName="Acc_CustomerUpdMemberVS_Positiontaking" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMemberVS_SAg" SpName="Acc_CustomerUpdMemberVS_SAg" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMemberVS_MAg" SpName="Acc_CustomerUpdMemberVS_MAg" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMasterVS_MinMaxBet" SpName="Acc_CustomerUpdMasterVS_MinMaxBet" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />

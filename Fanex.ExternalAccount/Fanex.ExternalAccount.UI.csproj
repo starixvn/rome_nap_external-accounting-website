@@ -680,6 +680,9 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="SpNames.CustDB.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\arrow-icn-right.png" />
