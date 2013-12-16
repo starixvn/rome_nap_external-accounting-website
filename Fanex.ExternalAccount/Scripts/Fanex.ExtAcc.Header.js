@@ -34,7 +34,7 @@ Fanex.ExtAcc.Header = {
                     // Get current Group Name
                     var indexes = location.href.split('/');
                     var groupNameSelected = indexes[indexes.length - 1];
-                    groupNameSelected = Fanex.ExtAcc.ReplaceAll(groupNameSelected, "%20", " ");
+                    groupNameSelected = Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.ReplaceAll(groupNameSelected, "%20", " "), "#", "");
                     var hasGroup = false;
                     $(items).each(function (i, v) {
                         if (v.GroupName == groupNameSelected)
