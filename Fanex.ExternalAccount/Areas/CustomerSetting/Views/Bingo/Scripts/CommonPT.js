@@ -188,14 +188,20 @@ function ResetMaxTransfer(custId) {
 function afterUpdate(timeout) {
     t1 = setTimeout(function () {
         //$('#err').html('');
-        parent.Fanex.ExtAcc.Form.Close(false, undefined, undefined, function () {
-            if ($('#tdIsSyncData')) { // if has 'Enable Bingo' checkbox, need to remove it
-                $('#tdIsSyncData').remove();
-            }
-        });
+        if (parent.document.getElementById('customerListGrid')) {
+            parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+            parent.Fanex.ExtAcc.Form.Close();
+        }
+        else {
+            parent.Fanex.ExtAcc.Form.Close(false, undefined, undefined, function () {
+                if ($('#tdIsSyncData')) { // if has 'Enable Bingo' checkbox, need to remove it
+                    $('#tdIsSyncData').remove();
+                }
+            });
 
-        if (!document.getElementById('windowPopup')) {
-            document.location.reload(true);
+            if (!document.getElementById('windowPopup')) {
+                document.location.reload(true);
+            } 
         }
     }, timeout);
 }
