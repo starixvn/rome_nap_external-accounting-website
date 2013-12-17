@@ -694,7 +694,7 @@ Fanex.ExtAcc = {
         });
     },
 
-    CheckNumber: function (event, ele, isFloat) {
+    CheckNumber: function (event, ele, isFloat, agentCredit) {
         var evt = event ? event : window.event; // Fix for IE7
 
         if (evt.keyCode === 9) return true; // Ignore TAB key
@@ -703,6 +703,10 @@ Fanex.ExtAcc = {
         var value = obj.value;
 
         if (value == '') return true;
+
+        if (agentCredit) {
+            this.CheckConstraintAgentCredits(agentCredit);
+        }
 
         var num;
         var dotPosition = 0;
