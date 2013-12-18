@@ -130,6 +130,9 @@ function LeftPanelController($scope, $element) {
         parent.Fanex.ExtAcc.Customer.MessageUnClosed = 'Are you sure you want to change Close status for this customer?';
         parent.Fanex.ExtAcc.Customer.MessageSuspended = 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!';
         parent.Fanex.ExtAcc.Customer.MessageUnSuspended = 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.';
+        parent.Fanex.ExtAcc.Customer.MessageClosedMember = 'Are you sure you want to change Close status for this customer?';
+        parent.Fanex.ExtAcc.Customer.MessageSuspendedMember = 'Are you sure you want to change Suspend status for this customer? Warning, this member can\'t place bet!';
+        parent.Fanex.ExtAcc.Customer.MessageUnSuspendedMember = 'Are you sure you want to change Suspend status for this customer?';
 
         parent.Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus = function (id) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {

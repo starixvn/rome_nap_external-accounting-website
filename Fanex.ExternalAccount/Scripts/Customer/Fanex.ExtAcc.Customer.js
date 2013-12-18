@@ -67,6 +67,10 @@ Fanex.ExtAcc.Customer = {
     MessageSuspended: 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!',
     MessageUnSuspended: 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.',
 
+    MessageClosedMember: 'Are you sure you want to change Close status for this customer?',
+    MessageSuspendedMember: 'Are you sure you want to change Suspend status for this customer? Warning, this member can\'t place bet!',
+    MessageUnSuspendedMember: 'Are you sure you want to change Suspend status for this customer?',
+
     Init: function () {
         if (this.IsLoading)
             return;
@@ -3458,7 +3462,8 @@ Fanex.ExtAcc.Customer = {
     },
 
     ProcessConfirmClosedStatus: function (id) {
-        if (this.CurrentLevel != 4) {
+        var currentLevel = this.CurrentLevel;
+        if (currentLevel != 4) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
 
@@ -3469,7 +3474,7 @@ Fanex.ExtAcc.Customer = {
 
                     if (this.checked && !Fanex.ExtAcc.Customer.Closed) {
                         Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            Fanex.ExtAcc.Customer.MessageClosed,
+                            currentLevel == 1 ? Fanex.ExtAcc.Customer.MessageClosedMember : Fanex.ExtAcc.Customer.MessageClosed,
                             400,
                             150,
                             false,
@@ -3502,7 +3507,8 @@ Fanex.ExtAcc.Customer = {
     },
 
     ProcessConfirmSuspendedStatus: function (id) {
-        if (this.CurrentLevel != 4) {
+        var currentLevel = this.CurrentLevel;
+        if (currentLevel != 4) {
             var timeout = setTimeout(function () {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.Customer.Suspended = document.getElementById(id ? id : 'suspended').checked;
@@ -3512,7 +3518,7 @@ Fanex.ExtAcc.Customer = {
 
                     if (this.checked && !Fanex.ExtAcc.Customer.Suspended) {
                         Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            Fanex.ExtAcc.Customer.MessageSuspended,
+                            currentLevel == 1 ? Fanex.ExtAcc.Customer.MessageSuspendedMember : Fanex.ExtAcc.Customer.MessageSuspended,
                             400,
                             180,
                             false,
@@ -3526,7 +3532,7 @@ Fanex.ExtAcc.Customer = {
                             'confirmStatus');
                     } else if (!this.checked && Fanex.ExtAcc.Customer.Suspended) {
                         Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            Fanex.ExtAcc.Customer.MessageUnSuspended,
+                            currentLevel == 1 ? Fanex.ExtAcc.Customer.MessageUnSuspendedMember : Fanex.ExtAcc.Customer.MessageUnSuspended,
                             400,
                             180,
                             false,
