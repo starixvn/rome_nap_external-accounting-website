@@ -105,11 +105,8 @@ Fanex.ExtAcc.Account = {
     },
 
     Logout: function () {
-        Fanex.ExtAcc.BlockUI();
-
         $.ajax(resolveClientUrl("Account/LogOff"))
         .done(function (data) {
-            Fanex.ExtAcc.UnBlockUI();
             location.href = resolveClientUrl("Account/Login");
         })
         .fail(function (data) {
