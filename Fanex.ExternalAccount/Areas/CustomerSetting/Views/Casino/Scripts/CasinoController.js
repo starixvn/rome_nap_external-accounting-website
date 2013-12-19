@@ -6,6 +6,7 @@
     var CustIds = custIds;
     var Usernames = usernames;
     var ErrorMessage = '';
+    var SuccessMessage = '';
     var actionName = '';
 
     if (isMultiple) {
@@ -117,33 +118,38 @@
         })
         .success(function (result) {
             if (result.errorCode != 0) {
-                ErrorMessage += result.errorMessage.formatErrorMessage() + '<br />';
+                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
+            }
+            else {
+                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
             }
 
             if (!IsMultiple) {
                 if (ErrorMessage != '') {
-                    $('#errMsg').html(ErrorMessage);
+                    $('#errMsg').html(ErrorMessage + SuccessMessage);
                     $('#errMsg').show();
 
                     if (typeof ondone == 'function') {
-                        ondone(1, ErrorMessage);
+                        ondone(1, ErrorMessage + SuccessMessage);
                     }
 
                     ErrorMessage = '';
+                    SuccessMessage = '';
                     Fanex.CustomerSetting.Core.UnBlockUI();
 
                     return false;
                 }
                 else {
                     $('#errMsg').attr('class', 'successMsg');
-                    $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                    $('#errMsg').html(SuccessMessage);
                     $('#errMsg').show();
 
                     if (typeof ondone == 'function') {
-                        ondone(0, ErrorMessage);
+                        ondone(0, SuccessMessage);
                     }
 
                     ErrorMessage = '';
+                    SuccessMessage = '';
                     Fanex.CustomerSetting.Core.UnBlockUI();
 
                     return true;
@@ -152,28 +158,30 @@
             else {
                 if (custIdIndex == CustIds.length - 1) {
                     if (ErrorMessage != '') {
-                        $('#errMsg').html(ErrorMessage);
+                        $('#errMsg').html(ErrorMessage + SuccessMessage);
                         $('#errMsg').show();
 
                         if (typeof ondone == 'function') {
-                            ondone(1, ErrorMessage);
+                            ondone(1, ErrorMessage + SuccessMessage);
                         }
 
                         ErrorMessage = '';
+                        SuccessMessage = '';
                         Fanex.CustomerSetting.Core.UnBlockUI();
 
                         return false;
                     }
                     else {
                         $('#errMsg').attr('class', 'successMsg');
-                        $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                        $('#errMsg').html(SuccessMessage);
                         $('#errMsg').show();
 
                         if (typeof ondone == 'function') {
-                            ondone(0, ErrorMessage);
+                            ondone(0, SuccessMessage);
                         }
 
                         ErrorMessage = '';
+                        SuccessMessage = '';
                         Fanex.CustomerSetting.Core.UnBlockUI();
 
                         return true;
@@ -189,15 +197,24 @@
                 console.log(response);
             }
 
-            if ($.parseJSON($(response)[0].responseText).errorCode) {
-                ErrorMessage += $.parseJSON($(response)[0].responseText).errorMessage.formatErrorMessage();
-            }
-            else {
-                ErrorMessage += $(response.responseText)[1].text.formatErrorMessage() + '<br />';
-            }
+            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
 
             if (!IsMultiple) {
-                if (ErrorMessage != '') {
+                $('#errMsg').html(ErrorMessage);
+                $('#errMsg').show();
+
+                if (typeof ondone == 'function') {
+                    ondone(1, ErrorMessage);
+                }
+
+                ErrorMessage = '';
+                SuccessMessage = '';
+                Fanex.CustomerSetting.Core.UnBlockUI();
+
+                return false;
+            }
+            else {
+                if (custIdIndex == CustIds.length - 1) {
                     $('#errMsg').html(ErrorMessage);
                     $('#errMsg').show();
 
@@ -206,54 +223,10 @@
                     }
 
                     ErrorMessage = '';
+                    SuccessMessage = '';
                     Fanex.CustomerSetting.Core.UnBlockUI();
 
                     return false;
-                }
-                else {
-                    $('#errMsg').attr('class', 'successMsg');
-                    $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-                    $('#errMsg').show();
-
-                    if (typeof ondone == 'function') {
-                        ondone(0, ErrorMessage);
-                    }
-
-                    ErrorMessage = '';
-                    Fanex.CustomerSetting.Core.UnBlockUI();
-
-                    return true;
-                }
-            }
-            else {
-                if (custIdIndex == CustIds.length - 1) {
-                    if (ErrorMessage != '') {
-                        $('#errMsg').html(ErrorMessage);
-                        $('#errMsg').show();
-
-                        if (typeof ondone == 'function') {
-                            ondone(1, ErrorMessage);
-                        }
-
-                        ErrorMessage = '';
-                        Fanex.CustomerSetting.Core.UnBlockUI();
-
-                        return false;
-                    }
-                    else {
-                        $('#errMsg').attr('class', 'successMsg');
-                        $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-                        $('#errMsg').show();
-
-                        if (typeof ondone == 'function') {
-                            ondone(0, ErrorMessage);
-                        }
-
-                        ErrorMessage = '';
-                        Fanex.CustomerSetting.Core.UnBlockUI();
-
-                        return true;
-                    }
                 }
                 else {
                     ProcessUpdate(++custIdIndex, ondone);

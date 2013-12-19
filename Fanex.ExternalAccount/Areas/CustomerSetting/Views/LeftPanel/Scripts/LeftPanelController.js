@@ -130,6 +130,9 @@ function LeftPanelController($scope, $element) {
         parent.Fanex.ExtAcc.Customer.MessageUnClosed = 'Are you sure you want to change Close status for this customer?';
         parent.Fanex.ExtAcc.Customer.MessageSuspended = 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!';
         parent.Fanex.ExtAcc.Customer.MessageUnSuspended = 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.';
+        parent.Fanex.ExtAcc.Customer.MessageClosedMember = 'Are you sure you want to change Close status for this customer?';
+        parent.Fanex.ExtAcc.Customer.MessageSuspendedMember = 'Are you sure you want to change Suspend status for this customer? Warning, this member can\'t place bet!';
+        parent.Fanex.ExtAcc.Customer.MessageUnSuspendedMember = 'Are you sure you want to change Suspend status for this customer?';
 
         parent.Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus = function (id) {
             if (parent.Fanex.ExtAcc.Customer.CurrentLevel != 4) {
@@ -893,7 +896,23 @@ function SettingController($scope, $http) {
                     !allowAdmins.contains(parseInt(parent.userId))) {
                     $scope.setting.enableItems[i].disabled = true;
                     $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
-                } 
+                }
+            }
+
+            for (var i = 0; i < $scope.setting.masterPts.length; i++) {
+                for (var j = 0; j < $scope.setting.syncItems.length; j++) {
+                    if ($scope.setting.syncItems[j].key == "Sync" + $scope.setting.masterPts[i].key) {
+                        if (!$scope.setting.syncItems[j].value) {
+                            $scope.setting.masterPts[i].isHide = true;
+                        }
+                    }
+
+                    if ($scope.setting.syncItems[j].key == "Sync" + $scope.setting.superPts[i].key) {
+                        if (!$scope.setting.syncItems[j].value) {
+                            $scope.setting.superPts[i].isHide = true;
+                        }
+                    }
+                }
             }
         }
     };
@@ -924,11 +943,17 @@ function SettingController($scope, $http) {
     };
 
     $scope.DoubleComm = function (allow, id) {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var msgMember = allow ? "Are you sure you want to turn OFF Double Commission feature for Sportsbook's Losing tickets on this customer?" : "Are you sure you want to turn ON Double Commission feature for Sportsbook's Losing tickets on this customer?";
         var msg = allow ?
             "Are you sure you want to disallow Double Commission feature for Sportsbook's Losing tickets on this customer? Warning, all members under this agent will be disallowed as well!" :
             "Are you sure you want to allow Double Commission feature for Sportsbook's Losing tickets on this customer?";
-        parent.Fanex.ExtAcc.Form.ConfirmBox(allow ? 'Disable Allow Double Commission' : 'Allow Double Commission',
-        msg,
+
+        var message = roleId == 1 ? msgMember : msg;
+        var titleMember = allow ? "Turn OFF Double Commission" : "Turn ON Double Commission";
+        var title = roleId == 1 ? titleMember : allow ? 'Disable Allow Double Commission' : 'Allow Double Commission';
+        parent.Fanex.ExtAcc.Form.ConfirmBox(title,
+        message,
         450,
         170,
         false,
@@ -951,7 +976,7 @@ function SettingController($scope, $http) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);                                                
+                        document.location.reload(true);
                     }, 2000);
                 }
                 else {

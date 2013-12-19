@@ -1,0 +1,242 @@
+﻿<Functions>
+  <Function Name="Login">
+    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="main_CustDB" Plain="0" />
+    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="Statement">
+    <Setting Key="Acc_AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="archive" Plain="0" />
+  </Function>
+  <Function Name="Report">
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="archive" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SAg" SpName="EAS_Rpt_WinLossDaily_SAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_MAg14" SpName="EAS_Rpt_WinLossDaily_MAg14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="Group">
+    <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="User">
+    <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserCheckPermission_All" SpName="EAS_UserCheckPermission_All" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoAddExistingUser" SpName="EAS_UserInfoAddExistingUser" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoSel" SpName="EAS_UserInfoSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoSelByUserID" SpName="EAS_UserInfoSelByUserID" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdStatus" SpName="EAS_UserInfoUpdStatus" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="main_CustDB" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="main_CustDB" Plain="0" />
+    <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="main_CustDB" Plain="0" />
+  </Function>
+  <Function Name="Menu and Function">
+    <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FunctionSel" SpName="EAS_FunctionSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FunctionUpd" SpName="EAS_FunctionUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FuncUpdStatus" SpName="EAS_FuncUpdStatus" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuIns" SpName="EAS_MenuIns" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuUpd" SpName="EAS_MenuUpd" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="checkin" Plain="0" />
+  </Function>
+  <Function Name="Left Panel">
+    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="on_user" Plain="0" />
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuperHR_All" SpName="Acc_CustomerUpdSuperHR_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="main" Plain="0" />
+    <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelRBStatus" SpName="Acc_CustomerSelRBStatus" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdRBStatus" SpName="Acc_CustomerUpdRBStatus" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="main_CustDB" Plain="0" />
+  </Function>
+  <Function Name="Customer List">
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="checkin" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="checkin" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Age_CustomerUpdUserInfo" SpName="Age_CustomerUpdUserInfo" DbName="main_CustDB" Plain="0" />
+    <Setting Key="EAS_CustomerUpdTransferOption" SpName="EAS_CustomerUpdTransferOption" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="main_CustDB" Plain="0" />
+  </Function>
+  <Function Name="Sportsbook">
+    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelSAgentInfo_Multiple" SpName="Acc_CustomerSelSAgentInfo_Multiple" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerSelUserComm" SpName="Age_CustomerSelUserComm" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Ag" SpName="Acc_CustomerInsMember_CloneSetting_Ag" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_MAg" SpName="Acc_CustomerInsMember_CloneSetting_MAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_SAg" SpName="Acc_CustomerInsMember_CloneSetting_SAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="archive" Plain="0" />
+  </Function>
+  <Function Name="Edit Commission">
+    <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="main_CustDB" Plain="0" />
+  </Function>
+  <Function Name="Live Casino - Get PT Setting">
+    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="archive"/>
+    <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="main"  />
+  </Function>
+  <Function Name="Live Casino - Update PT Setting">
+    <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMasterLiveCS_All" SpName="Acc_CustomerUpdMasterLiveCS_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdAgentLiveCS_All" SpName="Acc_CustomerUpdAgentLiveCS_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="main_CustDB"  />
+  </Function>
+  <Function Name="Live Casino - Stake Level Setting">
+    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin"  Plain="1" />
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="TP_User_Customer_AutoInsertAccountFromExisting" SpName="TP_User_Customer_AutoInsertAccountFromExisting" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="dblog"  />
+  </Function>
+  <Function Name="PTVirtualSports - Setting">
+    <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditMemberVS" SpName="Acc_CustomerSelEditMemberVS" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="archive" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMasterVS_Positiontaking" SpName="Acc_CustomerUpdMasterVS_Positiontaking" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdAgentVS_PositionTaking" SpName="Acc_CustomerUpdAgentVS_PositionTaking" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMemberVS_Positiontaking" SpName="Acc_CustomerUpdMemberVS_Positiontaking" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMemberVS_SAg" SpName="Acc_CustomerUpdMemberVS_SAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMemberVS_MAg" SpName="Acc_CustomerUpdMemberVS_MAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMasterVS_MinMaxBet" SpName="Acc_CustomerUpdMasterVS_MinMaxBet" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdAgentVS_MinMaxBet" SpName="Acc_CustomerUpdAgentVS_MinMaxBet" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMemberVS_MinMaxBet" SpName="Acc_CustomerUpdMemberVS_MinMaxBet" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMaxPerMatchVS180_1201" SpName="Acc_CustomerUpdMaxPerMatchVS180_1201" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="main_CustDB" Plain="0" />
+  </Function>
+  <Function Name="Racing Setting">
+    <Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="archive"  />
+    <Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="archive"  />
+
+    <Setting Key="Acc_CustomerUpdMasterHR_All" SpName="Acc_CustomerUpdMasterHR_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdAgentHR_All" SpName="Acc_CustomerUpdAgentHR_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMemberHR_All" SpName="Acc_CustomerUpdMemberHR_All" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMemberHR_SAg" SpName="Acc_CustomerUpdMemberHR_SAg" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdMemberHR_MAg" SpName="Acc_CustomerUpdMemberHR_MAg" DbName="main_CustDB"  />
+
+    <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="archive"  />
+    <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="main_CustDB"  />
+
+    <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="archive" Plain="0"/>
+    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="archive" Plain="0"/>
+    <Setting Key="UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="main_CustDB" Plain="0"/>
+  </Function>
+  <Function Name="Bingo Setting">
+    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="main_CustDB"/>
+    <Setting Key="BG_Acc_MT_GetBingoPT" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1"  />
+    <Setting Key="BG_TP_User_CustSetting_GetCustSetting" SpName="TP_User_CustSetting_GetCustSetting" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustSetting_GetDefaultMaxTransfer" SpName="TP_User_CustSetting_GetDefaultMaxTransfer" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Admin_GameGroup_SelAll" SpName="TP_Admin_GameGroup_SelAll" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustGameKind_GetCustGameKind" SpName="TP_User_CustGameKind_GetCustGameKind" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustGameType_GetCustGameType_EditMember" SpName="TP_User_CustGameType_GetCustGameType_EditMember" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustGameType_GetCustGameType" SpName="TP_User_CustGameType_GetCustGameType" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustGameKind_GetCustGameKind_EditMember" SpName="TP_User_CustGameKind_GetCustGameKind_EditMember" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Admin_GameType_Sel" SpName="TP_Admin_GameType_Sel" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_UP_Admin_Site_BySiteNo" SpName="UP_Admin_Site_BySiteNo" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustGameType_GetMemberCommReport" SpName="TP_User_CustGameType_GetMemberCommReport" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_User_CustGameType_GetPositionTakingReport" SpName="TP_User_CustGameType_GetPositionTakingReport" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Game_UserBet_WinLossBySAgentID" SpName="TP_Game_UserBet_WinLossBySAgentID" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Game_UserBet_WinLossByMAgentID" SpName="TP_Game_UserBet_WinLossByMAgentID" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Game_UserBet_WinLossByAgentID" SpName="TP_Game_UserBet_WinLossByAgentID" DbName="CS_LBBackupDB" Plain="1" />
+  </Function>
+</Functions>

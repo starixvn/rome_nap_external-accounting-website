@@ -144,6 +144,7 @@ Fanex.ExtAcc = {
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
+        this.BlockUI();
         if (typeof id != 'undefined') {
             $('#' + id).hide();
         }
@@ -153,8 +154,11 @@ Fanex.ExtAcc = {
             $.ajax({ url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html('');
 
-                if (result.errorCode) {
+                if (isLeftPanelClick || url.indexOf('Customer/CustomerList') == -1) {
                     Fanex.ExtAcc.UnBlockUI();
+                }
+
+                if (result.errorCode) {
                     $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
                     return;
                 }
@@ -175,7 +179,7 @@ Fanex.ExtAcc = {
 
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
-                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading) {
+                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
                                     $('#btnSearch').click();
                                 }
                             }, 2000);
@@ -694,7 +698,7 @@ Fanex.ExtAcc = {
         });
     },
 
-    CheckNumber: function (event, ele, isFloat) {
+    CheckNumber: function (event, ele, isFloat, agentCredit) {
         var evt = event ? event : window.event; // Fix for IE7
 
         if (evt.keyCode === 9) return true; // Ignore TAB key
@@ -703,6 +707,10 @@ Fanex.ExtAcc = {
         var value = obj.value;
 
         if (value == '') return true;
+
+        if (agentCredit) {
+            this.CheckConstraintAgentCredits(agentCredit);
+        }
 
         var num;
         var dotPosition = 0;
@@ -843,7 +851,7 @@ String.prototype.toFixed = function (precision, optionals) {
 String.prototype.formatString = function () {
     var src = this;
 
-    return src.search(/^[<\s\s*>]/) == -1 ? src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '') : '';
+    return src.search(/^[<\s\s*>]/) == -1 ? $.trim(src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '')) : '';
 };
 
 $(document).ready(function () {

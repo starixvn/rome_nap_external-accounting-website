@@ -109,7 +109,7 @@
                 //Loop to get BettingRangeList
                 for (var z = 0; z < totalBettingRange; z++) {
                     var bettingrange = customer.gameKindList[i].gameTypeList[j].bettingRangeList[z];
-                    var bettingrangeid = bettingrange.ID;
+                    var bettingrangeid = bettingrange.iD;
                     customer.gameKindList[i].gameTypeList[j].bettingRangeList[z].isChecked = $("#" + strChkStake + "_" + gamekindid + "_" + gametypeid + "_" + bettingrangeid).prop("checked");
                 }
             }

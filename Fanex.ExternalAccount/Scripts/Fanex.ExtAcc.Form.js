@@ -8,6 +8,7 @@ Fanex.ExtAcc.Form = {
     },
 
     Show: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId, params) {
+        Fanex.ExtAcc.BlockUI();
         var id = popupId ? popupId : 'windowPopup';
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
@@ -39,7 +40,8 @@ Fanex.ExtAcc.Form = {
         }
 
         $.ajax({ url: url, data: data, type: 'post' }).done(function (data) {
-            if (data.errorCode && data.errorCode == "1") {
+            Fanex.ExtAcc.UnBlockUI();
+            if (data.errorCode && data.errorCode == "1") {                
                 Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }
@@ -71,6 +73,8 @@ Fanex.ExtAcc.Form = {
     },
 
     ShowFrame: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId) {
+        Fanex.ExtAcc.BlockUI();
+
         var id = popupId ? popupId : 'windowPopup';
         var Frame = document.createElement("iframe");
         var margin = '30px';
@@ -107,6 +111,11 @@ Fanex.ExtAcc.Form = {
         if (callBack && typeof callBack === 'function') {
             callBack();
         }
+
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            Fanex.ExtAcc.UnBlockUI();
+        }, 1000);
     },
 
     ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel, closeClick, isSubmit) {
