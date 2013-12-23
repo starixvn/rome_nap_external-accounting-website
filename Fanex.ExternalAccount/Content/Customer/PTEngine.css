@@ -590,7 +590,7 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 }
 #idConfirm_yesButton, #idConfirm_noButton
 {
-	background: url(../../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center;
+	background: url(../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
 	color: #fff;
 	cursor: pointer;
@@ -606,7 +606,7 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 }
 #idConfirm_yesButton:hover, #idConfirm_noButton:hover
 {
-	background: url(../../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
+	background: url(../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
 	color: #fff;
 	cursor: pointer;
