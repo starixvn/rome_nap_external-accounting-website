@@ -8,7 +8,9 @@ Fanex.ExtAcc.Form = {
     },
 
     Show: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId, params) {
-        Fanex.ExtAcc.BlockUI();
+        if (typeof Fanex.ExtAcc.BlockUI == 'function')
+            Fanex.ExtAcc.BlockUI();
+
         var id = popupId ? popupId : 'windowPopup';
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
@@ -40,8 +42,10 @@ Fanex.ExtAcc.Form = {
         }
 
         $.ajax({ url: url, data: data, type: 'post' }).done(function (data) {
-            Fanex.ExtAcc.UnBlockUI();
-            if (data.errorCode && data.errorCode == "1") {                
+            if (typeof Fanex.ExtAcc.UnBlockUI == 'function')
+                Fanex.ExtAcc.UnBlockUI();
+
+            if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }
