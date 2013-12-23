@@ -145,6 +145,7 @@ Fanex.ExtAcc = {
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
+        $('#contentSplitter').hide();
         if (typeof id != 'undefined') {
             $('#' + id).hide();
         }
@@ -197,6 +198,11 @@ Fanex.ExtAcc = {
                     $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
                     return;
                 }
+            })
+            .done(function (data) {
+                $('#contentSplitter').ready(function () {
+                    $('#contentSplitter').show();
+                });
             });
         }
         else {
