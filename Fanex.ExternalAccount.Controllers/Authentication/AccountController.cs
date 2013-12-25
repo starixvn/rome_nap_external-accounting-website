@@ -192,7 +192,15 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return (int)StatusKickedOut.KickedOut;
             }
 
-            this._userService.Recheckin(onuserId, out isKickOut);
+            try
+            {
+                this._userService.Recheckin(onuserId, out isKickOut);
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+                return (int)StatusKickedOut.Error;
+            }
 
             if (!isKickOut)
             {
@@ -319,10 +327,18 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         private ActionResult SignOut(int onuserId, string userName)
         {
-            this._userService.Logout(onuserId, userName);
-            this._currentContext.Context.Session.Abandon();
+            try
+            {
+                this._userService.Logout(onuserId, userName);
+                this._currentContext.Context.Session.Abandon();
 
-            return this.RedirectToAction("Login", "Account");
+                return this.RedirectToAction("Login", "Account");
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+                return this.RedirectToAction("Error", "Shared");
+            }
         }
     }
 }

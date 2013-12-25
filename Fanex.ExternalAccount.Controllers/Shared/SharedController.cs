@@ -29,6 +29,11 @@ namespace Fanex.ExternalAccount.Controllers.Shared
             return this.View();
         }
 
+        public ActionResult Error()
+        {
+            return this.PartialView();
+        }
+
         /// <summary>
         /// Gets menus.
         /// </summary>

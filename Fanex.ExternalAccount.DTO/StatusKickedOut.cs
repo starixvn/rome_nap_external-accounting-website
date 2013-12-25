@@ -30,5 +30,10 @@ namespace Fanex.ExternalAccount.DTO
         /// Login status.
         /// </summary>
         Login = 3,
+
+        /// <summary>
+        /// Error or exception.
+        /// </summary>
+        Error = 4
     }
 }

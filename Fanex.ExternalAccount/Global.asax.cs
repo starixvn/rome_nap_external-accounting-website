@@ -9,7 +9,7 @@
 
 namespace Fanex.ExternalAccount
 {
-    using System.Configuration;
+    using System;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -85,6 +85,14 @@ namespace Fanex.ExternalAccount
             BundleTable.Bundles.EnableDailyWinLossBundle();
             BundleTable.Bundles.EnableStatementBundle();
             BundleTable.Bundles.EnableWinLossDetailBundle();
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            if (Request.Headers["X-Requested-With"] != "XMLHttpRequest")
+            {
+                Response.Redirect("~/Shared/Error");
+            }
         }
     }
 }

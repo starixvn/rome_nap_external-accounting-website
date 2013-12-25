@@ -149,7 +149,10 @@ Fanex.ExtAcc.Account = {
                     }
                 }
                 else if (data == 2) {
-                    location.href = resolveClientUrl('Account/Login');
+                    location.href = resolveClientUrl('Account/Offline');
+                }
+                else if (data == 3) {
+                    location.href = resolveClientUrl('Shared/Error');
                 }
 
                 Fanex.ExtAcc.Account.RecheckinXHR = null;

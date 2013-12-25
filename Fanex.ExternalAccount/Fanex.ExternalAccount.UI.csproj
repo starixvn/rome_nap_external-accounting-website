@@ -1962,6 +1962,7 @@
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
