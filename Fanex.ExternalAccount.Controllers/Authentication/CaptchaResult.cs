@@ -38,7 +38,6 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             CurrentSession.Instance.Captcha = randomString;
             g.DrawString(randomString, new Font("Courier", 16), new SolidBrush(Color.Black), 17, 2);
 
-            var response = context.HttpContext.Response;
             var stream = new System.IO.MemoryStream();
             bmp.Save(stream, ImageFormat.Jpeg);
             var bytes = stream.ToArray();
