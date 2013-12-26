@@ -68,13 +68,13 @@ Validators.show = function (elementInput, message, xPos, pointerXPos, yPos, poin
 Fanex.ExtAcc.Customer.MinPT = {
     customer: null,
 
-    Init: function () {        
+    Init: function () {
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             Fanex.ExtAcc.Customer.MinPT.GetEditMinPT('SuperEditMinPTMaster');
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
             Fanex.ExtAcc.Customer.MinPT.GetEditMinPT('MasterEditMinPTAgent');
-        }
+        }        
     },
 
     GetEditMinPT: function (editMinPTStatus) {
@@ -102,6 +102,8 @@ Fanex.ExtAcc.Customer.MinPT = {
 
             customer = result.customer;
             var context = result.context;
+
+            $('.headerPositionTaking').html($('.headerPositionTaking').html() + ': ' + customer.userName);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 

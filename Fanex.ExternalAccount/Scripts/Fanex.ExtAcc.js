@@ -176,6 +176,7 @@ Fanex.ExtAcc = {
                         if (document.getElementById('btnSearch')) {
                             clearInterval(interval);
 
+                            Fanex.ExtAcc.Customer.CurrentLevel = 4;
                             Fanex.ExtAcc.Customer.Init();
 
                             var timeout = setTimeout(function () {

@@ -275,6 +275,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }
     },
 
+    InsertUsernamIntoTitle: function (customer) {
+        if ($('.headerTab').length > 0)
+            $('.headerTab').html($('.headerTab').html() + ': ' + customer.userName);
+        else
+            $('.headerPositionTaking').html($('.headerPositionTaking').html() + ': ' + customer.userName);
+    },
+
     GetSuperPTSetting: function () {
         Fanex.ExtAcc.BlockUI();
 
@@ -307,6 +314,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
+
+            Fanex.ExtAcc.Customer.PTSetting.InsertUsernamIntoTitle(customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
@@ -362,6 +371,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var isChangeM3 = false;
             var isShowPopUpSetPTMember = false;
             var oldPTSetting = Fanex.copy(customer.ptSetting);
+
+            Fanex.ExtAcc.Customer.PTSetting.InsertUsernamIntoTitle(customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
@@ -524,6 +535,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var isChangeM2 = false;
             var isShowPopUpSetPTMember = false;
             var oldPTSetting = Fanex.copy(customer.ptSetting);
+
+            Fanex.ExtAcc.Customer.PTSetting.InsertUsernamIntoTitle(customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
@@ -694,6 +707,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
+            Fanex.ExtAcc.Customer.PTSetting.InsertUsernamIntoTitle(customer);
+
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
@@ -837,6 +852,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
 
+            Fanex.ExtAcc.Customer.PTSetting.InsertUsernamIntoTitle(customer);
+
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
             Fanex.ExtAcc.Customer.PTSetting.ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
@@ -936,6 +953,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
             var context = Fanex.ExtAcc.Customer.PTSetting.context = result.context;
             var customer = Fanex.ExtAcc.Customer.PTSetting.customer = Fanex.copy(result.customer);
+
+            Fanex.ExtAcc.Customer.PTSetting.InsertUsernamIntoTitle(customer);
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
             Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;

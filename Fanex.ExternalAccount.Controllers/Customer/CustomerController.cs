@@ -464,11 +464,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                         userInfo = this._agentService.GetData(mrecommend, recommend, null, null, null);
                         break;
                 }
-                
-                syncBingo = userInfo.Rows[0].ToBoolean("syncBingo");
-                syncCasino = userInfo.Rows[0].ToBoolean("syncCasino");
-                syncLiveCasino = userInfo.Rows[0].ToBoolean("syncLiveCasino");
-                allowDoubleComm = userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
+
+                syncBingo = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncBingo");
+                syncCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncCasino");
+                syncLiveCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncLiveCasino");
+                allowDoubleComm = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");                
             }
 
             return this.JsonBase(
