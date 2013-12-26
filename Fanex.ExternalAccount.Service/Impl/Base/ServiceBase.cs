@@ -20,14 +20,15 @@ namespace Fanex.ExternalAccount.Service.Impl.Base
         /// </summary>
         /// <param name="ex">Exception object.</param>
         /// <param name="category">Category to write log.</param>
-        protected void ProcessException(Exception ex, string category = "ExternalAccount")
+        /// <param name="includeQuery">To prevent getting secure information.</param>
+        protected void ProcessException(Exception ex, string category = "ExternalAccount", bool includeQuery = true)
         {
             var message = ex.Message +
                              "<br>\r\nSOURCE: " + ex.Source +
                              "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
                              "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
                              "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
-                             "<br>\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "<br>\r\nQUERYSTRING: " + (includeQuery ? HttpContext.Current.Request.QueryString.ToString() : string.Empty) +
                              "<br>\r\nTARGETSITE: " + ex.TargetSite +
                              "<br>\r\nSTACKTRACE: " + ex.StackTrace;
 
