@@ -93,7 +93,7 @@ function GameGroupController($scope) {
                     // Set warning for n3 if break pt rule
                     gameType.$n3.warning = n3Group < min || n3Group > max.ptRound();
 
-                    gameType.n3 = n3Group;
+                    gameType.n3 = selected;
                     gameType.$n3.min = gameType.$n3.max = gameType.$n3.selected = selected;
                     gameType.$n3 = toPTSource(gameType.$n3);
                 }
