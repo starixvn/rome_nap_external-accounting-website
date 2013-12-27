@@ -27,7 +27,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Base
                              "<br>\r\nSOURCE: " + ex.Source +
                              "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
                              "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                             "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                             "<br>\r\nFORM: " + (includeQuery ? HttpContext.Current.Request.Form.ToString() : string.Empty) +
                              "<br>\r\nQUERYSTRING: " + (includeQuery ? HttpContext.Current.Request.QueryString.ToString() : string.Empty) +
                              "<br>\r\nTARGETSITE: " + ex.TargetSite +
                              "<br>\r\nSTACKTRACE: " + ex.StackTrace;

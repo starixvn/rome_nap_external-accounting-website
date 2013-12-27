@@ -105,7 +105,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                this.ProcessException(ex, "ExternalAccount", false);
             }
 
             return null;
