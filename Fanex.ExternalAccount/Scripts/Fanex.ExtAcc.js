@@ -155,7 +155,7 @@ Fanex.ExtAcc = {
             $.ajax({ url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html('');
 
-                if (isLeftPanelClick || url.indexOf('Customer/CustomerList') == -1) {
+                if (url.indexOf('Customer/CustomerList') == -1) {
                     Fanex.ExtAcc.UnBlockUI();
                 }
 
@@ -167,8 +167,8 @@ Fanex.ExtAcc = {
                 $('#contentSplitter').html(result);
 
                 if (document.getElementById('btnLogin')) {
-                    Fanex.ExtAcc.UnBlockUI();
                     location.href = resolveClientUrl('Account/Login');
+                    return;
                 }
 
                 if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
