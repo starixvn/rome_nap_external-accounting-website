@@ -398,3 +398,7 @@ select,.select
 {
     border: none !important;
 }
+input[type="text"]
+{
+    height: 22px !important;
+}
