@@ -1556,3 +1556,7 @@ textarea
     float: right;
     cursor: pointer;
 }
+div#contentSplitter>div#msg
+{
+    margin: 10px;
+}

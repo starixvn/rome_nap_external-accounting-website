@@ -78,16 +78,15 @@ String.prototype.formatErrorMessage = function () {
         username = preMsg.substring(0, preMsg.indexOf(':'));
     }
 
-    var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
-    '<font color="#ff5411">' + subMsg + '</font>';
+    var formatMsg = '<div id="msg" style="color:#ff5411">' + preMsg + '<font color="#000000">' + orgMsg + '</font>' + subMsg + '</div>';
 
     var msg = '';
 
     if (!hasUsername) {
-        msg = orgMsg + subMsg.indexOf(':') > 0 ? ('<div style="float: left; color: Blue; font-weight: bold">' + subMsg.substring(0, subMsg.indexOf(':')) + ':</div><br /><font color="#ff5411">' + subMsg.substring(subMsg.indexOf(':') + 1) + '</font>') : ('<font color="#ff5411">' + subMsg + '</font>');
+        msg = orgMsg + subMsg.indexOf(':') > 0 ? ('<div style="float: left; color: Blue; font-weight: bold">' + subMsg.substring(0, subMsg.indexOf(':')) + ':</div><br /><div id="msg" style="color:#ff5411">' + subMsg.substring(subMsg.indexOf(':') + 1) + '</div>') : ('<div id="msg" style="color:#ff5411">' + subMsg + '</div>');
     }
     else {
-        msg = '<div style="float: left; color: Blue; font-weight: bold">' + username + ':</div><br /><font color="#ff5411">' + preMsg.substring(preMsg.indexOf(':') + 1, preMsg.length) + orgMsg + subMsg + '</font>';
+        msg = '<div style="float: left; color: Blue; font-weight: bold">' + username + ':</div><br /><div id="msg" style="color:#ff5411">' + preMsg.substring(preMsg.indexOf(':') + 1, preMsg.length) + orgMsg + subMsg + '</div>';
     }
 
     $('#errMsg').addClass('errMsg');
