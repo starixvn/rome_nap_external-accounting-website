@@ -245,8 +245,8 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
-            var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.ToLower() == groupname.ToLower()) :
-                groups.Where(o => o.GroupID == CurrentSession.GroupId).First().GroupName.ToLower() == groupname.ToLower();
+            var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase)) :
+                groups.Where(o => o.GroupID == CurrentSession.GroupId).First().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase);
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
@@ -295,11 +295,11 @@ namespace Fanex.ExternalAccount.Core.Base
             var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
-                !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.Contains("home/index") &&
+                !request.RawUrl.Contains("exporttoexcel") && !request.IsAjaxRequest())
             {
                 hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) &&
-                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+                    request.RawUrl.Contains(o.Url.Replace("~", string.Empty))).Count() > 0;
             }
 
             if (!hasPerm && (foundItems == null || foundItems.Count() == 0))

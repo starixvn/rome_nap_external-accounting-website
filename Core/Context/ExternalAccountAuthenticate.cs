@@ -46,12 +46,12 @@ namespace Fanex.ExternalAccount.Core.Context
             this._request = currentContext.Context.Request;
             this._response = currentContext.Context.Response;
 
-            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 this._response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) || 
+            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.Contains("login")) || 
                 (currentSession.IsLogin && currentContext.Context.Request.RawUrl.Equals("/")))
             {
                 this._groups = new LoginService().GroupList().ToList();
@@ -96,12 +96,12 @@ namespace Fanex.ExternalAccount.Core.Context
                 return;
             }
 
-            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !request.RawUrl.Contains("login"))
             {
                 response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && request.RawUrl.Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
                 response.Redirect("~/Home/Index" + group);
@@ -144,8 +144,8 @@ namespace Fanex.ExternalAccount.Core.Context
             groupName = string.IsNullOrWhiteSpace(groupName) ? string.Empty : groupName;
             var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
             var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
-            var hasGroup = CurrentSession.Instance.IsInternalAdmin ? groups.Any(o => o.GroupName.ToLower() == groupName.ToLower()) :
-                groups.Where(o => o.GroupID == CurrentSession.Instance.GroupId).First().GroupName.ToLower() == groupName.ToLower();
+            var hasGroup = CurrentSession.Instance.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
+                groups.Where(o => o.GroupID == CurrentSession.Instance.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
@@ -244,11 +244,11 @@ namespace Fanex.ExternalAccount.Core.Context
             var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
-                !request.RawUrl.ToLower().Contains("exporttoexcel") && !this.IsAjaxRequest)
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.Contains("home/index") &&
+                !request.RawUrl.Contains("exporttoexcel") && !this.IsAjaxRequest)
             {
                 hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) &&
-                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+                    request.RawUrl.Contains(o.Url.Replace("~", string.Empty))).Count() > 0;
             }
 
             if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
