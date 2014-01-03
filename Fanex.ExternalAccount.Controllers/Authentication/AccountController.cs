@@ -20,7 +20,6 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Account;
-    using System.Globalization;
 
     /// <summary>
     /// Account controller.
@@ -57,12 +56,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.Contains("login"))
+            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.Contains("login"))
+            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 var group = this._currentSession.IsInternalAdmin ? this._userService.GroupList().First().GroupName : string.Empty;
 
@@ -272,12 +271,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.Contains("login"))
+            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.Contains("login"))
+            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return this.RedirectToAction("Index", "Home");
             }
@@ -305,12 +304,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.Contains("login"))
+            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.Contains("login"))
+            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return this.RedirectToAction("Index", "Home");
             }

@@ -46,13 +46,13 @@ namespace Fanex.ExternalAccount.Core.Context
             this._request = currentContext.Context.Request;
             this._response = currentContext.Context.Response;
 
-            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.Contains("login"))
+            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 this._response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.Contains("login")) || 
-                (currentSession.IsLogin && currentContext.Context.Request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
+                (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Equals("/")))
             {
                 this._groups = new LoginService().GroupList().ToList();
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
@@ -96,12 +96,12 @@ namespace Fanex.ExternalAccount.Core.Context
                 return;
             }
 
-            if (!currentSession.IsLogin && !request.RawUrl.Contains("login"))
+            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
             {
                 response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && request.RawUrl.Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
             {
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
                 response.Redirect("~/Home/Index" + group);
