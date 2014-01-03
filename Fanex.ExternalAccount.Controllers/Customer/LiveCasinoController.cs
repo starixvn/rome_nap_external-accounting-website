@@ -114,8 +114,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             
             var settingModel = this.PtSetting.GetSuperSetting(custId);
-
-            var gameSetting = settingModel.GameSetting;
+            var customerInfo = this.PtSetting.GetCustomerInfo(custId);
+            var gameSetting = customerInfo.RoleId == Super && settingModel.GameSetting.Count == 0 ? 
+                this.PtSetting.GetSuperSetting(custId, customerInfo.ExChangeId).GameSetting : settingModel.GameSetting;
 
             foreach (var item in gameSetting)
             {
