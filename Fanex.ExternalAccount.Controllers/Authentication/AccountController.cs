@@ -57,12 +57,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 var group = this._currentSession.IsInternalAdmin ? this._userService.GroupList().First().GroupName : string.Empty;
 
@@ -272,12 +272,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 return this.RedirectToAction("Index", "Home");
             }
@@ -305,12 +305,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.Contains("login"))
             {
                 return this.RedirectToAction("Index", "Home");
             }
