@@ -39,12 +39,12 @@ namespace Fanex.ExternalAccount.Controllers.Home
                 return this.RedirectToAction("Offline", "Account");
             }
 
-            if (!CurrentSession.IsLogin && !CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!CurrentSession.IsLogin && !CurrentContext.Context.Request.RawUrl.Contains("login"))
             {
                 return this.RedirectToAction("Login", "Account");
             }
 
-            if (CurrentSession.IsLogin && CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (CurrentSession.IsLogin && CurrentContext.Context.Request.RawUrl.Contains("login"))
             {
                 var group = CurrentSession.IsInternalAdmin ? new LoginService().GroupList().First().GroupName : string.Empty;
 

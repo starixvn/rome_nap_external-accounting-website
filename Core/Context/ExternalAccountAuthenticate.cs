@@ -144,8 +144,8 @@ namespace Fanex.ExternalAccount.Core.Context
             groupName = string.IsNullOrWhiteSpace(groupName) ? string.Empty : groupName;
             var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
             var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
-            var hasGroup = CurrentSession.Instance.IsInternalAdmin ? groups.Any(o => o.GroupName.ToLower() == groupName.ToLower()) :
-                groups.Where(o => o.GroupID == CurrentSession.Instance.GroupId).First().GroupName.ToLower() == groupName.ToLower();
+            var hasGroup = CurrentSession.Instance.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
+                groups.Where(o => o.GroupID == CurrentSession.Instance.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }

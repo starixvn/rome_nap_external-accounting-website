@@ -212,19 +212,19 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
         {
             custStatus = !Convert.ToBoolean(items["enabled"]) ? "Disabled" : Convert.ToBoolean(items["closed"]) ? 
                 "Closed" : Convert.ToBoolean(items["suspended"]) ? "Suspended" : "Open";
-            if (custStatus.ToLower() == "open")
+            if (custStatus.Equals("open", StringComparison.OrdinalIgnoreCase))
             {
                 resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
             }
-            else if (custStatus.ToLower() == "suspended")
+            else if (custStatus.Equals("suspended", StringComparison.OrdinalIgnoreCase))
             {
                 resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
             }
-            else if (custStatus.ToLower() == "closed")
+            else if (custStatus.Equals("closed", StringComparison.OrdinalIgnoreCase))
             {
                 resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
             }
-            else if (custStatus.ToLower() == "disabled")
+            else if (custStatus.Equals("disabled", StringComparison.OrdinalIgnoreCase))
             {
                 resultSheet.CopyRow(templateSheet, 7, rowId, colId, lastColumnIndex);
             }
