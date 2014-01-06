@@ -46,7 +46,10 @@ Fanex.ExtAcc.Customer.Commission = {
             if (result.errorCode && result.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }

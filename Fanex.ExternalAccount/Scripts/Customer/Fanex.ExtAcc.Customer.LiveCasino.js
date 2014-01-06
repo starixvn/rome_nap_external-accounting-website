@@ -74,7 +74,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }
@@ -153,7 +156,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }
@@ -375,7 +381,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }
@@ -596,7 +605,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }
@@ -735,7 +747,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }
@@ -901,7 +916,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 450, 150);
+                }, 1000);
 
                 return;
             }

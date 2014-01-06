@@ -482,6 +482,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 return this.ActionDenied(this.Request);
             }
 
+            var customerInfo = this.PtSetting.GetCustomerInfo(custId);
+            if (!customerInfo.IsSyncLiveCasino)
+            {
+                return this.JsonBase(new { errorCode = 1, errorMessage = "Not Live Casino's customer" });
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -611,6 +617,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
                 return this.ActionDenied(this.Request);
+            }
+
+            var customerInfo = this.PtSetting.GetCustomerInfo(custId);
+            if (!customerInfo.IsSyncLiveCasino)
+            {
+                return this.JsonBase(new { errorCode = 1, errorMessage = "Not Live Casino's customer" });
             }
 
             var settings = new JsonSerializerSettings();
