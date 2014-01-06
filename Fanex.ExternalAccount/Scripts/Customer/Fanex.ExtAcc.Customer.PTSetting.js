@@ -2423,7 +2423,7 @@ function getUpdateParamaters() {
             }
         }
 
-        document.getElementById("bettingLimit9").checked ? paramaters += "1" : paramaters += "0";
+        document.getElementById("bettingLimit" + (items.length - 1)).checked ? paramaters += "1" : paramaters += "0";
     }
     else if (document.getElementById("bettingLimit1").checked && items[1].active === true) {
         document.getElementById("bettingLimit0").checked ? paramaters += "1" : paramaters += "0";
@@ -2434,7 +2434,7 @@ function getUpdateParamaters() {
             }
         }
 
-        document.getElementById("bettingLimit9").checked ? paramaters += "1" : paramaters += "0";
+        document.getElementById("bettingLimit" + (items.length - 1)).checked ? paramaters += "1" : paramaters += "0";
     }
     else {
         for (var i = 0; i < items.length; i++) {
