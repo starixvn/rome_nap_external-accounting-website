@@ -270,7 +270,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
                                 ParentID = reader.ToInt("ParentID"),
                                 ParentName = reader.ToString("ParentName"),
                                 Policy = (EPolicy)Convert.ToInt32(reader["UserPolicy"]),
-                                GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"])
+                                GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"]),
+                                FuncDesc = reader.ToString("FuncDesc")
                             });
                         }
                     }
