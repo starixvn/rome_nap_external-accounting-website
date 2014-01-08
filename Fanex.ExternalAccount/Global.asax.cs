@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount
 {
     using System;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -87,6 +88,11 @@ namespace Fanex.ExternalAccount
             BundleTable.Bundles.EnableWinLossDetailBundle();
         }
 
+        /// <summary>
+        /// Processes application error.
+        /// </summary>
+        /// <param name="sender">Object is performed.</param>
+        /// <param name="e">Event is sent.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
             if (Request.Headers["X-Requested-With"] != "XMLHttpRequest")

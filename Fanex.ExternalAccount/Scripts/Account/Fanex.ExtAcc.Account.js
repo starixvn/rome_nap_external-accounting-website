@@ -12,7 +12,30 @@ Fanex.ExtAcc.Account = {
     currentRetryTimes: 0,
     RecheckinXHR: null,
 
+    HandleAjaxResult: function (element) {
+        $(element).bind('ajaxComplete', function (event, request, settings) {
+            switch (request.status) {
+                case 401: 
+                    location.href = resolveClientUrl('Shared/Error');
+                    break;
+                case 403:
+                    location.href = resolveClientUrl('Shared/Error');
+                    break;
+                case 404:
+                    location.href = resolveClientUrl('Shared/Error');
+                    break;
+                case 500:
+                    location.href = resolveClientUrl('Shared/Error');
+                    break;
+                default:
+                    break;
+            }
+        });
+    },
+
     Init: function () {
+        this.HandleAjaxResult(document);
+
         if (this.RecheckinXHR == null && document.URL.toLowerCase().indexOf("account/login") != -1) {
             setInterval(this.ReCheckin, 10000);
         }
