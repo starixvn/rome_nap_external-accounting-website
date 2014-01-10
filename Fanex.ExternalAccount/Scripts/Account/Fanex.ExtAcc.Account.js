@@ -13,17 +13,11 @@ Fanex.ExtAcc.Account = {
     RecheckinXHR: null,
 
     HandleAjaxResult: function (element) {
-        $(element).bind('ajaxComplete', function (event, request, settings) {
+        $(element).bind('ajaxComplete', function (event, request) {
             switch (request.status) {
-                case 401: 
-                    location.href = resolveClientUrl('Shared/Error');
-                    break;
+                case 401:
                 case 403:
-                    location.href = resolveClientUrl('Shared/Error');
-                    break;
                 case 404:
-                    location.href = resolveClientUrl('Shared/Error');
-                    break;
                 case 500:
                     location.href = resolveClientUrl('Shared/Error');
                     break;
