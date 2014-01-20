@@ -1083,7 +1083,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             customer.PtSetting = new PTGrid();
 
             var customerService = new Fanex.PTEngine.Services.CustomerService();
-            customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
+
+            try
+            {
+                customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             customer.BettingLimit = null;
             customer.StatusSetting = null;
