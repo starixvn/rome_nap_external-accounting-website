@@ -33,7 +33,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             type: 'post'
         })
         .success(function (result) {
-            if (result.customer.custId == 0) {
+            if (result.customer.bettingLimit.bettingLimitItems.length == 0) {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
                 var timeout = setTimeout(function () {
