@@ -308,7 +308,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             try
             {
-                this._commissionService.GetCommission(currentContext);
+                commissionSetting = this._commissionService.GetCommission(currentContext);
             }
             catch (System.Exception ex)
             {

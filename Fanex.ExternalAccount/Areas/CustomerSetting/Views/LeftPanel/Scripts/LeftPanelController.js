@@ -146,7 +146,7 @@ function LeftPanelController($scope, $element) {
 
                         if (this.checked && !parent.Fanex.ExtAcc.Customer.Closed) {
                             parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            parent.Fanex.ExtAcc.Customer.MessageClosed,
+                            parent.Fanex.ExtAcc.Customer.CurrentLevel == 1 ? parent.Fanex.ExtAcc.Customer.MessageClosedMember : parent.Fanex.ExtAcc.Customer.MessageClosed,
                             400,
                             150,
                             false,
