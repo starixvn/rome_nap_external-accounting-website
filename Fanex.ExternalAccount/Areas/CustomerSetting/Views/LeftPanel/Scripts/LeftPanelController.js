@@ -191,7 +191,7 @@ function LeftPanelController($scope, $element) {
 
                         if (this.checked && !parent.Fanex.ExtAcc.Customer.Suspended) {
                             parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            parent.Fanex.ExtAcc.Customer.MessageSuspended,
+                            parent.Fanex.ExtAcc.Customer.CurrentLevel == 1 ? parent.Fanex.ExtAcc.Customer.MessageSuspendedMember : parent.Fanex.ExtAcc.Customer.MessageSuspended,
                             400,
                             180,
                             false,
@@ -206,7 +206,7 @@ function LeftPanelController($scope, $element) {
                         }
                         else if (!this.checked && parent.Fanex.ExtAcc.Customer.Suspended) {
                             parent.Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            parent.Fanex.ExtAcc.Customer.MessageUnSuspended,
+                             parent.Fanex.ExtAcc.Customer.CurrentLevel == 1 ? parent.Fanex.ExtAcc.Customer.MessageUnSuspendedMember : parent.Fanex.ExtAcc.Customer.MessageUnSuspended,
                             400,
                             180,
                             false,
