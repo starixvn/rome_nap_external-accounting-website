@@ -76,7 +76,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            IBettingLimit<BettingLimitItem> bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            IBettingLimit<BettingLimitItem> bettingLimit = null;
+
+            try
+            {
+                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
@@ -115,7 +124,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            IBettingLimit<BettingLimitItem> bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            IBettingLimit<BettingLimitItem> bettingLimit = null;
+
+            try
+            {
+                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
@@ -154,7 +172,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            IBettingLimit<BettingLimitItem> bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            IBettingLimit<BettingLimitItem> bettingLimit = null;
+
+            try
+            {
+                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
@@ -277,7 +304,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 LangKey = "E",
             };
 
-            ICommissionSetting commissionSetting = this._commissionService.GetCommission(currentContext);
+            ICommissionSetting commissionSetting = null;
+
+            try
+            {
+                this._commissionService.GetCommission(currentContext);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
         }
@@ -390,7 +426,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = setting.GetCustomerForCompanyEditSuper(context);
+            try
+            {
+                customer = setting.GetCustomerForCompanyEditSuper(context);
+            }
+            catch (System.Exception ex) 
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                     new { context = context, customer = customer }, 
@@ -435,7 +478,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = setting.GetCustomerForSuperEditMaster(context);
+            try
+            {
+                customer = setting.GetCustomerForSuperEditMaster(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -542,7 +592,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = setting.GetCustomerForMasterEditAgent(context);
+            try
+            {
+                customer = setting.GetCustomerForMasterEditAgent(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -649,7 +706,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = setting.GetCustomerForAgentUpdateMember(context);
+            try
+            {
+                customer = setting.GetCustomerForAgentUpdateMember(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -756,7 +820,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = setting.GetCustomerForSuperEditMember(context);
+            try
+            {
+                customer = setting.GetCustomerForSuperEditMember(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -861,7 +932,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            customer = setting.GetCustomerForMasterEditMember(context);
+            try
+            {
+                customer = setting.GetCustomerForMasterEditMember(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -1055,7 +1133,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             customer.PtSetting = new PTGrid();
 
             var customerService = new Fanex.PTEngine.Services.CustomerService();
-            customer = customerService.GetCustomerForMasterEditMinPTAgent(context);
+
+            try
+            {
+                customer = customerService.GetCustomerForMasterEditMinPTAgent(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             customer.BettingLimit = null;
             customer.StatusSetting = null;

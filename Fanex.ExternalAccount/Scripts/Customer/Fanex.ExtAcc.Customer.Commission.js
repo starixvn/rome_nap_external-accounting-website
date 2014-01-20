@@ -54,6 +54,17 @@ Fanex.ExtAcc.Customer.Commission = {
                 return;
             }
 
+            if (!result.commission) {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             commission = result.commission;
             var context = result.context;
             if ($this.currentLevel == 1) {
@@ -61,7 +72,7 @@ Fanex.ExtAcc.Customer.Commission = {
                 $("#textBoxDiscount1x2").val(commission.discount1x2);
                 $("#textBoxDiscountCS").val(commission.discountCS);
                 $("#textBoxDiscountNumber").val(commission.discountNumber);
-                $("#textBoxDiscountHRFixedOdds").val(commission.discountHRFixedOdds); 
+                $("#textBoxDiscountHRFixedOdds").val(commission.discountHRFixedOdds);
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);

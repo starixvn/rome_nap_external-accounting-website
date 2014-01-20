@@ -71,6 +71,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data == '') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
@@ -153,6 +164,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data == '') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
@@ -378,6 +400,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data == '') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
@@ -602,6 +635,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data == '') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
@@ -744,6 +788,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data == '') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
@@ -913,6 +968,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             data: data
         })
         .success(function (data) {
+            if (data == '') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();

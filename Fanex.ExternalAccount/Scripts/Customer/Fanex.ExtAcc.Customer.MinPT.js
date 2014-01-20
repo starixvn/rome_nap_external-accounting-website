@@ -92,6 +92,17 @@ Fanex.ExtAcc.Customer.MinPT = {
             type: 'post'
         })
         .success(function (result) {
+            if (result.customer.custId == 0) {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             if (result.errorCode && result.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();

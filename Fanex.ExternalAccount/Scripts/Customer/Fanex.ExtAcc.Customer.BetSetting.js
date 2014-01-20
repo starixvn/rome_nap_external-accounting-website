@@ -32,6 +32,17 @@ Fanex.ExtAcc.Customer.BetSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (!result.betting) {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             var bettingLimit = null;
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
@@ -110,6 +121,17 @@ Fanex.ExtAcc.Customer.BetSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (!result.betting) {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             var bettingLimit = null;
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
@@ -186,6 +208,17 @@ Fanex.ExtAcc.Customer.BetSetting = {
             type: 'post'
         })
         .success(function (result) {
+            if (!result.betting) {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Close();
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                }, 1000);
+
+                return;
+            }
+
             var bettingLimit = null;
             var context = result.context;
             bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);

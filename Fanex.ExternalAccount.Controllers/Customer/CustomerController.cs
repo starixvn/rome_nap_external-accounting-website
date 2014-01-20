@@ -122,7 +122,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
-            customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+
+            try
+            {
+                customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -218,7 +226,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
-            customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+
+            try
+            {
+                customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
@@ -314,7 +330,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
-            customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+
+            try
+            {
+                customer = new Fanex.PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+            }
+            catch (System.Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
