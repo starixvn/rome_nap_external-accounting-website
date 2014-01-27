@@ -65,7 +65,7 @@
         <tr>
             <td style="width: 40%" class="noneBorderLeft tdTitleRight">Accumulated transferable amount</td>
             <td class="noneBorderRight"><span style="margin-left: 4px; float: left; width: 130px">{{CustomerModel.totalWinLoss.formatNumber()}}</span>
-                <div data-ng-hide="CustomerModel.roleId == 4 || (CustomerModel.uplineRoleId == 4 && CustomerModel.roleId == 2) || !CustomerModel.casinoSync" style="float: left; color: #0066CC; cursor: pointer" data-ng-click="Reset()">Reset</div>
+                <div data-ng-hide="CustomerModel.roleId == 4 || CustomerModel.totalWinLoss == 0 || (CustomerModel.uplineRoleId == 4 && CustomerModel.roleId == 2) || !CustomerModel.casinoSync" style="float: left; color: #0066CC; cursor: pointer" data-ng-click="Reset()">Reset</div>
             </td>
         </tr>
         <tr>
