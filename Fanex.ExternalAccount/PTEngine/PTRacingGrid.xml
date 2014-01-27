@@ -35,7 +35,7 @@
     
     <SportType id="152" name="Greyhound" isHide="false" collapsed="true">
       <BetTypeGroups>
-        <BetTypeGroup id="41" name="UK/Irish Tote" isHide="false" allowCurrencies="*">
+        <BetTypeGroup id="41" name="UK/Irish Tote" isHide="true" allowCurrencies="*">
           <BetTypes>
             <BetType id="41" name="Win">
             </BetType>

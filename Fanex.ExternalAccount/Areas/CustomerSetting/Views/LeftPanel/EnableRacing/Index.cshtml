@@ -13,7 +13,7 @@
         <tr>
             <td colspan="2" class="bold racingTitle">{{sport.name}}</td>
         </tr>
-        <tr data-ng-repeat="item in sport.betTypeGroups" data-ng-hide="sport.betTypeGroups.isHide" data-ng-init="item.disable = false; item.enable = !item.bettingCommSetting.disable; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.bettingCommSetting.disableDownlines; item.preValDownline = item.enableDownline">
+        <tr data-ng-repeat="item in sport.betTypeGroups" data-ng-hide="item.isHide" data-ng-init="item.disable = false; item.enable = !item.bettingCommSetting.disable; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.bettingCommSetting.disableDownlines; item.preValDownline = item.enableDownline">
             <td style="width: 50%">
                 <input type="checkbox" data-ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.bettingCommSetting.disableUplines" /><span>Enable &nbsp;{{item.name}}</span>
             </td>

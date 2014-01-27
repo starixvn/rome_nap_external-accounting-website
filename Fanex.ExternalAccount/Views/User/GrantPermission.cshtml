@@ -94,7 +94,7 @@
             }
         }
 
-        <tr title="@fn.FuncDesc">
+        <tr title="@fn.FuncDesc.DecodeHtml()">
             <td>
                 <div id="parent-@fn.FuncID" expand="true" style="cursor:pointer" class="@className" onclick="Fanex.ExtAcc.ToggleRows(@fn.FuncID)">@fn.FuncName</div>
             </td>
@@ -166,7 +166,7 @@
                         SubactiveGroupR = SubactiveGroupW = "permInactive";
                     }
                 }
-        <tr parentid="@subfn.ParentID" title="@subfn.FuncDesc">
+        <tr parentid="@subfn.ParentID" title="@subfn.FuncDesc.DecodeHtml()">
             <td>
                 <span class="permItemChild">@subfn.FuncName</span>
             </td>

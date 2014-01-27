@@ -90,7 +90,7 @@
             this.bettingCommSetting = new Fanex.PTRacing.BettingCommSetting(this.currentSetting.settings.sportTypes);
             var bettingCommContainer = document.getElementById('bettingCommContainer');
             bettingCommContainer.innerHTML = "";
-            this.bettingCommSetting.Render(bettingCommContainer, window.targetRoleId);
+            this.bettingCommSetting.Render(bettingCommContainer);
             /*endregion render betting & comm*/
 
             /*region render pt*/
