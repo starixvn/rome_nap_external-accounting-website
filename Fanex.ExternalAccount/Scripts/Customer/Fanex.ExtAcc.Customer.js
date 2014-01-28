@@ -2877,7 +2877,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            430, 140, false, false, 1);
+                            430, 150, false, false, 1);
                     }
                 }
             };
@@ -2951,7 +2951,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            430, 140, false, false, 1);
+                            430, 150, false, false, 1);
                     }
                 };
             }
@@ -3024,7 +3024,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            430, 140, false, false, 1);
+                            430, 150, false, false, 1);
                     }
                 };
             }
@@ -3206,7 +3206,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function (key, opt) {
                         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                             'Edit Multiple Double Commission For Losing Tickets',
-                            430, 140, false, false, 1);
+                            430, 150, false, false, 1);
                     }
                 };
             }
