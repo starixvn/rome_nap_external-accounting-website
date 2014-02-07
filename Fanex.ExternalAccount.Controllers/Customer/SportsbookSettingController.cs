@@ -517,9 +517,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
-
             settings.NullValueHandling = NullValueHandling.Ignore;
-
             if (!string.IsNullOrWhiteSpace(para))
             {
                 for (int i = 0; i < para.Length; i++)
@@ -529,7 +527,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
@@ -543,7 +540,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
             var result = new Fanex.PTEngine.BusinessObjects.Result();
-
             if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
             {
                 result = custSrv.SuperUpdateMultipleMasters(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
@@ -553,7 +549,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
             }
 
-            this.UpdateCasinoStatus(custId, result, customer);
+            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
+            {
+                this.UpdateCasinoStatus(custId, result, customer);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -632,7 +631,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-
             if (!string.IsNullOrWhiteSpace(para))
             {
                 for (int i = 0; i < para.Length; i++)
@@ -642,7 +640,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
@@ -655,9 +652,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-
             var result = new Fanex.PTEngine.BusinessObjects.Result();
-
             if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
             {
                 result = custSrv.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
@@ -667,7 +662,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
             }
 
-            this.UpdateCasinoStatus(custId, result, customer);
+            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
+            {
+                this.UpdateCasinoStatus(custId, result, customer);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -744,7 +742,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-
             if (!string.IsNullOrWhiteSpace(para))
             {
                 for (int i = 0; i < para.Length; i++)
@@ -754,7 +751,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
@@ -767,9 +763,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-
             var result = new Fanex.PTEngine.BusinessObjects.Result();
-
             if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
             {
                 result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
@@ -779,7 +773,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.AgentUpdateMember(customer, requestContext);
             }
 
-            this.UpdateCasinoStatus(custId, result, customer);
+            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
+            {
+                this.UpdateCasinoStatus(custId, result, customer);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -857,9 +854,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
@@ -881,7 +876,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
             var result = new Fanex.PTEngine.BusinessObjects.Result();
-
             if (param.Count > 0)
             {
                 result = custSrv.SuperUpdateMultipleMembers(customer, requestContext, param);
@@ -891,7 +885,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.SuperUpdateMember(customer, requestContext);
             }
 
-            this.UpdateCasinoStatus(custId, result, customer);
+            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
+            {
+                this.UpdateCasinoStatus(custId, result, customer);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
@@ -969,9 +966,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var param = new Hashtable();
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
-
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-
             IRequestContext requestContext = new RequestContext()
             {
                 CustId = parentId,
@@ -993,7 +988,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
             var result = new Fanex.PTEngine.BusinessObjects.Result();
-
             if (param.Count > 0)
             {
                 result = custSrv.MasterUpdateMultipleMembers(customer, requestContext, param);
@@ -1003,7 +997,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 result = custSrv.MasterUpdateMember(customer, requestContext);
             }
 
-            this.UpdateCasinoStatus(custId, result, customer);
+            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
+            {
+                this.UpdateCasinoStatus(custId, result, customer);
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
