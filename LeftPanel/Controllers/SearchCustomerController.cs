@@ -236,7 +236,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
             }
 
-            if (casinoCustomer != null)
+            if (casinoCustomer != null && casinoCustomer.CasinoSync)
             {
                 this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
             }
@@ -265,7 +265,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
             }
 
-            if (casinoCustomer != null)
+            if (casinoCustomer != null && casinoCustomer.CasinoSync)
             {
                 this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
             }
