@@ -388,14 +388,12 @@ namespace Fanex.ExternalAccount.Core.Base
                 else if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
                     // Insert account success then update game setting
+                    // Sync live casino when updated PT
+                    var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
+
                     if (gameTypes.Count > 0)
                     {
-                        // Sync live casino when updated PT
-                        var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
-
                         result = this.GameSetting.InsertAccount(req);
-
-                        ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
 
                         var oldGameTypes = this.GameSetting.GetByCustomerId(custId);
 
@@ -467,6 +465,8 @@ namespace Fanex.ExternalAccount.Core.Base
                             }
                         }
                     }
+
+                    ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
                 }
 
                 return result;
