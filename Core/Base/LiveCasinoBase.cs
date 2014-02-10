@@ -258,6 +258,10 @@ namespace Fanex.ExternalAccount.Core.Base
 
                 return results;
             }
+            else
+            {
+                ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+            }
 
             return new List<object> { new { BettypeId = 0, ErrorCode = 0, ErrorMessage = string.Empty } };
         }
