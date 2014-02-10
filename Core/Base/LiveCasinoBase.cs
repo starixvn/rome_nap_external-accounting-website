@@ -260,7 +260,14 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             else
             {
-                ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+                var custInfo = this.PtSetting.GetCustomerInfo(custId);
+                var userInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
+                var uplineInfo = this.PtSetting.GetCustomerInfo(uplineRoleId == 4 ? userInfo.SuperId : uplineRoleId == 3 ? userInfo.MasterId : userInfo.AgentId);
+
+                if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+                {
+                    ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+                }
             }
 
             return new List<object> { new { BettypeId = 0, ErrorCode = 0, ErrorMessage = string.Empty } };
