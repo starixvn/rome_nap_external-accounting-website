@@ -197,17 +197,14 @@ namespace Fanex.ExternalAccount.Core.Base
                 var cust = new CasinoLibrary.SBAgent.Customer();
                 try
                 {
-                    if (customer.StatusSetting.SyncCasino)
+                    if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
                     {
-                        if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
-                        {
-                            cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
-                        }
+                        cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    }
 
-                        if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
-                        {
-                            cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
-                        }
+                    if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                    {
+                        cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
                 catch (Exception ex)
