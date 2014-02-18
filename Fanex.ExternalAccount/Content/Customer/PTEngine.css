@@ -120,6 +120,10 @@
 	vertical-align: middle;
 	width: 335px;
 }
+.commissionBlock1, .commissionBlock2, .commissionHeader, .BettingLimitTextBox4, .BettingLimitTextBox5
+{
+    font-size: 11px !important;
+}
 .customerInfoBlock2NoBorderLeft
 {
 	font-size: 11px !important;
