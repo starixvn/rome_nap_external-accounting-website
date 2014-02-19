@@ -22,6 +22,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
+    using Fanex.LiveCasinoSetting;
     using Fanex.LiveCasinoSetting.Business;
     using Fanex.LiveCasinoSetting.Model;
     using Fanex.LiveCasinoSetting.Model.Log;
@@ -225,7 +226,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         {
                             q.BettingLimit.ForEach(r =>
                             {
-                                if ((r.Id == p.Id && (r.IsSelected != p.IsSelected)) || r.IsSelected)
+                                if (r.Id == p.Id && r.IsSelected != p.IsSelected)
                                 {
                                     r.IsDirty = true;
                                 }
@@ -242,11 +243,51 @@ namespace Fanex.ExternalAccount.Core.Base
                     results.Add(new { BettypeId = item.Key, ErrorCode = item.Value.ErrorCode, ErrorMessage = item.Value.ErrorMessage });
                 }
 
+                var oldSettings = new List<LiveCasinoSetting.Model.GameType>();
+                var newSettings = new List<LiveCasinoSetting.Model.GameType>();
+                for (var i = 0; i < oldGameTypes.Count && i < gameTypes.Count; i++)
+                {                   
+                    if (oldGameTypes.Count != gameTypes.Count)
+                    {
+                        oldSettings = oldGameTypes;
+                        newSettings = gameTypes;
+
+                        break;
+                    }
+
+                    var oldGameTypeValue = oldGameTypes[i];
+                    var newGameTypeValue = gameTypes[i];
+
+                    for (var j = 0; j < oldGameTypeValue.BettingLimit.Count &&
+                        j < newGameTypeValue.BettingLimit.Count; j++)
+                    {
+                        if (oldGameTypeValue.BettingLimit.Count != newGameTypeValue.BettingLimit.Count)
+                        {
+                            oldSettings = oldGameTypes;
+                            newSettings = gameTypes;
+
+                            break;
+                        }
+
+                        var oldSelectedValue = oldGameTypeValue.BettingLimit[j].IsSelected;
+                        var newSelectedValue = newGameTypeValue.BettingLimit[j].IsSelected;
+
+                        if (oldSelectedValue != newSelectedValue)
+                        {
+                            oldSettings.Add(oldGameTypeValue);
+                            newSettings.Add(newGameTypeValue);
+
+                            break;
+                        }
+                    }
+                }
+
                 // Write log stake level
-                this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+                this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldSettings, newSettings, resultList)
                 {
                     Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
-                    ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
+                    ErrorCode = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode == ErrorCode.NOT_UPDATE_BETTING_LIMIT ? string.Empty : 
+                        resultList[gameTypes.ElementAt(0).BetTypeId].ErrorCode,
                     ErrorMessage = resultList[gameTypes.ElementAt(0).BetTypeId].ErrorMessage,
                     RoleId = uplineRoleId - 1,
                     SubAccId = req.SubAccId,
@@ -264,7 +305,7 @@ namespace Fanex.ExternalAccount.Core.Base
                 var userInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
                 var uplineInfo = this.PtSetting.GetCustomerInfo(uplineRoleId == 4 ? userInfo.SuperId : uplineRoleId == 3 ? userInfo.MasterId : userInfo.AgentId);
 
-                if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+                if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino && uplineRoleId - userInfo.RoleId == 1)
                 {
                     ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
                 }
