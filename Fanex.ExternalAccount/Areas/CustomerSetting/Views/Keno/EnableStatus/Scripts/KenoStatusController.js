@@ -44,7 +44,7 @@ function KenoStatusController($scope) {
                 scope.item.isDisabledDownlines = false;
 
                 for (var i = 0; i < betTypesCheckboxes.length; i++) {
-                    if (!betTypesCheckboxes[i].checked) {
+                    if (!betTypesCheckboxes[i].checked && !betTypesCheckboxes[i].disabled) {
                         allChecked = false;
                         break;
                     }
@@ -74,7 +74,7 @@ function KenoStatusController($scope) {
                 scope.item.isDisabledDownlines = false;
 
                 for (var i = 0; i < betTypesCheckboxes.length; i++) {
-                    if (!betTypesCheckboxes[i].checked) {
+                    if (!betTypesCheckboxes[i].checked && !betTypesCheckboxes[i].disabled) {
                         allChecked = false;
                         break;
                     }
@@ -196,16 +196,4 @@ function KenoStatusController($scope) {
             }
         }
     };
-
-    $scope.$watch('model', function () {
-        var length = $scope.model.betTypeStatusList.length;
-        $scope.isCheckeddAll = true;
-        for (var i = 0; i < length; i++) {
-            var bettypeTmp = $scope.model.betTypeStatusList[i];
-            if (bettypeTmp.isDisabled) {
-                $scope.isCheckeddAll = false;
-                return;
-            }
-        }
-    }, true);
 };
