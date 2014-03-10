@@ -402,3 +402,9 @@ input[type="text"]
 {
     height: 22px !important;
 }
+.enableTitle {
+    background-color: #E7F7FF;
+}
+.bold {
+    font-weight: bold;
+}

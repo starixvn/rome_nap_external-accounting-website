@@ -327,7 +327,6 @@
         var isCopyAll = $('#' + chkCopyAllSetting).prop('checked');
         var isCopyfromWin;
         var pt, uplinept, ptUK, uplineptUK;
-
         for (var i = 0; i < this.currentSetting.RacingSportType.length; i++) {
             sport = this.currentSetting.RacingSportType[i];
             for (var j = 0; j < sport.Totes.length; j++) {
@@ -343,6 +342,9 @@
                         pt = $('#' + id + '_minpt').val();
                         uplinept = $('#' + id + '_maxpt').val();
                     }
+
+                    if (!tote.Visible) continue;
+                    
                     if (isCopyAll) {
                         if (!this.isSATote(tote)) {
                             bettype.PositionTaking.Pt = pt;

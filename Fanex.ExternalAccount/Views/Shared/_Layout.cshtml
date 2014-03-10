@@ -25,6 +25,7 @@
     var hasSuspend = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
     var allowAutoPT = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.AllowAutoMPT, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
     var hasClearCredit = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    var enableKeno = System.Configuration.ConfigurationManager.AppSettings["EnableKeno"] == "true" ? 1 : 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -193,6 +194,7 @@
         var hasSuspend = '@hasSuspend';
         var allowAutoPT = '@allowAutoPT';
         var hasClearCredit = '@hasClearCredit';
+        var enableKeno = '@enableKeno';
         
         $(document).ready(function () {
             Fanex.ExtAcc.Account.ReCheckin();

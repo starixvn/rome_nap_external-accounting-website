@@ -1,0 +1,56 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+@{
+    ViewBag.Title = LayoutTexts.UpdateKenoSetting;
+    Layout = "~/Areas/CustomerSetting/Views/Keno/Shared/_Layout.cshtml";
+}
+<div ng-controller="mainController" class="content">
+    <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+        <tbody>
+            <tr>
+                <td class="maincontent_headerL">
+                </td>
+                <td class="maincontent_headerC fixfont">
+                    @LayoutTexts.UpdateKenoSetting
+                </td>
+                <td class="maincontent_headerR">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="divShowInfo" class="maincontent_box col612">
+    </div>
+    <div id="customerInfo">
+        @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Partial/CustomerInfo/_Information.cshtml")
+        <div style="margin-top: 10px;"></div>
+        @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Partial/BetSetting/_BetSettingSMA.cshtml")
+        <div style="margin-top: 10px;"></div>
+  @*      @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Partial/PositionTaking/_SuperPositionTaking.cshtml")*@
+    </div>
+    <div class="btnLeft">
+        <input ng-class-name="btnUpdate" ng-click="updateCustomerSetting(false)"
+            type="button" value="Update" class="btnUpdate b" />
+    </div>
+</div>
+@section scripts
+{
+    @*<script src="~/Areas/CustomerSetting/Views/OpusCasino/Scripts/Controllers/Super/Opus.SuperController.js"
+        type="text/javascript"></script>
+    <script src="~/Areas/CustomerSetting/Views/OpusCasino/Scripts/Controllers/Super/Opus.Super.CustomerInfoController.js"
+        type="text/javascript"></script>
+    <script src="~/Areas/CustomerSetting/Views/OpusCasino/Scripts/Controllers/Super/Opus.Super.GameSettingController.js"
+        type="text/javascript"></script>
+    <script src="~/Areas/CustomerSetting/Views/OpusCasino/Scripts/Controllers/Super/Opus.Super.PositionTakingController.js"
+        type="text/javascript"></script>
+    <script src="~/Areas/CustomerSetting/Views/OpusCasino/Scripts/Controllers/Super/Opus.Super.BetSettingController.js"
+        type="text/javascript"></script>*@
+}
+
+
+@*// --------------------------------------------------------------------------
+// <copyright file="SuperSetting.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Paul.Nguyen" date="2014/02/20">Created.</change>
+// </history>*@

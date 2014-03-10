@@ -180,5 +180,11 @@ namespace Fanex.ExternalAccount.Core.Context
                 this.Session[EASGroupId] = value;
             }
         }
+
+        public string Language
+        {
+            get;
+            set;
+        }
     }
 }

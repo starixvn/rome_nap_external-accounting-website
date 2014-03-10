@@ -1,0 +1,65 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<table class="tableColor" ng-controller="customerInfoController">
+    <tr>
+        <td colspan="4" class="header c b">
+         <span>@LayoutTexts.Super: </span>
+         @*   @if (Model.FormType == 0)
+            {
+                <span>@LayoutTexts.Super: </span>
+            }
+            else if (Model.FormType == 1)
+            {
+                <span>@LayoutTexts.Master: </span>
+            }
+            else if (Model.FormType == 2)
+            {
+                <span>@LayoutTexts.Agent: </span>
+            }
+            else
+            {
+                <span>@LayoutTexts.Member: </span>
+            }*@
+            <span ng-bind="model.username"></span>
+        </td>
+    </tr>
+    <tr>
+        <td class="col120 formatCol r b">
+            @LayoutTexts.FirstName
+        </td>
+        <td class="col120 formatCol l">
+            <span ng-bind="customerInfo.firstName"></span>
+        </td>
+        <td class="col120 formatCol r b">
+            @LayoutTexts.LastName
+        </td>
+        <td class="col120 formatCol l">
+            <span ng-bind="customerInfo.lastName"></span>
+        </td>
+    </tr>
+    <tr>
+        <td class="formatCol r b">
+            @LayoutTexts.Phone
+        </td>
+        <td class="formatCol l">
+            <span ng-bind="customerInfo.phone"></span>
+        </td>
+        <td class="formatCol r b">
+            @LayoutTexts.MobilePhone
+        </td>
+        <td class="formatCol l">
+            <span ng-bind="customerInfo.mobilePhone"></span>
+        </td>
+    </tr>
+    <tr>
+        <td class="formatCol r b">
+            @LayoutTexts.Fax
+        </td>
+        <td class="formatCol l">
+            <span ng-bind="customerInfo.fax"></span>
+        </td>
+        <td class="formatCol r b">
+        </td>
+        <td class="formatCol l">
+        </td>
+    </tr>
+</table>

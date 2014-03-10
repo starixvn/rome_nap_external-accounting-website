@@ -76,7 +76,7 @@ Fanex.ExtAcc.Form = {
         });
     },
 
-    ShowFrame: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId) {
+    ShowFrame: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId, resizable) {
         Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
@@ -100,7 +100,7 @@ Fanex.ExtAcc.Form = {
             title: title,
             height: height,
             width: width,
-            resizable: false,
+            resizable: resizable ? true : false,
             draggable: true,
             modal: true,
             autoOpen: true,

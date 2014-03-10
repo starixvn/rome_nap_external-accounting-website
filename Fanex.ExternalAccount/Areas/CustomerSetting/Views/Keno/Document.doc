@@ -1,0 +1,91 @@
+﻿
+1. Dependencies
+• Fanex.PTRacing.dll
+• Fanex.Data.dll
+• Fanex.Common.dll
+• Fanex.CustomerSetting.Security.dll
+• Fanex.NAP.Framework.dll
+• Fanex.CustomerSettting.Module.Core.dll
+• Fanex.CustomerSetting.Module.Racebook.Resources.dll
+2. Configuration 
+• Setting
+- Additional below config inner configuration tag.
+<configuration>
+
+<configSections>
+
+		<sectionGroup name="CustomerSetting">
+    			  <section name="Security" type="Fanex.CustomerSetting.Security.Configurations.CustomerSettingSection, 				Fanex.CustomerSetting.Security"/>
+   		 </sectionGroup>
+
+    
+     <!--RacingSetting-->
+    <section name="PTRacingMappingSection" type="Fanex.PTRacing.XmlMapping.PTRacingMappingSection"  		allowLocation="true" allowDefinition="Everywhere"/>
+    <section name="RacingBettingCommSettingMappingSection" 	type="Fanex.PTRacing.XmlMapping.RacingBettingCommSettingMappingSection"  allowLocation="true" 		allowDefinition="Everywhere"/>
+    <!--/RacingSetting-->
+
+</configSections>
+
+
+	<CustomerSetting>
+    		<Security allowDirectDownline="false" allowGroups="222|" 		authenticateFactory="Fanex.CustomerSetting.Security.Authenticate.DefaultAuthenticate, Fanex.CustomerSetting.Security"/>
+	  </CustomerSetting>
+
+
+<!--RacingSetting-->
+  <PTRacingMappingSection configSource="Web.Configuration\CustomerSetting\Racing\PTRacingMappingSection.config"/>
+  <RacingBettingCommSettingMappingSection configSource="Web.Configuration\CustomerSetting\Racing\RacingBettingCommSettingMappingSection.config"/>
+  <!--/RacingSetting-->
+
+
+
+</configuration>
+
+- Copy Racing configuration files from Fanex.Toco.Website\Areas\CustomerSetting\Views\Racebook\Config\ 
+
+• Store procedure
+
+
+<configuration>
+
+<configSections>
+    
+<section name="Fanex.Data.DbSettingProvider" type="Fanex.Data.Configuration.DbSettingProviderConfigurationSection, Fanex.Data"/>
+
+</configSections>
+
+<Fanex.Data.DbSettingProvider default="XmlDbSettingProvider">
+    <providers>
+      <add name="XmlDbSettingProvider" type="Fanex.Data.Configuration.XmlDbSettingProvider2, Fanex.Data" resourcePath="~/Web.Configuration/Store/" enableWatching="1"/>
+    </providers>
+  </Fanex.Data.DbSettingProvider>
+
+
+
+</configuration>
+
+- Copy Racing store procedure definition from Areas\CustomerSetting\Views\Racebook\Config\Store
+
+
+3. Action in detail
+
+• Super Setting
+- /customersetting/keno/kenosetting/EditSuper?custid=1
+
+• Master Setting
+- /customersetting/keno/kenosetting/EditMaster?custid=1
+
+• Agent Setting
+- /customersetting/keno/kenosetting/EditAgent?custid=1
+
+• Agent Edit Member
+- /customersetting/keno/kenosetting/AgentEditMember?custid=1
+
+• Super Edit member
+- /customersetting/keno/kenosetting/SuperEditMember?custid=1
+
+• Master Edit Member
+- /customersetting/keno/kenosetting/MasterEditMember?custid=1
+
+• Edit Keno Status
+- /customersetting/keno/enablestatus/index?id=xxx&uplineId=yyy&roleId=zzz (xxx, yyy, zzz is integer occording to custId, uplineId, roleId)

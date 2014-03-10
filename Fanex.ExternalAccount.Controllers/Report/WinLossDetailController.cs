@@ -96,6 +96,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
             }
 
+            list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
+
             this._filterParams.ToList().ForEach(o => 
             { 
                 this._products += o.Key + o.Value;

@@ -1,0 +1,43 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<table class="tableColor" ng-controller="fanex.customerSetting.betSettingController">
+    <tr>
+        <td colspan="5" class="header c b">
+            <span>@LayoutTexts.BetSetting</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="col120 formatCol">
+        </td>
+        <td class="col120 formatCol c b">
+            <span>@LayoutTexts.MinBet</span>
+        </td>
+        <td class="col120 formatCol c b">
+            <span>@LayoutTexts.MaxBet</span>
+        </td>
+        <td class="col120 formatCol c b">
+            <span>@LayoutTexts.MaxPerMatch</span>
+        </td>
+        <td class="col243 formatCol c b">
+            @LayoutTexts.Member
+        </td>
+    </tr>
+    <tr ng-repeat="betSetting in model">
+        <td class="col120 formatCol l">
+            <span>{{betSetting.gameTypeName}}</span>
+        </td>
+        <td class="col120 formatCol c">
+            <span>{{betSetting.minBet}}</span>
+        </td>
+        <td class="col120 formatCol c">
+            <span>{{betSetting.maxBet}}</span>
+        </td>
+        <td class="col120 formatCol c">
+            <span>{{betSetting.maxPerMatch}}</span>
+        </td>
+        <td class="col243 formatCol c">
+            <label class="checkbox">
+                <input type="checkbox" disabled="disabled" ng-model="betSetting.isDisable" />
+            </label>
+        </td>
+    </tr>
+</table>

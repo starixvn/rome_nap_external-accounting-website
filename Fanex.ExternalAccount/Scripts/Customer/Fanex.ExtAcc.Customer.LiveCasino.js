@@ -6,7 +6,6 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 
 Fanex.ExtAcc.Customer.LiveCasino = {
     IsMultiple: Fanex.ExtAcc.Customer.IsMultiple,
-    IsUncheckWinLimitMember: true,
     customer: null,
     CustIdIndex: 0,
     Error: '',
@@ -680,14 +679,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //Render game setting
             Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
 
-            //Check if all game setting is unchecked
-            if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0 && Fanex.ExtAcc.Customer.LiveCasino.IsUncheckWinLimitMember) {
-                $('#warningMsg').show();
-                $('#warningMsg').html('Your downline has uncheck all stake levels, by default, the system checked the lowest level. Please check and update.'.formatErrorMessage());
-
-                document.getElementsByName('gameRow0')[0].checked = true;
-            }
-
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
                 this.saveCustomer = function () {
@@ -857,14 +848,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             //Render game setting
             Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
 
-            //Check if all game setting is unchecked
-            if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0 && Fanex.ExtAcc.Customer.LiveCasino.IsUncheckWinLimitMember) {
-                $('#warningMsg').show();
-                $('#warningMsg').html('Your downline has uncheck all stake levels, by default, the system checked the lowest level. Please check and update.'.formatErrorMessage());
-
-                document.getElementsByName('gameRow0')[0].checked = true;
-            }
-
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
                 this.saveCustomer = function () {
@@ -1033,14 +1016,6 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             //Render game setting
             Fanex.ExtAcc.Customer.LiveCasino.RenderGameSetting(data);
-
-            //Check if all game setting is unchecked
-            if (Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length > 0 && Fanex.ExtAcc.Customer.LiveCasino.IsUncheckWinLimitMember) {
-                $('#warningMsg').show();
-                $('#warningMsg').html('Your downline has uncheck all stake levels, by default, the system checked the lowest level. Please check and update.'.formatErrorMessage());
-
-                document.getElementsByName('gameRow0')[0].checked = true;
-            }
 
             //Model for binding events on form
             Fanex.ExtAcc.Customer.LiveCasino.LiveCasinoModel = function () {
@@ -1256,15 +1231,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
     },
 
     RenderGameSetting: function (data) {
+        var gameTypesUnchecked = '';
         var gameSetting = data.gameSetting;
         var type = Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member ? 'radio' : 'checkbox';
 
         for (var i = 0; i < gameSetting.length; i++) {
             var bettingLimitItem = '';
+            var uncheckAll = true;
 
             for (var j = 0; j < gameSetting[i].bettingLimit.length; j++) {
                 if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member && gameSetting[i].bettingLimit[j].isSelected) {
-                    Fanex.ExtAcc.Customer.LiveCasino.IsUncheckWinLimitMember = false;
+                    uncheckAll = false;
                 }
 
                 var selected = gameSetting[i].bettingLimit[j].isSelected ? 'checked="checked"' : '';
@@ -1279,6 +1256,17 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 '</div>';
 
             $('#gameSetting').append(row);
+
+            if (uncheckAll) {
+                gameTypesUnchecked += gameSetting[i].name + ', ';
+                document.getElementsByName('gameRow' + i)[0].checked = true;
+            }
+        }
+
+        if (gameTypesUnchecked.length > 0 && Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
+            gameTypesUnchecked = gameTypesUnchecked.substring(0, gameTypesUnchecked.length - 2)
+            $('#warningMsg').show();
+            $('#warningMsg').html('<font color="#FF5411">' + gameTypesUnchecked + ' do/does not have any Betting Limit because the upline has all Betting Limit settings unchecked and it affects the downline settings. Therefore, the Betting Limit will be taken from the minimum Betting Limit of UPLINE by default</font><br />');
         }
     },
 
@@ -1354,7 +1342,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                             $('#errMsg').show();
                             $('#errMsg').html(error);
 
-                            Fanex.ExtAcc.UnBlockUI();
+                            //Fanex.ExtAcc.UnBlockUI();
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
                         }, 2000);
                     }
                     else {
@@ -1369,7 +1358,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                             Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                            Fanex.ExtAcc.UnBlockUI();
+                            //Fanex.ExtAcc.UnBlockUI();
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
                         }
                     }
                 }
@@ -1500,7 +1490,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }, 2000);
                 }
                 else {
@@ -1515,7 +1506,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }
                 }
             }
@@ -1587,7 +1579,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg);
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }, 2000);
                 }
                 else {
@@ -1602,7 +1595,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }
                 }
             }
@@ -1668,7 +1662,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(msg);
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }, 2000);
                 }
                 else {
@@ -1683,7 +1678,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }
                 }
             }
@@ -1755,7 +1751,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg);
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }, 2000);
                 }
                 else {
@@ -1770,7 +1767,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }
                 }
             }
@@ -1812,7 +1810,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                 $('#errMsg').show();
                 $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
-                Fanex.ExtAcc.UnBlockUI();
+                //Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Customer.CallBackCustomerList();
             }
             else {
                 var msg = Fanex.ExtAcc.Customer.LiveCasino.RenderPtCommErrorMessage(result);
@@ -1841,7 +1840,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }
                 }
             }
@@ -1921,7 +1921,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
                         $('#errMsg').show();
                         $('#errMsg').html(ptMsg + mwMsg + gsMsg + stMsg);
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }, 2000);
                 }
                 else {
@@ -1936,7 +1937,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
                         Fanex.ExtAcc.Customer.LiveCasino.Error = '';
 
-                        Fanex.ExtAcc.UnBlockUI();
+                        //Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                     }
                 }
             }
@@ -2561,6 +2563,8 @@ function onchangeCheckbox() {
 function setEventForCheckbox() {
     var gameRows = Fanex.ExtAcc.Customer.LiveCasino.customer.gameSetting.length;
     for (var i = 0; i < gameRows; i++) {
+        if (!document.getElementsByName('gameRow' + i)) continue;
+
         var items = document.getElementsByName('gameRow' + i);
         if (items && items[0] && items[0].type == 'checkbox') {
             for (var j = 0; j < items.length; j++) {

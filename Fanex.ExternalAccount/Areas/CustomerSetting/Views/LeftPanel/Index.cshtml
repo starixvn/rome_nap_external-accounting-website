@@ -144,7 +144,7 @@
             </ul>
             <div id="tab-1" class="auto" style="height: 100%">
                 <div class="floatLeft" data-ng-repeat="editItem in setting.editItems">
-                    <div data-ng-hide="{{editItem.key == 'EnablePoker'}}" class="settingEdit floatLeft" title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()">{{editItem.text}}</div>
+                    <div data-ng-hide="{{editItem.isHide }}" class="settingEdit floatLeft" title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()">{{editItem.text}}</div>
                 </div>
                 <br />
                 <div class="floatLeft" data-ng-repeat="enableItem in setting.enableItems">

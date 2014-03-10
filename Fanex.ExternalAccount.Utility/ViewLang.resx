@@ -811,4 +811,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="HRFixedOdds" xml:space="preserve">
     <value>HR Fixed Odds</value>
   </data>
+  <data name="Keno" xml:space="preserve">
+    <value>Keno</value>
+  </data>
 </root>

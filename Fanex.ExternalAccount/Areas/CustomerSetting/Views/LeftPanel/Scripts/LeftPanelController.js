@@ -891,11 +891,17 @@ function SettingController($scope, $http) {
                 }
             }
 
+            for (var i = 0; i < $scope.setting.editItems.length; i++) {
+                if ($scope.setting.editItems[i].key == 'EnablePoker' || ($scope.setting.editItems[i].key == 'EnableKeno' && parent.enableKeno == '0')) {
+                    $scope.setting.editItems[i].isHide = true;
+                }
+            }
+
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
-                if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed' || $scope.setting.enableItems[i].key == 'Suspended') &&
-                    !allowAdmins.contains(parseInt(parent.userId))) {
+                if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed') &&
+                    !allowAdmins.contains(parseInt(parent.userId)) && $scope.setting.enableItems[i].value == true) {
                     $scope.setting.enableItems[i].disabled = true;
-                    $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
+                    $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';                    
                 }
             }
 
@@ -1007,7 +1013,7 @@ function SettingController($scope, $http) {
 
     $scope.Closed = function (close, id) {
         var allowAdmins = eval(parent.allowAdminEditSuperStatus);
-        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId))) {
+        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
             return;
         }
 
@@ -1151,11 +1157,6 @@ function SettingController($scope, $http) {
     };
 
     $scope.Suspended = function (suspend, id) {
-        var allowAdmins = eval(parent.allowAdminEditSuperStatus);
-        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId))) {
-            return;
-        }
-
         var message = '';
         var title = '';
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -1914,6 +1915,14 @@ function SettingController($scope, $http) {
             '&roleId=' + $scope.model.personalInfo.roleId.value + '&groupName=' + parent.$('#selectedGroupName').html());
         var title = 'Update Racing Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 350, false, null, 1, 'enableRacing');
+    };
+
+    $scope.EnableKeno = function () {
+        var url = parent.resolveClientUrl('CustomerSetting/Keno/EnableStatus/Index?id=' + $scope.model.personalInfo.custId.value +
+            '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
+            '&roleId=' + $scope.model.personalInfo.roleId.value + '&groupName=' + parent.$('#selectedGroupName').html());
+        var title = 'Update Keno Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 380, false, null, 1, 'enableKeno');
     };
 
     $scope.ViewSubTab = function (id) {
