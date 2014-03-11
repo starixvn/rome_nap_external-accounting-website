@@ -75,6 +75,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             {
                 list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
             }
+
             list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
 
             return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());

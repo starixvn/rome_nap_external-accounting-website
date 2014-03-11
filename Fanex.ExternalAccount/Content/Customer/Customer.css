@@ -267,7 +267,3 @@ span.spanPT
 {
     border: 1px solid #ccc; border-left: none; border-right: none; font-weight: bold; height: 26px; vertical-align: middle; text-align: right
 }
-div.row_header.row-headers-background
-{
-    overflow: hidden !important;
-}
