@@ -23,7 +23,7 @@
                 <input name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.isDisabledUpline" /><span>{{item.betTypeName}}</span>
             </td>
             <td>
-                <input name="betTypes1" data-ng-hide="@hide" type="checkbox" data-ng-change="item.disableDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="item.disableDownline" /><span data-ng-hide="@hide">@Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.EnableDownlines</span>
+                <input id="{{item.betTypeID}}" name="betTypes1" data-ng-hide="@hide" type="checkbox" data-ng-change="item.disableDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="item.disableDownline" /><span data-ng-hide="@hide">@Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.EnableDownlines</span>
             </td>
         </tr>
     </table>
