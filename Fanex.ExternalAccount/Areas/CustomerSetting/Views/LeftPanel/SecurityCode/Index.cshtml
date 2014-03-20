@@ -1,4 +1,7 @@
-﻿<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
+﻿@{
+    var display = @ViewBag.roleId == 1 ? "none" : string.Empty;
+}
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Styles/SecurityCode.css")" rel="stylesheet" type="text/css" />
@@ -17,7 +20,7 @@
             <td class="bold">Confirm Security Code</td>
             <td><input type="text" id="securityCodeConfirm" maxlength="6" /></td>
         </tr>
-        <tr>
+        <tr style="display: @display">
             <td colspan="2" class="bold C"><input id="forceChange" type="checkbox" checked="checked" />Force change</td>
         </tr>
         <tr>
