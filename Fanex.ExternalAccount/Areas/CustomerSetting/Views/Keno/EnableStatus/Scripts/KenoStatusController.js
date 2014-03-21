@@ -103,7 +103,7 @@ function KenoStatusController($scope) {
         parent.Fanex.ExtAcc.BlockUI();
         var length = model.betTypeStatusList.length;
         for (var i = 0; i < length; i++) {
-            model.betTypeStatusList[i].isDisabledDownlines = model.betTypeStatusList[i].enableDownline;
+            model.betTypeStatusList[i].isDisabledDownlines = !model.betTypeStatusList[i].enableDownline;
         }
         $.ajax({
             dataType: 'json',
@@ -115,6 +115,7 @@ function KenoStatusController($scope) {
                 model: JSON.stringify(model),
                 roleId: roleId,
                 username: model.userName,
+                userId: parent.userId,
                 groupName: parent.$('#selectedGroupName').html()
             }
         })

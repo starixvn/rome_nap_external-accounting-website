@@ -1,4 +1,4 @@
-﻿@using Fanex.CustomerSetting.Module.KenoStatus.Resources
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources
 @{
     string hide = ViewBag.roleId == 1 ? "true" : "false";
 }
@@ -23,7 +23,7 @@
                 <input name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.isDisabledUpline" /><span>{{item.betTypeName}}</span>
             </td>
             <td>
-                <input id="{{item.betTypeID}}" name="betTypes1" data-ng-hide="@hide" type="checkbox" data-ng-change="item.disableDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="item.disableDownline" /><span data-ng-hide="@hide">@Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.EnableDownlines</span>
+                <input id="{{item.betTypeID}}" name="betTypes1" data-ng-hide="@hide || !model.hasDownline" type="checkbox" data-ng-change="item.disableDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="item.disableDownline" /><span data-ng-hide="@hide || !model.hasDownline">@Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.EnableDownlines</span>
             </td>
         </tr>
     </table>
@@ -35,7 +35,7 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/CustomerSetting/Keno/EnableStatus/GetKenoStatusData?id=" + ViewBag.id + "&uplineId=" + (ViewBag.roleId == 4 ? 0 : ViewBag.uplineId) + "&roleId=" + ViewBag.roleId + "&subAccountId=" + ViewBag.subAccountId)" type="text/javascript"></script>
+<script src="@Url.Content("~/CustomerSetting/Keno/EnableStatus/GetKenoStatusData?id=" + ViewBag.id + "&uplineId=" + (ViewBag.roleId == 4 ? 0 : ViewBag.uplineId) + "&roleId=" + ViewBag.roleId + "&subAccountId=" + ViewBag.subAccountId + "&userId=" + ViewBag.userId)" type="text/javascript"></script>
 <script type="text/javascript">
     var custId = parseInt('@ViewBag.id');
     var uplineId = parseInt('@ViewBag.uplineId');

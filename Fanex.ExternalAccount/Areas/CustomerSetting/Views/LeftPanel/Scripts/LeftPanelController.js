@@ -1920,7 +1920,7 @@ function SettingController($scope, $http) {
     $scope.EnableKeno = function () {
         var url = parent.resolveClientUrl('CustomerSetting/Keno/EnableStatus/Index?id=' + $scope.model.personalInfo.custId.value +
             '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
-            '&roleId=' + $scope.model.personalInfo.roleId.value + '&groupName=' + parent.$('#selectedGroupName').html());
+            '&roleId=' + $scope.model.personalInfo.roleId.value + '&userId=' + parent.userId + '&groupName=' + parent.$('#selectedGroupName').html());
         var title = 'Update Keno Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 380, false, null, 1, 'enableKeno');
     };
