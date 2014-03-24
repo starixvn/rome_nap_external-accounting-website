@@ -855,7 +855,7 @@ String.prototype.toFixed = function (precision, optionals) {
 };
 
 String.prototype.formatString = function () {
-    var src = this;
+    var src = escape(this);
 
     return src.search(/^[<\s\s*>]/) == -1 ? $.trim(src.encodeHtml().replaceAll('/', '').replaceAll('.', '').replaceAll('+', '')) : '';
 };
