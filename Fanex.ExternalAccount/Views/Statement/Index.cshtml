@@ -15,7 +15,7 @@ else
 <div>
     <div class="bgTitle titleForm">
         <div class="wlDetail">
-            Statement - <span id="StatementUsername">@Request.RequestContext.RouteData.Values["username"]</span>
+            Statement - <span id="StatementUsername">@Request.QueryString["username"]</span>
         </div>
     </div>
     <div class="bgTitle titleSearch pdr-normal">
@@ -40,8 +40,8 @@ else
         </div>
     </div>
     <div id='msgNoinfo'>There is no data.</div>
-    <input type="hidden" id="CustId" value="@Request.RequestContext.RouteData.Values["id"]" />
-    <input type="hidden" id="username" value="@Request.RequestContext.RouteData.Values["username"]" />
+    <input type="hidden" id="CustId" value="@Request.QueryString["id"]" />
+    <input type="hidden" id="username" value="@Request.QueryString["username"]" />
 </div>
 @if (HttpContext.Current.IsDebuggingEnabled)
 {
