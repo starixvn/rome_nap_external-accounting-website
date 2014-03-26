@@ -18,6 +18,7 @@ function KenoStatusController($scope) {
     }
 
     $scope.Init = function () {
+        model.userID = parent.userId;
         var allChecked = true;
         for (var i = 0; i < $scope.betTypes.length; i++) {
             if (($scope.betTypes[i].isDisabled && !$scope.betTypes[i].isDisabledUpline) || $scope.isDisabledAll) {
