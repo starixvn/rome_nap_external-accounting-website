@@ -103,9 +103,6 @@ function KenoStatusController($scope) {
     $scope.Update = function () {
         parent.Fanex.ExtAcc.BlockUI();
         var length = model.betTypeStatusList.length;
-        for (var i = 0; i < length; i++) {
-            model.betTypeStatusList[i].isDisabledDownlines = !model.betTypeStatusList[i].enableDownline;
-        }
         $.ajax({
             dataType: 'json',
             type: 'post',
