@@ -18,7 +18,7 @@ function KenoStatusController($scope) {
     }
 
     $scope.Init = function () {
-        model.userID = parent.userId;
+		model.userID = parent.userId;
         var allChecked = true;
         for (var i = 0; i < $scope.betTypes.length; i++) {
             if (($scope.betTypes[i].isDisabled && !$scope.betTypes[i].isDisabledUpline) || $scope.isDisabledAll) {
@@ -72,7 +72,7 @@ function KenoStatusController($scope) {
 
                 scope.item.isDisabled = false;
                 scope.item.isDisabledUpline = false;
-                scope.item.isDisabledDownlines = false;
+                scope.item.isDisabledDownlines = scope.item.preValDownline ? false : true;
 
                 for (var i = 0; i < betTypesCheckboxes.length; i++) {
                     if (!betTypesCheckboxes[i].checked && !betTypesCheckboxes[i].disabled) {
@@ -172,6 +172,7 @@ function KenoStatusController($scope) {
                     $scope.betTypes[i].isDisabledDownlines = false;
                 }
                 else {
+					betTypeChexkboxesDownlines[i].checked = false;
                     betTypeChexkboxesDownlines[i].disabled = false;
                     $scope.betTypes[i].isDisabledDownlines = true;
                 }
@@ -186,16 +187,16 @@ function KenoStatusController($scope) {
                 betTypeChexkboxes[i].checked = false;
                 betTypeChexkboxesDownlines[i].checked = false;
 
-                if ($scope.betTypes[i].preVal) {
-                    betTypeChexkboxesDownlines[i].disabled = true;
-                }
-                else {
-                    betTypeChexkboxesDownlines[i].disabled = true;
-                }
+				betTypeChexkboxesDownlines[i].disabled = true;
 
                 $scope.betTypes[i].isDisabled = true;
                 $scope.betTypes[i].isDisabledDownlines = true;
             }
         }
     };
+	
+	$scope.CheckDownline = function (id, scope) {	
+		var checkboxDownlines = document.getElementById(id);
+		scope.item.isDisabledDownlines = !checkboxDownlines.checked;
+	};
 };
