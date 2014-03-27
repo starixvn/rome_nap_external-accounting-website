@@ -8,7 +8,9 @@
 });
 
 angular.element(document.getElementById('ng-app')).ready(function () {
+    parent.Fanex.ExtAcc.UnBlockUI();
     $('#ng-app').show();
+    $('#txtLeftPanelUserName').focus();
 });
 
 Array.prototype.contains = function (item) {
