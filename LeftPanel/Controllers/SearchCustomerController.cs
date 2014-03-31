@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
     using System;
     using System.Collections;
+    using System.Data;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
@@ -588,6 +589,67 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             Result result = this._service.EnableHRFixedOdds(id, enable, enableDownline);
 
             return this.JsonBase(result);
+        }
+
+        /// <summary>
+        /// Gets online list.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>ActionResult object.</returns>
+        [HttpPost]
+        public ActionResult GetOnlineList(int custId)
+        {
+            var model = new OnlineList();
+            var onlines = this._service.GetOnlineList(custId);
+
+            foreach (DataRow row in onlines)
+            {
+                model.Onlines.Add(new OnlineInfo
+                {
+                    IP = new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
+                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt") }
+                });
+            }
+
+            return this.JsonBase(model);
+        }
+
+        /// <summary>
+        /// Gets down-line list.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="pageIndex">Page index.</param>
+        /// <returns>ActionResult object.</returns>
+        [HttpPost]
+        public ActionResult GetDownlineList(int custId, int pageIndex)
+        {
+            var downlines = this._service.GetDownlineList(custId, 100, pageIndex);
+            var model = new DownlineList();
+            var totalPages = LeftPanelService.TotalPages;
+                        
+            if (downlines != null && downlines.Rows.Count > 0)
+            {
+                foreach (DataRow item in downlines.Rows)
+                {
+                    model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
+                }
+
+                model.CurrentPage = pageIndex;
+
+                if (totalPages > 1)
+                {
+                    for (int i = 1; i <= totalPages; i++)
+                    {
+                        model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                    }
+                }
+                else
+                {
+                    model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
+                }
+            }
+
+            return this.JsonBase(model);
         }
     }
 }

@@ -641,6 +641,75 @@ function ViewInfoController($scope, $http) {
     };
 };
 
+function GetDownline (custId, pageIndex) {    
+    parent.Fanex.ExtAcc.BlockUI();
+
+    $.ajax({
+        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=' + pageIndex),
+        type: 'post'
+    })
+    .success(function (result) {
+        model.downlineList = result;
+        model.downlineList.downlines.currentPage = pageIndex;
+
+        var users = result.downlines;
+        var length = users.length;
+
+        if (length > 0) {
+            $('#downlines').empty();
+            $('#downlines').show();
+            $('#nodownline').hide();
+        }
+        else {
+            $('#downlines').hide();
+            $('#nodownline').show();
+        }
+
+        for (var i = 0; i < length; i++) {
+            var item = '<div class="downlineTitle percent50">' +
+                            '<a class="detail2" href="javascript:;" onclick="parent.Fanex.ExtAcc.ViewUser(\'' + users[i].text + '\', 1)">' + users[i].text + '</a>' +
+                        '</div>';
+            $('#downlines').append(item);
+        }
+
+        var pages = model.downlineList.pages;
+        if (model.downlineList.pages.length > 1) {
+            $('#pages').empty();
+            $('#page').show();
+            $('#pages').show();
+
+            for (var i = 0; i < pages.length; i++) {
+                var page = '<a id="link-' + pages[i].value + '" class="page" href="javascript:;" onclick="GetDownline(\'' + model.personalInfo.custId.value + '\', ' + pages[i].value + ')">' + pages[i].value + '</a>';
+                $('#pages').append(page);
+            }
+
+            $('#downlines').scrollTop(0);
+        }
+
+        $('#downlines').css('height', (pages.length > 1 ? '178px' : '208px'));
+
+        if (pages && pages.length > 1) {
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+
+                for (var i = 1; i <= pages.length; i++) {
+                    $('#link-' + i).removeClass('pageSelected');
+                }
+
+                $('#link-' + model.downlineList.downlines.currentPage).addClass('pageSelected');
+            }, 100);
+        }
+
+        parent.Fanex.ExtAcc.UnBlockUI();
+    })
+    .error(function (result) {
+        parent.Fanex.ExtAcc.UnBlockUI();
+        if (typeof console != 'undefined') {
+            console.log(result);
+        }
+    });
+};
+
 function BalanceDownlineInfoController($scope, $http) {
     $scope.className = 'fiftyPercent';
 
@@ -660,6 +729,78 @@ function BalanceDownlineInfoController($scope, $http) {
     else {
         $scope.model = null;
     }
+
+    $scope.GetDownline = function (custId) {
+        if (model.downlineLoaded) return;
+
+        parent.Fanex.ExtAcc.BlockUI();
+
+        $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            model.downlineLoaded = true;
+            model.downlineList = result;
+            model.downlineList.downlines.currentPage = 1;
+
+            var users = result.downlines;
+            var length = users.length;
+
+            if (length > 0) {
+                $('#downlines').empty();
+                $('#downlines').show();
+                $('#nodownline').hide();
+            }
+            else {
+                $('#downlines').hide();
+                $('#nodownline').show();
+            }
+
+            for (var i = 0; i < length; i++) {
+                var item = '<div class="downlineTitle percent50">' +
+                                '<a class="detail2" href="javascript:;" onclick="parent.Fanex.ExtAcc.ViewUser(\'' + users[i].text + '\', 1)">' + users[i].text + '</a>' +
+                            '</div>';
+                $('#downlines').append(item);
+            }
+
+            var pages = model.downlineList.pages;
+            if (model.downlineList.pages.length > 1) {
+                $('#pages').empty();
+                $('#page').show();
+                $('#pages').show();
+
+                for (var i = 0; i < pages.length; i++) {
+                    var page = '<a id="link-' + pages[i].value + '" class="page" href="javascript:;" onclick="GetDownline(\'' + model.personalInfo.custId.value + '\', ' + pages[i].value + ')">' + pages[i].value + '</a>';
+                    $('#pages').append(page);
+                }
+
+                $('#downlines').scrollTop(0);
+            }
+
+            $('#downlines').css('height', (pages.length > 1 ? '178px' : '208px'));
+
+            if (pages && pages.length > 1) {
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    for (var i = 1; i <= pages.length; i++) {
+                        $('#link-' + i).removeClass('pageSelected');
+                    }
+
+                    $('#link-1').addClass('pageSelected');
+                }, 100);
+            }
+
+            parent.Fanex.ExtAcc.UnBlockUI();
+        })
+        .error(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        });
+    };
 
     $scope.TooglePersonalInfo = function () {
         if ($('#personalInfo').hasClass('userDown')) {
@@ -871,6 +1012,34 @@ function DownlineListController($scope, $http) {
     };
 };
 
+function ViewUser(username, pageIndex) {
+    parent.Fanex.ExtAcc.BlockUI();
+
+    $.ajax({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ViewDownline/' + username + '/' + parent.$('#selectedGroupName').html() + '/' + pageIndex), 
+        type: 'post' })
+            .success(function (result) {
+                model = result;
+                
+                var pages = model.downlineList.downlines.pages;
+                var maxHeight = '178px';
+
+                $('#downlines').scrollTop(0);
+                $('#downlines').css('height', (pages.length > 1 ? maxHeight : '208px'));
+
+                var timeout = setTimeout(function () {
+                    clearTimeout(timeout);
+
+                    for (var i = 1; i <= pages.length; i++) {
+                        $('#link-' + i).removeClass('pageSelected');
+                    }
+
+                    $('#link-' + model.downlineList.downlines.currentPage).addClass('pageSelected');
+                }, 500);
+
+                parent.Fanex.ExtAcc.UnBlockUI();
+            });
+};
+
 function SettingController($scope, $http) {
     if ($scope.$parent.model) {
         $scope.setting = $scope.$parent.model.setting;
@@ -879,6 +1048,54 @@ function SettingController($scope, $http) {
     else {
         $scope.model = null;
     }
+
+    $scope.GetOnline = function (custId) {
+        if (model.onlineLoaded) return;
+
+        parent.Fanex.ExtAcc.BlockUI();
+
+        $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
+            method: 'post',
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .success(function (result) {
+            model.onlineLoaded = true;
+            model.onlineList.onlines = result;
+            var onlines = result.onlines;
+
+            if (onlines.length > 0) {
+                $('#onlines').empty();
+                $('#onlines').show();
+                $('#online').hide();
+
+                for (var i = 0; i < onlines.length; i++) {
+                    var online = onlines[i];
+                    var item = '<div class="floatLeft percent10">' + (i + 1) + '</div>' +
+                                    '<div class="floatLeft percent32">' +
+                                        '<a href="javascript:;" onclick="parent.Fanex.ExtAcc.Customer.ShowIpInfo(\'' + online.iP.text + '\')">' +
+                                            online.iP.text +
+                                        '</a>' +
+                                    '</div>' +
+                                '<div class="floatRight percent58">' + online.loginTime.text + '</div>';
+                    $('#onlines').append(item);
+
+                }
+
+                $('#onlines').scrollTop(0);
+            }
+            else {
+                $('#onlines').hide();
+                $('#online').show();
+            }
+
+            parent.Fanex.ExtAcc.UnBlockUI();
+        })
+        .error(function (result) {
+            if (typeof console != 'undefined') {
+                console.log(result);
+            }
+        })
+    };
 
     $scope.Init = function () {
         if ($scope.setting != null) {

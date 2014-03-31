@@ -56,8 +56,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 model.BalanceInfo(ds);
                 model.PersonalInfo(ds);
                 model.LoginInfo(ds);
-                model.GetOnlineList(ds);
-                model.GetDownlineList(ds, pageIndex);
 
                 if (roleId == this.Super)
                 {

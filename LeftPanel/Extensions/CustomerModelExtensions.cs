@@ -525,6 +525,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
+        public static string CheckVNIP(string ip)
+        {
+            return string.IsNullOrWhiteSpace(ip) || (
+                IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)) ? string.Empty : ip;
+        }  
+
         /// <summary>
         /// Removes Enable products.
         /// </summary>
@@ -1174,12 +1180,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             };
 
             return model;
-        }
-
-        private static string CheckVNIP(string ip)
-        {
-            return string.IsNullOrWhiteSpace(ip) || (
-                IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)) ? string.Empty : ip;
-        }        
+        }              
     }
 }
