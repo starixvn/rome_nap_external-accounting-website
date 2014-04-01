@@ -6,25 +6,25 @@
       <BetTypeGroups>
         <BetTypeGroup id="41" name="UK/Irish Tote" key="UK/Irish Tote" resourcekey="ukirishtote" isHide="false" allowCurrencies="*">
           <BetTypes>
-            <BetType id="41" name="Win" allowCopy="true">
+            <BetType id="41" name="Win">
             </BetType>
-            <BetType id="42" name="Place" allowCopy="true">
+            <BetType id="42" name="Place">
             </BetType>
           </BetTypes>
         </BetTypeGroup>
         <BetTypeGroup id="31" name="SA Tote" key="SA Tote" resourcekey="satote" isHide="false" allowCurrencies="*">
           <BetTypes>
-            <BetType id="31" name="Win" allowCopy="true">
+            <BetType id="31" name="Win">
             </BetType>
-            <BetType id="32" name="Place" allowCopy="true">
+            <BetType id="32" name="Place">
             </BetType>
           </BetTypes>
         </BetTypeGroup>
         <BetTypeGroup id="51" name="Aust Tote" key="Aust Tote" resourcekey="autote" isHide="false" allowCurrencies="*">
           <BetTypes>
-            <BetType id="51" name="Win" allowCopy="true">
+            <BetType id="51" name="Win">
             </BetType>
-            <BetType id="52" name="Place" allowCopy="true">
+            <BetType id="52" name="Place">
             </BetType>
           </BetTypes>
         </BetTypeGroup>
@@ -32,19 +32,19 @@
     </SportType>
     <SportType id="152" name="Greyhounds" key="Greyhounds" resourcekey="greyHound" isHide="false" collapsed="true">
       <BetTypeGroups>
-        <BetTypeGroup id="41" name="UK/Irish Tote" key="UK/Irish Tote" resourcekey="ukirishtote" isHide="true" allowCurrencies="*">
+        <BetTypeGroup id="41" name="UK/Irish Tote" key="UK/Irish Tote" resourcekey="ukirishtote" isHide="false" allowCurrencies="*">
           <BetTypes>
-            <BetType id="41" name="Win" allowCopy="false">
+            <BetType id="41" name="Win">
             </BetType>
-            <BetType id="42" name="Place" allowCopy="false">
+            <BetType id="42" name="Place">
             </BetType>
           </BetTypes>
         </BetTypeGroup>
         <BetTypeGroup id="51" name="Aust Tote" key="Aust Tote" resourcekey="autote" isHide="false" allowCurrencies="*">
           <BetTypes>
-            <BetType id="51" name="Win" allowCopy="true">
+            <BetType id="51" name="Win">
             </BetType>
-            <BetType id="52" name="Place" allowCopy="true">
+            <BetType id="52" name="Place">
             </BetType>
           </BetTypes>
         </BetTypeGroup>
@@ -54,9 +54,9 @@
       <BetTypeGroups>
         <BetTypeGroup id="51" name="Aust Tote" key="Aust Tote" resourcekey="autote" isHide="false" allowCurrencies="*">
           <BetTypes>
-            <BetType id="51" name="Win" allowCopy="true">
+            <BetType id="51" name="Win">
             </BetType>
-            <BetType id="52" name="Place" allowCopy="true">
+            <BetType id="52" name="Place">
             </BetType>
           </BetTypes>
         </BetTypeGroup>

@@ -47,6 +47,7 @@
         });
     },
     getCustomerInfo: function () {
+        customerPTRacingSetting.context.adminId = parent.userId;
         $.ajax({
             type: "POST",
             url: "GetCustomerInfo",
