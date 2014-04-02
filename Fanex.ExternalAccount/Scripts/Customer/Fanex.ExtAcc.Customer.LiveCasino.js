@@ -195,6 +195,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             var uplinePreset = data.uplinePtSetting.presetPT;
             var uplineAutoPreset = data.uplinePtSetting.autoPresetPT;
             var max = data.ptSetting.maxPT;
+            var min = data.ptSetting.minPT;
 
             //Render super preset pt
             PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -210,7 +211,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             $('#chkAutoPT').attr('checked', data.uplinePtSetting.isAutoPresetPT);
 
             //Render Master Max PT
-            PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, max);
+            PT_RenderCombo(document.getElementById('pt_3'), min, (uplineMax - uplinePreset), 0.01, max);
 
             //Render Master Min PT
             PT_RenderCombo(document.getElementById('pt_4'), 0, data.ptSetting.maxPT, 0.01, data.ptSetting.minPT);
@@ -431,6 +432,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             var uplinePreset = data.uplinePtSetting.presetPT;
             var uplineAutoPreset = data.uplinePtSetting.autoPresetPT;
             var max = data.ptSetting.maxPT;
+            var min = data.ptSetting.minPT;
 
             //Render super preset pt
             PT_RenderCombo(document.getElementById('pt_1'), uplineMin, uplineMax, 0.01, uplinePreset);
@@ -446,7 +448,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             $('#chkAutoPT').attr('checked', data.uplinePtSetting.isAutoPresetPT);
 
             //Render Master Max PT
-            PT_RenderCombo(document.getElementById('pt_3'), 0, (uplineMax - uplinePreset), 0.01, max);
+            PT_RenderCombo(document.getElementById('pt_3'), min, (uplineMax - uplinePreset), 0.01, max);
 
             //Render Master Min PT
             PT_RenderCombo(document.getElementById('pt_4'), 0, data.ptSetting.maxPT, 0.01, data.ptSetting.minPT);
@@ -827,7 +829,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render Super auto preset pt
-            PT_RenderCombo(document.getElementById('pt_2'), 0, uplineMax, 0.01, uplineAutoPreset);
+            PT_RenderCombo(document.getElementById('pt_2'), min, uplineMax, 0.01, uplineAutoPreset);
             if (!data.superPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
@@ -999,7 +1001,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
 
             //Render master auto preset pt
-            PT_RenderCombo(document.getElementById('pt_2'), 0, uplineMax, 0.01, uplineAutoPreset);
+            PT_RenderCombo(document.getElementById('pt_2'), min, uplineMax, 0.01, uplineAutoPreset);
             if (!data.masterPtSetting.isAutoPresetPT) {
                 $('#pt_2').attr('disabled', 'disabled');
             }
