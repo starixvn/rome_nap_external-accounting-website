@@ -139,13 +139,28 @@ namespace Fanex.ExternalAccount.Core.Context
             return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
+        /// <summary>
+        /// Checks belonging.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="username">Customer username.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <param name="getUplineInfo">Gets up-line or not.</param>
+        /// <returns>Boolean object.</returns>
         public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
         {
+            var currentSession = CurrentSession.Instance;
             groupName = string.IsNullOrWhiteSpace(groupName) ? string.Empty : groupName;
-            var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
+            var loginService = new LoginService();
+            var userInfo = new UserService().GetUserById(currentSession.UserId);
+            currentSession.IsInternalAdmin = loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
+            currentSession.GroupId = userInfo.GroupID;
+            currentSession.CurrencyGroup = userInfo.GroupName;
+            currentSession.IsITAdmin = currentSession.GroupId == 1;
+            var groups = loginService.GroupList();
             var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
-            var hasGroup = CurrentSession.Instance.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
-                groups.Where(o => o.GroupID == CurrentSession.Instance.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
+            var hasGroup = currentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
+                groups.Where(o => o.GroupID == currentSession.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }

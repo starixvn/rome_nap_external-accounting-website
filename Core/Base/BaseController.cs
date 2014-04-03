@@ -24,6 +24,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Utilities;
@@ -241,9 +242,23 @@ namespace Fanex.ExternalAccount.Core.Base
             }
         }
 
+        /// <summary>
+        /// Checks belonging.
+        /// </summary>
+        /// <param name="groupname">Group name.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="userName">Username of admin.</param>
+        /// <param name="isGetUplineInfo">Gets up-line info or not.</param>
+        /// <returns>Boolean object.</returns>
         protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
-            var groups = new Fanex.ExternalAccount.Service.Impl.Login.LoginService().GroupList();
+            var loginService = new LoginService();
+            var userInfo = new UserService().GetUserById(CurrentSession.UserId);
+            CurrentSession.IsInternalAdmin = loginService.CheckExternalGroup(CurrentSession.UserId, 11, "ExternalGroup");
+            CurrentSession.GroupId = userInfo.GroupID;
+            CurrentSession.CurrencyGroup = userInfo.GroupName;
+            CurrentSession.IsITAdmin = CurrentSession.GroupId == 1;
+            var groups = loginService.GroupList();
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
             var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase)) :
                 groups.Where(o => o.GroupID == CurrentSession.GroupId).First().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase);
