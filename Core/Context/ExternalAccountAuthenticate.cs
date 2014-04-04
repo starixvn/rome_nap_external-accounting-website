@@ -153,10 +153,15 @@ namespace Fanex.ExternalAccount.Core.Context
             groupName = string.IsNullOrWhiteSpace(groupName) ? string.Empty : groupName;
             var loginService = new LoginService();
             var userInfo = new UserService().GetUserById(currentSession.UserId);
-            currentSession.IsInternalAdmin = loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
-            currentSession.GroupId = userInfo.GroupID;
-            currentSession.CurrencyGroup = userInfo.GroupName;
-            currentSession.IsITAdmin = currentSession.GroupId == 1;
+
+            if (currentSession.GroupId != userInfo.GroupID)
+            {
+                currentSession.IsInternalAdmin = loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
+                currentSession.GroupId = userInfo.GroupID;
+                currentSession.CurrencyGroup = userInfo.GroupName;
+                currentSession.IsITAdmin = currentSession.GroupId == 1;
+            }
+
             var groups = loginService.GroupList();
             var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
             var hasGroup = currentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
