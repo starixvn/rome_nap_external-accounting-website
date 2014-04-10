@@ -2,6 +2,7 @@
 
 angular.element($('#ng-app')).ready(function () {
     $('#ng-app').show();
+    parent.Fanex.ExtAcc.UnBlockUI();
 });
 
 function RacingStatusController($scope) {

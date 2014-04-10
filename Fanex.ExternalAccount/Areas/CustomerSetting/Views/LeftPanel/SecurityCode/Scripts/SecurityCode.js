@@ -91,3 +91,7 @@ function Reset() {
     $('#securityCode').focus();
     document.getElementById('forceChange').checked = true;
 };
+
+$(document).ready(function () {
+    parent.Fanex.ExtAcc.UnBlockUI();
+});

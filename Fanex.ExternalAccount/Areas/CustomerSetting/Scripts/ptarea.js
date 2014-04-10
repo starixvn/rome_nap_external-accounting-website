@@ -2,6 +2,7 @@
 
 angular.element(document.getElementById('ng-app')).ready(function () {
     $('#ng-app').show();
+    parent.Fanex.ExtAcc.UnBlockUI();
 });
 
 toPTSource = function (obj, resetSelected, isComm) {
