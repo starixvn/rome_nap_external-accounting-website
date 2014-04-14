@@ -35,14 +35,14 @@
                     <td class="C @className">@item.Username.DecodeHtml()</td>
                     <td class="C @className">@item.FirstName.DecodeHtml()</td>
                     <td class="C @className">@item.LastName.DecodeHtml()</td>
-                    <td class="R @className">@item.Amount.ToStringFormat().DecodeHtml()</td>
+                    <td class="R @className">@Html.Raw(item.Amount.ToStringFormat())</td>
                 </tr>   
                 
                 index++;
             }            
             <tr>
                 <td class="total bold R" colspan="3">TOTAL</td>
-                <td class="total bold R">@Model.TotalActiveMemberUsedCredit.ToStringFormat().DecodeHtml()</td>
+                <td class="total bold R">@Html.Raw(Model.TotalActiveMemberUsedCredit.ToStringFormat())</td>
             </tr>
         }        
     </table>
@@ -77,18 +77,18 @@
                     <td class="C @className">@item.Username.DecodeHtml()</td>
                     <td class="C @className">@item.FirstName.DecodeHtml()</td>
                     <td class="C @className">@item.LastName.DecodeHtml()</td>
-                    <td class="R @className">@item.Amount.ToStringFormat().DecodeHtml()</td>
+                    <td class="R @className">@Html.Raw(item.Amount.ToStringFormat())</td>
                 </tr>   
                 
                 index++;
             }            
             <tr>
                 <td class="total bold R" colspan="3">TOTAL</td>
-                <td class="total bold R">@Model.TotalInactiveMemberUsedCredit.ToStringFormat().DecodeHtml()</td>
+                <td class="total bold R">@Html.Raw(Model.TotalInactiveMemberUsedCredit.ToStringFormat())</td>
             </tr>
             <tr>
                 <td class="bold R grandTotal" colspan="3">TOTAL Active + Inactive</td>
-                <td class="bold R grandTotal">@grandTotal.ToStringFormat().DecodeHtml()</td>
+                <td class="bold R grandTotal">@Html.Raw(grandTotal.ToStringFormat())</td>
             </tr>            
         }
         @if (Model.TotalActiveMemberUsedCredit + Model.TotalInactiveMemberUsedCredit != 0m)

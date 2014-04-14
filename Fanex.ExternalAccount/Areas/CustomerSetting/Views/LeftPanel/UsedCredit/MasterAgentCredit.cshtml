@@ -29,16 +29,16 @@
                 
                  <tr>
                     <td class="C @className">@item.Username.DecodeHtml()</td>
-                    <td class="R @className">@item.GivenCredit.ToStringFormat().DecodeHtml()</td>
-                    <td class="R @className">@item.UsedCredit.ToStringFormat().DecodeHtml()</td>
+                    <td class="R @className">@Html.Raw(item.GivenCredit.ToStringFormat())</td>
+                    <td class="R @className">@Html.Raw(item.UsedCredit.ToStringFormat())</td>
                 </tr>   
                 
                 index++;
             }            
             <tr>
                 <td class="total bold C">TOTAL</td>
-                <td class="total bold R">@Model.Total.GivenCredit.ToStringFormat().DecodeHtml()</td>
-                <td class="total bold R">@Model.Total.UsedCredit.ToStringFormat().DecodeHtml()</td>
+                <td class="total bold R">@Html.Raw(Model.Total.GivenCredit.ToStringFormat())</td>
+                <td class="total bold R">@Html.Raw(Model.Total.UsedCredit.ToStringFormat())</td>
             </tr>
         }        
     </table>
