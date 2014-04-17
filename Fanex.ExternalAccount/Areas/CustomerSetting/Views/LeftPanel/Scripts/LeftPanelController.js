@@ -978,12 +978,37 @@ function SettingController($scope, $http) {
                 }
             }
 
+            var syncCasino = true;
+            var syncBingo = true;
+            var syncLiveCasino = true;
+
+            for (var j = 0; j < $scope.setting.syncItems.length; j++) {
+                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
+                    syncCasino = false;
+                }
+                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncBingo') {
+                    syncBingo = false;
+                }
+                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncLiveCasino') {
+                    syncLiveCasino = false;
+                }
+            }
+
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed') &&
                     !allowAdmins.contains(parseInt(parent.userId)) && $scope.setting.enableItems[i].value == true) {
                     $scope.setting.enableItems[i].disabled = true;
-                    $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';                    
+                    $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
                 }
+
+                if ($scope.setting.enableItems[i].key == 'EnableCasino')
+                    $scope.setting.enableItems[i].isHide = !syncCasino;
+
+                if ($scope.setting.enableItems[i].key == 'EnableBingo')
+                    $scope.setting.enableItems[i].isHide = !syncBingo;
+
+                if ($scope.setting.enableItems[i].key == 'EnableLiveCasino')
+                    $scope.setting.enableItems[i].isHide = !syncLiveCasino;
             }
 
             for (var i = 0; i < $scope.setting.masterPts.length; i++) {

@@ -1260,8 +1260,10 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             $('#gameSetting').append(row);
 
             if (uncheckAll) {
-                gameTypesUnchecked += gameSetting[i].name + ', ';
-                document.getElementsByName('gameRow' + i)[0].checked = true;
+                if (document.getElementsByName('gameRow' + i)[0]) {
+                    gameTypesUnchecked += gameSetting[i].name + ', ';
+                    document.getElementsByName('gameRow' + i)[0].checked = true;
+                }
             }
         }
 

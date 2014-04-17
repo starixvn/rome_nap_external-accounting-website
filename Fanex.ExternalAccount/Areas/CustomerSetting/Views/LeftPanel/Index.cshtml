@@ -146,8 +146,8 @@
                 </div>
                 <br />
                 <div class="floatLeft" data-ng-repeat="enableItem in setting.enableItems">
-                    <div class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                    <div class="floatLeft"><input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" /></div>
+                    <div data-ng-hide="{{enableItem.isHide}}" class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
+                    <div data-ng-hide="{{enableItem.isHide}}" class="floatLeft"><input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" /></div>
                 </div>    
             </div>
             <div class="auto" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
