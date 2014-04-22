@@ -24,13 +24,10 @@
     <div id="names" style="display: none;" class="names">
     </div>
     <div class="customerInfo" id="generalInfo">
-        <div class="headerTab">
-            <div id="saveStatus" class="saveDiv" data-bind="visible: @showEditLink">
-                <input id='btnSaveStatus' type="button" class="save" title="@ViewLang.SaveStatus" data-bind="click: saveStatus" />
+        <div class="headerTab" style="border-bottom: 0px">
+            <div class="save" id="saveStatus" title="@ViewLang.SaveStatus" data-bind="visible: @showEditLink, click: saveStatus">
             </div>
-            <div>
                 @ViewLang.generalInformation
-            </div>
         </div>
         <div class="clearBlock general">
             <div class="customerInfoBlock1 b">
@@ -110,26 +107,18 @@
     <div class="clearBlock">
     </div>
     <div class="headerBetSetting">
-        <div id="saveBetSetting" class="saveDiv" data-bind="visible: @showEditLink">
-            <input id='btnSaveBetSetting' type="button" class="save"
-                    title="@ViewLang.SaveBetSetting" data-bind="click: saveBettingLimit" />
+        <div id="saveBetSetting" class="save" title="@ViewLang.SaveBetSetting" data-bind="visible: @showEditLink, click: saveBettingLimit">
         </div>
-        <div>
             @ViewLang.BetSetting
-        </div>
     </div>
     <div id="bettingLimitContainer">
     </div>
     <div class="clearBlock">
     </div>
     <div class="headerPositionTaking">
-        <div id="savePositionTaking" class="saveDiv" data-bind="visible: @showEditLink">
-            <input id='btnSavePositionTaking' type="button" class="save"
-                    title="@ViewLang.SavePositionTaking" data-bind="click: savePositionTaking" />
+        <div id="savePositionTaking" class="save" data-bind="visible: @showEditLink, click: savePositionTaking" title="@ViewLang.SavePositionTaking">
         </div>
-        <div>
             @ViewLang.PositionTaking
-        </div>
     </div>
     <div id="positionTaking">
     </div>
