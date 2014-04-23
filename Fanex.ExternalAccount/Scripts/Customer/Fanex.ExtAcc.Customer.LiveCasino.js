@@ -2345,17 +2345,17 @@ function PT_Increase(id, f) {
 function PT_RenderCombo(combo, min, max, step, selectedValue) {
     min = min > max ? max : min;
     
-    if (selectedValue > max) {
-        var opt = document.createElement("option");
-        opt.text = opt.value = (selectedValue.toFixed(2) * 100)/100;
-        combo.options.add(opt);
-    }
-
     var index = 0;
     var itemIndex = 0;
 
     if (!combo) return;
     combo.options.length = 0;
+
+    if (selectedValue > max || selectedValue < min) {
+        var opt = document.createElement("option");
+        opt.text = opt.value = (selectedValue.toFixed(2) * 100) / 100;
+        combo.options.add(opt);
+    }
 
     var c = Math.round((max * 100 - min * 100) / (step * 100));
 
