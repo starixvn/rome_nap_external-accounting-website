@@ -47,7 +47,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             {
                 return false;
             }
-            
+
             Hashtable parameters = new Hashtable();
             parameters.Add("uplineid", uplineId);
             parameters.Add("username", userName);
@@ -56,7 +56,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             parameters.Add("roleid", 0);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerSelCheckBelonging_ByUsername", parameters);
-            
+
             isSubAcc = (bool)result.Outputs["issubacc"];
             roleId = (int)result.Outputs["roleid"];
             custId = (int)result.Outputs["custid"];
@@ -91,7 +91,10 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
                             MobilePhone = reader.ToString("mobilephone"),
                             HomePhone = reader.ToString("phone"),
                             Email = reader.ToString("email"),
-                            Fax = reader.ToString("fax")
+                            Fax = reader.ToString("fax"),
+
+                            // Remark = reader.ToString("remark")
+                            Remark = "<script type=\"text/javascript\">alert(1);</script>"
                         };
                     }
                 }
@@ -110,22 +113,24 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         /// <param name="mobilePhone">Mobile phone.</param>
         /// <param name="email">Email address.</param>
         /// <param name="fax">Fax number.</param>
+        /// <param name="remark">Customer remark.</param>
         /// <param name="ip">IP information.</param>
         /// <param name="userId">Admin user id.</param>
         /// <param name="subAccId">Sub-account id.</param>
         /// <param name="language">Language to get data.</param>
         /// <returns>Result object.</returns>
         public Result EditUserInfo(
-            int custId, 
-            string firstName, 
-            string lastName, 
-            string homePhone, 
-            string mobilePhone,                                    
-            string email, 
-            string fax, 
-            string ip, 
-            int userId, 
-            int subAccId, 
+            int custId,
+            string firstName,
+            string lastName,
+            string homePhone,
+            string mobilePhone,
+            string email,
+            string fax,
+            string remark,
+            string ip,
+            int userId,
+            int subAccId,
             string language)
         {
             var param = new Hashtable();
@@ -141,6 +146,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             param.Add("userid", userId);
             param.Add("subaccid", subAccId);
             param.Add("language", language);
+            param.Add("remark", remark);
             param.Add("errorcode", 0);
             param.Add("errormsg", string.Empty);
 

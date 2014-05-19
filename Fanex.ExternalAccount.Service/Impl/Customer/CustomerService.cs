@@ -60,6 +60,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
         /// <param name="mobilePhone">Mobile phone.</param>
         /// <param name="email">Email address.</param>
         /// <param name="fax">Fax number.</param>
+        /// <param name="remark">Customer remark.</param>
         /// <param name="ip">IP address.</param>
         /// <param name="userId">Admin user id.</param>
         /// <param name="subAccId">Sub-account id.</param>
@@ -71,8 +72,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             string lastName, 
             string homePhone, 
             string mobilePhone,
-            string email, 
-            string fax, 
+            string email,
+            string fax,
+            string remark, 
             string ip, 
             int userId, 
             int subAccId, 
@@ -80,7 +82,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
         {
             try
             {
-                return this._dao.EditUserInfo(custId, firstName, lastName, homePhone, mobilePhone, email, fax, ip, userId, subAccId, language);
+                return this._dao.EditUserInfo(custId, firstName, lastName, homePhone, mobilePhone, email, fax, remark, ip, userId, subAccId, language);
             }
             catch (Exception ex)
             {

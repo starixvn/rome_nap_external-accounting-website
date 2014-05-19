@@ -134,7 +134,12 @@ function LeftPanelController($scope, $element) {
 
     $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditInfo/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 406, 310, false);
+
+        var url = parent.resolveClientUrl('Customer/EditInfo/?' +
+            'custId=' + $scope.model.personalInfo.custId.value +
+            "&groupName=" + parent.$('#selectedGroupName').html());
+        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, 460, false);
     };
 
     $scope.Transfer = function () {
@@ -212,7 +217,7 @@ function LeftPanelController($scope, $element) {
         var custId = $scope.model.personalInfo.custId.value;
         var param = custId + '/' + custId + '/' + parent.userId + '/' + parent.$('#selectedGroupName').html();
         var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + param);
-        
+
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
     };
 
@@ -448,11 +453,11 @@ function ViewInfoController($scope, $http) {
         }
         else if ($scope.personalInfo.roleId.value == 1) {
             $scope.className = 'onehundredPercent';
-        }        
+        }
     }
     else {
         $scope.model = null;
-    }    
+    }
 
     $scope.TooglePersonalInfo = function () {
         if ($('#personalInfo').hasClass('userDown')) {
@@ -503,7 +508,7 @@ function ViewInfoController($scope, $http) {
     };
 };
 
-function GetDownline (custId, pageIndex) {    
+function GetDownline(custId, pageIndex) {
     parent.Fanex.ExtAcc.BlockUI();
 
     $.ajax({
@@ -877,11 +882,12 @@ function DownlineListController($scope, $http) {
 function ViewUser(username, pageIndex) {
     parent.Fanex.ExtAcc.BlockUI();
 
-    $.ajax({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ViewDownline/' + username + '/' + parent.$('#selectedGroupName').html() + '/' + pageIndex), 
-        type: 'post' })
+    $.ajax({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ViewDownline/' + username + '/' + parent.$('#selectedGroupName').html() + '/' + pageIndex),
+        type: 'post'
+    })
             .success(function (result) {
                 model = result;
-                
+
                 var pages = model.downlineList.downlines.pages;
                 var maxHeight = '178px';
 
@@ -1330,7 +1336,7 @@ function SettingController($scope, $http) {
                 function () {
                     document.getElementById(id).checked = suspend;
                 });
-            };
+    };
 
     $scope.Outright = function (allow, id) {
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -1390,7 +1396,7 @@ function SettingController($scope, $http) {
         function () {
             document.getElementById(id).checked = allow;
         });
-            };
+    };
 
     $scope.AutoPT = function (allow, id) {
         var message = 'Are you sure you want to change Auto Master PT status for this customer?';
@@ -1802,7 +1808,7 @@ function SettingController($scope, $http) {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
                 document.getElementById(id).checked = enable;
             },
-            true);        
+            true);
     };
 
     $scope.EnableLiveCasino = function (enable, id) {
@@ -2094,7 +2100,7 @@ function SettingController($scope, $http) {
         }
     };
 
-    $scope.MinSB = function () {        
+    $scope.MinSB = function () {
         parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = $scope.model.personalInfo.uplineId.value;

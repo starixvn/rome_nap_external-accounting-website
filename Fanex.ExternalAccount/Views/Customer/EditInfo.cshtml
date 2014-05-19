@@ -14,7 +14,7 @@
                 @Html.HiddenFor(m => m.CustId) @Html.LabelFor(m => m.FirstName, ViewLang.Firstname, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "edit-customer-control" })
             </td>
         </tr>
         <tr>
@@ -22,7 +22,7 @@
                 @Html.LabelFor(m => m.LastName, ViewLang.Lastname, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.LastName, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "edit-customer-control" })
             </td>
         </tr>
         <tr>
@@ -30,7 +30,7 @@
                 @Html.LabelFor(m => m.HomePhone, ViewLang.Phone, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.HomePhone, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.HomePhone, new { @class = "edit-customer-control" })
             </td>
         </tr>
         <tr>
@@ -38,7 +38,7 @@
                 @Html.LabelFor(m => m.MobilePhone, ViewLang.MobilePhone, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.MobilePhone, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.MobilePhone, new { @class = "edit-customer-control" })
             </td>
         </tr>
         <tr>
@@ -46,7 +46,7 @@
                 @Html.LabelFor(m => m.Email, ViewLang.Email, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.Email, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "edit-customer-control" })
             </td>
         </tr>
         <tr>
@@ -54,11 +54,19 @@
                 @Html.LabelFor(m => m.Fax, ViewLang.Fax, new { @class = "divMargin" })
             </td>
             <td>
-                @Html.TextBoxFor(m => m.Fax, new { @class = "editControl" })
+                @Html.TextBoxFor(m => m.Fax, new { @class = "edit-customer-control" })
             </td>
         </tr>
         <tr>
-            <td colspan="4" style="padding-right:0">
+            <td style="text-align: right; vertical-align: top;">
+                @Html.LabelFor(m => m.Remark, ViewLang.Remark, new { @class = "divMargin" })
+            </td>
+            <td>
+                @Html.TextAreaFor(m => m.Remark, new { @class = "customer-remark", @maxlength = "300" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding-right: 0">
                 <div style="float: right; padding-right: 3px;">
                     <input class="buttonPopup" type="button" value="Reset" onclick="Fanex.ExtAcc.Customer.ResetInfo()" />
                 </div>
@@ -66,7 +74,7 @@
                     <input class="buttonPopup" type="button" value="Update" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
                 </div>
             </td>
-        </tr>        
+        </tr>
     </table>
 </div>
 <script type="text/javascript">

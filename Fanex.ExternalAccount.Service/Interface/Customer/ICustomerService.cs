@@ -29,6 +29,7 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
             string mobilePhone,
             string email,
             string fax,
+            string remark,
             string ip,
             int userId,
             int subAccId,

@@ -1082,6 +1082,7 @@ Fanex.ExtAcc.Customer = {
         var mobilePhone = $('#MobilePhone').val();
         var email = $('#Email').val();
         var fax = $('#Fax').val();
+        var remark = $('#Remark').val();
 
         var editUrl = 'Customer/EditInfoPost';
 
@@ -1093,6 +1094,7 @@ Fanex.ExtAcc.Customer = {
             mobilePhone: Fanex.ExtAcc.EscapeHtml(mobilePhone),
             email: Fanex.ExtAcc.EscapeHtml(email),
             fax: Fanex.ExtAcc.EscapeHtml(fax),
+            remark: Fanex.ExtAcc.EscapeHtml(remark),
             groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 

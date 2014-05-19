@@ -27,7 +27,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
-    
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -40,7 +40,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private readonly CustomerService _customerService = new CustomerService();
         private string _cacheList = string.Empty;
         private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        
+
         #region Super Add New Master
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
 
             return this.JsonBase(
-                new { context = context, customer = customer }, 
+                new { context = context, customer = customer },
                 new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -237,7 +237,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
 
             return this.JsonBase(
-                new { context = context, customer = customer }, 
+                new { context = context, customer = customer },
                 new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -341,7 +341,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
 
             return this.JsonBase(
-                new { context = context, customer = customer }, 
+                new { context = context, customer = customer },
                 new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -399,7 +399,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             return this.PartialViewBase();
         }
-                
+
         /// <summary>
         /// Gets setting page.
         /// </summary>
@@ -417,9 +417,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var recommend = 0;
             var roleId = 0;
             var userId = 0;
-            
+
             this.GetDataResult(groupName, null, null, null, userName, out result, out srecommend, out mrecommend, out recommend, out userId, out roleId);
-            
+
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
@@ -457,25 +457,25 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SearchListPost(
-            string groupName = "ACCDDD", 
-            bool? enabled = null, 
-            bool? closed = null, 
-            bool? suspended = null, 
-            string username = null, 
+            string groupName = "ACCDDD",
+            bool? enabled = null,
+            bool? closed = null,
+            bool? suspended = null,
+            string username = null,
             bool? isExportExcel = null)
         {
             DataTable result;
             int srecommend, mrecommend, recommend, custId, roleId;
             this.GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
-                result == null ? new DataTable() : this.CheckVNIP(result), 
-                Formatting.None, 
+                result == null ? new DataTable() : this.CheckVNIP(result),
+                Formatting.None,
                 new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
             bool syncCasino = true, syncBingo = true, syncLiveCasino = true, allowDoubleComm = true;
 
             if (roleId > 0 && roleId < 4)
             {
-                DataTable userInfo = null;                
+                DataTable userInfo = null;
                 switch (roleId)
                 {
                     case Master:
@@ -492,20 +492,20 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 syncBingo = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncBingo");
                 syncCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncCasino");
                 syncLiveCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncLiveCasino");
-                allowDoubleComm = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");                
+                allowDoubleComm = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
             }
 
             return this.JsonBase(
-                new 
-                { 
-                    total = 1, 
-                    page = 1, 
-                    records = result != null ? result.Rows.Count : 0, 
-                    rows = ret, 
-                    roleId = roleId, 
-                    srecommend = srecommend, 
-                    mrecommend = mrecommend, 
-                    recommend = recommend, 
+                new
+                {
+                    total = 1,
+                    page = 1,
+                    records = result != null ? result.Rows.Count : 0,
+                    rows = ret,
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
                     custId = custId,
                     syncCasino = syncCasino,
                     syncBingo = syncBingo,
@@ -516,14 +516,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SuperListPost(
-            string groupName = "ACCDDD", 
-            int? custId = null, 
-            bool? enabled = null, 
-            bool? closed = null, 
+            string groupName = "ACCDDD",
+            int? custId = null,
+            bool? enabled = null,
+            bool? closed = null,
             bool? suspended = null)
         {
             this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
-            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() : 
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
                 this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
@@ -569,13 +569,17 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
-                new 
-                { 
-                    total = 1, 
-                    page = 1, 
-                    records = result.Rows.Count, 
-                    rows = ret, roleId = roleId, srecommend = srecommend, 
-                    mrecommend = mrecommend, recommend = recommend, custId = custId 
+                new
+                {
+                    total = 1,
+                    page = 1,
+                    records = result.Rows.Count,
+                    rows = ret,
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId
                 });
         }
 
@@ -591,7 +595,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() : 
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
                 this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
@@ -616,15 +620,17 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
-                new 
+                new
                 {
                     total = 1,
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
                     roleId = roleId,
-                    srecommend = srecommend, 
-                    mrecommend = mrecommend, recommend = recommend, custId = custId 
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId
                 });
         }
 
@@ -640,7 +646,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
-            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() : 
+            var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() :
                 this._memberService.GetData(recommend, custId, enabled, closed, suspended);
 
             var agentId = Utils.ToInt32(recommend);
@@ -665,14 +671,17 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             return this.JsonBase(
-                new 
+                new
                 {
                     total = 1,
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId = roleId, 
-                    srecommend = srecommend, mrecommend = mrecommend, recommend = recommend, custId = custId 
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId
                 });
         }
 
@@ -767,6 +776,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
             model.Email = HttpUtility.HtmlDecode(model.Email);
             model.Fax = HttpUtility.HtmlDecode(model.Fax);
+            model.Remark = HttpUtility.HtmlDecode(model.Remark);
 
             return this.PartialViewBase(model);
         }
@@ -781,9 +791,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="mobilePhone">Mobile phone.</param>
         /// <param name="email">Email address.</param>
         /// <param name="fax">Fax number.</param>
+        /// <param name="remark">Customer remark.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult EditInfoPost(int custId, string firstName, string lastName, string homePhone, string mobilePhone, string email, string fax)
+        public ActionResult EditInfoPost(
+            int custId,
+            string firstName,
+            string lastName,
+            string homePhone,
+            string mobilePhone,
+            string email,
+            string fax,
+            string remark)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
@@ -791,16 +810,17 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
 
             var result = this._customerService.EditUserInfo(
-                    custId, 
-                    firstName, 
-                    lastName, 
-                    homePhone, 
-                    mobilePhone, 
+                    custId,
+                    firstName,
+                    lastName,
+                    homePhone,
+                    mobilePhone,
                     email,
-                    fax, 
-                    CurrentContext.Ip4Address, 
-                    CurrentSession.CustId, 
-                    0, 
+                    fax,
+                    remark,
+                    CurrentContext.Ip4Address,
+                    CurrentSession.CustId,
+                    0,
                     "E");
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
@@ -915,20 +935,20 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetExportToExcel(
-            int? currentLevel = null, 
-            string groupName = "ACCDDD", 
-            int? srecommend = null, 
-            int? mrecommend = null, 
-            int? recommend = null, 
-            int? custId = null, 
-            bool? enabled = null, 
-            bool? closed = null, 
+            int? currentLevel = null,
+            string groupName = "ACCDDD",
+            int? srecommend = null,
+            int? mrecommend = null,
+            int? recommend = null,
+            int? custId = null,
+            bool? enabled = null,
+            bool? closed = null,
             bool? suspended = null)
         {
             string fileName = "CustomerList";
 
             this.SetCache(currentLevel, ref fileName, groupName, srecommend, mrecommend, recommend, custId, enabled, closed, suspended);
-            
+
             string status = string.Empty;
             if (enabled != null || closed != null || suspended != null)
             {
@@ -936,9 +956,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
 
             var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(
-                this.CheckVNIP(this._cache.Get<DataTable>(this._cacheList)), 
-                false, 
-                status, 
+                this.CheckVNIP(this._cache.Get<DataTable>(this._cacheList)),
+                false,
+                status,
                 Convert.ToInt32(currentLevel));
             var excelStream = builder.Build();
             if (excelStream != null)
@@ -964,8 +984,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         private void SetCache(
-            int? currentLevel, 
-            ref string fileName, 
+            int? currentLevel,
+            ref string fileName,
             string groupName = "ACCDDD",
             int? srecommend = null,
             int? mrecommend = null,
@@ -1019,7 +1039,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     }
 
                     break;
-            }   
+            }
         }
 
         /// <summary>
@@ -1037,16 +1057,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="custId">Customer id.</param>
         /// <param name="roleId">Customer role id.</param>
         private void GetDataResult(
-            string groupName, 
-            bool? enabled, 
-            bool? closed, 
-            bool? suspended, 
-            string username, 
-            out DataTable result, 
-            out int srecommend, 
-            out int mrecommend, 
-            out int recommend, 
-            out int custId, 
+            string groupName,
+            bool? enabled,
+            bool? closed,
+            bool? suspended,
+            string username,
+            out DataTable result,
+            out int srecommend,
+            out int mrecommend,
+            out int recommend,
+            out int custId,
             out int roleId)
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
@@ -1070,7 +1090,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
                 mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
                 recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);                
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
             }
 
             if (customerInfo != null || !string.IsNullOrWhiteSpace(Request["roleId"]))

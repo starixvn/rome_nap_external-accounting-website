@@ -78,5 +78,11 @@ namespace Fanex.ExternalAccount.DTO.Customer
             get;
             set;
         }
+
+        public string Remark
+        {
+            get;
+            set;
+        }
     }
 }

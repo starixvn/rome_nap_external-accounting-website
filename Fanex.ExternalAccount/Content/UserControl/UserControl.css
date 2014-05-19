@@ -169,6 +169,7 @@
 	width: 255px;
 	height: 30px;
 }
+
 .cboControl
 {
 	width: 255px;
@@ -552,4 +553,19 @@ input, textarea
 {
 	max-height: 200px;
 	overflow: auto;
+}
+
+.edit-customer-control
+{
+	width: 345px;
+	height: 30px;
+}
+
+.customer-remark 
+{
+	width: 347px;
+	height: 30px;
+	min-height: 130px;
+	height: 130px;
+	resize: vertical;
 }
