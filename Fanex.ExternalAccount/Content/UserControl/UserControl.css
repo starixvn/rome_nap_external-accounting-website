@@ -557,15 +557,18 @@ input, textarea
 
 .edit-customer-control
 {
-	width: 345px;
+	width: 347px;
 	height: 30px;
+    -webkit-padding-start: 1px;
+    -webkit-padding-end: 1px;
 }
 
 .customer-remark 
 {
-	width: 347px;
+	width: 349px;
 	height: 30px;
 	min-height: 130px;
 	height: 130px;
-	resize: vertical;
+	resize: vertical;	
+    padding: 0;
 }
