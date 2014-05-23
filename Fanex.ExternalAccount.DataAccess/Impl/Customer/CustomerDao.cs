@@ -93,8 +93,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
                             Email = reader.ToString("email"),
                             Fax = reader.ToString("fax"),
 
-                            // Remark = reader.ToString("remark")
-                            Remark = "<script type=\"text/javascript\">alert(1);</script>"
+                            Remark = reader.ToString("remark")
                         };
                     }
                 }
