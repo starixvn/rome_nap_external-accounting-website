@@ -208,7 +208,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 TargetCustId = custId,
                 FormId = FormType.EditPT,
                 SubAccId = 0,
@@ -341,7 +341,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 TargetCustId = custId,
                 FormId = FormType.EditPT,
                 SubAccId = 0,
@@ -529,7 +529,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master,
                 FormId = FormType.EditPT,
@@ -642,7 +642,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Master,
                 TargetRoleId = (int)CustomerRole.Agent,
                 FormId = FormType.EditPT,
@@ -753,7 +753,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Agent,
                 TargetRoleId = (int)CustomerRole.Member,
                 FormId = FormType.EditPT,
@@ -857,7 +857,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Member,
                 FormId = FormType.EditPT,
@@ -969,7 +969,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Master,
                 TargetRoleId = (int)CustomerRole.Member,
                 FormId = FormType.EditPT,
@@ -1183,7 +1183,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master,
                 FormId = FormType.EditMinPT,
@@ -1219,7 +1219,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext()
             {
-                CustId = parentId,
+                CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Master,
                 TargetRoleId = (int)CustomerRole.Agent,
                 FormId = FormType.EditMinPT,
