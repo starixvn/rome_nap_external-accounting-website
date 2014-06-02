@@ -242,17 +242,17 @@ namespace Fanex.ExternalAccount.Core.Base
 
             foreach (var gameType in gameTypeList)
             {
-                LiveCasinoSetting.Model.GameType _gameType = new LiveCasinoSetting.Model.GameType()
+                LiveCasinoSetting.Model.GameType game = new LiveCasinoSetting.Model.GameType()
                 {
                     Id = gameType.Id,
                     Name = gameType.Name,
                     BetTypeId = gameType.BetTypeId,
                 };
-                _gameType.BettingLimit = new List<LiveCasinoSetting.Model.StakeLevel>();
+                game.BettingLimit = new List<LiveCasinoSetting.Model.StakeLevel>();
 
                 foreach (var stakeLevel in gameType.BettingLimit)
                 {
-                    _gameType.BettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel()
+                    game.BettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel()
                     {
                         Id = stakeLevel.Id,
                         IsDirty = stakeLevel.IsDirty,
@@ -261,16 +261,16 @@ namespace Fanex.ExternalAccount.Core.Base
                     });
                 }
 
-                oldValues.Add(_gameType);
+                oldValues.Add(game);
             }
 
             gameTypeList
                 .ForEach(g => g.BettingLimit
                     .ForEach(b => ((INotifyPropertyChanged)b).PropertyChanged += (o, arg) =>
                     {
-                        if ((arg.PropertyName == "IsSelected"))
+                        if (arg.PropertyName == "IsSelected")
                         {
-                            (o as LiveCasinoSetting.Model.StakeLevel).IsDirty = (arg.PropertyName == "IsSelected");
+                            (o as LiveCasinoSetting.Model.StakeLevel).IsDirty = arg.PropertyName == "IsSelected";
                         }
                     }));
 
@@ -321,6 +321,7 @@ namespace Fanex.ExternalAccount.Core.Base
                                 IsDirty = true
                             });
                         }
+
                         gameTypeList.Add(new LiveCasinoSetting.Model.GameType() { Id = gameType.Id, BetTypeId = gameType.BetTypeId, Name = gameType.Name, BettingLimit = bettingLimit });
                     }
                     else
