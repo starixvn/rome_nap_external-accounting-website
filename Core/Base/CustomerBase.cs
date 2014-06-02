@@ -54,6 +54,22 @@ namespace Fanex.ExternalAccount.Core.Base
                 var table = new DataTable();
                 var result = this._gameSetting.InsertAccount(this.GetInsertAccountRequest(custId, uplineRoleId, groupName), ref table);
 
+                if (table.Rows.Count == 0)
+                {
+                    var gameTypes = this._gameSetting.GetByExhangeId(userInfo.ExChangeId, userInfo.Site);
+                    if (gameTypes.Count > 0)
+                    {
+                        foreach (var gameType in gameTypes)
+                        {
+                            var row = table.NewRow();
+                            row[0] = gameType.Id;
+                            row[1] = gameType.BetTypeId;
+                            row[2] = string.Empty;
+                            table.Rows.Add(row);
+                        }
+                    }
+                }
+
                 if (string.IsNullOrWhiteSpace(result.ErrorCode))
                 {
                     var custInfo = this.GetCustomerInfo(custId, groupName);

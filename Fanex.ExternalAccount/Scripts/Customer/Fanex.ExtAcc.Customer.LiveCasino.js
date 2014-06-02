@@ -1259,7 +1259,7 @@ Fanex.ExtAcc.Customer.LiveCasino = {
 
             $('#gameSetting').append(row);
 
-            if (uncheckAll) {
+            if (uncheckAll && Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
                 if (document.getElementsByName('gameRow' + i)[0]) {
                     gameTypesUnchecked += gameSetting[i].name + ', ';
                     document.getElementsByName('gameRow' + i)[0].checked = true;
