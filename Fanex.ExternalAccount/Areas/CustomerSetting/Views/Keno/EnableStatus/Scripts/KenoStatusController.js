@@ -10,6 +10,9 @@ function KenoStatusController($scope) {
     $scope.betTypes = $scope.model.betTypeStatusList;
     $scope.isDisabledAll = true;
     $scope.isCheckeddAll = true;
+    $scope.isCheckeddAll = true;
+    $scope.enableBetTypeCache = {};
+
     var length = $scope.model.betTypeStatusList.length;
     for (var i = 0; i < length; i++) {
         if (!$scope.model.betTypeStatusList[i].isDisabledUpline) {
@@ -19,17 +22,19 @@ function KenoStatusController($scope) {
     }
 
     $scope.Init = function () {
-		model.userID = parent.userId;
+        model.userID = parent.userId;
         var allChecked = true;
         for (var i = 0; i < $scope.betTypes.length; i++) {
-            if (($scope.betTypes[i].isDisabled && !$scope.betTypes[i].isDisabledUpline) || $scope.isDisabledAll) {
+            var betType = $scope.betTypes[i];
+            if ((betType.isDisabled && !betType.isDisabledUpline) || $scope.isDisabledAll) {
                 allChecked = false;
                 break;
             }
         }
 
-        if (allChecked)
+        if (allChecked) {
             document.getElementById('chkAll').checked = true;
+        }
     };
 
     $scope.CheckStatus = function (preVal, scope) {
@@ -59,7 +64,7 @@ function KenoStatusController($scope) {
                 document.getElementById('chkAll').checked = false;
 
                 scope.item.enableDownline = false;
-                scope.item.disableDownline = true;                
+                scope.item.disableDownline = true;
 
                 scope.item.isDisabled = true;
                 scope.item.isDisabledUpline = false;
@@ -173,7 +178,7 @@ function KenoStatusController($scope) {
                     $scope.betTypes[i].isDisabledDownlines = false;
                 }
                 else {
-					betTypeChexkboxesDownlines[i].checked = false;
+                    betTypeChexkboxesDownlines[i].checked = false;
                     betTypeChexkboxesDownlines[i].disabled = false;
                     $scope.betTypes[i].isDisabledDownlines = true;
                 }
@@ -188,16 +193,29 @@ function KenoStatusController($scope) {
                 betTypeChexkboxes[i].checked = false;
                 betTypeChexkboxesDownlines[i].checked = false;
 
-				betTypeChexkboxesDownlines[i].disabled = true;
+                betTypeChexkboxesDownlines[i].disabled = true;
 
                 $scope.betTypes[i].isDisabled = true;
                 $scope.betTypes[i].isDisabledDownlines = true;
             }
         }
     };
-	
-	$scope.CheckDownline = function (id, scope) {	
-		var checkboxDownlines = document.getElementById(id);
-		scope.item.isDisabledDownlines = !checkboxDownlines.checked;
-	};
+
+    $scope.CheckDownline = function (id, scope) {
+        var checkboxDownlines = document.getElementById(id);
+        scope.item.isDisabledDownlines = !checkboxDownlines.checked;
+    };
+    $scope.cacheEnableBetType = function () {
+        for (var i = 0; i < $scope.betTypes.length; i++) {
+            var betType = $scope.betTypes[i];
+            if ($scope.enableBetTypeCache[betType.betTypeID] == undefined) {
+                $scope.enableBetTypeCache[betType.betTypeID] = betType.enable;
+            }
+        }
+
+        return true;
+    };
+    $scope.isEnableCheckboxDownline = function (item) {
+        return $scope.enableBetTypeCache[item.betTypeID] || !item.enable;
+    };
 };
