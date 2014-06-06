@@ -55,6 +55,12 @@ namespace Fanex.ExternalAccount.Utilities
         {
             get
             {
+                var checkUM = Utils.ToBoolean(GetValue("CheckUM"));
+                if (!checkUM) 
+                { 
+                    return false; 
+                }
+
                 var um = new UMBusiness();
                 string from = string.Empty, to = string.Empty;
                 bool isUM = um.isUnderMaintainence(Sites.AccountSite, Config.LBUrl, ref from, ref to) || Utils.ToBoolean(GetValue("IsUM"));
