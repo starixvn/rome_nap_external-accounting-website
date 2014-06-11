@@ -481,11 +481,7 @@ namespace Fanex.ExternalAccount.Core.Base
                 if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
                 {
                     retVal = true;
-
-                    // Insert account success then update game setting
-                    // Sync live casino when updated PT
                     var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
-
                     result = this.GameSetting.InsertAccount(req);
                     var oldGameTypes = this.GameSetting.GetByCustomerId(uplineId);
                     oldGameTypes = oldGameTypes.Count == 0 ? gameTypes : oldGameTypes;
@@ -558,16 +554,15 @@ namespace Fanex.ExternalAccount.Core.Base
 
                     var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineRoleId - 1, gameTypes);
                     var errorCode = resultList.Any(o => string.IsNullOrWhiteSpace(o.Value.ErrorCode) || o.Value.ErrorCode == ErrorCode.NOT_UPDATE_BETTING_LIMIT) ? string.Empty :
-                        resultList.Where(o => !string.IsNullOrWhiteSpace(o.Value.ErrorCode) && o.Value.ErrorCode != ErrorCode.NOT_UPDATE_BETTING_LIMIT).FirstOrDefault().Value.ErrorCode;
-
+                        resultList.Where(o => !string.IsNullOrWhiteSpace(o.Value.ErrorCode) && o.Value.ErrorCode != ErrorCode.NOT_UPDATE_BETTING_LIMIT)
+                        .FirstOrDefault().Value.ErrorCode;
                     var errorMsg = resultList.Any(o => string.IsNullOrWhiteSpace(o.Value.ErrorCode) || o.Value.ErrorCode == ErrorCode.NOT_UPDATE_BETTING_LIMIT) ? string.Empty :
-                        resultList.Where(o => !string.IsNullOrWhiteSpace(o.Value.ErrorCode) && o.Value.ErrorCode != ErrorCode.NOT_UPDATE_BETTING_LIMIT).FirstOrDefault().Value.ErrorMessage;
-
+                        resultList.Where(o => !string.IsNullOrWhiteSpace(o.Value.ErrorCode) && o.Value.ErrorCode != ErrorCode.NOT_UPDATE_BETTING_LIMIT)
+                        .FirstOrDefault().Value.ErrorMessage;
                     if (string.IsNullOrWhiteSpace(errorCode) && !isUpdateGameSetting)
                     {
                         var custList = new List<KeyValuePair<int, string>>();
                         custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
-
                         this.LogWriter.WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
                         {
                             Action = this.LogActionManual(uplineRoleId - 1),
@@ -589,7 +584,6 @@ namespace Fanex.ExternalAccount.Core.Base
                             ErrorMessage = result.ErrorMessage,
                             CustomerList = custList
                         });
-
                         this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
                         {
                             Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),

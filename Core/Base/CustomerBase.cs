@@ -48,32 +48,27 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             var parentInfo = this._setting.GetCustomerInfo(parentId);
             var userInfo = this._setting.GetCustomerInfo(custId);
-
+            var result = new Fanex.LiveCasinoSetting.Model.Result();
             if (parentInfo.IsSyncLiveCasino && !userInfo.IsSyncLiveCasino)
             {
                 var table = new DataTable();
-                var result = this._gameSetting.InsertAccount(this.GetInsertAccountRequest(custId, uplineRoleId, groupName), ref table);
-
+                result = this._gameSetting.InsertAccount(this.GetInsertAccountRequest(custId, uplineRoleId, groupName), ref table);
                 if (table.Rows.Count == 0)
                 {
                     var gameTypes = this._gameSetting.GetByExhangeId(userInfo.ExChangeId, userInfo.Site);
-                    if (gameTypes.Count > 0)
+                    foreach (var gameType in gameTypes)
                     {
-                        foreach (var gameType in gameTypes)
-                        {
-                            var row = table.NewRow();
-                            row[0] = gameType.Id;
-                            row[1] = gameType.BetTypeId;
-                            row[2] = string.Empty;
-                            table.Rows.Add(row);
-                        }
+                        var row = table.NewRow();
+                        row[0] = gameType.Id;
+                        row[1] = gameType.BetTypeId;
+                        row[2] = string.Empty;
+                        table.Rows.Add(row);
                     }
                 }
 
                 if (string.IsNullOrWhiteSpace(result.ErrorCode))
                 {
                     var custInfo = this.GetCustomerInfo(custId, groupName);
-
                     this._logWriter.WriteLog(new LogAutoInsertAccount
                     {
                         Action = uplineRoleId == BaseController.Super ? LogActions.AutoInsert_Master : 
@@ -95,11 +90,9 @@ namespace Fanex.ExternalAccount.Core.Base
                         dataResult = table
                     });
                 }
-
-                return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
             }
 
-            return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
         #endregion
