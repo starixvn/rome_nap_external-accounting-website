@@ -788,8 +788,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMasterPT(custId, uplineId, customer);
 
+            var synced = false;
+
             // Process manually sync
-            this.SyncManually(BaseController.Super, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Super, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName);
 
             return this.JsonBase(
                 new 
@@ -816,8 +818,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
+            var synced = false;
+
             // Process manually sync
-            this.SyncManually(BaseController.Master, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Master, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName);
 
             return this.JsonBase(
                 new 
@@ -844,8 +848,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
+            var synced = false;
+
             // Process manually sync
-            this.SyncManually(BaseController.Agent, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Agent, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName);
 
             return this.JsonBase(
                 new 
@@ -920,11 +926,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMasterPT(custId, uplineId, customer);
 
+            var synced = false;
+
             // Process manually sync
-            this.SyncManually(BaseController.Super, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Super, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName);
 
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(BaseController.Super, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Super, custId, customer, synced);
 
             var results = new List<object>();
 
@@ -961,11 +969,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateAgentPT(custId, uplineId, customer);
 
+            var synced = false;
+
             // Process manually sync
-            this.SyncManually(BaseController.Master, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Master, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName);
 
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(BaseController.Master, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Master, custId, customer, synced);
 
             var results = new List<object>();
 
@@ -1002,11 +1012,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
             var result = this.UpdateMemberPT(custId, uplineId, customer);
 
+            var synced = false;
+
             // Process manually sync
-            this.SyncManually(BaseController.Agent, uplineId, custId, customer, model.CustomerInfo.GroupName);
+            this.SyncManually(BaseController.Agent, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName);
 
             var resultMWL = this.UpdateMemberWinLimit(custId, model.CustomerInfo.Limit.IsDailyAutoReset, model.CustomerInfo.Limit.MaxWinLimit, customer);
-            var resultGS = this.UpdateGameSetting(BaseController.Agent, custId, customer);
+            var resultGS = this.UpdateGameSetting(BaseController.Agent, custId, customer, synced);
             var resultStatus = new Fanex.LiveCasinoSetting.Model.Result();
             var results = new List<object>();
 
@@ -1024,8 +1036,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             if (result != null && model.GameSetting.Count > 0)
             {
+                var insertReq = this.GetInsertAccountRequest(custId, BaseController.Agent, model.CustomerInfo.GroupName);
+                insertReq.IsDisabledLiveCasino = model.CustomerInfo.DisableLiveCasino;
                 resultStatus = this.PtSetting.UpdateStatusLiveCasino(
-                    new UpdateLiveCasinoStatusRequest(this.GetInsertAccountRequest(custId, BaseController.Agent, model.CustomerInfo.GroupName)));
+                    new UpdateLiveCasinoStatusRequest(insertReq));
                 results.Add(
                     new 
                     { 
@@ -1153,10 +1167,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
             var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
 
-            // Process manually sync
-            this.SyncManually(uplineRoleId, uplineId, custId, customer, model.CustomerInfo.GroupName, true);
+            var synced = false;
 
-            var result = this.UpdateGameSetting(uplineRoleId, custId, customer);
+            // Process manually sync
+            this.SyncManually(uplineRoleId, uplineId, custId, customer, ref synced, model.CustomerInfo.GroupName, true);
+
+            var result = this.UpdateGameSetting(uplineRoleId, custId, customer, synced);
 
             return this.JsonBase(result);
         }
