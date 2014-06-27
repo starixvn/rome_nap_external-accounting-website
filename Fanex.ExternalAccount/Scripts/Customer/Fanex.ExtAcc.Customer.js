@@ -31,7 +31,7 @@ Fanex.ExtAcc.Customer = {
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
     HideVirtualSports: false,
-    ShowKeno: true,
+    HideKeno: true,
 
     superSyncCasino: false,
     superSyncBingo: false,
@@ -296,12 +296,12 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, superSyncCasino, superSyncBingo, superSyncLiveCasino, isShowKeno, disableKeno) {
+    ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, superSyncCasino, superSyncBingo, superSyncLiveCasino, isHideKeno, disableKeno) {
         this.TransferCondition = transferCondition;
         Fanex.ExtAcc.Customer.UserId = custId;
         this.TitleEditInfo = title;
         this.HideVirtualSports = hideVirtualSport;
-        this.ShowKeno = isShowKeno;
+        this.HideKeno = isHideKeno;
 
         this.ResetFlags();
 
@@ -518,7 +518,7 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        if (isShowKeno) {
+        if (!isHideKeno) {
             has3rdParty = true;
             if (disableKeno) {
                 itemsMaster.keno = {
@@ -589,12 +589,12 @@ Fanex.ExtAcc.Customer = {
         } catch (e) { }
     },
 
-    ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isShowKeno, disableKeno) {
+    ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isHideKeno, disableKeno) {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
         this.HideVirtualSports = hideVirtualSport;
-        this.ShowKeno = isShowKeno;
+        this.HideKeno = isHideKeno;
 
         this.ResetFlags();
 
@@ -827,7 +827,7 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        if (isShowKeno) {
+        if (!isHideKeno) {
             has3rdParty = true;
             if (disableKeno) {
                 itemsAgent.keno = {
@@ -897,13 +897,13 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isShowKeno, disableKeno) {
+    ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isHideKeno, disableKeno) {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
         this.IsMultiple = false;
         this.HideVirtualSports = hideVirtualSport;
-        this.ShowKeno = isShowKeno;
+        this.HideKeno = isHideKeno;
 
         this.ResetFlags();
 
@@ -1099,7 +1099,7 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        if (isShowKeno) {
+        if (!isHideKeno) {
             has3rdParty = true;
             if (disableKeno) {
                 itemsMember.keno = {

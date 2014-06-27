@@ -596,7 +596,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("VirtualSports");
             }
 
-            if (!KenoSection.Instance.ShowSetting)
+            if (product.HideKeno)
             {
                 model.RemoveProduct("Keno");
             }
@@ -612,7 +612,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
-            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
+            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports, hideKeno = product.HideKeno ;
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
@@ -626,7 +626,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
                        (o.Key.ToString() == "VirtualSports" && !hideVS) ||
                        o.Key.ToString() == "Racing" ||
-                        (o.Key.ToString() == "Keno" && KenoSection.Instance.ShowSetting)).ToList();
+                        (o.Key.ToString() == "Keno" && hideKeno)).ToList();
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
@@ -700,6 +700,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableCasino)
             {
                 model.DisableProduct("EnableCasino");
+            }
+
+            if (product.UplineStatuses.DisableLiveCasino)
+            {
+                model.DisableProduct("EnableLiveCasino");
             }
 
             if (product.UplineStatuses.DisableLiveCasino)
@@ -884,6 +889,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.Suspended = result.Rows[0].ToBoolean("suspended");
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
             product.DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds");
+            product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || KenoSection.Instance.ShowSetting;
+            product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || 

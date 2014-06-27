@@ -124,7 +124,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             };
 
             $scope.afterUpdatedSuccessfully = function (results, kenoSetting, index) {
-                var usermessageGroup = $scope.multipleEdit.isMultipleEdit ? '<div >' + results.username + '</div>' : '';
+                var usermessageGroup = $scope.multipleEdit.isMultipleEdit ? '<div style="font-size: 16px !important; color: blue;font-weight: bold;">' + results.username + '</div>' : '';
                 var multipleEditClass = $scope.multipleEdit.isMultipleEdit ? ' multipleedit' : '';
 
                 if (typeof results != 'undefined') {
@@ -146,7 +146,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                         if (($scope.multipleEdit.isMultipleEdit && $scope.multipleEdit.updatedCount == $scope.multipleEdit.custids.length)
                         || !$scope.multipleEdit.isMultipleEdit) {
                             $timeout(function () {
-                                location.reload();
+//                                location.reload();
                             }, 2000);
                         }
                     } else {
