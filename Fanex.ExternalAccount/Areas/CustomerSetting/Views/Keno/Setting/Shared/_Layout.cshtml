@@ -34,8 +34,13 @@
 <div ng-controller="mainController" class="content">
 <div id="page_main">
 
-    <div id="divShowInfo"  style="display: none;" class="maincontent_box tableWidth">
+   <div id="errMsg" style="display: none;" class="successMsg">
     </div>
+    <div id="arrowUpDown" class="collapse">
+    </div>
+    <div id="names" style="display: none;" class="names">
+    </div>  
+
     <div id="customerInfo">
         @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
         @RenderBody()
@@ -96,6 +101,7 @@
 
     if(parent.Fanex.ExtAcc.Customer.IsMultiple) {
         InitMultipleEditInformation();
+        Fanex.CustomerSetting.Core.ProcessDisplayMultiple(80, parent.Fanex.ExtAcc.Customer.Usernames);
     }
 
     function InitMultipleEditInformation() {

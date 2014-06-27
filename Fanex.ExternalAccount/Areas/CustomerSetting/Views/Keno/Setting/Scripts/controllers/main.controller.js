@@ -84,13 +84,13 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             }
 
             $scope.showMesseges = function (html) {
-                $("#divShowInfo").append(html).show();
+                $("#errMsg").append(html).show();
                 Fanex.CustomerSetting.Core.UnBlockUI();
             }
 
             $scope.doUpdated = function () {
                 Fanex.CustomerSetting.Core.BlockUI();
-                $("#divShowInfo").empty();
+                $("#errMsg").empty();
 
                 if (!$scope.multipleEdit.isMultipleEdit) {
                     $scope.save($scope.kenoSetting, 0);
@@ -124,7 +124,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             };
 
             $scope.afterUpdatedSuccessfully = function (results, kenoSetting, index) {
-                var usermessageGroup = $scope.multipleEdit.isMultipleEdit ? '<div class="alertsuccessgroup">' + results.username + '</div>' : '';
+                var usermessageGroup = $scope.multipleEdit.isMultipleEdit ? '<div >' + results.username + '</div>' : '';
                 var multipleEditClass = $scope.multipleEdit.isMultipleEdit ? ' multipleedit' : '';
 
                 if (typeof results != 'undefined') {
