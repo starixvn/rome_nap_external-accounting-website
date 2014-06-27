@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.IP.Utils;
+    using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -595,6 +596,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("VirtualSports");
             }
 
+            if (!KenoSection.Instance.ShowSetting)
+            {
+                model.RemoveProduct("Keno");
+            }
+
             return model;
         }
 
@@ -619,7 +625,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "Bingo" && syncBingo) ||
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
                        (o.Key.ToString() == "VirtualSports" && !hideVS) ||
-                       o.Key.ToString() == "Racing").ToList();
+                       o.Key.ToString() == "Racing" ||
+                        (o.Key.ToString() == "Keno" && KenoSection.Instance.ShowSetting)).ToList();
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
@@ -961,6 +968,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
             model.AddBettingLimitForSuper();
@@ -1049,6 +1057,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
 
@@ -1113,6 +1122,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
 
@@ -1176,6 +1186,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
 

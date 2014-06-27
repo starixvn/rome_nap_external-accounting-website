@@ -1,0 +1,55 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<table class="tableColor tableWidth">
+    <tr>
+        <td colspan="4" class="header c b " >
+           <div ng-show="!multipleEdit.isMultipleEdit" class=" divInline" ng-switch="customerInformation.roleId">
+                <span ng-switch-when="4">@LayoutTexts.Super: </span>
+                <span ng-switch-when="3">@LayoutTexts.Master: </span>
+                <span ng-switch-when="2">@LayoutTexts.Agent: </span>
+                <span ng-switch-default>@LayoutTexts.Member: </span>
+            </div>
+            <span ng-show="!multipleEdit.isMultipleEdit" ng-bind="customerInformation.username"> </span>
+            <span ng-show="multipleEdit.isMultipleEdit" ng-bind="multipleEdit.usernames"> </span>
+        </td>
+    </tr>
+    <tr>
+        <td class="col15percent formatCol r b betSetting">
+            @LayoutTexts.FirstName
+        </td>
+        <td class="col35percent formatCol l betSetting">
+            <span ng-bind="customerInformation.firstName"></span>
+        </td>
+        <td class="col15percent formatCol r b betSetting">
+            @LayoutTexts.LastName
+        </td>
+        <td class="col35percent formatCol l betSetting">
+            <span ng-bind="customerInformation.lastName"></span>
+        </td>
+    </tr>
+    <tr>
+        <td class="formatCol r b betSetting">
+            @LayoutTexts.Phone
+        </td>
+        <td class="formatCol l betSetting">
+            <span ng-bind="customerInformation.phone"></span>
+        </td>
+        <td class="formatCol r b betSetting">
+            @LayoutTexts.MobilePhone
+        </td>
+        <td class="formatCol l betSetting">
+            <span ng-bind="customerInformation.mobilePhone"></span>
+        </td>
+    </tr>
+    <tr>
+        <td class="formatCol r b betSetting">
+            @LayoutTexts.Fax
+        </td>
+        <td class="formatCol l betSetting">
+            <span ng-bind="customerInformation.fax"></span>
+        </td>
+        <td class="formatCol r b betSetting">
+        </td>
+        <td class="formatCol l betSetting">
+        </td>
+    </tr>
+</table>

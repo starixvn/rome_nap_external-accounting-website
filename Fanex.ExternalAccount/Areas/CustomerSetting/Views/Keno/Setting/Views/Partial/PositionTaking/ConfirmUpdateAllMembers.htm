@@ -1,0 +1,21 @@
+﻿<div class="ngdialog-message">
+    Confirm Update Members's PT
+</div>
+<div style="padding-left: 15px;" ng-switch="roleId">
+     You have changed this <span ng-switch-when="3">Super </span> <span ng-switch-default>Master </span> position taking.</div>
+<div style="padding-left: 15px;">
+    Do you want to update all member's position taking to:</div>
+<div ng-repeat="positionTaking in positionTakingList " ng-model="positionTaking">
+    <div ng-if="positionTaking.isConfirmIsAuto" style="margin-top: 5px; padding-left: 50px;">
+        <div class ="col100 " ng-bind="positionTaking.betTypeName" style="margin-right: 10px; display: inline-block"></div>
+         <select ie-select-fix = "{{fixIECount}}" class="col60" ng-model="positionTaking.newMemberPT" ng-options="value for value in positionTaking.memberNewValueRange">
+        </select>
+    </div>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-dialog-class="ngdialog-theme-default"
+        ng-click="setValueAllMember(false);" ng-dialog-close-previous>
+        NO</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="setValueAllMember(true);">
+        YES</button>
+</div>

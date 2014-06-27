@@ -1,0 +1,24 @@
+﻿<td class="formatCol l betSetting">
+    <span ng-bind="positionTaking.betTypeName"></span>
+    <div style="display: inline-block; float: right;" ng-switch="index == 0">
+        <input ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}"
+            ng-switch-when="true" ng-model="$parent.$parent.isCopyAll"
+            ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)"
+            type="button" /></div>
+</td>
+<td class="formatCol c b betSetting">
+    <select ie-select-fix = "{{fixIECount}}"  ng-disabled="($parent.$parent.isCopyAll && index != 0) || positionTaking.iS3" ng-show="!positionTaking.iS1" class="col60" ng-model="positionTaking.s1" ng-options="value for value in s1Range">
+    </select>
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iS1" class="col60" ng-model="positionTaking.uS1"
+        ng-options="value for value in uS1Range">
+    </select>
+</td>
+<td class="formatCol c b betSetting" ng-hide="positionTaking.isDisabledMPT">
+    <input  ng-disabled="$parent.$parent.isCopyAll && index != 0" class="chb" type="checkbox" ng-model="positionTaking.iS1" />
+</td>
+<td class="formatCol c betSetting">
+    <span ng-bind="positionTaking.m1"></span>
+</td>
+<td class="formatCol c betSetting">
+    <span ng-bind="positionTaking.a1"></span>
+</td>

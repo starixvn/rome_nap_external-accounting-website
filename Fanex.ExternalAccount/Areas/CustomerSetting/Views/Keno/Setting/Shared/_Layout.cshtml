@@ -1,0 +1,116 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using Fanex.CustomerSetting.Module.Keno.Resources;
+<!DOCTYPE html>
+<html ng-app='kenoSettingModule' id="ng-app">
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Styles/keno-setting.less"
+        rel="stylesheet" type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Styles/External/theme-color.less"
+        rel="stylesheet" type="text/css" />
+            <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.css" rel="stylesheet"
+        type="text/css" />
+          <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog-theme-default.css" rel="stylesheet"
+        type="text/css" />
+          <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog-theme-plain.css" rel="stylesheet"
+        type="text/css" />
+
+          <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/tipsy.css" rel="stylesheet"
+        type="text/css" />
+         <link href="~/Areas/CustomerSetting/Styles/input.css" rel="stylesheet"
+        type="text/css" />
+    @{
+        var KenoSetting = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling = NullValueHandling.Ignore
+        }); 
+    }
+</head>
+<body>
+<div ng-controller="mainController" class="content">
+<div id="page_main">
+
+    <div id="divShowInfo"  style="display: none;" class="maincontent_box tableWidth">
+    </div>
+    <div id="customerInfo">
+        @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
+        @RenderBody()
+    </div>
+    <div class="tableWidth">
+        @if (Model.CustomerInformation.RoleId != 4)
+        {
+        <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedKeno" ng-click="updated(false)"  value="Update" 
+            type="button" class="btnUpdate b" />
+        }
+    </div>
+     <div id="loadingDiv" style="display: none; position: absolute; top: 0px; left: 0px; opacity: 0.5; background-color: white; width: 1058px; height: 778px;">
+        <div class="MaskLoadingDiv" style="width: 100px; height: 100px; position: relative; left: 530px; top: 0px;"></div>
+    </div>
+</div>
+</div>
+</body>
+
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/modules/module.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/repositories/repository.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/main.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/bet-setting.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/controllers/position-taking.controller.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/CommonDirective.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/BetSettingDirective.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MaxBetDirective.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MaxPerMatchDirective.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/betSetting/MinBetDirective.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/services/commonService.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/services/dataService.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/jquery.tipsy.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var model = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@KenoSetting'));
+    var domain = '@Url.Content("~")';
+    var resources = {
+        successful: "@Messages.Msg_0",
+        failed: "@Messages.UpdatedFail",
+        more_than: "@Messages.MoreThan",
+        less_than: "@Messages.LessThan"
+    };
+    var custids;
+    var usernames;
+    var isMultipleEdit;
+
+    if(parent.Fanex.ExtAcc.Customer.IsMultiple) {
+        InitMultipleEditInformation();
+    }
+
+    function InitMultipleEditInformation() {
+        if (custids == null || custids == undefined) {
+            var elementByCustids = parent.Fanex.ExtAcc.Customer.Ids();
+            if (elementByCustids != null) {
+                custids = elementByCustids;
+                usernames = parent.Fanex.ExtAcc.Customer.Names();
+            }
+        }
+
+        isMultipleEdit = custids != null && custids != undefined && custids.length > 1 ? true : false;
+    }
+
+   
+</script>
+@RenderSection("scripts", required: false)
+</html>

@@ -1,0 +1,47 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+
+<table class="tableColor tableWidth" ng-controller="betSettingController">
+    <thead>
+        <tr>
+            <td class="header col15percent">
+            </td>
+            <td colspan="3" class="header c b">
+                <span>@LayoutTexts.BetSetting</span>
+            </td>
+            <td colspan="2" class="header c b">
+              <input  ng-if="roleId != 4" ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
+                    ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
+                    type="button" />
+                <span>@LayoutTexts.EnableStatus</span>
+                <input  ng-if="roleId != 4" ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
+                    ng-click="updated(true, 'BetSetting')" type="button" />
+            </td>
+        </tr>
+        <tr>
+            <td class="betSetting col15percent formatCol">
+            </td>
+            <td class="formatCol c b betSetting col23percent">
+                <span>@LayoutTexts.MinBet</span>
+            </td>
+            <td class="formatCol c b betSetting col23percent">
+                <span>@LayoutTexts.MaxBet</span>
+            </td>
+            <td class="formatCol c b betSetting col23percent">
+                <span>@LayoutTexts.MaxPerMatch</span>
+            </td>
+            <td class=" formatCol c b betSetting " ng-switch="roleId">
+                <span class="col8percent" ng-switch-when="4">@LayoutTexts.Super </span>
+                <span class="col8percent" ng-switch-when="3">@LayoutTexts.Master </span>
+                <span class="col8percent" ng-switch-when="2">@LayoutTexts.Agent </span>
+                <span class="col17percent" ng-switch-default>@LayoutTexts.Member</span>
+            </td>
+            <td ng-if="roleId > 1" class=" formatCol c b betSetting col8percent">
+                <span>@LayoutTexts.Downlines</span>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="betSetting in betSettingList track by $index" bet-setting-element >
+        </tr>
+    </tbody>
+</table>

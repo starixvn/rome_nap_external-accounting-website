@@ -302,6 +302,37 @@ function LeftPanelController($scope, $element) {
             parent.Fanex.ExtAcc.LoadMainFrame(url, undefined, true, false, true);
         }
     };
+
+    $scope.Keno = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var url = '';
+        switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + custId);
+                break;
+            case 3:
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + custId);
+                break;
+            case 2:
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + custId);
+                break;
+            case 1:
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + custId);
+                break;
+            default:
+                break;
+        }
+
+        if (url !== '') {
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
+        }
+    };
 };
 
 function PersonalInfoController($scope, $http) {
@@ -2183,6 +2214,14 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
+    $scope.SuperKeno = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value));
+    };
+
     $scope.MasterPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -2241,6 +2280,14 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
+    };
+
+    $scope.MasterKeno = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value));
     };
 
     $scope.SuperSBPT = function () {

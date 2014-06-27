@@ -31,6 +31,7 @@ Fanex.ExtAcc.Customer = {
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
     HideVirtualSports: false,
+    ShowKeno: true,
 
     superSyncCasino: false,
     superSyncBingo: false,
@@ -235,6 +236,16 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.UserId + '&roleId=5&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Super + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Virtual Sports Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
                 }
             },
+            keno: {
+                name: "Keno",
+                className: "iconViewEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    Fanex.ExtAcc.Customer.IsFullInfo = true;
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
+                }
+            },
             separator4: "-----",
             editInfo: {
                 name: "Edit Info",
@@ -285,11 +296,12 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, superSyncCasino, superSyncBingo, superSyncLiveCasino) {
+    ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, superSyncCasino, superSyncBingo, superSyncLiveCasino, isShowKeno, disableKeno) {
         this.TransferCondition = transferCondition;
         Fanex.ExtAcc.Customer.UserId = custId;
         this.TitleEditInfo = title;
         this.HideVirtualSports = hideVirtualSport;
+        this.ShowKeno = isShowKeno;
 
         this.ResetFlags();
 
@@ -506,6 +518,31 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
+        if (isShowKeno) {
+            has3rdParty = true;
+            if (disableKeno) {
+                itemsMaster.keno = {
+                    name: "Keno",
+                    className: "iconDisableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.UserId = custId;
+                        Fanex.ExtAcc.Customer.IsMultiple = false;
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                    }
+                };
+            } else {
+                itemsMaster.keno = {
+                    name: "Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.UserId = custId;
+                        Fanex.ExtAcc.Customer.IsMultiple = false;
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                    }
+                };
+            }
+        }
+
         if (has3rdParty)
             itemsMaster.separator2 = "-----";
         itemsMaster.editInfo = {
@@ -552,11 +589,12 @@ Fanex.ExtAcc.Customer = {
         } catch (e) { }
     },
 
-    ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino) {
+    ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isShowKeno, disableKeno) {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
         this.HideVirtualSports = hideVirtualSport;
+        this.ShowKeno = isShowKeno;
 
         this.ResetFlags();
 
@@ -645,13 +683,13 @@ Fanex.ExtAcc.Customer = {
                         }
                     };
                     /*itemsAgent.scasino = {
-                        name: "Super Edit Casino",
-                        className: "iconViewEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Agent/ViewAgentBySuper/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html()), 'Super View Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
-                        }
+                    name: "Super Edit Casino",
+                    className: "iconViewEdit",
+                    callback: function () {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Agent/ViewAgentBySuper/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html()), 'Super View Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
+                    }
                     };*/
                 } else {
                     itemsAgent.casino = {
@@ -664,13 +702,13 @@ Fanex.ExtAcc.Customer = {
                         }
                     };
                     /*itemsAgent.scasino = {
-                        name: "Super Edit Casino",
-                        className: "iconViewEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Agent/ViewAgentBySuper/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html()), 'Super View Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
-                        }
+                    name: "Super Edit Casino",
+                    className: "iconViewEdit",
+                    callback: function () {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Agent/ViewAgentBySuper/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html()), 'Super View Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
+                    }
                     };*/
                 }
             } else {
@@ -789,6 +827,32 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
+        if (isShowKeno) {
+            has3rdParty = true;
+            if (disableKeno) {
+                itemsAgent.keno = {
+                    name: "Keno",
+                    className: "iconDisableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.UserId = custId;
+                        Fanex.ExtAcc.Customer.IsMultiple = false;
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                    }
+                };
+            }
+            else {
+                itemsAgent.keno = {
+                    name: "Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.UserId = custId;
+                        Fanex.ExtAcc.Customer.IsMultiple = false;
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                    }
+                };
+            }
+        }
+
         if (has3rdParty)
             itemsAgent.separator2 = "-----";
         itemsAgent.editInfo = {
@@ -833,12 +897,13 @@ Fanex.ExtAcc.Customer = {
         });
     },
 
-    ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino) {
+    ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isShowKeno, disableKeno) {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
         this.TitleEditInfo = title;
         this.IsMultiple = false;
         this.HideVirtualSports = hideVirtualSport;
+        this.ShowKeno = isShowKeno;
 
         this.ResetFlags();
 
@@ -1032,6 +1097,32 @@ Fanex.ExtAcc.Customer = {
                     }
                 };
             }
+        }
+
+        if (isShowKeno) {
+            has3rdParty = true;
+            if (disableKeno) {
+                itemsMember.keno = {
+                    name: "Keno",
+                    className: "iconDisableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.UserId = custId;
+                        Fanex.ExtAcc.Customer.IsMultiple = false;
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                    }
+                };
+            }
+            else {
+            }
+            itemsMember.keno = {
+                name: "Keno",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    Fanex.ExtAcc.Customer.IsMultiple = false;
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                }
+            };
         }
 
         if (has3rdParty)
@@ -1347,7 +1438,7 @@ Fanex.ExtAcc.Customer = {
             Width: 30,
             CustomCellRender: function (cell) {
                 var title = cell.Value.username.replace('$', '&#36');
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + ")";
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + "," + cell.Value.HideKeno + ", " + cell.Value.DisableKeno + ")";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMaster"></div>';
             }
@@ -1403,8 +1494,8 @@ Fanex.ExtAcc.Customer = {
             CellAlign: 'center',
             CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" '
         }, {
-            HeaderText: 'Group D',
             Name: 'groupd',
+            HeaderText: 'Group D',
             Width: 60,
             CellAlign: 'center',
             CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" '
@@ -1518,7 +1609,7 @@ Fanex.ExtAcc.Customer = {
             Width: 30,
             CustomCellRender: function (cell) {
                 var title = cell.Value.username.replace('$', '&#36');
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditAgent(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + masterSyncCasino + ", " + masterSyncBingo + ", " + masterSyncLiveCasino + ")";
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditAgent(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + masterSyncCasino + ", " + masterSyncBingo + ", " + masterSyncLiveCasino + "," + cell.Value.HideKeno + ", " + cell.Value.DisableKeno + ")";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editAgent"></div>';
             }
@@ -1686,7 +1777,7 @@ Fanex.ExtAcc.Customer = {
             Width: 30,
             CustomCellRender: function (cell) {
                 var title = cell.Value.username.replace('$', '&#36');
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + ")";
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + "," + cell.Value.HideKeno + ", " + cell.Value.DisableKeno + ")";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMember"></div>';
             }
@@ -2946,6 +3037,16 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
+            if (this.ShowKeno) {
+                menuItems.keno = {
+                    name: "Edit Multiple Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                    }
+                };
+
+            }
             if (this.AllowDoubleCommMaster) {
                 menuItems.doubleComm = {
                     name: "Edit Multiple Double Comm",
@@ -3019,6 +3120,16 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
+            if (this.ShowKeno) {
+                menuItems.keno = {
+                    name: "Edit Multiple Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                    }
+                };
+
+            }
             if (this.AllowDoubleCommAgent) {
                 menuItems.doubleComm = {
                     name: "Edit Multiple Double Comm",
@@ -3199,6 +3310,31 @@ Fanex.ExtAcc.Customer = {
                     }
                 };
                 menuItems.separate6 = "------";
+            }
+
+            if (this.ShowKeno) {
+                menuItems.keno = {
+                    name: "Edit Multiple Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                    }
+                };
+                menuItems.skeno = {
+                    name: "Super Edit Multiple Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                    }
+                };
+                menuItems.mkeno = {
+                    name: "Master Edit Multiple Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                    }
+                };
+                menuItems.separate7 = "------";
             }
 
             if (this.AllowDoubleComm) {

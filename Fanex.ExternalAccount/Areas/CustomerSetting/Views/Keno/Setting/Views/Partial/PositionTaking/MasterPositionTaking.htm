@@ -1,0 +1,30 @@
+﻿<td class="formatCol l betSetting">
+    <span ng-bind="positionTaking.betTypeName"></span>
+    <div style="display: inline-block; float: right;" ng-switch="index == 0">
+        <input ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}"
+            ng-switch-when="true" ng-model="$parent.$parent.isCopyAll"
+            ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)"
+            type="button" /></div>
+</td>
+<td class="formatCol c b betSetting">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="!positionTaking.iS3"
+        class="col60" ng-model="positionTaking.s3" ng-options="value for value in s3Range">
+    </select>
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iS3"
+        class="col60" ng-model="positionTaking.uS3" ng-options="value for value in uS3Range">
+    </select>
+</td>
+<td class="formatCol c b betSetting">
+    <input  ng-disabled="$parent.$parent.isCopyAll && index != 0" class="chb" type="checkbox"
+        ng-model="positionTaking.iS3" />
+</td>
+<td class="formatCol c b betSetting">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" class="col60" ng-model="positionTaking.m3"
+        ng-options="value for value in maxPTRange">
+    </select>
+</td>
+<td class="formatCol c b betSetting">
+    <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" class="col60" ng-model="positionTaking.n3"
+        ng-options="value for value in minPTRange">
+    </select>
+</td>

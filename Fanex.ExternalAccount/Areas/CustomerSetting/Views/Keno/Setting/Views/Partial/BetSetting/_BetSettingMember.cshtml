@@ -1,0 +1,50 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+
+<table class="tableColor tableWidth" ng-controller="betSettingController">
+    <thead>
+        <tr>
+            <td class="header col21percent">
+            </td>
+            <td colspan="3" class="header c b">
+                <span>@LayoutTexts.BetSetting</span>
+            </td>
+            <td class="header c b">
+                <span>@LayoutTexts.EnableStatus</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="betSetting col21percent formatCol">
+            </td>
+            <td class="formatCol c b betSetting col21percent">
+                <span>@LayoutTexts.MinBet</span>
+            </td>
+            <td class="formatCol c b betSetting col21percent">
+                <span>@LayoutTexts.MaxBet</span>
+            </td>
+            <td class="formatCol c b betSetting col21percent">
+                <span>@LayoutTexts.MaxPerMatch</span>
+            </td>
+             <td class="betSetting formatCol">
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="betSetting in betSettingList track by $index">
+            <td class="formatCol l betSetting">
+                <span ng-bind="betSetting.betTypeName"></span>
+            </td>
+            <td class="c formatCol betSetting">
+                <span ng-bind="betSetting.minBet | number : 0"></span>
+            </td>
+            <td class="c formatCol betSetting">
+                <span ng-bind="betSetting.maxBet | number : 0"></span>
+            </td>
+            <td class="c formatCol betSetting">
+                <span ng-bind="betSetting.maxPerMatch | number : 0"></span>
+            </td>
+            <td class="formatCol c betSetting">
+                <input ng-disabled="true " type="checkbox" ng-model="betSetting.isEnabled" />
+            </td>
+        </tr>
+    </tbody>
+</table>
