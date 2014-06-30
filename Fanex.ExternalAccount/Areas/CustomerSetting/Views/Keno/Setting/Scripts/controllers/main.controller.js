@@ -146,7 +146,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                         if (($scope.multipleEdit.isMultipleEdit && $scope.multipleEdit.updatedCount == $scope.multipleEdit.custids.length)
                         || !$scope.multipleEdit.isMultipleEdit) {
                             $timeout(function () {
-//                                location.reload();
+                                location.reload();
                             }, 2000);
                         }
                     } else {
