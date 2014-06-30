@@ -612,7 +612,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
-            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports, hideKeno = product.HideKeno ;
+            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
+            bool hideKeno = product.HideKeno;
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
@@ -864,6 +865,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="result">Current customer info.</param>
         /// <param name="upperInfo">Upper customer info.</param>
         /// <returns>ProductStatuses object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
         {
             ProductStatuses product = new ProductStatuses();

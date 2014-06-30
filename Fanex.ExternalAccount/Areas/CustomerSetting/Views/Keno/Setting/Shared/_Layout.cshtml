@@ -33,15 +33,13 @@
 <body>
 <div ng-controller="mainController" class="content">
 <div id="page_main">
-
-   <div id="errMsg" style="display: none;" class="successMsg">
-    </div>
-    <div id="arrowUpDown" class="collapse">
-    </div>
-    <div id="names" style="display: none;" class="names">
-    </div>  
-
     <div id="customerInfo">
+       <div id="errMsg" style="display: none;" class="successMsg">
+    </div>
+    <div id="arrowUpDown" style="display: none;"  class="collapse ">
+    </div>
+    <div id="names" style="display: none; width: 829px;" class="names">
+    </div>  
         @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
         @RenderBody()
     </div>
@@ -114,6 +112,9 @@
         }
 
         isMultipleEdit = custids != null && custids != undefined && custids.length > 1 ? true : false;
+        if (isMultipleEdit) {
+            $("arrowUpDown").show();
+        }
     }
 
    

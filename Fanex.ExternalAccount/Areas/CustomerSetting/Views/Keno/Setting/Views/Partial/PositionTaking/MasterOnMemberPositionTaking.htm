@@ -6,16 +6,16 @@
             ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)"
             type="button" /></div>
 </td>
-<td class="formatCol c b betSetting">
+<td class="formatCol c b ">
     <select ie-select-fix = "{{fixIECount}}" ng-disabled="($parent.$parent.isCopyAll && index != 0) || positionTaking.iM2" ng-show="!positionTaking.iM1" class="col60" ng-model="positionTaking.m1" ng-options="value for value in m1Range">
     </select>
     <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0" ng-show="positionTaking.iM1 && !$parent.isDisableAutoMPT" class="col60" ng-model="positionTaking.uM1"
         ng-options="value for value in uM1Range">
     </select>
 </td>
-<td class="formatCol c b betSetting" ng-hide="$parent.isDisableAutoMPT">
+<td class="formatCol c b " ng-hide="$parent.isDisableAutoMPT">
     <input   ng-disabled="$parent.$parent.isCopyAll && index != 0" class="chb" type="checkbox" ng-model="positionTaking.iM1" />
 </td>
-<td class="formatCol c betSetting">
+<td class="formatCol c ">
     <span ng-bind="positionTaking.a1"></span>
 </td>

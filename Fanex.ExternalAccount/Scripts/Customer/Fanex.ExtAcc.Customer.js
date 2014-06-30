@@ -3037,7 +3037,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            if (this.ShowKeno) {
+            if (this.HideKeno) {
                 menuItems.keno = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",
@@ -3120,7 +3120,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            if (this.ShowKeno) {
+            if (this.HideKeno) {
                 menuItems.keno = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",
@@ -3312,7 +3312,7 @@ Fanex.ExtAcc.Customer = {
                 menuItems.separate6 = "------";
             }
 
-            if (this.ShowKeno) {
+            if (this.HideKeno) {
                 menuItems.keno = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",

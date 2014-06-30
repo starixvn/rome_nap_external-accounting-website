@@ -1,7 +1,7 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
 <table class="tableColor tableWidth">
     <tr>
-        <td colspan="4" class="header c b " >
+        <td colspan="4" class="header c b ">
            <div ng-show="!multipleEdit.isMultipleEdit" class=" divInline" ng-switch="customerInformation.roleId">
                 <span ng-switch-when="4">@LayoutTexts.Super: </span>
                 <span ng-switch-when="3">@LayoutTexts.Master: </span>
@@ -12,43 +12,43 @@
         </td>
     </tr>
     <tr>
-        <td class="col15percent formatCol r b betSetting">
+        <td class="col15percent formatCol r b ">
             @LayoutTexts.FirstName
         </td>
-        <td class="col35percent formatCol l betSetting">
+        <td class="col35percent formatCol l ">
             <span ng-bind="customerInformation.firstName"></span>
         </td>
-        <td class="col15percent formatCol r b betSetting">
+        <td class="col15percent formatCol r b ">
             @LayoutTexts.LastName
         </td>
-        <td class="col35percent formatCol l betSetting">
+        <td class="col35percent formatCol l ">
             <span ng-bind="customerInformation.lastName"></span>
         </td>
     </tr>
     <tr>
-        <td class="formatCol r b betSetting">
+        <td class="formatCol r b ">
             @LayoutTexts.Phone
         </td>
-        <td class="formatCol l betSetting">
+        <td class="formatCol l ">
             <span ng-bind="customerInformation.phone"></span>
         </td>
-        <td class="formatCol r b betSetting">
+        <td class="formatCol r b ">
             @LayoutTexts.MobilePhone
         </td>
-        <td class="formatCol l betSetting">
+        <td class="formatCol l ">
             <span ng-bind="customerInformation.mobilePhone"></span>
         </td>
     </tr>
     <tr>
-        <td class="formatCol r b betSetting">
+        <td class="formatCol r b ">
             @LayoutTexts.Fax
         </td>
-        <td class="formatCol l betSetting">
+        <td class="formatCol l ">
             <span ng-bind="customerInformation.fax"></span>
         </td>
-        <td class="formatCol r b betSetting">
+        <td class="formatCol r b ">
         </td>
-        <td class="formatCol l betSetting">
+        <td class="formatCol l ">
         </td>
     </tr>
 </table>
