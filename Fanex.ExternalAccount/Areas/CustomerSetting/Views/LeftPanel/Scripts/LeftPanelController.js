@@ -314,16 +314,16 @@ function LeftPanelController($scope, $element) {
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + custId);
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + custId + "&userId=" + parent.userId);
                 break;
             case 3:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + custId);
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + custId + "&userId=" + parent.userId);
                 break;
             case 2:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + custId);
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + custId + "&userId=" + parent.userId);
                 break;
             case 1:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + custId);
+                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + custId + "&userId=" + parent.userId);
                 break;
             default:
                 break;
@@ -2219,7 +2219,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
     };
 
     $scope.MasterPT = function () {
@@ -2287,7 +2287,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
     };
 
     $scope.SuperSBPT = function () {
