@@ -527,7 +527,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function () {
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
                     }
                 };
             } else {
@@ -537,7 +537,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function () {
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
                     }
                 };
             }
@@ -836,7 +836,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function () {
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
                     }
                 };
             }
@@ -847,7 +847,7 @@ Fanex.ExtAcc.Customer = {
                     callback: function () {
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
                     }
                 };
             }
@@ -1108,19 +1108,19 @@ Fanex.ExtAcc.Customer = {
                     callback: function () {
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
                     }
                 };
             }
             else {
-            }
-            itemsMember.keno = {
-                name: "Keno",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                itemsMember.keno = {
+                    name: "Keno",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.UserId = custId;
+                        Fanex.ExtAcc.Customer.IsMultiple = false;
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userI), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 880, 700, false, null, 1);
+                    }
                 }
             };
         }
@@ -3042,7 +3042,7 @@ Fanex.ExtAcc.Customer = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
                     }
                 };
 
@@ -3125,7 +3125,7 @@ Fanex.ExtAcc.Customer = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>' , 880, 700, false, null, 1);
                     }
                 };
 
@@ -3317,21 +3317,21 @@ Fanex.ExtAcc.Customer = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
                     }
                 };
                 menuItems.skeno = {
                     name: "Super Edit Multiple Keno",
                     className: "iconEnableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
                     }
                 };
                 menuItems.mkeno = {
                     name: "Master Edit Multiple Keno",
                     className: "iconEnableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + '&isMultipleEdit=true'), 'Edit Multiple Keno Setting <font color="#6dcff6"></font>', 880, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
                     }
                 };
                 menuItems.separate7 = "------";
