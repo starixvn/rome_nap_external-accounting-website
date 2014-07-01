@@ -2041,7 +2041,6 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\MasterMinMaxPT.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Shared\_LayoutMinMaxPT.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\SuperOnMember\SuperEditMember.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Shared\_Layout.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\Common.less" />
     <None Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\theme-color.less" />
