@@ -428,6 +428,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
             ViewBag.DisableP2P = (bool)result.Rows[0]["DisableP2P"];
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
+            ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
 
             return this.PartialViewBase();
         }

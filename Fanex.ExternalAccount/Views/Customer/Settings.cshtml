@@ -7,7 +7,8 @@
     var SyncLiveCasino = ViewBag.SyncLiveCasino;
     var DisableP2P = ViewBag.DisableP2P;
     var HideVirtualSports = ViewBag.HideVirtualSports;
-    var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports };
+    var HideKeno = ViewBag.HideKeno;
+    var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
 <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
@@ -25,6 +26,7 @@
     <li id="tab6"><a href="#tabs-6">Poker</a></li>
     <li id="tab7"><a href="#tabs-7">Live Casino</a></li>
     <li id="tab8"><a href="#tabs-8">Virtual Sports</a></li>
+    <li id="tab9"><a href="#tabs-9">Keno</a></li>
   </ul>
   <div id="tabs-1" class="divTab">    
   </div>
@@ -46,6 +48,9 @@
   </div>
   <div id="tabs-8" class="divTab">    
   </div>
+  <div id="tabs-9" class="divTab" style="padding: 0px">
+    <iframe id="kenoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>           
+  </div>
 </div>
 <script type="text/javascript">
     if (typeof Fanex == 'undefined') {
@@ -61,7 +66,8 @@
     }
 
     var custStatus = $.parseJSON(Fanex.ExtAcc.DecodeHtml('@statusJSON'));
-    
+
+    Fanex.ExtAcc.Customer.CurrentLevel = '@ViewBag.CurrentLevel';
     Fanex.ExtAcc.Customer.IsMultiple = false;
     Fanex.ExtAcc.Customer.UserId = '@ViewBag.UserId';
     Fanex.ExtAcc.Customer.Master = 3;
@@ -73,6 +79,7 @@
     Fanex.ExtAcc.Customer.SyncLiveCasino = custStatus.syncLiveCasino;
     Fanex.ExtAcc.Customer.DisableP2P = custStatus.disableP2P;
     Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
+    Fanex.ExtAcc.Customer.HideKeno = custStatus.hideKeno;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 

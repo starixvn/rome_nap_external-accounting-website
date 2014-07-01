@@ -16,6 +16,7 @@ Fanex.ExtAcc.Customer.Settings = {
     CurrentLevel: parseInt(Fanex.ExtAcc.Customer.CurrentLevel),
 
     Init: function () {
+        debugger;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();
@@ -25,6 +26,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab6').css('display', Fanex.ExtAcc.Customer.DisableP2P ? 'none' : 'block');
         $('#tab7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino ? 'block' : 'none');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
+        $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
@@ -83,6 +85,11 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab8').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetVirtualSportSetting();
+        });
+
+        $('#tab9').bind('click', function () {
+            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
+            Fanex.ExtAcc.Customer.Settings.GetKenoSetting();
         });
     },
 
@@ -212,7 +219,34 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#bingoFrame').attr('src', url);
     },
 
-    GetPokerSetting: function () {
+    GetKenoSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
+        var action = '';
+
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            action = 'customersetting/kenosetting/kenosetting/editmaster';
+        }
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            action = 'customersetting/kenosetting/kenosetting/editagent';
+        }
+        else {
+            action = 'customersetting/kenosetting/kenosetting/editmember';
+        }
+
+        Fanex.ExtAcc.Customer.Ids = function () {
+            return [this.UserId];
+        };
+
+        Fanex.ExtAcc.Customer.Names = function () {
+            return [''];
+        };
+
+        var url = resolveClientUrl(action + "?custId=" + this.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html());
+
+        $('#tabs-9').height($('#leftFrame').height() - 10);
+        $('#tabs-9').css('display', 'block');
+        $('#kenoFrame').attr('src', url);
     },
 
     GetLiveCasinoSetting: function () {
