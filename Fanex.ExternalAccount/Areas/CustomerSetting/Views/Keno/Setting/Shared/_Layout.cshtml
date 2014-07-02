@@ -32,11 +32,11 @@
 </head>
 <body>
 <div ng-controller="mainController" class="content">
-<div id="page_main">
-    <div id="customerInfo">
-       <div id="errMsg" style="display: none;width: 835px;" class="successMsg">
-    </div>
-    <div id="arrowUpDown" style="display: none;"  class="collapse ">
+<div id="page_main" >
+    <div id="customerInfo" class="tableWidth"  >
+       <div id="errMsg" style="display: none;width: 839px;" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
+       </div>
+     <div id="arrowUpDown" style="display: none;"  class="collapse ">
     </div>
     <div id="names" style="display: none; width: 829px;" class="names">
     </div>  
@@ -49,9 +49,6 @@
         <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedKeno" ng-click="updated(false)"  value="Submit" 
             type="button" class="btnUpdate b" />
         }
-    </div>
-     <div id="loadingDiv" style="display: none; position: absolute; top: 0px; left: 0px; opacity: 0.5; background-color: white; width: 1058px; height: 778px;">
-        <div class="MaskLoadingDiv" style="width: 100px; height: 100px; position: relative; left: 530px; top: 0px;"></div>
     </div>
 </div>
 </div>

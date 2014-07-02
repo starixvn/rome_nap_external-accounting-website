@@ -320,8 +320,6 @@
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\btn-bgsubmit-disabled.png" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\btn-bgsubmit-hover.png" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\btn-bgsubmit-original.png" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\error.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\sucess.gif" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\successgroup.gif" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\Images\warninggroup.png" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\Images\accessDenied.gif" />

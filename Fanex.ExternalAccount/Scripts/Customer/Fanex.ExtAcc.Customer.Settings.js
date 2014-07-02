@@ -228,10 +228,10 @@ Fanex.ExtAcc.Customer.Settings = {
             action = 'customersetting/kenosetting/kenosetting/editmaster';
         }
         else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            action = 'customersetting/kenosetting/kenosetting/editagent';
+            action = 'customersetting/kenosetting/kenosetting/EditAgent';
         }
         else {
-            action = 'customersetting/kenosetting/kenosetting/editmember';
+            action = 'customersetting/kenosetting/kenosetting/AgentEditMember';
         }
 
         Fanex.ExtAcc.Customer.Ids = function () {

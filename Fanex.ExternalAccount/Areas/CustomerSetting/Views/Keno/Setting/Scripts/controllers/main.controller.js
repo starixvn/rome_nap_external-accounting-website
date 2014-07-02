@@ -16,7 +16,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             $scope.isBetSettingPartial = false;
             $scope.isBetSettingValid = true;
             $scope.confirmIsAutoArray = [];
-            $scope.errors = {};
+            $scope.errors = false;
 
             $scope.multipleEdit = {
                 isMultipleEdit: isMultipleEdit,
@@ -135,6 +135,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     for (var i = 0; i < length; i++) {
                         if (results[i].ErrorCode > 0) {
                             html += '<div class="alerterror' + multipleEditClass + '">' + results[i].ErrorMessage + '</div>';
+                            $scope.errors = true;
                             isError = true;
                         }
                     }
@@ -142,7 +143,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     if (!isError) {
                         var usermessageGroupSuccess = '<div class="alertsuccessgroup">' + kenoSetting.customerInformation.username + '</div>';
                         $scope.multipleEdit.updatedCount++;
-                        $scope.showMesseges(usermessageGroupSuccess + '<div class="alertsuccess' + multipleEditClass + '">' + resources.successful + '</div>');
+                        $scope.showMesseges(usermessageGroupSuccess + '<div class="alertsuccess' + multipleEditClass + '">' + resources.successful + '</div><br>');
 
                         if (($scope.multipleEdit.isMultipleEdit && $scope.multipleEdit.updatedCount == $scope.multipleEdit.custids.length)
                         || !$scope.multipleEdit.isMultipleEdit) {
@@ -155,7 +156,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     }
                 }
                 else {
-                    var html = usermessageGroup + '<div class="alerterror' + multipleEditClass + '">' + resources.failed + '</div>';
+                    var html = usermessageGroup + '<div class="alerterror' + multipleEditClass + '">' + resources.failed + '</div><br>';
                     $scope.showMesseges(html);
                 }
 
@@ -165,7 +166,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             };
 
             $scope.afterUpdatedFailed = function (kenoSetting, index) {
-                var html = '<div class="alerterror">' + resources.failed + '</div>';
+                var html = '<div class="alerterror">' + resources.failed + '</div><br>';
                 $scope.showMesseges(html);
 
                 if ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length) {
