@@ -1,14 +1,14 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
-<table class="tableColor tableWidth">
+<table class="tableColor tableWidth" ng-if="!multipleEdit.isMultipleEdit">
     <tr>
         <td colspan="4" class="header c b ">
-           <div ng-show="!multipleEdit.isMultipleEdit" class=" divInline" ng-switch="customerInformation.roleId">
+           <div  class=" divInline" ng-switch="customerInformation.roleId">
                 <span ng-switch-when="4">@LayoutTexts.Super: </span>
                 <span ng-switch-when="3">@LayoutTexts.Master: </span>
                 <span ng-switch-when="2">@LayoutTexts.Agent: </span>
                 <span ng-switch-default>@LayoutTexts.Member: </span>
             </div>
-            <span ng-show="!multipleEdit.isMultipleEdit" ng-bind="customerInformation.username"> </span>
+            <span ng-bind="customerInformation.username"> </span>
         </td>
     </tr>
     <tr>
