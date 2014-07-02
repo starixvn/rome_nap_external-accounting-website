@@ -31,7 +31,7 @@ Fanex.ExtAcc.Customer = {
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
     HideVirtualSports: false,
-    HideKeno: false
+    HideKeno: false,
 
     superSyncCasino: false,
     superSyncBingo: false,
