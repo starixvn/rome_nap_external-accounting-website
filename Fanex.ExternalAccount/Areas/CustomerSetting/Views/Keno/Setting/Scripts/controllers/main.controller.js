@@ -124,8 +124,8 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             };
 
             $scope.afterUpdatedSuccessfully = function (results, kenoSetting, index) {
-                var usermessageGroup = $scope.multipleEdit.isMultipleEdit ? '<div style="font-size: 16px !important; color: blue;font-weight: bold;">' + results.username + '</div>' : '';
-                var multipleEditClass = $scope.multipleEdit.isMultipleEdit ? ' multipleedit' : '';
+                var usermessageGroup = '<div class="alertfailgroup">' + kenoSetting.customerInformation.username + '</div>';
+                var multipleEditClass = ' multipleedit';
 
                 if (typeof results != 'undefined') {
                     var length = results.length;
@@ -140,8 +140,9 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     }
 
                     if (!isError) {
+                        var usermessageGroupSuccess = '<div class="alertsuccessgroup">' + kenoSetting.customerInformation.username + '</div>';
                         $scope.multipleEdit.updatedCount++;
-                        $scope.showMesseges(usermessageGroup + '<div class="alertsuccess' + multipleEditClass + '">' + resources.successful + '</div>');
+                        $scope.showMesseges(usermessageGroupSuccess + '<div class="alertsuccess' + multipleEditClass + '">' + resources.successful + '</div>');
 
                         if (($scope.multipleEdit.isMultipleEdit && $scope.multipleEdit.updatedCount == $scope.multipleEdit.custids.length)
                         || !$scope.multipleEdit.isMultipleEdit) {
@@ -154,8 +155,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     }
                 }
                 else {
-                    var html = 
-                     + '<div class="alerterror' + multipleEditClass + '">' + resources.failed + '</div>';
+                    var html = usermessageGroup + '<div class="alerterror' + multipleEditClass + '">' + resources.failed + '</div>';
                     $scope.showMesseges(html);
                 }
 

@@ -61,21 +61,41 @@ table
 	margin-bottom: 5px;
 	float: right;
 }
+.alertsuccessgroup {
+	background: url("Images/successgroup.gif") no-repeat scroll 2px center ;
+    color: #0000FF;
+    font-weight: bold;
+    height: 21px;
+    margin: 0px 2px 0px 2px;
+    padding-left: 30px;
+    padding-top: 7px;
+	font-size: 16px;
+}
+.alertfailgroup {
+	background: url("Images/warninggroup.png") no-repeat scroll 2px center;
+    color: #0000FF;
+    font-weight: bold;
+    height: 21px;
+    margin: 0px 2px 0px 2px;
+    padding-left: 30px;
+    padding-top: 7px;
+	font-size: 16px;
+}
 .alerterror {
-	background: url("Images/error.gif") no-repeat scroll left center #F6F5F2;
 	color: #F40000;
 	font-weight: bold;
 	margin: 2px;
+	padding-left: 20px;
 }
 .alertsuccess {
-	color: blue;
+	color: #0000FF;
 	font-weight: bold;
 	margin: 2px;
-}
+	padding-left: 20px;
+	}
 .multipleedit{
 	margin-left: 2px;
 	font-weight: normal;
-	padding-left: 2px;
 	background-position: 31px center;
 	font-size: 14px !important;
 }
@@ -83,8 +103,9 @@ table
     padding-bottom: 0px !important;
 }
 
-.MaskLoadingDiv {
-    background: url("/Images/loader3.gif") repeat scroll 0 0 rgba(0, 0, 0, 0);
+.successMsg {
+    background-image: none !important;
+	padding-left: 0px !important;
 }
 table, .header, .formatCol, .btnUpdate, .btnUpdateDisabled
 {
