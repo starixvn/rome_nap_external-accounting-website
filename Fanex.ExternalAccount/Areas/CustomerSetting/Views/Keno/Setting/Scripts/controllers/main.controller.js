@@ -133,10 +133,16 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     var html = usermessageGroup;
 
                     for (var i = 0; i < length; i++) {
-                        if (results[i].ErrorCode > 0) {
+                        if (typeof results == 'Array' && results[i].ErrorCode > 0) {
                             html += '<div class="alerterror' + multipleEditClass + '">' + results[i].ErrorMessage + '</div>';
                             $scope.errors = true;
                             isError = true;
+                        }
+                        else {
+                            html += results;
+                            $scope.errors = true;
+                            isError = true;
+                            break;
                         }
                     }
 

@@ -75,6 +75,8 @@ function LeftPanelController($scope, $element) {
                 var syncBingo = false;
                 var syncCasino = false;
                 var syncLiveCasino = false;
+                var isHideKeno = false;
+                var isHideVirtualSport = false;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -98,15 +100,24 @@ function LeftPanelController($scope, $element) {
                     }
                 }
 
+                for (var i = 0; i < $scope.model.setting.details.length; i++) {
+                    if ($scope.model.setting.details[i].key == 'Keno') {
+                        isHideKeno = true;
+                    }
+                    if ($scope.model.setting.details[i].key == 'VirtualSports') {
+                        isHideKeno = true;
+                    }
+                }
+
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno);
                         break;
                     default:
                         break;
