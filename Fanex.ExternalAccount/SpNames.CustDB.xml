@@ -2,6 +2,36 @@
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="archive" Plain="0" />
+
+      <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno_xtest" DbName="archive" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno_xtest" DbName="archive" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno_xtest" DbName="archive" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno_xtest" DbName="archive" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno_xtest" DbName="archive" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno_xtest" DbName="archive" Plain="0" TimeOut="600" />
+
+    <Function Name="EditSuper">
+      <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdSuperKeno" SpName="Acc_CustomerUpdSuperKeno_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="EditMaster">
+      <Setting Key="Acc_CustomerUpdMasterKeno_BetSetting" SpName="Acc_CustomerUpdMasterKeno_BetSetting_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMasterKeno" SpName="Acc_CustomerUpdMasterKeno_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="EditAgent">
+      <Setting Key="Acc_CustomerUpdAgentKeno_BetSetting" SpName="Acc_CustomerUpdAgentKeno_BetSetting_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdAgentKeno" SpName="Acc_CustomerUpdAgentKeno_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="AgentEditMember">
+      <Setting Key="Acc_CustomerUpdMemberKeno_BetSetting" SpName="Acc_CustomerUpdMemberKeno_BetSetting_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+      <Setting Key="Acc_CustomerUpdMemberKeno_Positiontaking" SpName="Acc_CustomerUpdMemberKeno_Positiontaking_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="SuperEditMember">
+      <Setting Key="Acc_CustomerUpdMemberKeno_SAg" SpName="Acc_CustomerUpdMemberKeno_SAg_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+    </Function>
+    <Function Name="MasterEditMember">
+      <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg_xtest" DbName="main_CustDB" Plain="0" TimeOut="600" />
+    </Function>
   </Function>
   <Function Name="Login">
     <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="main_CustDB" Plain="0" />
@@ -132,12 +162,12 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="archive" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="archive" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="main_CustDB" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Ag" SpName="Acc_CustomerInsMember_CloneSetting_Ag" DbName="main_CustDB" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_MAg" SpName="Acc_CustomerInsMember_CloneSetting_MAg" DbName="main_CustDB" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_SAg" SpName="Acc_CustomerInsMember_CloneSetting_SAg" DbName="main_CustDB" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="main_CustDB" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_xtest" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Ag" SpName="Acc_CustomerInsMember_CloneSetting_Ag_xtest" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_MAg" SpName="Acc_CustomerInsMember_CloneSetting_MAg_xtest" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_SAg" SpName="Acc_CustomerInsMember_CloneSetting_SAg_xtest" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_xtest" DbName="main_CustDB" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xtest" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="main_CustDB" Plain="0" />

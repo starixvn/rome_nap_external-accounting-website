@@ -1,0 +1,14 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+@{
+    Layout = "~/Areas/CustomerSetting/Views/Keno/Setting/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/BetSetting/_BetSettingSMA.cshtml")
+
+@Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/PositionTaking/_AgentPositionTaking.cshtml")
+
+
+@section scripts
+{
+   <script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/positionTaking/AgentPositionTakingDirective.js")" type="text/javascript"></script>
+}

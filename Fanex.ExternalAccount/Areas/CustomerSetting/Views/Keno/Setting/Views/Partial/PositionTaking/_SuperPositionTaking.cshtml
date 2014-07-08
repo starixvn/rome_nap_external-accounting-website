@@ -1,0 +1,21 @@
+﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<table class="tableColor tableWidth" ng-controller="positionTakingController">
+    <tr>
+        <td colspan="4" class="header c b">
+            <span>@LayoutTexts.PositionTaking</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="formatCol c b col15percent betSetting">
+            @LayoutTexts.CountryMarket
+        </td>
+        <td class="formatCol c b col42percent betSetting">
+            @LayoutTexts.SuperMaxPT
+        </td>
+        <td class="formatCol c b col43percent betSetting">
+            @LayoutTexts.SuperMinPT
+        </td>
+    </tr>
+    <tr ng-repeat="positionTaking in positionTakingList track by $index" super-position-taking-element ng-model="positionTaking" index="$index"  ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}">
+    </tr>
+</table>

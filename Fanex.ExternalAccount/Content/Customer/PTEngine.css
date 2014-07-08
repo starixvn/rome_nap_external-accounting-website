@@ -633,3 +633,20 @@ td, TD
     white-space: normal; 
     overflow: auto;
 }
+.PTBoxRightBorder .BetTypeHeader, .PTBoxRightBorder .BetTypeSelect, .PTBoxRightBorder .BetTypeLabel {
+    border-right: 1px solid #CCC;
+}
+.BetTypeBottomBorder {
+    border-bottom: 1px solid #CCC;
+    height: 22px;
+}
+.PTGroupSet2 {
+    background-color: #FAF9EE !important;
+    clear: both;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+}
+.hint li:hover {
+    color: black !important;
+}

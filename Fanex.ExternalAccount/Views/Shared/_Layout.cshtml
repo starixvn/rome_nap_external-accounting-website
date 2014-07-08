@@ -5,6 +5,7 @@
 @using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel.Extensions
 @using Fanex.CustomerSetting.Security.Authenticate
+@using Fanex.CustomerSetting.Module.KenoStatus.Configurations
 @{
     var groupId = CurrentSession.Instance.GroupId;
     var groups = GroupConfigurations.AllowBettingGroups;
@@ -26,6 +27,7 @@
     var allowAutoPT = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.AllowAutoMPT, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
     var hasClearCredit = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
     var enableKeno = System.Configuration.ConfigurationManager.AppSettings["EnableKeno"] == "true" ? 1 : 0;
+    var showKenoSetting = KenoSection.Instance.ShowSetting == true ? "true" : "false";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -195,6 +197,7 @@
         var allowAutoPT = '@allowAutoPT';
         var hasClearCredit = '@hasClearCredit';
         var enableKeno = '@enableKeno';
+        var showKenoSetting = '@showKenoSetting';
         
         $(document).ready(function () {
             Fanex.ExtAcc.Account.ReCheckin();

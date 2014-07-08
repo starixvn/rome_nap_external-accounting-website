@@ -19,6 +19,24 @@
                 </BetType>
                 <BetType id="2" name="Odd/Even" title="Odd/Even" minWidth="90" resourcekey="lblOddEven">
                 </BetType>
+                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="true" showBottomBorder="true">
+                  <RepresentativeForBetType id="133" name="Home To Win Both Halves" />
+                  <RepresentativeForBetType id="134" name="Away To Win Both Halves" />
+                  <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" />
+                  <RepresentativeForBetType id="145" name="Both Teams To Score" />
+                  <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" />
+                  <RepresentativeForBetType id="147" name="Home To Score In Both Halves" />
+                  <RepresentativeForBetType id="148" name="Away To Score In Both Halves" />
+                  <RepresentativeForBetType id="149" name="Home To Win Either Half" />
+                  <RepresentativeForBetType id="150" name="Away To Win Either Half" />
+                  <RepresentativeForBetType id="151" name="1st Half Double Chances" />
+                  <RepresentativeForBetType id="140" name="Highest Scoring Half" />
+                  <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
+                  <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
+                  <RepresentativeForBetType id="14" name="First Goal/Last Goal" />
+                  <RepresentativeForBetType id="16" name="Half Time/Full Time" />
+                  <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
             <BetTypeGroup id="2">
@@ -31,7 +49,7 @@
                 </BetType>
                 <BetType id="9" name="Mix Parlay" title="Mix Parlay" minWidth="90" resourcekey="lblMixParlay">
                 </BetType>
-                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -46,9 +64,9 @@
                 </BetType>
                 <BetType id="3" name="Over/Under" minWidth="124" resourcekey="lblOverUnder">
                 </BetType>
-                <BetType id="7" name="1st Hdp" minWidth="125" resourcekey="lbl1stHdp">
+                <BetType id="7" name="1st Hdp" minWidth="124" resourcekey="lbl1stHdp">
                 </BetType>
-                <BetType id="8" name="1st OU" minWidth="124" resourcekey="lbl1stOU">
+                <BetType id="8" name="1st OU" minWidth="124" resourcekey="lbl1stOU" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -116,6 +134,22 @@
                 <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
+                </BetType>
+                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="true" visible="true">
+                  <RepresentativeForBetType id="133" name="Home To Win Both Halves" />
+                  <RepresentativeForBetType id="134" name="Away to Win both Halves" />
+                  <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" />
+                  <RepresentativeForBetType id="145" name="Both Teams To Score" />
+                  <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" />
+                  <RepresentativeForBetType id="147" name="Home To Score In Both Halves" />
+                  <RepresentativeForBetType id="148" name="Away To Score In Both Halves" />
+                  <RepresentativeForBetType id="149" name="Home To Win Either Half" />
+                  <RepresentativeForBetType id="150" name="Away To Win Either Half" />
+                  <RepresentativeForBetType id="151" name="1st Half Double Chances" />
+                  <RepresentativeForBetType id="152" name="Half time/Fulltime Correct Score" />
+                  <RepresentativeForBetType id="140" name="Highest Scoring Half" />
+                  <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
+                  <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
                 </BetType>
               </BetTypes>
             </BetTypeGroup>

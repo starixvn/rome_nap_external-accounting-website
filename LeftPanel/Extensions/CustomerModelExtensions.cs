@@ -10,10 +10,12 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.IP.Utils;
+    using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -512,15 +514,40 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.RemoveEnableProducts(product);
-            
+                        
             if (product.RoleId == 4)
             {
+                model.CheckConfig();
+
                 return model;
             }
 
             model.UplineStatuses(product);
             model.RemoveProducts(product);
             model.GetSuperMasterPtsOnMember(product);
+
+            return model;
+        }
+
+        /// <summary>
+        /// Remove config to show or hide.
+        /// </summary>
+        /// <param name="model">Customer model.</param>
+        /// <returns>Customer model item.</returns>
+        public static CustomerModel CheckConfig(this CustomerModel model)
+        {
+            var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
+            var hideKeno = !KenoSection.Instance.ShowSetting;
+
+            if (hideVS)
+            {
+                model.RemoveProduct("VirtualSports");
+            }
+
+            if (hideKeno)
+            {
+                model.RemoveProduct("Keno");
+            }
 
             return model;
         }
@@ -595,6 +622,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("VirtualSports");
             }
 
+            if (product.HideKeno)
+            {
+                model.RemoveProduct("Keno");
+            }
+
             return model;
         }
 
@@ -607,6 +639,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
             bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
+            bool hideKeno = product.HideKeno;
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
@@ -619,7 +652,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "Bingo" && syncBingo) ||
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
                        (o.Key.ToString() == "VirtualSports" && !hideVS) ||
-                       o.Key.ToString() == "Racing").ToList();
+                       o.Key.ToString() == "Racing" ||
+                        (o.Key.ToString() == "Keno" && !hideKeno)).ToList();
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
@@ -693,6 +727,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableCasino)
             {
                 model.DisableProduct("EnableCasino");
+            }
+
+            if (product.UplineStatuses.DisableLiveCasino)
+            {
+                model.DisableProduct("EnableLiveCasino");
             }
 
             if (product.UplineStatuses.DisableLiveCasino)
@@ -852,6 +891,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="result">Current customer info.</param>
         /// <param name="upperInfo">Upper customer info.</param>
         /// <returns>ProductStatuses object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
         {
             ProductStatuses product = new ProductStatuses();
@@ -877,6 +917,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.Suspended = result.Rows[0].ToBoolean("suspended");
             product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
             product.DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds");
+            product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
+            product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || 
@@ -961,6 +1003,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
             model.AddBettingLimitForSuper();
@@ -1049,6 +1092,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
 
@@ -1113,6 +1157,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
 
@@ -1176,6 +1221,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
                         }
             };
 

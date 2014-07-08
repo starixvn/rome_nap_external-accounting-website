@@ -115,5 +115,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool HideKeno
+        {
+            get;
+            set;
+        }
+
+        public bool DisableKeno
+        {
+            get;
+            set;
+        }
     }
 }
