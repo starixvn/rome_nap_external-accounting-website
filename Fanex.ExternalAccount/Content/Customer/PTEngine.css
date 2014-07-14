@@ -647,3 +647,6 @@ td, TD
     overflow: auto;
     padding: 0;
 }
+.hint li:hover {
+    color: black !important;
+}
