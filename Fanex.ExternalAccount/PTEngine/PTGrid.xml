@@ -21,7 +21,7 @@
                 </BetType>
                 <BetType id="9999" name="Others" minWidth="90" showDetailIcon="true" showBottomBorder="true">
                   <RepresentativeForBetType id="133" name="Home To Win Both Halves" />
-                  <RepresentativeForBetType id="134" name="Away to Win both Halves" />
+                  <RepresentativeForBetType id="134" name="Away To Win Both Halves" />
                   <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" />
                   <RepresentativeForBetType id="145" name="Both Teams To Score" />
                   <RepresentativeForBetType id="146" name="2nd Half Both Teams To Score" />
@@ -34,7 +34,7 @@
                   <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
                   <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
                   <RepresentativeForBetType id="14" name="First Goal/Last Goal" />
-                  <RepresentativeForBetType id="16" name="Half time/Full time" />
+                  <RepresentativeForBetType id="16" name="Halft Time/Full Time" />
                   <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
                 </BetType>
               </BetTypes>
