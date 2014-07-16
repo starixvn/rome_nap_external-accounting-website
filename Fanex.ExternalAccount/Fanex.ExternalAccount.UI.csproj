@@ -1148,7 +1148,9 @@
     <Content Include="Images\super-btn.png" />
     <Content Include="Images\UnderMaintenance.gif" />
     <Content Include="PTEngine\BettingLimit.xml" />
-    <Content Include="PTEngine\PTGrid.xml" />
+    <Content Include="PTEngine\PTGrid.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="PTEngine\PTRacingGrid.xml">
       <SubType>Designer</SubType>
     </Content>

@@ -30,10 +30,12 @@
                   <RepresentativeForBetType id="149" name="Home To Win Either Half" />
                   <RepresentativeForBetType id="150" name="Away To Win Either Half" />
                   <RepresentativeForBetType id="151" name="1st Half Double Chance" />
-                  <RepresentativeForBetType id="152" name="Half time/Fulltime Correct Score" />
                   <RepresentativeForBetType id="140" name="Highest Scoring Half" />
                   <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
                   <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
+                  <RepresentativeForBetType id="14" name="First Goal/Last Goal" />
+                  <RepresentativeForBetType id="16" name="Half time/Full time" />
+                  <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
