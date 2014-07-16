@@ -10,6 +10,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -513,15 +514,35 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.RemoveEnableProducts(product);
-            
+                        
             if (product.RoleId == 4)
             {
+                model.CheckConfig(product);
+
                 return model;
             }
 
             model.UplineStatuses(product);
             model.RemoveProducts(product);
             model.GetSuperMasterPtsOnMember(product);
+
+            return model;
+        }
+
+        public static CustomerModel CheckConfig(this CustomerModel model, ProductStatuses product)
+        {
+            var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
+            var hideKeno = !KenoSection.Instance.ShowSetting;
+
+            if (hideVS)
+            {
+                model.RemoveProduct("VirtualSports");
+            }
+
+            if (hideKeno)
+            {
+                model.RemoveProduct("Keno");
+            }
 
             return model;
         }
