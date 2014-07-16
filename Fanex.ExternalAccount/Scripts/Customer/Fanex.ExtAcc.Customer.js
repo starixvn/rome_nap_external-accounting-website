@@ -1269,7 +1269,7 @@ Fanex.ExtAcc.Customer = {
             CustomCellRender: function (cell) {
                 var custId = cell.Value.custid;
                 var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
-                var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + ")";
+                var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + ")";
                 Fanex.ExtAcc.Customer.superDisableP2P = cell.Value.DisableP2P;
                 var len = cell.Value.username.length;
                 var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
