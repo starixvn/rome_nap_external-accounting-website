@@ -235,8 +235,11 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Customer.IsFullInfo = true;
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.UserId + '&roleId=5&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Super + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Virtual Sports Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
                 }
-            },
-            keno: {
+            }
+        }
+
+        if (showKenoSetting == 'true') {
+            items.keno = {
                 name: "Keno",
                 className: "iconViewEdit",
                 callback: function () {
@@ -245,34 +248,38 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Customer.IsFullInfo = true;
                     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
                 }
-            },
-            separator4: "-----",
-            editInfo: {
-                name: "Edit Info",
-                height: 25,
-                className: "iconEnableEdit editInfoBg",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 460, false);
-                }
-            },
-            changePassword: {
-                name: "Reset Password",
-                className: "iconEnableEdit editInfoBg",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false);
-                }
-            },
-            transferCondition: {
-                name: "Transfer Condition",
-                className: "iconEnableEdit editInfoBg",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1);
-                }
             }
         }
+
+        items.separator4 = "-----";
+
+        items.editInfo = {
+            name: "Edit Info",
+            height: 25,
+            className: "iconEnableEdit editInfoBg",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 460, false);
+            }
+        };
+
+        items.changePassword = {
+            name: "Reset Password",
+            className: "iconEnableEdit editInfoBg",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false);
+            }
+        };
+
+        items.transferCondition = {
+            name: "Transfer Condition",
+            className: "iconEnableEdit editInfoBg",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1);
+            }
+        };
 
         var allowBettingLimitGroups = eval(allowBetSettingGroups);
 
@@ -1261,7 +1268,8 @@ Fanex.ExtAcc.Customer = {
             Width: 100,
             CustomCellRender: function (cell) {
                 var custId = cell.Value.custid;
-                var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.SyncLiveCasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + ")";
+                var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
+                var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + ")";
                 Fanex.ExtAcc.Customer.superDisableP2P = cell.Value.DisableP2P;
                 var len = cell.Value.username.length;
                 var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
@@ -1440,7 +1448,8 @@ Fanex.ExtAcc.Customer = {
             Width: 30,
             CustomCellRender: function (cell) {
                 var title = cell.Value.username.replace('$', '&#36');
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + "," + cell.Value.HideKeno + ", " + cell.Value.DisableKeno + ")";
+                var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + ")";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMaster"></div>';
             }
@@ -1613,7 +1622,8 @@ Fanex.ExtAcc.Customer = {
             Width: 30,
             CustomCellRender: function (cell) {
                 var title = cell.Value.username.replace('$', '&#36');
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditAgent(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + masterSyncCasino + ", " + masterSyncBingo + ", " + masterSyncLiveCasino + "," + cell.Value.HideKeno + ", " + cell.Value.DisableKeno + ")";
+                var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditAgent(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + masterSyncCasino + ", " + masterSyncBingo + ", " + masterSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + ")";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editAgent"></div>';
             }
@@ -1783,7 +1793,8 @@ Fanex.ExtAcc.Customer = {
             Width: 30,
             CustomCellRender: function (cell) {
                 var title = cell.Value.username.replace('$', '&#36');
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + "," + cell.Value.HideKeno + ", " + cell.Value.DisableKeno + ")";
+                var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + ")";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMember"></div>';
             }
