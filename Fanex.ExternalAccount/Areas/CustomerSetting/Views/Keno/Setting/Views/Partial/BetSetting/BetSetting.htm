@@ -3,7 +3,7 @@
     <div style="display: inline-block; float: right;" ng-switch="$index == 0">
         <input ng-model="betSettingCopyAll.isCopiedAll" ng-switch-when="true" ng-click="copyAllBetSetting(!betSettingCopyAll.isCopiedAll, betSetting.betTypeId)"
             ng-class="{'btnCopyAll' : betSettingCopyAll.isCopiedAll, 'btnUnCopyAll' : !betSettingCopyAll.isCopiedAll}"
-            type="button" />
+            type="button" title="Copy all below bet setting from Australia Acttab"/>
     </div>
 </td>
 <td class="formatCol " ng-class="{'betTypeInactive': betSettingCopyAll.isCopiedAll && $index != 0}">

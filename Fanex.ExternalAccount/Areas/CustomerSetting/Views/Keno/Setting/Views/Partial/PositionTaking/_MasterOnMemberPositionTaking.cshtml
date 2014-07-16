@@ -4,7 +4,7 @@
          <td colspan="6" class="header c b">
              <span>@LayoutTexts.PositionTaking</span>
            <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isPositionTakingPartial"
-                    ng-click="updated(true, 'PositionTaking')" type="button" />
+                    ng-click="updated(true, 'PositionTaking')" type="button" title="Save"/>
         </td>
     </tr>
     <tr>
@@ -22,6 +22,6 @@
         </td>
     </tr>
     <tr ng-repeat="positionTaking in positionTakingList track by $index" master-on-member-position-taking-element ng-model="positionTaking" index="$index"
-             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}">
+             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="Copy all below position taking setting from Australia Acttab">
     </tr>
 </table>

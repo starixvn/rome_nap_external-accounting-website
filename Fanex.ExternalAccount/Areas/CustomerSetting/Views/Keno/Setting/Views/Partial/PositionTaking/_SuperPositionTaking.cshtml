@@ -16,6 +16,6 @@
             @LayoutTexts.SuperMinPT
         </td>
     </tr>
-    <tr ng-repeat="positionTaking in positionTakingList track by $index" super-position-taking-element ng-model="positionTaking" index="$index"  ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}">
+    <tr ng-repeat="positionTaking in positionTakingList track by $index" super-position-taking-element ng-model="positionTaking" index="$index"  ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="Copy all below position taking setting from Australia Acttab">
     </tr>
 </table>
