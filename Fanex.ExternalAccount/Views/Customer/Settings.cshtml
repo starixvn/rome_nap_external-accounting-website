@@ -1,13 +1,14 @@
 ﻿@using Fanex.PTEngine
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.CustomerSetting.Module.KenoStatus.Configurations
 @{
     var SyncCasino = ViewBag.SyncCasino;
     var SyncBingo = ViewBag.SyncBingo;
     var SyncLiveCasino = ViewBag.SyncLiveCasino;
     var DisableP2P = ViewBag.DisableP2P;
     var HideVirtualSports = ViewBag.HideVirtualSports;
-    var HideKeno = ViewBag.HideKeno;
+    var HideKeno = ViewBag.HideKeno || !KenoSection.Instance.ShowSetting;
     var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -48,9 +49,12 @@
   </div>
   <div id="tabs-8" class="divTab">    
   </div>
+  @if (!HideKeno)
+  {
   <div id="tabs-9" class="divTab" style="padding: 0px">
     <iframe id="kenoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>           
   </div>
+  }
 </div>
 <script type="text/javascript">
     if (typeof Fanex == 'undefined') {
