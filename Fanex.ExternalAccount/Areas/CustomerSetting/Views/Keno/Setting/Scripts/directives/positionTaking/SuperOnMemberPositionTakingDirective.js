@@ -65,7 +65,7 @@ KenoModule.directive('superOnMemberPositionTakingElement', ['commonService', '$t
                             $scope.positionTaking.isUpdateUS1 = ($scope.originalPositionTaking.uS1 != $scope.positionTaking.uS1) || ($scope.originalPositionTaking.iS1 != $scope.positionTaking.iS1);
                         }
                         else {
-                            $scope.positionTaking.isUpdateS1 = true;
+                            $scope.positionTaking.isUpdateS1 = $scope.originalPositionTaking.iS3 == true ? false : true;
                             $scope.positionTaking.isUpdateUS1 = true;
                         }
                     }
