@@ -517,7 +517,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         
             if (product.RoleId == 4)
             {
-                model.CheckConfig(product);
+                model.CheckConfig();
 
                 return model;
             }
@@ -529,7 +529,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
-        public static CustomerModel CheckConfig(this CustomerModel model, ProductStatuses product)
+        /// <summary>
+        /// Remove config to show or hide.
+        /// </summary>
+        /// <param name="model">Customer model.</param>
+        /// <returns>Customer model item.</returns>
+        public static CustomerModel CheckConfig(this CustomerModel model)
         {
             var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
             var hideKeno = !KenoSection.Instance.ShowSetting;
