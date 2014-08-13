@@ -308,7 +308,7 @@ Fanex.ExtAcc.Customer = {
         Fanex.ExtAcc.Customer.UserId = custId;
         this.TitleEditInfo = title;
         this.HideVirtualSports = hideVirtualSport;
-        this.HideKeno = showKenoSetting == 'false';
+        this.HideKeno = showKenoSetting == 'false' || isHideKeno;
 
         this.ResetFlags();
 
@@ -601,7 +601,7 @@ Fanex.ExtAcc.Customer = {
         this.UserId = custId;
         this.TitleEditInfo = title;
         this.HideVirtualSports = hideVirtualSport;
-        this.HideKeno = showKenoSetting == 'false';
+        this.HideKeno = showKenoSetting == 'false' || isHideKeno;
 
         this.ResetFlags();
 
@@ -910,7 +910,7 @@ Fanex.ExtAcc.Customer = {
         this.TitleEditInfo = title;
         this.IsMultiple = false;
         this.HideVirtualSports = hideVirtualSport;
-        this.HideKeno = showKenoSetting == 'false';
+        this.HideKeno = showKenoSetting == 'false' || isHideKeno;
 
         this.ResetFlags();
 
@@ -1399,7 +1399,7 @@ Fanex.ExtAcc.Customer = {
         this.superSyncCasino = superSyncCasino;
         this.superSyncBingo = superSyncBingo;
         this.superSyncLiveCasino = superSyncLiveCasino;
-        this.HideKeno = showKenoSetting == 'false';
+        this.HideKeno = showKenoSetting == 'false' || isHideKeno;
         this.HideVirtualSports = isHideVirtualSport;
 
         var url = resolveClientUrl('Customer/MasterListPost');
@@ -1573,7 +1573,7 @@ Fanex.ExtAcc.Customer = {
         this.masterSyncCasino = masterSyncCasino;
         this.masterSyncBingo = masterSyncBingo;
         this.masterSyncLiveCasino = masterSyncLiveCasino;
-        this.HideKeno = showKenoSetting == 'false';
+        this.HideKeno = showKenoSetting == 'false' || isHideKeno;
         this.HideVirtualSports = isHideVirtualSport;
 
         var url = resolveClientUrl('Customer/AgentListPost');
@@ -1746,7 +1746,7 @@ Fanex.ExtAcc.Customer = {
         this.agentSyncCasino = agentSyncCasino;
         this.agentSyncBingo = agentSyncBingo;
         this.agentSyncLiveCasino = agentSyncLiveCasino;
-        this.HideKeno = showKenoSetting == 'false';
+        this.HideKeno = showKenoSetting == 'false' || isHideKeno;
         this.HideVirtualSports = isHideVirtualSport;
 
         var url = resolveClientUrl('Customer/MemberListPost');
