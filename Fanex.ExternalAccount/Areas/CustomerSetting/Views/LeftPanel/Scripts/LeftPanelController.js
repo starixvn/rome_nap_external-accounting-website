@@ -75,8 +75,8 @@ function LeftPanelController($scope, $element) {
                 var syncBingo = false;
                 var syncCasino = false;
                 var syncLiveCasino = false;
-                var isHideKeno = false;
-                var isHideVirtualSport = false;
+                var isHideKeno = true;
+                var isHideVirtualSport = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -102,10 +102,10 @@ function LeftPanelController($scope, $element) {
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
                     if ($scope.model.setting.details[i].key == 'Keno') {
-                        isHideKeno = true;
+                        isHideKeno = false;
                     }
                     if ($scope.model.setting.details[i].key == 'VirtualSports') {
-                        isHideVirtualSport = true;
+                        isHideVirtualSport = false;
                     }
                 }
 
