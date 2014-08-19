@@ -132,18 +132,17 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     var isError = false;
                     var html = usermessageGroup;
 
-                    if (typeof results == 'string') {
-                        html += results;
-                        $scope.errors = true;
-                        isError = true;
-                    }
-                    else {
-                        for (var i = 0; i < length; i++) {
-                            if (results[i].ErrorCode > 0) {
-                                html += '<div class="alerterror' + multipleEditClass + '">' + results[i].ErrorMessage + '</div>';
-                                $scope.errors = true;
-                                isError = true;
-                            }
+                    for (var i = 0; i < length; i++) {
+                        if (typeof results == 'Array' && results[i].ErrorCode > 0) {
+                            html += '<div class="alerterror' + multipleEditClass + '">' + results[i].ErrorMessage + '</div>';
+                            $scope.errors = true;
+                            isError = true;
+                        }
+                        else {
+                            html += results;
+                            $scope.errors = true;
+                            isError = true;
+                            break;
                         }
                     }
 
