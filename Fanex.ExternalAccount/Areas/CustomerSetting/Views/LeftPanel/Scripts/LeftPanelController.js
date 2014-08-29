@@ -1993,6 +1993,76 @@ function SettingController($scope, $http) {
         true);
     };
 
+    $scope.EnableESports = function (enable, id) {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var display = roleId == 1 ? 'none' : 'block';
+        var checked = !enable ? 'checked="checked"' : "";
+        var disabledDownline = enable ? 'disabled="disabled"' : ''
+        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
+                        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + '/>' + $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>';
+        var title = enable ? 'Disable E-Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
+                                'Enable E-Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+
+        parent.Fanex.ExtAcc.Form.ConfirmBox(
+        title,
+        content,
+        380,
+        150,
+        false,
+        function () {
+            parent.Fanex.ExtAcc.BlockUI();
+
+            $.ajax({
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateESports'),
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    custId: $scope.model.personalInfo.custId.value,
+                    enable: !enable,
+                    enableDownline: parent.$('#enableDownline').get(0).checked,
+                    groupName: parent.$('#selectedGroupName').html()
+                }
+            })
+            .success(function (result) {
+                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmES');
+                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
+                if (result.isSuccess) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        document.location.reload(true);
+                    }, 2000);
+                }
+                else {
+                    parent.Fanex.ExtAcc.UnBlockUI();
+                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmES');
+                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                    document.getElementById(id).checked = enable;
+                }
+            })
+            .error(function (xhr) {
+                parent.Fanex.ExtAcc.UnBlockUI();
+                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmES');
+                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
+                document.getElementById(id).checked = enable;
+                if (typeof console != 'undefined') {
+                    console.log(xhr);
+                }
+            });
+        },
+        function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
+            document.getElementById(id).checked = enable;
+        },
+        'popupES',
+        true,
+        function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
+            document.getElementById(id).checked = enable;
+        },
+        true);
+    };
+
     $scope.EnableHRFixedOdds = function (enable, id) {
         var roleId = $scope.model.personalInfo.roleId.value;
         var display = roleId == 1 ? 'none' : 'block';

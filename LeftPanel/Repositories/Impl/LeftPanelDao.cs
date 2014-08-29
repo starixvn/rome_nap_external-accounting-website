@@ -468,6 +468,34 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
+        /// Enables e-sports.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enables or not.</param>
+        /// <param name="enableDownline">Enables down-line or not.</param>
+        /// <returns>Result object.</returns>
+        public Result EnableESports(int id, bool enable, bool enableDownline)
+        {
+            Hashtable param = new Hashtable();
+            param.Add("userid", CurrentSession.Instance.UserId);
+            param.Add("custid", id);
+            param.Add("disable", !enable);
+            param.Add("language", "E");
+            param.Add("ip", CurrentContext.Instance.Ip4Address);
+            param.Add("disabledownlines", !enableDownline);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
+
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableESports", 120))
+            {
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+
+                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+            }
+        }
+
+        /// <summary>
         /// Allows master auto PT.
         /// </summary>
         /// <param name="id">Customer id.</param>
