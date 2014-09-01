@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global settingContext*/
+/*global custSetting*/
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.js" />
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustomerSettingController',
@@ -11,25 +11,16 @@ if (fanex.liveCasinoSetting) {
         'CustomerSettingService',
         function ($scope, $http, $window, $timeout, customerSettingService) {
             'use strict';
-            var updateAllSettingUrl = $('#UpdateLiveCasinoSettingUrl').val();
+            var updateAllSettingUrl = $('#tblSetting').data('update-href');
             $scope.mainResult = {
                 CommandResultsList: []
             };
-
-            settingContext.IsSyncLiveCasino = settingContext.Customer.IsSyncLiveCasino;
             $scope.isUpdateAllSetting = false;
-            $scope.isReadOnly = settingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
-            $scope.isEditMultiple = settingContext.Customers && settingContext.Customers.length > 0;
-            $scope.isEditDirect = (settingContext.Upline.Level - settingContext.Customer.Level === 1);
-            if ($scope.isEditMultiple
-                && settingContext.Customer.IsSyncLiveCasino
-                && $scope.isEditDirect) {
-                for (var i = 0; i < settingContext.Customers.length; i++) {
-                    if (!settingContext.Customers[i].IsSyncLiveCasino) {
-                        settingContext.IsSyncLiveCasino = false;
-                        break;
-                    }
-                }
+            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
+            if (custSetting.SettingContext.IsEditMultiple
+                && custSetting.SettingContext.TargetSyncStatus
+                && custSetting.SettingContext.IsEditDirectDownline) {
+                custSetting.CustInfo.IsSyncLiveCasino = custSetting.SettingContext.TargetSyncStatus.indexOf('0') === -1;
             }
 
             $scope.validateAndUpdateSetting = function (updateType) {
@@ -50,21 +41,19 @@ if (fanex.liveCasinoSetting) {
                     winLimitScope = angular.element('[data-ng-controller="CustomerWinLimitController"]').scope(),
                     gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
 
-                var customer = custInfoScope.getCustInfo();
-                customer.LiveCasinoSetting.WinLimit = winLimitScope.getWinLimit();
-                customer.LiveCasinoSetting.PositionTaking = ptAndComScope.positionTaking;
-                customer.LiveCasinoSetting.Commission = ptAndComScope.commission;
-                customer.LiveCasinoSetting.GameSetting = gameSettingScope.getGameSetting();
+                var custInfo = custInfoScope.getCustInfo();
+                custInfo.MemberWinLimit = winLimitScope.getWinLimit();
 
-                var settingContextForUpdate = {
-                    settingContext: settingContext,
-                    customer: customer,
-                    isApplyPositionTakingAllMembers: ptAndComScope.uplinePTOnMember.isApplyNewUplinePositionTaking,
-                    positionTakingOnMembers: ptAndComScope.uplinePTOnMember.newUplinePositionTaking,
+
+                var custSettingForUpdate = {
+                    settingContext: custSetting.SettingContext,
+                    custInfo: custInfo,
+                    ptAndComSetting: ptAndComScope.ptAndComSetting,
+                    gameSetting: gameSettingScope.getGameSetting(),
                     updateType: updateType
                 };
 
-                customerSettingService.updateAllSetting(updateAllSettingUrl, settingContextForUpdate, $scope);
+                customerSettingService.updateAllSetting(updateAllSettingUrl, custSettingForUpdate, $scope);
                 $scope.isUpdateAllSetting = false;
             };
 
@@ -74,17 +63,17 @@ if (fanex.liveCasinoSetting) {
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        if ($scope.isEditMultiple
+                        if (custSetting.SettingContext.IsEditMultiple
                             && $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
                             $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePartial);
                         }
                         else {
-                            if ($window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
+                            if (!isUpdatePartial
+                                && $window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
                                 $window.parent.actionAfterUpdatedLiveCasinoSettingSingle(isUpdatePartial);
                             }
-                            else {
-                                $window.location.href = $window.location.href;
-                            }
+
+                            $window.location.href = $window.location.href;
                         }
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
                 }

@@ -493,7 +493,7 @@
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-1.11.1.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
@@ -1379,6 +1379,7 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.LiveCasino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
@@ -2271,16 +2272,12 @@
     <Content Include="Areas\Statement\Views\Report\Index.cshtml" />
     <Content Include="Configurations\connectionStrings.kbt67.config" />
     <Content Include="Configurations\appSettings.kbt67.config" />
-    <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
-    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Configurations\appSettings.sandbox.config" />
     <Content Include="Configurations\connectionStrings.sandbox.config" />
+    <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang1.js</LastGenOutput>
-    </None>
     <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\Web.config" />
@@ -2288,14 +2285,18 @@
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
     <Content Include="Areas\LiveCasinoSetting\Views\Common\UnAuthorized.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingSingle.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSetting.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfo.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfoMultiple.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\_EditSetting.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Web.config" />
+    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang1.js</LastGenOutput>
+    </None>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
@@ -2424,9 +2425,15 @@
     <Content Include="Views\SportsbookSetting\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\TransferCondition.cshtml" />
     <Content Include="Views\SportsbookSetting\SuperMasterEditSB.cshtml" />
+    <Content Include="Views\LiveCasino\EditMaster.cshtml" />
+    <Content Include="Views\LiveCasino\EditAgent.cshtml" />
+    <Content Include="Views\LiveCasino\EditMember.cshtml" />
+    <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
+    <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
+    <Content Include="Views\LiveCasino\EditSuper.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BettypeReference\Index.cshtml" />
@@ -2435,17 +2442,9 @@
     <Content Include="Views\Shared\_LayoutPtInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
-      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
-      <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>

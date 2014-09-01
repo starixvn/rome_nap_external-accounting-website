@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+@model SettingContext
+<div id="tblCustInfo" class="col-xs-12">
+    <table data-ng-controller="CustomerInfoController" class="cust-info">
+        <tbody>
+            <tr>
+                <td class="bold left">
+                    @(string.Join(", ", Model.TargetUsernames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)))
+                </td>
+            </tr>
+            @if (Model.IsAgentEditingMember)
+            {
+                <tr>
+                    <td class="right">
+                        <label for="chbEnableLiveCasino">
+                            <input id="chbEnableLiveCasino" type="checkbox" data-ng-model="enableLiveCasino"
+                                data-ng-disabled="disableCheckBoxLiveCasino" />@LiveCasinoLang.lblEnable</label>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

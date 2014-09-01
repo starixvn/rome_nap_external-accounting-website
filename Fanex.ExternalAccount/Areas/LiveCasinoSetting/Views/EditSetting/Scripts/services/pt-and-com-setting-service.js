@@ -1,15 +1,12 @@
-﻿/*global settingContext, language*/
+﻿/*global custSetting, language*/
 fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($http) {
     'use strict';
     var me = this;
 
-    me.updatePtAndComSetting = function (updatePtAndComUrl, commission, positionTaking, uplinePTOnMember, custSettingScope) {
+    me.updatePtAndComSetting = function (updatePtAndComUrl, ptAndComSetting, custSettingScope) {
         var ptAndComUpdateModel = {
-            settingContext: settingContext,
-            commission: commission,
-            positionTaking: positionTaking,
-            isApplyPositionTakingAllMembers: uplinePTOnMember.isApplyNewUplinePositionTaking,
-            positionTakingOnMembers: uplinePTOnMember.newUplinePositionTaking 
+            settingContext: custSetting.SettingContext,
+            ptAndComSetting: ptAndComSetting
         };
 
         $http({

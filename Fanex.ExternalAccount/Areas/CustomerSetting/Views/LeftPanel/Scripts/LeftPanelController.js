@@ -203,24 +203,24 @@ function LeftPanelController($scope, $element) {
         parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
 
         switch (roleId) {
-            case 4: 
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=4&formType=2");
+            case 4:
+                url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&&uplineRoleId=0&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=4&formType=2");
                 break;
             case 3:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=4&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=3");
+                url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&directUplineId=" + $scope.model.personalInfo.uplineId.value + "&uplineRoleId=4&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=3");
                 break;
             case 2:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=3&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=2");
+                url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&directUplineId=" + $scope.model.personalInfo.uplineId.value + "&uplineRoleId=3&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=2");
                 break;
             case 1:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=2&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1");
+                url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&directUplineId=" + $scope.model.personalInfo.uplineId.value + "&uplineRoleId=2&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=1");
                 break;
             default:
                 break;
         }
 
         if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + "&adminId=" + userId + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
         }
     };
 
@@ -2285,8 +2285,8 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + superId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=4&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+        var url = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&directUplineId=" + $scope.model.personalInfo.uplineId.value + "&uplineRoleId=4&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=1" + "&adminId=" + parent.userId;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -2354,8 +2354,8 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + masterId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=3&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+        var url = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&directUplineId=" + $scope.model.personalInfo.uplineId.value + "&uplineRoleId=3&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=1" + "&adminId=" + parent.userId;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterVirtualSports = function () {

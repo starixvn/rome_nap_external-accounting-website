@@ -1,16 +1,17 @@
 /* File Created: July 21, 2014 */
-/*global language*/
+/*global custSetting, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', function ($http) {
         'use strict';
         var me = this;
 
-        me.updateAllSetting = function (updateAllSettingUrl, settingContextForUpdate, scope) {
+        me.custSetting = custSetting;
+        me.updateAllSetting = function (updateAllSettingUrl, custSettingForUpdate, scope) {
             $http({
                 method: 'POST',
                 url: updateAllSettingUrl,
                 headers: { 'Content-Type': 'application/json' },
-                data: settingContextForUpdate
+                data: custSettingForUpdate
             }).
             success(function (mainResult) {
                 scope.afterServerReturnSuccess(mainResult, false);
