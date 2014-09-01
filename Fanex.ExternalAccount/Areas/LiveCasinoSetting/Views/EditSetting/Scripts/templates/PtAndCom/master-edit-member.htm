@@ -1,0 +1,38 @@
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th class="col-xs-4">
+                {{language.getString('lblMasterPT')}}
+            </th>
+            <th class="col-xs-4" data-ng-if="!ptAndComSetting.PositionTaking.IsDisableAuto">
+                {{language.getString('lblMasterAutoPT')}}
+            </th>
+            <th class="col-xs-4">
+                {{language.getString('lblAgentPT')}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select id="ddlM1" 
+                data-ng-model="ptAndComSetting.PositionTaking.M1" 
+                data-ng-options="item.id as item.value for item in masterPTOptions" 
+                data-ng-disabled="ptAndComSetting.PositionTaking.Im1"
+                data-ng-change="masterPTChange()"
+                data-ng-if="!ptAndComSetting.PositionTaking.Im2"></select>
+                <span data-ng-if="ptAndComSetting.PositionTaking.Im2">{{ptAndComSetting.PositionTaking.M1}}</span>
+            </td>
+            <td data-ng-if="!ptAndComSetting.PositionTaking.IsDisableAuto">
+                <input id="cbIm1" type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im1" />
+                <select id="ddlUm1"
+                data-ng-model="ptAndComSetting.PositionTaking.Um1" 
+                data-ng-options="item.id as item.value for item in masterAutoPTOptions"
+                data-ng-disabled="!ptAndComSetting.PositionTaking.Im1"></select>
+            </td>
+            <td>
+                {{ptAndComSetting.PositionTaking.A1}}
+            </td>
+        </tr>
+    </tbody>
+</table>

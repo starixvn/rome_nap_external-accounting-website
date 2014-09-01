@@ -101,10 +101,10 @@ namespace Fanex.ExternalAccount
         /// <param name="e">Event is sent.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            if (Request.Headers["X-Requested-With"] != "XMLHttpRequest")
-            {
-                Response.Redirect("~/Shared/Error");
-            }
+            //if (Request.Headers["X-Requested-With"] != "XMLHttpRequest")
+            //{
+            //    Response.Redirect("~/Shared/Error");
+            //}
         }
     }
 }

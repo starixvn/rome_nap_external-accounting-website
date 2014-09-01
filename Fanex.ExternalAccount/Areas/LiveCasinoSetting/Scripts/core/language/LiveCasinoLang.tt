@@ -1,0 +1,78 @@
+<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".js" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Security" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Windows.Forms" #>
+<#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
+/*global language*/
+
+language.liveCasino = {};
+<# 
+    var solutionPath = Host.ResolveAssemblyReference("$(SolutionDir)");
+    var resourcePath = Path.Combine(solutionPath, "Fanex.LiveCasino.CoreSetting\\Resources");
+    var fileNames = new string[]
+    {
+        Path.Combine(resourcePath, "LiveCasinoLang.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.zh-CN.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.zh-TW.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.vi-VN.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.ja-JP.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.ko-KR.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.th-TH.resx")
+    };
+
+    var manager = TemplateFileManager.Create(this);
+    foreach (string filePath in fileNames) 
+    {
+        var language = new StringBuilder("/*global language*/");
+        language.Append("\r\n/*jshint -W101,-W106,-W044,-W098*/");
+        var fileName = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".resx","");
+        var cultureIndex = fileName.IndexOf(".");
+        var fileOrigin = cultureIndex > 0 ? fileName.Substring(0, cultureIndex) : fileName;
+        var culture = cultureIndex > 0 ? fileName.Substring(cultureIndex + 1) : "en-US";
+        language.AppendFormat("\r\n\r\nlanguage.liveCasino['{0}'] = {{", culture);
+        using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+        {
+            var xDoc = XDocument.Load(stream);
+            var items = xDoc.Descendants("data").OrderBy(i => i.Attribute("name").Value);
+            var index = 0;
+            var lastIndex = items.Count() - 1;
+            foreach (var item in items)
+            {
+                var isLast = index == lastIndex;
+                var valueItem = item.Descendants("value").FirstOrDefault();
+                language.Append(CreateJsonPropertise(item.Attribute("name").Value, valueItem.Value, isLast));
+                index++;
+            }
+
+            language.Append("\r\n};");
+        }
+            
+        if(language.Length > 0)
+        {
+            manager.StartNewFile(string.Format("{0}.{1}.js", fileOrigin, culture));
+#>
+<#=language.ToString()#>
+<#		}
+    }
+
+    manager.Process();
+#>
+<#+
+string CreateJsonPropertise(string name, string value, bool isLast)
+{
+    var pattern = "\r\n\t{0} : \"{1}\"{2}";
+    var separate = isLast ?  string.Empty: "," ;
+
+    return string.Format(pattern, name, SecurityElement.Escape(value.Trim().Replace("\n", " ")), separate);
+}
+#>

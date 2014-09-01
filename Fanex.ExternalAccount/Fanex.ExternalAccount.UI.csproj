@@ -98,9 +98,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -457,6 +457,61 @@
     <Content Include="Areas\Statement\Views\Report\Styles\Statement.css" />
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-title-header.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\btn-update-setting.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\center-header.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\cross.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn-hover.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\header-popup-background.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\left-header.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\loader3.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\popup-background.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\right-header.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\tick.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\warning.png" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.en-US.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.ja-JP.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.ko-KR.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.th-TH.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.vi-VN.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-CN.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-TW.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang1.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCasinoLang.tt</DependentUpon>
+    </Content>
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\live-casino-lang.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-win-limit-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-game-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-agent.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-master.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
     <Content Include="bundles\images\dec1.gif" />
     <Content Include="bundles\images\dec1_disable.jpg" />
     <Content Include="bundles\images\dec2.gif" />
@@ -468,6 +523,7 @@
     <Content Include="bundles\images\sucess.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
+    <Compile Include="Areas\LiveCasinoSetting\Services\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2105,6 +2161,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
+    <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -2215,11 +2272,29 @@
     <Content Include="Areas\Statement\Views\Report\Index.cshtml" />
     <Content Include="Configurations\connectionStrings.kbt67.config" />
     <Content Include="Configurations\appSettings.kbt67.config" />
+    <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\Web.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Common\UnAuthorized.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSetting.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfo.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfoMultiple.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Web.config" />
+    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang1.js</LastGenOutput>
+    </None>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
@@ -2382,6 +2457,9 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Error1.designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

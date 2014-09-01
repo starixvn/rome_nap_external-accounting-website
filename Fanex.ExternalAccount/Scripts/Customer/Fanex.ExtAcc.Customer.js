@@ -223,7 +223,8 @@ Fanex.ExtAcc.Customer = {
                 className: "iconViewEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditSuper?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                    url = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&&uplineRoleId=0&targetCustId=" + Fanex.ExtAcc.Customer.UserId + "&targetRoleId=4&formType=2" + "&adminId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html();
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
                 }
             },
             virtualSport: {
@@ -422,39 +423,16 @@ Fanex.ExtAcc.Customer = {
 
         if (superSyncLiveCasino) {
             has3rdParty = true;
-            if (syncLiveCasino) {
-                if (disableLiveCasino) {
-                    itemsMaster.liveCasino = {
-                        name: "Live Casino",
-                        className: "iconDisableEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMaster?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                        }
-                    };
-                } else {
-                    itemsMaster.liveCasino = {
-                        name: "Live Casino",
-                        className: "iconEnableEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMaster?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                        }
-                    };
+
+            itemsMaster.liveCasino = {
+                name: "Live Casino",
+                className: syncLiveCasino == true ? (disableLiveCasino == true ? "iconDisableEdit" : "iconEnableEdit") : "iconUnsyncEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    url = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.superId + "&directUplineId=" + Fanex.ExtAcc.Customer.superId + "&uplineRoleId=4&targetCustId=" + Fanex.ExtAcc.Customer.UserId + "&targetRoleId=3" + "&adminId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html();
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
                 }
-            } else {
-                itemsMaster.liveCasino = {
-                    name: "Live Casino",
-                    className: "iconUnsyncEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMaster?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                    }
-                };
-            }
+            };
         }
 
         if (superSyncBingo) {
@@ -733,39 +711,16 @@ Fanex.ExtAcc.Customer = {
 
         if (masterSyncLiveCasino) {
             has3rdParty = true;
-            if (syncLiveCasino) {
-                if (disableLiveCasino) {
-                    itemsAgent.liveCasino = {
-                        name: "Live Casino",
-                        className: "iconDisableEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditAgent?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                        }
-                    };
-                } else {
-                    itemsAgent.liveCasino = {
-                        name: "Live Casino",
-                        className: "iconEnableEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditAgent?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                        }
-                    };
+
+            itemsAgent.liveCasino = {
+                name: "Live Casino",
+                className: syncLiveCasino == true ? (disableLiveCasino == true ? "iconDisableEdit" : "iconEnableEdit") : "iconUnsyncEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    url = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.masterId + "&directUplineId=" + Fanex.ExtAcc.Customer.masterId + "&uplineRoleId=3&targetCustId=" + Fanex.ExtAcc.Customer.UserId + "&targetRoleId=2" + "&adminId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html();
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
                 }
-            } else {
-                itemsAgent.liveCasino = {
-                    name: "Live Casino",
-                    className: "iconUnsyncEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditAgent?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                    }
-                };
-            }
+            };
         }
 
         if (masterSyncBingo) {
@@ -1046,39 +1001,16 @@ Fanex.ExtAcc.Customer = {
 
         if (agentSyncLiveCasino) {
             has3rdParty = true;
-            if (syncLiveCasino) {
-                if (disableLiveCasino) {
-                    itemsMember.liveCasino = {
-                        name: "Live Casino",
-                        className: "iconDisableEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMember?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                        }
-                    };
-                } else {
-                    itemsMember.liveCasino = {
-                        name: "Live Casino",
-                        className: "iconEnableEdit",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.UserId = custId;
-                            Fanex.ExtAcc.Customer.IsMultiple = false;
-                            Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMember?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                        }
-                    };
+
+            itemsMember.liveCasino = {
+                name: "Live Casino",
+                className: syncLiveCasino == true ? (disableLiveCasino == true ? "iconDisableEdit" : "iconEnableEdit") : "iconUnsyncEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    url = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.masterId + "&directUplineId=" + Fanex.ExtAcc.Customer.masterId + "&uplineRoleId=2&targetCustId=" + Fanex.ExtAcc.Customer.UserId + "&targetRoleId=1" + "&adminId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html();
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
                 }
-            } else {
-                itemsMember.liveCasino = {
-                    name: "Live Casino",
-                    className: "iconUnsyncEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('LiveCasino/EditMember?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-                    }
-                };
-            }
+            };
         }
 
         if (!hideVirtualSport) {
