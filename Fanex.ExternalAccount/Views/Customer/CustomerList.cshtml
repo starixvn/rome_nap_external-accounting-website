@@ -58,6 +58,17 @@
             There is no data.</div>
     </div>
 </div>
+<form id="targetForm" method="post" target="windowPopup" action="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple")">
+   <input type="hidden" id="directUplineId" name="directUplineId" value="" />
+  <input type="hidden" id="uplineId" name="uplineId" value="" />
+  <input type="hidden" id="targetCustIds" name="targetCustIds" value="" />
+  <input type="hidden" id="targetSyncStatus" name="targetSyncStatus" value="" />
+  <input type="hidden" id="targetUsernames" name="targetUsernames" value="" />
+  <input type="hidden" id="uplineRoleId" name="uplineRoleId" value="" />
+  <input type="hidden" id="targetRoleId" name="targetRoleId" value="" />
+  <input type="hidden" id="adminId" name="adminId" value="" />
+  <input type="hidden" id="groupName" name="groupName" value="" />
+</form>
 <script type="text/javascript">
     $('#customerStatus').combobox();
     Fanex.ExtAcc.Customer.dataTexts = [
