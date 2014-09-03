@@ -165,7 +165,8 @@ select:disabled
     padding-bottom: 2px;
     margin-top: 5px;
     text-indent: 0 ;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
+    float: right;
 }
 
 .edit-setting-livecs .update-setting-ext-acc-submit:hover
@@ -269,6 +270,9 @@ label.clearfix
 {
     display: inline-block;
     margin-left: 25px;
+    max-height: 200px;
+    overflow: auto;
+    width: 100%;
 }
 
 .edit-setting-livecs .updated-result .main-message .message-user-name
@@ -342,17 +346,18 @@ label.clearfix
     margin: 0px 12px 0px 0px;
 }
 
+/*
 .game-setting .betting-limit-item .betting-limit-label
 {
 	margin-top: 4px;
 }
-
+*/
 .game-setting .betting-limit-item input[type="checkbox"], 
 .game-setting .betting-limit-item input[type="radio"], 
 .win-limit input[type="checkbox"]
 {
     margin: 2px 2px 2px -14px;
-    padding-top: 2px;
+    /*padding-top: 2px;*/
 }
 
 .game-setting .game-setting-name

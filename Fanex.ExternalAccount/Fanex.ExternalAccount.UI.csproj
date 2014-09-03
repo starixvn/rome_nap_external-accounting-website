@@ -100,7 +100,7 @@
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <HintPath>..\..\..\live-casino-setting\Fanex.LiveCasino.CoreSetting\bin\Debug\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -493,6 +493,7 @@
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-1.11.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
@@ -1379,7 +1380,6 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.LiveCasino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
@@ -2445,6 +2445,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
+      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
+      <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>

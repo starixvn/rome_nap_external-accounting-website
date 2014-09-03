@@ -5,7 +5,7 @@
 }
 @section css
 {
-    @if(Model.SystemId == (int)SystemType.Accounting)
+    @if (Model.SystemId == (int)SystemType.Accounting)
     {
         <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/bootstrap.css")" />
         <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css")" />
@@ -49,6 +49,7 @@
     </div>
     @{
         var buttonClass = string.Empty;
+        var buttonText = LiveCasinoLang.lblUpdate;
 
         switch (Model.SystemId)
         {
@@ -69,8 +70,13 @@
                 </div>
                                                   break;
             case (int)SystemType.ExtAccounting:
-                                                  buttonClass = "update-setting-ext-acc-submit";
-                                                  break;
+                <div class="update-setting col-xs-12">
+                    <input type="button" class="update-setting-ext-acc-submit" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblSubmit"
+                        value="@LiveCasinoLang.lblSubmit" data-ng-show="!isReadOnly" />
+                </div>
+              buttonText = LiveCasinoLang.lblSubmit;
+              buttonClass = "update-setting-ext-acc-submit";
+              break;
         }
     }
 
@@ -98,8 +104,8 @@
         {
             <span class="update-setting-agency-submit-left"  data-ng-show="!isReadOnly"></span>
         }
-        <input type="button" class="@(buttonClass)" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblUpdate"
-            value="@LiveCasinoLang.lblUpdate" data-ng-show="!isReadOnly" />
+        <input type="button" class="@(buttonClass)" data-ng-click="validateAndUpdateSetting()"  title="@buttonText"
+            value="@buttonText" data-ng-show="!isReadOnly" />
     </div>
 </div>
 <div class="live-casino-loading">
