@@ -1,0 +1,963 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="LiveCasinoBase.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Andy.Nguyen" date="2013.3.20">Created</change>
+// </history>
+
+namespace Fanex.ExternalAccount.Core.Base
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.ViewModel.Customer;
+    using Fanex.LiveCasinoSetting;
+    using Fanex.LiveCasinoSetting.Business;
+    using Fanex.LiveCasinoSetting.Model;
+    using Fanex.LiveCasinoSetting.Model.Log;
+    using Fanex.LiveCasinoSetting.Request;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
+    /// <summary>
+    /// Base controller for live casino setting.
+    /// </summary>
+    public class LiveCasinoBase : BaseController
+    {        
+        /// <summary>
+        /// Lock object for synchronization.
+        /// </summary>
+        private static object locker = new object();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LiveCasinoBase"/> class.
+        /// </summary>
+        public LiveCasinoBase()
+        {
+            // Inits base properties
+            this.GameSetting = new GameSettingService();
+            this.PtSetting = new SettingService();
+            this.MemberWinLimit = new MemberWinLimitService();
+            this.LogWriter = new LogWriterService();
+        }
+
+        /// <summary>
+        /// Gets or sets property.
+        /// </summary>
+        /// <value>System.Object object.</value>
+        protected ISettingService PtSetting
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property.
+        /// </summary>
+        /// <value>System.Object object.</value>
+        protected IGameSettingService GameSetting
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property.
+        /// </summary>
+        /// <value>System.Object object.</value>
+        protected IMemberWinLimitService MemberWinLimit
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets property.
+        /// </summary>
+        /// <value>System.Object object.</value>
+        protected ILogWriterService LogWriter
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets member win limit value.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <returns>MemberWinLimit object.</returns>
+        [ExternalAccountAuthenticate(Function = eFunctions.LiveCasino, Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult GetMemberWinLimit(int custId)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            return this.JsonBase(this.MemberWinLimit.GetMemberWinLimit(custId), settings);
+        }
+
+        /// <summary>
+        /// Checks whether an account is disabled or not.
+        /// </summary>
+        /// <param name="username">Username to check.</param>
+        /// <param name="groupName">Group name that user belongs to.</param>
+        /// <returns>Boolean value.</returns>
+        protected bool IsDisableAccount(string username, string groupName)
+        {
+            var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
+            var result = new DataTable();
+            var srecommend = 0;
+            var mrecommend = 0;
+            var recommend = 0;
+            var custId = 0;
+            var roleId = 0;
+
+            if (customerInfo != null)
+            {
+                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+
+                if (roleId == 4)
+                {
+                    result = new SuperService().GetData(null, custId, null, null, null, groupName);
+                }
+                else if (roleId == 3)
+                {
+                    result = new MasterService().GetData(srecommend, custId, null, null, null);
+                }
+                else if (roleId == 2)
+                {
+                    result = new AgentService().GetData(mrecommend, custId, null, null, null);
+                }
+                else
+                {
+                    result = new MemberService().GetData(recommend, custId, null, null, null);
+                }
+            }
+
+            return !(bool)result.Rows[0]["enabled"];
+        }
+
+        /// <summary>
+        /// Updates member win limit setting.
+        /// </summary>
+        /// <param name="custId">Updated customer id.</param>
+        /// <param name="isDailyAutoReset">Is daily auto reset.</param>
+        /// <param name="maxWinLimit">Maximum win limit.</param>
+        /// <param name="customer">JSON customer string.</param>
+        /// <returns>ActionResult object.</returns>
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberWinLimit(int custId, bool isDailyAutoReset, decimal maxWinLimit, string customer)
+        {
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
+            var memberWinLimit = new MemberWinLimit()
+            {
+                IsDailyAutoReset = isDailyAutoReset,
+                MaxWinLimit = maxWinLimit
+            };
+
+            var context = new RequestContext()
+            {
+                CustId = custId,
+                Language = "en",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var result = this.MemberWinLimit.UpdateMemberWinLimit(memberWinLimit, context);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates game setting info.
+        /// </summary>
+        /// <param name="uplineRoleId">Role id of up-line.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="customer">Customer string object.</param>
+        /// <param name="sync">Identify whether or not manually synchronization.</param>
+        /// <returns>JSON string object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        protected List<object> UpdateGameSetting(int uplineRoleId, int custId, string customer, bool sync = true)
+        {            
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
+
+            // Checks whether a customer is disabled or not
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return new List<object> { new { BettypeId = 1101, ErrorCode = 1, ErrorMessage = ViewLang.DisabledAccount } };
+            }
+
+            // Gets betting limits by customer
+            var gameTypeList = this.GameSetting.GetByCustomerId(custId);
+            List<LiveCasinoSetting.Model.GameType> oldValues = new List<LiveCasinoSetting.Model.GameType>();
+
+            // Tracking old values
+            foreach (var gameType in gameTypeList)
+            {
+                LiveCasinoSetting.Model.GameType game = new LiveCasinoSetting.Model.GameType()
+                {
+                    Id = gameType.Id,
+                    Name = gameType.Name,
+                    BetTypeId = gameType.BetTypeId,
+                };
+                game.BettingLimit = new List<LiveCasinoSetting.Model.StakeLevel>();
+
+                foreach (var stakeLevel in gameType.BettingLimit)
+                {
+                    game.BettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel()
+                    {
+                        Id = stakeLevel.Id,
+                        IsDirty = stakeLevel.IsDirty,
+                        IsSelected = stakeLevel.IsSelected,
+                        Text = stakeLevel.Text
+                    });
+                }
+
+                oldValues.Add(game);
+            }
+
+            // Checks whether or not game kinds exist and then tracking changed values
+            if (gameTypeList.Count > 0)
+            {
+                // Tracking handler
+                gameTypeList
+                .ForEach(g => g.BettingLimit
+                    .ForEach(b => ((INotifyPropertyChanged)b).PropertyChanged += (o, arg) =>
+                    {
+                        if (arg.PropertyName == "IsSelected")
+                        {
+                            (o as LiveCasinoSetting.Model.StakeLevel).IsDirty = arg.PropertyName == "IsSelected";
+                        }
+                    }));
+
+                // Process tracking values
+                foreach (LiveCasinoSetting.Model.GameType gameType in gameTypeList)
+                {
+                    foreach (var stakeLavel in gameType.BettingLimit)
+                    {
+                        var gameSetting = model.GameSetting.Where(s => s.Id == gameType.Id).Select(
+                            f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected));
+                        if (gameSetting != null && gameSetting.Count() > 0)
+                        {
+                            var stakeSetting = gameSetting.ToList().FirstOrDefault();
+                            if (stakeSetting != null && stakeSetting.Count() > 0)
+                            {
+                                stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
+                            }
+                        }
+                    }
+                }
+            }
+
+            var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
+            var resultList = new Dictionary<int, Result>();
+
+            if (model.GameSetting.Count > 0 && !sync)
+            {
+                var changedValues = new List<GameType>();
+                if (gameTypeList.Count == 0)
+                {
+                    gameTypeList = model.GameSetting;
+                    foreach (var gameType in gameTypeList)
+                    {
+                        foreach (var betting in gameType.BettingLimit)
+                        {
+                            betting.IsDirty = true;
+                        }
+                    }
+                }
+
+                resultList = this.GameSetting.UpdateGameSetting(uplineRoleId, gameTypeList, req);
+                var oldSettings = new List<LiveCasinoSetting.Model.GameType>();
+                var newSettings = new List<LiveCasinoSetting.Model.GameType>();
+
+                if (oldValues.Count > 0)
+                {
+                    for (var i = 0; i < oldValues.Count && i < gameTypeList.Count; i++)
+                    {
+                        var oldGameTypeValue = oldValues[i];
+                        var newGameTypeValue = gameTypeList[i];
+
+                        var isDifferent = false;
+                        for (var j = 0; j < oldGameTypeValue.BettingLimit.Count &&
+                            j < newGameTypeValue.BettingLimit.Count; j++)
+                        {
+                            var oldSelectedValue = oldGameTypeValue.BettingLimit[j].IsSelected;
+                            var newSelectedValue = newGameTypeValue.BettingLimit[j].IsSelected;
+                            if (oldSelectedValue != newSelectedValue)
+                            {
+                                isDifferent = true;
+                                break;
+                            }
+                        }
+
+                        if (isDifferent)
+                        {
+                            oldSettings.Add(oldGameTypeValue);
+                            newSettings.Add(newGameTypeValue);
+                        }
+                    }
+                }
+                else
+                {
+                    newSettings = gameTypeList;
+                }
+
+                // Write log stake level
+                this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldSettings, newSettings, resultList)
+                {
+                    Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
+                    RoleId = uplineRoleId - 1,
+                    SubAccId = req.SubAccId,
+                    CustId = custId,
+                    SignUpIp = this.CurrentContext.Ip4Address,
+                    Language = "en",
+                    UserId = req.UserId
+                });
+
+                var results = new List<object>();
+                foreach (var item in resultList)
+                {
+                    results.Add(new { BettypeId = item.Key, ErrorCode = item.Value.ErrorCode, ErrorMessage = item.Value.ErrorMessage });
+                }
+
+                return results;
+            }
+            else
+            {
+                return new List<object>() { new { BettypeId = 1101, ErrorCode = string.Empty, ErrorMessage = string.Empty } };
+            }
+        }
+
+        /// <summary>
+        /// Gets customer info.
+        /// </summary>
+        /// <param name="custId">Customer Id.</param>
+        /// <param name="groupName">Group Name that user belongs to.</param>
+        /// <returns>CUSTINFO object.</returns>
+        protected CustInfo GetCustomerInfo(int custId, string groupName)
+        {
+            var report = new ReportService();
+            var custInfo = report.GetCustomerInfo(groupName, custId, string.Empty, true);
+
+            if (custInfo == null || custInfo.Rows.Count == 0)
+            {
+                return new CustInfo();
+            }
+
+            var item = custInfo.Rows[0];
+            var info = new CustInfo
+            {
+                AgentId = (int)item["recommend"],
+                MasterId = (int)item["mrecommend"],
+                SuperId = (int)item["srecommend"],
+                AgentName = item["agentname"] is DBNull ? string.Empty : item["agentname"].ToString(),
+                MasterName = item["mastername"] is DBNull ? string.Empty : item["mastername"].ToString(),
+                SuperName = item["supername"] is DBNull ? string.Empty : item["supername"].ToString(),
+                CustId = (int)item["custid"],
+                Username = (string)item["username"],
+                RoleId = Utils.ToInt32(item["roleid"])
+            };
+
+            return info;
+        }
+
+        /// <summary>
+        /// Gets log action update stake level.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>LogActions object.</returns>
+        protected LogActions LogActionUpdateStakeLevel(int roleId)
+        {
+            switch (roleId)
+            {
+                case BaseController.Master:
+                    return LogActions.UpdateStakeLevel_Master;
+                case BaseController.Agent:
+                    return LogActions.UpdateStakeLevel_Agent;
+                case BaseController.Member:
+                    return LogActions.UpdateStakeLevel_Member;
+            }
+
+            return LogActions.UpdateStakeLevel_Super;
+        }
+
+        /// <summary>
+        /// Gets log action manual insert account.
+        /// </summary>
+        /// <param name="roleId">Role id of customer.</param>
+        /// <returns>LogActions object.</returns>
+        protected LogActions LogActionManual(int roleId)
+        {
+            switch (roleId)
+            {
+                case BaseController.Member:
+                    return LogActions.ManualInsert_Member;
+                case BaseController.Agent:
+                    return LogActions.ManualInsert_Agent;
+                case BaseController.Master:
+                    return LogActions.ManualInsert_Master;
+            }
+
+            return LogActions.ManualInsert_Super;
+        }
+
+        /// <summary>
+        /// Synchronizes account manually.
+        /// </summary>
+        /// <param name="uplineRoleId">Role id of up-line.</param>
+        /// <param name="uplineId">Id of up-line.</param>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <param name="retVal">Identify whether or not manually synchronization.</param>
+        /// <param name="groupName">Group name that user belongs to.</param>
+        /// <param name="isUpdateGameSetting">Boolean value.</param>
+        /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        protected Fanex.LiveCasinoSetting.Model.Result SyncManually(
+            int uplineRoleId, 
+            int uplineId, 
+            int custId, 
+            string customer, 
+            ref bool retVal,
+            string groupName = "ACCINDO", 
+            bool isUpdateGameSetting = false)
+        {
+            lock (locker)
+            {
+                var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+                var gameTypes = model.GameSetting;
+                var result = new Fanex.LiveCasinoSetting.Model.Result();
+                var custInfo = this.PtSetting.GetCustomerInfo(custId);
+                var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
+                var userInfo = this.GetCustomerInfo(custId, model.CustomerInfo.GroupName);
+
+                // If account is disabled then return
+                if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+                {
+                    retVal = false;
+                    return null;
+                }
+
+                // Update game setting in case of not sync live casino
+                if (isUpdateGameSetting && uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+                {
+                    // Update PT first
+                    if (uplineRoleId == BaseController.Super)
+                    {
+                        result = this.UpdateMasterPT(custId, uplineId, customer);
+                    }
+                    else if (uplineRoleId == BaseController.Master)
+                    {
+                        result = this.UpdateAgentPT(custId, uplineId, customer);
+                    }
+                    else
+                    {
+                        result = this.UpdateMemberPT(custId, uplineId, customer);
+                    }
+                }
+
+                if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+                {
+                    retVal = true;
+                    var req = this.GetInsertAccountRequest(custId, uplineRoleId, model.CustomerInfo.GroupName);
+                    result = this.GameSetting.InsertAccount(req);
+                    var oldGameTypes = this.GameSetting.GetByCustomerId(uplineId);
+                    oldGameTypes = oldGameTypes.Count == 0 ? gameTypes : oldGameTypes;
+
+                    // Synced directly if don't have betting limits then get by currency
+                    if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino && gameTypes.Count == 0)
+                    {
+                        var settingGame = this.GameSetting.GetByExhangeId(model.CustomerInfo.ExChangeId, model.CustomerInfo.Site);
+                        if (settingGame.Count > 0)
+                        {
+                            foreach (var item in settingGame)
+                            {
+                                var stakes = new List<StakeLevel>();
+                                foreach (var stake in item.BettingLimit)
+                                {
+                                    stakes.Add(new StakeLevel
+                                    {
+                                        Id = stake.Id,
+                                        IsSelected = false,
+                                        Text = stake.Text,
+                                        IsDirty = true
+                                    });
+                                }
+
+                                gameTypes.Add(new GameType
+                                {
+                                    Id = item.Id,
+                                    Name = item.Name,
+                                    BetTypeId = item.BetTypeId,
+                                    BettingLimit = stakes
+                                });
+                            }
+                        }
+                    }
+                    else
+                    {              
+                        foreach (GameType gameType in gameTypes)
+                        {
+                            if (gameType.BettingLimit.Count > 0)
+                            {
+                                foreach (var stakeLavel in gameType.BettingLimit)
+                                {
+                                    var gameSetting = model.GameSetting.Where(s => s.Id == gameType.Id).Select(
+                                        f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected));
+                                    if (gameSetting != null && gameSetting.Count() > 0)
+                                    {
+                                        var stakeSetting = gameSetting.ToList().FirstOrDefault();
+                                        if (stakeSetting != null && stakeSetting.Count() > 0)
+                                        {
+                                            stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
+                                            stakeLavel.IsDirty = true;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                gameType.BettingLimit = new List<StakeLevel>()
+                                {
+                                    new StakeLevel()
+                                    {
+                                        IsDirty = true,
+                                        IsSelected = false,
+                                        Text = string.Empty
+                                    }
+                                };
+                            }
+                        }
+                    }
+
+                    var resultList = ((GameSettingService)this.GameSetting).UpdateStakeLevel(custId, uplineRoleId - 1, gameTypes);
+                    var errorCode = resultList.Any(o => string.IsNullOrWhiteSpace(o.Value.ErrorCode) || o.Value.ErrorCode == ErrorCode.NOT_UPDATE_BETTING_LIMIT) ? string.Empty :
+                        resultList.Where(o => !string.IsNullOrWhiteSpace(o.Value.ErrorCode) && o.Value.ErrorCode != ErrorCode.NOT_UPDATE_BETTING_LIMIT)
+                        .FirstOrDefault().Value.ErrorCode;
+                    var errorMsg = resultList.Any(o => string.IsNullOrWhiteSpace(o.Value.ErrorCode) || o.Value.ErrorCode == ErrorCode.NOT_UPDATE_BETTING_LIMIT) ? string.Empty :
+                        resultList.Where(o => !string.IsNullOrWhiteSpace(o.Value.ErrorCode) && o.Value.ErrorCode != ErrorCode.NOT_UPDATE_BETTING_LIMIT)
+                        .FirstOrDefault().Value.ErrorMessage;
+                    if (string.IsNullOrWhiteSpace(errorCode) && !isUpdateGameSetting)
+                    {
+                        var custList = new List<KeyValuePair<int, string>>();
+                        custList.Add(new KeyValuePair<int, string>(req.CustId, req.CustUserName));
+                        this.LogWriter.WriteLog(new Fanex.LiveCasinoSetting.Model.Log.LogManualInsertAccount()
+                        {
+                            Action = this.LogActionManual(uplineRoleId - 1),
+                            AgentId = req.AgentId,
+                            CustId = req.CustId,
+                            CustUserName = req.CustUserName,
+                            ExchangeId = req.ExchangeId,
+                            SignUpIp = req.SignUpIp,
+                            Language = req.Language,
+                            MasterId = req.MasterId,
+                            RoleId = req.RoleId,
+                            SignUpForm = req.SignUpForm,
+                            SubAccId = req.SubAccId,
+                            SubAccName = req.SubAccName,
+                            SuperId = req.SuperId,
+                            UserId = req.UserId,
+                            UserName = req.UserName,
+                            ErrorCode = result.ErrorCode,
+                            ErrorMessage = result.ErrorMessage,
+                            CustomerList = custList
+                        });
+                        this.LogWriter.WriteLog(new LogUpdateStakeLevel(oldGameTypes, gameTypes, resultList)
+                        {
+                            Action = this.LogActionUpdateStakeLevel(uplineRoleId - 1),
+                            ErrorCode = errorCode,
+                            ErrorMessage = errorMsg,
+                            RoleId = uplineRoleId - 1,
+                            SubAccId = req.SubAccId,
+                            CustId = custId,
+                            SignUpIp = this.CurrentContext.Ip4Address,
+                            Language = "en",
+                            UserId = req.UserId
+                        });
+                    }
+
+                    ((GameSettingService)this.GameSetting).UpdateSyncLiveCasinoInfo(req);
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Update master PT.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMasterPT(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetMasterPTSeting(custId, uplineId);
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
+            if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("MaxPT");
+                pt.PropertiesChangedList.Add("MinPT");
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("AutoPresetPT");
+                ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add("IsAutoPresetPT");
+            }
+            else
+            {
+                // Handles Master values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                // Handles Super values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((SuperPTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            // Super values
+            ((SuperPTSetting)pt.Upline).PresetPT = model.UplinePtSetting.PresetPT;
+            ((SuperPTSetting)pt.Upline).AutoPresetPT = model.UplinePtSetting.AutoPresetPT;
+            ((SuperPTSetting)pt.Upline).IsAutoPresetPT = model.UplinePtSetting.IsAutoPresetPT;
+            ((SuperPTSetting)pt.Upline).IsUpdateAllMember = model.UplinePtSetting.IsUpdateAllMember;
+            ((SuperPTSetting)pt.Upline).NewMemberPT = model.UplinePtSetting.NewMemberPT;
+
+            // Master values
+            pt.MaxPT = model.PtSetting.MaxPT;
+            pt.MinPT = model.PtSetting.MinPT;
+            pt.Comm = model.PtSetting.Comm;
+
+            var result = this.PtSetting.UpdateMasterPTSetting(context, pt);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Update agent PT.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateAgentPT(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetAgentPTSetting(custId, uplineId);
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
+            if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("MaxPT");
+                pt.PropertiesChangedList.Add("MinPT");
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("AutoPresetPT");
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("IsAutoPresetPT");
+            }
+            else
+            {
+                // Handles Agent values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                // Handles Master values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((SuperPTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((SuperPTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            // Master values
+            ((PTSetting)pt.Upline).PresetPT = model.UplinePtSetting.PresetPT;
+            ((PTSetting)pt.Upline).AutoPresetPT = model.UplinePtSetting.AutoPresetPT;
+            ((PTSetting)pt.Upline).IsAutoPresetPT = model.UplinePtSetting.IsAutoPresetPT;
+            ((PTSetting)pt.Upline).IsUpdateAllMember = model.UplinePtSetting.IsUpdateAllMember;
+            ((PTSetting)pt.Upline).NewMemberPT = model.UplinePtSetting.NewMemberPT;
+
+            // Agent values
+            pt.MaxPT = model.PtSetting.MaxPT;
+            pt.MinPT = model.PtSetting.MinPT;
+            pt.Comm = model.PtSetting.Comm;
+
+            var result = this.PtSetting.UpdateAgentPTSetting(context, pt);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Update member PT.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        protected Fanex.LiveCasinoSetting.Model.Result UpdateMemberPT(int custId, int uplineId, string customer)
+        {
+            var context = new RequestContext
+            {
+                CustId = custId,
+                IsSyncLiveCasino = true,
+                Language = "en",
+                SignUpIp = this.CurrentContext.Ip4Address,
+                UplineId = uplineId,
+                UserId = this.CurrentSession.UserId
+            };
+
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+            var pt = this.PtSetting.GetMemberPTSetting(custId, uplineId);            
+            var custInfo = this.PtSetting.GetCustomerInfo(custId);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(uplineId);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
+            if (uplineInfo.IsSyncLiveCasino && !custInfo.IsSyncLiveCasino)
+            {
+                pt.PropertiesChangedList.Add("Comm");
+
+                ((PTSetting)pt.Upline).PropertiesChangedList.Add("PresetPT");
+            }
+            else
+            {
+                // Handles Member values changed
+                ((INotifyPropertyChanged)pt).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!pt.PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         pt.PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+
+                // Handles Agent values changed
+                ((INotifyPropertyChanged)pt.Upline).PropertyChanged
+                                 += (o, arg) =>
+                                 {
+                                     if (!((PTSetting)pt.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                                     {
+                                         ((PTSetting)pt.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                                     }
+                                 };
+            }
+
+            // Agent values
+            ((PTSetting)pt.Upline).PresetPT = model.UplinePtSetting.PresetPT;
+
+            // Member values
+            pt.Comm = model.PtSetting.Comm;
+
+            var result = this.PtSetting.UpdateMemberPTSetting(context, pt);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Update member PT by super.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
+        protected Fanex.LiveCasinoSetting.Model.Result SuperUpdateMemberPT(int custId, int uplineId, string customer)
+        {
+            var pt = this.PtSetting.SuperGetMemberPTSetting(custId, uplineId);
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {
+                return null;
+            }
+
+            ((INotifyPropertyChanged)pt.Upline.Upline.Upline).PropertyChanged
+                        += (o, arg) =>
+                        {
+                            if (!((SuperPTSetting)pt.Upline.Upline.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                            {
+                                ((SuperPTSetting)pt.Upline.Upline.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                            }
+                        };
+
+            ((SuperPTSetting)pt.Upline.Upline.Upline).PresetPT = model.SuperPtSetting.PresetPT;
+            ((SuperPTSetting)pt.Upline.Upline.Upline).AutoPresetPT = model.SuperPtSetting.AutoPresetPT;
+            ((SuperPTSetting)pt.Upline.Upline.Upline).IsAutoPresetPT = model.SuperPtSetting.IsAutoPresetPT;
+
+            var result = this.PtSetting.UpdateMemberPTSettingBySuper(
+                new RequestContext()
+                {
+                    CustId = custId,
+                    SignUpIp = this.CurrentContext.Ip4Address,
+                    Language = "en",
+                    UplineId = uplineId,
+                    UserId = this.CurrentSession.UserId
+                },
+                pt);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Update member PT by master.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Up-line id.</param>
+        /// <param name="customer">Customer JSON string.</param>
+        /// <returns>Result object.</returns>
+        protected Fanex.LiveCasinoSetting.Model.Result MasterUpdateMemberPT(int custId, int uplineId, string customer)
+        {
+            var pt = this.PtSetting.MasterGetMemberPTSetting(custId, uplineId);
+            var model = JsonConvert.DeserializeObject<LiveCasinoModel>(customer);
+
+            if (this.IsDisableAccount(model.CustomerInfo.UserName, model.CustomerInfo.GroupName))
+            {                
+                return null;
+            }
+
+            ((INotifyPropertyChanged)pt.Upline.Upline).PropertyChanged
+                        += (o, arg) =>
+                        {
+                            if (!((SuperPTSetting)pt.Upline.Upline).PropertiesChangedList.Contains(arg.PropertyName))
+                            {
+                                ((SuperPTSetting)pt.Upline.Upline).PropertiesChangedList.Add(arg.PropertyName);
+                            }
+                        };
+
+            ((PTSetting)pt.Upline.Upline).PresetPT = model.MasterPtSetting.PresetPT;
+            ((PTSetting)pt.Upline.Upline).AutoPresetPT = model.MasterPtSetting.AutoPresetPT;
+            ((PTSetting)pt.Upline.Upline).IsAutoPresetPT = model.MasterPtSetting.IsAutoPresetPT;
+
+            var result = this.PtSetting.UpdateMemberPTSettingByMaster(
+                new RequestContext()
+                {
+                    CustId = custId,
+                    SignUpIp = this.CurrentContext.Ip4Address,
+                    Language = "en",
+                    UplineId = uplineId,
+                    UserId = this.CurrentSession.UserId
+                },
+                pt);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets insert account request.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineRoleId">Up-line role id.</param>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>InsertAccountRequest object.</returns>
+        protected InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
+        {
+            var custInfo = this.GetCustomerInfo(custId, groupName);
+            var uplineInfo = this.PtSetting.GetCustomerInfo(
+                uplineRoleId == BaseController.Super ? custInfo.SuperId : 
+                uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
+
+            var result = new InsertAccountRequest()
+            {
+                AgentId = custInfo.AgentId,
+                CustId = custId,
+                CustUserName = custInfo.Username,
+                ExchangeId = uplineInfo.ExChangeId,
+                SignUpIp = this.CurrentContext.Ip4Address,
+                IsDisabledLiveCasino = uplineInfo.DisableLiveCasino,
+                IsEnableDownline = true,
+                Language = "en",
+                MasterId = custInfo.MasterId,
+                RoleId = custInfo.RoleId,
+                SignUpForm = BaseController.FromSystem, // External acc system
+                SuperId = custInfo.SuperId,
+                SyncLiveCasino = uplineInfo.IsSyncLiveCasino,
+                UserId = this.CurrentSession.UserId,
+                UserName = this.CurrentSession.UserName,
+                IsAutoInsert = false // Manually insert account
+            };
+
+            return result;
+        }
+    }
+}

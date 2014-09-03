@@ -10,12 +10,12 @@ namespace Fanex.ExternalAccount.UI.Services
     {
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, SettingContext settingContext)
         {
-            return PermissionService.HasReadPermission(eFunctions.LiveCasino);
+            return true;
         }
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, SettingContext settingContext)
         {
-            return PermissionService.HasHostPermission(eFunctions.LiveCasino);
+            return true;
         }
     }
 }
