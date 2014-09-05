@@ -3,19 +3,21 @@ using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Fanex.LiveCasino.CoreSetting.Models;
 using Fanex.LiveCasino.CoreSetting.Services;
+using Fanex.ExternalAccount.Core.Context;
 
 namespace Fanex.ExternalAccount.UI.Services
 {
     public class LiveCasinoAuthorizationService : ILiveCasinoAuthorizationService
     {
+        private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, SettingContext settingContext)
         {
-            return PermissionService.HasReadPermission(eFunctions.LiveCasino);
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
         }
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, SettingContext settingContext)
         {
-            return PermissionService.HasHostPermission(eFunctions.LiveCasino);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino); ;
         }
     }
 }
