@@ -828,6 +828,7 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="Images\Content\view.png" />
     <Content Include="SpNames.CustDB.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2064,6 +2065,7 @@
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Super\EditSuper.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
+    <Content Include="Areas\CustomerSetting\Views\Shared\_LayoutMinMaxPT.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />

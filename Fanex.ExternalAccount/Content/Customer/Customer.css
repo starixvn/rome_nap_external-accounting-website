@@ -163,7 +163,7 @@ tr.rowDisabled td
 }
 .iconViewEdit
 {
-	background-image: url(../../Images/Content/view.png);
+	background-image: url(../Images/Content/view.png);
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	height: 16px;
