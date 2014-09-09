@@ -255,16 +255,16 @@ Fanex.ExtAcc.Customer.Settings = {
         var action = '';
 
         if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            action = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.superId + "&parentId=" + Fanex.ExtAcc.Customer.superId + "&uplineLevel=4&customerId=" + this.UserId + "&customerLevel=3";
+            action = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.superId + "&directUplineId=" + Fanex.ExtAcc.Customer.superId + "&uplineRoleId=4&targetCustId=" + this.UserId + "&targetRoleId=3";
         }
         else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            action = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.masterId + "&parentId=" + Fanex.ExtAcc.Customer.masterId + "&uplineLevel=3&customerId=" + this.UserId + "&customerLevel=2";
+            action = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.masterId + "&directUplineId=" + Fanex.ExtAcc.Customer.masterId + "&uplineRoleId=3&targetCustId=" + this.UserId + "&targetRoleId=2";
         }
         else {
-            action = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.agentId + "&parentId=" + Fanex.ExtAcc.Customer.agentId + "&uplineLevel=2&customerId=" + this.UserId + "&customerLevel=1";
+            action = "LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.agentId + "&directUplineId=" + Fanex.ExtAcc.Customer.agentId + "&uplineRoleId=2&targetCustId=" + this.UserId + "&targetRoleId=1";
         }
 
-        var url = resolveClientUrl(action + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + '&groupName=' + $('#selectedGroupName').html());
+        var url = resolveClientUrl(action + '&adminId=' + parent.userId + '&groupName=' + $('#selectedGroupName').html());
 
         $('#tabs-7').height($('#leftFrame').height() - 10);
         $('#tabs-7').css('display', 'block');

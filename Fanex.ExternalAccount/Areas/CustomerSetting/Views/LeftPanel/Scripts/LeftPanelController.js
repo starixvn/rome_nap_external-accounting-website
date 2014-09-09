@@ -204,7 +204,7 @@ function LeftPanelController($scope, $element) {
 
         switch (roleId) { 
             case 4:
-                url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&&uplineRoleId=0&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=4&formType=2");
+                url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=4&formType=2");
                 break;
             case 3:
                 url = parent.resolveClientUrl("LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&directUplineId=" + $scope.model.personalInfo.uplineId.value + "&uplineRoleId=4&targetCustId=" + $scope.model.personalInfo.custId.value + "&targetRoleId=3");
