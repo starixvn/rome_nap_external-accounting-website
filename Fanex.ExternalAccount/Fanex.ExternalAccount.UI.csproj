@@ -1956,12 +1956,15 @@
     </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
@@ -2065,7 +2068,6 @@
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Super\EditSuper.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <Content Include="Configurations\connectionStrings.config" />
-    <Content Include="Areas\CustomerSetting\Views\Shared\_LayoutMinMaxPT.cshtml" />
     <None Include="Content\Images\Thumbs.db" />
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
     <None Include="ExcelTemplates\Customer\CustomerList.xls" />
