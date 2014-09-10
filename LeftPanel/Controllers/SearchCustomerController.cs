@@ -239,7 +239,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             if (casinoCustomer != null && casinoCustomer.CasinoSync)
             {
-                this.UpdateCasinoStatus2(custId, close, casinoCustomer.Suspend);
+                this.UpdateCasinoClosed(custId, close);
             }
 
             return this.JsonBase(this._service.CloseCutomer(custId, close, clearCredit, custName));
@@ -264,7 +264,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             if (casinoCustomer != null && casinoCustomer.CasinoSync)
             {
-                this.UpdateCasinoStatus2(custId, casinoCustomer.Closed, suspend);
+                this.UpdateCasinoSuspended(custId, suspend);
             }
 
             return this.JsonBase(this._service.SuspendCustomer(custId, suspend));
