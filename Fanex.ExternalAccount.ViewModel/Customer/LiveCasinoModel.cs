@@ -10,7 +10,6 @@
 namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasinoSetting.Model;
 
     /// <summary>
     /// TODO: Update summary.
@@ -18,8 +17,6 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
     public class LiveCasinoModel
     {
         public CustomerInfo CustomerInfo { get; set; }
-
-        public List<GameType> GameSetting { get; set; }
 
         public virtual PTModel SuperPtSetting { get; set; }
 

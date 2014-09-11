@@ -85,6 +85,8 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <param name="filterContext">AuthorizationContext object.</param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            base.OnAuthorization(filterContext);
+
             this._groups = new LoginService().GroupList().ToList();
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
@@ -231,6 +233,11 @@ namespace Fanex.ExternalAccount.Core.Context
                 groups.Where(o => o.GroupID == currentSession.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
+        }
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            return true;
         }
 
         /// <summary>

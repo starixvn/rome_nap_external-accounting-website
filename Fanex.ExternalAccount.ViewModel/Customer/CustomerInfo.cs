@@ -13,7 +13,6 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Fanex.LiveCasinoSetting.Model;
 
     /// <summary>
     /// TODO: Update summary.
@@ -37,8 +36,6 @@ namespace Fanex.ExternalAccount.ViewModel.Customer
         public bool IsSyncLiveCasino { get; set; }
 
         public string LastName { get; set; }
-
-        public MemberWinLimit Limit { get; set; }
 
         public string Mobile { get; set; }
 

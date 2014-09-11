@@ -63,9 +63,6 @@
     <Reference Include="Fanex.LiveCasino.CoreSetting">
       <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting">
-      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
@@ -148,7 +145,6 @@
     <Compile Include="Base\ControllerExtentions.cs" />
     <Compile Include="Base\CustomerBase.cs" />
     <Compile Include="Base\JsonBase.cs" />
-    <Compile Include="Base\LiveCasinoBase.cs" />
     <Compile Include="Context\CasinoAPILogger.cs" />
     <Compile Include="Context\CurrentContext.cs" />
     <Compile Include="Context\CurrentSession.cs">
