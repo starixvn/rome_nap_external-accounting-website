@@ -100,7 +100,7 @@
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\live-casino-setting\Fanex.LiveCasino.CoreSetting\bin\Debug\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2425,15 +2425,9 @@
     <Content Include="Views\SportsbookSetting\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\TransferCondition.cshtml" />
     <Content Include="Views\SportsbookSetting\SuperMasterEditSB.cshtml" />
-    <Content Include="Views\LiveCasino\EditMaster.cshtml" />
-    <Content Include="Views\LiveCasino\EditAgent.cshtml" />
-    <Content Include="Views\LiveCasino\EditMember.cshtml" />
-    <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
-    <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
-    <Content Include="Views\LiveCasino\EditSuper.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BettypeReference\Index.cshtml" />
