@@ -2160,8 +2160,8 @@
     <None Include="ExcelTemplates\Statement\Statement.xls" />
     <Content Include="PTEngine\BettingLimitMappingSection.config" />
     <Content Include="PTEngine\PTMappingSection.config" />
-    <None Include="IbcKeys\ibckeydec.snk" />
-    <None Include="IbcKeys\ibcpkey.snk" />
+    <Content Include="IbcKeys\ibckeydec.snk" />
+    <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
     <Content Include="PTEngine\PTRacingMappingSection.config" />
     <Content Include="PTEngine\RacingBettingCommSettingMappingSection.config" />
