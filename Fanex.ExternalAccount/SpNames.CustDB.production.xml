@@ -1,4 +1,38 @@
 ﻿<Functions>
+  <Function Name="Keno">
+    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+
+  </Function>
+  <Function Name="EditSuper">
+    <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdSuperKeno" SpName="Acc_CustomerUpdSuperKeno" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+  </Function>
+  <Function Name="EditMaster">
+    <Setting Key="Acc_CustomerUpdMasterKeno_BetSetting" SpName="Acc_CustomerUpdMasterKeno_BetSetting" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdMasterKeno" SpName="Acc_CustomerUpdMasterKeno" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+  </Function>
+  <Function Name="EditAgent">
+    <Setting Key="Acc_CustomerUpdAgentKeno_BetSetting" SpName="Acc_CustomerUpdAgentKeno_BetSetting" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAgentKeno" SpName="Acc_CustomerUpdAgentKeno" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+  </Function>
+  <Function Name="AgentEditMember">
+    <Setting Key="Acc_CustomerUpdMemberKeno_BetSetting" SpName="Acc_CustomerUpdMemberKeno_BetSetting" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdMemberKeno_Positiontaking" SpName="Acc_CustomerUpdMemberKeno_Positiontaking" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+  </Function>
+  <Function Name="SuperEditMember">
+    <Setting Key="Acc_CustomerUpdMemberKeno_SAg" SpName="Acc_CustomerUpdMemberKeno_SAg" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+  </Function>
+  <Function Name="MasterEditMember">
+    <Setting Key="Acc_CustomerUpdMemberKeno_MAg" SpName="Acc_CustomerUpdMemberKeno_MAg" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+  </Function>
   <Function Name="Login">
     <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
