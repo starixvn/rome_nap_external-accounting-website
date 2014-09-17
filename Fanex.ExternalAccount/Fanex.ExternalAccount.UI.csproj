@@ -2273,6 +2273,8 @@
     <Content Include="Configurations\appSettings.kbt67.config" />
     <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Configurations\appSettings.sandbox.config" />
+    <Content Include="Configurations\connectionStrings.sandbox.config" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
@@ -2321,6 +2323,18 @@
     </Content>
     <Content Include="Web.production.Release.config">
       <DependentUpon>Web.production.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.Debug.config">
+      <DependentUpon>Web.sandbox.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.Release.config">
+      <DependentUpon>Web.sandbox.config</DependentUpon>
     </Content>
     <Content Include="Web.sandbox.config">
       <SubType>Designer</SubType>
