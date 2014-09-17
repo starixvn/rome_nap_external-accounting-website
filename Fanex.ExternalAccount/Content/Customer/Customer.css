@@ -12,7 +12,7 @@
 }
 .enabled
 {
-	background-image: url(../Images/Content/icon-customerlist.png);
+	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
 	background-position: -5px -43px;
 	width: 16px;
@@ -22,7 +22,7 @@
 }
 .disabled
 {
-	background-image: url(../Images/Content/icon-customerlist.png);
+	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
 	background-position: -36px -43px;
 	width: 16px;
@@ -32,7 +32,7 @@
 }
 .unsynced
 {
-	background-image: url(../Images/Content/icon-customerlist.png);
+	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
 	background-position: -20px -43px;
 	width: 16px;
@@ -42,7 +42,7 @@
 }
 .editMult
 {
-	background-image: url(../Images/Content/icon-customerlist.png);
+	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
 	background-position: -23px -20px;
 	width: 16px;
@@ -53,7 +53,7 @@
 
 .editInfo, .editMaster, .editAgent, .editMember
 {
-	background-image: url(../Images/Content/icon-customerlist.png);
+	background-image: url(../../Images/Content/icon-customerlist.png);
 	background-repeat: no-repeat;
 	background-position: -5px -20px;
 	width: 16px;
@@ -65,7 +65,7 @@
 
 .allowDblComm
 {
-	background-image: url(../Images/Content/on-off.png);
+	background-image: url(../../Images/Content/on-off.png);
 	background-repeat: no-repeat;
 	background-position: -12px -11px;
 	width: 80px;
@@ -76,7 +76,7 @@
 
 .disallowDblComm
 {
-	background-image: url(../Images/Content/on-off.png);
+	background-image: url(../../Images/Content/on-off.png);
 	background-repeat: no-repeat;
 	background-position: -100px -11px;
 	width: 80px;
@@ -87,7 +87,7 @@
 
 .onDblComm
 {
-	background-image: url(../Images/Content/on-off.png);
+	background-image: url(../../Images/Content/on-off.png);
 	background-repeat: no-repeat;
 	background-position: -12px -36px;
 	width: 60px;
@@ -98,7 +98,7 @@
 
 .offDblComm
 {
-	background-image: url(../Images/Content/on-off.png);
+	background-image: url(../../Images/Content/on-off.png);
 	background-repeat: no-repeat;
 	background-position: -100px -36px;
 	width: 60px;
@@ -139,7 +139,7 @@ tr.rowDisabled td
 
 .iconEnableEdit
 {
-	background-image: url(../Images/Content/icon-customerlist-active.png);
+	background-image: url(../../Images/Content/icon-customerlist-active.png);
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	height: 16px;
@@ -147,7 +147,7 @@ tr.rowDisabled td
 }
 .iconDisableEdit
 {
-	background-image: url(../Images/Content/icon-customerlist-unactive.png);
+	background-image: url(../../Images/Content/icon-customerlist-unactive.png);
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	height: 16px;
@@ -155,7 +155,7 @@ tr.rowDisabled td
 }
 .iconUnsyncEdit
 {
-	background-image: url(../Images/Content/icon-customerlist-sync.png);
+	background-image: url(../../Images/Content/icon-customerlist-sync.png);
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	height: 16px;
@@ -163,7 +163,7 @@ tr.rowDisabled td
 }
 .iconViewEdit
 {
-	background-image: url(../Images/Content/view.png);
+	background-image: url(../../Images/Content/view.png);
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	height: 16px;
