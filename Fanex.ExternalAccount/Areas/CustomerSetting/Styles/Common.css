@@ -127,7 +127,7 @@ input[type=text]
 }
 .btnPTDown
 {
-	background: url(../Images/b_down.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/b_down.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
@@ -136,7 +136,7 @@ input[type=text]
 
 .btnPTUp
 {
-	background: url(../Images/b_up.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/b_up.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
@@ -145,7 +145,7 @@ input[type=text]
 
 .btnPTSub
 {
-	background: url(../Images/b_sub.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/b_sub.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
@@ -154,7 +154,7 @@ input[type=text]
 
 .btnPTAdd
 {
-	background: url(../Images/b_add.jpg) repeat-x scroll center top transparent;
+	background: url(../../Images/b_add.jpg) repeat-x scroll center top transparent;
 	border: 0 solid #000000;
 	height: 17px;
 	width: 17px;
