@@ -551,7 +551,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
-                this.UpdateCasinoStatus(custId, result, customer);
+                this.UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -664,7 +664,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
-                this.UpdateCasinoStatus(custId, result, customer);
+                this.UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -775,7 +775,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
-                this.UpdateCasinoStatus(custId, result, customer);
+                this.UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -887,7 +887,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
-                this.UpdateCasinoStatus(custId, result, customer);
+                this.UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
@@ -999,7 +999,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
-                this.UpdateCasinoStatus(custId, result, customer);
+                this.UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
