@@ -1,13 +1,13 @@
 ﻿.itemParent
 {
-	background-image: url(../../Images/Content/arrowdown-icn.png);
+	background-image: url(../Images/Content/arrowdown-icn.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	width: 20px;
 }
 .itemParentCollapse1
 {
-	background-image: url(../../Images/Content/arrowblack-icn.png);
+	background-image: url(../Images/Content/arrowblack-icn.png);
 	background-repeat: no-repeat;
 	background-position: left;
 	margin-left: 10px;
@@ -16,7 +16,7 @@
 }
 .itemParentCollapse2
 {
-	background-image: url(../../Images/Content/arrowblue-icn.png);
+	background-image: url(../Images/Content/arrowblue-icn.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	width: 20px;
@@ -39,7 +39,7 @@
 }
 .menuActive
 {
-	background-image: url(../../Images/Content/checkbox.png);
+	background-image: url(../Images/Content/checkbox.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -50,7 +50,7 @@
 }
 .menuInactive
 {
-	background-image: url(../../Images/Content/checkbox.png);
+	background-image: url(../Images/Content/checkbox.png);
 	background-position: -18px 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -61,7 +61,7 @@
 }
 .menuDelete
 {
-	background-image: url(../../Images/Content/delete-icn.png);
+	background-image: url(../Images/Content/delete-icn.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -72,7 +72,7 @@
 }
 .menuResetPwd
 {
-	background-image: url(../../Images/Content/password-icon.png);
+	background-image: url(../Images/Content/password-icon.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -83,7 +83,7 @@
 }
 .button-add
 {
-	background: url(../../Images/Content/addnew-btn.png) no-repeat scroll 5px center;
+	background: url(../Images/Content/addnew-btn.png) no-repeat scroll 5px center;
 	background-position: 0 0;
 	height: 30px;
 	font-family: Verdana,Arial,sans-serif;
@@ -102,7 +102,7 @@
 }
 .button-add:hover
 {
-	background: url(../../Images/Content/addnew-btn.png) no-repeat scroll 5px center;
+	background: url(../Images/Content/addnew-btn.png) no-repeat scroll 5px center;
 	background-position: 0 -33px;
 	height: 30px;
 	color: #fff;
@@ -116,7 +116,7 @@
 }
 .buttonPopup, .ui-button, button[type=button]
 {
-	background: url(../../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
+	background: url(../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
 	cursor: pointer;
 	width: 80px;
@@ -132,14 +132,14 @@
 }
 .buttonPopup:hover, .ui-button:hover
 {
-	background: url(../../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
+	background: url(../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
 	border: none !important;
 	cursor: pointer;
 }
 .jqx-window-header
 {
-	background: url(../../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center;
+	background: url(../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center;
 	text-indent: 15px;
 	font-weight: bold;
 	line-height: 24px;
@@ -154,7 +154,7 @@
 }
 .jqx-window-close-button
 {
-	background-image: url("../../Images/Content/close-icn.png");
+	background-image: url("../Images/Content/close-icn.png");
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
@@ -238,7 +238,7 @@
 }
 .edit
 {
-	background-image: url(../../Images/Content/permission-icn.png);
+	background-image: url(../Images/Content/permission-icn.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -253,7 +253,7 @@ td .edit2 a, td div a
 }
 .checkboxMulti-active
 {
-	background-image: url(../../Images/Content/checkbox.png);
+	background-image: url(../Images/Content/checkbox.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -266,7 +266,7 @@ td .edit2 a, td div a
 }
 .checkboxMulti-inactive
 {
-	background-image: url(../../Images/Content/checkbox.png);
+	background-image: url(../Images/Content/checkbox.png);
 	background-position: -18px 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -288,7 +288,7 @@ td .edit2 a, td div a
 }
 .permActive
 {
-	background-image: url(../../Images/Content/checkbox.png);
+	background-image: url(../Images/Content/checkbox.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -300,7 +300,7 @@ td .edit2 a, td div a
 }
 .permInactive
 {
-	background-image: url(../../Images/Content/checkbox.png);
+	background-image: url(../Images/Content/checkbox.png);
 	background-position: -18px 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -339,7 +339,7 @@ td .edit2 a, td div a
 }
 .permItemParent
 {
-	background-image: url(../../Images/Content/arrow-down-icn.png);
+	background-image: url(../Images/Content/arrow-down-icn.png);
 	background-repeat: no-repeat;
 	background-position: left center;
 	margin-left: 10px;
@@ -369,7 +369,7 @@ td .edit2 a, td div a
 }
 .bgTitle
 {
-	background: url("../../Images/Content/bg-maintittle.png") repeat-x scroll 0 0;
+	background: url("../Images/Content/bg-maintittle.png") repeat-x scroll 0 0;
 	font-family: 'Cabin' , Sans-Serif;
 	min-width: 700px;
 }
@@ -386,7 +386,7 @@ td .edit2 a, td div a
 }
 .groupMenuTop
 {
-	background: url("../../Images/Content/bg-groptittle.png") repeat-x scroll 0 0;
+	background: url("../Images/Content/bg-groptittle.png") repeat-x scroll 0 0;
 	color: #ebebeb;
 	float: right;
 	font-size: 13px;
@@ -404,7 +404,7 @@ td .edit2 a, td div a
 }
 .ui-widget-header
 {
-	background: url(../../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center !important;
+	background: url(../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
 	text-indent: 5px;
 }
