@@ -50,7 +50,7 @@
 }
 .menuInactive
 {
-	background-image: url(../Images/Content/checkbox.png);
+	background-image: url(../../Images/Content/checkbox.png);
 	background-position: -18px 0;
 	background-repeat: no-repeat;
 	width: 15px;
@@ -238,7 +238,7 @@
 }
 .edit
 {
-	background-image: url(../Images/Content/permission-icn.png);
+	background-image: url(../../Images/Content/permission-icn.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	width: 15px;
