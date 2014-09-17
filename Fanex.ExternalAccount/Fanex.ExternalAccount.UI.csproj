@@ -828,6 +828,9 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="SpNames.CustDB.sandbox.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="SpNames.CustDB.local.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2079,6 +2082,8 @@
     <Content Include="Configurations\connectionStrings.production.config" />
     <Content Include="Configurations\connectionStrings.uat.config" />
     <Content Include="Configurations\appSettings.local.config" />
+    <Content Include="Configurations\appSettings.sandbox.config" />
+    <Content Include="Configurations\connectionStrings.sandbox.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
@@ -2114,6 +2119,18 @@
     </Content>
     <Content Include="Web.production.Release.config">
       <DependentUpon>Web.production.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.Debug.config">
+      <DependentUpon>Web.sandbox.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.Release.config">
+      <DependentUpon>Web.sandbox.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="ExcelTemplates\Customer\MemberList.xls" />
