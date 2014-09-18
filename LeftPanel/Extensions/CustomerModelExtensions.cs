@@ -641,6 +641,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel item.</param>
         /// <param name="product">ProductStatuses item.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
             bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
@@ -666,6 +667,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var bingo = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Bingo");
             var liveCasino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "LiveCasino");
             var virtualSports = model.Setting.MasterPts.Where(o => o.Key.ToString() == "VirtualSports");
+            var keno = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Keno");
             if (casino.Count() > 0)
             {
                 casino.FirstOrDefault().Value = "Casino";
@@ -684,6 +686,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (virtualSports.Count() > 0)
             {
                 virtualSports.FirstOrDefault().Value = "Virtual Sports";
+            }
+
+            if (keno.Count() > 0)
+            {
+                keno.FirstOrDefault().Value = "Keno";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;

@@ -115,6 +115,9 @@
     <Reference Include="Fanex.PTRacing">
       <HintPath>..\Dependencies\Fanex.PTRacing.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTSetting.BettypeReference">
+      <HintPath>..\Dependencies\Fanex.PTSetting.BettypeReference.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTVirtualSports.dll</HintPath>
@@ -143,6 +146,9 @@
       <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
+      <HintPath>..\_Dependency\Entlib\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Microsoft.Practices.Unity.dll</HintPath>
@@ -163,6 +169,9 @@
     </Reference>
     <Reference Include="NPOI">
       <HintPath>..\Dependencies\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\Dependencies\RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core">
       <HintPath>..\Dependencies\Bingo\Sunplus.Accounting.Core.dll</HintPath>
@@ -274,6 +283,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="TplCore">
+      <HintPath>..\Dependencies\TplCore.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\Dependencies\WebGrease.dll</HintPath>
     </Reference>
@@ -1965,6 +1977,11 @@
     <Content Include="SpNames.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\BettypeReference\Themes\style.css" />
+    <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bg.jpg" />
+    <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bgnote.jpg" />
+    <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\collapse.png" />
+    <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\expand.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2055,10 +2072,10 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Shared\_LayoutMinMaxPT.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Shared\_Layout.cshtml" />
-    <None Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\Common.less" />
-    <None Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\theme-color.less" />
-    <None Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\keno-setting.less" />
-    <None Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\Variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\Common.less" />
+    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\External\theme-color.less" />
+    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\keno-setting.less" />
+    <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Styles\Variables.less" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Agent\EditAgent.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\MasterOnMember\MasterEditMember.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Master\EditMaster.cshtml" />
@@ -2193,6 +2210,10 @@
     <Content Include="Views\LiveCasino\EditSuper.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\BettypeReference\Index.cshtml" />
+    <Content Include="Views\BettypeReference\Themes\ExtAccounting\variables.less" />
+    <Content Include="Views\BettypeReference\Themes\style.less" />
+    <Content Include="Views\Shared\_LayoutPtInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">

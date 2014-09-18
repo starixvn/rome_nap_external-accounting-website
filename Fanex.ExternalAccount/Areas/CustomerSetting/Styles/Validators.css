@@ -26,7 +26,7 @@
 	top: 33px;
 	width: 20px;
 	height: 19px;
-	background: url('../images/pointer.png') left top no-repeat;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAKCAYAAABWiWWfAAAAS0lEQVR42mM4M9P4/9vb0////3+GbAzSDzKHAQQoMRDFIBggx0CsBpFjIF6DSDGQKIOIMZAkg/AZSJZB2AykyCB0Ayk2CNlAYtQBAESjXMOimVAdAAAAAElFTkSuQmCC) left top no-repeat;
 	z-index: 999999;
 }
 
@@ -37,6 +37,6 @@
 	top: 33px;
 	width: 20px;
 	height: 19px;
-	background: url('../images/pointerDown.png') left top no-repeat;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAKCAYAAABWiWWfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGJJREFUeNpiYCACnJlp/J+BGgBk0Nvb0/9TbCDMoP//z1BmILJBMEzIQBZcBik6pTAIqZiiiMP4Z2Yy/DdJP8tI0DBcBhFjIAspBhEykIVUg/AZyEKOQbgMZCHXIGwGAgQYAC8YYNFw4NXSAAAAAElFTkSuQmCC) left top no-repeat;
 	z-index: 999999;
 }

@@ -4,11 +4,11 @@
 <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
-<div id='jqxWidget' style="background-color: #fff">
+<div id="customerList" style="background-color: #fff">
     <div class="bgTitle titleForm">
         <div style="float: left; margin: 5px; vertical-align: middle;">
             Customer List
-        </div>
+        </div>        
     </div>
     <div id="searchBar" class="bgTitle titleSearch">
         <div class="searchBar">
@@ -45,8 +45,10 @@
         </div>
         <div style="float: right">
             <div id="breadcrumbs">
+            </div>                                    
+            <div class="floatR">
+                <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
             </div>
-            <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
         </div>
     </div>
     <div style="margin: 0px 3px 0px 3px" id="customerListGrid">

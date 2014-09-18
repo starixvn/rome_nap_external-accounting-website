@@ -276,6 +276,8 @@ Fanex.ExtAcc.Customer.PTSetting = {
     },
 
     InsertUsernameIntoTitle: function (customer) {
+        Fanex.ExtAcc.AddPtInfoPage();
+
         if (this.IsMultiple)
             return;
 

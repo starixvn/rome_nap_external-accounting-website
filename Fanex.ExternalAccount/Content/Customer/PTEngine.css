@@ -547,7 +547,7 @@
 	vertical-align: top;
 	cursor: pointer;
 	border: 1px solid #ccc;
-	background-image: url("../../Images/Content/arrowblue-icn.png");
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHCAYAAAAvZezQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNJREFUeNpiYCja8x8IGGCYESTAAAGMIIKJAQH+owuABdEFGJEFwGawgNX1OjPCRAECDAA48xEwOiYDYQAAAABJRU5ErkJggg==);
 	background-repeat: no-repeat;
 	background-position: center center;
 	width: 16px;
@@ -561,7 +561,7 @@
 	vertical-align: top;
 	cursor: pointer;
 	border: 1px solid #ccc;
-	background-image: url("../../Images/Content/arrowdown-icn.png");
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAECAYAAABCxiV9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACVJREFUeNpiVOk8958BB2ACYkYccoxMMAa6BEwnA5oCuEKAAAMAGvsCiPmLy68AAAAASUVORK5CYII=);
 	background-repeat: no-repeat;
 	background-position: center center;
 	width: 16px;
@@ -590,7 +590,7 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 }
 #idConfirm_yesButton, #idConfirm_noButton
 {
-	background: url(../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEdJREFUeNpMi0EOgEAMAgn+3q/5Dd9gNlkFl9qDh6YMYbb9OHmNyXk/NEwLhE0lG4u/H8bKcnP1qn28YrWXLm5t/9c9/AowAL0JSAVSVq3tAAAAAElFTkSuQmCC) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
 	color: #fff;
 	cursor: pointer;
@@ -606,7 +606,7 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 }
 #idConfirm_yesButton:hover, #idConfirm_noButton:hover
 {
-	background: url(../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADpJREFUeNpidu3ZxcTIwMDEyMgIxUhsJgjNBBJjAtEQMSaYOJhmgtDI8jBz4Pph5gHFGIAkIyNAgAEA2vwCK9PMD8cAAAAASUVORK5CYII=) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
 	color: #fff;
 	cursor: pointer;
