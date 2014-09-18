@@ -186,10 +186,21 @@
 		<Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS" DbName="main"  />
 		<Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main"  />
 		<Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="main"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="main_CustDB"  />
 	</Function>
 	<Function Name="Live Casino - Stake Level Setting">
-		<Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
-		<Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin"  />
+    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" >
+      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+    </Setting>
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin"  >
+      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+    </Setting>
 		<Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LiveCasinoAdmin"  />
 		<Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LiveCasinoAdmin"  />
 		<Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LiveCasinoAdmin"  />

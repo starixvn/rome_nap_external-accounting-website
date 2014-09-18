@@ -1,23 +1,24 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting, language*/
+/*global settingContext, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerGameSettingService', ['$http', function ($http) {
         'use strict';
         var $this = this;
 
-        $this.updateGameSetting = function (gameSetting, custSettingScope) {
+        $this.updateGameSetting = function (gameSetting, disableLiveCasino, settingContextScope) {
             var gameSettingModel = {
-                settingContext: custSetting.SettingContext,
-                gameSetting: gameSetting
-            };            
+                settingContext: settingContext,
+                gameSetting: gameSetting,
+                disableLiveCasino: disableLiveCasino
+            };
 
             $http({
                 method: 'POST',
-                url: $('#tblGameSetting').data('update-href'),
+                url: $('#UpdateGameSettingUrl').val(),
                 headers: { 'Content-Type': 'application/json' },
                 data: gameSettingModel
             }).success(function (mainResult) {
-                custSettingScope.afterServerReturnSuccess(mainResult, true);
+                settingContextScope.afterServerReturnSuccess(mainResult, true);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
@@ -26,7 +27,7 @@ if (fanex.liveCasinoSetting) {
                 else {
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('lblUpdateFailed');
                 }
-                custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
+                settingContextScope.mainResult = fanex.liveCasinoSetting.errorResult;
             });
         };
     } ]);

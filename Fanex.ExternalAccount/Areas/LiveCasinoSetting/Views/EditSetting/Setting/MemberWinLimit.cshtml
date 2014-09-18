@@ -1,7 +1,5 @@
-﻿@model SettingContext
-<div id="tblMaxWinLimit" class="pt-container col-xs-12"
-    data-ng-controller="CustomerWinLimitController"
-    data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimit")">
+﻿@model LiveCasinoSettingContext
+<div id="tblMaxWinLimit" class="pt-container col-xs-12" data-ng-controller="CustomerWinLimitController">
     <div class="pt-title">
         <span class="pt-title-text">@LiveCasinoLang.lblMemberWinLimit</span><span data-ng-click="updateWinLimitSetting()"
             data-ng-if="!$parent.isReadOnly" class="btn-save-partial"  title="@LiveCasinoLang.lblUpdate"></span>
@@ -25,22 +23,23 @@
                     </label>
                 </td>
             </tr>
-            @if (Model.TargetRoleId == (int)CustRole.Member)
+            @if (Model.Customer.Level == CustomerLevel.Member)
             { 
                 <tr>
                     <td class="col-xs-3 right bold">
                         @LiveCasinoLang.lblCurrentWinLimit
                     </td>
                     <td class="col-xs-3 left ng-binding">
-                        <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
+                        <div id="showWinLimit" class="member-win-limit" data-ng-click="showCurrentWinLimit(@Model.Customer.Id)" data-ng-show="!isShowCurrentWinLimit">
                             @LiveCasinoLang.lblClickToViewCurrentWinLimit
                         </div>
-                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">
+                        <div class="current-win-limit {{isPercentShowRedColor?'text-red':''}}" id="currentWinLimit"
+                            data-ng-show="isShowCurrentWinLimit && currentWinLimit !='-1'">
                             {{percent}} %</div>
-                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit == '-1'">
+                        <div class="current-win-limit" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && currentWinLimit == '-1'">
                             @LiveCasinoLang.lblUnlimited</div>
-                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">@LiveCasinoLang.lblOf
-                            {{winLimit}}</span>
+                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && currentWinLimit !='-1'">@LiveCasinoLang.lblOf
+                            {{currentWinLimit}}</span>
                     </td>
                     <td class="col-xs-3">
                     </td>
@@ -48,5 +47,5 @@
             }
         </tbody>
     </table>
-    @Html.Hidden("memberWinLimitLink", Url.Content("~/LiveCasinoSetting/LiveCSSetting/GetCurrentWinLimit"))
+    @Html.Hidden("memberWinLimitLink", Url.Content("~/LiveCasinoSetting/Setting/GetCurrentWinLimit"))
 </div>

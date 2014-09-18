@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting, language*/
+/*global settingContext, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustGameSettingController',
     [
@@ -8,10 +8,10 @@ if (fanex.liveCasinoSetting) {
         'CustomerGameSettingService',
         function ($scope, $http, customerGameSettingService) {
             'use strict';
-            $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
+            $scope.gameSetting = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.GameSetting);
             var uplineUncheckedAllMsg = '';
 
-            if (custSetting.SettingContext.IsEdittingMember && custSetting.CustInfo.IsSyncLiveCasino) {
+            if (settingContext.Customer.Level === fanex.liveCasinoSetting.customerLevel.Member && settingContext.Customer.IsSyncLiveCasino) {
                 angular.forEach($scope.gameSetting, function (gameType) {
                     if (gameType.CheckedStakeLevelId === '') {
                         gameType.BettingLimit[0].IsChecked = true;
@@ -30,7 +30,7 @@ if (fanex.liveCasinoSetting) {
             }
 
             $scope.getGameSetting = function () {
-                if (custSetting.SettingContext.IsEdittingMember) {
+                if (settingContext.Customer.Level === fanex.liveCasinoSetting.customerLevel.Member) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {
                         var gameType = $scope.gameSetting[i];
                         for (var j = 0; j < gameType.BettingLimit.length; j++) {
@@ -44,12 +44,15 @@ if (fanex.liveCasinoSetting) {
             };
 
             $scope.updateGameSetting = function () {
-                if (!custSetting.CustInfo.IsSyncLiveCasino) {
+                if (!settingContext.IsSyncLiveCasino) {
                     $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.GameSetting);
                     return;
                 }
 
-                customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
+                var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
+                var customer = custInfoScope.getCustInfo();
+
+                customerGameSettingService.updateGameSetting($scope.getGameSetting(), customer.DisableLiveCasino, $scope.$parent);
             };
 
             $scope.checkShowWarningUncheckedAll = function () {

@@ -74,7 +74,7 @@ fanex.liveCasinoSetting.formType = {
     ReadOnly: 2
 };
 
-fanex.liveCasinoSetting.custRole = {
+fanex.liveCasinoSetting.customerLevel = {
     Super: 4,
     Master: 3,
     Agent: 2,
@@ -94,6 +94,11 @@ fanex.liveCasinoSetting.COM_INTERVAL = 0.0005;
 fanex.liveCasinoSetting.COM_DECIMAL = 4;
 fanex.liveCasinoSetting.PT_DECIMAL = 2;
 fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE = 4000;
+fanex.liveCasinoSetting.templateVersion = '?v=' + Math.random();
+fanex.liveCasinoSetting.buildTemplateUrlWithVersion = function (templateUrl) {
+    'use strict';
+    return fanex.liveCasinoSetting.rootUrl + templateUrl + fanex.liveCasinoSetting.templateVersion;
+};
 fanex.liveCasinoSetting.errorResult = {
     CommandResultsList: [
         {

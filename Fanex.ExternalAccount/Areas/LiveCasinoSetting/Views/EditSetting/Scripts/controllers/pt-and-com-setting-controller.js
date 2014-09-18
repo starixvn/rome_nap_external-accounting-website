@@ -1,4 +1,4 @@
-﻿/*global custSetting, language*/
+﻿/*global settingContext, language*/
 fanex.liveCasinoSetting.controller('PtAndComSettingController',
     [
     '$scope',
@@ -9,18 +9,23 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         //// Privates
         var me = this;
         me.$presetOnMemberModal = $('#presetOnMemberModal');
+        $scope.uplinePTOnMember =
+        {
+            newUplinePositionTaking: 0,
+            isApplyNewUplinePositionTaking: false
+        };
 
         $scope.isEditPresetOnMember = function () {
-            var currentPt = $scope.ptAndComSetting.PositionTaking;
-            switch (custSetting.SettingContext.TargetRoleId) {
-                case fanex.liveCasinoSetting.custRole.Master:
-                    if (custSetting.PtAndComSetting.PositionTaking.Is3
+            var currentPt = $scope.positionTaking;
+            switch (settingContext.Customer.Level) {
+                case fanex.liveCasinoSetting.customerLevel.Master:
+                    if (settingContext.Customer.LiveCasinoSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
-                        currentPt.NewPresetOnMember = fanex.roundNumber(currentPt.S4 - currentPt.M3);
-                        $scope.presetOnMemberOptions = fanex.createOptionsFromRange(
-                                                            currentPt.NewPresetOnMember,
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3);
+                        $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
-                                                            currentPt.NewPresetOnMember, 
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             fanex.liveCasinoSetting.PT_INTERVAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
@@ -30,14 +35,14 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                         return true;
                     }
                     break;
-                case fanex.liveCasinoSetting.custRole.Agent:
-                    if (custSetting.PtAndComSetting.PositionTaking.Im2
+                case fanex.liveCasinoSetting.customerLevel.Agent:
+                    if (settingContext.Customer.LiveCasinoSetting.PositionTaking.Im2
                         && !currentPt.Im2) {
-                        currentPt.NewPresetOnMember = fanex.roundNumber(currentPt.M3 - currentPt.A2);
-                        $scope.presetOnMemberOptions = fanex.createOptionsFromRange(
-                                                            currentPt.NewPresetOnMember,
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2);
+                        $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
-                                                            currentPt.NewPresetOnMember, 
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             fanex.liveCasinoSetting.PT_INTERVAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
@@ -52,15 +57,17 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         };
 
         //// Properties
-        $scope.ptAndComSetting = fanex.cloneObject(custSetting.PtAndComSetting);
-        $scope.presetOnMemberOptions = [];
+        $scope.positionTaking = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.PositionTaking);
+        $scope.commission = settingContext.Customer.LiveCasinoSetting.Commission;
+        $scope.parentCommission = settingContext.Customer.Parent.LiveCasinoSetting.Commission;
+        $scope.uplinePTOnMemberOptions = [];
         $scope.isUpdateAllSetting = false;
         $scope.language = language;
-        me.updatePtAndCommUrl = $('#tblPtComSetting').data('update-href');
+        me.updatePTComUrl = $('#UpdatePTComSettingUrl').val();
 
         //// Action
         $scope.updatePtAndComSetting = function () {
-            if (!custSetting.CustInfo.IsSyncLiveCasino) {
+            if (!settingContext.IsSyncLiveCasino) {
                 $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.PositionTakingAndCommission);
                 return;
             }
@@ -69,16 +76,21 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                 return;
             }
 
-            ptAndComSettingService.updatePtAndComSetting(me.updatePtAndCommUrl, $scope.ptAndComSetting, $scope.$parent);
+            ptAndComSettingService.updatePtAndComSetting(me.updatePTComUrl, $scope.commission, $scope.positionTaking, $scope.uplinePTOnMember, $scope.$parent);
         };
 
-        $scope.updatePresetOnMember = function (isUpdate) {
-            $scope.ptAndComSetting.PositionTaking.UpdateAllMembers = isUpdate;
+        $scope.updatePTOnMember = function (isUpdate) {
+            $scope.uplinePTOnMember.isApplyNewUplinePositionTaking = isUpdate;
             if ($scope.$parent.isUpdateAllSetting) {
                 $scope.$parent.updateAllSetting();
             }
             else {
-                ptAndComSettingService.updatePtAndComSetting(me.updatePtAndCommUrl, $scope.ptAndComSetting, $scope.$parent);
+                ptAndComSettingService.updatePtAndComSetting(
+                            me.updatePTComUrl,
+                            $scope.commission,
+                            $scope.positionTaking,
+                            $scope.uplinePTOnMember,
+                            $scope.$parent);
             }
         };
     }

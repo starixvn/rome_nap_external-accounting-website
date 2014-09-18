@@ -22,34 +22,33 @@
         <tr>
             <td>
                 <select id="ddlS3" 
-                data-ng-model="ptAndComSetting.PositionTaking.S3" 
+                data-ng-model="positionTaking.S3" 
                 data-ng-options="item.id as item.value for item in superPresetOptions" 
-                data-ng-disabled="ptAndComSetting.PositionTaking.Is3"
+                data-ng-disabled="positionTaking.Is3"
                 data-ng-change="updateSuperPreset()"></select>
             </td>
             <td>
-                <input id="cbIs3" type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Is3" />
+                <input id="cbIs3" type="checkbox" data-ng-model="positionTaking.Is3" data-ng-change="updateSuperPreset()" />
                 <select id="ddlUs3"
-                data-ng-model="ptAndComSetting.PositionTaking.Us3" 
+                data-ng-model="positionTaking.Us3" 
                 data-ng-options="item.id as item.value for item in superAutoPresetOptions"
-                data-ng-disabled="!ptAndComSetting.PositionTaking.Is3"
-                data-ng-change="updateSuperPreset()"></select>
+                data-ng-disabled="!positionTaking.Is3"></select>
             </td>
             <td>
                 <select id="ddlM3" 
-                data-ng-model="ptAndComSetting.PositionTaking.M3" 
+                data-ng-model="positionTaking.M3" 
                 data-ng-options="item.id as item.value for item in masterMaxOptions"
                 data-ng-change="updateMasterMax()"></select>
             </td>
             <td>
                 <select id="ddlN3"
-                data-ng-model="ptAndComSetting.PositionTaking.N3" 
+                data-ng-model="positionTaking.N3" 
                 data-ng-options="item.id as item.value for item in masterMinOptions"
                 data-ng-change="updateMasterMin()"></select>
             </td>
             <td>
                 <select id="ddlCom"
-                data-ng-model="ptAndComSetting.Commission.Value" 
+                data-ng-model="commission" 
                 data-ng-options="item.id as item.value for item in masterCommissionOptions" ></select>
             </td>
         </tr>
