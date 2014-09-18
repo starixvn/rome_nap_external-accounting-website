@@ -494,7 +494,6 @@
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-1.11.1.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
@@ -2276,6 +2275,10 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang1.js</LastGenOutput>
+    </None>
     <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\Web.config" />
@@ -2283,18 +2286,14 @@
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
     <Content Include="Areas\LiveCasinoSetting\Views\Common\UnAuthorized.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSetting.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfo.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfoMultiple.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingSingle.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\_EditSetting.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Web.config" />
-    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang1.js</LastGenOutput>
-    </None>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>

@@ -12,12 +12,22 @@
     {
         private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
 
-        public bool IsAuthorizedRead(AuthorizationContext authorizationContext, SettingContext settingContext)
+        public bool IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
         {
             return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
         }
 
-        public bool IsAuthorizedHost(AuthorizationContext authorizationContext, SettingContext settingContext)
+        public bool IsAuthorizedHost(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
+        {
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
+        }
+
+        public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
+        {
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
+        }
+
+        public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
         }

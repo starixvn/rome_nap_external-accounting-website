@@ -19,25 +19,25 @@
         <tr>
             <td>
                 <select id="ddlS1"
-                data-ng-model="ptAndComSetting.PositionTaking.S1" 
+                data-ng-model="positionTaking.S1" 
                 data-ng-options="item.id as item.value for item in superPTOptions" 
-                data-ng-disabled="ptAndComSetting.PositionTaking.Is1"
+                data-ng-disabled="positionTaking.Is1"
                 data-ng-change="superPTChange()"
-                data-ng-if="!ptAndComSetting.PositionTaking.Is3"></select>
-                <span data-ng-if="ptAndComSetting.PositionTaking.Is3">{{ptAndComSetting.PositionTaking.S1}}</span>
+                data-ng-if="!positionTaking.Is3"></select>
+                <span data-ng-if="positionTaking.Is3">{{positionTaking.S1}}</span>
             </td>
             <td>
-                <input id="cbIs1" type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Is1" />
+                <input id="cbIs1" type="checkbox" data-ng-model="positionTaking.Is1" />
                 <select id="ddlUs1"
-                data-ng-model="ptAndComSetting.PositionTaking.Us1" 
+                data-ng-model="positionTaking.Us1" 
                 data-ng-options="item.id as item.value for item in superAutoPTOptions"
-                data-ng-disabled="!ptAndComSetting.PositionTaking.Is1"></select>
+                data-ng-disabled="!positionTaking.Is1"></select>
             </td>
             <td>
-                {{ptAndComSetting.PositionTaking.M1}}
+                {{positionTaking.M1}}
             </td>
             <td>
-                {{ptAndComSetting.PositionTaking.A1}}
+                {{positionTaking.A1}}
             </td>
         </tr>
     </tbody>

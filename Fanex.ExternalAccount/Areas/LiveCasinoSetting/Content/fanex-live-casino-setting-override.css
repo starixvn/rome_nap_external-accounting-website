@@ -5,6 +5,7 @@
 .edit-setting-livecs .title, .pt-container .pt-title {
     background-color: #F1F1A6 !important;
     color: #464646 !important;
+    font-size: 12px;
 }
 .block-ui-loading
 {
@@ -26,4 +27,18 @@
     text-align: center;
     font-size: 12px;
     line-height: 20px;
+}
+
+.edit-setting-livecs table, .edit-setting-livecs table tr, .edit-setting-livecs table td
+{
+    border: 1px solid #CCCCCC !important;
+}
+
+.pt-container .pt-title {
+    border-left: 1px solid #CCCCCC !important;
+    border-right: 1px solid #CCCCCC !important;
+}
+
+.pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th {
+    border: 1px solid #CCCCCC !important;
 }

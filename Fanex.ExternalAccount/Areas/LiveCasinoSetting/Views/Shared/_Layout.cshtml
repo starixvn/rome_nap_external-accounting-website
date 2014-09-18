@@ -1,5 +1,7 @@
 ﻿@{
-    Layout = null;    
+    Layout = null;
+    var currentLangaugeKey = Session[LiveCasinoSettings.Settings.LanguageSessionKey] != null ?
+              Session[LiveCasinoSettings.Settings.LanguageSessionKey].ToString() : "en-US";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +11,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     @RenderSection("css", false)
+    @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Accounting)
+    {
+        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/bootstrap.css")" />
+        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css")" />
+        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting-override.css")" />
+    }
+    else
+    {
+        @Styles.Render("~/areas/LiveCasinoSetting/content/bundlecss")
+    }
+    <script type="text/javascript">
+        var currentLaguageKey = '@(currentLangaugeKey)';
+    </script>
     @RenderSection("modeldata", false)
 </head>
 <body>
@@ -17,6 +32,33 @@
     </div>
     @Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
     @Scripts.Render("~/areasjs/livecasino/core")
+    @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Accounting)
+    {
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/live-casino-lang.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.en-US.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.ja-JP.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.ko-KR.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.th-TH.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.vi-VN.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-CN.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-TW.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js")")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-win-limit-service.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-game-setting-service.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/pt-and-com-setting-service.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-info-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-setting-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-win-limit-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/pt-and-com-setting-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-game-setting-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")"></script>
+    }
+    else
+    {
+        @Scripts.Render("~/areasjs/livecasino/setting")
+    }
     @RenderSection("scripts", false)
 </body>
 </html>

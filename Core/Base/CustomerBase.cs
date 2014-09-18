@@ -17,9 +17,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
-    using Fanex.NAP.Framework.Data;
-    using LiveCasinoModel = Fanex.LiveCasino.CoreSetting.Models;
-    using LiveCasinoService = Fanex.LiveCasino.CoreSetting.Services;
+    using Fanex.LiveCasino.CoreSetting.Services;
 
     /// <summary>
     /// Base class for customer controller.
@@ -42,36 +40,18 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <returns>ActionResult object.</returns>
         public ActionResult AutoInsertLiveCasinoPost(int custId, int parentId, int uplineRoleId, string groupName)
         {
-            var gameSettingService = new LiveCasinoService.GameSettingService();
+            SettingService liveCasinoSettingService = new SettingService();
+            System.Threading.Thread.Sleep(5000);
+            var results = liveCasinoSettingService.AutoInsertAccount(
+                                                                custId,
+                                                                this.CurrentSession.UserId,
+                                                                this.CurrentSession.UserName,
+                                                                0,
+                                                                string.Empty,
+                                                                this.CurrentContext.Ip4Address,
+                                                                "E");
 
-            var parentInfo = gameSettingService.GetCustomerInfo(parentId);
-            var userInfoContainsSync = gameSettingService.GetCustomerInfo(custId);
-            var userInfoContainsAllLineIds = this.GetCustomerInfo(custId, groupName);
-            ICommandResult result = new CommandResultBase();
-
-            if (parentInfo.IsSyncLiveCasino && !userInfoContainsSync.IsSyncLiveCasino)
-            {
-                result = gameSettingService.InsertAutoAccount(new LiveCasinoModel.SettingContext
-                {
-                    AgentId = userInfoContainsAllLineIds.AgentId,
-                    MasterId = userInfoContainsAllLineIds.MasterId,
-                    SuperId = userInfoContainsAllLineIds.SuperId,
-                    DirectUplineId = parentInfo.CustId,
-                    UplineUsername = parentInfo.UserName,
-                    TargetCustId = userInfoContainsSync.CustId,
-                    TargetUsername = userInfoContainsSync.UserName,
-                    TargetRoleId = userInfoContainsSync.RoleId,
-                    AdminId = this.CurrentSession.UserId,
-                    SubAccId = 0,
-                    ExchangeId = userInfoContainsSync.CurrencyId,
-                    IP = this.CurrentContext.Ip4Address,
-                    Language = "E",
-                    IsEditMultiple = false,
-                    SystemId = BaseController.FromSystem
-                });
-            }
-
-            return this.JsonBase(new { ErrorCode = result.Code, ErrorMessage = result.Message });
+            return this.JsonBase(new { ErrorCode = results.Code, ErrorMessage = results.Message });
         }
 
         #endregion

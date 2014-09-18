@@ -16,20 +16,20 @@
         <tr>
             <td>
                 <select id="ddlS4" 
-                data-ng-model="ptAndComSetting.PositionTaking.S4" 
+                data-ng-model="positionTaking.S4" 
                 data-ng-options="item.id as item.value for item in superMaxOptions" 
                 data-ng-disabled="isReadOnly"
                 data-ng-change="updateSuperMax()"></select>
             </td>
             <td>
                 <select id="ddlN4"
-                data-ng-model="ptAndComSetting.PositionTaking.N4" 
+                data-ng-model="positionTaking.N4" 
                 data-ng-options="item.id as item.value for item in superMinOptions"
                 data-ng-disabled="isReadOnly"></select>
             </td>
             <td>
                 <select id="ddlCom"
-                data-ng-model="ptAndComSetting.Commission.Value" 
+                data-ng-model="commission" 
                 data-ng-options="item.id as item.value for item in superCommissionOptions"
                 data-ng-disabled="isReadOnly"></select>
             </td>

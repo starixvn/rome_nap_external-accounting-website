@@ -235,11 +235,6 @@ namespace Fanex.ExternalAccount.Core.Context
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
 
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
-        {
-            return true;
-        }
-
         /// <summary>
         /// Closes connection.
         /// </summary>

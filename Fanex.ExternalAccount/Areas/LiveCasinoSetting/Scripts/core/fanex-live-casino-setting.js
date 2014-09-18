@@ -74,7 +74,7 @@ fanex.liveCasinoSetting.formType = {
     ReadOnly: 2
 };
 
-fanex.liveCasinoSetting.custRole = {
+fanex.liveCasinoSetting.customerLevel = {
     Super: 4,
     Master: 3,
     Agent: 2,
