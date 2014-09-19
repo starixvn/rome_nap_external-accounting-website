@@ -24,6 +24,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
@@ -190,7 +191,8 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="custId">Customer id.</param>
         /// <param name="result">Result object.</param>
         /// <param name="customer">Customer object.</param>
-        protected void UpdateCasinoStatus(int custId, Fanex.PTEngine.BusinessObjects.Result result, Customer customer)
+        /// <param name="isMult">Is update multiple or not.</param>
+        protected void UpdateCasinoStatus(int custId, Fanex.PTEngine.BusinessObjects.Result result, Customer customer, bool isMult = false)
         {
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0)
             {
@@ -201,6 +203,13 @@ namespace Fanex.ExternalAccount.Core.Base
                     if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
                     {
                         cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    }
+
+                    var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
+
+                    if (isMult || casinoCustomer.Suspend == customer.StatusSetting.Suspended)
+                    {
+                        return;
                     }
 
                     if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
@@ -231,6 +240,48 @@ namespace Fanex.ExternalAccount.Core.Base
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
 
+                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                {
+                    cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
+        }
+
+        /// <summary>
+        /// Updates casino statuses.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="closed">Closed status.</param>
+        protected void UpdateCasinoClosed(int custId, bool closed)
+        {
+            var cust = new CasinoLibrary.SBAgent.Customer();
+            try
+            {
+                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                {
+                    cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
+            }
+        }
+
+        /// <summary>
+        /// Updates casino statuses.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="suspended">Suspended status.</param>
+        protected void UpdateCasinoSuspended(int custId, bool suspended)
+        {
+            var cust = new CasinoLibrary.SBAgent.Customer();
+            try
+            {
                 if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
                 {
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
