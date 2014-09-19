@@ -1964,15 +1964,12 @@
     </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
@@ -2087,58 +2084,46 @@
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.local.Debug.config">
       <DependentUpon>Web.local.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.local.Release.config">
       <DependentUpon>Web.local.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.uat.Debug.config">
       <DependentUpon>Web.uat.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.uat.Release.config">
       <DependentUpon>Web.uat.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.production.Debug.config">
       <DependentUpon>Web.production.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.production.Release.config">
       <DependentUpon>Web.production.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.sandbox.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.sandbox.Debug.config">
       <DependentUpon>Web.sandbox.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.sandbox.Release.config">
       <DependentUpon>Web.sandbox.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ExcelTemplates\Customer\MemberList.xls" />
-    <None Include="ExcelTemplates\Customer\CustomerList.xls" />
-    <None Include="ExcelTemplates\Reports\WinLossDetailAg.xls" />
-    <None Include="ExcelTemplates\Reports\WinLossDetailMAg.xls" />
-    <None Include="ExcelTemplates\Reports\WinLossDetail.xls" />
-    <None Include="ExcelTemplates\Reports\DailyWinloss.xls" />
+    <Content Include="ExcelTemplates\Customer\MemberList.xls" />
+    <Content Include="ExcelTemplates\Customer\CustomerList.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossDetailAg.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossDetailMAg.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossDetail.xls" />
+    <Content Include="ExcelTemplates\Reports\DailyWinloss.xls" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Account\ExternalGroup.cshtml" />
     <Content Include="Views\Group\GroupList.cshtml" />
@@ -2157,7 +2142,7 @@
     <Content Include="Views\User\GrantPermission.cshtml" />
     <Content Include="Views\User\AddExistUser.cshtml" />
     <Content Include="Views\Group\GrantPermission.cshtml" />
-    <None Include="ExcelTemplates\Statement\Statement.xls" />
+    <Content Include="ExcelTemplates\Statement\Statement.xls" />
     <Content Include="PTEngine\BettingLimitMappingSection.config" />
     <Content Include="PTEngine\PTMappingSection.config" />
     <Content Include="IbcKeys\ibckeydec.snk" />
