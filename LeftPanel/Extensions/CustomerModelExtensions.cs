@@ -586,6 +586,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveEnableProduct("EnableVirtualSports");
             }
 
+            if (product.HideEsports)
+            {
+                model.RemoveEnableProduct("EnableESports");
+            }
+
             return model;
         }
 

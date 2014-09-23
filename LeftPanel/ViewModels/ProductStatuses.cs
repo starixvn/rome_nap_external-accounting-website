@@ -128,6 +128,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             set;
         }
 
+        public bool HideEsports
+        {
+            get
+            {
+                return Utilities.Utils.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["HideEsports"]);
+            }
+        }
+
         public bool DisableKeno
         {
             get;
