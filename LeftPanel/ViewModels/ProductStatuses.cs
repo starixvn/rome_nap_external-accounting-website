@@ -62,6 +62,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             set;
         }
 
+        public bool DisableESports
+        {
+            get;
+            set;
+        }
+
         public bool AllowOutright
         {
             get;

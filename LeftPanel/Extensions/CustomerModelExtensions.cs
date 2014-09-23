@@ -714,6 +714,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.DisableProduct("EnableVirtualSports");
             }
 
+            if (product.UplineStatuses.DisableESports)
+            {
+                model.DisableProduct("EnableESports");
+            }
+
             if (product.UplineStatuses.DisableHRFixedOdds)
             {
                 model.DisableProduct("EnableHRFixedOdds");
@@ -919,6 +924,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds");
             product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
+            product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || 
@@ -941,6 +947,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
                 product.UplineStatuses.DisableHRFixedOdds = upperInfo.Rows[0].ToBoolean("disableHRFixedOdds");
+                product.UplineStatuses.DisableESports = upperInfo.Rows[0].ToBoolean("DisableESports");
             }
 
             return product;
@@ -977,7 +984,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo 
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            }
+                            },
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1066,7 +1074,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo 
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            }
+                            },
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1131,7 +1140,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo 
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            }
+                            },
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1197,7 +1207,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo 
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            }
+                            },
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
                         },
                 SyncItems = new List<ObjectInfo>
                         {

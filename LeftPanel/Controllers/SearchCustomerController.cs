@@ -378,6 +378,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         }
 
         /// <summary>
+        /// Updates enable e-sports status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="enable">Allow or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <returns>ActionResult object.</returns>
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableESports, Policy = AuthenticateAction.AuthenticationType.Host)]
+        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
+        {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
+            return this.JsonBase(this._service.EnableESports(custId, enable, enableDownline));
+        }
+
+        /// <summary>
         /// Updates enable number game status.
         /// </summary>
         /// <param name="custId">Customer id.</param>

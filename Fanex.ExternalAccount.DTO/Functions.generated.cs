@@ -48,4 +48,7 @@ public static class eFunctions
 			public const string ViewVNIP = "ViewVNIP";
 			public const string EnableHRFixedOdds = "EnableHRFixedOdds";
 			public const string CustomerList = "CustomerList";
+			public const string Keno = "Keno";
+			public const string KenoSetting = "KenoSetting";
+            public const string EnableESports = "EnableESports";
 		}
