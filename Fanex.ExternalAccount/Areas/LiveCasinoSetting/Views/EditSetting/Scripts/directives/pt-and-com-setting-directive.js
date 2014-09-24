@@ -1,5 +1,5 @@
 ﻿/* File Created: July 23, 2014 */
-
+var builtUrlTemplate = fanex.liveCasinoSetting.buildTemplateUrlWithVersion;
 fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
         function () {
         'use strict';
@@ -7,7 +7,7 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                 restrict: 'E',
                 replace: true,
                 controller: 'PtAndComSettingController',
-                templateUrl: fanex.liveCasinoSetting.rootUrl + 'Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-super.htm',
+                templateUrl: builtUrlTemplate('Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-super.htm'),
                 link: function ($scope) {
                     var currentPt = $scope.positionTaking,
                         currentCom = $scope.commission;
@@ -37,7 +37,7 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                 restrict: 'E',
                 replace: true,
                 controller: 'PtAndComSettingController',
-                templateUrl: fanex.liveCasinoSetting.rootUrl + 'Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-master.htm',
+                templateUrl: builtUrlTemplate('Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-master.htm'),
                 link: function ($scope) {
 
                     var currentPt = $scope.positionTaking,
@@ -114,7 +114,7 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                 restrict: 'E',
                 replace: true,
                 controller: 'PtAndComSettingController',
-                templateUrl: fanex.liveCasinoSetting.rootUrl + 'Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-agent.htm',
+                templateUrl: builtUrlTemplate('Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-agent.htm'),
                 link: function ($scope) {
 
                     var currentPt = $scope.positionTaking,
@@ -192,7 +192,7 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
                 restrict: 'E',
                 replace: true,
                 controller: 'PtAndComSettingController',
-                templateUrl: fanex.liveCasinoSetting.rootUrl + 'Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/agent-edit-member.htm',
+                templateUrl: builtUrlTemplate('Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/agent-edit-member.htm'),
                 link: function ($scope) {
                     var currentPt = $scope.positionTaking,
                         currentCom = $scope.commission;
@@ -226,7 +226,7 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
                 restrict: 'E',
                 replace: true,
                 controller: 'PtAndComSettingController',
-                templateUrl: fanex.liveCasinoSetting.rootUrl + 'Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm',
+                templateUrl: builtUrlTemplate('Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm'),
                 link: function ($scope) {
                     var currentPt = $scope.positionTaking;
                     $scope.superPTOptions = fanex.createOptionsFromRange(currentPt.S1, currentPt.S1Min, currentPt.S1Max, fanex.liveCasinoSetting.PT_INTERVAL);
@@ -255,7 +255,7 @@ fanex.liveCasinoSetting.directive('masterEditMemberPt', [
                 restrict: 'E',
                 replace: true,
                 controller: 'PtAndComSettingController',
-                templateUrl: fanex.liveCasinoSetting.rootUrl + 'Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm',
+                templateUrl: builtUrlTemplate('Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm'),
                 link: function ($scope) {
                     var currentPt = $scope.positionTaking;
                     $scope.masterPTOptions = fanex.createOptionsFromRange(currentPt.M1, currentPt.M1Min, currentPt.M1Max, fanex.liveCasinoSetting.PT_INTERVAL);

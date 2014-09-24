@@ -28,12 +28,11 @@
                 data-ng-change="updateSuperPreset()"></select>
             </td>
             <td>
-                <input id="cbIs3" type="checkbox" data-ng-model="positionTaking.Is3" />
+                <input id="cbIs3" type="checkbox" data-ng-model="positionTaking.Is3" data-ng-change="updateSuperPreset()" />
                 <select id="ddlUs3"
                 data-ng-model="positionTaking.Us3" 
                 data-ng-options="item.id as item.value for item in superAutoPresetOptions"
-                data-ng-disabled="!positionTaking.Is3"
-                data-ng-change="updateSuperPreset()"></select>
+                data-ng-disabled="!positionTaking.Is3"></select>
             </td>
             <td>
                 <select id="ddlM3" 

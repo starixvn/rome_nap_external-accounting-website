@@ -28,12 +28,11 @@
                 data-ng-change="updateMasterPreset()"></select>
             </td>
             <td data-ng-if="!positionTaking.IsDisableAuto">
-                <input id="cbIm2" type="checkbox" data-ng-model="positionTaking.Im2" />
+                <input id="cbIm2" type="checkbox" data-ng-model="positionTaking.Im2" data-ng-change="updateMasterPreset()" />
                 <select id="ddlUm2"
                 data-ng-model="positionTaking.Um2" 
                 data-ng-options="item.id as item.value for item in masterAutoPresetOptions"
-                data-ng-disabled="!positionTaking.Im2"
-                data-ng-change="updateAgentPreset()"></select>
+                data-ng-disabled="!positionTaking.Im2"></select>
             </td>
             <td>
                 <select id="ddlA2"
