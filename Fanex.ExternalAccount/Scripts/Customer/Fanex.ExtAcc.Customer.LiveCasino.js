@@ -447,6 +447,8 @@ Fanex.ExtAcc.Customer.LiveCasino = {
             }
             $('#chkAutoPT').attr('checked', data.uplinePtSetting.isAutoPresetPT);
 
+            console.log(data);
+
             //Render Master Max PT
             PT_RenderCombo(document.getElementById('pt_3'), min, (uplineMax - uplinePreset), 0.01, max);
 
