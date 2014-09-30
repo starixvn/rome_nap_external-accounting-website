@@ -416,6 +416,9 @@
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Partial\PositionTaking\MemberPositionTaking.htm" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Partial\PositionTaking\SuperOnMemberPositionTaking.htm" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Partial\PositionTaking\SuperPositionTaking.htm" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\active-icn.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\arrow-up-icn.png" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\inactive-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\SecurityCode.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Styles\SecurityCode.css" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\AgentMinMaxPT.js" />
