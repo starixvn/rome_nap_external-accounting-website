@@ -44,16 +44,16 @@ String.prototype.decodeHtml = function () {
     return $("<div/>").html(str).text();
 };
 
-String.prototype.encodeHtml = function(){
+String.prototype.encodeHtml = function () {
     var str = this;
-    return $('<div/>').text(str).html();    
+    return $('<div/>').text(str).html();
 };
 
 Fanex.decodeHtml = function (str) {
     return $("<div/>").html(str).text();
 };
 
-Fanex.encodeHtml = function(str){
+Fanex.encodeHtml = function (str) {
     return $('<div/>').text(str).html();
 };
 
@@ -765,6 +765,23 @@ Fanex.ExtAcc = {
         }
 
         return '';
+    },
+
+    AddPtInfoPage: function () {
+        if ($('.bet-type-detail-icon').length > 0) {
+            return;
+        }
+        console.log('a');
+        var headerPt = $('.headerPositionTaking').last();
+        var infoDiv = document.createElement('DIV');
+        infoDiv.setAttribute('title', 'Click to view PT info');
+        infoDiv.setAttribute('class', 'bet-type-detail-icon');
+        infoDiv.setAttribute('style', 'float: right; margin: 5px; z-index: 999999');
+        infoDiv.innerHTML = '&nbsp;';
+
+        infoDiv.setAttribute('onclick', "window.open(resolveClientUrl('SportsbookSetting/ViewPtInfo'), '_blank')");
+
+        headerPt.append(infoDiv);
     }
 };
 

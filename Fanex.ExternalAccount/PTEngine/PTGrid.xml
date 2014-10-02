@@ -19,7 +19,7 @@
                 </BetType>
                 <BetType id="2" name="Odd/Even" title="Odd/Even" minWidth="90" resourcekey="lblOddEven">
                 </BetType>
-                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="true" showBottomBorder="true">
+                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="false" showBottomBorder="true">
                   <RepresentativeForBetType id="14" name="First Goal/Last Goal" />
                   <RepresentativeForBetType id="127" name="1H First Goal/Last Goal" />
                   <RepresentativeForBetType id="16" name="Half time/Full time" />
@@ -137,7 +137,7 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="true" visible="true">
+                <BetType id="9999" name="Others" minWidth="90" showDetailIcon="false" visible="true">
                   <RepresentativeForBetType id="133" name="Home To Win Both Halves" />
                   <RepresentativeForBetType id="134" name="Away to Win both Halves" />
                   <RepresentativeForBetType id="135" name="Penalty Shootout Yes/No" />

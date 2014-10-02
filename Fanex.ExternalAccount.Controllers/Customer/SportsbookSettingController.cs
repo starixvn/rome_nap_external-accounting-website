@@ -1235,5 +1235,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         }
 
         #endregion Edit Min PT
+
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult ViewPtInfo()
+        {
+            return this.ViewBase("~/Views/BettypeReference/Index.cshtml");
+        }
     }
 }

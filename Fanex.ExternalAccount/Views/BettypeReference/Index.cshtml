@@ -1,0 +1,10 @@
+﻿@using Fanex.PTSetting.BettypeReference
+@{
+    ViewBag.Title = "PT Bettypes Reference";
+    Layout = "~/Views/Shared/_LayoutPtInfo.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Views/BettypeReference/Themes/style.less")" rel="Stylesheet" type="text/css" />
+}
+@Html.RenderBetTypeReference(true)

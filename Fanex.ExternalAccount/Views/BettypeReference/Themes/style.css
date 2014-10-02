@@ -1,0 +1,115 @@
+﻿/* content */
+/* table */
+
+body {
+  background: url('ExtAccounting/Images/bg.jpg') repeat;
+  margin: 0;
+  padding: 0;
+  font-family: 'Tahoma';
+  font-size: 12px;
+  color: #333333;
+}
+.right {
+  text-align: right;
+}
+.left {
+  text-align: left;
+}
+.followedByCol {
+  width: 35%;
+}
+.bettypeCol {
+  width: 30%;
+}
+.container {
+  padding: 15px;
+}
+.note-box {
+  background: url('ExtAccounting/Images/bgnote.jpg') repeat-x left bottom #eeeeee;
+  border: 1px solid #9b9b9b;
+}
+.note-box .note {
+  margin-left: 20px;
+  width: 40px;
+  text-align: center;
+  background: #bfbfbf;
+  color: #333333;
+  padding: 2px 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid #9b9b9b;
+  font-size: 11px;
+  border-top: none;
+}
+.note-box .text-note {
+  padding: 10px 10px 10px 20px;
+}
+.content .title {
+  padding: 15px 0;
+  font-weight: bold;
+}
+.content > p {
+  margin: 0 0 15px;
+}
+.content .sport {
+  width: 70%;
+}
+.content .sport .header-sport {
+  background: #e0e0e0;
+  color: #333333;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid #9b9b9b;
+  text-align: left;
+  font-weight: bold;
+  border-top: none;
+}
+.content .sport .header-sport.first-child {
+  border-top: 1px solid #9b9b9b;
+}
+.content .sport .header-sport .iconBox {
+  text-align: center;
+  font-weight: bold;
+  margin-right: 5px;
+  font-size: 13px;
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  position: relative;
+  top: 1px;
+  border: 1px solid #9b9b9b;
+}
+.content .sport .header-sport .iconBox.collapse-icon {
+  background: url('ExtAccounting/Images/expand.png') no-repeat white center;
+}
+.content .sport .header-sport .iconBox.expand-icon {
+  background: url('ExtAccounting/Images/collapse.png') no-repeat white center;
+}
+.content .sport table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+.content .sport table thead {
+  color: #333333;
+  background: #d4e3eb;
+  font-weight: bold;
+  text-align: center;
+}
+.content .sport table thead th {
+  padding: 5px;
+  border: 1px solid #9b9b9b;
+  border-top: none;
+}
+.content .sport table tbody td {
+  padding: 5px;
+  border: 1px solid #9b9b9b;
+}
+.content .sport table tbody td.bettype {
+  background: #dce6f2;
+  text-align: center;
+}
+.content .sport .hide {
+  display: none;
+  visibility: hidden;
+}

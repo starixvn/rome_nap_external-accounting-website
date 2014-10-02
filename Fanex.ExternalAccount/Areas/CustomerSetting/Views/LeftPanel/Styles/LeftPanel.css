@@ -368,7 +368,7 @@ input
     border-bottom: none;
     padding: 0 5px;
     font-weight: bold;
-    background: url(../images/inactive-icn.png) no-repeat;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAANCAIAAAAv2XlzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVChTY/hPImAgUf3/IaDBDRtA9icWP6BpQQsV7J6G68EMQ5yhBNSDNcSHQLASTCkAtHZK/7pU0qAAAAAASUVORK5CYII=) no-repeat;
     background-position: center right;
     padding-right: 15px;
     cursor: pointer;
@@ -377,7 +377,7 @@ input
 .subTab-active
 {
     color: #2489CE;
-    background: url(../images/active-icn.png) no-repeat;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAIAAAAyIHCzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA1SURBVChTY/hPCmAgRfF/aqhW6TyH1U4sZgOVQhCmBnTVcKVYNaCoRlOKqYEavsQVrIPHbABfCAHjyFEhUQAAAABJRU5ErkJggg==) no-repeat;
     background-position: center right;
     background-color: #FFF;
 }

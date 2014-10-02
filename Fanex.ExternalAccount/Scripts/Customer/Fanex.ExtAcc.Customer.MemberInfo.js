@@ -1,4 +1,6 @@
-﻿if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+﻿Fanex.ExtAcc.AddPtInfoPage();
+
+if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 var validateExpr = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.?\d*)?$/;

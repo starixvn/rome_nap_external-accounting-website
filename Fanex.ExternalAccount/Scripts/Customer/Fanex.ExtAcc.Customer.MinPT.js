@@ -118,6 +118,7 @@ Fanex.ExtAcc.Customer.MinPT = {
             var context = result.context;
 
             $('.headerPositionTaking').html($('.headerPositionTaking').html() + ': ' + customer.userName);
+            Fanex.ExtAcc.AddPtInfoPage();
 
             Fanex.PTEngine.CURRENT_CONTEXT = context;
 
