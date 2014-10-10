@@ -6,7 +6,7 @@ fanex.liveCasinoSetting.controller('CustomerInfoController',
         function ($scope) {
             'use strict';
             $scope.enableLiveCasino = !settingContext.Customer.DisableLiveCasino;
-            $scope.disableCheckBoxLiveCasino = settingContext.Customer.UplineDisableLiveCasino;
+            $scope.disableCheckBoxLiveCasino = settingContext.Customer.Parent.DisableLiveCasino;
 
             //// Functions
             $scope.getCustInfo = function () {

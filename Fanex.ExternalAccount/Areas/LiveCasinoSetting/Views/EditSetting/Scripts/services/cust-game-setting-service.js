@@ -5,11 +5,12 @@ if (fanex.liveCasinoSetting) {
         'use strict';
         var $this = this;
 
-        $this.updateGameSetting = function (gameSetting, settingContextScope) {
+        $this.updateGameSetting = function (gameSetting, disableLiveCasino, settingContextScope) {
             var gameSettingModel = {
                 settingContext: settingContext,
-                gameSetting: gameSetting
-            };            
+                gameSetting: gameSetting,
+                disableLiveCasino: disableLiveCasino
+            };
 
             $http({
                 method: 'POST',

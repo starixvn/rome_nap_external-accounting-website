@@ -15,8 +15,9 @@ if (fanex.liveCasinoSetting) {
             $scope.mainResult = {
                 CommandResultsList: []
             };
-            $scope.isUpdateAllSetting = false;
 
+            settingContext.IsSyncLiveCasino = settingContext.Customer.IsSyncLiveCasino;
+            $scope.isUpdateAllSetting = false;
             $scope.isReadOnly = settingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
             $scope.isEditMultiple = settingContext.Customers && settingContext.Customers.length > 0;
             $scope.isEditDirect = (settingContext.Upline.Level - settingContext.Customer.Level === 1);
@@ -25,7 +26,7 @@ if (fanex.liveCasinoSetting) {
                 && $scope.isEditDirect) {
                 for (var i = 0; i < settingContext.Customers.length; i++) {
                     if (!settingContext.Customers[i].IsSyncLiveCasino) {
-                        settingContext.Customer.IsSyncLiveCasino = false;
+                        settingContext.IsSyncLiveCasino = false;
                         break;
                     }
                 }

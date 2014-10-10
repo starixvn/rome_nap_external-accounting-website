@@ -67,7 +67,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
 
         //// Action
         $scope.updatePtAndComSetting = function () {
-            if (!settingContext.Customer.IsSyncLiveCasino) {
+            if (!settingContext.IsSyncLiveCasino) {
                 $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.PositionTakingAndCommission);
                 return;
             }

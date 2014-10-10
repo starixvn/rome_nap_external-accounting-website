@@ -7,12 +7,13 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerWinLimitService',
         function ($scope, $http, customerWinLimitService) {
-            'use strict';            
+            'use strict';
             var winLimit = settingContext.Customer.LiveCasinoSetting.WinLimit;
             var parentWinLimit = settingContext.Customer.Parent.LiveCasinoSetting.WinLimit;
 
-            $scope.maxWinLimitModel = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.WinLimit);            
+            $scope.maxWinLimitModel = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.WinLimit);
             $scope.isShowCurrentWinLimit = false;
+            $scope.isPercentShowRedColor = false;
             $scope.maxWinLimits = [{ lable: "3X", value: 3 },
                                    { lable: "5X", value: 5 },
                                    { lable: "10X", value: 10 },
@@ -62,16 +63,17 @@ if (fanex.liveCasinoSetting) {
                         $scope.currentWinLimit = -1;
                     }
                     else {
-                        $scope.currentWinLimit = numeral(data.MaxWinCredit).format('0,0');
-                        $scope.percent = data.WinPercent;
+                        $scope.currentWinLimit = numeral(data.MaxWinCredit).format('0,0.00');
+                        $scope.percent = numeral(data.WinPercent).format('0,0.00');
                     }
 
                     $scope.isShowCurrentWinLimit = true;
+                    $scope.isPercentShowRedColor = parseFloat(data.WinPercent) >= 100;
                 });
             };
 
             $scope.updateWinLimitSetting = function () {
-                if (!settingContext.Customer.IsSyncLiveCasino) {
+                if (!settingContext.IsSyncLiveCasino) {
                     $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.WinLimit);
                     return;
                 }

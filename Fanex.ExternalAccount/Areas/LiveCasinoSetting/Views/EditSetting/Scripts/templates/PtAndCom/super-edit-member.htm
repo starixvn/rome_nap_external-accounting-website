@@ -31,7 +31,8 @@
                 <select id="ddlUs1"
                 data-ng-model="positionTaking.Us1" 
                 data-ng-options="item.id as item.value for item in superAutoPTOptions"
-                data-ng-disabled="!positionTaking.Is1"></select>
+                data-ng-disabled="!positionTaking.Is1"
+                data-ng-change="superAutoPTChange()"></select>
             </td>
             <td>
                 {{positionTaking.M1}}

@@ -230,8 +230,9 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
                 link: function ($scope) {
                     var currentPt = $scope.positionTaking;
                     $scope.superPTOptions = fanex.createOptionsFromRange(currentPt.S1, currentPt.S1Min, currentPt.S1Max, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.superAutoPTOptions = fanex.createOptionsFromRange(currentPt.S1, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.superAutoPTOptions = fanex.createOptionsFromRange(currentPt.Us1, currentPt.S1Min, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.isSuperPTOutOfRange = currentPt.S1 < currentPt.S1Min || currentPt.S1 > currentPt.S1Max;
+                    $scope.isSuperAutoPTOutOfRange = currentPt.Us1 < currentPt.S1Min || currentPt.Us1 > currentPt.S4;
 
                     $scope.superPTChange = function () {
                         if ($scope.isSuperPTOutOfRange) {
@@ -241,6 +242,17 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
                                 currentPt.S1Max, 
                                 fanex.liveCasinoSetting.PT_INTERVAL);
                             $scope.isSuperPTOutOfRange = false;
+                        }
+                    };
+
+                    $scope.superAutoPTChange = function () {
+                        if ($scope.isSuperAutoPTOutOfRange) {
+                            $scope.superAutoPTOptions = fanex.createOptionsFromRange(
+                                currentPt.Us1,
+                                currentPt.S1Min,
+                                currentPt.S4,
+                                fanex.liveCasinoSetting.PT_INTERVAL);
+                            $scope.isSuperAutoPTOutOfRange = false;
                         }
                     };
                 }
@@ -259,8 +271,14 @@ fanex.liveCasinoSetting.directive('masterEditMemberPt', [
                 link: function ($scope) {
                     var currentPt = $scope.positionTaking;
                     $scope.masterPTOptions = fanex.createOptionsFromRange(currentPt.M1, currentPt.M1Min, currentPt.M1Max, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.masterAutoPTOptions = fanex.createOptionsFromRange(currentPt.M1, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.masterAutoPTOptions = fanex.createOptionsFromRange(
+                                                    currentPt.Um1,
+                                                    currentPt.M1Min,
+                                                    currentPt.M3, 
+                                                    fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.isMasterPTOutOfRange = currentPt.M1 < currentPt.M1Min || currentPt.M1 > currentPt.M1Max;
+                    $scope.isMasterAutoPTOutOfRange = currentPt.Um1 < currentPt.M1Min || currentPt.Um1 > currentPt.M3;
+                    
                     $scope.masterPTChange = function () {
                         if ($scope.isMasterPTOutOfRange) {
                             $scope.masterPTOptions = fanex.createOptionsFromRange(
@@ -269,6 +287,17 @@ fanex.liveCasinoSetting.directive('masterEditMemberPt', [
                                                             currentPt.M1Max, 
                                                             fanex.liveCasinoSetting.PT_INTERVAL);
                             $scope.isMasterPTOutOfRange = false;
+                        }
+                    };
+
+                    $scope.masterAutoPTChange = function () {
+                        if ($scope.isMasterAutoPTOutOfRange) {
+                            $scope.masterAutoPTOptions = fanex.createOptionsFromRange(
+                                                            currentPt.Um1,
+                                                            currentPt.M1Min,
+                                                            currentPt.M3,
+                                                            fanex.liveCasinoSetting.PT_INTERVAL);
+                            $scope.isMasterAutoPTOutOfRange = false;
                         }
                     };
                 }

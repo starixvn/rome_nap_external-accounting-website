@@ -8,7 +8,7 @@ if (fanex.liveCasinoSetting) {
         'CustomerGameSettingService',
         function ($scope, $http, customerGameSettingService) {
             'use strict';
-            $scope.gameSetting = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.GameSetting);            
+            $scope.gameSetting = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.GameSetting);
             var uplineUncheckedAllMsg = '';
 
             if (settingContext.Customer.Level === fanex.liveCasinoSetting.customerLevel.Member && settingContext.Customer.IsSyncLiveCasino) {
@@ -44,12 +44,15 @@ if (fanex.liveCasinoSetting) {
             };
 
             $scope.updateGameSetting = function () {
-                if (!settingContext.Customer.IsSyncLiveCasino) {
+                if (!settingContext.IsSyncLiveCasino) {
                     $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.GameSetting);
                     return;
                 }
 
-                customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
+                var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
+                var customer = custInfoScope.getCustInfo();
+
+                customerGameSettingService.updateGameSetting($scope.getGameSetting(), customer.DisableLiveCasino, $scope.$parent);
             };
 
             $scope.checkShowWarningUncheckedAll = function () {

@@ -142,10 +142,10 @@ select:disabled
     color: #000;
     cursor: pointer;
 }
-.edit-setting-livecs .update-setting-agency-submit-left 
+.edit-setting-livecs .update-setting-agency-submit-left
 {
     background: url("Images/agency-button-left.gif") no-repeat left top;
-	height: 22px;
+    height: 22px;
     padding: 0 0 0 3px;
     display: inline-block;
     float: left;
@@ -158,13 +158,13 @@ select:disabled
     cursor: pointer;
     width: 80px;
     height: 30px;
-    border: none ;
+    border: none;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     padding-bottom: 2px;
     margin-top: 5px;
-    text-indent: 0 ;
+    text-indent: 0;
     margin-bottom: 10px;
     float: right;
 }
@@ -352,12 +352,9 @@ label.clearfix
 	margin-top: 4px;
 }
 */
-.game-setting .betting-limit-item input[type="checkbox"], 
-.game-setting .betting-limit-item input[type="radio"], 
-.win-limit input[type="checkbox"]
+.game-setting .betting-limit-item input[type="checkbox"], .game-setting .betting-limit-item input[type="radio"], .win-limit input[type="checkbox"]
 {
-    margin: 2px 2px 2px -14px;
-    /*padding-top: 2px;*/
+    margin: 2px 2px 2px -14px; /*padding-top: 2px;*/
 }
 
 .game-setting .game-setting-name
@@ -406,23 +403,23 @@ label.clearfix
 }
 
 /*popup layout*/
-#presetOnMemberModal .custom-modal-dialog 
+#presetOnMemberModal .custom-modal-dialog
 {
-	width: 400px;
+    width: 400px;
 }
 
-#presetOnMemberModal .custom-modal-content 
+#presetOnMemberModal .custom-modal-content
 {
     border-radius: 0px;
-	background: #f5f6f8 url(Images/popup-background.jpg) repeat-x fixed 50% top;
+    background: #f5f6f8 url(Images/popup-background.jpg) repeat-x fixed 50% top;
 }
 
-#presetOnMemberModal .custom-modal-content p 
+#presetOnMemberModal .custom-modal-content p
 {
-	margin: 0 0 3px;
+    margin: 0 0 3px;
 }
 
-#presetOnMemberModal .custom-modal-header 
+#presetOnMemberModal .custom-modal-header
 {
     color: #ffffff;
     height: 22px;
@@ -432,28 +429,27 @@ label.clearfix
 
 #presetOnMemberModal .custom-close
 {
-	margin-top: -7px;
-	opacity: 1;
+    margin-top: -7px;
+    opacity: 1;
 }
 
-#presetOnMemberModal .custom-modal-title 
+#presetOnMemberModal .custom-modal-title
 {
-	
 }
 
-#presetOnMemberModal .custom-modal-body 
+#presetOnMemberModal .custom-modal-body
 {
-	text-align: center;
-	font-size: 11px;
-	padding: 8px;
+    text-align: center;
+    font-size: 11px;
+    padding: 8px;
 }
 
-#presetOnMemberModal .custom-modal-footer 
+#presetOnMemberModal .custom-modal-footer
 {
     padding: 4px;
-	text-align: center;
-	border-top: none;
-	margin-bottom: 10px;
+    text-align: center;
+    border-top: none;
+    margin-bottom: 10px;
 }
 
 #presetOnMemberModal .custom-btn
@@ -461,3 +457,20 @@ label.clearfix
     margin-right: 3px;
 }
 
+.member-win-limit
+{
+    cursor: pointer;
+    color: Blue;
+}
+
+.current-win-limit
+{
+    width: 84px;
+    float: left;
+    text-indent: 5px;
+}
+
+.text-red
+{
+    color: Red;
+}
