@@ -79,8 +79,7 @@ if (fanex.liveCasinoSetting) {
                             $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePartial);
                         }
                         else {
-                            if (!isUpdatePartial
-                                && $window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
+                            if ($window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
                                 $window.parent.actionAfterUpdatedLiveCasinoSettingSingle(isUpdatePartial);
                             }
                             else {
