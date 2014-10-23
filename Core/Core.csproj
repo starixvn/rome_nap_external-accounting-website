@@ -105,6 +105,9 @@
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Libraries.APILogger">
+      <HintPath>..\Dependencies\Sunplus.Libraries.APILogger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -137,6 +140,7 @@
     <Compile Include="Base\CustomerBase.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Base\LiveCasinoBase.cs" />
+    <Compile Include="Context\CasinoAPILogger.cs" />
     <Compile Include="Context\CurrentContext.cs" />
     <Compile Include="Context\CurrentSession.cs">
       <SubType>ASPXCodeBehind</SubType>

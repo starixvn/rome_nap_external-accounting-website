@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
@@ -78,6 +79,12 @@ namespace Fanex.ExternalAccount
             RegisterRoutes(RouteTable.Routes);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+
+            var logger = new CasinoAPILogger();
+            var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
+            string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
+            manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
+            manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
             BundleTable.Bundles.EnableCommonBundle();
             BundleTable.Bundles.EnableLoginBundle();
