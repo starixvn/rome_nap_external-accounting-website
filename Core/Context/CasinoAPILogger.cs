@@ -30,7 +30,7 @@ namespace Fanex.ExternalAccount.Core.Context
             var param = new Hashtable();
             param.Add("systemid", 4);
             param.Add("userid", CurrentSession.Instance.UserId);
-            param.Add("custid", Utils.ToInt32(HttpContext.Current.Request["id"]));
+            param.Add("custid", Utils.ToInt32(string.IsNullOrWhiteSpace(HttpContext.Current.Request["id"]) ? HttpContext.Current.Request["custid"] : HttpContext.Current.Request["id"]));
             param.Add("actionid", actionId);
             param.Add("funcname", functionName);
             param.Add("trackingvalue", strackingValue);
