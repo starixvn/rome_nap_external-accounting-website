@@ -28,9 +28,10 @@ namespace Fanex.ExternalAccount.Core.Context
         public void Write(int actionId, string functionName, string strackingValue, string returnValue, int returnCode)
         {
             var param = new Hashtable();
+            var custId = string.IsNullOrWhiteSpace(HttpContext.Current.Request["id"]) ? HttpContext.Current.Request["custid"] : HttpContext.Current.Request["id"];
             param.Add("systemid", 4);
             param.Add("userid", CurrentSession.Instance.UserId);
-            param.Add("custid", Utils.ToInt32(string.IsNullOrWhiteSpace(HttpContext.Current.Request["id"]) ? HttpContext.Current.Request["custid"] : HttpContext.Current.Request["id"]));
+            param.Add("custid", Utils.ToInt32(custId));
             param.Add("actionid", actionId);
             param.Add("funcname", functionName);
             param.Add("trackingvalue", strackingValue);
