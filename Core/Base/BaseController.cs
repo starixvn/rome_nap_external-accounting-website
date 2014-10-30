@@ -69,7 +69,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <summary>
         /// Constant object.
         /// </summary>
-        protected const int FromSystem = 4;
+        protected const int FromSystem = 3;
 
         #endregion Constant
 
