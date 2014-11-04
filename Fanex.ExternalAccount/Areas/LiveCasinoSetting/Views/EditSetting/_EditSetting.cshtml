@@ -8,24 +8,6 @@
     data-ng-controller="CustomerSettingController" 
     style="display:none;"
     class="edit-setting-livecs">
-    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
-        <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}">
-        </div>
-        <div class="main-message">
-            <div data-ng-repeat="subResult in mainResult.CommandResultsList">
-                <div class="message-user-name">
-                    {{subResult.Name}}</div>
-                <div class="sub-message" data-ng-repeat="result in subResult.Results">
-                    <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
-                        data-ng-show="!mainResult.isUnAuthorized">
-                    </div>
-                    <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}"
-                        data-ng-bind-html="result.Message">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     @{
         var buttonClass = string.Empty;
         var buttonText = LiveCasinoLang.lblUpdate;
@@ -61,6 +43,25 @@
               break;
         }
     }
+
+    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
+        <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}">
+        </div>
+        <div class="main-message">
+            <div data-ng-repeat="subResult in mainResult.CommandResultsList">
+                <div class="message-user-name">
+                    {{subResult.Name}}</div>
+                <div class="sub-message" data-ng-repeat="result in subResult.Results">
+                    <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
+                        data-ng-show="!mainResult.isUnAuthorized">
+                    </div>
+                    <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}"
+                        data-ng-bind-html="result.Message">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow">
         <div class="sub-message-icon sub-icon-warning">

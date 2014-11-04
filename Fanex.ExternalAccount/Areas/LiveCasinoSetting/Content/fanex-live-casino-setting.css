@@ -243,6 +243,7 @@ label.clearfix
 /*Result message*/
 .edit-setting-livecs .updated-result
 {
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
