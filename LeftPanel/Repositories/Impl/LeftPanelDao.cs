@@ -347,7 +347,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 CurrentContext.Instance.Ip4Address, 
                 0, 
                 "En", 
-                custName, 
+                CurrentSession.Instance.UserName, 
                 string.Empty);
 
             return new Result(result ? 0 : 1, result ? string.Empty : "Update casino status failed");

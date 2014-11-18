@@ -137,7 +137,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         DateTime.Now,
                         CurrentContext.Ip4Address,
                         uplineId,
-                        uplineName,
+                        CurrentSession.UserName,
                         BaseController.FromSystem);
                     if (isSuccess)
                     {
@@ -189,7 +189,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         DateTime.Now,
                         this.CurrentContext.Ip4Address,
                         uplineId,
-                        uplineName,
+                        CurrentSession.UserName,
                         BaseController.FromSystem);
                 }
                 catch (Exception e)

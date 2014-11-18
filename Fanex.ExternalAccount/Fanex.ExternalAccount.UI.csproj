@@ -204,6 +204,10 @@
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Libraries.APILogger, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Sunplus.Libraries.APILogger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -2216,6 +2220,10 @@
     <Content Include="Views\Shared\_LayoutPtInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>

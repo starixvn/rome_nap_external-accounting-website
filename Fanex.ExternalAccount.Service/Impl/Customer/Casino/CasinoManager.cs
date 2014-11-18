@@ -173,7 +173,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             }
 
             var cust = new Customer();
-            return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, custid, subAccId == 0 ? username : subUsername, 2);
+            return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId, subAccId == 0 ? username : subUsername, 3);
         }
 
         /// <summary>

@@ -279,4 +279,7 @@
     <Setting Key="BG_TP_Game_UserBet_WinLossByMAgentID" SpName="TP_Game_UserBet_WinLossByMAgentID" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Game_UserBet_WinLossByAgentID" SpName="TP_Game_UserBet_WinLossByAgentID" DbName="CS_LBBackupDB" Plain="1" />
   </Function>
+  <Function Name="Casino">
+    <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog"  />
+  </Function>
 </Functions>

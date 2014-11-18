@@ -803,18 +803,10 @@ namespace Fanex.ExternalAccount.Utilities
             var cssLogin = Config.CssLogin.Split(';');
             var jssLogin = Config.JsLogin.Split(';');
 
-            foreach (var item in cssLogin)
-            {
-                bootstrapCssLogin.Include(item);
-            }
-
+            bootstrapCssLogin.Include(cssLogin);
             bundles.Add(bootstrapCssLogin);
 
-            foreach (var item in jssLogin)
-            {
-                bootstrapJsLogin.Include(item);
-            }
-
+            bootstrapJsLogin.Include(jssLogin);
             bundles.Add(bootstrapJsLogin);
         }
 
@@ -831,18 +823,10 @@ namespace Fanex.ExternalAccount.Utilities
             var css = Config.CssFiles.Split(';');
             var js = Config.JsFiles.Split(';');
 
-            foreach (var item in css)
-            {
-                bootstrapCss.Include(item);
-            }
-
+            bootstrapCss.Include(css);
             bundles.Add(bootstrapCss);
 
-            foreach (var item in js)
-            {
-                bootstrapJs.Include(item);
-            }
-
+            bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);
         }
 
@@ -859,18 +843,10 @@ namespace Fanex.ExternalAccount.Utilities
             var css = Config.CssExtGroup.Split(';');
             var js = Config.JsExtGroup.Split(';');
 
-            foreach (var item in css)
-            {
-                bootstrapCss.Include(item);
-            }
-
+            bootstrapCss.Include(css);
             bundles.Add(bootstrapCss);
 
-            foreach (var item in js)
-            {
-                bootstrapJs.Include(item);
-            }
-
+            bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);
         }
 
@@ -887,18 +863,10 @@ namespace Fanex.ExternalAccount.Utilities
             var css = Config.CssDailyWinLoss.Split(';');
             var js = Config.JsDailyWinLoss.Split(';');
 
-            foreach (var item in css)
-            {
-                bootstrapCss.Include(item);
-            }
-
+            bootstrapCss.Include(css);
             bundles.Add(bootstrapCss);
 
-            foreach (var item in js)
-            {
-                bootstrapJs.Include(item);
-            }
-
+            bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);
         }
 
@@ -915,18 +883,10 @@ namespace Fanex.ExternalAccount.Utilities
             var css = Config.CssWinLossDetail.Split(';');
             var js = Config.JsWinLossDetail.Split(';');
 
-            foreach (var item in css)
-            {
-                bootstrapCss.Include(item);
-            }
-
+            bootstrapCss.Include(css);
             bundles.Add(bootstrapCss);
 
-            foreach (var item in js)
-            {
-                bootstrapJs.Include(item);
-            }
-
+            bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);
         }
 
@@ -943,18 +903,10 @@ namespace Fanex.ExternalAccount.Utilities
             var css = Config.CssStatement.Split(';');
             var js = Config.JsStatement.Split(';');
 
-            foreach (var item in css)
-            {
-                bootstrapCss.Include(item);
-            }
-
+            bootstrapCss.Include(css);
             bundles.Add(bootstrapCss);
 
-            foreach (var item in js)
-            {
-                bootstrapJs.Include(item);
-            }
-
+            bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);
         }
 
@@ -971,18 +923,10 @@ namespace Fanex.ExternalAccount.Utilities
             var css = Config.CssCustomer.Split(';');
             var js = Config.JsCustomer.Split(';');
 
-            foreach (var item in css)
-            {
-                bootstrapCss.Include(item);
-            }
-
+            bootstrapCss.Include(css);
             bundles.Add(bootstrapCss);
 
-            foreach (var item in js)
-            {
-                bootstrapJs.Include(item);
-            }
-
+            bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);
         }
 
