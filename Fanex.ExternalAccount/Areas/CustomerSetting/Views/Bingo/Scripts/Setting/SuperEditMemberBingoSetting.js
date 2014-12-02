@@ -11,6 +11,15 @@
     },
     renderGameKindBO: function (isGroupSetting, gameKindBO) {
         var id = gameKindBO.iD;
+        var superPT = gameKindBO.isSuperAutoPositionTakingOnMaster ?
+        '<div>' + roundNumber(gameKindBO.positionTaking, 2) + '</div>' :
+        '<select id="listSuperPT_' + id + '" onchange="superEditMemberBingoSetting.on_ChangeSuperPT(this);" max="' + roundNumber(gameKindBO.positionTakingMax, 2) + '" min="' + roundNumber(gameKindBO.minPositionTaking, 2) + '" class="select-pt" ' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+                                <option value="' + roundNumber(gameKindBO.positionTaking, 2) + '" selected="true">' + roundNumber(gameKindBO.positionTaking, 2) + '</option>\
+        </select>\
+        <input type="button" onclick="superEditMemberBingoSetting.ReducePT(\'listSuperPT_' + id + '\',1)" class="btn-dec1 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+        <input type="button" onclick="superEditMemberBingoSetting.IncreasePT(\'listSuperPT_' + id + '\',1)" class="btn-inc1 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+        <input type="button" onclick="superEditMemberBingoSetting.ReducePT(\'listSuperPT_' + id + '\',10)" class="btn-dec10 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+        <input type="button" onclick="superEditMemberBingoSetting.IncreasePT(\'listSuperPT_' + id + '\',10)" class="btn-inc10 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>';
         var html = '<tr>\
                         <td colspan="2" class="c"></td>\
                         <td class="c"><b>Super PT</b></td>\
@@ -21,15 +30,9 @@
                     <tr>\
                         <td rowspan="' + (2 * gameKindBO.gameTypeList.length + 1) + '"><b>' + gameKindBO.name + '</b></td>\
                         <td class="l"><b>Group Setting</b></td>\
-                        <td>\
-                            <select id="listSuperPT_' + id + '" onchange="superEditMemberBingoSetting.on_ChangeSuperPT(this);" max="' + roundNumber(gameKindBO.positionTakingMax, 2) + '" min="' + roundNumber(gameKindBO.minPositionTaking, 2) + '" class="select-pt" ' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
-                                <option value="' + roundNumber(gameKindBO.positionTaking, 2) + '" selected="true">' + roundNumber(gameKindBO.positionTaking, 2) + '</option>\
-                            </select>\
-                            <input type="button" onclick="superEditMemberBingoSetting.ReducePT(\'listSuperPT_' + id + '\',1)" class="btn-dec1 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
-                            <input type="button" onclick="superEditMemberBingoSetting.IncreasePT(\'listSuperPT_' + id + '\',1)" class="btn-inc1 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
-                            <input type="button" onclick="superEditMemberBingoSetting.ReducePT(\'listSuperPT_' + id + '\',10)" class="btn-dec10 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
-                            <input type="button" onclick="superEditMemberBingoSetting.IncreasePT(\'listSuperPT_' + id + '\',10)" class="btn-inc10 SuperPT_' + id + '" value=" "' + (gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
-                        </td>\
+                        <td>'
+                            + superPT +
+                        '</td>\
                         <td>\
                             <input type="checkbox"' + (gameKindBO.isAutoPositionTaking ? 'checked' : '') + ' onclick="superEditMemberBingoSetting.checkAutoPT(this)" id="chkAuto_' + id + '">\
                         </td>\
@@ -42,8 +45,8 @@
                             <input type="button" onclick="superEditMemberBingoSetting.ReducePT(\'listSuperAutoPT_' + id + '\',10)" class="btn-dec10 SuperAuto_' + id + '" value=" "' + (!gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
                             <input type="button" onclick="superEditMemberBingoSetting.IncreasePT(\'listSuperAutoPT_' + id + '\',10)" class="btn-inc10 SuperAuto_' + id + '" value=" "' + (!gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
                         </td>\
-                        <td>' + roundNumber(gameKindBO.positionTakingMaster,2) + '</td>\
-                        <td>' + roundNumber(gameKindBO.positionTakingAgent,2) + '</td>\
+                        <td>' + roundNumber(gameKindBO.positionTakingMaster, 2) + '</td>\
+                        <td>' + roundNumber(gameKindBO.positionTakingAgent, 2) + '</td>\
                     </tr>';
         $.each(gameKindBO.gameTypeList, function (index, value) {
             html += superEditMemberBingoSetting.renderGameTypeBO(isGroupSetting, id, value);
@@ -54,12 +57,16 @@
         var id = gameKindBOId + '_' + gameTypeBO.iD;
         var html = '<tr>\
                     <td class="l" rowspan="2">' + gameTypeBO.name + '</td>';
+
+        var superPT = gameTypeBO.isSuperAutoPositionTakingOnMaster ?
+        '<div>' + roundNumber(gameTypeBO.positionTaking, 2) + '</div>' :
+        '<select id="listSuperPT_' + id + '" max="' + roundNumber(gameTypeBO.positionTakingMax, 2) + '" min="' + roundNumber(gameTypeBO.minPositionTaking, 2) + '" class="select-pt SuperPT_' + id + '"' + (gameTypeBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+            <option value="' + roundNumber(gameTypeBO.positionTaking, 2) + '" selected="true">' + roundNumber(gameTypeBO.positionTaking, 2) + '</option>\
+        </select>';
         if (!isGroupSetting) {
-            html += '<td class="gametypePT c">\
-                        <select id="listSuperPT_' + id + '" max="' + roundNumber(gameTypeBO.positionTakingMax, 2) + '" min="' + roundNumber(gameTypeBO.minPositionTaking, 2) + '" class="select-pt SuperPT_' + id + '"' + (gameTypeBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
-                            <option value="' + roundNumber(gameTypeBO.positionTaking, 2) + '" selected="true">' + roundNumber(gameTypeBO.positionTaking, 2) + '</option>\
-                        </select>\
-                    </td>\
+            html += '<td class="gametypePT c">' 
+                        + superPT +
+                    '</td>\
                     <td>\
                         <input class="chkauto" type="checkbox"' + (gameTypeBO.isAutoPositionTaking ? 'checked' : '') + ' onclick="superEditMemberBingoSetting.checkAutoPTGameType(this)" id="chkAuto_' + id + '">\
                     </td>\
@@ -68,8 +75,8 @@
                             <option value="' + roundNumber(gameTypeBO.autoPositionTaking, 2) + '" selected="true">' + roundNumber(gameTypeBO.autoPositionTaking, 2) + '</option>\
                         </select>\
                     </td>\
-                    <td class="gametypePT c">' + roundNumber(gameTypeBO.positionTakingMaster,2) + '</td>\
-                    <td class="gametypePT c">' + roundNumber(gameTypeBO.positionTakingAgent,2) + '</td>';
+                    <td class="gametypePT c">' + roundNumber(gameTypeBO.positionTakingMaster, 2) + '</td>\
+                    <td class="gametypePT c">' + roundNumber(gameTypeBO.positionTakingAgent, 2) + '</td>';
         }
         html += '</tr>\
                 <tr>\
@@ -184,7 +191,7 @@
                 if (id.indexOf(strListSuper) >= 0) {
                     superEditMemberBingoSetting.on_ChangeSuperPT(document.getElementById(id));
                 }
-                else  {
+                else {
                     superEditMemberBingoSetting.on_ChangeSuperAutoPT(document.getElementById(id));
                 }
             }
@@ -194,39 +201,39 @@
         var Auto = $(obj);
         var AutoID = Auto.attr("id");
         var AutoValue = Auto.val();
-        var Autolists = $(".SuperAuto" + AutoID.replace(strListSuperAuto,""));
+        var Autolists = $(".SuperAuto" + AutoID.replace(strListSuperAuto, ""));
         Autolists.each(function () {
             if ($(this).prop("id").indexOf(AutoID + "_") >= 0) {
                 $(this).val(AutoValue);
             }
         });
     },
-    checkAutoPT: function (obj) {   
+    checkAutoPT: function (obj) {
         var chkAuto = $(obj);
         var chkAutoID = chkAuto.attr("id");
         if (chkAuto.prop("checked")) {
-            $("#" + chkAutoID.replace(strChkAuto,strListSuper)).attr("disabled","disabled");
-            $("#" + chkAutoID.replace(strChkAuto,strListSuperAuto)).removeAttr("disabled");
-        
-            $(".SuperPT" + chkAutoID.replace(strChkAuto,"")).attr("disabled","disabled");
-            $(".SuperAuto" + chkAutoID.replace(strChkAuto,"")).removeAttr("disabled");
-              
-            jQuery.each($(".chkauto"), function() {
+            $("#" + chkAutoID.replace(strChkAuto, strListSuper)).attr("disabled", "disabled");
+            $("#" + chkAutoID.replace(strChkAuto, strListSuperAuto)).removeAttr("disabled");
+
+            $(".SuperPT" + chkAutoID.replace(strChkAuto, "")).attr("disabled", "disabled");
+            $(".SuperAuto" + chkAutoID.replace(strChkAuto, "")).removeAttr("disabled");
+
+            jQuery.each($(".chkauto"), function () {
                 if ($(this).prop("id").indexOf(chkAutoID) >= 0) {
-                    $(this).attr("checked","checked");
+                    $(this).attr("checked", "checked");
                     superEditMemberBingoSetting.checkAutoPTGameType(this);
-                 }
+                }
             });
         }
         else {
-            $("#" + chkAutoID.replace(strChkAuto,strListSuperAuto)).attr("disabled","disabled");
-            $("#" + chkAutoID.replace(strChkAuto,strListSuper)).removeAttr("disabled");
-        
-            $(".SuperAuto" + chkAutoID.replace(strChkAuto,"")).attr("disabled","disabled");
-            $(".SuperPT" + chkAutoID.replace(strChkAuto,"")).removeAttr("disabled");
-        
-            jQuery.each($(".chkauto"), function() {
-                if ($(this).prop("id").indexOf(chkAutoID)>=0) {
+            $("#" + chkAutoID.replace(strChkAuto, strListSuperAuto)).attr("disabled", "disabled");
+            $("#" + chkAutoID.replace(strChkAuto, strListSuper)).removeAttr("disabled");
+
+            $(".SuperAuto" + chkAutoID.replace(strChkAuto, "")).attr("disabled", "disabled");
+            $(".SuperPT" + chkAutoID.replace(strChkAuto, "")).removeAttr("disabled");
+
+            jQuery.each($(".chkauto"), function () {
+                if ($(this).prop("id").indexOf(chkAutoID) >= 0) {
                     $(this).removeAttr("checked");
                     superEditMemberBingoSetting.checkAutoPTGameType(this);
                 }
@@ -237,12 +244,12 @@
         var chkAuto = $(obj);
         var chkAutoID = chkAuto.attr("id");
         if (chkAuto.prop("checked")) {
-            $("#" + chkAutoID.replace(strChkAuto,strListSuper)).attr("disabled","disabled");
-            $("#" + chkAutoID.replace(strChkAuto,strListSuperAuto)).removeAttr("disabled");
+            $("#" + chkAutoID.replace(strChkAuto, strListSuper)).attr("disabled", "disabled");
+            $("#" + chkAutoID.replace(strChkAuto, strListSuperAuto)).removeAttr("disabled");
         }
         else {
-            $("#" + chkAutoID.replace(strChkAuto,strListSuperAuto)).attr("disabled","disabled");
-            $("#" + chkAutoID.replace(strChkAuto,strListSuper)).removeAttr("disabled");
+            $("#" + chkAutoID.replace(strChkAuto, strListSuperAuto)).attr("disabled", "disabled");
+            $("#" + chkAutoID.replace(strChkAuto, strListSuper)).removeAttr("disabled");
         }
     }
 };

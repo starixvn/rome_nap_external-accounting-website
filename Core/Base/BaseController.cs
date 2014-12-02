@@ -207,7 +207,7 @@ namespace Fanex.ExternalAccount.Core.Base
 
                     var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
 
-                    if (isMult || casinoCustomer.Suspend == customer.StatusSetting.Suspended)
+                    if (isMult)
                     {
                         return;
                     }
