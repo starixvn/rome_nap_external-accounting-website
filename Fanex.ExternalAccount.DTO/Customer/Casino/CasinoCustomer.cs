@@ -20,6 +20,12 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
             set;
         }
 
+        public bool UplineCasinoSync
+        {
+            get;
+            set;
+        }
+
         public bool EnableDownline
         {
             get;
@@ -93,6 +99,12 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
         }
 
         public bool BingoSync
+        {
+            get;
+            set;
+        }
+
+        public bool UplineBingoSync
         {
             get;
             set;

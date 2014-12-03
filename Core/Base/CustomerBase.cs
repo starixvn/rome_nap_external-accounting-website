@@ -111,7 +111,7 @@ namespace Fanex.ExternalAccount.Core.Base
             try
             {
                 var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                if (custInfo != null && !custInfo.CasinoSync)
+                if (custInfo != null && custInfo.UplineCasinoSync && !custInfo.CasinoSync)
                 {
                     var isSuccess = new CasinoLibrary.SBAgent.Customer().AutoInsertAccount(
                         CasinoNo,
@@ -171,7 +171,7 @@ namespace Fanex.ExternalAccount.Core.Base
             var isSuccess = false;
             var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
-            if (custInfo != null && !custInfo.BingoSync)
+            if (custInfo != null && custInfo.UplineBingoSync && !custInfo.BingoSync)
             {
                 LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
 

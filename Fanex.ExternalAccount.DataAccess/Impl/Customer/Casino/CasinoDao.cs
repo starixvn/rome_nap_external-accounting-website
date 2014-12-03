@@ -70,6 +70,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.UpperCustID = uplineId;
                 customerDetail.IsEnablePT = true;
 
+                if (upline != null && upline.ResultSet != null && upline.ResultSet.Tables.Count > 0 && upline.ResultSet.Tables[0].Rows.Count > 0)
+                {
+                    var drupline = upline.ResultSet.Tables[0].Rows[0];
+                    customerDetail.UplineBingoSync = Utils.ToBoolean(drupline["syncbingo"]);
+                    customerDetail.UplineCasinoSync = Utils.ToBoolean(drupline["synccasino"]);
+                }
+
                 try
                 {
                     CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();

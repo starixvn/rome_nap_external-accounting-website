@@ -194,18 +194,18 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="isMult">Is update multiple or not.</param>
         protected void UpdateCasinoStatus(int custId, Fanex.PTEngine.BusinessObjects.Result result, Customer customer, bool isMult = false)
         {
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0)
+            try
             {
-                // Update Casino status for closed and suspended
-                var cust = new CasinoLibrary.SBAgent.Customer();
-                try
+                var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
+                if (casinoCustomer.CasinoSync && (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0))
                 {
+                    // Update Casino status for closed and suspended
+                    var cust = new CasinoLibrary.SBAgent.Customer();
+
                     if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
                     {
                         cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
-
-                    var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
 
                     if (isMult)
                     {
@@ -217,10 +217,10 @@ namespace Fanex.ExternalAccount.Core.Base
                         cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Logs.Error(ex.Message, "ExternalAccount", ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex.Message, "ExternalAccount", ex);
             }
         }
 
