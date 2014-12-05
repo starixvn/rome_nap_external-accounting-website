@@ -37,7 +37,7 @@
                             <input type="checkbox"' + (gameKindBO.isAutoPositionTaking ? 'checked' : '') + ' onclick="superEditMemberBingoSetting.checkAutoPT(this)" id="chkAuto_' + id + '">\
                         </td>\
                         <td>\
-                            <select id="listSuperAutoPT_' + id + '" onchange="superEditMemberBingoSetting.on_ChangeSuperAutoPT(this);" max="0.9" min="0" class="select-pt" ' + (!gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+                            <select id="listSuperAutoPT_' + id + '" onchange="superEditMemberBingoSetting.on_ChangeSuperAutoPT(this);" max="' + gameKindBO.superPositionTakingPreset + '" min="0" class="select-pt" ' + (!gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
                                 <option value="' + roundNumber(gameKindBO.autoPositionTaking, 2) + '" selected="true">' + roundNumber(gameKindBO.autoPositionTaking, 2) + '</option>\
                             </select>\
                             <input type="button" onclick="superEditMemberBingoSetting.ReducePT(\'listSuperAutoPT_' + id + '\',1)" class="btn-dec1 SuperAuto_' + id + '" value=" "' + (!gameKindBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
@@ -71,7 +71,7 @@
                         <input class="chkauto" type="checkbox"' + (gameTypeBO.isAutoPositionTaking ? 'checked' : '') + ' onclick="superEditMemberBingoSetting.checkAutoPTGameType(this)" id="chkAuto_' + id + '">\
                     </td>\
                     <td class="gametypePT c">\
-                        <select id="listSuperAutoPT_' + id + '" max="0.9" min="0" class="select-pt SuperAuto_' + id + '"' + (!gameTypeBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
+                        <select id="listSuperAutoPT_' + id + '" max="' + gameTypeBO.superPositionTakingPreset + '" min="0" class="select-pt SuperAuto_' + id + '"' + (!gameTypeBO.isAutoPositionTaking ? 'Disabled' : '') + '>\
                             <option value="' + roundNumber(gameTypeBO.autoPositionTaking, 2) + '" selected="true">' + roundNumber(gameTypeBO.autoPositionTaking, 2) + '</option>\
                         </select>\
                     </td>\
