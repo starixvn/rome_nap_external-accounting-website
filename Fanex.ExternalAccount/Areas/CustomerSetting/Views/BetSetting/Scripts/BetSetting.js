@@ -34,3 +34,8 @@ function LoadCasino() {
     Fanex.CustomerSetting.Core.BlockUI();
     document.location.href = toUrl('CasinoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
+
+function LoadKeno() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    document.location.href = toUrl('KenoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
+};
