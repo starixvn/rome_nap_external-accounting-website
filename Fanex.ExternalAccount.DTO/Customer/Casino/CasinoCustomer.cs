@@ -319,5 +319,11 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
             get;
             set;
         }
+
+        public bool IsDisableAutoMPT
+        {
+            get;
+            set;
+        }
     }
 }

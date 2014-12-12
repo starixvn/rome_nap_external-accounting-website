@@ -2,6 +2,7 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.CustomerSetting.Module.Casino.Resources
 @model CasinoSettingModel
 @{
     var isPtByGameType = true;// For testing purpose/super level only
@@ -28,23 +29,23 @@
     </div>
     <div>
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
-            Postition Taking
+             @NGCasinoLang.positiontaking
         </div>                                                                                                                                                                                                                                                                                                                                                            
         <div style="border-right: none" id="settingContainer" data-ng-controller="EditSuperController">
             <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
                     <td class="gameTypeWidth noneBorderL noneBorderTop R"><input type="checkbox" data-ng-init="customer.preAuto = customer.isPtByGameType; customer.isUnchecked = !customer.isPtByGameType" data-ng-model="customer.isUnchecked" data-ng-click="customer.isPtByGameType = !customer.isUnchecked"/></td>
-                    <td class="ptTitle noneBorderTop tdWidthSuper">Super Max Position Taking</td>
-                    <td class="ptTitle noneBorderTop tdWidthSuper">Super Min Position Taking</td>
-                    <td class="ptTitle noneBorderTop tdWidthSuper">Super Commission</td>
+                    <td class="ptTitle noneBorderTop tdWidthSuper"> @NGCasinoLang.lblSuperMaxPosition</td>
+                    <td class="ptTitle noneBorderTop tdWidthSuper"> @NGCasinoLang.lblSuperMinPosition</td>
+                    <td class="ptTitle noneBorderTop tdWidthSuper"> @NGCasinoLang.lblSuperCommission</td>
                 </tr>
                 <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered" data-ng-hide="gameGroup.gameGroupName == 'P2P'">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="4" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>
-                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>
+                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">@NGCasinoLang.lblGroupSetting</td>
                                 <td class="C ptTitle noneBorderTop tdWidthSuper">
                                     <span class="spanPT" ptarea="true" min="0" max="s4" selected="s3" data-ng-model="setting"></span>
                                 </td>
@@ -78,7 +79,7 @@
                                             <td class="gameTypeWidth R noneBorderL noneBorderT" data-ng-hide="customer.isUnchecked == false">
                                                 {{gameType.gameTypeName}}
                                             </td>
-                                            <td colspan="3" class="noneBorderRight noneBorderT"><span>Betting Limit: </span>
+                                            <td colspan="3" class="noneBorderRight noneBorderT"><span>@NGCasinoLang.lblBettingLimit: </span>
                                                 <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
                                                     <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                 </span>
@@ -94,7 +95,7 @@
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
-                                <td colspan="3" class="noneBorderR"><span>Betting Limit: </span>
+                                <td colspan="3" class="noneBorderR"><span>@NGCasinoLang.lblBettingLimit: </span>
                                     <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
                                         <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                     </span>
@@ -119,10 +120,10 @@
         //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
         var casinoController = new CasinoController(uplineId, '');
 
-        //$('.buttonPopup').bind('click', function () {
-        //    casinoController.Update();
-        //});
+        $('.buttonPopup').bind('click', function () {
+            casinoController.Update();
+        });
 
-        $('.buttonPopup').remove();
+        //$('.buttonPopup').remove();
     });
 </script>

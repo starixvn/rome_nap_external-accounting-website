@@ -68,7 +68,7 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\..\..\customer-setting\Fanex.Toco\Module\Casino\bin\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -315,6 +315,7 @@
     </Compile>
     <Content Include="Areas\CustomerSetting\Styles\input.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Scripts\KenoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Help.txt" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Styles\Keno.css" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Scripts\KenoStatusController.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Styles\EnableKeno.css" />

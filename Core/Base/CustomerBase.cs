@@ -134,6 +134,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         custInfo.RoleId.ToString(),
                         false,
                         false,
+                        custInfo.IsDisableAutoMPT,
                         DateTime.Now,
                         CurrentContext.Ip4Address,
                         uplineId,

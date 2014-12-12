@@ -2,7 +2,9 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.CustomerSetting.Module.Casino.Resources
 @using Fanex.ExternalAccount.Core.Context
+
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -29,61 +31,70 @@
     </div>
     <div>
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
-            Postition Taking
+            @NGCasinoLang.positiontaking
         </div>                                                                                                                                                                                                                                                                                                                                                            
         <div style="border-right: none" id="settingContainer" data-ng-controller="EditAgentController">
             <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
                     <td class="gameTypeWidth noneBorderL noneBorderTop">&nbsp;</td>
-                    <td class="ptTitle noneBorderTop tdWidth">Master Preset PT</td>
-                    <td class="ptTitle noneBorderTop maxPtAgentWidth">Agent Max PT</td>
-                    <td class="ptTitle noneBorderTop tdWidth">Agent Min PT</td>
-                    <td class="ptTitle noneBorderTop tdWidth">Agent Commission</td>
+                    <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="ptTitle noneBorderTop">@NGCasinoLang.lblMasterPresetPT</td>
+                    <td data-ng-hide="isDisableAutoMPT" class="ptTitle noneBorderTop autoPtWidth">@NGCasinoLang.lblMasterAutoPT</td>
+                    <td ng-class="{'maxPtAgentWidth' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="ptTitle noneBorderTop">@NGCasinoLang.lblAgentMaxPT</td>
+                    <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="ptTitle noneBorderTop">@NGCasinoLang.lblAgentMinPT</td>
+                    <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="ptTitle noneBorderTop ">@NGCasinoLang.lblAgentComm</td>
                 </tr>
                 <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
-                    <td colspan="5" class="noneBorderBottom noneBorderTop">
+                    <td colspan="6" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                             <tr>
-                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>
-                                <td class="C ptTitle noneBorderTop tdWidth">
-                                    <span class="spanPT" ptarea="true" min="0" max="m3" selected="m2" data-ng-model="setting"></span>
+                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">@NGCasinoLang.lblGroupSetting</td>
+                                <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"  class="C ptTitle noneBorderTop">
+                                    <span data-ng-init="gameGroup.l2 = gameGroup.m3 - gameGroup.m2" data-ng-click="gameGroup.l2 = gameGroup.m3 - gameGroup.m2" class="spanPT"  enable="gameGroup.im2" ptarea="true" min="0" max="m3" selected="m2" data-ng-model="setting"></span>
                                 </td>
-                                <td class="C ptTitle noneBorderTop maxPtAgentWidth">
-                                    <span class="spanPT" ptarea="true" min="0" max="{{gameGroup.m3.ptRound() - gameGroup.m2.ptRound()}}" selected="a2" data-ng-model="setting"></span>
+                                  <td  data-ng-hide="isDisableAutoMPT" class="C ptTitle noneBorderTop autoPtWidth">
+                                    <input type="checkbox" data-ng-model="gameGroup.im2" />
+                                    <span enable="gameGroup.im2 == false" class="spanPT" ptarea="true" min="0" max="m3" selected="um2" data-ng-model="setting"></span>
                                 </td>
-                                <td class="C ptTitle noneBorderTop tdWidth">
+                                <td ng-class="{'maxPtAgentWidth' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="C ptTitle noneBorderTop">
+                                    <span data-ng-init="gameGroup.l2 = gameGroup.m3 - gameGroup.m2" data-ng-click="gameGroup.l2 = gameGroup.m3 - gameGroup.m2"  class="spanPT"  ptarea="true" min="0" max="l2" selected="a2" data-ng-model="setting"></span>
+                                </td>
+                                <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="C ptTitle noneBorderTop">
                                     <span class="spanPT" ptarea="true" min="0" max="a2" selected="n2" data-ng-model="setting"></span>
                                 </td>
-                                <td class="C ptTitle noneBorderTop tdWidth" style="border-right: 0px none">
+                                <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="C ptTitle noneBorderTop" style="border-right: 0px none">
                                     <span class="spanPT" ptarea="true" min="0" max="mco" selected="aco" data-ng-model="setting" iscomm = "true"></span>
                                 </td>
                             </tr>         
                             @if (isPtByGameType)
                             {                
                             <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
-                                <td colspan="5" style="border: none">
+                                <td colspan="6" style="border: none">
                                     <table class="tableInfo" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td rowspan="2" class="gameTypeWidth R noneBorderL noneBorderT">
                                                 {{gameType.gameTypeName}}
                                             </td>
-                                            <td class="C noneBorderT tdWidth">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="m3" selected="m2" data-ng-model="setting"></span>
+                                            <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"  class="C noneBorderT">
+                                                <span  data-ng-init="gameType.l2 = gameType.m3 - gameType.m2" data-ng-click="gameType.l2 = gameType.m3 - gameType.m2" class="spanPT" enable="gameType.im2" showbutton="false" ptarea="true" min="0" max="l2" selected="m2" data-ng-model="setting"></span>
                                             </td>
-                                            <td class="C noneBorderT maxPtAgentWidth">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="{{gameType.m3 - gameType.m2}}" selected="a2" data-ng-model="setting"></span>
+                                            <td   data-ng-hide="isDisableAutoMPT" class="C noneBorderT autoPtWidth">
+                                                <input type="checkbox" data-ng-model="gameType.im2" />
+                                                    <span enable="gameType.im2 == false" class="spanPT" showbutton="false" ptarea="true" min="0" max="m3" selected="um2" data-ng-model="setting"></span>
                                             </td>
-                                            <td class="C noneBorderT tdWidth">
+                                            <td ng-class="{'maxPtAgentWidth' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}" class="C noneBorderT">
+                                                <span  data-ng-init="gameType.l2 = gameType.m3 - gameType.m2" data-ng-click="gameType.l2 = gameType.m3 - gameType.m2" class="spanPT" showbutton="false" ptarea="true" min="0" max="l2" selected="a2" data-ng-model="setting"></span>
+                                            </td>
+                                            <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"  class="C noneBorderT">
                                                 <span class="spanPT" showbutton="false" ptarea="true" min="0" max="a2" selected="n2" data-ng-model="setting"></span>
                                             </td>
-                                            <td class="noneBorderR C noneBorderT noneBorderRight tdWidth">
+                                            <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"  class="noneBorderR C noneBorderT noneBorderRight ">
                                                 <span class="spanPT" showbutton="false" ptarea="true" min="0" max="mco" selected="aco" data-ng-model="setting" iscomm = "true"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4" class="noneBorderRight"><span>Betting Limit: </span>
+                                            <td colspan="5" class="noneBorderRight"><span>@NGCasinoLang.lblBettingLimit: </span>
                                                 <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
                                                     <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                 </span>
@@ -99,7 +110,7 @@
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
-                                <td colspan="4" class="noneBorderR"><span>Betting Limit: </span>
+                                <td colspan="5" class="noneBorderR"><span>@NGCasinoLang.lblBettingLimit: </span>
                                     <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
                                         <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                     </span>
