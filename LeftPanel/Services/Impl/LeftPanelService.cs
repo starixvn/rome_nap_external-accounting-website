@@ -18,6 +18,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
+    using CasinoLibrary.SBAgent;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
 
     /// <summary>
     /// TODO: Update summary.
@@ -194,9 +197,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return this._data.EnableESports(id, enable, enableDownline);
         }
 
-        public override Result AutoMasterPT(int id, bool allow)
+        public override Result AutoMasterPT(int id, bool allow, int uplineId)
         {
-            return this._data.AutoMasterPT(id, allow);
+            var result = this._data.AutoMasterPT(id, allow);
+
+            CasinoManager casinoManager = new CasinoManager();
+            var custInfo = casinoManager.GetCustInfoIBC(id, uplineId);
+
+            if (custInfo.CasinoSync)
+            {
+                var casinoSync = new Customer();
+                casinoSync.UpdateMasterDisableAutoMPT(id, allow, CurrentContext.Instance.Ip4Address, CurrentSession.Instance.UserId, CurrentSession.Instance.UserName, 3);
+            }
+            return result;
         }
 
         public override Result ResetSecurityCode(int id, string code, bool force)

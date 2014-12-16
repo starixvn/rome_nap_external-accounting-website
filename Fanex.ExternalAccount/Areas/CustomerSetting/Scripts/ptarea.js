@@ -2,7 +2,6 @@
 
 angular.element(document.getElementById('ng-app')).ready(function () {
     $('#ng-app').show();
-    parent.Fanex.ExtAcc.UnBlockUI();
 });
 
 toPTSource = function (obj, resetSelected, isComm) {
@@ -82,7 +81,6 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 var selected = min;
                 // $ + 'selected' attribute
                 var obj = scope[attrs.ngModel][source];
-                if (!obj) return;
                 obj.min = min;
                 obj.max = max;
                 obj.selected = selected;
@@ -93,11 +91,19 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             function render() {
                 var obj = scope[attrs.ngModel][source];
 
-                if (!obj || !obj.pts || obj.pts.length > 1) return;
+                if (obj.pts.length > 1) return;
 
                 var min = getValue(attrs.min).ptRound();
-                var max = source == "$m3" && scope[attrs.ngModel].is3 ?
-                    scope[attrs.ngModel].s4 : (source == "$m3" && typeof scope[attrs.ngModel]["n3"] != 'undefined' && typeof scope[attrs.ngModel].is3 != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                var max = 0;
+
+                if (source == "$m3") {
+                    max = source == "$m3" && scope[attrs.ngModel].is3 ?
+                        scope[attrs.ngModel].s4 : (source == "$m3" && typeof scope[attrs.ngModel]["n3"] != 'undefined' && typeof scope[attrs.ngModel].is3 != 'undefined' ? scope[attrs.ngModel].s4 - scope[attrs.ngModel].s3 : getValue(attrs.max));
+                }
+                else {
+                    max = source == "$a2" && scope[attrs.ngModel].im2 ?
+                        scope[attrs.ngModel].m3 : (source == "$a2" && typeof scope[attrs.ngModel]["n2"] != 'undefined' && typeof scope[attrs.ngModel].im2 != 'undefined' ? scope[attrs.ngModel].m3 - scope[attrs.ngModel].m2 : getValue(attrs.max));
+                }
                 var selected = getValue(attrs.selected).ptRound();
                 max = max.ptRound();
 
@@ -136,10 +142,8 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             }
 
             scope[source + "change"] = function (event, source) {
-                if (!source) return;
                 scope[attrs.ngModel][attrs.selected] = source.selected.ptRound();
-                if (typeof attrs.warning != 'undefined')
-                    scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
+                scope[attrs.ngModel][attrs.warning] = source.selected < source.min || source.selected > source.max;
             }
 
             scope[source + "up"] = function (event, source, step, isComm) {
@@ -207,18 +211,6 @@ module.directive('ngFocus', ['$parse', function ($parse) {
         var fn = $parse(attr['ngFocus']);
         element[0].addEventListener = element[0].addEventListener || element[0].attachEvent;
         element[0].addEventListener('focus', function (event) {
-            scope.$apply(function () {
-                fn(scope, { $event: event });
-            });
-        });
-    };
-} ]);
-
-module.directive('ngChange', ['$parse', function ($parse) {
-    return function (scope, element, attr) {
-        var fn = $parse(attr['ngChange']);
-        element[0].addEventListener = element[0].addEventListener || element[0].attachEvent;
-        element[0].addEventListener('change', function (event) {
             scope.$apply(function () {
                 fn(scope, { $event: event });
             });

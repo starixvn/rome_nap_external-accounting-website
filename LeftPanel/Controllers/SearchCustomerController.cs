@@ -294,14 +294,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="allow">Allow or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult UpdateAutoMPT(int custId, bool allow)
+        public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
             {
                 return this.ActionDenied(this.Request);
             }
 
-            return this.JsonBase(this._service.AutoMasterPT(custId, allow));
+            return this.JsonBase(this._service.AutoMasterPT(custId, allow, uplineId));
         }
 
         /// <summary>

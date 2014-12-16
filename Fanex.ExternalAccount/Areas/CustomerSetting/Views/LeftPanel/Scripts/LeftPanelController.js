@@ -1459,6 +1459,7 @@ function SettingController($scope, $http) {
                     data: {
                         custId: $scope.model.personalInfo.custId.value,
                         allow: !allow,
+                        uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                         groupName: parent.$('#selectedGroupName').html()
                     }
                 })

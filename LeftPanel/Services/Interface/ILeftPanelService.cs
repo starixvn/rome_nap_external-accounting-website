@@ -55,7 +55,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 
         Result EnableESports(int id, bool enable, bool enableDownline);
 
-        Result AutoMasterPT(int id, bool allow);
+        Result AutoMasterPT(int id, bool allow, int uplineId);
 
         Result ResetSecurityCode(int id, string code, bool force);
 

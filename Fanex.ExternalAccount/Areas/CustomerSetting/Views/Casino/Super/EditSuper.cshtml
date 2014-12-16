@@ -22,9 +22,6 @@
     <div id="names" style="display: none;" class="names">
     </div>    
     <div>
-        <input class="buttonPopup" type="button" value="Submit" />
-    </div>
-    <div>
         @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
     </div>
     <div>
@@ -107,9 +104,6 @@
                 </tr>                                        
             </table>            
         </div>
-    </div>
-    <div>
-        <input class="buttonPopup" type="button" value="Submit" />
     </div>
 </div>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditSuperController.js")" type="text/javascript"></script>

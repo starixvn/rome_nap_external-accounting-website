@@ -115,7 +115,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
         public abstract Result EnableESports(int id, bool enable, bool enableDownline);
 
-        public abstract Result AutoMasterPT(int id, bool allow);
+        public abstract Result AutoMasterPT(int id, bool allow, int uplineId);
 
         public abstract Result ResetSecurityCode(int id, string code, bool force);
 
