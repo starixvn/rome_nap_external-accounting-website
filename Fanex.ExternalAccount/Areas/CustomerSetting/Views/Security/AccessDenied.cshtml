@@ -2,5 +2,11 @@
     @Resources.Error.AccessDenied
 </div>
 <script type="text/javascript">
-    parent.Fanex.ExtAcc.UnBlockUI();
+    try {
+        parent.Fanex.ExtAcc.UnBlockUI();
+    } catch (err) {
+        if (typeof console != 'undefined') {
+            console.log(err);
+        }
+    }
 </script>
