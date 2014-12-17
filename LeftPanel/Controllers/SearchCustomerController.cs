@@ -292,6 +292,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// </summary>
         /// <param name="custId">Customer id.</param>
         /// <param name="allow">Allow or not.</param>
+        /// <param name="uplineId">Up line id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)

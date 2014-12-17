@@ -12,15 +12,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
     using System.Collections.Generic;
     using System.Data;
+    using CasinoLibrary.SBAgent;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
     using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Utilities;
-    using CasinoLibrary.SBAgent;
-    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -197,6 +197,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return this._data.EnableESports(id, enable, enableDownline);
         }
 
+        /// <summary>
+        /// Auto update master and sync to casino database.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="allow">Allow PT or not.</param>
+        /// <param name="uplineId">Up line id.</param>
+        /// <returns>Result of actions.</returns>
         public override Result AutoMasterPT(int id, bool allow, int uplineId)
         {
             var result = this._data.AutoMasterPT(id, allow);
@@ -207,8 +214,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             if (custInfo.CasinoSync)
             {
                 var casinoSync = new Customer();
-                casinoSync.UpdateMasterDisableAutoMPT(id, allow, CurrentContext.Instance.Ip4Address, CurrentSession.Instance.UserId, CurrentSession.Instance.UserName, 3);
+                casinoSync.UpdateMasterDisableAutoMPT(
+                    id, 
+                    allow, 
+                    CurrentContext.Instance.Ip4Address, 
+                    CurrentSession.Instance.UserId, 
+                    CurrentSession.Instance.UserName, 
+                    3);
             }
+
             return result;
         }
 

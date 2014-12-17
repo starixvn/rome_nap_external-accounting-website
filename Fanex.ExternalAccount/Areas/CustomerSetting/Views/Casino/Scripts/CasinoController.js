@@ -42,13 +42,15 @@
     }
 
     this.Update = function (ondone) {
+        $(document).scrollTop(0);
         actionName = ActionName();
 
         var min = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#minCredit').html(), ',', ''));
         var max = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxCredit').html(), ',', ''));
         var cur = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxTransfer').val(), ',', ''));
+        max = isNaN(max) ? 0 : max;
 
-        if (isNaN(cur) || cur < min || cur > max) {
+        if (isNaN(cur) || cur < min || (max != 0 && cur > max)) {
             Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').html() + ' and ' + $('#maxCredit').html(), undefined, undefined, 1500);
             return;
         }
