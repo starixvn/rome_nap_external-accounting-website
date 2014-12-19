@@ -55,3 +55,14 @@
 .masterAutoPtWidth {
     width: 170px;
 }
+
+.gameTypeWidth {
+    padding-right: 4px !important;
+}
+
+.tdTitleLeft {
+    padding: 4px;
+}
+.tdTitleRight {
+    padding: 4px;
+	}
