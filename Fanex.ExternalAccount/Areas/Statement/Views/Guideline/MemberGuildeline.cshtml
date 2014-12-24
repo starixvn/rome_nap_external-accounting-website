@@ -1,0 +1,49 @@
+﻿@using Fanex.Module.Statement.Resources;
+@{
+    ViewBag.Title = Labels.Statement_Guidelines;
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en" class="linen">
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Statement/Views/Guideline/Styles/Guideline.less")" />
+</head>
+<body id="body">
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Opening_Balance:</span> <span>@Labels.Guidelines_OpeningBalance_Member</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Turnover:</span> <span>@Labels.Guidelines_Turnover</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Void/@Labels.Rejected:</span> <span>@Labels.Guidelines_VoidRejected</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Outstanding:</span> <span>@Labels.Guidelines_Outstanding</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Win_Loss:</span> <span>@Labels.Guidelines_WinLoss_Member</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Commission:</span> <span>@Labels.Guidelines_Commission_Member</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Transfer_Amt:</span> <span>@Labels.Guidelines_TransferAmt_Member</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Accumulated_Total:</span> <span>@Labels.Guidelines_AccumulatedTotal_Member</span>
+    </div>
+    <div class="guideline-row">
+        <div class="formular-accumulated-total">@Labels.Formular_Accumulated_Total</div>
+    </div>
+</body>
+</html>

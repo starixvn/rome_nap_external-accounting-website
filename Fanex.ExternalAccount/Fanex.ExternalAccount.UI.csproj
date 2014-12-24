@@ -102,6 +102,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependency\Modules\Statement\Fanex.Module.Statement.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Core">
       <HintPath>..\Dependencies\Fanex.NAP.Core.dll</HintPath>
     </Reference>
@@ -447,6 +451,11 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MasterMinMaxPT.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MinMaxPTRacingSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\minmaxpt.css" />
+    <Content Include="Areas\Statement\Views\Report\Scripts\StatementReportManager.js" />
+    <Content Include="Areas\Statement\Views\Report\Styles\Images\information-icon2.png" />
+    <Content Include="Areas\Statement\Views\Report\Styles\Statement.css" />
+    <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
+    <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
     <Content Include="bundles\images\dec1.gif" />
     <Content Include="bundles\images\dec1_disable.jpg" />
     <Content Include="bundles\images\dec2.gif" />
@@ -853,7 +862,92 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.Convert.js" />
     <Content Include="SpNames.CustDB.kbt67.xml" />
+    <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.css" />
+    <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.js" />
+    <Content Include="Scripts\_Libs\FanexGrid\Fanex.Pagination.css" />
+    <Content Include="Scripts\_Libs\FanexGrid\Fanex.Pagination.js" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\1350530947_page_excel.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\ajax-loader.gif" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\back-icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\bgtitle.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\bg_gloss_wave.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\check-box.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\collapse-icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\collapse-small.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\email.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\excel-icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\expand-icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\expand-small.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\go-hover-icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\icn_add.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\icn_del.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\icn_edit.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\icon_page.gif" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\page_white_edit.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\pdf.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\print.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\refresh_icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\report_check.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\send-mail.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\send.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\seperations.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\setting.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sort-icon-new.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sort-icon-new1.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sort-icon-new3.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sort-icon.png" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sorting_asc.gif" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sorting_bg.gif" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\sorting_desc.gif" />
+    <Content Include="Scripts\_Libs\FanexGrid\images\white-top-bottom.gif" />
+    <Content Include="Scripts\_Libs\FanexGrid\moment.js" />
+    <Content Include="Scripts\_Libs\FanexGrid\numeral.js" />
+    <Content Include="Scripts\_Libs\jQuery\classList.js" />
+    <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
+    <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
+    <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.min.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery-migrate-1.0.0.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery-ui-1.9.1.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery-ui-1.9.1.min.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.cookie.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.fixedsortable.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.form.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.formattyping.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.jqprint-0.3.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.validate.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.validate.min.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\_Libs\jQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\_Libs\jQuery\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\_Libs\jQuery\knockout-2.1.0.js" />
+    <Content Include="Scripts\_Libs\jQuery\modernizr-2.5.3.js" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_60_4264ac_40x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_75_5476bb_40x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_90_466bb9_40x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_90_aaaaaa_40x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_glass_45_f4f3f1_1x400.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_highlight-soft_90_999999_1x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-icons_4264ac_256x240.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-icons_c6cddc_256x240.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-icons_cbd4e6_256x240.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-icons_d0d9ec_256x240.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\jquery-ui-1.9.1.custom.css" />
+    <Content Include="Scripts\_Libs\jQuery\Styles\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="Scripts\_Libs\jQuery\_references.js" />
+    <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
+    <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="SpNames.CustDB.sandbox.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2114,8 +2208,15 @@
     <Content Include="Configurations\appSettings.local.config" />
     <Content Include="Configurations\appSettings.sandbox.config" />
     <Content Include="Configurations\connectionStrings.sandbox.config" />
+    <Content Include="Areas\Statement\StatementSection.config" />
+    <Content Include="Areas\Statement\Views\Report\Index.cshtml" />
     <Content Include="Configurations\connectionStrings.kbt67.config" />
     <Content Include="Configurations\appSettings.kbt67.config" />
+    <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
+    <Content Include="Areas\Statement\Views\Web.config" />
+    <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
+    <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
+    <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
@@ -2187,6 +2288,15 @@
     <Content Include="PTEngine\RacingBettingCommSettingMappingSection.config" />
     <Content Include="PTEngine\RacingSection.config">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.kbt67.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.kbt67.Debug.config">
+      <DependentUpon>Web.kbt67.config</DependentUpon>
+    </Content>
+    <Content Include="Web.kbt67.Release.config">
+      <DependentUpon>Web.kbt67.config</DependentUpon>
     </Content>
     <Content Include="Web.kbt67.config">
       <SubType>Designer</SubType>

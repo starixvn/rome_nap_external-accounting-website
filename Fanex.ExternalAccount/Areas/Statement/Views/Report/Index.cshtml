@@ -1,0 +1,74 @@
+﻿@using Fanex.Module.Statement.Resources;
+@using Fanex.Module.Statement.Configurations;
+@{
+    ViewBag.Title = Labels.Statement_Report;
+    Layout = "";
+    var isInternalCustomer = 0;
+    var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
+    var balanceUpDay = "12/13/2014";
+    var moveBetsDay = "12/15/2014"; 
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css")"/>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Statement/Views/Report/Styles/Statement.css?ver=1")" />
+</head>
+<body>
+    <div id="GridContainer" class="freegrid">
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/PopUp/dialogbox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
+    <script src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';       
+        var isInternalCustomer = @isInternalCustomer;
+        var balanceUpDay = '@balanceUpDay';
+        var moveBetsDay = '@moveBetsDay'; 
+        var newLayoutDate = '@newLayoutDate';
+        var statementResources = {
+            Invalid_Date_Range: '@Labels.Invalid_Date_Range',
+            Date: "@Labels.Date",
+            Opening_Balance: "@Labels.Opening_Balance",
+            Turnover: "@Labels.Turnover",
+            Void_Cancelled: "@(Labels.Void + "/" + Labels.Rejected)",
+            Outstanding: "@Labels.Outstanding",
+            Win_Loss: "@Labels.Win_Loss",
+            Commission: "@Labels.Commission",
+            Transfer_Amt: "@Labels.Transfer_Amt",
+            Accumulated_Total: "@Labels.Accumulated_Total",
+            Symbol_NoData: "@Labels.Symbol_NoData",
+            Transfer_Details: "@Labels.Transfer_Details",
+            Bet_List: '@Labels.Bet_List'
+        };
+
+        jQuery(document).ready(function() {
+            domain = window.rootUrl;
+            statementReportManager.initFunction(null, function(options) {
+                OpenPopup( options.url, options.title, options.width, options.height);
+            });
+            statementReportManager.getStatementReport( {
+                fromDate: "11/01/2014",
+                toDate: "12/19/2014",
+                custId: 2198112,
+                roleId: 1,
+                balanceUpDay: balanceUpDay,
+                moveBetDay: moveBetsDay,
+                username: "agent01"
+            });
+        });
+    </script>
+</body>
+</html>

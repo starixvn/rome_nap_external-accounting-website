@@ -68,7 +68,7 @@ namespace Fanex.ExternalAccount.Excel
             for (short i = 0; i < this._hssfWorkbook.NumberOfFonts; i++)
             {
                 var font = this._hssfWorkbook.GetFontAt(i);
-                font.Boldweight = (short)FontBoldWeight.BOLD;
+                font.Boldweight = (short)FontBoldWeight.Bold;
             }
         }
 
@@ -78,9 +78,8 @@ namespace Fanex.ExternalAccount.Excel
         /// <param name="disposing">Identifies to dispose or not.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && this._hssfWorkbook != null) 
+            if (disposing && this._hssfWorkbook != null)
             {
-                this._hssfWorkbook.Dispose();
                 this._hssfWorkbook = null;
             }
         }

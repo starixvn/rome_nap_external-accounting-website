@@ -328,7 +328,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
                 CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
                 Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status + "closed" : suspended ? status + "suspended" : string.Empty },
-                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? "closed" : suspended ? "suspended" : string.Empty }
+                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? "closed" : suspended ? "suspended" : string.Empty },
+                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["isinternal"]) }
             };
 
             return model;
@@ -514,7 +515,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.RemoveEnableProducts(product);
-                        
+
             if (product.RoleId == 4)
             {
                 model.CheckConfig();
@@ -556,7 +557,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             return string.IsNullOrWhiteSpace(ip) || (
                 IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)) ? string.Empty : ip;
-        }  
+        }
 
         /// <summary>
         /// Removes Enable products.
@@ -791,7 +792,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.Setting.Details.RemoveAt(index);
             }
-            
+
             return model;
         }
 
@@ -842,7 +843,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (index != -1)
             {
                 model.Setting.EnableItems.ElementAt(index).Disabled = true;
-                model.Setting.EnableItems.ElementAt(index).Tooltip = key.Equals("Closed", System.StringComparison.OrdinalIgnoreCase) ? 
+                model.Setting.EnableItems.ElementAt(index).Tooltip = key.Equals("Closed", System.StringComparison.OrdinalIgnoreCase) ?
                     "Upline has been closed" : key.Equals("Suspended", System.StringComparison.OrdinalIgnoreCase) ? "Upline has been suspended" : "Upline has been disabled";
             }
 
@@ -860,7 +861,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, string groupName, string username, int uplineId = 0)
         {
             IReportService report = new ReportService();
-            
+
             DataTable customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
             DataTable upperInfo = uplineId != 0 ? report.GetCustomerInfo(groupName, uplineId, null, true) : null;
             DataTable result = null;
@@ -939,7 +940,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" || 
+            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
                 o.Key.ToString() == "Bingo" || o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
@@ -1249,6 +1250,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             };
 
             return model;
-        }              
+        }
     }
 }

@@ -36,5 +36,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public ObjectInfo Status { get; set; }
 
         public ObjectInfo BackgroundColor { get; set; }
+
+        public ObjectInfo IsInternal { get; set; }
     }
 }

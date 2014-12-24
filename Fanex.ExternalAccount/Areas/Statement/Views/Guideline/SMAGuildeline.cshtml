@@ -1,0 +1,47 @@
+﻿@using Fanex.Module.Statement.Resources;
+@using Fanex.Module.Statement.Configurations;
+@{
+    ViewBag.Title = Labels.Statement_Guidelines;
+    Layout = "";
+    var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
+}
+<!DOCTYPE html>
+<html lang="en" class="linen">
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Statement/Views/Guideline/Styles/Guideline.less")" />
+</head>
+<body id="body">
+    <div class="guideline-row">
+        <span>
+            @string.Format(Labels.Guidelines_1stRow_SMA, newLayoutDate)</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Opening_Balance:</span> <span>@Labels.Guidelines_OpeningBalance_SMA</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Turnover:</span> <span>@Labels.Guidelines_Turnover</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Win_Loss:</span> <span>@Labels.Guidelines_WinLoss_SMA</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Commission:</span> <span>@Labels.Guidelines_Commission_SMA</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Transfer_Amt:</span> <span>@Labels.Guidelines_TransferAmt_SMA</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.Accumulated_Total:</span> <span>@Labels.Guidelines_AccumulatedTotal_SMA</span>
+    </div>
+    <div class="guideline-row">
+        <div class="formular-accumulated-total">@Labels.Formular_Accumulated_Total</div>
+    </div>
+</body>
+</html>
