@@ -160,7 +160,7 @@ function GameGroupController($scope) {
 
             // Change game group PT
             var min = 0;
-            var max = gameGroup.m3 - gameGroup.m2;
+            var max = gameGroup.im2 ? gameGroup.m3 : gameGroup.m3 - gameGroup.m2;
             var selected = Math.min(max, newValue).ptRound();
             var a2Group = Math.min(max, newValue).ptRound();
 
@@ -183,7 +183,7 @@ function GameGroupController($scope) {
                 for (var i = 0; i < c; i++) {
                     var gameType = $scope.gameGroup.gameTypes[i];
 
-                    max = gameType.m3 - gameType.m2;
+                    max = gameType.im2 ? gameType.m3 : gameType.m3 - gameType.m2;
                     selected = Math.min(max, newValue).ptRound();
 
                     // Set warning for m2 if break pt rule
