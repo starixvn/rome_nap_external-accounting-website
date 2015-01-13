@@ -849,6 +849,7 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="SpNames.CustDB.kbt67.xml" />
     <Content Include="SpNames.CustDB.sandbox.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2109,6 +2110,8 @@
     <Content Include="Configurations\appSettings.local.config" />
     <Content Include="Configurations\appSettings.sandbox.config" />
     <Content Include="Configurations\connectionStrings.sandbox.config" />
+    <Content Include="Configurations\connectionStrings.kbt67.config" />
+    <Content Include="Configurations\appSettings.kbt67.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
@@ -2180,6 +2183,15 @@
     <Content Include="PTEngine\RacingBettingCommSettingMappingSection.config" />
     <Content Include="PTEngine\RacingSection.config">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.kbt67.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.kbt67.Debug.config">
+      <DependentUpon>Web.kbt67.config</DependentUpon>
+    </Content>
+    <Content Include="Web.kbt67.Release.config">
+      <DependentUpon>Web.kbt67.config</DependentUpon>
     </Content>
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
