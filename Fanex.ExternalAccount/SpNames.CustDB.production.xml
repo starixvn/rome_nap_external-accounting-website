@@ -1,4 +1,10 @@
 ﻿<Functions>
+  <Function Name="PT Setting Information">
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+  </Function>
+  <Function Name="E-Sports">
+    <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -272,5 +278,8 @@
     <Setting Key="BG_TP_Game_UserBet_WinLossBySAgentID" SpName="TP_Game_UserBet_WinLossBySAgentID" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Game_UserBet_WinLossByMAgentID" SpName="TP_Game_UserBet_WinLossByMAgentID" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Game_UserBet_WinLossByAgentID" SpName="TP_Game_UserBet_WinLossByAgentID" DbName="CS_LBBackupDB" Plain="1" />
+  </Function>
+  <Function Name="Casino">
+    <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog"  />
   </Function>
 </Functions>
