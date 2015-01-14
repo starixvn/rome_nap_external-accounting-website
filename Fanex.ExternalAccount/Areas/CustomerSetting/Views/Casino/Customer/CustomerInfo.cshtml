@@ -39,7 +39,7 @@
             <td class="tdTitleRight">@NGCasinoLang.lblEnable</td>
             <td class="noneBorderRight">                
                 <div style="float: left; height: 24px">
-                    <input type="checkbox" id="chkEnable" data-ng-click="EnableClicked()" style="margin-top: 5px" data-ng-init="CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && CustomerModel.casinoSync" data-ng-model="CustomerModel.casinoEnabled" data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" data-ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
+                    <input type="checkbox" id="chkEnable" data-ng-click="EnableClicked()" style="margin-top: 5px"  data-ng-model="CustomerModel.casinoEnabled" data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled;" data-ng-disabled="CustomerModel.uplineDisabledCasino"/>                    
                     <label for="chkEnable" id="downline"></label>                    
                     <span data-ng-init="CustomerModel.showDownline = !Enabled && CustomerModel.casinoEnabled" data-ng-model="CustomerModel.showDownline" data-ng-show="CustomerModel.showDownline && CustomerModel.roleId != 1">
                         <input type="checkbox" id="chkEnableDownline" data-ng-model="CustomerModel.enableDownline" data-ng-show="CustomerModel.showDownline" style="margin-top: 5px;" />                    
