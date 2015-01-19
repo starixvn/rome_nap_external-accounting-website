@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Module.Core.Web;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Interface.Login;
@@ -32,11 +33,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
         private ICurrentContext _currentContext = null;
 
+        private NoCaptchaSectionConfiguration _nocaptcha = null;
+
         public AccountController()
         {
             this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
             this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
             this._userService = new LoginService();
+            this._nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
 
         /// <summary>
@@ -81,7 +85,10 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
-            if (this._currentSession.Captcha != null && this._currentSession.Captcha.Equals(model.Captcha, StringComparison.OrdinalIgnoreCase))
+            if ((this._currentSession.Captcha != null && 
+                this._currentSession.Captcha.Equals(model.Captcha, StringComparison.OrdinalIgnoreCase)) ||
+                (this._nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
+                this._nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))))
             {
                 Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
                 int custId = 0, onuserId = 0;
