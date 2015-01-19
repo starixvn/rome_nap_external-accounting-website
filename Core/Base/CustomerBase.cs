@@ -40,18 +40,26 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <returns>ActionResult object.</returns>
         public ActionResult AutoInsertLiveCasinoPost(int custId, int parentId, int uplineRoleId, string groupName)
         {
-            SettingService liveCasinoSettingService = new SettingService();
-            System.Threading.Thread.Sleep(5000);
-            var results = liveCasinoSettingService.AutoInsertAccount(
-                                                                custId,
-                                                                this.CurrentSession.UserId,
-                                                                this.CurrentSession.UserName,
-                                                                0,
-                                                                string.Empty,
-                                                                this.CurrentContext.Ip4Address,
-                                                                "E");
+            SettingService livecasinoSettingService = new SettingService();
+            var customerInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(custId);
+            var parentInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(parentId);
 
-            return this.JsonBase(new { ErrorCode = results.Code, ErrorMessage = results.Message });
+            if (!customerInfo.IsSyncLiveCasino && parentInfo.IsSyncLiveCasino)
+            {
+                System.Threading.Thread.Sleep(5000);
+                var results = livecasinoSettingService.AutoInsertAccount(
+                                                                    custId,
+                                                                    this.CurrentSession.UserId,
+                                                                    this.CurrentSession.UserName,
+                                                                    0,
+                                                                    string.Empty,
+                                                                    this.CurrentContext.Ip4Address,
+                                                                    "E");
+
+                return this.JsonBase(new { ErrorCode = results.Code, ErrorMessage = results.Message });
+            }
+
+            return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
         }
 
         #endregion
