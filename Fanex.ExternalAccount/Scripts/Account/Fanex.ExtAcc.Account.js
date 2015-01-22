@@ -19,7 +19,7 @@ Fanex.ExtAcc.Account = {
                 case 403:
                 case 404:
                 case 500:
-                    //location.href = resolveClientUrl('Shared/Error');
+                    location.href = resolveClientUrl('Shared/Error');
                     break;
                 default:
                     break;
@@ -63,12 +63,12 @@ Fanex.ExtAcc.Account = {
                     Validators.show($('#Password').get(0), 'Not allow HTML TAG');
                     return false;
                 }
-
+                /*
                 if ($('#Captcha').val().toString().search(/^[<\s\s*>]/) != -1) {
                     $('#Captcha').focus();
                     Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
                     return false;
-                }
+                }*/
 
                 if ($('#UserName').val() == '') {
                     $('#UserName').focus();
@@ -81,12 +81,12 @@ Fanex.ExtAcc.Account = {
                     Validators.show($('#Password').get(0), 'This field is required');
                     return false;
                 }
-
+                /*
                 if ($('#Captcha').val() == '' || $('#Captcha').val().length < 4) {
                     $('#Captcha').focus();
                     Validators.show($('#Captcha').get(0), 'This field is required');
                     return false;
-                }
+                }*/
             };
         }
     },
