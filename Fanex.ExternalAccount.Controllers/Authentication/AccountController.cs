@@ -102,7 +102,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                         CountryCode = this._currentContext.CountryCode, 
                         DomainName = this._currentContext.DomainName, 
                         IP = this._currentContext.Ip4Address, 
-                        NetSessionId = this._currentSession.NetSessionId 
+                        NetSessionId = this._currentSession.NetSessionId,
+                        Platform = Request.Browser.Platform
                     }, 
                     out custId, 
                     out onuserId, 

@@ -11,11 +11,11 @@
 // </history>
 namespace Fanex.ExternalAccount.Core.Context
 {
-    using System;
     using System.Collections.Specialized;
     using System.Globalization;
     using System.Net;
     using System.Web;
+    using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
 
     /// <summary>
@@ -120,48 +120,15 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                RegionInfo regionInfo = this.ResolveCountry(HttpContext.Current.Request);
+                RegionInfo regionInfo = this.ResolveCountry();
 
                 return regionInfo == null ? null : regionInfo.GeoId.ToString();
             }
         }
-
-        /// <summary>
-        /// Resolves culture information.
-        /// </summary>
-        /// <param name="request">Request object.</param>
-        /// <returns>CultureInfo object.</returns>
-        private CultureInfo ResolveCulture(HttpRequest request)
+        
+        private RegionInfo ResolveCountry()
         {
-            string[] languages = request.UserLanguages;
-
-            if (languages == null || languages.Length == 0)
-            {
-                return null;
-            }
-
-            try
-            {
-                string language = languages[0].ToLowerInvariant().Trim();
-
-                return CultureInfo.CreateSpecificCulture(language);
-            }
-            catch (ArgumentException)
-            {
-                return null;
-            }
-        }
-
-        private RegionInfo ResolveCountry(HttpRequest request)
-        {
-            CultureInfo culture = this.ResolveCulture(request);
-
-            if (culture != null)
-            {
-                return new RegionInfo(culture.LCID);
-            }
-
-            return null;
+            return new RegionInfo(IpUtils.LocationFromIP(this.Ip4Address).countrySHORT);
         }
     }
 }
