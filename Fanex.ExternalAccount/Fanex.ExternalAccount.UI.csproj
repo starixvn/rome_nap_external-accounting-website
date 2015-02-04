@@ -862,6 +862,9 @@
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="Images\tick.png" />
+    <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.Convert.js" />
     <Content Include="SpNames.CustDB.kbt67.xml" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.css" />
@@ -1281,7 +1284,6 @@
     <Content Include="PTEngine\PTRacingGrid.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\Assets\css\1200.css" />
     <Content Include="Scripts\Assets\css\1200.min.css" />
     <Content Include="Scripts\Assets\css\1560.css" />
