@@ -122,13 +122,20 @@ namespace Fanex.ExternalAccount.Core.Context
             {
                 RegionInfo regionInfo = this.ResolveCountry();
 
-                return regionInfo == null ? null : regionInfo.GeoId.ToString();
+                return regionInfo == null ? null : regionInfo.EnglishName;
             }
         }
         
         private RegionInfo ResolveCountry()
         {
-            return new RegionInfo(IpUtils.LocationFromIP(this.Ip4Address).countrySHORT);
+            try
+            {
+                return new RegionInfo(IpUtils.LocationFromIP(this.Ip4Address).countrySHORT);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
