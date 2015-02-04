@@ -98,6 +98,10 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Core">
       <HintPath>..\Dependencies\Fanex.NAP.Core.dll</HintPath>
     </Reference>
