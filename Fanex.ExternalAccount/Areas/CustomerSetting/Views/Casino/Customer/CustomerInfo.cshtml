@@ -72,7 +72,7 @@
         <tr>
             <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblMaxTransferCredit</td>
             <td class="noneBorderRight">
-                <div style="float: left; height: 24px"><input id="maxTransfer" oncut="return false;" onpaste="return false;" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="13" type="text" data-ng-init="CustomerModel.maxTransferFormated = CustomerModel.maxTransferCredit.formatNumber()" data-ng-change="CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated" data-ng-model="CustomerModel.maxTransferFormated" /></div>
+                <div style="float: left; height: 24px"><input id="maxTransfer" oncut="return false;" onpaste="return false;" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="13" type="text" data-ng-init="CustomerModel.maxTransferFormated" data-ng-change="CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated" data-ng-model="CustomerModel.maxTransferFormated" /></div>
                 <div style="float: left; height: 24px;"><input id="isAutoReset" type="checkbox" data-ng-model="CustomerModel.isAutoReset" /><label for="isAutoReset">@NGCasinoLang.lblDailyAutoResetLimit</label></div>
             </td>           
         </tr>
