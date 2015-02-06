@@ -280,7 +280,7 @@
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog"  />
   </Function>
   <Function Name="Statement - Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="archive" Plain="0" />
     <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14_xtest" DbName="report" Plain="0" />
     <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="report" Plain="0" />
 
