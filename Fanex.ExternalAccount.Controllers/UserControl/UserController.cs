@@ -313,7 +313,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult InternalLogin(string username)
         {
             var encryption = new RSACryptoPad.EncryptionThread();
-            var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks);
+            var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
             param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
             var url = Config.InternalLoginUrl + "?params=" + param;
 
