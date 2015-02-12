@@ -980,7 +980,7 @@ function SettingController($scope, $http) {
 
                 for (var i = 0; i < onlines.length; i++) {
                     var online = onlines[i];
-                    var item = '<div class="clearBoth"><div class="floatLeft percent10">' + (i + 1) + '</div>' +
+                    var item = '<div style="clear: both"><div class="floatLeft percent10">' + (i + 1) + '</div>' +
                                     '<div class="floatLeft percent32">' +
                                         '<a href="javascript:;" onclick="parent.Fanex.ExtAcc.Customer.ShowIpInfo(\'' + online.iP.text + '\')">' +
                                             online.iP.text +
