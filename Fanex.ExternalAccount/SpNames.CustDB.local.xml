@@ -1,6 +1,6 @@
 ﻿<Functions>
   <Function Name="PT Setting Information">
-    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="archive" Plain="0" />
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="main" Plain="0" />
   </Function>
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="main_CustDB" Plain="0" />

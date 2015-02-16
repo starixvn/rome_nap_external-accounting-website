@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
+  <Function Name="PT Setting Information">
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="archive" Plain="0" />
+  </Function>
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBTXN.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBAGE.bodb02.BODBDownlineNet" Plain="0" />
