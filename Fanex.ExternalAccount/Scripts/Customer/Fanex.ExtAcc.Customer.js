@@ -73,7 +73,64 @@ Fanex.ExtAcc.Customer = {
     MessageSuspendedMember: 'Are you sure you want to change Suspend status for this customer? Warning, this member can\'t place bet!',
     MessageUnSuspendedMember: 'Are you sure you want to change Suspend status for this customer?',
 
+    RecheckinXHR: null,
+
+    ReCheckin: function () {
+        if (this.RecheckinXHR != null)
+            this.RecheckinXHR.abort();
+
+        this.RecheckinXHR = $.ajax({
+            url: resolveClientUrl('Account/ReCheckIn'),
+            type: 'GET',
+            dataType: 'html',
+            cache: false,
+            success: function (data) {
+                if (data == -1) {
+                    try {
+                        if (typeof Fanex.ExtAcc.Form != 'undefined') {
+                            if (document.getElementById('windowPopup')) {
+                                var tag = document.getElementById('windowPopup');
+
+                                if (tag.tagName == "IFRAME") {
+                                    Fanex.ExtAcc.Form.Close();
+                                } else {
+                                    $('#windowPopup').html('You have logged in from another session or your login session has expired!'); // Prevent opening popup if any
+                                }
+                            }
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
+                                    location.href = resolveClientUrl('Account/Login');
+                                }, 1000);
+                            }, 1000);
+                        }
+                    } catch (e) {
+                        location.href = resolveClientUrl('Account/Login');
+                    }
+                }
+                else if (data == 2) {
+                    location.href = resolveClientUrl('Account/Offline');
+                }
+                else if (data == 3) {
+                    location.href = resolveClientUrl('Shared/Error');
+                }
+
+                Fanex.ExtAcc.Account.RecheckinXHR = null;
+            },
+            error: function (xhr, status, e) {
+                if (typeof console != 'undefined') console.log(e);
+
+                Fanex.ExtAcc.Account.RecheckinXHR = null;
+            }
+        });
+    },
+
     Init: function () {
+        if (this.RecheckinXHR == null && document.URL.toLowerCase().indexOf("account/login") != -1) {
+            setInterval(this.ReCheckin, 10000);
+        }
+
         if (this.IsLoading)
             return;
 
