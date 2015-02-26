@@ -284,7 +284,7 @@
   </Function>
   <Function Name="Statement - Report">
     <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="archive" Plain="0" />
-    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14_xtest" DbName="report" Plain="0" />
+    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="report" Plain="0" />
     <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="report" Plain="0" />
 
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="archive" Plain="0" />
