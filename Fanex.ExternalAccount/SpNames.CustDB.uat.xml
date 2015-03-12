@@ -280,11 +280,11 @@
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog"  />
   </Function>
   <Function Name="Statement - Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBAGE.bodb_report.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBAGE.bodb_report.bodbExtAccNet" Plain="0" />
 
-    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.bodbExtAccNet" Plain="0" />
 
     <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
