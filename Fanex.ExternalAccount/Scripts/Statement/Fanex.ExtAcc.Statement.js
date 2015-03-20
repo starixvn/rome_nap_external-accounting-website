@@ -39,16 +39,19 @@ Fanex.ExtAcc.Statement = {
         $("#dtpFromDate").datepicker({
             changeYear: true,
             onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
         });
         $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
         $("#dtpToDate").datepicker({
             changeYear: true,
             onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
+
+        $("#dtpFromDate").datepicker("option", "minDate", new Date('01/01/2010'));
+        $("#dtpToDate").datepicker("option", "minDate", new Date('01/01/2010'));
 
         $('#ddlGroupName').bind('change', function (event) {
             var args = event.args;
