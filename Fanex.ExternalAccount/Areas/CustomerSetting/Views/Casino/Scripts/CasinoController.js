@@ -103,14 +103,14 @@
             id: CustomerInfo.id,
             uplineId: CustomerInfo.uplineId,
             userId: CustomerInfo.userId,
-            username: CustomerInfo.username,
+            actorName: CustomerInfo.username,
             settingModel: JSON.stringify(SettingModel),
             customerModel: JSON.stringify(CustomerModel),
             groupName: parent.$('#selectedGroupName').html()
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
-        data.custName = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
+        data.username = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
 
         $.ajax({
             url: toUrl(actionName),
@@ -120,10 +120,10 @@
         })
         .success(function (result) {
             if (result.errorCode != 0) {
-                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
+                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
             }
             else {
-                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
+                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
             }
 
             if (!IsMultiple) {
@@ -199,7 +199,7 @@
                 console.log(response);
             }
 
-            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
+            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
 
             if (!IsMultiple) {
                 $('#errMsg').html(ErrorMessage);

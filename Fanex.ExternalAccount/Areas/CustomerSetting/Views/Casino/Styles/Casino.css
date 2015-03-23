@@ -66,3 +66,6 @@
 .tdTitleRight {
     padding: 4px;
 	}
+input[type="text"] {
+    height: 16px !important;
+}

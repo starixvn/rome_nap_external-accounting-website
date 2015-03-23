@@ -31,7 +31,8 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
-        
+        public const string EASFromSystem = "EASFromSystem";
+
         private static string _captcha = string.Empty;
 
         #endregion Constants
@@ -178,6 +179,19 @@ namespace Fanex.ExternalAccount.Core.Context
             set
             {
                 this.Session[EASGroupId] = value;
+            }
+        }
+
+        public int FromSystem 
+        {
+            get
+            {
+                return Utils.ToInt32(this.Session[EASFromSystem]);
+            }
+
+            set
+            {
+                this.Session[EASFromSystem] = value;
             }
         }
 
