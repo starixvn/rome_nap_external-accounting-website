@@ -17,6 +17,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Utilities;
@@ -110,16 +111,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     out isIntAcc);
                 if (result != null && result.IsSuccess)
                 {
-                    var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
-                    this._currentSession.UserName = model.UserName;
-                    this._currentSession.UserId = custId;
-                    this._currentSession.CustId = custId;
-                    this._currentSession.OnUserId = onuserId;
-                    this._currentSession.IsInternalAdmin = isIntAcc;
-                    this._currentSession.GroupId = group.GroupID;
-                    this._currentSession.CurrencyGroup = group.GroupName;
-                    this._currentSession.IsITAdmin = group.GroupID == 1;
-                    Fanex.CustomerSetting.Module.Core.Web.AppSession.FromSystem = 3;
+                    var group = result.ResultData as Group;
+                    SetSessionIfSuccess(model, custId, onuserId, isIntAcc, group);
                     return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
                 }
                 else
@@ -348,6 +341,27 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 Logs.Error(ex.Message, "ExternalAccount", ex);
                 return this.RedirectToAction("Error", "Shared");
             }
+        }
+
+        /// <summary>
+        /// Set session if success.
+        /// </summary>
+        /// <param name="model">Login object.</param>
+        /// <param name="custId">Identify of customer.</param>
+        /// <param name="onuserId">Identify of login user.</param>
+        /// <param name="isIntAcc">Is internal account or not.</param>
+        /// <param name="group">Group object.</param>
+        private void SetSessionIfSuccess(Login model, int custId, int onuserId, bool isIntAcc, Group group)
+        {
+            this._currentSession.UserName = model.UserName;
+            this._currentSession.UserId = custId;
+            this._currentSession.CustId = custId;
+            this._currentSession.OnUserId = onuserId;
+            this._currentSession.IsInternalAdmin = isIntAcc;
+            this._currentSession.GroupId = group.GroupID;
+            this._currentSession.CurrencyGroup = group.GroupName;
+            this._currentSession.IsITAdmin = group.GroupID == 1;
+            Fanex.CustomerSetting.Module.Core.Web.AppSession.FromSystem = 3;
         }
     }
 }
