@@ -20,14 +20,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.PTEngine.BusinessObjects;
+    using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
 
     /// <summary>
     /// TODO: Update summary.
@@ -925,7 +926,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 if (casino.CasinoSync)
                 {
                     CasinoLibrary.SBAgent.Customer cust = new CasinoLibrary.SBAgent.Customer();
-                    cust.UpdateCustPwd(custId, password, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                    cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
                 }
             }
 
