@@ -27,6 +27,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
 
     /// <summary>
     /// TODO: Update summary.
@@ -917,6 +918,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     SubAccId = 0,
                     UserId = custId
                 });
+
+            if (result.ErrorCode.Equals("0"))
+            {
+                var casino = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
+                if (casino.CasinoSync)
+                {
+                    CasinoLibrary.SBAgent.Customer cust = new CasinoLibrary.SBAgent.Customer();
+                    cust.UpdateCustPwd(custId, password, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                }
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }
