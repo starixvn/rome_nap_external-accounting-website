@@ -12,6 +12,7 @@
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -84,6 +85,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>JSON string.</returns>
         [AllowAnonymous]
         [HttpPost]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {

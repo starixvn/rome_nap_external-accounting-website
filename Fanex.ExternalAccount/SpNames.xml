@@ -183,7 +183,7 @@
 		<Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="main"  />
 		<Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="main"  />
 		<Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="main"  />
-		<Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS" DbName="main"  />
+		<Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS" DbName="main"  />
 		<Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main"  />
 		<Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="main"  />
     <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="main_CustDB"  />
