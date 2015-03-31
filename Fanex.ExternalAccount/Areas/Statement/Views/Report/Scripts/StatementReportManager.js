@@ -198,7 +198,8 @@ var StatementReportManager = function () {
                 Name: "ColCommission",
                 HeaderAlign: "center",
                 CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal
+                FormatNumber: self.Constants.Format.Number.TwoDecimal,
+                FormatNegative: '$'
             },
             {
                 HeaderText: statementResources.Transfer_Amt,
@@ -398,7 +399,8 @@ var StatementReportManager = function () {
                 Name: "ColCommission",
                 HeaderAlign: "center",
                 CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal
+                FormatNumber: self.Constants.Format.Number.TwoDecimal,
+                FormatNegative: '$'
             },
             {
                 HeaderText: statementResources.Transfer_Amt,
