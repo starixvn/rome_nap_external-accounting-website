@@ -4,6 +4,7 @@
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Live casino authentication.
@@ -19,6 +20,11 @@
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
         {
+            if (settingContext.Customer.Level.Equals(CustomerLevel.Super))
+            {
+                return false;
+            }
+
             return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
         }
 
@@ -29,6 +35,11 @@
 
         public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
         {
+            if (settingContextMultiple.Customer.Level.Equals(CustomerLevel.Super))
+            {
+                return false;
+            }
+
             return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
         }
     }

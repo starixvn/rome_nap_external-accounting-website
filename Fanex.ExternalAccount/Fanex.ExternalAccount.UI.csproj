@@ -484,11 +484,6 @@
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.vi-VN.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-CN.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-TW.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang1.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LiveCasinoLang.tt</DependentUpon>
-    </Content>
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\live-casino-lang.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
