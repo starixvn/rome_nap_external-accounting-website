@@ -2,9 +2,9 @@
 {
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Live casino authentication.
