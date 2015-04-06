@@ -1,7 +1,9 @@
 ﻿@using Fanex.Module.Statement.Resources;
+@model bool
 @{
     ViewBag.Title = Labels.Statement_Guidelines;
     Layout = "";
+    var canViewBetListStatement = Model;
 }
 <!DOCTYPE html>
 <html lang="en" class="linen">
@@ -20,15 +22,15 @@
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
-            @Labels.Void/@Labels.Rejected:</span> <span>@Labels.Guidelines_VoidRejected</span>
+            @Labels.Void/@Labels.Rejected:</span> <span>@(canViewBetListStatement ? Labels.Guidelines_VoidRejected : Labels.Guidelines_VoidRejected_DisableBetList)</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
-            @Labels.Outstanding:</span> <span>@Labels.Guidelines_Outstanding</span>
+            @Labels.Outstanding:</span> <span>@(canViewBetListStatement ? Labels.Guidelines_Outstanding : Labels.Guidelines_Outstanding_DisableBetList)</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
-            @Labels.Win_Loss:</span> <span>@Labels.Guidelines_WinLoss_Member</span>
+            @Labels.Win_Loss:</span> <span>@(canViewBetListStatement ? Labels.Guidelines_WinLoss_Member : Labels.Guidelines_WinLoss_Member_DisableBetList)</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">

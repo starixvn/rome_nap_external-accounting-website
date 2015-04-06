@@ -119,7 +119,8 @@ Fanex.ExtAcc.Statement = {
                 Fanex.ExtAcc.Form.ShowFrame(
                     domain + "NapStatement/StatementReport/Guideline?" +
                     $.param({
-                        roleId: rs.RoleId
+                        roleId: rs.RoleId,
+                        canViewBetListStatement: false
                     }),
                     statementResources.Statement_Guidelines,
                     900,
