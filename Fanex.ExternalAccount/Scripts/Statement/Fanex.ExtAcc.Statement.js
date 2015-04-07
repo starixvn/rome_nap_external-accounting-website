@@ -39,16 +39,19 @@ Fanex.ExtAcc.Statement = {
         $("#dtpFromDate").datepicker({
             changeYear: true,
             onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
         });
         $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
         $("#dtpToDate").datepicker({
             changeYear: true,
             onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
+
+        $("#dtpFromDate").datepicker("option", "minDate", new Date('01/01/2010'));
+        $("#dtpToDate").datepicker("option", "minDate", new Date('01/01/2010'));
 
         $('#ddlGroupName').bind('change', function (event) {
             var args = event.args;
@@ -66,6 +69,32 @@ Fanex.ExtAcc.Statement = {
         $('#exporttoexcel').hide();
 
         $('#exporttoexcel').click(function () {
+            var criteria = {
+                fromDate: moment(new Date($this.fromdate)).format("MM DD, YYYY"),
+                toDate: moment(new Date($this.todate)).format("MM DD, YYYY"),
+                custId: 0,
+                roleId: 0,
+                username: _username
+            };
+
+            if (!isInternalCustomer) {
+                if (!statementReportManager.checkCriteria(criteria)) {
+                    parent.jQuery.unblockUI();
+                    return;
+                }
+
+                if (statementReportManager.IsUseNewLayout(criteria)) {
+                    statementReportCriteria = criteria;
+                    var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
+                    statementReportManager.callAjax(url, criteria, function (rs) {
+                        statementReportCriteria.custId = rs.CustomerId;
+                        statementReportCriteria.roleId = rs.RoleId;
+                        statementReportManager.exportStatementReport(statementReportCriteria);
+                    });
+                    return;
+                }
+            }
+
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
             document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
         });
@@ -80,6 +109,25 @@ Fanex.ExtAcc.Statement = {
             }
             catch (err) { }
         };
+
+        $("#view-guidelines-icon").click(function () {
+            var criteria = {
+                username: _username
+            };
+            var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
+            statementReportManager.callAjax(url, criteria, function (rs) {
+                Fanex.ExtAcc.Form.ShowFrame(
+                    domain + "NapStatement/StatementReport/Guideline?" +
+                    $.param({
+                        roleId: rs.RoleId,
+                        canViewBetListStatement: false
+                    }),
+                    statementResources.Statement_Guidelines,
+                    900,
+                    400,
+                    false);
+            });
+        });
     },
     RenderUsernameColumn: function (cell) {
         if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
@@ -165,13 +213,55 @@ Fanex.ExtAcc.Statement = {
             return;
         }
 
+        Fanex.ExtAcc.BlockUI();
         this.GetFromDateToDate();
+        var criteria = {
+            fromDate: this.fromdate,
+            toDate: this.todate,
+            custId: 0,
+            roleId: 0,
+            balanceUpDay: balanceUpDay,
+            moveBetDay: moveBetsDay,
+            username: _username
+        };
+        statementReportManager.initFunction(
+            Fanex.ExtAcc.UnBlockUI,
+            function (options) {
+                Fanex.ExtAcc.Form.ShowFrame(options.url,
+                    options.title,
+                    options.width,
+                    options.height,
+                    null,
+                    null,
+                    1,
+                    null,
+                    false);
+            },
+            function (options) {
+            });
+        if (!isInternalCustomer) {
+            if (!statementReportManager.checkCriteria(criteria)) {
+                Fanex.ExtAcc.UnBlockUI();
+                return;
+            }
+
+            if (statementReportManager.IsUseNewLayout(criteria)) {
+                $('#mainGrid').css('visibility', 'visible');
+                $("#jqgrid").addClass('hidden');
+                statementReportManager.getStatementReport(criteria);
+                $('#exporttoexcel').css('display', 'block');
+                return;
+            }
+        }
+
+        $('#mainGrid').css('visibility', 'hidden');
+        $("#GridContainer").addClass('hidden');
+        $("#jqgrid").addClass('hidden');
+        $('#exporttoexcel').css('display', 'none');
         var parameterUrl = "?groupname=" + this.groupName
                             + "&custid=" + this.custId
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate;
-
-        Fanex.ExtAcc.BlockUI();
 
         $.ajax({
             context: $this,
@@ -198,7 +288,7 @@ Fanex.ExtAcc.Statement = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $("#jqgrid").fanexGrid($this.Render());
+                    $("#jqgrid").removeClass('hidden').fanexGrid($this.Render());
                 }
 
                 Fanex.ExtAcc.UnBlockUI();

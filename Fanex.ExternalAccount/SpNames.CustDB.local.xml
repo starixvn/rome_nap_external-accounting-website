@@ -6,12 +6,12 @@
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="archive" Plain="0" />
 
-      <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
 
     <Function Name="EditSuper">
       <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting" DbName="main_CustDB" Plain="0" TimeOut="600" />
@@ -278,5 +278,16 @@
   </Function>
   <Function Name="Casino">
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog"  />
+  </Function>
+  <Function Name="Statement - Report">
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="archive" Plain="0" />
+    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14_xtest" DbName="report" Plain="0" />
+    <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="report" Plain="0" />
+
+    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="archive" Plain="0" />
+    <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="archive01" Plain="0" />
+
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="archive" Plain="0" />
+    <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="archive01"  />
   </Function>
 </Functions>
