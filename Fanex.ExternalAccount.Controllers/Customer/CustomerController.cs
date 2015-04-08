@@ -60,21 +60,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool isSubAccount = false;
             int customerId = -1;
 
-            bool isValidUser = this._customerService.IsUsernameBelong(username.Trim(), this.CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
+            bool isValidUser = this._customerService.IsValidUsername(username.Trim(), this.CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
 
-            if (isValidUser && this.CurrentSession.UserName.Trim().ToLower() != username.Trim().ToLower() && (parentRoleId - 1) == roleId)
+            if (isValidUser)
             {
                 errMsg = customerId.ToString();
-                errCode = 999;
+                errCode = 101;
             }
             else
             {
-                errCode = 101;
+                errCode = 999;
                 errMsg = ViewLang.notExist;
             }
 
             return this.JsonBase(
-                new { errCode = errCode, errMsg = errCode },
+                new { errCode = errCode, errMsg = errMsg },
                 new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),

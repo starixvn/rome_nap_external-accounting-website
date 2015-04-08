@@ -771,7 +771,7 @@ Fanex.ExtAcc = {
         if ($('.bet-type-detail-icon').length > 0) {
             return;
         }
-        console.log('a');
+        
         var headerPt = $('.headerPositionTaking').last();
         var infoDiv = document.createElement('DIV');
         infoDiv.setAttribute('title', 'Click to view PT info');

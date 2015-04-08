@@ -15,8 +15,7 @@ Fanex.ExtAcc.Customer.Settings = {
     Member: 1,
     CurrentLevel: parseInt(Fanex.ExtAcc.Customer.CurrentLevel),
 
-    Init: function () {
-        debugger;
+    Init: function () {        
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();

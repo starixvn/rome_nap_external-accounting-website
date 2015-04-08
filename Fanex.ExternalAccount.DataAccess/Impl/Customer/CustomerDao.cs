@@ -38,7 +38,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         /// <param name="isSubAcc">Output to identify whether or not this customer is a sub-account.</param>
         /// <param name="roleId">Role id of customer.</param>
         /// <returns>Boolean object.</returns>
-        public bool IsUsernameBelong(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
+        public bool IsValidUsername(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
         {
             custId = 0;
             isSubAcc = false;
@@ -49,19 +49,12 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             }
 
             Hashtable parameters = new Hashtable();
-            parameters.Add("uplineid", uplineId);
             parameters.Add("username", userName);
-            parameters.Add("custid", 0);
-            parameters.Add("issubacc", isSubAcc);
-            parameters.Add("roleid", 0);
+            parameters.Add("isexists", false);
 
-            var result = DbHelper.ExecuteDbResult("Age_CustomerSelCheckBelonging_ByUsername", parameters);
+            var result = DbHelper.ExecuteDbResult("Age_CustomerCheckExists", parameters);
 
-            isSubAcc = (bool)result.Outputs["issubacc"];
-            roleId = (int)result.Outputs["roleid"];
-            custId = (int)result.Outputs["custid"];
-
-            return custId > 0;
+            return !(bool)result.Outputs["isexists"];
         }
         #endregion
 

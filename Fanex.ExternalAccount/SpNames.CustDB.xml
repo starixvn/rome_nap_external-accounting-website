@@ -186,6 +186,7 @@
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" Plain="0" />
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="archive" Plain="0" />
+    <Setting Key="Age_CustomerCheckExists" SpName="Age_CustomerCheckExists" DbName="archive" Plain="0" />
   </Function>
   <Function Name="Edit Commission">
     <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="main_CustDB" Plain="0" />
