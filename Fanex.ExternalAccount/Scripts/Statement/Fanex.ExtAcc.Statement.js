@@ -14,7 +14,7 @@ Fanex.ExtAcc.Statement = {
     $this: null,
     SetRange: function () {
         return {
-            minDate: new Date('01/01/2010'),
+            minDate: new Date(newLayoutDate),
             maxDate: new Date($('#MaxDate').val())
         }
     },
@@ -50,8 +50,8 @@ Fanex.ExtAcc.Statement = {
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
-        $("#dtpFromDate").datepicker("option", "minDate", new Date('01/01/2010'));
-        $("#dtpToDate").datepicker("option", "minDate", new Date('01/01/2010'));
+        $("#dtpFromDate").datepicker("option", "minDate", new Date(newLayoutDate));
+        $("#dtpToDate").datepicker("option", "minDate", new Date(newLayoutDate));
 
         $('#ddlGroupName').bind('change', function (event) {
             var args = event.args;
