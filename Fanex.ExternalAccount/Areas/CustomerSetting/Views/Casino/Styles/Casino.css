@@ -8,6 +8,28 @@
 {
     display: none;
 }
+
+.custInfoHeader
+{
+    border-bottom: 0; 
+    border-top: 1px solid #ccc;
+}
+
+.superAutoPtWidth {
+    width: 167px !important;
+}
+
+.tdWidthMember {
+     width: 192px ;
+}
+
+.tdWidth {
+    width: 144px !important;
+}
+
+.memberWidth {
+    width: 374px !important;
+}
 .masterWidth
 {
     width: 1024px;
@@ -19,7 +41,31 @@
     border-bottom: 0; 
     border-top: 1px solid #ccc;
 }
+.tdWidthMember {
+     width: 192px ;
+}
 .tdWidthSuper
 {
-    width: 263px;
+    width: 249px;
+}
+
+.superAutoPtWidth {
+    width: 167px !important;
+}
+.masterAutoPtWidth {
+    width: 170px;
+}
+
+.gameTypeWidth {
+    padding-right: 4px !important;
+}
+
+.tdTitleLeft {
+    padding: 4px;
+}
+.tdTitleRight {
+    padding: 4px;
+	}
+input[type="text"] {
+    height: 16px !important;
 }

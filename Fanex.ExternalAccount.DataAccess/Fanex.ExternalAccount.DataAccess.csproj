@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CasinoLibrary">
-      <HintPath>..\Dependencies\CasinoLibrary.dll</HintPath>
+      <HintPath>..\Dependencies\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting">
       <HintPath>..\Dependencies\CasinoSetting.dll</HintPath>

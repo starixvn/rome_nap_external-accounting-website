@@ -2,9 +2,10 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.CustomerSetting.Module.Casino.Resources
 @model CasinoSettingModel
 @{
-    var isPtByGameType = true;// For testing purpose/super level only
+    var isPtByGameType = false;// For testing purpose/super level only
     //var isPtByGameType = Model.IsPtByGameType;
     //Model.IsPtByGameType = isPtByGameType;// For testing purpose only
     var settingModel = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
@@ -13,104 +14,130 @@
             NullValueHandling = NullValueHandling.Ignore
         });    
 }
-<div id="ng-app" style="display: none; width: 1024px" data-ng-app="settingApp">
-    <div id="errMsg" style="display: none;" class="successMsg">
-    </div>
-    <div id="arrowUpDown" class="collapse">
-    </div>
-    <div id="names" style="display: none;" class="names">
-    </div>    
-    <div>
-        <input class="buttonPopup" type="button" value="Submit" />
-    </div>
-    <div>
-        @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
-    </div>
-    <div>
-        <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
-            Postition Taking
-        </div>                                                                                                                                                                                                                                                                                                                                                            
-        <div style="border-right: none" id="settingContainer" data-ng-controller="EditSuperController">
-            <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
-                    <td class="gameTypeWidth noneBorderL noneBorderTop R"><input type="checkbox" data-ng-init="customer.preAuto = customer.isPtByGameType; customer.isUnchecked = !customer.isPtByGameType" data-ng-model="customer.isUnchecked" data-ng-click="customer.isPtByGameType = !customer.isUnchecked"/></td>
-                    <td class="ptTitle noneBorderTop tdWidthSuper">Super Max Position Taking</td>
-                    <td class="ptTitle noneBorderTop tdWidthSuper">Super Min Position Taking</td>
-                    <td class="ptTitle noneBorderTop tdWidthSuper">Super Commission</td>
-                </tr>
-                <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered" data-ng-hide="gameGroup.gameGroupName == 'P2P'">
-                    <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
-                    <td colspan="4" class="noneBorderBottom noneBorderTop">
-                        <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>
-                                <td class="C ptTitle noneBorderTop tdWidthSuper">
-                                    <span class="spanPT" ptarea="true" min="0" max="s4" selected="s3" data-ng-model="setting"></span>
-                                </td>
-                                <td class="C ptTitle noneBorderTop tdWidthSuper">
-                                    <span class="spanPT" ptarea="true" min="0" max="s3" selected="n3" data-ng-model="setting"></span>
-                                </td>
-                                <td class="C ptTitle noneBorderTop tdWidthSuper" style="border-right: 0px none">
-                                    <span class="spanPT" ptarea="true" min="0" max="sco" selected="mco" data-ng-model="setting" iscomm = "true"></span>
-                                </td>
-                            </tr>         
-                            @if (isPtByGameType)
-                            {                
-                            <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
-                                <td colspan="6" style="border: none">
-                                    <table class="tableInfo" cellpadding="0" cellspacing="0">
-                                        <tr data-ng-hide="customer.isUnchecked">
-                                            <td rowspan="2" class="gameTypeWidth R noneBorderL noneBorderT">
-                                                {{gameType.gameTypeName}}
-                                            </td>
-                                            <td class="C noneBorderT tdWidthSuper">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="s3" data-ng-model="setting"></span>
-                                            </td>
-                                            <td class="C noneBorderT tdWidthSuper">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s3" selected="n3" data-ng-model="setting"></span>
-                                            </td>
-                                            <td class="noneBorderR C noneBorderT noneBorderRight tdWidthSuper">
-                                                <span class="spanPT" showbutton="false" ptarea="true" min="0" max="sco" selected="mco" data-ng-model="setting" iscomm = "true"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="gameTypeWidth R noneBorderL noneBorderT" data-ng-hide="customer.isUnchecked == false">
-                                                {{gameType.gameTypeName}}
-                                            </td>
-                                            <td colspan="3" class="noneBorderRight noneBorderT"><span>Betting Limit: </span>
-                                                <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
-                                                    <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>                    
-                            </tr>                
-                            }
-                            else
-                            {
-		                    <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
-                                <td class="gameTypeWidth R noneBorderL">
-                                    {{gameType.gameTypeName}}
-                                </td>
-                                <td colspan="3" class="noneBorderR"><span>Betting Limit: </span>
-                                    <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
-                                        <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
-                                    </span>
-                                </td>
-                            </tr>
-                            }
-                        </table>
-                    </td>                    
-                </tr>                                        
-            </table>            
+<!DOCTYPE html>
+<html style="display: none;" data-ng-app="settingApp" id="ng-app">
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div style="width: 1024px">
+        <div id="errMsg" style="display: none;" class="successMsg">
+        </div>
+        <div id="arrowUpDown" class="collapse">
+        </div>
+        <div id="names" style="display: none;" class="names">
+        </div>
+        <div>
+            @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
+        </div>
+        <div>
+            <div style="border-right: none" id="settingContainer" data-ng-controller="EditSuperController">
+                <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="headerPositionTaking" style="border-right: 1px solid #ccc;">
+                            @NGCasinoLang.positiontaking
+                        </td>
+                    </tr>
+                    <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups"
+                        data-ng-finish-render="rendered" data-ng-hide="gameGroup.gameGroupName == 'P2P'">
+                        <td class="noneBorderBottom noneBorderTop noneBorderL">
+                            <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
+                                <tr ng-if="$first">
+                                    <td class="gameGroupWidth noneBorderL  noneBorderR">
+                                        &nbsp;
+                                    </td>
+                                    <td class="gameTypeWidth noneBorderL  R">
+                                        <input ng-show="customer.isPtByGameType" type="checkbox" data-ng-init="customer.preAuto = customer.isPtByGameType; customer.isUnchecked = !customer.isPtByGameType"
+                                            data-ng-model="customer.isUnchecked" data-ng-click="customer.isPtByGameType = !customer.isUnchecked" />
+                                    </td>
+                                    <td class="ptTitle  tdWidthSuper">
+                                        @NGCasinoLang.lblSuperMaxPosition
+                                    </td>
+                                    <td class="ptTitle  tdWidthSuper">
+                                        @NGCasinoLang.lblSuperMinPosition
+                                    </td>
+                                    <td class="ptTitle  tdWidthSuper noneBorderR">
+                                        @NGCasinoLang.lblSuperCommission
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="{{gameGroup.gameTypes.length + 1}}" class="gameGroupWidth gameTitle noneBorderTop">
+                                        {{gameGroup.gameGroupName}}
+                                    </td>
+                                    <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">@NGCasinoLang.lblGroupSetting
+                                    </td>
+                                    <td class="C ptTitle noneBorderTop tdWidthSuper">
+                                        <span class="spanPT" ptarea="true" min="0" max="s4" selected="s3" data-ng-model="setting">
+                                        </span>
+                                    </td>
+                                    <td class="C ptTitle noneBorderTop tdWidthSuper">
+                                        <span class="spanPT" ptarea="true" min="0" max="s3" selected="n3" data-ng-model="setting">
+                                        </span>
+                                    </td>
+                                    <td class="C ptTitle noneBorderTop tdWidthSuper" style="border-right: 0px none">
+                                        <span class="spanPT" ptarea="true" min="0" max="sco" selected="mco" data-ng-model="setting"
+                                            iscomm="true"></span>
+                                    </td>
+                                </tr>
+                                @if (isPtByGameType)
+                                {                
+                                    <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
+                                        <td colspan="5" style="border: none">
+                                            <table class="tableInfo" cellpadding="0" cellspacing="0">
+                                                <tr data-ng-hide="customer.isUnchecked">
+                                                    <td rowspan="2" class="gameTypeWidth R noneBorderL noneBorderT">
+                                                        {{gameType.gameTypeName}}
+                                                    </td>
+                                                    <td class="C noneBorderT tdWidthSuper">
+                                                        <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s4" selected="s3"
+                                                            data-ng-model="setting"></span>
+                                                    </td>
+                                                    <td class="C noneBorderT tdWidthSuper">
+                                                        <span class="spanPT" showbutton="false" ptarea="true" min="0" max="s3" selected="n3"
+                                                            data-ng-model="setting"></span>
+                                                    </td>
+                                                    <td class="noneBorderR C noneBorderT noneBorderRight tdWidthSuper">
+                                                        <span class="spanPT" showbutton="false" ptarea="true" min="0" max="sco" selected="mco"
+                                                            data-ng-model="setting" iscomm="true"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="gameTypeWidth R noneBorderL noneBorderT" data-ng-hide="customer.isUnchecked == false">
+                                                        {{gameType.gameTypeName}}
+                                                    </td>
+                                                    <td colspan="3" class="noneBorderRight noneBorderT">
+                                                        <span>@NGCasinoLang.lblBettingLimit: </span><span data-ng-controller="BettingLimitController"
+                                                            data-ng-repeat="stake in gameType.bettingLimits">
+                                                            <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>                
+                                }
+                                else
+                                {
+                                    <tr data-ng-controller="GameTypeController" data-ng-repeat="gameType in gameGroup.gameTypes">
+                                        <td class="gameTypeWidth R noneBorderL">
+                                            {{gameType.gameTypeName}}
+                                        </td>
+                                        <td colspan="5" class="noneBorderR">
+                                            <span>@NGCasinoLang.lblBettingLimit: </span><span data-ng-controller="BettingLimitController"
+                                                data-ng-repeat="stake in gameType.bettingLimits">
+                                                <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-    <div>
-        <input class="buttonPopup" type="button" value="Submit" />
-    </div>
-</div>
+</body>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/EditSuperController.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
@@ -119,10 +146,11 @@
         //var casinoController = new CasinoController(userId, username, isMultiple, custIds, usernames);
         var casinoController = new CasinoController(uplineId, '');
 
-        //$('.buttonPopup').bind('click', function () {
-        //    casinoController.Update();
-        //});
+        $('.buttonPopup').bind('click', function () {
+            casinoController.Update();
+        });
 
-        $('.buttonPopup').remove();
+        //$('.buttonPopup').remove();
     });
 </script>
+</html>

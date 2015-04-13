@@ -64,7 +64,7 @@ function GameGroupController($scope) {
             }
         });
 
-        $scope.$watch("setting.is3", function (newValue, oldValue) {
+        $scope.$watch("setting.is1", function (newValue, oldValue) {
             if (newValue == oldValue) return; // Avoid $apply checking
 
             var min = gameGroup.n3;
@@ -83,7 +83,12 @@ function GameGroupController($scope) {
                 for (var i = 0; i < c; i++) {
                     var gameType = $scope.gameGroup.gameTypes[i];
 
-                    gameType.is3 = newValue;
+                    gameType.is1 = newValue;
+
+                    if (newValue)
+                        gameType.$s3.max = gameType.s4;
+                    else
+                        gameType.$s3.max = gameGroup.s4 - gameGroup.m3 - gameGroup.m2;
                 }
             }
         });
@@ -147,7 +152,7 @@ function GameTypeController($scope) {
             gameType.$s3 = toPTSource(gameType.$s3);
         });
 
-        $scope.$watch("setting.is3", function (newValue, oldValue) {            
+        $scope.$watch("setting.is1", function (newValue, oldValue) {            
             // No need to watch, because it's already watched on render action
         });
 

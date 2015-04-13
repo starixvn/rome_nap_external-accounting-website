@@ -8,7 +8,7 @@
     var ErrorMessage = '';
     var SuccessMessage = '';
     var actionName = '';
-
+    CustomerModel.casinoEnabled = CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino);
     if (isMultiple) {
         if (!custIds) {
             alert('Please input custIds parameter is array');
@@ -42,13 +42,15 @@
     }
 
     this.Update = function (ondone) {
+        $(document).scrollTop(0);
         actionName = ActionName();
 
         var min = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#minCredit').html(), ',', ''));
         var max = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxCredit').html(), ',', ''));
         var cur = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxTransfer').val(), ',', ''));
+        max = isNaN(max) ? 0 : max;
 
-        if (isNaN(cur) || cur < min || cur > max) {
+        if (isNaN(cur) || cur < min || (max != 0 && cur > max)) {
             Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').html() + ' and ' + $('#maxCredit').html(), undefined, undefined, 1500);
             return;
         }
@@ -101,14 +103,14 @@
             id: CustomerInfo.id,
             uplineId: CustomerInfo.uplineId,
             userId: CustomerInfo.userId,
-            username: CustomerInfo.username,
+            actorName: CustomerInfo.username,
             settingModel: JSON.stringify(SettingModel),
             customerModel: JSON.stringify(CustomerModel),
             groupName: parent.$('#selectedGroupName').html()
         };
 
         data.id = custIdIndex == null ? CustomerInfo.id : CustIds[custIdIndex];
-        data.custName = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
+        data.username = custIdIndex == null ? CustomerModel.userName : Usernames[custIdIndex];
 
         $.ajax({
             url: toUrl(actionName),
@@ -118,10 +120,10 @@
         })
         .success(function (result) {
             if (result.errorCode != 0) {
-                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
+                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
             }
             else {
-                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
+                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
             }
 
             if (!IsMultiple) {
@@ -197,7 +199,7 @@
                 console.log(response);
             }
 
-            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.custName + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
+            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
 
             if (!IsMultiple) {
                 $('#errMsg').html(ErrorMessage);

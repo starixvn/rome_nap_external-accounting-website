@@ -671,7 +671,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
                     fromSystem,
                     customerInfo.IsAutoReset,                    
                     enableBonus,
-                    enableJackpot);
+                    enableJackpot,
+                    customerInfo.IsDisableAutoMPT);
         }
 
         /// <summary>

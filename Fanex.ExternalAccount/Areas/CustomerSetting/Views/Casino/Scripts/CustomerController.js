@@ -11,7 +11,7 @@ function CustomerController($scope, $element) {
     $scope.IsAgent = false;
     $scope.IsMember = false;
     $scope.IsSuper = false;
-
+    $scope.CustomerModel.maxTransferFormated = !$scope.CustomerModel.casinoSync && $scope.CustomerModel.roleId == 4 ? $scope.CustomerModel.defaultTransferCredit.formatNumber() : $scope.CustomerModel.maxTransferCredit.formatNumber();
     UplineRoleId = $scope.CustomerModel.uplineRoleId;
 
     switch ($scope.CustomerModel.roleId) {

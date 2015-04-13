@@ -1,0 +1,17 @@
+﻿Edit Super:
+/CustomerSetting/Casino/Super/EditSuper/16457038/0/ACCUUS
+
+Edit Master:
+/CustomerSetting/Casino/Master/EditMaster/16457040/16457038/ACCUUS
+
+Edit Agent:
+/CustomerSetting/Casino/Agent/EditAgent/16457041/16457040/ACCUUS
+
+Edit Member:
+/CustomerSetting/Casino/Member/EditMember/16457042/16457041/ACCUUS
+
+Super Edit Member:
+/CustomerSetting/Casino/Member/EditMemberBySuper/16457042/16457038/ACCUUS
+
+Master Edit Member:
+/CustomerSetting/Casino/Member/EditMemberByMaster/16457042/16457040/ACCUUS

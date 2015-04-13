@@ -20,10 +20,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.PTEngine.BusinessObjects;
+    using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
@@ -917,6 +919,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     SubAccId = 0,
                     UserId = custId
                 });
+
+            if (result.ErrorCode.Equals("0"))
+            {
+                var casino = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
+                if (casino.CasinoSync)
+                {
+                    CasinoLibrary.SBAgent.Customer cust = new CasinoLibrary.SBAgent.Customer();
+                    cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                }
+            }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, IsSuccess = result.IsSuccess });
         }

@@ -2,6 +2,7 @@
 @using Fanex.CustomerSetting.Module.Casino.ViewModels
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.CustomerSetting.Module.Casino.Resources
 @model CasinoSettingModel
 @{
     //var isPtByGameType = true;// For testing purpose only
@@ -19,21 +20,23 @@
     </div>    
     <div>
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">
-            Postition Taking
+             @NGCasinoLang.positiontaking
         </div>                                                                                                                                                                                                                                                                                                                                                            
         <div style="border-right: none" id="settingContainer" data-ng-controller="ViewAgentController">
             <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
                 <tr>
                     <td class="gameGroupWidth noneBorderL noneBorderTop noneBorderR">&nbsp;</td>
                     <td class="gameTypeWidth noneBorderL noneBorderTop">&nbsp;</td>
-                    <td class="ptTitle noneBorderTop memberWidth">Master Preset PT</td>
-                    <td class="ptTitle noneBorderTop memberWidth">Agent Preset PT</td>
+                    <td class="ptTitle noneBorderTop memberWidth"> @NGCasinoLang.lblMasterPresetPT</td>
+                    <td class="ptTitle noneBorderTop memberWidth"> @NGCasinoLang.lblAgentPresetPT</td>
                 </tr>
                 <tr data-ng-controller="GameGroupController" data-ng-repeat="gameGroup in customer.gameGroups" data-ng-finish-render="rendered">
                     <td class="gameGroupWidth gameTitle noneBorderTop">{{gameGroup.gameGroupName}}</td>
                     <td colspan="5" class="noneBorderBottom noneBorderTop">
                         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
-                            <tr>                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">Group Setting</td>                                <td class="C noneBorderTop memberWidth">
+                            <tr>
+                                <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">@NGCasinoLang.lblGroupSetting</td>
+                                <td class="C noneBorderTop memberWidth">
                                     <span>{{gameGroup.m3}}</span>
                                 </td>
                                 <td class="C noneBorderTop memberWidth" style="border-right: 0px none">
@@ -57,7 +60,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4" class="noneBorderRight"><span>Betting Limit: </span>
+                                            <td colspan="4" class="noneBorderRight"><span>@NGCasinoLang.lblBettingLimit: </span>
                                                 <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
                                                     <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                 </span>
@@ -73,7 +76,7 @@
                                 <td class="gameTypeWidth R noneBorderL">
                                     {{gameType.gameTypeName}}
                                 </td>
-                                <td colspan="4" class="noneBorderR"><span>Betting Limit: </span>
+                                <td colspan="4" class="noneBorderR"><span>@NGCasinoLang.lblBettingLimit: </span>
                                     <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
                                         <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                     </span>
