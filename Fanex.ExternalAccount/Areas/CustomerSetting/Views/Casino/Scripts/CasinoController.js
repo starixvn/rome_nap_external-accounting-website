@@ -9,6 +9,7 @@
     var SuccessMessage = '';
     var actionName = '';
     CustomerModel.casinoEnabled = CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino);
+    CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated;
     if (isMultiple) {
         if (!custIds) {
             alert('Please input custIds parameter is array');
