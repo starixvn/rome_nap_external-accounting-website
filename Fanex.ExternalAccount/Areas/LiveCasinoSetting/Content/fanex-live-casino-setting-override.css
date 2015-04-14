@@ -1,0 +1,64 @@
+﻿body {
+   font-family: Tahoma,Arial,helvetica,sans-serif !important;
+    font-size: 11px !important;
+}
+.edit-setting-livecs .title, .pt-container .pt-title {
+    background-color: #F1F1A6 !important;
+    color: #464646 !important;
+    font-size: 12px;
+}
+.block-ui-loading
+{
+    background: none !important;
+}
+
+.edit-setting-livecs .btn-save-partial {
+    background-image: url("../../../Content/Images/Content/icon-customerlist.png")!important;
+    background-position: -75px -66px !important;
+    background-repeat: no-repeat;
+    border: medium none;
+    cursor: pointer;
+    float: right;
+    height: 25px;
+    width: 25px;
+}
+.pt-title
+{
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.edit-setting-livecs table, .edit-setting-livecs table tr, .edit-setting-livecs table td
+{
+    border: 1px solid #CCCCCC !important;
+}
+
+.pt-container .pt-title {
+    border-left: 1px solid #CCCCCC !important;
+    border-right: 1px solid #CCCCCC !important;
+}
+
+.pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th {
+    border: 1px solid #CCCCCC !important;
+}
+ 
+able td, th {
+    height: 23px !important;
+}
+
+.edit-setting-livecs {
+    padding:  0px !important;
+}
+
+.edit-setting-livecs .updated-result .main-icon-error {
+    background-image: none !important;
+}
+
+.edit-setting-livecs .updated-result .main-icon-success {
+    background-image: none !important;
+}
+
+.edit-setting-livecs .updated-result .main-message {
+    margin-left:  0px !important;
+}

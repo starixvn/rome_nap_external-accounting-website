@@ -1,0 +1,48 @@
+﻿@model LiveCasinoSettingContext
+<div id="tblGameSetting" class="pt-container col-xs-12" 
+    data-ng-controller="CustGameSettingController" >
+    <div class="pt-title">
+        <span class="pt-title-text">@LiveCasinoLang.lblGameSetting</span> <span data-ng-click="updateGameSetting()"
+            data-ng-if="!$parent.isReadOnly" class="btn-save-partial" title="@LiveCasinoLang.lblUpdate"></span>
+    </div>
+    <table class="game-setting col-xs-12">
+        <thead>
+            <tr>
+                <td class="col-xs-3 right bold">
+                    @LiveCasinoLang.lblGameType
+                </td>
+                <td class="col-xs-9 left bold">
+                    @LiveCasinoLang.lblBettingLimit
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="itemGameType in gameSetting">
+                <td class="right game-setting-name">
+                    {{itemGameType.Name}}
+                </td>
+                <td class="betting-limit-container">
+                    <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
+                        <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
+                        @if (Model.Customer.Level != CustomerLevel.Member)
+                        {
+                            <label class="checkbox-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
+                                    data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                        else
+                        { 
+                            <label class="radio-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
+                                    data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

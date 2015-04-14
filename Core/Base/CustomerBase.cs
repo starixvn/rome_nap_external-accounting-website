@@ -10,7 +10,6 @@
 namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
-    using System.Data;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Service.Impl.Customer.Bingo;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
@@ -18,9 +17,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
-    using Fanex.LiveCasinoSetting.Business;
-    using Fanex.LiveCasinoSetting.Model.Log;
-    using Fanex.LiveCasinoSetting.Request;
+    using Fanex.LiveCasino.CoreSetting.Services;
 
     /// <summary>
     /// Base class for customer controller.
@@ -29,9 +26,6 @@ namespace Fanex.ExternalAccount.Core.Base
     {
         private const string CasinoNo = "01";
 
-        private readonly ISettingService _setting = new SettingService();
-        private readonly IGameSettingService _gameSetting = new GameSettingService();
-        private readonly ILogWriterService _logWriter = new LogWriterService();
         private readonly IReportService _report = new ReportService();
 
         #region Live Casino
@@ -46,53 +40,26 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <returns>ActionResult object.</returns>
         public ActionResult AutoInsertLiveCasinoPost(int custId, int parentId, int uplineRoleId, string groupName)
         {
-            var parentInfo = this._setting.GetCustomerInfo(parentId);
-            var userInfo = this._setting.GetCustomerInfo(custId);
-            var result = new Fanex.LiveCasinoSetting.Model.Result();
-            if (parentInfo.IsSyncLiveCasino && !userInfo.IsSyncLiveCasino)
-            {
-                var table = new DataTable();
-                result = this._gameSetting.InsertAccount(this.GetInsertAccountRequest(custId, uplineRoleId, groupName), ref table);
-                if (table.Rows.Count == 0)
-                {
-                    var gameTypes = this._gameSetting.GetByExhangeId(userInfo.ExChangeId, userInfo.Site);
-                    foreach (var gameType in gameTypes)
-                    {
-                        var row = table.NewRow();
-                        row[0] = gameType.Id;
-                        row[1] = gameType.BetTypeId;
-                        row[2] = string.Empty;
-                        table.Rows.Add(row);
-                    }
-                }
+            SettingService livecasinoSettingService = new SettingService();
+            var customerInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(custId);
+            var parentInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(parentId);
 
-                if (string.IsNullOrWhiteSpace(result.ErrorCode))
-                {
-                    var custInfo = this.GetCustomerInfo(custId, groupName);
-                    this._logWriter.WriteLog(new LogAutoInsertAccount
-                    {
-                        Action = uplineRoleId == BaseController.Super ? LogActions.AutoInsert_Master : 
-                            uplineRoleId == BaseController.Master ? LogActions.AutoInsert_Agent : LogActions.AutoInsert_Member,
-                        AgentId = custInfo.AgentId,
-                        CustId = custId,
-                        CustUserName = custInfo.Username,
-                        ExchangeId = userInfo.ExChangeId,
-                        SignUpIp = this.CurrentContext.Ip4Address,
-                        Language = "en",
-                        MasterId = custInfo.MasterId,
-                        RoleId = custInfo.RoleId,
-                        SignUpForm = BaseController.FromSystem,
-                        SuperId = custInfo.SuperId,
-                        UserId = this.CurrentSession.UserId,
-                        UserName = this.CurrentSession.UserName,
-                        ErrorCode = result.ErrorCode,
-                        ErrorMessage = result.ErrorMessage,
-                        dataResult = table
-                    });
-                }
+            if (!customerInfo.IsSyncLiveCasino && parentInfo.IsSyncLiveCasino)
+            {
+                System.Threading.Thread.Sleep(5000);
+                var results = livecasinoSettingService.AutoInsertAccount(
+                                                                    custId,
+                                                                    this.CurrentSession.UserId,
+                                                                    this.CurrentSession.UserName,
+                                                                    0,
+                                                                    string.Empty,
+                                                                    this.CurrentContext.Ip4Address,
+                                                                    "E");
+
+                return this.JsonBase(new { ErrorCode = results.Code, ErrorMessage = results.Message });
             }
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
+            return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
         }
 
         #endregion
@@ -251,43 +218,6 @@ namespace Fanex.ExternalAccount.Core.Base
             };
 
             return info;
-        }
-
-        /// <summary>
-        /// Gets insert account request.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineRoleId">Up-line role id.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>InsertAccountRequest object.</returns>
-        private InsertAccountRequest GetInsertAccountRequest(int custId, int uplineRoleId, string groupName)
-        {
-            var custInfo = this.GetCustomerInfo(custId, groupName);
-            var uplineInfo = this._setting.GetCustomerInfo(
-                uplineRoleId == BaseController.Super ? custInfo.SuperId : 
-                uplineRoleId == BaseController.Master ? custInfo.MasterId : custInfo.AgentId);
-
-            var result = new InsertAccountRequest()
-            {
-                AgentId = custInfo.AgentId,
-                CustId = custId,
-                CustUserName = custInfo.Username,
-                ExchangeId = uplineInfo.ExChangeId,
-                SignUpIp = this.CurrentContext.Ip4Address,
-                IsDisabledLiveCasino = uplineInfo.DisableLiveCasino,
-                IsEnableDownline = true,
-                Language = "en",
-                MasterId = custInfo.MasterId,
-                RoleId = custInfo.RoleId,
-                SignUpForm = BaseController.FromSystem, // External acc system
-                SuperId = custInfo.SuperId,
-                SyncLiveCasino = uplineInfo.IsSyncLiveCasino,
-                UserId = this.CurrentSession.UserId,
-                UserName = this.CurrentSession.UserName,
-                IsAutoInsert = true // Auto insert account
-            };
-
-            return result;
         }
     }
 }

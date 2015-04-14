@@ -1,0 +1,54 @@
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th class="col-xs-2">
+                {{language.getString('lblMasterPresetPT')}}
+            </th>
+            <th class="col-xs-3" data-ng-if="!positionTaking.IsDisableAuto">
+                {{language.getString('lblMasterAutoPresetPT')}}
+            </th>
+            <th class="col-xs-2">
+               {{language.getString('lblAgentMaxPT')}}
+            </th>
+            <th class="col-xs-2">
+                {{language.getString('lblAgentMinPT')}}
+            </th>
+            <th class="col-xs-2">
+                {{language.getString('lblAgentComm')}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select id="ddlM2"
+                data-ng-model="positionTaking.M2" 
+                data-ng-options="item.id as item.value for item in masterPresetOptions" 
+                data-ng-disabled="positionTaking.Im2"
+                data-ng-change="updateMasterPreset()"></select>
+            </td>
+            <td data-ng-if="!positionTaking.IsDisableAuto">
+                <input id="cbIm2" type="checkbox" data-ng-model="positionTaking.Im2" data-ng-change="updateMasterPreset()" />
+                <select id="ddlUm2"
+                data-ng-model="positionTaking.Um2" 
+                data-ng-options="item.id as item.value for item in masterAutoPresetOptions"
+                data-ng-disabled="!positionTaking.Im2"></select>
+            </td>
+            <td>
+                <select id="ddlA2"
+                data-ng-model="positionTaking.A2" 
+                data-ng-options="item.id as item.value for item in agentMaxOptions"
+                data-ng-change="updateAgentMax()"></select>
+            </td>
+            <td>
+                <select id="ddlN2"
+                data-ng-model="positionTaking.N2" 
+                data-ng-options="item.id as item.value for item in agentMinOptions"
+                data-ng-change="updateAgentMin()"></select>
+            </td>
+            <td>
+                <select id="ddlCom" data-ng-model="commission" data-ng-options="item.id as item.value for item in agentCommissionOptions"></select>
+            </td>
+        </tr>
+    </tbody>
+</table>

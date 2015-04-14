@@ -12,8 +12,10 @@
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -83,6 +85,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>JSON string.</returns>
         [AllowAnonymous]
         [HttpPost]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
@@ -91,6 +94,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 (this._nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
                 this._nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))))
             {
+                FormsAuthentication.SetAuthCookie(model.UserName, false);
                 Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
                 int custId = 0, onuserId = 0;
                 bool isIntAcc = true;
@@ -158,6 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 this._currentContext.Context.Session.Abandon();
             }
 
+            FormsAuthentication.SignOut();
             return this.RedirectToAction("Login", "Account");
         }
 

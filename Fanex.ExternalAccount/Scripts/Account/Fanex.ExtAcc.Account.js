@@ -19,7 +19,7 @@ Fanex.ExtAcc.Account = {
                 case 403:
                 case 404:
                 case 500:
-                    location.href = resolveClientUrl('Shared/Error');
+//                    location.href = resolveClientUrl('Shared/Error');
                     break;
                 default:
                     break;
@@ -169,7 +169,7 @@ Fanex.ExtAcc.Account = {
                     location.href = resolveClientUrl('Account/Offline');
                 }
                 else if (data == 3) {
-                    location.href = resolveClientUrl('Shared/Error');
+                   location.href = resolveClientUrl('Shared/Error');
                 }
 
                 Fanex.ExtAcc.Account.RecheckinXHR = null;

@@ -85,6 +85,8 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <param name="filterContext">AuthorizationContext object.</param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            base.OnAuthorization(filterContext);
+
             this._groups = new LoginService().GroupList().ToList();
             var currentSession = new CurrentSession();
             var currentContext = new CurrentContext();
@@ -127,6 +129,69 @@ namespace Fanex.ExternalAccount.Core.Context
             {
                 this.ProcessException(ex, response);
             }
+        }
+
+        public bool AllowReadByAuthenticationParam(string action)
+        {
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, action, this._request, AuthenticateAction.AuthenticationType.Read);
+        }
+
+        public bool AllowUpdateByAuthenticationParam(string action)
+        {
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, action, this._request, AuthenticateAction.AuthenticationType.Host);
+        }
+
+        /// <summary>
+        /// Authorizes function .
+        /// </summary>
+        /// <param name="userId">Admin user id.</param>
+        /// <param name="functionKey">Function key.</param>
+        /// <param name="request">Request object.</param>
+        /// <param name="authenticateActionType">Type of authenticate.</param>
+        /// <returns>Boolean object.</returns>
+        public bool FunctionAuthorization(int userId, string functionKey, HttpRequest request, AuthenticateAction.AuthenticationType authenticateActionType)
+        {
+            var userCache = this._cachingService.GetUserCache(userId);
+            var menuList = userCache.MenuList;
+            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
+            var hasPerm = true;
+
+            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
+                !request.RawUrl.ToLower().Contains("exporttoexcel") && !this.IsAjaxRequest)
+            {
+                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) &&
+                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+            }
+
+            if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
+            {
+                return false;
+            }
+
+            if (foundItems.Count() > 0)
+            {
+                var firstItem = foundItems.First();
+                switch (authenticateActionType)
+                {
+                    case AuthenticateAction.AuthenticationType.Read:
+                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
+                            firstItem.Policy == EPolicy.Create)
+                        {
+                            return true;
+                        }
+
+                        break;
+                    case AuthenticateAction.AuthenticationType.Host:
+                        if (firstItem.Policy == EPolicy.Read)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public bool AllowRead(string action)

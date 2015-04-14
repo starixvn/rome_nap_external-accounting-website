@@ -98,9 +98,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
+      <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -457,6 +457,56 @@
     <Content Include="Areas\Statement\Views\Report\Styles\Statement.css" />
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-title-header.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\btn-update-setting.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\center-header.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\cross.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn-hover.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\header-popup-background.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\left-header.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\loader3.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\popup-background.jpg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\right-header.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\tick.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\warning.png" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.en-US.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.ja-JP.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.ko-KR.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.th-TH.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.vi-VN.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-CN.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-TW.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\live-casino-lang.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-1.11.1.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-win-limit-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-game-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-agent.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-master.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
     <Content Include="bundles\images\dec1.gif" />
     <Content Include="bundles\images\dec1_disable.jpg" />
     <Content Include="bundles\images\dec2.gif" />
@@ -468,6 +518,7 @@
     <Content Include="bundles\images\sucess.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
+    <Compile Include="Areas\LiveCasinoSetting\Services\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -814,6 +865,104 @@
     <Content Include="Content\Images\calendar.png" />
     <Content Include="Content\Images\changepass.png" />
     <Content Include="Content\Images\changlang.png" />
+    <Content Include="Content\Images\Content\addnew-btn.png" />
+    <Content Include="Content\Images\Content\ajax-loader.png" />
+    <Content Include="Content\Images\Content\arrow-down-icn.png" />
+    <Content Include="Content\Images\Content\arrow-icn-right.png" />
+    <Content Include="Content\Images\Content\arrow-icn.png" />
+    <Content Include="Content\Images\Content\arrow.png" />
+    <Content Include="Content\Images\Content\arrowblack-icn.png" />
+    <Content Include="Content\Images\Content\arrowblue-icn.png" />
+    <Content Include="Content\Images\Content\arrowCbo.png" />
+    <Content Include="Content\Images\Content\arrowdown-icn.png" />
+    <Content Include="Content\Images\Content\balance.png" />
+    <Content Include="Content\Images\Content\bg-excel.png" />
+    <Content Include="Content\Images\Content\bg-groptittle.png" />
+    <Content Include="Content\Images\Content\bg-Line-Title.png" />
+    <Content Include="Content\Images\Content\bg-maintittle.png" />
+    <Content Include="Content\Images\Content\bg-menubar.png" />
+    <Content Include="Content\Images\Content\bg-popuptittle.png" />
+    <Content Include="Content\Images\Content\bg-Title-Grid.png" />
+    <Content Include="Content\Images\Content\bg-top.png" />
+    <Content Include="Content\Images\Content\bgGrid.png" />
+    <Content Include="Content\Images\Content\btn-bgsubmit-hover.png" />
+    <Content Include="Content\Images\Content\btn-bgsubmit-original.png" />
+    <Content Include="Content\Images\Content\b_add.jpg" />
+    <Content Include="Content\Images\Content\b_down.jpg" />
+    <Content Include="Content\Images\Content\b_sub.jpg" />
+    <Content Include="Content\Images\Content\b_up.jpg" />
+    <Content Include="Content\Images\Content\calendar.png" />
+    <Content Include="Content\Images\Content\changepass.png" />
+    <Content Include="Content\Images\Content\changlang.png" />
+    <Content Include="Content\Images\Content\checkbox.png" />
+    <Content Include="Content\Images\Content\close-icn.png" />
+    <Content Include="Content\Images\Content\DailyText.png" />
+    <Content Include="Content\Images\Content\delete-icn.png" />
+    <Content Include="Content\Images\Content\enableEdit.jpg" />
+    <Content Include="Content\Images\Content\error.png" />
+    <Content Include="Content\Images\Content\excel-icn.png" />
+    <Content Include="Content\Images\Content\favicon.ico" />
+    <Content Include="Content\Images\Content\filterbox-bg.png" />
+    <Content Include="Content\Images\Content\filterboxdaily-bg.png" />
+    <Content Include="Content\Images\Content\firstGoal.gif" />
+    <Content Include="Content\Images\Content\help.gif" />
+    <Content Include="Content\Images\Content\hideMargin.png" />
+    <Content Include="Content\Images\Content\icon-customerlist-active.png" />
+    <Content Include="Content\Images\Content\icon-customerlist-sync.png" />
+    <Content Include="Content\Images\Content\icon-customerlist-unactive.png" />
+    <Content Include="Content\Images\Content\icon-customerlist.png" />
+    <Content Include="Content\Images\Content\icon-search-black.png" />
+    <Content Include="Content\Images\Content\icons-18-black.png" />
+    <Content Include="Content\Images\Content\icons-18-white.png" />
+    <Content Include="Content\Images\Content\icons-36-black.png" />
+    <Content Include="Content\Images\Content\icons-36-white.png" />
+    <Content Include="Content\Images\Content\important.gif" />
+    <Content Include="Content\Images\Content\info.gif" />
+    <Content Include="Content\Images\Content\info.png" />
+    <Content Include="Content\Images\Content\lastGoal.gif" />
+    <Content Include="Content\Images\Content\LeftMenu.png" />
+    <Content Include="Content\Images\Content\loading.gif" />
+    <Content Include="Content\Images\Content\loading1.gif" />
+    <Content Include="Content\Images\Content\logo.png" />
+    <Content Include="Content\Images\Content\member-btn.png" />
+    <Content Include="Content\Images\Content\member.png" />
+    <Content Include="Content\Images\Content\message.png" />
+    <Content Include="Content\Images\Content\on-off.png" />
+    <Content Include="Content\Images\Content\password-icon.png" />
+    <Content Include="Content\Images\Content\permission-icn.png" />
+    <Content Include="Content\Images\Content\plus-icn.png" />
+    <Content Include="Content\Images\Content\pointer.png" />
+    <Content Include="Content\Images\Content\pointerDown.png" />
+    <Content Include="Content\Images\Content\pointericon.png" />
+    <Content Include="Content\Images\Content\Refresh.png" />
+    <Content Include="Content\Images\Content\report.png" />
+    <Content Include="Content\Images\Content\right.png" />
+    <Content Include="Content\Images\Content\save.png" />
+    <Content Include="Content\Images\Content\scoremap.png" />
+    <Content Include="Content\Images\Content\showMargin.png" />
+    <Content Include="Content\Images\Content\sort.png" />
+    <Content Include="Content\Images\Content\success.png" />
+    <Content Include="Content\Images\Content\super-btn.png" />
+    <Content Include="Content\Images\Content\tick.png" />
+    <Content Include="Content\Images\Content\topmenu-bg.png" />
+    <Content Include="Content\Images\Content\transfer.png" />
+    <Content Include="Content\Images\Content\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Images\Content\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\Images\Content\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\Images\Content\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Images\Content\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\Images\Content\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\Images\Content\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Images\Content\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\Images\Content\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Images\Content\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Images\Content\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Images\Content\ui-icons_888888_256x240.png" />
+    <Content Include="Content\Images\Content\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Images\Content\user.png" />
+    <Content Include="Content\Images\Content\view.png" />
+    <Content Include="Content\Images\Content\warning.png" />
+    <Content Include="Content\Images\Content\x5.gif" />
     <Content Include="Content\Images\error.png" />
     <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\firstGoal.gif" />
@@ -1323,7 +1472,6 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.LiveCasino.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
@@ -2105,6 +2253,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
+    <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -2215,11 +2364,31 @@
     <Content Include="Areas\Statement\Views\Report\Index.cshtml" />
     <Content Include="Configurations\connectionStrings.kbt67.config" />
     <Content Include="Configurations\appSettings.kbt67.config" />
+    <Content Include="Configurations\appSettings.sandbox.config" />
+    <Content Include="Configurations\connectionStrings.sandbox.config" />
+    <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang1.js</LastGenOutput>
+    </None>
+    <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\Web.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Common\UnAuthorized.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingSingle.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\_EditSetting.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Web.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
@@ -2247,6 +2416,18 @@
     </Content>
     <Content Include="Web.production.Release.config">
       <DependentUpon>Web.production.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.Debug.config">
+      <DependentUpon>Web.sandbox.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.sandbox.Release.config">
+      <DependentUpon>Web.sandbox.config</DependentUpon>
     </Content>
     <Content Include="Web.sandbox.config">
       <SubType>Designer</SubType>
@@ -2336,15 +2517,9 @@
     <Content Include="Views\SportsbookSetting\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\TransferCondition.cshtml" />
     <Content Include="Views\SportsbookSetting\SuperMasterEditSB.cshtml" />
-    <Content Include="Views\LiveCasino\EditMaster.cshtml" />
-    <Content Include="Views\LiveCasino\EditAgent.cshtml" />
-    <Content Include="Views\LiveCasino\EditMember.cshtml" />
-    <Content Include="Views\LiveCasino\MasterEditMember.cshtml" />
-    <Content Include="Views\LiveCasino\SuperEditMember.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
-    <Content Include="Views\LiveCasino\EditSuper.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BettypeReference\Index.cshtml" />
@@ -2360,6 +2535,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
+      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
+      <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
@@ -2382,6 +2561,9 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Error1.designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
