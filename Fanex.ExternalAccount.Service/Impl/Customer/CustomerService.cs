@@ -26,9 +26,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
 
         #region ICustomerService Members
 
-        public bool IsUsernameBelong(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
+        public bool IsValidUsername(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
         {
-            return this._dao.IsUsernameBelong(userName, uplineId, out custId, out isSubAcc, out roleId);
+            return this._dao.IsValidUsername(userName, uplineId, out custId, out isSubAcc, out roleId);
         }
 
         /// <summary>
