@@ -2371,7 +2371,7 @@
     <Content Include="Configurations\appSettings.kbt67.config" />
     <Content Include="Configurations\appSettings.sandbox.config" />
     <Content Include="Configurations\connectionStrings.sandbox.config" />
-    <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
+    <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
