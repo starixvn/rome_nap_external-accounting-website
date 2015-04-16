@@ -452,6 +452,11 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MasterMinMaxPT.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MinMaxPTRacingSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\minmaxpt.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting-override.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button-left.gif" />
     <Content Include="Areas\Statement\Views\Report\Scripts\StatementReportManager.js" />
     <Content Include="Areas\Statement\Views\Report\Styles\Images\information-icon2.png" />
     <Content Include="Areas\Statement\Views\Report\Styles\Statement.css" />
