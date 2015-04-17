@@ -88,7 +88,6 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [AllowAnonymous]
         [HttpPost]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
