@@ -60,15 +60,19 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Fanex.LiveCasino.CoreSetting">
       <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.LiveCasinoSetting">
+      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Fanex.NAP.Core">
+      <HintPath>..\Dependencies\Fanex.NAP.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependencies\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4894.26393, Culture=neutral, processorArchitecture=MSIL">

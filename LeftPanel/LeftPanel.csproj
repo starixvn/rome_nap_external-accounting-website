@@ -31,8 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary, Version=1.0.2.8, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CasinoLibrary">
       <HintPath>..\Dependencies\Casino\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
@@ -73,8 +72,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
     <Reference Include="System" />

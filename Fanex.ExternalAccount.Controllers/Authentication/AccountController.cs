@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.Security;
     using CaptchaMvc.HtmlHelpers;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
