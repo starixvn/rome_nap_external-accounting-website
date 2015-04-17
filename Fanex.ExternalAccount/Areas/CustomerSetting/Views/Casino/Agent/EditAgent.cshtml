@@ -180,7 +180,7 @@
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
     $(document).ready(function () {
-        var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names());
+        var casinoController = new CasinoController(parseInt('@CurrentSession.Instance.UserId'), '@CurrentSession.Instance.UserName', parent.Fanex.ExtAcc.Customer.IsMultiple, parent.Fanex.ExtAcc.Customer.Ids(), parent.Fanex.ExtAcc.Customer.Names(), parent.Fanex.ExtAcc.Customer.RnGCasinoStatuses);
 
         $('.buttonPopup').bind('click', function () {
             casinoController.Update(function (errorCode, errorMessage) {

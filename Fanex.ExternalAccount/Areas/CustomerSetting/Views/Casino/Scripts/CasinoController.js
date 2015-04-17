@@ -1,10 +1,11 @@
-﻿function CasinoController(userId, username, isMultiple, custIds, usernames) {
+﻿function CasinoController(userId, username, isMultiple, custIds, usernames, syncStatuses) {
     var CustomerModel = customerModel;
     var SettingModel = customerSetting;
     var CustomerInfo = { id: custId, uplineId: uplineId, userId: userId, username: username };
     var IsMultiple = isMultiple;
     var CustIds = custIds;
     var Usernames = usernames;
+    var SyncStatuses = syncStatuses;
     var ErrorMessage = '';
     var SuccessMessage = '';
     var actionName = '';
@@ -100,6 +101,8 @@
     };
 
     var ProcessUpdate = function (custIdIndex, ondone) {
+        var isSync = SyncStatuses[custIdIndex] == 1 ? true : false;
+        CustomerModel.casinoSync = custIdIndex == null ? CustomerModel.casinoSync : isSync;
         var data = {
             id: CustomerInfo.id,
             uplineId: CustomerInfo.uplineId,
@@ -196,18 +199,13 @@
             }
         })
         .error(function (response) {
-            if (typeof console != 'undefined') {
-                console.log(response);
-            }
-
-            ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + $($(response).get(0).responseText)[1].text.formatErrorMessage() + '<br /><br />';
-
+            ErrorMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + data.username + ":</font><br /><font color='red'> Not casino's Customer. </font></div>";
             if (!IsMultiple) {
-                $('#errMsg').html(ErrorMessage);
+                $('#errMsg').html(ErrorMessage + SuccessMessage);
                 $('#errMsg').show();
 
                 if (typeof ondone == 'function') {
-                    ondone(1, ErrorMessage);
+                    ondone(1, ErrorMessage + SuccessMessage);
                 }
 
                 ErrorMessage = '';
@@ -218,7 +216,7 @@
             }
             else {
                 if (custIdIndex == CustIds.length - 1) {
-                    $('#errMsg').html(ErrorMessage);
+                    $('#errMsg').attr('class', 'errMsg').html(ErrorMessage + SuccessMessage);
                     $('#errMsg').show();
 
                     if (typeof ondone == 'function') {
