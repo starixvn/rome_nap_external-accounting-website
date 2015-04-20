@@ -10,10 +10,13 @@
 namespace Fanex.ExternalAccount
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using CaptchaMvc.Infrastructure;
+    using CaptchaMvc.Interface;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
 
@@ -91,7 +94,11 @@ namespace Fanex.ExternalAccount
             BundleTable.Bundles.EnableExternalGroupBundle();
             BundleTable.Bundles.EnableDailyWinLossBundle();
             BundleTable.Bundles.EnableStatementBundle();
-            BundleTable.Bundles.EnableWinLossDetailBundle();
+            BundleTable.Bundles.EnableWinLossDetailBundle(); 
+
+            var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
+            defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
+            defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
         }
 
         /// <summary>
@@ -105,6 +112,23 @@ namespace Fanex.ExternalAccount
             {
                 Response.Redirect("~/Shared/Error");
             }
+        }
+
+        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
+        {
+            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
+        }
+
+        private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
+        {
+            return urlHelper.Action(
+                "Generate",
+                "DefaultCaptcha",
+                new RouteValueDictionary
+                {
+                    { "area", string.Empty },
+                    { captchaManager.TokenParameterName, keyValuePair.Key }
+                });
         }
     }
 }

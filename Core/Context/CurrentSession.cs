@@ -34,6 +34,8 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASFromSystem = "EASFromSystem";
 
         private static string _captcha = string.Empty;
+        private static int _loginAttempt = 0;
+        private static string _userAttempt = string.Empty;
 
         #endregion Constants
 
@@ -199,6 +201,32 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get;
             set;
+        }
+
+        public int LoginAttempt
+        {
+            get
+            {
+                return _loginAttempt;
+            }
+
+            set
+            {
+                _loginAttempt = value;
+            }
+        }
+
+        public string UserAttempt
+        {
+            get
+            {
+                return _userAttempt;
+            }
+
+            set
+            {
+                _userAttempt = value;
+            }
         }
     }
 }

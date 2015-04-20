@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CaptchaMvc">
+      <HintPath>..\Dependencies\CaptchaMvc.dll</HintPath>
+    </Reference>
     <Reference Include="CasinoLibrary, Version=1.0.0.26, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Casino\CasinoLibrary.dll</HintPath>
@@ -64,6 +67,9 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.LiveCasinoSetting">
+      <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -200,8 +200,8 @@
         var showKenoSetting = '@showKenoSetting';
         
         $(document).ready(function () {
-            Fanex.ExtAcc.Account.ReCheckin();
-            setInterval(Fanex.ExtAcc.Account.ReCheckin, 10000);
+            Fanex.ExtAcc.Customer.ReCheckin();
+            setInterval(Fanex.ExtAcc.Customer.ReCheckin, 10000);
         });
 
         var titles = ['@ViewLang.EditPersonalInfo', '@ViewLang.editTransferCondition', '@ViewLang.confirmTransCondition', '@ViewLang.choonseDaily', '@ViewLang.chooseOneDay'];

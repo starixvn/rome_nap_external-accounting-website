@@ -10,7 +10,18 @@ Fanex.ExtAcc.Account = {
     kickOutIntId: 0,
     maxRetryTimes: 3,
     currentRetryTimes: 0,
-    RecheckinXHR: null,
+    LoginAttempt: 0,
+
+    ResetLoginAttempt: function () {
+        $.ajax(resolveClientUrl("Account/ResetLoginAttempt"))
+        .done(function (data) {
+            $('#captcha').hide();
+        })
+        .fail(function (data) {
+            if (typeof console != 'undefined')
+                console.log(data);
+        })
+    },
 
     HandleAjaxResult: function (element) {
         $(element).bind('ajaxComplete', function (event, request) {
@@ -28,26 +39,12 @@ Fanex.ExtAcc.Account = {
     },
 
     Init: function () {
+        var interval = setInterval(function () {
+            clearInterval(interval);
+            Fanex.ExtAcc.Account.ResetLoginAttempt();
+        }, 300000);
+
         this.HandleAjaxResult(document);
-
-        if (this.RecheckinXHR == null && document.URL.toLowerCase().indexOf("account/login") != -1) {
-            setInterval(this.ReCheckin, 10000);
-        }
-
-        if (this.kickOutIntId == 0 && document.URL.toLowerCase().indexOf("account/login") != -1) {
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
-
-                $.ajax({
-                    url: resolveClientUrl('Account/CaptchaImage?ver=' + new Date().toGMTString()),
-                    type: 'post'
-                }).success(function (result) {
-                    $('#imgCode').attr('src', 'data:image/jpeg;base64,' + result);
-                });
-            }, 1000);
-
-            this.kickOutIntId = setInterval(this.GetValidateImage, 120000);
-        }
 
         if (document.forms.length > 0) {
             $('#UserName').focus();
@@ -65,9 +62,9 @@ Fanex.ExtAcc.Account = {
                 }
                 /*
                 if ($('#Captcha').val().toString().search(/^[<\s\s*>]/) != -1) {
-                    $('#Captcha').focus();
-                    Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
-                    return false;
+                $('#Captcha').focus();
+                Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
+                return false;
                 }*/
 
                 if ($('#UserName').val() == '') {
@@ -83,9 +80,9 @@ Fanex.ExtAcc.Account = {
                 }
                 /*
                 if ($('#Captcha').val() == '' || $('#Captcha').val().length < 4) {
-                    $('#Captcha').focus();
-                    Validators.show($('#Captcha').get(0), 'This field is required');
-                    return false;
+                $('#Captcha').focus();
+                Validators.show($('#Captcha').get(0), 'This field is required');
+                return false;
                 }*/
             };
         }
@@ -129,57 +126,6 @@ Fanex.ExtAcc.Account = {
         .fail(function (data) {
             if (typeof console != 'undefined') console.log(data);
         })
-    },
-
-    ReCheckin: function () {
-        if (this.RecheckinXHR != null)
-            this.RecheckinXHR.abort();
-
-        this.RecheckinXHR = $.ajax({
-            url: resolveClientUrl('Account/ReCheckIn'),
-            type: 'GET',
-            dataType: 'html',
-            cache: false,
-            success: function (data) {
-                if (data == -1) {
-                    try {
-                        if (typeof Fanex.ExtAcc.Form != 'undefined') {
-                            if (document.getElementById('windowPopup')) {
-                                var tag = document.getElementById('windowPopup');
-
-                                if (tag.tagName == "IFRAME") {
-                                    Fanex.ExtAcc.Form.Close();
-                                } else {
-                                    $('#windowPopup').html('You have logged in from another session or your login session has expired!'); // Prevent opening popup if any
-                                }
-                            }
-
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
-                                Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
-                                    location.href = resolveClientUrl('Account/Login');
-                                }, 1000);
-                            }, 1000);
-                        }
-                    } catch (e) {
-                        location.href = resolveClientUrl('Account/Login');
-                    }
-                }
-                else if (data == 2) {
-                    location.href = resolveClientUrl('Account/Offline');
-                }
-                else if (data == 3) {
-                   location.href = resolveClientUrl('Shared/Error');
-                }
-
-                Fanex.ExtAcc.Account.RecheckinXHR = null;
-            },
-            error: function (xhr, status, e) {
-                if (typeof console != 'undefined') console.log(e);
-
-                Fanex.ExtAcc.Account.RecheckinXHR = null;
-            }
-        });
     }
 }
 

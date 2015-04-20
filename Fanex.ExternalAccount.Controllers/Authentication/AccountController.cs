@@ -16,6 +16,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
+    using CaptchaMvc.HtmlHelpers;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -28,7 +29,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// <summary>
     /// Account controller.
     /// </summary>
-    public class AccountController : Controller
+    public class AccountController : CaptchaMvc.Controllers.DefaultCaptchaController
     {
         private ILoginService _userService = null;
 
@@ -53,6 +54,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         [HttpGet]
         public ActionResult Login()
         {
+            ViewBag.ShowCaptcha = ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
             Response.AppendHeader("Content-Encoding", "gzip");
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
@@ -83,50 +85,84 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// </summary>
         /// <param name="model">Login model object.</param>
         /// <returns>JSON string.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [AllowAnonymous]
         [HttpPost]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
-            if ((this._currentSession.Captcha != null && 
-                this._currentSession.Captcha.Equals(model.Captcha, StringComparison.OrdinalIgnoreCase)) ||
-                (this._nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
-                this._nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))))
+            if ((this._nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
+                this._nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))) ||
+                ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt < 3 ||
+                !((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) ||
+                this.IsCaptchaValid(null))
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
                 Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
                 int custId = 0, onuserId = 0;
                 bool isIntAcc = true;
+
                 var result = this._userService.Login(
-                    model.UserName, 
-                    model.Password, 
-                    new DTO.Request() 
-                    { 
-                        Browser = Request.Browser.Browser, 
-                        CountryCode = this._currentContext.CountryCode, 
-                        DomainName = this._currentContext.DomainName, 
-                        IP = this._currentContext.Ip4Address, 
+                    model.UserName,
+                    model.Password,
+                    new DTO.Request()
+                    {
+                        Browser = Request.Browser.Browser,
+                        CountryCode = this._currentContext.CountryCode,
+                        DomainName = this._currentContext.DomainName,
+                        IP = this._currentContext.Ip4Address,
                         NetSessionId = this._currentSession.NetSessionId,
                         Platform = Request.Browser.Platform
-                    }, 
-                    out custId, 
-                    out onuserId, 
+                    },
+                    out custId,
+                    out onuserId,
                     out isIntAcc);
+
+                if (((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 &&
+                    !((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) &&
+                    (result == null || !result.IsSuccess || !this.IsCaptchaValid(null)))
+                {
+                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
+                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
+                    ViewBag.ShowCaptcha = "none";
+                    return this.PartialView(model);
+                }
+
                 if (result != null && result.IsSuccess)
                 {
-                    var group = result.ResultData as Group;
-                    SetSessionIfSuccess(model, custId, onuserId, isIntAcc, group);
+                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
+                    var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
+                    this._currentSession.UserName = model.UserName;
+                    this._currentSession.UserId = custId;
+                    this._currentSession.CustId = custId;
+                    this._currentSession.OnUserId = onuserId;
+                    this._currentSession.IsInternalAdmin = isIntAcc;
+                    this._currentSession.GroupId = group.GroupID;
+                    this._currentSession.CurrencyGroup = group.GroupName;
+                    this._currentSession.IsITAdmin = group.GroupID == 1;
                     return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
                 }
                 else
                 {
+                    if (string.IsNullOrWhiteSpace(((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt) ||
+                        ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        ++((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt;
+                    }
+                    else
+                    {
+                        ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
+                    }
+
+                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
+                    ViewBag.ShowCaptcha = ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
                     Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
                     return this.PartialView(model);
                 }
             }
             else
             {
+                ViewBag.ShowCaptcha = ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
                 Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
                 this._currentSession.UserName = string.Empty;
                 return this.PartialView(model);
@@ -140,7 +176,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <param name="noisy">True if specify noisy points.</param>
         /// <returns>ActionResult object.</returns>
         public ActionResult CaptchaImage(string prefix, bool noisy = true)
-        {        
+        {
             return this.Content(new CaptchaResult().GetValiationImage(this.ControllerContext));
         }
 
@@ -178,7 +214,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             if (maintenanceInfo.IsDownTime)
             {
                 if (this._currentSession.IsLogin)
-                {                    
+                {
                     this.SignOut(onuserId, this._currentSession.UserName);
                 }
 
@@ -324,6 +360,11 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             var result = this._userService.GroupList();
 
             return this.Json(result.Select(o => new { GroupId = o.GroupID, GroupName = o.GroupName }).ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public void ResetLoginAttempt()
+        {
+            ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
         }
 
         /// <summary>
