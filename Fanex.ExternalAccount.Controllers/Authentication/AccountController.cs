@@ -91,11 +91,21 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
+            var isValidCaptcha = false;
+            try
+            {
+                isValidCaptcha = this.IsCaptchaValid(null);
+            }
+            catch
+            {
+                isValidCaptcha = false;
+            }
+
             if ((this._nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
                 this._nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))) ||
                 ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt < 3 ||
                 !((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) ||
-                this.IsCaptchaValid(null))
+                isValidCaptcha)
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
                 Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
@@ -120,7 +130,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
                 if (((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 &&
                     !((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) &&
-                    (result == null || !result.IsSuccess || !this.IsCaptchaValid(null)))
+                    (result == null || !result.IsSuccess || !isValidCaptcha))
                 {
                     ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
                     ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;

@@ -207,12 +207,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return _loginAttempt;
+                return Utils.ToInt32(this.Session["_loginAttempt"]);
             }
 
             set
             {
-                _loginAttempt = value;
+                this.Session["_loginAttempt"] = value;
             }
         }
 
@@ -220,12 +220,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return _userAttempt;
+                return Utils.ToString(this.Session["_userAttempt"]);
             }
 
             set
             {
-                _userAttempt = value;
+                this.Session["_userAttempt"] = value;
             }
         }
     }

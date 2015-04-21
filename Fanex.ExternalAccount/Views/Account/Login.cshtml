@@ -6,6 +6,7 @@
 @model Fanex.ExternalAccount.ViewModel.Account.Login
 @{
     ViewBag.Title = ViewLang.LoginTitle;
+    var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none"; 
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,8 @@
     {
         <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/login/css")" rel="stylesheet" type="text/css" />
     }
-</head>
+    <link href="@Url.Content("~/Areas/CustomerSetting/Views/SylouCaptcha/Styles/Index.css")"
+                                    rel="stylesheet" type="text/css" /></head>
 <body>
     @using (Html.BeginForm())
     {
@@ -51,19 +53,13 @@
                             @Html.PasswordFor(m => m.Password, new { @class = "password bgLoginControl", @maxlength = 50 })
                         </td>
                     </tr>
-                    <tr id="captcha" style="display: @ViewBag.ShowCaptcha">
+                    <tr id="captcha" style="display: @showCaptcha">
                         <td>
                         </td>
                         <td>
-                            @*@Html.TextBoxFor(m => m.Captcha, new { @autocomplete = "off", @class = "captchaText text bgLoginControl", @maxlength = 4, @width = "80px" })&nbsp;<span><img src="@Url.Content("~/Images/loading.gif")" id="imgCode" alt="" class="captcha" onclick="Fanex.ExtAcc.Account.GetValidateImage()" /></span>*@
                              @if (ViewBag.ShowCaptcha == string.Empty)
-                            {
-                                <link href="@Url.Content("~/Areas/CustomerSetting/Views/SylouCaptcha/Styles/Index.css")"
-                                    rel="stylesheet" type="text/css" />
-                                using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @id = "CaptchaMVCForm" }))
-                                {
-                                    @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
-                                }
+                            {    
+                                @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
                             }
                         </td>
                     </tr>
