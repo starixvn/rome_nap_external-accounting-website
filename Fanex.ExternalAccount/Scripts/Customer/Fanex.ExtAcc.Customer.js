@@ -63,6 +63,7 @@ Fanex.ExtAcc.Customer = {
     Usernames: '',
     CustIds: '',
     LiveCasinoStatuses: '',
+    RnGCasinoStatuses: [],
     TitleEditInfo: '',
     MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
     MessageUnClosed: 'Are you sure you want to change Close status for this customer?',
@@ -3525,6 +3526,7 @@ Fanex.ExtAcc.Customer = {
         this.Usernames = '';
         this.CustIds = '';
         this.LiveCasinoStatuses = '';
+        this.RnGCasinoStatuses = [];
 
         for (var i = 0; i < divs.length; i++) {
             if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
@@ -3552,9 +3554,9 @@ Fanex.ExtAcc.Customer = {
 
                 for (var j = 0; j < custids.length; j++) {
                     if (custids[j] == row.custid) {
-                        this.Usernames += row.username + ',';
+                        this.Usernames += row.username + ', ';
                         this.LiveCasinoStatuses += (row.SyncLiveCasino ? '1' : '0') + ',';
-
+                        this.RnGCasinoStatuses.push(row.synccasino ? '1' : '0');
                         continue;
                     }
                 }
@@ -3582,6 +3584,7 @@ Fanex.ExtAcc.Customer = {
 
         return [];
     },
+
 
     ResetFlags: function () {
         this.IsMultiple = false;
