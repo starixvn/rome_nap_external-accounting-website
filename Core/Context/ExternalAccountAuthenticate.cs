@@ -372,10 +372,9 @@ namespace Fanex.ExternalAccount.Core.Context
         /// </summary>
         /// <param name="ex">Exception object.</param>
         /// <param name="response">Response object.</param>
-        /// <param name="category">Category string.</param>
-        private void ProcessException(Exception ex, HttpResponseBase response, string category = "ExternalAccount")
+        private void ProcessException(Exception ex, HttpResponseBase response)
         {
-            LogService.Error(ex.Message, category, ex);
+            LogService.Error(ex.Message, ex);
 
             this.SignOut(response);
         }        

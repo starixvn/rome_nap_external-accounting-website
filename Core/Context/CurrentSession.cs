@@ -33,8 +33,7 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASGroupId = "EASGroupId";
         public const string EASFromSystem = "EASFromSystem";
 
-        private static string _captcha = string.Empty;
-        private static int _loginAttempt = 0;
+        private static string _captcha = string.Empty;        
         private static string _userAttempt = string.Empty;
 
         #endregion Constants

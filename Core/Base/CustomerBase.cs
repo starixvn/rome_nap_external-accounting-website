@@ -118,7 +118,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
                 return this.JsonBase(new { ErrorCode = 999, ErrorMessage = string.Empty });
             }            
         }
@@ -162,7 +162,7 @@ namespace Fanex.ExternalAccount.Core.Base
                 }
                 catch (Exception e)
                 {
-                    Logs.Error(e.Message, "ExternalAccount", e);
+                    Logs.Error(e.Message, e);
                 }
             }
 

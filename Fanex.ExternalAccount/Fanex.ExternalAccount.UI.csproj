@@ -2515,6 +2515,7 @@
     <Content Include="Web.kbt67.Release.config">
       <DependentUpon>Web.kbt67.config</DependentUpon>
     </Content>
+    <None Include="deployment.ignore" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />

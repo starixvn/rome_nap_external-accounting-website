@@ -220,7 +220,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
             }
         }
 
@@ -247,7 +247,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
             }
         }
 
@@ -268,7 +268,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
             }
         }
 
@@ -289,7 +289,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
             }
         }
 

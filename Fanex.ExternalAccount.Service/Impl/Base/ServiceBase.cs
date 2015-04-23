@@ -19,9 +19,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Base
         /// Processes exception.
         /// </summary>
         /// <param name="ex">Exception object.</param>
-        /// <param name="category">Category to write log.</param>
         /// <param name="includeQuery">To prevent getting secure information.</param>
-        protected void ProcessException(Exception ex, string category = "ExternalAccount", bool includeQuery = true)
+        protected void ProcessException(Exception ex, bool includeQuery = true)
         {
             var message = ex.Message +
                              "<br>\r\nSOURCE: " + ex.Source +
@@ -32,7 +31,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Base
                              "<br>\r\nTARGETSITE: " + ex.TargetSite +
                              "<br>\r\nSTACKTRACE: " + ex.StackTrace;
 
-            LogService.Error(message, category);
+            LogService.Error(message);
 
             if (HttpContext.Current.IsDebuggingEnabled)
             {

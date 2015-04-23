@@ -142,14 +142,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 {
                     ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
                     var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
-                    this._currentSession.UserName = model.UserName;
-                    this._currentSession.UserId = custId;
-                    this._currentSession.CustId = custId;
-                    this._currentSession.OnUserId = onuserId;
-                    this._currentSession.IsInternalAdmin = isIntAcc;
-                    this._currentSession.GroupId = group.GroupID;
-                    this._currentSession.CurrencyGroup = group.GroupName;
-                    this._currentSession.IsITAdmin = group.GroupID == 1;
+
+                    SetSessionIfSuccess(model, custId, onuserId, isIntAcc, group);
+
                     return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
                 }
                 else
@@ -251,7 +246,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
                 return (int)StatusKickedOut.Error;
             }
 
@@ -394,7 +389,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, "ExternalAccount", ex);
+                Logs.Error(ex.Message, ex);
                 return this.RedirectToAction("Error", "Shared");
             }
         }

@@ -78,7 +78,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex, "ExternalAccount", false);
+                this.ProcessException(ex, false);
             }
 
             return null;
@@ -103,7 +103,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex, "ExternalAccount", false);
+                this.ProcessException(ex, false);
             }
 
             return null;

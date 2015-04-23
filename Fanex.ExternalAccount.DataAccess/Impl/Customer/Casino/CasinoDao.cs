@@ -90,7 +90,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 }
                 catch (System.Exception ex)
                 {
-                    Logs.Error(ex.Message, "ExternalAccount", ex);
+                    Logs.Error(ex.Message, ex);
                 }
 
                 customerDetail.NoIBCData = false;
