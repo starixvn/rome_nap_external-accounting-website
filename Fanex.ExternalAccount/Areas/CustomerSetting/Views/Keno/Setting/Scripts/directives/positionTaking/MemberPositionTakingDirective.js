@@ -18,6 +18,12 @@ KenoModule.directive('memberPositionTakingElement', ['commonService', '$template
                 $scope.a1Range.unshift($scope.positionTaking.a1);
             }
 
+            $scope.$on('resetPositionTaking', function (event, data) {
+                if (data.betTypeId != $scope.positionTaking.betTypeId) {
+                    $scope.positionTaking.a1 = $scope.originalPositionTaking.a1;
+                }
+            });
+
             $scope.setRangePTIfFirstChange = function () {
                 if (($scope.originalPositionTaking.a1 != $scope.positionTaking.a1) && !$scope.isPTFirstChange) {
                     $scope.a1Range = commonService.getRangePTValue($scope.positionTaking.a2, Math.max(0, $scope.positionTaking.n2));

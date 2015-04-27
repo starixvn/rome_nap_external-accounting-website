@@ -21,6 +21,13 @@ KenoModule.directive('superPositionTakingElement', ['commonService', '$templateC
                 $scope.$emit('totallyChecking');
             };
 
+            $scope.$on('resetPositionTaking', function (event, data) {
+                if (data.betTypeId != $scope.positionTaking.betTypeId) {
+                    $scope.positionTaking.s4 = $scope.originalPositionTaking.s4;
+                    $scope.positionTaking.n4 = $scope.originalPositionTaking.n4;
+                }
+            });
+
             $scope.$watch('positionTaking.s4', function () {
                 $scope.positionTaking.isUpdateS4 = $scope.originalPositionTaking.s4 != $scope.positionTaking.s4;
 

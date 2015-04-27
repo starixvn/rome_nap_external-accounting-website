@@ -31,6 +31,16 @@ KenoModule.directive('agentPositionTakingElement', ['commonService', '$templateC
                 $scope.$emit('totallyChecking');
             };
 
+            $scope.$on('resetPositionTaking', function (event, data) {
+                if (data.betTypeId != $scope.positionTaking.betTypeId) {
+                    $scope.positionTaking.m2 = $scope.originalPositionTaking.m2;
+                    $scope.positionTaking.uM2 = $scope.originalPositionTaking.uM2;
+                    $scope.positionTaking.iM2 = $scope.originalPositionTaking.iM2;
+                    $scope.positionTaking.a2 = $scope.originalPositionTaking.a2;
+                    $scope.positionTaking.n2 = $scope.originalPositionTaking.n2;
+                }
+            });
+
             $scope.arangeMemberRange = function () {
                 var minOfMemberNewValueRange = Math.max(0, commonService.roundPTValue($scope.positionTaking.n3 - $scope.positionTaking.a2));
                 var maxOfMemberNewValueRange = commonService.roundPTValue($scope.positionTaking.m3 - $scope.positionTaking.a2);

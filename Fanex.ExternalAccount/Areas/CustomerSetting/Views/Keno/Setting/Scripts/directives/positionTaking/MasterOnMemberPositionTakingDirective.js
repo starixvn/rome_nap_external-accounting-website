@@ -56,6 +56,14 @@ KenoModule.directive('masterOnMemberPositionTakingElement', ['commonService', '$
                 $scope.$emit('totallyChecking');
             };
 
+            $scope.$on('resetPositionTaking', function (event, data) {
+                if (data.betTypeId != $scope.positionTaking.betTypeId) {
+                    $scope.positionTaking.m1 = $scope.originalPositionTaking.m1;
+                    $scope.positionTaking.uM1 = $scope.originalPositionTaking.uM1;
+                    $scope.positionTaking.iM1 = $scope.originalPositionTaking.iM1;
+                }
+            });
+
             $scope.$watch('[positionTaking.m1, positionTaking.uM1,  positionTaking.iM1]', function (newValue, oldValue) {
                 if (newValue !== oldValue) {
                     if ($scope.originalPositionTaking.iM1) { // Load in case within isAuto

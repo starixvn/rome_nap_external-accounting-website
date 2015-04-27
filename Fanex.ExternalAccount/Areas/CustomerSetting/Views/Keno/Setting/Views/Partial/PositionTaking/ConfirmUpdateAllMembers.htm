@@ -6,7 +6,7 @@
 <div style="padding-left: 15px;">
     Do you want to update all member's position taking to:</div>
 <div ng-repeat="positionTaking in positionTakingList " ng-model="positionTaking">
-    <div ng-if="positionTaking.isConfirmIsAuto" style="margin-top: 5px; padding-left: 50px;">
+    <div ng-show="(positionTakingCopyAll.isCopiedAll && positionTaking.betTypeId == positionTakingCopyAll.betTypeId) || !positionTakingCopyAll.isCopiedAll" ng-if="positionTaking.isConfirmIsAuto" style="margin-top: 5px; padding-left: 50px;">
         <div class ="col100 " ng-bind="positionTaking.betTypeName" style="margin-right: 10px; display: inline-block"></div>
          <select ie-select-fix = "{{fixIECount}}" class="col60" ng-model="positionTaking.newMemberPT" ng-options="value for value in positionTaking.memberNewValueRange">
         </select>
