@@ -51,4 +51,6 @@ public static class eFunctions
 			public const string Keno = "Keno";
 			public const string KenoSetting = "KenoSetting";
             public const string EnableESports = "EnableESports";
+
+            public const string UpdateGoldDeluxe = "UpdateGoldDeluxe";
 		}

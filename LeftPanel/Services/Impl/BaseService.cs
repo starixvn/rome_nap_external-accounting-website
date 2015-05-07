@@ -21,27 +21,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     /// </summary>
     public abstract class BaseService : ILeftPanelService
     {
-        public int Agent 
-        { 
-            get 
-            { 
-                return 2; 
-            } 
+        public int Agent
+        {
+            get
+            {
+                return 2;
+            }
         }
 
-        public int Master 
-        { 
-            get 
-            { 
-                return 3; 
-            } 
+        public int Master
+        {
+            get
+            {
+                return 3;
+            }
         }
 
-        public int Member 
-        { 
-            get 
-            { 
-                return 1; 
+        public int Member
+        {
+            get
+            {
+                return 1;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             {
                 return 4;
             }
-        }        
+        }
 
         /// <summary>
         /// Gets customer information.
@@ -120,5 +120,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public abstract Result ResetSecurityCode(int id, string code, bool force);
 
         public abstract Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
+
+        public abstract Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int custId);
     }
 }

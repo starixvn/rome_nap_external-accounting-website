@@ -73,8 +73,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             string result = "var model = " + JsonConvert.SerializeObject(
-                model, 
-                Formatting.None,                
+                model,
+                Formatting.None,
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -483,8 +483,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 IP = CurrentContext.Ip4Address
             });
             var result = "var model = " + JsonConvert.SerializeObject(
-                model, 
-                Formatting.None, 
+                model,
+                Formatting.None,
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -645,7 +645,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             var downlines = this._service.GetDownlineList(custId, 100, pageIndex);
             var model = new DownlineList();
             var totalPages = LeftPanelService.TotalPages;
-                        
+
             if (downlines != null && downlines.Rows.Count > 0)
             {
                 foreach (DataRow item in downlines.Rows)
@@ -669,6 +669,34 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             return this.JsonBase(model);
+        }
+
+        /// <summary>
+        /// Updates Gold Deluxe status.
+        /// </summary>
+        /// <param name="custId">Customer id.</param>
+        /// <param name="uplineId">Upper customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-lines or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>ActionResult object.</returns>
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateGoldDeluxe, Policy = AuthenticateAction.AuthenticationType.Host)]
+        public ActionResult UpdateGoldDeluxe(int custId, int uplineId, bool enable, bool enableDownline, string custName)
+        {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
+            try
+            {
+                var customerInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+                return this.JsonBase(this._service.UpdateGoldDeluxe(custId, enable, enableDownline, custName, CurrentSession.CustId));
+            }
+            catch (Exception ex)
+            {
+                return this.JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
+            }
         }
     }
 }

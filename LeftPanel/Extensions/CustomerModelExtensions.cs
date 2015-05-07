@@ -998,7 +998,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1088,7 +1094,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1154,7 +1166,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1221,7 +1239,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {

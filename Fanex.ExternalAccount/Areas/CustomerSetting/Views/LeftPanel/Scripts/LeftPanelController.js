@@ -2150,6 +2150,149 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 380, false, null, 1, 'enableKeno');
     };
 
+    $scope.EnableGoldDeluxe = function (enable, id) {
+        var message = 'Are you sure you want to change Gold Deluxe status for this customer? Warning, Gold Deluxe downlines will be disabled as well';
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var display = roleId == 1 ? 'none' : 'block';
+        var checked = !enable ? 'checked="checked"' : "";
+        var content = '<input name="chkA" type="checkbox" disabled="disabled" checked="checked" />' + $scope.model.personalInfo.currentLevel.text +
+            '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" />Gold Deluxe\'s downlines</div>';
+        content = enable ? '<input name="chkA" type="checkbox" disabled="disabled" />' + $scope.model.personalInfo.currentLevel.text : content;
+
+        if (enable) {
+            parent.Fanex.ExtAcc.Form.ConfirmBox('Disable Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
+                    content,
+                    350,
+                    150,
+                    false,
+                    function () {
+                        parent.Fanex.ExtAcc.Form.ConfirmBox(
+                            'Warning!!!',
+                            message,
+                            460,
+                            150,
+                            false,
+                            function () {
+                                parent.Fanex.ExtAcc.BlockUI();
+
+                                $.ajax({
+                                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGoldDeluxe'),
+                                    dataType: 'json',
+                                    type: 'post',
+                                    data: {
+                                        custId: $scope.model.personalInfo.custId.value,
+                                        uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
+                                        enable: !enable,
+                                        enableDownline: false,
+                                        custName: $scope.model.personalInfo.currentLevel.value,
+                                        groupName: parent.$('#selectedGroupName').html()
+                                    }
+                                })
+                                .success(function (result) {
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmGoldDeluxe');
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                                    if (result.isSuccess) {
+                                        var timeout = setTimeout(function () {
+                                            clearTimeout(timeout);
+                                            parent.Fanex.ExtAcc.UnBlockUI();
+                                            document.location.reload(true);
+                                        }, 2000);
+                                    }
+                                    else {
+                                        parent.Fanex.ExtAcc.UnBlockUI();
+                                        parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmGoldDeluxe');
+                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                        document.getElementById(id).checked = enable;
+                                    }
+                                })
+                                .error(function (xhr) {
+                                    parent.Fanex.ExtAcc.UnBlockUI();
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmGoldDeluxe');
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                                    document.getElementById(id).checked = enable;
+                                    if (typeof console != 'undefined') {
+                                        console.log(xhr);
+                                    }
+                                });
+                            },
+                            function () {
+                                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmGoldDeluxe');
+                            },
+                            'confirmGoldDeluxe');
+                    },
+                    function () {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                        document.getElementById(id).checked = enable;
+                    },
+                    'popupGoldDeluxe',
+                    true,
+                    function () {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                        document.getElementById(id).checked = enable;
+                    },
+                    true);
+        }
+        else {
+            parent.Fanex.ExtAcc.Form.ConfirmBox('Enable Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
+                content,
+                350,
+                150,
+                false,
+                function () {
+                    parent.Fanex.ExtAcc.BlockUI();
+
+                    $.ajax({
+                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGoldDeluxe'),
+                        dataType: 'json',
+                        type: 'post',
+                        data: {
+                            custId: $scope.model.personalInfo.custId.value,
+                            uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
+                            enable: !enable,
+                            enableDownline: parent.$('#enableDownline').get(0).checked,
+                            custName: $scope.model.personalInfo.currentLevel.value,
+                            groupName: parent.$('#selectedGroupName').html()
+                        }
+                    })
+                    .success(function (result) {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        }
+                        else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            document.getElementById(id).checked = enable;
+                        }
+                    })
+                    .error(function (xhr) {
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                        document.getElementById(id).checked = enable;
+                        if (typeof console != 'undefined') {
+                            console.log(xhr);
+                        }
+                    });
+                },
+                function () {
+                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                    document.getElementById(id).checked = enable;
+                },
+                'popupGoldDeluxe',
+                true,
+                function () {
+                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupGoldDeluxe');
+                    document.getElementById(id).checked = enable;
+                },
+                true);
+        }
+        };
+
     $scope.ViewSubTab = function (id) {
         switch (id) {
             case 'sub-edit':

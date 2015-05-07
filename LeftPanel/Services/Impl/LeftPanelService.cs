@@ -235,5 +235,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.EnableHRFixedOdds(id, enable, enableDownline);
         }
+
+        public override Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
+        {
+            return this._data.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
+        }
     }
 }
