@@ -118,7 +118,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
 
                 $http.post(url, kenoSetting)
                 .success(function (data, status, headers, config) {
-                    if ($scope.multipleEdit.isMultipleEdit) {
+                    if ($scope.multipleEdit.isMultipleEdit && typeof data != "string") {
                         data.custId = $scope.multipleEdit.custids[index];
                         data.username = $scope.multipleEdit.usernameArray[index];
                     }

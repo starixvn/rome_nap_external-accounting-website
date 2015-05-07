@@ -917,7 +917,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     NetSessionId = CurrentSession.NetSessionId,
                     Platform = Request.Browser.Platform,
                     SubAccId = 0,
-                    UserId = custId
+                    UserId = CurrentSession.UserId
                 });
 
             if (result.ErrorCode.Equals("0"))
@@ -926,7 +926,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 if (casino.CasinoSync)
                 {
                     CasinoLibrary.SBAgent.Customer cust = new CasinoLibrary.SBAgent.Customer();
-                    cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                    try
+                    {
+                        cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logs.Error(ex.Message, ex);
+                    }
                 }
             }
 
