@@ -141,5 +141,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool DisableGoldDeluxe
+        {
+            get;
+            set;
+        }
     }
 }

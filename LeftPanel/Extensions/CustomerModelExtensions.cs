@@ -752,9 +752,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.DisableProduct("EnableLiveCasino");
             }
 
-            if (product.UplineStatuses.DisableLiveCasino)
+            if (product.UplineStatuses.DisableGoldDeluxe)
             {
-                model.DisableProduct("EnableLiveCasino");
+                model.DisableProduct("EnableGoldDeluxe");
             }
 
             if (product.UplineStatuses.Closed)
@@ -956,6 +956,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableBingo = upperInfo.Rows[0].ToBoolean("disableBingo");
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
+                product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
