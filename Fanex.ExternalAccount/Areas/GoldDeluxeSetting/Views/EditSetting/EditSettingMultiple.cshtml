@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Areas/GoldDeluxeSetting/Views/EditSetting/_EditSetting.cshtml";
+    ViewBag.Title = GoldDeluxeLang.lblEditMultipleGoldDeluxe;
+}
+@model EditSettingMultipleViewModel
+
+@section modeldata
+{
+    <script type="text/javascript">
+        @(Html.ToJavascriptObject(Model, "settingViewModel"))
+    </script>
+}
+
+@section Customer
+{
+    <div id="tblCustInfo" class="col-xs-12">
+        <table data-ng-controller="CustomerInfoController" class="cust-info">
+            <tbody>
+                <tr>
+                    <td class="bold left">
+                        @(Model.Usernames.TrimEnd(',').Replace(",", ", "))
+                    </td>
+                </tr>
+                @if (Model.Level == CustomerLevel.Member
+                    && Model.UpLineLevel == CustomerLevel.Agent)
+                {
+                    <tr>
+                        <td class="right">
+                            <label for="chbEnableLiveCasino">
+                                <input id="chbEnableLiveCasino" type="checkbox" data-ng-model="enableLiveCasino"
+                                       data-ng-disabled="disableCheckBoxLiveCasino" />@GoldDeluxeLang.lblEnable
+                                </label>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
+    @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateSettingMultiple"))
+    @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndComMultiple"))
+    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSettingMultiple"))
+}
+
+

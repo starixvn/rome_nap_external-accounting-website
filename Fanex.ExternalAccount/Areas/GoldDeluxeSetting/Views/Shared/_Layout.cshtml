@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+    var currentLangaugeKey = Session[GoldDeluxeSettings.Settings.LanguageSessionKey] != null ?
+              Session[GoldDeluxeSettings.Settings.LanguageSessionKey].ToString() : "en-US";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("css", false)
+    @if (GoldDeluxeSettings.Settings.System == SystemType.Accounting)
+    {
+        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/bootstrap.css")" />
+        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting.css")?v=1" />
+        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting-override.css")" />
+    }
+    else
+    {
+        @Styles.Render("~/areas/GoldDeluxeSetting/content/bundlecss")
+    }
+    <script type="text/javascript">
+        var currentLaguageKey = '@(currentLangaugeKey)';
+    </script>
+    @RenderSection("modeldata", false)
+</head>
+<body>
+    <div id="mainContainer" class="main-content">
+        @RenderBody()
+    </div>
+    @Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
+    @Scripts.Render("~/areasjs/golddeluxe/core")
+    @if (GoldDeluxeSettings.Settings.System == SystemType.Accounting)
+    {
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/gold-deluxe-lang.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.en-US.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.ja-JP.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.ko-KR.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.th-TH.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.vi-VN.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.zh-CN.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.zh-TW.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/fanex-gold-deluxe-setting.js")?v=1"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/services/cust-setting-service.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/services/cust-game-setting-service.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/services/pt-and-com-setting-service.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/cust-info-controller.js")?v=1"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/cust-setting-controller.js")?v=1"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/pt-and-com-setting-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/cust-game-setting-controller.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")?v=2"></script>
+    }
+    else
+    {
+        @Scripts.Render("~/areasjs/golddeluxe/setting")
+    }
+    @RenderSection("scripts", false)
+</body>
+</html>

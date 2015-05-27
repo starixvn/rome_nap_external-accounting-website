@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\Dependencies\GoldDeluxe\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="CaptchaMvc">
       <HintPath>..\Dependencies\CaptchaMvc.dll</HintPath>
     </Reference>
@@ -100,6 +103,10 @@
     </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\gold-deluxe-setting\Fanex.GoldDeluxe.CoreSetting\bin\Debug\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -781,6 +788,59 @@
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\Styles\Index.css" />
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Web.config" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\bootstrap.css" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\fanex-gold-deluxe-setting.css" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\fanex-gold-deluxe-setting-override.css" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\agency-button-left.gif" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\agency-button.gif" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\agency-title-header.jpg" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\btn-update-setting.jpg" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\center-header.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\cross.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\error-icon.gif" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\ext-acc-btn-hover.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\ext-acc-btn.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\header-popup-background.jpg" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\infoMsg.gif" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\left-header.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\loader3.gif" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\popup-background.jpg" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\right-header.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\save.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\Success.gif" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\tick.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Content\Images\warning.png" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\fanex-gold-deluxe-setting.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\gold-deluxe-lang.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.en-US.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.ja-JP.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.ko-KR.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.th-TH.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.vi-VN.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.zh-CN.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.zh-TW.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\angular-sanitize.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\angular.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\bootstrap.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\jquery-1.11.1.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\jquery.blockUI.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\numeral.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-game-setting-service.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-agent.htm" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-master.htm" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
     <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
     <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting-override.css" />
@@ -870,6 +930,7 @@
     <Content Include="bundles\images\sucess.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
+    <Compile Include="Areas\GoldDeluxeSetting\Services\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Areas\LiveCasinoSetting\Services\LiveCasinoAuthorizationService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -2397,7 +2458,9 @@
   <ItemGroup>
     <Content Include="Configurations\appSettings.config" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
-    <Content Include="Configurations\connectionStrings.config" />
+    <Content Include="Configurations\connectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\appSettings.production.config" />
     <Content Include="Configurations\appSettings.uat.config" />
     <Content Include="Configurations\connectionStrings.local.config" />
@@ -2410,6 +2473,19 @@
     <Content Include="Configurations\appSettings.kbt67.config" />
     <Content Include="Configurations\connectionStrings.sandbox.config" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
+    <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
+    <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\Common\NoInformation.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\Common\UnAuthorized.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\EditSettingSingle.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\_EditSetting.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\Web.config" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />

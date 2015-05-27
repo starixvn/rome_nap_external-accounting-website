@@ -1,0 +1,477 @@
+﻿/* File Created: July 18, 2014 */
+body
+{
+    font-family: Tahoma;
+    font-size: 12px;
+}
+
+table td
+{
+    height: 24px;
+}
+
+select:disabled
+{
+    color: Gray;
+    cursor: not-allowed;
+}
+
+.edit-setting-gold-deluxe
+{
+    width: 850px;
+    padding: 10px 0px 0px 10px;
+}
+
+.edit-setting-gold-deluxe .left
+{
+    text-align: left;
+}
+
+.edit-setting-gold-deluxe .right
+{
+    text-align: right;
+}
+
+.edit-setting-gold-deluxe .bold
+{
+    font-weight: bold;
+}
+
+.edit-setting-gold-deluxe .center
+{
+    text-align: center;
+}
+
+.edit-setting-gold-deluxe .title, .pt-container .pt-title
+{
+    font-weight: bold;
+    color: White;
+    background-color: #587281;
+    padding-left: 10px;
+}
+
+.edit-setting-gold-deluxe table, .edit-setting-gold-deluxe table tr, .edit-setting-gold-deluxe table td
+{
+    border: 1px solid #7c98a4;
+    border-collapse: collapse;
+}
+
+.edit-setting-gold-deluxe .cust-info, .edit-setting-gold-deluxe .pt-setting, .edit-setting-gold-deluxe .win-limit
+{
+    width: 100%;
+}
+
+.edit-setting-gold-deluxe .cust-info td
+{
+    width: 25%;
+}
+
+.edit-setting-gold-deluxe .cust-info .info-lable
+{
+    padding-right: 4px;
+}
+
+.edit-setting-gold-deluxe .cust-info .info-value
+{
+    padding-left: 4px;
+}
+
+
+.edit-setting-gold-deluxe .pt-setting
+{
+    clear: both;
+}
+
+.edit-setting-gold-deluxe .pt-title
+{
+    position: relative;
+    height: 20px;
+}
+
+.edit-setting-gold-deluxe .btn-save-partial
+{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-image: url(Images/save.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+    right: 2px;
+}
+
+
+.edit-setting-gold-deluxe .update-setting
+{
+    margin-top: 4px;
+}
+
+.edit-setting-gold-deluxe .update-setting-accounting-submit
+{
+    background: url("Images/btn-update-setting.jpg") no-repeat scroll center center transparent;
+    border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    height: 24px;
+    margin-top: 6px;
+    text-align: center;
+    width: 122px;
+}
+
+.edit-setting-gold-deluxe .update-setting-agency-submit
+{
+    background: url("Images/agency-button.gif") no-repeat right top;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-weight: 700;
+    height: 22px;
+    min-width: 64px;
+    padding: 0 24px 2px 12px;
+    float: left;
+}
+.edit-setting-gold-deluxe .update-setting-agency-submit:hover
+{
+    background-position: 100% -22px;
+    color: #000;
+    cursor: pointer;
+}
+.edit-setting-gold-deluxe .update-setting-agency-submit-left
+{
+    background: url("Images/agency-button-left.gif") no-repeat left top;
+    height: 22px;
+    padding: 0 0 0 3px;
+    display: inline-block;
+    float: left;
+}
+
+.edit-setting-gold-deluxe .update-setting-ext-acc-submit
+{
+    background: url("Images/ext-acc-btn.png") repeat-x scroll 5px center;
+    color: #fff;
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    text-indent: 0;
+    margin-bottom: 10px;
+    float: right;
+}
+
+.edit-setting-gold-deluxe .update-setting-ext-acc-submit:hover
+{
+    background: url("Images/ext-acc-btn-hover.png") repeat-x scroll 5px center;
+}
+
+/*PT Style*/
+.pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th
+{
+    border: 1px solid #587281;
+    border-collapse: collapse;
+}
+
+.pt-setting tbody td, .pt-setting th
+{
+    text-align: center;
+}
+
+label.clearfix
+{
+    float: none;
+    clear: both;
+}
+.pt-container .pt-title
+{
+    border-left: 1px solid #587281;
+    border-right: 1px solid #587281;
+}
+.pt-container select
+{
+    width: 70px;
+}
+
+.pt-container select#maxWinLimit
+{
+    width: 110px;
+}
+
+.win-limit .checkbox-inline
+{
+    padding-left: 19px;
+}
+
+/*Warning message*/
+.edit-setting-gold-deluxe .warning-result
+{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.edit-setting-gold-deluxe .warning-result .sub-message-icon
+{
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+}
+
+.edit-setting-gold-deluxe .warning-result .sub-icon-warning
+{
+    background-image: url(Images/warning.png);
+}
+
+.edit-setting-gold-deluxe .warning-result .message-content-warning
+{
+    display: inline-block;
+    margin-left: 21px;
+    color: #C28F06;
+}
+
+/*Result message*/
+.edit-setting-gold-deluxe .updated-result
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message-icon
+{
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-icon-success
+{
+    background-image: url(Images/Success.gif);
+}
+
+.edit-setting-gold-deluxe .updated-result .main-icon-error
+{
+    background-image: url(Images/error-icon.gif);
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message
+{
+    display: inline-block;
+    margin-left: 25px;
+    max-height: 200px;
+    overflow: auto;
+    width: 100%;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .message-user-name
+{
+    color: Blue;
+    font-weight: bold;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message
+{
+    position: relative;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message-icon
+{
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+    left: 5px;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message .sub-icon-success
+{
+    background-image: url(Images/tick.png);
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message .sub-icon-error
+{
+    background-image: url(Images/cross.png);
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message .message-content
+{
+    display: inline-block;
+    margin-left: 21px;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message .message-content-success
+{
+    color: #2d9d3b;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message .message-content-error
+{
+    color: #DF2267;
+}
+
+.edit-setting-gold-deluxe .updated-result .main-message .sub-message .message-content-unauthorized
+{
+    margin-left: 5px;
+}
+
+
+/*Loading css*/
+.block-ui-loading
+{
+    width: 64px;
+    height: 64px;
+    background: url(Images/loader3.gif) no-repeat;
+}
+
+.game-setting .betting-limit-container
+{
+    padding: 2px 0px 4px 3px;
+}
+.game-setting .betting-limit-item
+{
+    margin: 0px 12px 0px 0px;
+}
+
+/*
+.game-setting .betting-limit-item .betting-limit-label
+{
+	margin-top: 4px;
+}
+*/
+.game-setting .betting-limit-item input[type="checkbox"], .game-setting .betting-limit-item input[type="radio"], .win-limit input[type="checkbox"]
+{
+    margin: 2px 2px 2px -14px; /*padding-top: 2px;*/
+}
+
+.game-setting .game-setting-name
+{
+    padding-right: 4px;
+}
+
+.setting-header-accounting .setting-header-first-icon
+{
+    float: left;
+    display: inline-block;
+    height: 23px;
+    width: 24px;
+    background: url(Images/left-header.png) no-repeat right bottom;
+}
+
+.setting-header-accounting .setting-header-text
+{
+    float: left;
+    height: 23px;
+    min-width: 120px;
+    font-weight: bold;
+    color: #fff;
+    text-align: left;
+    padding-top: 3px;
+    background: url(Images/center-header.png) repeat-x bottom;
+}
+
+.setting-header-accounting .setting-header-last-icon
+{
+    float: left;
+    background: url(Images/right-header.png) no-repeat right bottom;
+    height: 23px;
+    width: 5px;
+}
+
+.setting-header-agency .setting-header-text
+{
+    background: url('Images/agency-title-header.jpg') no-repeat scroll left bottom transparent;
+    color: #9D1C1C;
+    padding-left: 12px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    display: inline-block;
+    width: 100%;
+}
+
+/*popup layout*/
+#presetOnMemberModal .custom-modal-dialog
+{
+    width: 400px;
+}
+
+#presetOnMemberModal .custom-modal-content
+{
+    border-radius: 0px;
+    background: #f5f6f8 url(Images/popup-background.jpg) repeat-x fixed 50% top;
+}
+
+#presetOnMemberModal .custom-modal-content p
+{
+    margin: 0 0 3px;
+}
+
+#presetOnMemberModal .custom-modal-header
+{
+    color: #ffffff;
+    height: 22px;
+    padding: 3px;
+    background: #000000 url(Images/header-popup-background.jpg) repeat scroll 0 0;
+}
+
+#presetOnMemberModal .custom-close
+{
+    margin-top: -7px;
+    opacity: 1;
+}
+
+#presetOnMemberModal .custom-modal-title
+{
+}
+
+#presetOnMemberModal .custom-modal-body
+{
+    text-align: center;
+    font-size: 11px;
+    padding: 8px;
+}
+
+#presetOnMemberModal .custom-modal-footer
+{
+    padding: 4px;
+    text-align: center;
+    border-top: none;
+    margin-bottom: 10px;
+}
+
+#presetOnMemberModal .custom-btn
+{
+    margin-right: 3px;
+}
+
+.member-win-limit
+{
+    cursor: pointer;
+    color: Blue;
+}
+
+.current-win-limit
+{
+    width: 84px;
+    float: left;
+    text-indent: 5px;
+}
+
+.text-red
+{
+    color: Red;
+}

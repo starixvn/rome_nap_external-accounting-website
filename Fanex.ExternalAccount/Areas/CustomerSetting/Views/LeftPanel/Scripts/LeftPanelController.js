@@ -77,6 +77,7 @@ function LeftPanelController($scope, $element) {
                 var syncLiveCasino = false;
                 var isHideKeno = true;
                 var isHideVirtualSport = true;
+                var isHideGoldDeluxe = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -107,17 +108,21 @@ function LeftPanelController($scope, $element) {
                     if ($scope.model.setting.details[i].key == 'VirtualSports') {
                         isHideVirtualSport = false;
                     }
+                    if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
+                        isHideGoldDeluxe = false;
+                    }
                 }
+
 
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe);
                         break;
                     default:
                         break;
@@ -343,6 +348,37 @@ function LeftPanelController($scope, $element) {
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
+    };
+
+    $scope.GoldDeluxe = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var url = '';
+        switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4");
+                break;
+            case 3:
+                url = parent.resolveClientUrl("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + $scope.model.personalInfo.uplineId.value);
+                break;
+            case 2:
+                url = parent.resolveClientUrl("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2" + "&uplineId=" + $scope.model.personalInfo.uplineId.value);
+                break;
+            case 1:
+                url = parent.resolveClientUrl("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1" + "&uplineId=" + $scope.model.personalInfo.uplineId.value);
+                break;
+            default:
+                break;
+        }
+      
+       if (url != '') {
+           parent.Fanex.ExtAcc.LoadMainIFrame(url + "&actorId=" + parent.userId + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
+       }
     };
 };
 
@@ -2441,11 +2477,26 @@ function SettingController($scope, $http) {
     };
 
     $scope.SuperKeno = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
+    };
+
+    $scope.SuperGoldDeluxe = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&uplineId=' + superId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterPT = function () {
@@ -2517,6 +2568,30 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
     };
 
+    $scope.MasterGoldDeluxe = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
+    };
+
+    $scope.MasterLiveCasino = function () {
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
+    };
+    
     $scope.SuperSBPT = function () {
         parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;

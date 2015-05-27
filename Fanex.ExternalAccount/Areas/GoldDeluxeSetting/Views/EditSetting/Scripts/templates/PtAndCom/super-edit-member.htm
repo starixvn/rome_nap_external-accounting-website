@@ -1,0 +1,45 @@
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th class="col-xs-3">
+                {{language.getString('lblSuperPT')}}
+            </th>
+            <th class="col-xs-3">
+                {{language.getString('lblSuperAutoPT')}}
+            </th>
+            <th class="col-xs-3">
+                {{language.getString('lblMasterPT')}}
+            </th>
+            <th class="col-xs-3">
+                {{language.getString('lblAgentPT')}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select id="ddlS1"
+                data-ng-model="positionTaking.S1" 
+                data-ng-options="item.id as item.value for item in superPTOptions" 
+                data-ng-disabled="positionTaking.Is1"
+                data-ng-change="superPTChange()"
+                data-ng-if="!positionTaking.Is3"></select>
+                <span data-ng-if="positionTaking.Is3">{{positionTaking.S1}}</span>
+            </td>
+            <td>
+                <input id="cbIs1" type="checkbox" data-ng-model="positionTaking.Is1" />
+                <select id="ddlUs1"
+                data-ng-model="positionTaking.Us1" 
+                data-ng-options="item.id as item.value for item in superAutoPTOptions"
+                data-ng-disabled="!positionTaking.Is1"
+                data-ng-change="superAutoPTChange()"></select>
+            </td>
+            <td>
+                {{positionTaking.M1}}
+            </td>
+            <td>
+                {{positionTaking.A1}}
+            </td>
+        </tr>
+    </tbody>
+</table>
