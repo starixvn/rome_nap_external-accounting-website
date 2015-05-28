@@ -321,7 +321,7 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Customer.IsMultiple = false;
                     Fanex.ExtAcc.Customer.IsFullInfo = true;
                     url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4" + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             }
         }
@@ -613,7 +613,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function () {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             }
         }
@@ -915,7 +915,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function () {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2" + "&uplineId=" + Fanex.ExtAcc.Customer.masterId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             };
         }
@@ -1180,7 +1180,7 @@ Fanex.ExtAcc.Customer = {
                 callback: function () {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1" + "&uplineId=" + Fanex.ExtAcc.Customer.agentId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             };
         }
@@ -3553,8 +3553,7 @@ Fanex.ExtAcc.Customer = {
             document.getElementById('groupName').value = Fanex.ExtAcc.Customer.GroupName().groupName;
 
             Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('LiveCasinoSetting/Setting/EditMultipleSetting'), levelText + 'Edit Multiple Live Casino Setting', 900, 700, false, false, 1);
-            document.getElementById("targetForm").submit();
-
+            $("#targetForm").attr("action", resolveClientUrl('LiveCasinoSetting/Setting/EditMultipleSetting')).submit();
         }
         else {
             var url = '';
@@ -3594,9 +3593,21 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (this.IsMultiple) {
+            var goldDeluxeUsernames = '';
+            var goldDeluxeCustIds = '';
+            var userNamesArr = this.Names();
+            var custIdsArr = this.Ids()
+
+            var customerlength = userNamesArr.length;
+            for (var i = 0; i < customerlength; i++) {
+                var linkChar = i == customerlength - 1 ? "" : ", ";
+                goldDeluxeUsernames += userNamesArr[i] + linkChar;
+                goldDeluxeCustIds += custIdsArr[i] + linkChar;
+            }
+
             document.getElementById('uplineId').value = uplineId;
-            document.getElementById('customerIds').value = "1176083,14373487,14373624";
-            document.getElementById('usernames').value = "master1, masterkz, masterkz00";
+            document.getElementById('customerIds').value = goldDeluxeCustIds;
+            document.getElementById('usernames').value = goldDeluxeUsernames;
             document.getElementById('uplineLevel').value = uplineRoleId;
             document.getElementById('customerLevel').value = targetRoleId;
             document.getElementById('actorId').value = parent.userId;
@@ -3604,22 +3615,21 @@ Fanex.ExtAcc.Customer = {
             document.getElementById('language').value = 'E';
             document.getElementById('groupName').value = Fanex.ExtAcc.Customer.GroupName().groupName;
 
-            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple'), levelText + 'Edit Multiple Gold Deluxe Setting', 900, 700, false, false, 1);
-            document.getElementById("targetForm").submit();
-
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple'), levelText + 'Edit Multiple Gold Deluxe Setting', 900,400, false, false, 1);
+            $("#targetForm").attr("action", resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple')).submit();
         }
         else {
             var url = '';
             switch (uplineRoleId) {
-                case 4: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3";
+                case 4: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=" + uplineRoleId + "&formType=1&level=" + targetRoleId + "&uplineId=" + Fanex.ExtAcc.Customer.superId;
                     break;
-                case 3: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2";
+                case 3: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=" + uplineRoleId + "&formType=1&level=" + targetRoleId + "&uplineId=" + Fanex.ExtAcc.Customer.masterId;
                     break;
-                default: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1";
+                default: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=" + uplineRoleId + "&formType=1&level=" + targetRoleId + "&uplineId=" + Fanex.ExtAcc.Customer.agentId;
                     break;
             }
 
-            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + "&uplineId=" + Fanex.ExtAcc.Customer.superId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Gold Deluxe Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, false, 1);
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Gold Deluxe Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, false, 1);
         }
     },
 

@@ -947,7 +947,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
-            product.HideGoldDeluxeSettingForCredit = result.Rows[0].ToBoolean("HideGoldDeluxe") || !(ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1");
+            product.HideGoldDeluxeSettingForCredit = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||

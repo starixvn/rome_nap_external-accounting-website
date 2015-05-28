@@ -270,6 +270,39 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#livecasinoFrame').attr('src', url);
     },
 
+    GetGoldDeluxeSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
+        var action = '';
+        var url = '';
+        switch (uplineRoleId) {
+            case 4: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3";
+                break;
+            case 3: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2";
+                break;
+            default: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1";
+                break;
+        }
+
+       
+        
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            action = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId;
+        }
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            action = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2" + "&uplineId=" + Fanex.ExtAcc.Customer.masterId;
+        }
+        else {
+            action = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1" + "&uplineId=" + Fanex.ExtAcc.Customer.agentId;
+        }
+
+
+        var url = resolveClientUrl(url  + "&actorId=" + parent.userId + "&custId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html());
+        $('#tabs-7').height($('#leftFrame').height() - 10);
+        $('#tabs-7').css('display', 'block');
+        $('#livecasinoFrame').attr('src', url);
+    },
+
     GetVirtualSportSetting: function () {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.BlockUI();
