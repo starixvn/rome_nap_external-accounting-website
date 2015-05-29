@@ -148,7 +148,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             set;
         }
 
-        public bool HideGoldDeluxeSettingForCredit
+        public bool HideGoldDeluxe
         {
             get;
             set;

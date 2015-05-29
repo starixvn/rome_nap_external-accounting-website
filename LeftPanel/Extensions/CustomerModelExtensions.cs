@@ -539,6 +539,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
             var hideKeno = !KenoSection.Instance.ShowSetting;
+            var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
 
             if (hideVS)
             {
@@ -548,6 +549,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideKeno)
             {
                 model.RemoveProduct("Keno");
+            }
+
+            if (hideGoldDeluxe)
+            {
+                model.RemoveProduct("GoldDeluxe");
             }
 
             return model;
@@ -592,6 +598,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveEnableProduct("EnableESports");
             }
 
+            if (product.HideGoldDeluxe)
+            {
+                model.RemoveEnableProduct("EnableGoldDeluxe");
+            }
+
             return model;
         }
 
@@ -633,6 +644,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Keno");
             }
 
+            if (product.HideGoldDeluxe)
+            {
+                model.RemoveProduct("GoldDeluxe");
+            }
+
             return model;
         }
 
@@ -647,7 +663,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
             bool hideKeno = product.HideKeno;
-            bool hideGoldDeluxe = product.HideGoldDeluxeSettingForCredit;
+            bool hideGoldDeluxe = product.HideGoldDeluxe;
 
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
@@ -947,7 +963,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
-            product.HideGoldDeluxeSettingForCredit = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+            product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
