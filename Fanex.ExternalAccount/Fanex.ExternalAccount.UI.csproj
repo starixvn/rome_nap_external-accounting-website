@@ -106,7 +106,7 @@
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\gold-deluxe-setting\Fanex.GoldDeluxe.CoreSetting\bin\Debug\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <HintPath>..\Dependencies\GoldDeluxe\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
