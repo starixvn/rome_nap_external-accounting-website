@@ -305,4 +305,24 @@
     <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbExtAccNet"  />
   </Function>
+  <Functions Name="Gold Deluxe">
+    <Function Name="Get Setting">
+      <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe_xtest" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe_xtest" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe_xtest" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe_xtest" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe_xtest" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe_xtest" DbName="archive" Plain="0"/>
+    </Function>
+    <Function Name="Update Setting">
+      <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_All" SpName="Acc_CustomerUpdMemberGoldDeluxe_All_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdSuperGoldDeluxe_All" SpName="Acc_CustomerUpdSuperGoldDeluxe_All_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_SAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_SAg_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet_xtest" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe_xtest" DbName="main_CustDB"/>
+    </Function>
+  </Functions>
 </Functions>
