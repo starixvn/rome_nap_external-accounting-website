@@ -719,6 +719,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 goldDeluxe.FirstOrDefault().Value = "GoldDeluxe";
             }
+
             model.Setting.SuperPts = model.Setting.MasterPts;
             return model;
         }

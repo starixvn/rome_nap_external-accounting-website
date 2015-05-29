@@ -3036,7 +3036,7 @@ Fanex.ExtAcc.Customer = {
         this.IsMultiple = true;
         var ret = this.IdsAndNames();
         var info = this.CustomerInfo();
-        this.HideGoldDeluxe = showGoldDeluxeSetting;
+        this.HideGoldDeluxe = showGoldDeluxeSetting == 0;
 
         if (this.CurrentLevel == this.Super) {
             menuItems = {
