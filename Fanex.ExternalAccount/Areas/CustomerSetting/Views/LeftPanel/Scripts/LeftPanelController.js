@@ -2213,7 +2213,7 @@ function SettingController($scope, $http) {
                         custId: $scope.model.personalInfo.custId.value,
                         uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                         enable: !enable,
-                        enableDownline: false,
+                        enableDownline: parent.$('#enableDownline').get(0).checked,
                         custName: $scope.model.personalInfo.currentLevel.value,
                         groupName: parent.$('#selectedGroupName').html()
                     }
