@@ -56,6 +56,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 var tableTotalMember = ds.Tables[3];
                 var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
 
+                model.HasDownline = Utils.ToBoolean(tableCustomer.Rows[0]["HasDownline"]);
                 model.BalanceInfo(ds);
                 model.PersonalInfo(ds);
                 model.LoginInfo(ds);
@@ -141,7 +142,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         {
             return this._data.ResetMemberCredit(custId, agentId, closedOnly);
         }
-        
+
         public override Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {
             return this._data.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip);
@@ -215,11 +216,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             {
                 var casinoSync = new Customer();
                 casinoSync.UpdateMasterDisableAutoMPT(
-                    id, 
-                    allow, 
-                    CurrentContext.Instance.Ip4Address, 
-                    CurrentSession.Instance.UserId, 
-                    CurrentSession.Instance.UserName, 
+                    id,
+                    allow,
+                    CurrentContext.Instance.Ip4Address,
+                    CurrentSession.Instance.UserId,
+                    CurrentSession.Instance.UserName,
                     3);
             }
 

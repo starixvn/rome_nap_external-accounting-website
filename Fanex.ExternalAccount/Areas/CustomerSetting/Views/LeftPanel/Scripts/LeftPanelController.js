@@ -2192,8 +2192,10 @@ function SettingController($scope, $http) {
         var display = roleId == 1 ? 'none' : 'block';
         var checked = !enable ? 'checked="checked"' : "";
         var disabledDownline = enable ? 'disabled="disabled"' : '';
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
-            '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + ' />Gold Deluxe\'s downlines</div>';
+        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text;
+        content += $scope.model.hasDownline ?
+            '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + ' />Gold Deluxe\'s downlines</div>' :
+            '';
         var title = enable ? 'Disable Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
                                 'Enable Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
 
@@ -2213,7 +2215,7 @@ function SettingController($scope, $http) {
                         custId: $scope.model.personalInfo.custId.value,
                         uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
                         enable: !enable,
-                        enableDownline: parent.$('#enableDownline').get(0).checked,
+                        enableDownline: $scope.model.hasDownline && parent.$('#enableDownline').get(0).checked,
                         custName: $scope.model.personalInfo.currentLevel.value,
                         groupName: parent.$('#selectedGroupName').html()
                     }
