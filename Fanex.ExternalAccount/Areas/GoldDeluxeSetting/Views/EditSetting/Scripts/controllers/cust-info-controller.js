@@ -3,6 +3,8 @@
       '$scope',
       function ($scope) {
           'use strict';
+
+          $scope.enableGoldDeluxe = !settingViewModel.Setting.DisableGoldDeluxe;
           $scope.enableDownline = !settingViewModel.Setting.DisableDownlines;
           $scope.hasDownline = settingViewModel.Setting.HasDownline;
           $scope.disableCheckBoxGoldDeluxe = settingViewModel.Setting.DisableUpline;
@@ -12,4 +14,4 @@
               setting.DisableDownlines = !$scope.enableDownline;
           };
       }
-]);
+  ]);
