@@ -73,13 +73,13 @@ namespace Fanex.ExternalAccount.Controllers.Report
             list.Add(new KeyValuePair<string, string>("showNG", ViewLang.NumberGame));
             list.Add(new KeyValuePair<string, string>("showP2P", ViewLang.Poker));
             list.Add(new KeyValuePair<string, string>("showLiveCasino", ViewLang.LiveCasino));
-            list.Add(new KeyValuePair<string, string>("showGoldDeluxe", ViewLang.GoldDeluxe));
             if (Config.IsShowVirtualSports)
             {
                 list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
             }
 
             list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
+            list.Add(new KeyValuePair<string, string>("showGoldDeluxe", ViewLang.GoldDeluxe));
 
             return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());
         }
