@@ -90,7 +90,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             list.Add(new KeyValuePair<string, string>("showNG", ViewLang.NumberGame));
             list.Add(new KeyValuePair<string, string>("showP2P", ViewLang.Poker));
             list.Add(new KeyValuePair<string, string>("showLiveCasino", ViewLang.LiveCasino));
-            list.Add(new KeyValuePair<string, string>("showGoldDeluxe", ViewLang.GoldDeluxe));
+            list.Add(new KeyValuePair<string, string>("showGD", ViewLang.GoldDeluxe));
 
             if (Config.IsShowVirtualSports)
             {
