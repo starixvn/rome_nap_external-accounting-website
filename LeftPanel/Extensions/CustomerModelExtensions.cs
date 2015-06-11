@@ -717,7 +717,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             if (goldDeluxe.Count() > 0)
             {
-                goldDeluxe.FirstOrDefault().Value = "GoldDeluxe";
+                goldDeluxe.FirstOrDefault().Value = "Gold Deluxe";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;
