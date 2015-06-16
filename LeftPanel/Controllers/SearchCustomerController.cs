@@ -680,7 +680,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateGoldDeluxe, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableGoldDeluxe, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateGoldDeluxe(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
