@@ -1,21 +1,24 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<div class="errMsg" style="color: #ff5411">@LayoutTexts.WarningPowerKeno</div>
 <table class="tableColor tableWidth" ng-controller="positionTakingController">
     <tr>
         <td colspan="4" class="header c b">
             <span>@LayoutTexts.PositionTaking</span>
+           <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isPositionTakingPartial"
+                    ng-click="updated(true, 'PositionTaking')" type="button" title="Save"/>
         </td>
     </tr>
     <tr>
-        <td class="formatCol c b col15percent betSetting">
+        <td class="formatCol c b col15percent header">
             @LayoutTexts.CountryMarket
         </td>
-        <td class="formatCol c b col42percent betSetting">
+        <td class="formatCol c b col42percent header">
             @LayoutTexts.SuperMaxPT
         </td>
-        <td class="formatCol c b col43percent betSetting">
+        <td class="formatCol c b col43percent header">
             @LayoutTexts.SuperMinPT
         </td>
     </tr>
-    <tr ng-repeat="positionTaking in positionTakingList track by $index" super-position-taking-element ng-model="positionTaking" index="$index"  ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="Copy all below position taking setting from Australia Acttab">
+    <tr ng-repeat="positionTaking in positionTakingList track by $index" super-position-taking-element ng-model="positionTaking" index="$index"  ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="@LayoutTexts.lblCopyAllPT">
     </tr>
 </table>

@@ -1538,638 +1538,80 @@ function SettingController($scope, $http) {
     };
 
     $scope.EnableCasino = function (enable, id) {
-        var message = 'Are you sure you want to change casino status for this customer? Warning, casino downlines will be disabled as well';
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" checked="checked" />' + $scope.model.personalInfo.currentLevel.text +
-            '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" />Casino\'s downlines</div>';
-        content = enable ? '<input name="chkA" type="checkbox" disabled="disabled" />' + $scope.model.personalInfo.currentLevel.text : content;
-
-        if (enable) {
-            parent.Fanex.ExtAcc.Form.ConfirmBox('Disable Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-                    content,
-                    350,
-                    150,
-                    false,
-                    function () {
-                        parent.Fanex.ExtAcc.Form.ConfirmBox(
-                            'Warning!!!',
-                            message,
-                            460,
-                            150,
-                            false,
-                            function () {
-                                parent.Fanex.ExtAcc.BlockUI();
-
-                                $.ajax({
-                                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateCasino'),
-                                    dataType: 'json',
-                                    type: 'post',
-                                    data: {
-                                        custId: $scope.model.personalInfo.custId.value,
-                                        uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                                        enable: !enable,
-                                        enableDownline: false,
-                                        custName: $scope.model.personalInfo.currentLevel.value,
-                                        groupName: parent.$('#selectedGroupName').html()
-                                    }
-                                })
-                                .success(function (result) {
-                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
-                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                                    if (result.isSuccess) {
-                                        var timeout = setTimeout(function () {
-                                            clearTimeout(timeout);
-                                            parent.Fanex.ExtAcc.UnBlockUI();
-                                            document.location.reload(true);
-                                        }, 2000);
-                                    }
-                                    else {
-                                        parent.Fanex.ExtAcc.UnBlockUI();
-                                        parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
-                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                                        document.getElementById(id).checked = enable;
-                                    }
-                                })
-                                .error(function (xhr) {
-                                    parent.Fanex.ExtAcc.UnBlockUI();
-                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
-                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                                    document.getElementById(id).checked = enable;
-                                    if (typeof console != 'undefined') {
-                                        console.log(xhr);
-                                    }
-                                });
-                            },
-                            function () {
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmCasino');
-                            },
-                            'confirmCasino');
-                    },
-                    function () {
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                        document.getElementById(id).checked = enable;
-                    },
-                    'popupCasino',
-                    true,
-                    function () {
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                        document.getElementById(id).checked = enable;
-                    },
-                    true);
-        }
-        else {
-            parent.Fanex.ExtAcc.Form.ConfirmBox('Enable Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-                content,
-                350,
-                150,
-                false,
-                function () {
-                    parent.Fanex.ExtAcc.BlockUI();
-
-                    $.ajax({
-                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateCasino'),
-                        dataType: 'json',
-                        type: 'post',
-                        data: {
-                            custId: $scope.model.personalInfo.custId.value,
-                            uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                            enable: !enable,
-                            enableDownline: parent.$('#enableDownline').get(0).checked,
-                            custName: $scope.model.personalInfo.currentLevel.value,
-                            groupName: parent.$('#selectedGroupName').html()
-                        }
-                    })
-                    .success(function (result) {
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                        if (result.isSuccess) {
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
-                                parent.Fanex.ExtAcc.UnBlockUI();
-                                document.location.reload(true);
-                            }, 2000);
-                        }
-                        else {
-                            parent.Fanex.ExtAcc.UnBlockUI();
-                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                            document.getElementById(id).checked = enable;
-                        }
-                    })
-                    .error(function (xhr) {
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                        document.getElementById(id).checked = enable;
-                        if (typeof console != 'undefined') {
-                            console.log(xhr);
-                        }
-                    });
-                },
-                function () {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                    document.getElementById(id).checked = enable;
-                },
-                'popupCasino',
-                true,
-                function () {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupCasino');
-                    document.getElementById(id).checked = enable;
-                },
-                true);
-        }
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=casino&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[0].value + '&isCasino=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+            document.getElementById(id).checked = enable;
+        }, 1, null);
     };
 
     $scope.EnableBingo = function (enable, id) {
-        var message = 'Are you sure you want to change bingo status for this customer? Warning, bingo downlines will be disabled as well';
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" checked="checked" />' + $scope.model.personalInfo.currentLevel.text +
-        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" />Bingo\'s downlines</div>';
-        content = enable ? '<input name="chkA" type="checkbox" disabled="disabled" />' + $scope.model.personalInfo.currentLevel.text : content;
-
-        if (enable) {
-            parent.Fanex.ExtAcc.Form.ConfirmBox('Disable Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-                content,
-                350,
-                150,
-                false,
-                function () {
-                    parent.Fanex.ExtAcc.Form.ConfirmBox(
-                        'Warning!!!',
-                        message,
-                        460,
-                        150,
-                        false,
-                        function () {
-                            parent.Fanex.ExtAcc.BlockUI();
-
-                            $.ajax({
-                                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateBingo'),
-                                dataType: 'json',
-                                type: 'post',
-                                data: {
-                                    custId: $scope.model.personalInfo.custId.value,
-                                    uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                                    enable: !enable,
-                                    enableDownline: false,
-                                    custName: $scope.model.personalInfo.currentLevel.value,
-                                    groupName: parent.$('#selectedGroupName').html()
-                                }
-                            })
-                            .success(function (result) {
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                                if (result.isSuccess) {
-                                    var timeout = setTimeout(function () {
-                                        clearTimeout(timeout);
-                                        parent.Fanex.ExtAcc.UnBlockUI();
-                                        document.location.reload(true);
-                                    }, 2000);
-                                }
-                                else {
-                                    parent.Fanex.ExtAcc.UnBlockUI();
-                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
-                                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                                    document.getElementById(id).checked = enable;
-                                }
-                            })
-                            .error(function (xhr) {
-                                parent.Fanex.ExtAcc.UnBlockUI();
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                                document.getElementById(id).checked = enable;
-                                if (typeof console != 'undefined') {
-                                    console.log(xhr);
-                                }
-                            });
-                        },
-                        function () {
-                            parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmBingo');
-                        },
-                        'confirmBingo');
-                },
-                function () {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                    document.getElementById(id).checked = enable;
-                },
-                'popupBingo',
-                true,
-                function () {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                    document.getElementById(id).checked = enable;
-                },
-                true);
-        }
-        else {
-            parent.Fanex.ExtAcc.Form.ConfirmBox('Enable Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-            content,
-            350,
-            150,
-            false,
-            function () {
-                parent.Fanex.ExtAcc.BlockUI();
-
-                $.ajax({
-                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateBingo'),
-                    dataType: 'json',
-                    type: 'post',
-                    data: {
-                        custId: $scope.model.personalInfo.custId.value,
-                        uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                        enable: !enable,
-                        enableDownline: parent.$('#enableDownline').get(0).checked,
-                        custName: $scope.model.personalInfo.currentLevel.value,
-                        groupName: parent.$('#selectedGroupName').html()
-                    }
-                })
-                .success(function (result) {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                    if (result.isSuccess) {
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
-                            parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
-                        }, 2000);
-                    }
-                    else {
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                        document.getElementById(id).checked = enable;
-                    }
-                })
-                .error(function (xhr) {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                    document.getElementById(id).checked = enable;
-                    if (typeof console != 'undefined') {
-                        console.log(xhr);
-                    }
-                });
-            },
-            function () {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupBingo');
-                document.getElementById(id).checked = enable;
-            },
-            'popupBingo',
-            true,
-            function () {
-                document.getElementById(id).checked = enable;
-            },
-            true);
-        }
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=bingo&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[1].value;
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+            document.getElementById(id).checked = enable;
+        }, 1, null);
     };
 
     $scope.EnableNumberGame = function (enable, id) {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var disabledDownline = enable ? 'disabled="disabled"' : ''
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
-        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + ' />' + $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>';
-        var title = enable ? 'Disable Number Game: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
-                             'Enable Number Game: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        parent.Fanex.ExtAcc.Form.ConfirmBox(
-            title,
-            content,
-            380,
-            150,
-            false,
-            function () {
-                parent.Fanex.ExtAcc.BlockUI();
-
-                $.ajax({
-                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateNumberGame'),
-                    dataType: 'json',
-                    type: 'post',
-                    data: {
-                        custId: $scope.model.personalInfo.custId.value,
-                        enable: !enable,
-                        enableDownline: parent.$('#enableDownline').get(0).checked,
-                        groupName: parent.$('#selectedGroupName').html()
-                    }
-                })
-                .success(function (result) {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
-                    if (result.isSuccess) {
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
-                            parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
-                        }, 2000);
-                    }
-                    else {
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                        document.getElementById(id).checked = enable;
-                    }
-                })
-                .error(function (xhr) {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmNG');
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
-                    document.getElementById(id).checked = enable;
-                    if (typeof console != 'undefined') {
-                        console.log(xhr);
-                    }
-                });
-            },
-            function () {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
-                document.getElementById(id).checked = enable;
-            },
-            'popupNG',
-            true,
-            function () {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupNG');
-                document.getElementById(id).checked = enable;
-            },
-            true);
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=numbergame&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Number Game: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+            document.getElementById(id).checked = enable;
+        }, 1, null);
     };
 
     $scope.EnableLiveCasino = function (enable, id) {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var disabledDownline = enable ? 'disabled="disabled"' : ''
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
-                        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + '/>' + $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>';
-        var title = enable ? 'Disable Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
-                                'Enable Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        parent.Fanex.ExtAcc.Form.ConfirmBox(
-        title,
-        content,
-        380,
-        150,
-        false,
-        function () {
-            parent.Fanex.ExtAcc.BlockUI();
-
-            $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateLiveCasino'),
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    custId: $scope.model.personalInfo.custId.value,
-                    enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked,
-                    groupName: parent.$('#selectedGroupName').html()
-                }
-            })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupLC');
-                if (result.isSuccess) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
-                    }, 2000);
-                }
-                else {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                    document.getElementById(id).checked = enable;
-                }
-            })
-            .error(function (xhr) {
-                parent.Fanex.ExtAcc.UnBlockUI();
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmLC');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupLC');
-                document.getElementById(id).checked = enable;
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
-            });
-        },
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupLC');
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
-        },
-        'popupLC',
-        true,
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupLC');
-            document.getElementById(id).checked = enable;
-        },
-        true);
+        }, 1, null);
     };
 
     $scope.EnableVirtualSports = function (enable, id) {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var disabledDownline = enable ? 'disabled="disabled"' : ''
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
-                        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + '/>' + $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>';
-        var title = enable ? 'Disable Virtual Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
-                                'Enable Virtual Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        parent.Fanex.ExtAcc.Form.ConfirmBox(
-        title,
-        content,
-        380,
-        150,
-        false,
-        function () {
-            parent.Fanex.ExtAcc.BlockUI();
-
-            $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateVirtualSports'),
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    custId: $scope.model.personalInfo.custId.value,
-                    enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked,
-                    groupName: parent.$('#selectedGroupName').html()
-                }
-            })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupVS');
-                if (result.isSuccess) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
-                    }, 2000);
-                }
-                else {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                    document.getElementById(id).checked = enable;
-                }
-            })
-            .error(function (xhr) {
-                parent.Fanex.ExtAcc.UnBlockUI();
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmVS');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupVS');
-                document.getElementById(id).checked = enable;
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
-            });
-        },
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupVS');
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=virtualsports&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Virtual Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
-        },
-        'popupVS',
-        true,
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupVS');
-            document.getElementById(id).checked = enable;
-        },
-        true);
+        }, 1, null);
     };
 
     $scope.EnableESports = function (enable, id) {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var disabledDownline = enable ? 'disabled="disabled"' : ''
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
-                        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + '/>' + $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>';
-        var title = enable ? 'Disable E-Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
-                                'Enable E-Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        parent.Fanex.ExtAcc.Form.ConfirmBox(
-        title,
-        content,
-        380,
-        150,
-        false,
-        function () {
-            parent.Fanex.ExtAcc.BlockUI();
-
-            $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateESports'),
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    custId: $scope.model.personalInfo.custId.value,
-                    enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked,
-                    groupName: parent.$('#selectedGroupName').html()
-                }
-            })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmES');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
-                if (result.isSuccess) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
-                    }, 2000);
-                }
-                else {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmES');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                    document.getElementById(id).checked = enable;
-                }
-            })
-            .error(function (xhr) {
-                parent.Fanex.ExtAcc.UnBlockUI();
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmES');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
-                document.getElementById(id).checked = enable;
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
-            });
-        },
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
-        },
-        'popupES',
-        true,
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupES');
-            document.getElementById(id).checked = enable;
-        },
-        true);
+        }, 1, null);
     };
 
     $scope.EnableHRFixedOdds = function (enable, id) {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var display = roleId == 1 ? 'none' : 'block';
-        var checked = !enable ? 'checked="checked"' : "";
-        var disabledDownline = enable ? 'disabled="disabled"' : ''
-        var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text +
-                        '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + '/>' + $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>';
-        var title = enable ? 'Disable HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
-                                'Enable HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        parent.Fanex.ExtAcc.Form.ConfirmBox(
-        title,
-        content,
-        380,
-        150,
-        false,
-        function () {
-            parent.Fanex.ExtAcc.BlockUI();
-
-            $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateHRFixedOdds'),
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    id: $scope.model.personalInfo.custId.value,
-                    enable: !enable,
-                    enableDownline: parent.$('#enableDownline').get(0).checked,
-                    groupName: parent.$('#selectedGroupName').html()
-                }
-            })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmFO');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupFO');
-                if (result.isSuccess) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
-                    }, 2000);
-                }
-                else {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmFO');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                    document.getElementById(id).checked = enable;
-                }
-            })
-            .error(function (xhr) {
-                parent.Fanex.ExtAcc.UnBlockUI();
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmFO');
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupFO');
-                document.getElementById(id).checked = enable;
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
-            });
-        },
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupFO');
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+        '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
-        },
-        'popupFO',
-        true,
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupFO');
-            document.getElementById(id).checked = enable;
-        },
-        true);
+        }, 1, null);
     };
 
     $scope.EnableRacing = function () {
@@ -2181,11 +1623,24 @@ function SettingController($scope, $http) {
     };
 
     $scope.EnableKeno = function () {
-        var url = parent.resolveClientUrl('CustomerSetting/Keno/EnableStatus/Index?id=' + $scope.model.personalInfo.custId.value +
-            '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
-            '&roleId=' + $scope.model.personalInfo.roleId.value + '&userId=' + parent.userId + '&groupName=' + parent.$('#selectedGroupName').html());
-        var title = 'Update Keno Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 380, false, null, 1, 'enableKeno');
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+            '&userid=' + parent.userId + '&productid=keno&level=' + $scope.model.personalInfo.roleId.value +
+            '&enable=true&enabledownlines=true&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Enable Keno: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 420, false, null, 1, 'enableGD');
+
+    };
+
+    $scope.EnableGoldDeluxe = function (enable, id) {
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+            '&userid=' + parent.userId + '&productid=golddeluxe&level=' + $scope.model.personalInfo.roleId.value +
+            '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ' ) + 'Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+            document.getElementById(id).checked = enable;
+        }, 1, null);
     };
 
     $scope.EnableGoldDeluxe = function (enable, id) {

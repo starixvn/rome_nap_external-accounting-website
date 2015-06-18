@@ -1,4 +1,5 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<div class="errMsg" style="color: #ff5411">@LayoutTexts.WarningPowerKeno</div>
 <table class="tableColor tableWidth" ng-controller="positionTakingController">
     <tr>
          <td colspan="6" class="header c b">
@@ -8,14 +9,14 @@
         </td>
     </tr>
     <tr>
-        <td class="col25percent formatCol c b betSetting">
+        <td class="col25percent formatCol c b header">
             @LayoutTexts.CountryMarket
         </td>
-        <td class="col75percent formatCol c b betSetting">
+        <td class="col75percent formatCol c b header">
             @LayoutTexts.AgentPT
         </td>
     </tr>
       <tr ng-repeat="positionTaking in positionTakingList track by $index" member-position-taking-element ng-model="positionTaking" index="$index"
-             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="Copy all below position taking setting from Australia Acttab">
+             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="@LayoutTexts.lblCopyAllPT">
     </tr>
 </table>

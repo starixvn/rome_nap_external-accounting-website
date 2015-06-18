@@ -56,6 +56,8 @@ Fanex.ExtAcc.Header = {
                     $('#selectedGroupName').html(selectedGroupName);
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('font-weight', 'bold');
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('color', '#fff');
+                    $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, ' ', '')).css('font-weight', 'bold');
+                    $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, ' ', '')).css('color', '#fff');                    
                     $('#selectedGroup').html(Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', ' '));
                     $("#groupsMenu").superfish();
                     $("#groupsMenu").css('visibility', 'visible');

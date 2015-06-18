@@ -87,7 +87,7 @@ namespace Fanex.ExternalAccount
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
-
+            
             var logger = new CasinoAPILogger();
             var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
             string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
