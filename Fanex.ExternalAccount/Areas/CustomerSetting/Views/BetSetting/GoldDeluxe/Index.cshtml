@@ -6,7 +6,8 @@
     var siteName = Request.RequestContext.RouteData.Values["siteName"];
     
     Layout = "~/Areas/CustomerSetting/Views/BetSetting/Shared/_Layout.cshtml";
-    var url ="~/CustomerSetting/BetSetting/GoldDeluxeBetting/Content?upLineLevel=4&formType=1&level=3&uplineId=" + uplineId + "&actorId=" + userId + "&custId=" + id + "&groupName=" + siteName;
+    var url = "~/CustomerSetting/BetSetting/GoldDeluxeBetting/Content?upLineLevel=0&formType=1&level=4&uplineId=0&actorId=" + userId + "&custId=" + id + "&groupName=" + siteName;
+
 }
 @section GoldDeluxe{
     <iframe width="100%" height="250px" frameborder="0" src="@Url.Content(url)">
