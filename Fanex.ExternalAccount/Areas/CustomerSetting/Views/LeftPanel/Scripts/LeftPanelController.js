@@ -2194,7 +2194,8 @@ function SettingController($scope, $http) {
         var disabledDownline = enable ? 'disabled="disabled"' : '';
         var content = '<input name="chkA" type="checkbox" disabled="disabled" ' + checked + ' />' + $scope.model.personalInfo.currentLevel.text;
         content += $scope.model.hasDownline ?
-            '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + ' />Gold Deluxe\'s downlines</div>' :
+            '&nbsp;<div style="display: ' + display + '"><input name="chkB" type="checkbox" id="enableDownline" ' + disabledDownline + ' />' +
+                $scope.model.personalInfo.currentLevel.text + '\'s downlines</div>' :
             '';
         var title = enable ? 'Disable Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>' :
                                 'Enable Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
