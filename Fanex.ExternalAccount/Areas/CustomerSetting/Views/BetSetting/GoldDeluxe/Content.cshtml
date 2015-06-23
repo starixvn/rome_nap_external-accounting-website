@@ -5,6 +5,7 @@
 @using Fanex.GoldDeluxe.CoreSetting.Resources
 @using Fanex.GoldDeluxe.CoreSetting.ViewModels
 @using Fanex.GoldDeluxe.CoreSetting.Web.HtmlHelpers
+@using Fanex.GoldDeluxe.CoreSetting.Enumerations
 @{
     var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
     var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
@@ -65,7 +66,46 @@
         <div class="pt-title">
             <span class="pt-title-text">@GoldDeluxeLang.lblGameSetting</span>
         </div>
-        <edit-game-setting></edit-game-setting>
+       <table class="game-setting col-xs-12">
+        <thead>
+            <tr>
+                <td class="col-xs-3 right bold">
+                    @GoldDeluxeLang.lblGameType
+                </td>
+                <td class="col-xs-9 left bold">
+                    @GoldDeluxeLang.lblBettingLimit
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="itemGameType in gameSetting">
+                <td class="right game-setting-name">
+                    {{itemGameType.Name}}
+                </td>
+                <td class="betting-limit-container">
+                    <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
+                        <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
+                        @if (Model.Level != CustomerLevel.Member)
+                        {
+                            <label class="checkbox-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
+                                       data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="radio-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
+                                       data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
         <div class="update-setting col-xs-12">
             <input type="button" class="update-setting-ext-acc-submit" data-ng-click="updateGameSetting()" title="@GoldDeluxeLang.lblSubmit"
                    value="@GoldDeluxeLang.lblSubmit" data-ng-show="!isReadOnly" />
