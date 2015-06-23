@@ -7,9 +7,25 @@
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
-            $scope.language = language;
-            $scope.customerLevel = fanex.goldDeluxeSetting.customerLevel;
-            $scope.level = settingViewModel.Level;
+            var uplineUncheckedAllMsg = '';
+
+            if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
+                angular.forEach($scope.gameSetting, function (gameType) {
+                    if (gameType.CheckedStakeLevelId === '') {
+                        gameType.BettingLimit[0].IsChecked = true;
+                        gameType.CheckedStakeLevelId = String(gameType.BettingLimit[0].Id);
+                        uplineUncheckedAllMsg += gameType.Name + ', ';
+                    }
+                });
+
+                if (uplineUncheckedAllMsg !== '') {
+                    uplineUncheckedAllMsg = '{' + uplineUncheckedAllMsg.slice(0, -2) + '} ' + language.getString('WarningUplineUncheckAllStakeLevelMsg');
+                    $scope.$parent.mainResult.Warning = {
+                        IsShow: true,
+                        Message: uplineUncheckedAllMsg
+                    };
+                }
+            }
 
             $scope.getGameSetting = function () {
                 if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
@@ -30,6 +46,30 @@
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
 
                 customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
+            };
+
+            $scope.checkShowWarningUncheckedAll = function () {
+                var isShowWarning = false;
+                angular.forEach($scope.gameSetting, function (gameType) {
+                    var isUncheckedAll = true;
+                    angular.forEach(gameType.BettingLimit, function (stakeLevel) {
+                        if (stakeLevel.IsChecked) {
+                            isUncheckedAll = false;
+                            return;
+                        }
+                    });
+
+                    if (isUncheckedAll) {
+                        isShowWarning = true;
+                        return;
+                    }
+                });
+
+                var message = language.getString('WarningUncheckAllStakeLevelMsg');
+                $scope.$parent.mainResult.Warning = {
+                    IsShow: isShowWarning,
+                    Message: message
+                };
             };
         }
     ]);

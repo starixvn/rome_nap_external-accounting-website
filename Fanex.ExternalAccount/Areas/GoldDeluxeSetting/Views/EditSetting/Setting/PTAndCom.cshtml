@@ -7,33 +7,47 @@
         <span class="pt-title-text">@GoldDeluxeLang.lblPositionTakingCommission</span>
         <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial" data-ng-if="!$parent.isReadOnly" title="@GoldDeluxeLang.lblUpdate"></span>
     </div>
-    @switch (Model.Level)
+    @if (Model.Setting.Commission != null && Model.Setting.PositionTaking != null)
     {
-        case CustomerLevel.Super:
-            <edit-super-pt-and-com></edit-super-pt-and-com>
-            break;
-        case CustomerLevel.Master:
-        <edit-master-pt-and-com></edit-master-pt-and-com>
-            break;
-        case CustomerLevel.Agent:
-        <edit-agent-pt-and-com></edit-agent-pt-and-com>
-            break;
-        case CustomerLevel.Member:
-            switch (Model.UpLineLevel)
-            {
-                case CustomerLevel.Super:
-                    <super-edit-member-pt></super-edit-member-pt>
-                    break;
-                case CustomerLevel.Master:
-                <master-edit-member-pt></master-edit-member-pt>
-                    break;
-                default:
-                <agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>
-                    break;
-            }
-            break;
+        switch (Model.Level)
+        {
+            case CustomerLevel.Super:
+                <edit-super-pt-and-com></edit-super-pt-and-com>
+                break;
+            case CustomerLevel.Master:
+            <edit-master-pt-and-com></edit-master-pt-and-com>
+                break;
+            case CustomerLevel.Agent:
+            <edit-agent-pt-and-com></edit-agent-pt-and-com>
+                break;
+            case CustomerLevel.Member:
+                switch (Model.UpLineLevel)
+                {
+                    case CustomerLevel.Super:
+                        <super-edit-member-pt></super-edit-member-pt>
+                        break;
+                    case CustomerLevel.Master:
+                    <master-edit-member-pt></master-edit-member-pt>
+                        break;
+                    default:
+                    <agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>
+                        break;
+                }
+                break;
+        }
     }
-
+    else
+    {
+        <table class="pt-setting">
+            <thead>
+                <tr>
+                    <th>
+                        @GoldDeluxeLang.NoInformation
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    }
 
     <div id="presetOnMemberModal" class="modal fade">
         <div class="modal-dialog custom-modal-dialog">

@@ -70,17 +70,20 @@
                 <td class="left info-value">
                     @Model.Setting.Fax
                 </td>
-                @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Agent
-                    || GoldDeluxeSettings.Settings.System == SystemType.Accounting)
+                @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master
+                    || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
+                {
+                    <td class="right bold"></td>
+                    <td class="left"></td>
+                }
+                else
                 {
                     <td class="right bold info-lable">
                         @GoldDeluxeLang.lblEnable
                     </td>
                     <td class="left info-value">
                         <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" />
-                        @if (GoldDeluxeSettings.Settings.System != SystemType.Agency
-                            && Model.Level != CustomerLevel.Member
-                            && Model.Setting.HasDownline)
+                        @if (Model.Level != CustomerLevel.Member && Model.Setting.HasDownline)
                         {
                             <label>
                                 <input type="checkbox" data-ng-model="enableDownline" data-ng-disabled="!hasDownline || $parent.isReadOnly || !enableGoldDeluxe" />
@@ -88,11 +91,6 @@
                             </label>
                         }
                     </td>
-                }
-                else
-                {
-                    <td class="right bold"></td>
-                    <td class="left"></td>
                 }
             </tr>
         </table>
