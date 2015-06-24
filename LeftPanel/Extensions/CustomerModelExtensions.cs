@@ -601,6 +601,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.HideGoldDeluxe)
             {
                 model.RemoveEnableProduct("EnableGoldDeluxe");
+                model.RemoveProduct("GoldDeluxe");
             }
 
             return model;
