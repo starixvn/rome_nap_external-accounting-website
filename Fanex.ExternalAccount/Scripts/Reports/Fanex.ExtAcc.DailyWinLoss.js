@@ -305,7 +305,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                     { Name: "AgTOPercent", Value: this.dataSource[i].AgTOPercent },
                     { Name: "ComWinlost", Value: this.dataSource[i].ComWinlost },
                     { Name: "ComWinlostPercent", Value: this.dataSource[i].ComWinlostPercent },
-                    { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlostPercent },
+                    { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
                     { Name: "SAgWinlostPercent", Value: this.dataSource[i].SAgWinlostPercent },
                     { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
                     { Name: "MAgWinlostPercent", Value: this.dataSource[i].MAgWinlostPercent },
