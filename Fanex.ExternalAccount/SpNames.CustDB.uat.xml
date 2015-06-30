@@ -104,7 +104,7 @@
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">
-    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
@@ -139,11 +139,11 @@
     <Setting Key="Acc_CustomerUpdDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
-    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" >
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" >
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -305,22 +305,22 @@
   </Function>
   <Functions Name="Gold Deluxe">
     <Function Name="Get Setting">
-      <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
-      <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
-      <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
-      <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
-      <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
-      <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
     </Function>
     <Function Name="Update Setting">
-      <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_All" SpName="Acc_CustomerUpdMemberGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdSuperGoldDeluxe_All" SpName="Acc_CustomerUpdSuperGoldDeluxe_All_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_SAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_SAg_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
-      <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe_xtest" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_All" SpName="Acc_CustomerUpdMemberGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdSuperGoldDeluxe_All" SpName="Acc_CustomerUpdSuperGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_SAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_SAg" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBTXN.CustDB.bodbExtAccNet"/>
     </Function>
   </Functions>
 </Functions>

@@ -2,9 +2,6 @@
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
-  <Function Name="E-Sports">
-    <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
-  </Function>
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -140,15 +137,15 @@
     <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
-
-    <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0"/>
   </Function>
   <Function Name="Customer List">
-    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_xtest" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" >
+      <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
+    </Setting>
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdUserInfo" SpName="Age_CustomerUpdUserInfo" DbName="DBTXN.CustDB.bodbExtAccNet" Plain="0" />
@@ -215,8 +212,18 @@
     <Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="DBTXN.CustDB.bodbExtAccNet"  />
   </Function>
   <Function Name="Live Casino - Stake Level Setting">
-    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB"  Plain="1" />
+    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1" >
+      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+    </Setting>
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB"  Plain="1" >
+      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+    </Setting>
     <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LV_BackupDB" Plain="1" />
     <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LV_BackupDB" Plain="1" />
     <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LV_BackupDB" Plain="1" />
@@ -296,4 +303,24 @@
     <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbExtAccNet"  />
   </Function>
+  <Functions Name="Gold Deluxe">
+    <Function Name="Get Setting">
+      <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+      <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+    </Function>
+    <Function Name="Update Setting">
+      <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_All" SpName="Acc_CustomerUpdMemberGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdSuperGoldDeluxe_All" SpName="Acc_CustomerUpdSuperGoldDeluxe_All" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_SAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_SAg" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBTXN.CustDB.bodbExtAccNet"/>
+    </Function>
+  </Functions>
 </Functions>
