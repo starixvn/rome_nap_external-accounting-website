@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "~/Areas/GoldDeluxeSetting/Views/EditSetting/_EditSetting.cshtml";
+    ViewBag.Title = GoldDeluxeLang.lblEditGoldDeluxe;
+}
+@model EditSettingViewModel
+@section modeldata
+{
+    <script type="text/javascript">
+        @(Html.ToJavascriptObject(Model, "settingViewModel"))
+    </script>
+}
+@section Customer
+{
+    <div id="tblCustInfo" class="col-xs-12">
+        <table data-ng-controller="CustomerInfoController" class="cust-info">
+            <tr class="title">
+                <td colspan="4" class="center">
+                    @GoldDeluxeLang.lblCustomerInformation
+                </td>
+            </tr>
+            <tr>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblUsername
+                </td>
+                <td class="left info-value">
+                    @Model.Setting.Username
+                </td>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblNickname
+                </td>
+                <td class="left info-value">
+                    @if (GoldDeluxeSettings.Settings.System != SystemType.Agency)
+                    {
+                        @Model.Setting.NickName
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblFirstName
+                </td>
+                <td class="left info-value">
+                    @Model.Setting.FirstName
+                </td>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblLastName
+                </td>
+                <td class="left info-value">
+                    @Model.Setting.LastName
+                </td>
+            </tr>
+            <tr>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblPhone
+                </td>
+                <td class="left info-value">
+                    @Model.Setting.Phone
+                </td>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblMobilePhone
+                </td>
+                <td class="left info-value">
+                    @Model.Setting.MobilePhone
+                </td>
+            </tr>
+            <tr>
+                <td class="right bold info-lable">
+                    @GoldDeluxeLang.lblFax
+                </td>
+                <td class="left info-value">
+                    @Model.Setting.Fax
+                </td>
+                @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master
+                    || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
+                {
+                    <td class="right bold"></td>
+                    <td class="left"></td>
+                }
+                else
+                {
+                    <td class="right bold info-lable">
+                        @GoldDeluxeLang.lblEnable
+                    </td>
+                    <td class="left info-value">
+                        <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" ng-change="updateDownlineStatus()" />
+                        @if (Model.Level != CustomerLevel.Member && Model.Setting.HasDownline)
+                        {
+                            <label>
+                                <input type="checkbox" data-ng-model="enableDownline" data-ng-disabled="disableCheckBoxDownline || $parent.isReadOnly" />
+                                @GoldDeluxeLang.lblDownline
+                            </label>
+                        }
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+    @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
+    @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateSetting"))
+    @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndCom"))
+    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSetting"))
+}
+

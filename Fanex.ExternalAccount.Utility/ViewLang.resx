@@ -814,4 +814,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Keno" xml:space="preserve">
     <value>Keno</value>
   </data>
+  <data name="GoldDeluxe" xml:space="preserve">
+    <value>Gold Deluxe</value>
+  </data>
 </root>

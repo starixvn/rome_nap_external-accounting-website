@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Areas/GoldDeluxeSetting/Views/Shared/_Layout.cshtml";
+}
+@RenderSection("modeldata", false)
+
+<div id="tblSetting"
+     data-ng-app="fanex.goldDeluxeSetting"
+     data-ng-controller="CustomerSettingController"
+     style="display:none;"
+     class="edit-setting-gold-deluxe">
+    @{
+        var buttonClass = string.Empty;
+        var buttonText = GoldDeluxeLang.lblUpdate;
+
+        switch (GoldDeluxeSettings.Settings.System)
+        {
+
+            case SystemType.Accounting:
+                buttonClass = "update-setting-accounting-submit";
+                <div class="setting-header-accounting bold col-xs-12">
+                    <span class="setting-header-first-icon"></span>
+                    <span class="setting-header-text">
+                        @(ViewBag.Title)
+                    </span>
+                    <span class="setting-header-last-icon"></span>
+                </div>
+
+                break;
+            case SystemType.Agency:
+                buttonClass = "update-setting-agency-submit";
+
+                <div class="setting-header-agency bold col-xs-12">
+                    <span class="setting-header-text">@(ViewBag.Title)</span>
+                </div>
+                break;
+            case SystemType.ExtAccounting:
+            <div class="update-setting col-xs-12">
+                <input type="button" class="update-setting-ext-acc-submit" data-ng-click="validateAndUpdateSetting()" title="@GoldDeluxeLang.lblSubmit"
+                       value="@GoldDeluxeLang.lblSubmit" data-ng-show="!isReadOnly" />
+            </div>
+                buttonText = GoldDeluxeLang.lblSubmit;
+                buttonClass = "update-setting-ext-acc-submit";
+                break;
+        }
+    }
+
+    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
+        <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}">
+        </div>
+        <div class="main-message">
+            <div data-ng-repeat="subResult in mainResult.CommandResultsList">
+                <div class="message-user-name">
+                    {{subResult.Name}}
+                </div>
+                <div class="sub-message" data-ng-repeat="result in subResult.Results">
+                    <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
+                         data-ng-show="!mainResult.isUnAuthorized">
+                    </div>
+                    <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}"
+                         data-ng-bind-html="result.Message">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow">
+        <div class="sub-message-icon sub-icon-warning">
+        </div>
+        <div class="message-content message-content-warning">
+            {{mainResult.Warning.Message}}
+        </div>
+    </div>
+
+    @RenderSection("Customer", true)
+
+    <div class="update-setting col-xs-12">
+        @if (GoldDeluxeSettings.Settings.System == SystemType.Agency)
+        {
+            <span class="update-setting-agency-submit-left" data-ng-show="!isReadOnly"></span>
+        }
+        <input type="button" class="@(buttonClass)" data-ng-click="validateAndUpdateSetting()" title="@buttonText"
+               value="@buttonText" data-ng-show="!isReadOnly" />
+    </div>
+</div>
+<div class="live-casino-loading">
+    <span class="loading-icon"></span>
+</div>

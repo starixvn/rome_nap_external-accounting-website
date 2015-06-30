@@ -28,6 +28,7 @@
     var hasClearCredit = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
     var enableKeno = System.Configuration.ConfigurationManager.AppSettings["EnableKeno"] == "true" ? 1 : 0;
     var showKenoSetting = KenoSection.Instance.ShowSetting == true ? "true" : "false";
+    var showGoldDeluxeSetting = System.Configuration.ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1" ? 1 : 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -198,7 +199,8 @@
         var hasClearCredit = '@hasClearCredit';
         var enableKeno = '@enableKeno';
         var showKenoSetting = '@showKenoSetting';
-        
+        var showGoldDeluxeSetting = '@showGoldDeluxeSetting';
+
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();
             setInterval(Fanex.ExtAcc.Customer.ReCheckin, 10000);

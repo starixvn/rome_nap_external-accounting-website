@@ -58,7 +58,7 @@
             There is no data.</div>
     </div>
 </div>
-<form id="targetForm" method="post" target="windowPopup" action="@Url.Content("~/LiveCasinoSetting/Setting/EditMultipleSetting")">
+<form id="targetForm" method="post" target="windowPopup" action="">
    <input type="hidden" id="uplineId" name="uplineId" value="" />
   <input type="hidden" id="parentId" name="parentId" value="" />
   <input type="hidden" id="customerIds" name="customerIds" value="" />
@@ -71,6 +71,7 @@
   <input type="hidden" id="subAccId" name="subAccId" value="" />
   <input type="hidden" id="language" name="language" value="" />
   <input type="hidden" id="groupName" name="groupName" value="" />
+  <input type="hidden" id="formType" name="formType" value="1" />
 </form>
 <script type="text/javascript">
     $('#customerStatus').combobox();

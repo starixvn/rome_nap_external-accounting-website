@@ -539,6 +539,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
             var hideKeno = !KenoSection.Instance.ShowSetting;
+            var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
 
             if (hideVS)
             {
@@ -548,6 +549,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideKeno)
             {
                 model.RemoveProduct("Keno");
+            }
+
+            if (hideGoldDeluxe)
+            {
+                model.RemoveProduct("GoldDeluxe");
             }
 
             return model;
@@ -592,6 +598,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveEnableProduct("EnableESports");
             }
 
+            if (product.HideGoldDeluxe)
+            {
+                model.RemoveEnableProduct("EnableGoldDeluxe");
+                model.RemoveProduct("GoldDeluxe");
+            }
+
             return model;
         }
 
@@ -633,6 +645,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Keno");
             }
 
+            if (product.HideGoldDeluxe)
+            {
+                model.RemoveProduct("GoldDeluxe");
+            }
+
             return model;
         }
 
@@ -647,6 +664,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
             bool hideKeno = product.HideKeno;
+            bool hideGoldDeluxe = product.HideGoldDeluxe;
+
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
             model.Setting.Details.ForEach(o =>
@@ -660,7 +679,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
                        (o.Key.ToString() == "VirtualSports" && !hideVS) ||
                        o.Key.ToString() == "Racing" ||
-                        (o.Key.ToString() == "Keno" && !hideKeno)).ToList();
+                       (o.Key.ToString() == "Keno" && !hideKeno) ||
+                       (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe)).ToList();
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
@@ -669,6 +689,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var liveCasino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "LiveCasino");
             var virtualSports = model.Setting.MasterPts.Where(o => o.Key.ToString() == "VirtualSports");
             var keno = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Keno");
+            var goldDeluxe = model.Setting.MasterPts.Where(o => o.Key.ToString() == "GoldDeluxe");
+
             if (casino.Count() > 0)
             {
                 casino.FirstOrDefault().Value = "Casino";
@@ -692,6 +714,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (keno.Count() > 0)
             {
                 keno.FirstOrDefault().Value = "Keno";
+            }
+
+            if (goldDeluxe.Count() > 0)
+            {
+                goldDeluxe.FirstOrDefault().Value = "Gold Deluxe";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;
@@ -752,9 +779,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.DisableProduct("EnableLiveCasino");
             }
 
-            if (product.UplineStatuses.DisableLiveCasino)
+            if (product.UplineStatuses.DisableGoldDeluxe)
             {
-                model.DisableProduct("EnableLiveCasino");
+                model.DisableProduct("EnableGoldDeluxe");
             }
 
             if (product.UplineStatuses.Closed)
@@ -938,6 +965,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
+            product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -956,6 +984,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableBingo = upperInfo.Rows[0].ToBoolean("disableBingo");
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
+                product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
@@ -998,7 +1027,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1024,7 +1059,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
                         }
             };
             model.AddBettingLimitForSuper();
@@ -1088,7 +1124,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1114,7 +1156,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
                         }
             };
 
@@ -1154,7 +1197,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1180,7 +1229,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
                         }
             };
 
@@ -1221,7 +1271,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
                             },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" }
+                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableGoldDeluxe", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                                Text = "Enable Gold Deluxe"
+                            }
                         },
                 SyncItems = new List<ObjectInfo>
                         {
@@ -1245,7 +1301,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" }
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
                         }
             };
 

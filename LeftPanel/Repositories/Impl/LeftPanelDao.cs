@@ -665,5 +665,34 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
+
+        /// <summary>
+        /// Update Gold Deluxe status.
+        /// </summary>
+        /// <param name="id">Customer id.</param>
+        /// <param name="enable">Enable or not.</param>
+        /// <param name="enableDownline">Enable down-line or not.</param>
+        /// <param name="custName">Customer username.</param>
+        /// <returns>Result object.</returns>
+        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
+        {
+            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 600))
+            {
+                var hash = new Hashtable();
+                hash.Add("custid", id);
+                hash.Add("userid", userId);
+                hash.Add("disable", !enable);
+                hash.Add("language", "E");
+                hash.Add("ip", CurrentContext.Instance.Ip4Address);
+                hash.Add("enabledownlines", enableDownline);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", string.Empty);
+                objDb.AssignParamValues(hash);
+
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
     }
 }

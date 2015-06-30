@@ -37,5 +37,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public List<ObjectInfo> Login { get; set; }
 
         public OnlineList OnlineList { get; set; }
+
+        public bool HasDownline { get; set; }
     }
 }

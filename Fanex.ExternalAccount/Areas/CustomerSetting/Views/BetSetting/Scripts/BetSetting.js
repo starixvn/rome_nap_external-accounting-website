@@ -39,3 +39,8 @@ function LoadKeno() {
     Fanex.CustomerSetting.Core.BlockUI();
     document.location.href = toUrl('KenoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
+
+function LoadGoldDeluxe() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    document.location.href = toUrl('GoldDeluxeBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
+};

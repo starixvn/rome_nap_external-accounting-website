@@ -19,6 +19,7 @@ namespace Fanex.ExternalAccount
     using CaptchaMvc.Interface;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
+    using Fanex.GoldDeluxe.CoreSetting.Mappings;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -82,6 +83,7 @@ namespace Fanex.ExternalAccount
             RegisterRoutes(RouteTable.Routes);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+            AutoMapperConfiguration.Configure();
 
             var logger = new CasinoAPILogger();
             var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);

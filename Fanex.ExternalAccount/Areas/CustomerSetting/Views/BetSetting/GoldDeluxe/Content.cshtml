@@ -1,0 +1,175 @@
+﻿@using Fanex.PTEngine.BusinessObjects
+@using Fanex.CustomerSetting.Module.Core
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using Fanex.GoldDeluxe.CoreSetting.Resources
+@using Fanex.GoldDeluxe.CoreSetting.ViewModels
+@using Fanex.GoldDeluxe.CoreSetting.Web.HtmlHelpers
+@using Fanex.GoldDeluxe.CoreSetting.Enumerations
+@{
+    var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
+    var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
+    var userId = Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
+    var siteName = Request.RequestContext.RouteData.Values["siteName"];
+}
+@{
+    Layout = "~/Areas/GoldDeluxeSetting/Views/Shared/_Layout.cshtml";
+    var currentLangaugeKey = "en-US";
+}
+@model EditSettingViewModel
+<link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/bootstrap.css")" />
+<link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting.css")?v=1" />
+<link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting-override.css")" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Styles/BettingLimiteGoldDeluxe.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    @(Html.ToJavascriptObject(Model, "settingViewModel"))
+       var currentLaguageKey = '@(currentLangaugeKey)';
+</script>
+<div id="tblSetting" data-ng-app="fanex.goldDeluxeSetting" data-ng-controller="CustomerSettingController"
+    style="display: none;" class="edit-setting-gold-deluxe">
+    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
+        <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}">
+        </div>
+        <div class="main-message">
+            <div data-ng-repeat="subResult in mainResult.CommandResultsList">
+                <div class="message-user-name">
+                    {{subResult.Name}}
+                </div>
+                <div class="sub-message" data-ng-repeat="result in subResult.Results">
+                    <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
+                        data-ng-show="!mainResult.isUnAuthorized">
+                    </div>
+                    <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}"
+                        data-ng-bind-html="result.Message">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow">
+        <div class="sub-message-icon sub-icon-warning">
+        </div>
+        <div class="message-content message-content-warning">
+            {{mainResult.Warning.Message}}
+        </div>
+    </div>
+    <div id="tblCustInfo" class="col-xs-12">
+        <table data-ng-controller="CustomerInfoController" class="cust-info">
+            <tr class="title">
+                <td colspan="4" class="center">
+                    Update Bet Setting: @Model.Setting.Username
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="tblGameSetting" class="pt-container col-xs-12" data-ng-controller="CustGameSettingController">
+        <div class="pt-title">
+            <span class="pt-title-text">@GoldDeluxeLang.lblGameSetting</span>
+        </div>
+       <table class="game-setting col-xs-12">
+        <thead>
+            <tr>
+                <td class="col-xs-3 right bold">
+                    @GoldDeluxeLang.lblGameType
+                </td>
+                <td class="col-xs-9 left bold">
+                    @GoldDeluxeLang.lblBettingLimit
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="itemGameType in gameSetting">
+                <td class="right game-setting-name">
+                    {{itemGameType.Name}}
+                </td>
+                <td class="betting-limit-container">
+                    <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
+                        <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
+                        @if (Model.Level != CustomerLevel.Member)
+                        {
+                            <label class="checkbox-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
+                                       data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="radio-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
+                                       data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <div class="update-setting col-xs-12">
+            <input type="button" class="update-setting-ext-acc-submit" data-ng-click="updateGameSetting()" title="@GoldDeluxeLang.lblSubmit"
+                   value="@GoldDeluxeLang.lblSubmit" data-ng-show="!isReadOnly" />
+        </div>
+    </div>
+</div>
+<div class="live-casino-loading">
+    <span class="loading-icon"></span>
+</div>
+@Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSetting"))
+@Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
+@Scripts.Render("~/areasjs/golddeluxe/core")
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/gold-deluxe-lang.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.en-US.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.ja-JP.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.ko-KR.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.th-TH.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.vi-VN.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.zh-CN.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.zh-TW.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/fanex-gold-deluxe-setting.js")?v=1"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/services/cust-setting-service.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/services/cust-game-setting-service.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/services/pt-and-com-setting-service.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/cust-info-controller.js")?v=1"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/cust-setting-controller.js")?v=1"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/pt-and-com-setting-controller.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/controllers/cust-game-setting-controller.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")?v=2"></script>
+<script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/views/editsetting/scripts/directives/edit-game-setting-directive.js")?v=2"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    var custId = parseInt('@id');
+    var uplineId = parseInt('@uplineId');
+    var userId = parseInt('@userId');
+    var siteName = '@siteName';
+    var syncCasino = '@ViewBag.SyncCasino';
+    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
+    var syncBingo = '@ViewBag.SyncBingo';
+
+    function toUrl(relativeUrl) {
+        return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
+    }
+
+    $(document).ready(function () {
+        if (syncCasino == 'False') {
+            $('#tab6').remove();
+        }
+
+        if (syncBingo == 'False') {
+            $('#tab5').remove();
+        }
+
+        if (syncLiveCasino == 'False') {
+            $('#tab4').remove();
+        }
+
+        $('#tab8').addClass('ui-tabs-active ui-state-active');
+        $('#tab1').removeClass('ui-tabs-active ui-state-active');
+        $('#tab2').removeClass('ui-tabs-active ui-state-active');
+        $('#tab3').removeClass('ui-tabs-active ui-state-active');
+        $('#tab5').removeClass('ui-tabs-active ui-state-active');
+        $('#tab6').removeClass('ui-tabs-active ui-state-active');
+    });
+</script>

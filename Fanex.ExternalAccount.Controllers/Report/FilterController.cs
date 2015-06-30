@@ -33,6 +33,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         public const string ShowLiveCasino = "showlivecasino";
         public const string ShowVirtualSport = "showvs";
         public const string ShowKeno = "showkeno";
+        public const string ShowGoldDeluxe = "showgd";
 
         /// <summary>
         /// Gets list of request from filter condition.
@@ -51,6 +52,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             list.Add(new KeyValuePair<string, bool>(ShowLiveCasino, CheckRequest.GetBooleanRequest(ShowLiveCasino, true)));
             list.Add(new KeyValuePair<string, bool>(ShowVirtualSport, CheckRequest.GetBooleanRequest(ShowVirtualSport, true)));
             list.Add(new KeyValuePair<string, bool>(ShowKeno, CheckRequest.GetBooleanRequest(ShowKeno, true)));
+            list.Add(new KeyValuePair<string, bool>(ShowGoldDeluxe, CheckRequest.GetBooleanRequest(ShowGoldDeluxe, true)));
 
             return list;
         }
@@ -77,6 +79,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
 
             list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
+            list.Add(new KeyValuePair<string, string>("showGD", ViewLang.GoldDeluxe));
 
             return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());
         }

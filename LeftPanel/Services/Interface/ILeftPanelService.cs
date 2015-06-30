@@ -60,5 +60,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
         Result ResetSecurityCode(int id, string code, bool force);
 
         Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
+
+        Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
     }
 }
