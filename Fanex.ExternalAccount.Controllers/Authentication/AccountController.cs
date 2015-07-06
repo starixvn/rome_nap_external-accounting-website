@@ -412,7 +412,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             this._currentSession.GroupId = group.GroupID;
             this._currentSession.CurrencyGroup = group.GroupName;
             this._currentSession.IsITAdmin = group.GroupID == 1;
-            Fanex.CustomerSetting.Module.Core.Web.AppSession.FromSystem = 3;
+            this._currentSession.FromSystem = 3;
         }
     }
 }
