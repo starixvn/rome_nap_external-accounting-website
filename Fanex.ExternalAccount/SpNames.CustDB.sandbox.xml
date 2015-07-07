@@ -2,16 +2,19 @@
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="main" Plain="0" />
   </Function>
+  <Function Name="E-Sports">
+    <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports" DbName="main_CustDB" Plain="0" />
+  </Function>
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="main_CustDB" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="archive" Plain="0" />
 
-      <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
-      <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="archive" Plain="0" TimeOut="600" />
 
     <Function Name="EditSuper">
       <Setting Key="Acc_CustomerUpdSuperKeno_BetSetting" SpName="Acc_CustomerUpdSuperKeno_BetSetting" DbName="main_CustDB" Plain="0" TimeOut="600" />
@@ -209,23 +212,13 @@
     <Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="main_CustDB"  />
     <Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="main_CustDB"  />
     <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="main_CustDB"  />
-    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="main_CustDB"  />
+    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="main_CustDB"  />
     <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main_CustDB"  />
     <Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="main_CustDB"  />
   </Function>
   <Function Name="Live Casino - Stake Level Setting">
-    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" >
-      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
-      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
-      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
-      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
-    </Setting>
-      <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin"  Plain="1" >
-        <Mapping DataField="GameTypeID" ObjectProperty="Id" />
-        <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
-        <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
-        <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
-      </Setting>
+    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
+    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin"  Plain="1" />
     <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
     <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
     <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LiveCasinoAdmin" Plain="1" />
@@ -282,7 +275,8 @@
     <Setting Key="BG_TP_User_CustGameKind_GetCustGameKind_EditMember" SpName="TP_User_CustGameKind_GetCustGameKind_EditMember" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Admin_GameType_Sel" SpName="TP_Admin_GameType_Sel" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="CS_LBBackupDB" Plain="1" />
+    <Setting Key="BG_TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="CS_LBBackupDB" Plain="1" >
+    </Setting>
     <Setting Key="BG_TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_UP_Admin_Site_BySiteNo" SpName="UP_Admin_Site_BySiteNo" DbName="CS_LBBackupDB" Plain="1" />
     <Setting Key="BG_TP_User_CustGameType_GetMemberCommReport" SpName="TP_User_CustGameType_GetMemberCommReport" DbName="CS_LBBackupDB" Plain="1" />
@@ -295,14 +289,81 @@
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog"  />
   </Function>
   <Function Name="Statement - Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="archive01" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="archive" Plain="0" />
     <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="report" Plain="0" />
     <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="report" Plain="0" />
 
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="archive" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="archive01" Plain="0" />
 
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="archive01" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="archive" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="archive01"  />
   </Function>
+
+  <Functions>
+    <Function Name="Live Casino - GET PT Setting">
+      <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="archive"/>
+      <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="archive"  />
+      <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="archive"  />
+      <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="archive"  />
+      <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="archive"  />
+      <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="archive"  />
+      <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="archive"  />
+      <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="archive"  />
+    </Function>
+    <Function Name="Live Casino - update PT Setting">
+      <Setting Key="Acc_CustomerUpdAgentLiveCS_All" SpName="Acc_CustomerUpdAgentLiveCS_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMasterLiveCS_All" SpName="Acc_CustomerUpdMasterLiveCS_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="main_CustDB"  />
+    </Function>
+    <Function Name="Live Casino - Stake Level Settingc">
+      <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LiveCasinoAdmin" Plain="1" >
+        <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+        <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+        <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+        <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+      </Setting>
+      <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LiveCasinoAdmin" Plain="1" >
+        <Mapping DataField="GameTypeID" ObjectProperty="Id" />
+        <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
+        <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
+        <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
+      </Setting>
+      <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LiveCasinoAdmin"  Plain="1"/>
+      <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LiveCasinoAdmin"  Plain="1"/>
+      <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LiveCasinoAdmin" Plain="1" />
+      <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LiveCasinoAdmin" Plain="1" />
+      <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="dblog" />
+    </Function>
+    <Function Name="Live Casino - Win Limit">
+      <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="main" />
+    </Function>
+  </Functions>
+
+  <Functions Name="Gold Deluxe">
+    <Function Name="Get Setting">
+      <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="archive" Plain="0"/>
+      <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="archive" Plain="0"/>
+    </Function>
+    <Function Name="Update Setting">
+      <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_All" SpName="Acc_CustomerUpdMemberGoldDeluxe_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdSuperGoldDeluxe_All" SpName="Acc_CustomerUpdSuperGoldDeluxe_All" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_SAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_SAg" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdMemberGoldDeluxe_MAg" SpName="Acc_CustomerUpdMemberGoldDeluxe_MAg" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdGoldDeluxe_MinMaxBet" SpName="Acc_CustomerUpdGoldDeluxe_MinMaxBet" DbName="main_CustDB"/>
+      <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="main_CustDB"/>
+    </Function>
+  </Functions>
 </Functions>
