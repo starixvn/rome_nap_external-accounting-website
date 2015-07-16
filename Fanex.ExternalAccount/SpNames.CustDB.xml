@@ -325,7 +325,7 @@
     </Function>
   </Functions>
   <Function Name="Racing Setting">
-    <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="DBACC.bodb02.bodbExtAccNet"  />
+    <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerUpdHRStatus" SpName="Acc_CustomerUpdHRStatus_andy" DbName="DBCust.CustDB.bodbExtAccNet"  />
   </Function>
 </Functions>
