@@ -324,4 +324,8 @@
       <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd" DbName="DBCust.CustDB.bodbExtAccNet"/>
     </Function>
   </Functions>
+  <Function Name="Racing Setting">
+    <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="DBACC.bodb02.bodbExtAccNet"  />
+    <Setting Key="Acc_CustomerUpdHRStatus" SpName="Acc_CustomerUpdHRStatus_andy" DbName="DBCust.CustDB.bodbExtAccNet"  />
+  </Function>
 </Functions>

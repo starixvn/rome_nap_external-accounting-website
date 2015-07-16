@@ -322,9 +322,9 @@
       <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet"/>
       <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd" DbName="DBCust.CustDB.bodbExtAccNet"/>
     </Function>
-    <Function Name="Racing Setting">
-    <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="archive"  />
-    <Setting Key="Acc_CustomerUpdHRStatus" SpName="Acc_CustomerUpdHRStatus_andy" DbName="main_CustDB"  />
+  <Function Name="Racing Setting">
+    <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="DBEXT.bodb02.bodbExtAccNet"  />
+    <Setting Key="Acc_CustomerUpdHRStatus" SpName="Acc_CustomerUpdHRStatus_andy" DbName="DBCust.CustDB.bodbExtAccNet"  />
   </Function>
 
 </Functions>
