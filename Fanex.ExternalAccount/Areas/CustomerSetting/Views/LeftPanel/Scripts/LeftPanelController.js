@@ -102,14 +102,16 @@ function LeftPanelController($scope, $element) {
                 }
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
-                    if ($scope.model.setting.details[i].key == 'Keno') {
-                        isHideKeno = false;
-                    }
-                    if ($scope.model.setting.details[i].key == 'VirtualSports') {
-                        isHideVirtualSport = false;
-                    }
-                    if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
-                        isHideGoldDeluxe = false;
+                    if ($scope.model.personalInfo.roleId.value != 4) {
+                        if ($scope.model.setting.details[i].key == 'Keno') {
+                            isHideKeno = false;
+                        }
+                        if ($scope.model.setting.details[i].key == 'VirtualSports') {
+                            isHideVirtualSport = false;
+                        }
+                        if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
+                            isHideGoldDeluxe = false;
+                        }
                     }
                 }
 
@@ -846,6 +848,7 @@ function BalanceController($scope, $http) {
 
         if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
+            value = value.replace(/,/g, "");
             $http({
                 url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post',

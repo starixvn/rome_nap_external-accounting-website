@@ -3441,14 +3441,14 @@ Fanex.ExtAcc.Customer = {
             }
 
             if (!this.HideGoldDeluxe) {
-                menuItems.liveCasino = {
+                menuItems.goldDeluxe = {
                     name: "Edit Multiple Gold Deluxe",
                     className: "iconEnableEdit",
                     callback: function () {
                         Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 2, 1);
                     }
                 };
-                menuItems.liveCasinoSuper = {
+                menuItems.goldDeluxeSuper = {
                     name: "Super Edit Multiple Gold Deluxe",
                     className: "iconEnableEdit",
                     callback: function () {
@@ -3458,7 +3458,7 @@ Fanex.ExtAcc.Customer = {
                         Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 4, 1);
                     }
                 };
-                menuItems.liveCasinoMaster = {
+                menuItems.goldDeluxeMaster = {
                     name: "Master Edit Multiple Gold Deluxe",
                     className: "iconEnableEdit",
                     callback: function () {
@@ -3468,7 +3468,7 @@ Fanex.ExtAcc.Customer = {
                         Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 3, 1);
                     }
                 };
-                menuItems.separate5 = "------";
+                menuItems.separate8 = "------";
             }
 
 
