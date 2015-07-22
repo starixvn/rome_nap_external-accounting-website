@@ -96,9 +96,11 @@
         </table>
     </div>
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model)
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
     @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateSetting"))
     @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndCom"))
+    @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateWinLimit"))
     @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSetting"))
 }
 

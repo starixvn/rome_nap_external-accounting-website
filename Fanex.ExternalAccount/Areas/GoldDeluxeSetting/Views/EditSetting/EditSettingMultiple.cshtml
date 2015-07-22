@@ -27,19 +27,21 @@
                     <tr>
                         <td class="right">
                             <label for="chbEnableLiveCasino">
-                                <input id="chbEnableLiveCasino" type="checkbox" data-ng-model="enableLiveCasino"
-                                       data-ng-disabled="disableCheckBoxLiveCasino" />@GoldDeluxeLang.lblEnable
-                                </label>
-                            </td>
-                        </tr>
+                                <input id="chbEnableLiveCasino" type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" />
+                                @GoldDeluxeLang.lblEnable
+                            </label>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model)
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
     @Html.Hidden("UpdateGoldDeluxeSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateSettingMultiple"))
     @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndComMultiple"))
+    @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateWinLimitMultiple"))
     @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSettingMultiple"))
 }
 
