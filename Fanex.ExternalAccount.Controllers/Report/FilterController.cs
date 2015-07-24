@@ -50,9 +50,17 @@ namespace Fanex.ExternalAccount.Controllers.Report
             list.Add(new KeyValuePair<string, bool>(ShowNumberGame, CheckRequest.GetBooleanRequest(ShowNumberGame, true)));
             list.Add(new KeyValuePair<string, bool>(ShowP2P, CheckRequest.GetBooleanRequest(ShowP2P, true)));
             list.Add(new KeyValuePair<string, bool>(ShowLiveCasino, CheckRequest.GetBooleanRequest(ShowLiveCasino, true)));
-            list.Add(new KeyValuePair<string, bool>(ShowVirtualSport, CheckRequest.GetBooleanRequest(ShowVirtualSport, true)));
+            if (Config.IsShowVirtualSports)
+            {
+                list.Add(new KeyValuePair<string, bool>(ShowVirtualSport, CheckRequest.GetBooleanRequest(ShowVirtualSport, true)));
+            }
+
             list.Add(new KeyValuePair<string, bool>(ShowKeno, CheckRequest.GetBooleanRequest(ShowKeno, true)));
-            list.Add(new KeyValuePair<string, bool>(ShowGoldDeluxe, CheckRequest.GetBooleanRequest(ShowGoldDeluxe, true)));
+
+            if (!Config.HideGoldDeluxe)
+            {
+                list.Add(new KeyValuePair<string, bool>(ShowGoldDeluxe, CheckRequest.GetBooleanRequest(ShowGoldDeluxe, true)));
+            }
 
             return list;
         }
