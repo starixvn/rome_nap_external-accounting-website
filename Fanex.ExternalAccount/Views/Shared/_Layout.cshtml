@@ -7,15 +7,15 @@
 @using Fanex.CustomerSetting.Security.Authenticate
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
 @{
-    var groupId = CurrentSession.Instance.GroupId;
-    var groups = GroupConfigurations.AllowBettingGroups;
-    var admins = Config.AdminUsersEditSuperStatus;
-    var showBetSetting = groups.Contains(groupId) ? 1 : 0;
-    var allowBetSettingGroups = Newtonsoft.Json.JsonConvert.SerializeObject(groups, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
-    {
-        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
-        NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
-    });
+    var admins = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] {};
+    var showBetSetting = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
@@ -186,8 +186,7 @@
         Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
         Fanex.ExtAcc.IsITAdmin = '@CurrentSession.Instance.IsITAdmin';
 
-        var showBetSetting = '@showBetSetting';
-        var allowBetSettingGroups = '@allowBetSettingGroups';
+        var showBetSetting = '@showBetSetting';        
         var allowAdminEditSuperStatus = '@allowAdminEditSuperStatus';
         var userId = '@CurrentSession.Instance.UserId';
         var username = '@CurrentSession.Instance.UserName';

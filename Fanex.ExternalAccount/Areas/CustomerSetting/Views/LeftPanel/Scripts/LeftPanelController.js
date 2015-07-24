@@ -1049,12 +1049,11 @@ function SettingController($scope, $http) {
     $scope.Init = function () {
         if ($scope.setting != null) {
             var groupName = parent.$('#selectedGroupName').html();
-            var allowGroups = eval(parent.allowBetSettingGroups);
             var allowAdmins = eval(parent.allowAdminEditSuperStatus);
             for (var i = 0; i < $scope.setting.details.length; i++) {
                 if ($scope.setting.details[i].key == 'Poker' ||
                     ($scope.setting.details[i].key == 'Transfer' && $scope.model.personalInfo.roleId.value == 1) ||
-                    ($scope.setting.details[i].key == 'BetSetting' && (parent.showBetSetting == '0' || !allowGroups.contains(parseInt(parent.$('#selectedGroupIndex').html()))))) {
+                    ($scope.setting.details[i].key == 'BetSetting' && parent.showBetSetting == '0')) {
                     $scope.setting.details[i].isHide = true;
                 }
             }
