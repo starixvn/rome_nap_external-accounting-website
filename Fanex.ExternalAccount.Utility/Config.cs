@@ -213,6 +213,11 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static bool HideGoldDeluxe
+        {
+            get { return Utils.ToBoolean(GetValue("HideGoldDeluxe")); }
+        }
+
         public static bool IsCache
         {
             get

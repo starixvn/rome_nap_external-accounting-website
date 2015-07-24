@@ -79,7 +79,11 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
 
             list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
-            list.Add(new KeyValuePair<string, string>("showGD", ViewLang.GoldDeluxe));
+
+            if (!Config.HideGoldDeluxe)
+            {
+                list.Add(new KeyValuePair<string, string>("showGD", ViewLang.GoldDeluxe));
+            }
 
             return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());
         }
