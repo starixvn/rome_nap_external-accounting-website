@@ -244,7 +244,11 @@ Fanex.CustomerSetting.Betting.Keno.Update = function (ondone) {
         var success = true;
 
         $(errorCodes).each(function (i, obj) {
-            if (obj[0].errorCode != '' && parseInt(obj[0].errorCode) >= 0) {
+            if (obj.errorCode) {
+                success = obj.isSuccess;
+                errorMessage += obj.errorMessage + '<br />';
+            }
+            else if (obj[0].errorCode != '' && parseInt(obj[0].errorCode) >= 0) {
                 success = false;
                 errorMessage += obj[0].errorMessage + '<br />';
             }
