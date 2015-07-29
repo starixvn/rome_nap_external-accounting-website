@@ -202,7 +202,7 @@
     <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.bodb02.bodbExtAccNet" />
+    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS_xpre" DbName="DBTXN.bodb02.bodbExtAccNet" />
   </Function>
   <Function Name="Live Casino - Update PT Setting">
     <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="DBCust.CustDB.bodbExtAccNet" />
