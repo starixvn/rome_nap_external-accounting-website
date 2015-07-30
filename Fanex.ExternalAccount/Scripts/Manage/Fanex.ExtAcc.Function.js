@@ -354,7 +354,7 @@ Fanex.ExtAcc.Function = {
     ShowActivate: function (funcId, funcName) {
         var titles = $.parseJSON(menuTitles);
         var title = '';
-        var warning = 'This function will be <font style="color: #ff0000">{0}</font> on PRODUCTION environment';
+        var warning = 'This function will be <font style="color: #ff0000">{0}</font> on grant permission form<br> on PRODUCTION environment';
 
         title = $('#test-' + funcId).attr('class') == 'menuActive' ? titles.Deactivate : titles.Activate;
         warning = $('#test-' + funcId).attr('class') == 'menuActive' ?
@@ -366,7 +366,7 @@ Fanex.ExtAcc.Function = {
             'Are you sure to ' + title.toLowerCase() + ' [Is Test] of function <font color="#4b91be">' + funcName + '</font>?<br>' +
             warning,
             400,
-            150,
+            190,
             false,
             function () {
                 Fanex.ExtAcc.Function.Activate(funcId, !($('#test-' + funcId).attr('class') == 'menuActive'));
