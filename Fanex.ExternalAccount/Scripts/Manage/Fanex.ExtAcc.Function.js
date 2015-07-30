@@ -363,7 +363,7 @@ Fanex.ExtAcc.Function = {
         Fanex.ExtAcc.Function.FunctionId = funcId;
         Fanex.ExtAcc.Form.ConfirmBox(
             title,
-            'Are you sure to ' + title.toLowerCase() + ' [Is Test] of function <font color="#4b91be">' + funcName + '</font>?\n' +
+            'Are you sure to ' + title.toLowerCase() + ' [Is Test] of function <font color="#4b91be">' + funcName + '</font>?<br>' +
             warning,
             400,
             150,
