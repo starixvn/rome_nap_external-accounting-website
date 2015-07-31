@@ -13,6 +13,7 @@
 namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
+    using System.Configuration;
     using System.Data;
     using System.IO;
     using System.Linq;
@@ -71,6 +72,9 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         protected const int FromSystem = 3;
 
+        protected const string UAT = "UAT";
+        protected const string PRO = "LIVE";
+                
         #endregion Constant
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// Session of current logging in session.
         /// </summary>
         private readonly ICurrentSession _currentSession;
-
+                
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseController"/> class.
         /// </summary>
@@ -90,6 +94,16 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
             this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+        }
+
+        protected string Environment
+        {
+            get { return Utils.ToString(ConfigurationManager.AppSettings["Environment"]); }
+        }
+
+        protected bool IncludeAllFunctions
+        {
+            get { return this.Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase); }
         }
 
         /// <summary>

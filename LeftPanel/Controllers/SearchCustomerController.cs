@@ -232,7 +232,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !Config.AdminUsersEditSuperStatus.Contains(CurrentSession.UserId) && !close)
+            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !close 
+                && !IsAuthorized(CurrentSession.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host, Request))
             {
                 return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
             }

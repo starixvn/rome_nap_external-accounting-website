@@ -354,15 +354,19 @@ Fanex.ExtAcc.Function = {
     ShowActivate: function (funcId, funcName) {
         var titles = $.parseJSON(menuTitles);
         var title = '';
+        var warning = 'This function will be <font style="color: #ff0000">{0}</font> on grant permission form<br> on PRODUCTION environment';
 
         title = $('#test-' + funcId).attr('class') == 'menuActive' ? titles.Deactivate : titles.Activate;
+        warning = $('#test-' + funcId).attr('class') == 'menuActive' ?
+            warning.replace('{0}', 'shown') : warning.replace('{0}', 'hidden');
 
         Fanex.ExtAcc.Function.FunctionId = funcId;
         Fanex.ExtAcc.Form.ConfirmBox(
             title,
-            'Are you sure to ' + title.toLowerCase() + ' [Is Test] of function <font color="#4b91be">' + funcName + '</font> ?',
+            'Are you sure to ' + title.toLowerCase() + ' [Is Test] of function <font color="#4b91be">' + funcName + '</font>?<br>' +
+            warning,
             400,
-            150,
+            190,
             false,
             function () {
                 Fanex.ExtAcc.Function.Activate(funcId, !($('#test-' + funcId).attr('class') == 'menuActive'));

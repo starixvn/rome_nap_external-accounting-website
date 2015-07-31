@@ -2,7 +2,6 @@
 public static class eFunctions
 {
 		public const string Administration = "Administration";
-			public const string EnableESports = "EnableESports";
 			public const string SystemConfiguration = "SystemConfiguration";
 			public const string Reports = "Reports";
 			public const string ManageCustomer = "ManageCustomer";
@@ -14,8 +13,8 @@ public static class eFunctions
 			public const string DailyWinloss = "DailyWinloss";
 			public const string WinlossDetail = "WinlossDetail";
 			public const string Statement = "Statement";
-			public const string UpdateGoldDeluxe = "UpdateGoldDeluxe";
 			public const string EnableGoldDeluxe = "EnableGoldDeluxe";
+			public const string UpdateGoldDeluxe = "UpdateGoldDeluxe";
 			public const string GoldDeluxeBetting = "GoldDeluxeBetting";
 			public const string Sportsbook = "Sportsbook";
 			public const string Racing = "Racing";
@@ -54,5 +53,7 @@ public static class eFunctions
 			public const string CustomerList = "CustomerList";
 			public const string Keno = "Keno";
 			public const string KenoSetting = "KenoSetting";
+			public const string EnableESports = "EnableESports";
 			public const string KenoBetting = "KenoBetting";
+			public const string OpenSuper = "OpenSuper";
 		}

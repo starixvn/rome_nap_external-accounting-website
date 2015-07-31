@@ -12,12 +12,14 @@
 
 namespace Fanex.ExternalAccount.Controllers.UserControl
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
@@ -131,8 +133,26 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
+            var funcs = new FunctionService().GetAllFunctions().ToList();
+            funcs = funcs.Where(f => f.IsTest).ToList();
             var externalGroup = new LoginService().GroupList();
             var functionList = this._groupService.GetAllGroupPolicy(groupId);
+
+            var allowFunctions = new List<Function>();
+
+            if (!IncludeAllFunctions)
+            {
+                foreach (var function in functionList)
+                {
+                    if (!funcs.Any(f => f.FuncID == function.FuncID))
+                    {
+                        allowFunctions.Add(function);
+                    }
+                }
+
+                functionList = allowFunctions;
+            }
+
             var isEditExtGroup = false;
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;

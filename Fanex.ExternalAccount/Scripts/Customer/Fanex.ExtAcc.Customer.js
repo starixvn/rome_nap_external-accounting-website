@@ -356,9 +356,7 @@ Fanex.ExtAcc.Customer = {
             }
         };
 
-        var allowBettingLimitGroups = eval(allowBetSettingGroups);
-
-        if (showBetSetting == '1' && allowBettingLimitGroups.contains(parseInt($('#selectedGroupIndex').html()))) {
+        if (showBetSetting == '1') {
             items.betSetting = {
                 name: "Edit Betting Limit",
                 className: "iconEnableEdit editInfoBg",

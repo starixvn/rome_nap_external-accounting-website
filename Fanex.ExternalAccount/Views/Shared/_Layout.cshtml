@@ -7,25 +7,26 @@
 @using Fanex.CustomerSetting.Security.Authenticate
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
 @{
-    var groupId = CurrentSession.Instance.GroupId;
-    var groups = GroupConfigurations.AllowBettingGroups;
-    var admins = Config.AdminUsersEditSuperStatus;
-    var showBetSetting = groups.Contains(groupId) ? 1 : 0;
-    var allowBetSettingGroups = Newtonsoft.Json.JsonConvert.SerializeObject(groups, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
-    {
-        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
-        NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
-    });
+    var userId = CurrentSession.Instance.UserId;
+    var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] {};
+    var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
     });
-    var isUpdateCredit = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var hasClose = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var hasSuspend = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var allowAutoPT = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.AllowAutoMPT, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var hasClearCredit = CustomerModelExtensions.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    var isUpdateCredit = CustomerModelExtensions.IsAuthorized(userId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    var hasClose = CustomerModelExtensions.IsAuthorized(userId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    var hasSuspend = CustomerModelExtensions.IsAuthorized(userId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    var allowAutoPT = CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllowAutoMPT, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    var hasClearCredit = CustomerModelExtensions.IsAuthorized(userId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
     var enableKeno = System.Configuration.ConfigurationManager.AppSettings["EnableKeno"] == "true" ? 1 : 0;
     var showKenoSetting = KenoSection.Instance.ShowSetting == true ? "true" : "false";
     var showGoldDeluxeSetting = System.Configuration.ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1" ? 1 : 0;
@@ -85,7 +86,7 @@
                                     <div class="sf-menu divLI" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</div>
                                 </li>
                                 <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</div>
+                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@userId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</div>
                                 </li>
                             </ul>
                         </li>
@@ -186,10 +187,9 @@
         Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
         Fanex.ExtAcc.IsITAdmin = '@CurrentSession.Instance.IsITAdmin';
 
-        var showBetSetting = '@showBetSetting';
-        var allowBetSettingGroups = '@allowBetSettingGroups';
+        var showBetSetting = '@showBetSetting';        
         var allowAdminEditSuperStatus = '@allowAdminEditSuperStatus';
-        var userId = '@CurrentSession.Instance.UserId';
+        var userId = '@userId';
         var username = '@CurrentSession.Instance.UserName';
         var menuTitles = '{"ResetPwd" : "@ViewLang.ResetPassword", "CreateExistUser" : "@ViewLang.AddExistingUser", "CreateUser" : "@ViewLang.NewUser", "EditUser" : "@ViewLang.EditUserInfo", "Edit": "@ViewLang.EditMenu", "Activate": "@ViewLang.Activate", "Delete": "@ViewLang.Delete", "Create" : "@ViewLang.NewMenu", "Deactivate" : "@ViewLang.Deactivate", "EditGroup" : "@ViewLang.EditGroup", "EditFunction":"@ViewLang.EditFunction", "CreateFunction" : "@ViewLang.NewFunction"}';
         var isUpdateCredit = '@isUpdateCredit';
