@@ -237,7 +237,7 @@ Fanex.ExtAcc.Customer = {
     ShowEditSuper: function (custId, title) {
         this.TransferCondition = false;
         this.UserId = custId;
-        this.TitleEditInfo = title;
+        this.TitleEditInfo = unescape(title);
         this.CurrentLevel = this.Super;
 
         this.ResetFlags();
@@ -379,7 +379,7 @@ Fanex.ExtAcc.Customer = {
     ShowEditMaster: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, superSyncCasino, superSyncBingo, superSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe) {
         this.TransferCondition = transferCondition;
         Fanex.ExtAcc.Customer.UserId = custId;
-        this.TitleEditInfo = title;
+        this.TitleEditInfo = unescape(title);
         this.HideVirtualSports = hideVirtualSport;
         this.HideKeno = showKenoSetting == 'false' || isHideKeno;
         this.HideGoldDeluxe = showGoldDeluxeSetting == 0 || isHideGoldDeluxe;
@@ -665,7 +665,7 @@ Fanex.ExtAcc.Customer = {
     ShowEditAgent: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe) {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
-        this.TitleEditInfo = title;
+        this.TitleEditInfo = unescape(title);
         this.HideVirtualSports = hideVirtualSport;
         this.HideKeno = showKenoSetting == 'false' || isHideKeno;
         this.HideGoldDeluxe = showGoldDeluxeSetting == 0 || isHideGoldDeluxe;
@@ -965,7 +965,7 @@ Fanex.ExtAcc.Customer = {
     ShowEditMember: function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe) {
         this.TransferCondition = transferCondition;
         this.UserId = custId;
-        this.TitleEditInfo = title;
+        this.TitleEditInfo = unescape(title);
         this.IsMultiple = false;
         this.HideVirtualSports = hideVirtualSport;
         this.HideKeno = showKenoSetting == 'false' || isHideKeno;
@@ -1332,7 +1332,7 @@ Fanex.ExtAcc.Customer = {
             Name: 'Edit',
             Width: 30,
             CustomCellRender: function (cell) {
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + cell.Value.username.replace('$', '&#36') + "')";
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "')";
 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
             }
@@ -1499,7 +1499,7 @@ Fanex.ExtAcc.Customer = {
             Name: 'Edit',
             Width: 30,
             CustomCellRender: function (cell) {
-                var title = cell.Value.username.replace('$', '&#36');
+                var title = escape(cell.Value.username);
                 var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
                 var hideGoldDeluxe = showGoldDeluxeSetting == 0 || cell.Value.HideGoldDeluxe || isHideGoldDeluxe;
                 var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncBingo + ", " + superSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + ")";
@@ -1675,7 +1675,7 @@ Fanex.ExtAcc.Customer = {
             Name: 'Edit',
             Width: 30,
             CustomCellRender: function (cell) {
-                var title = cell.Value.username.replace('$', '&#36');
+                var title = escape(cell.Value.username);
                 var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
                 var hideGoldDeluxe = showGoldDeluxeSetting == 0 || cell.Value.HideGoldDeluxe || isHideGoldDeluxe;
 
@@ -1849,7 +1849,7 @@ Fanex.ExtAcc.Customer = {
             Name: 'Edit',
             Width: 30,
             CustomCellRender: function (cell) {
-                var title = cell.Value.username.replace('$', '&#36');
+                var title = escape(cell.Value.username);
                 var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
                 var hideGoldDeluxe = showGoldDeluxeSetting == 0 || cell.Value.HideGoldDeluxe || isHideGoldDeluxe;
                 var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + ")";
