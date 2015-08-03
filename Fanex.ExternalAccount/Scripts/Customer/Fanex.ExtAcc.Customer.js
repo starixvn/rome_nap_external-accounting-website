@@ -313,7 +313,7 @@ Fanex.ExtAcc.Customer = {
         }
 
         if (showGoldDeluxeSetting == 1) {
-            items.keno = {
+            items.goldDeluxe = {
                 name: "Gold Deluxe",
                 className: "iconViewEdit",
                 callback: function () {
