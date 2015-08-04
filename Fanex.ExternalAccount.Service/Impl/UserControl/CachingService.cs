@@ -38,7 +38,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
                 result = this._menuDao.GetMenuByUserId(userId);
                 if (result != null)
                 {
-                    UserCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddHours(1));
+                    UserCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddSeconds(30));
                 }
             }
 
