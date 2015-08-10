@@ -831,11 +831,13 @@
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-win-limit-controller.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\directives\edit-game-setting-directive.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-game-setting-service.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\GameSetting\edit-game-setting.htm" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
@@ -2413,7 +2415,9 @@
     <Content Include="Scripts\Validators.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SpNames.CustDB.production.xml" />
-    <Content Include="SpNames.CustDB.uat.xml" />
+    <Content Include="SpNames.CustDB.uat.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\BettypeReference\Themes\style.css" />
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bg.jpg" />
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bgnote.jpg" />
@@ -2479,6 +2483,7 @@
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\_EditSetting.cshtml" />
     <Content Include="Areas\GoldDeluxeSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\GoldDeluxeSetting\Views\Web.config" />
+    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
