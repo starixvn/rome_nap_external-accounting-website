@@ -41,6 +41,9 @@ namespace Fanex.ExternalAccount
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
+            routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
+            routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
             routes.MapHttpRoute(
                 name: "DefaultApi",
