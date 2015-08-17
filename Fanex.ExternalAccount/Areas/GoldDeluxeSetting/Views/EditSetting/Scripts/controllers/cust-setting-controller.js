@@ -33,12 +33,14 @@
                 updateType = updateType || fanex.goldDeluxeSetting.updateType.AllSetting;
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope(),
                     ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope(),
+                    winLimitScope = angular.element('[data-ng-controller="CustomerWinLimitController"]').scope(),
                     gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
 
                 custInfoScope.updateSettingStatus(settingViewModel.Setting);
 
                 settingViewModel.Setting.PositionTaking = ptAndComScope.positionTaking;
                 settingViewModel.Setting.Commission = { Commission: ptAndComScope.commission };
+                settingViewModel.Setting.WinLimit = winLimitScope.getWinLimit();
                 settingViewModel.Setting.GameSetting = gameSettingScope.getGameSetting();
                 settingViewModel.IsUpdatePTAllMembers = ptAndComScope.uplinePTOnMember.isApplyNewUplinePositionTaking;
                 settingViewModel.PTOnMember = ptAndComScope.uplinePTOnMember.newUplinePositionTaking;
