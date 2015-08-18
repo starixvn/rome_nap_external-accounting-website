@@ -102,7 +102,7 @@ function LeftPanelController($scope, $element) {
                 }
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
-                    if ($scope.model.personalInfo.roleId.value != 4) {
+                    //if ($scope.model.personalInfo.roleId.value != 4) {
                         if ($scope.model.setting.details[i].key == 'Keno') {
                             isHideKeno = false;
                         }
@@ -112,7 +112,7 @@ function LeftPanelController($scope, $element) {
                         if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
                             isHideGoldDeluxe = false;
                         }
-                    }
+                    //}
                 }
 
 
