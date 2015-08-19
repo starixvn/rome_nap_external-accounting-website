@@ -2428,6 +2428,10 @@ function disableSportType(id, isDisable) {
         isDisable ? betTypeGroupSets[j].copiedItem = {} : betTypeGroupSets[j].copiedItem = null;
         for (var k = 0; k < betTypeGroups.length; k++) {
             var betTypes = betTypeGroups[k].items;
+            if (isDisable) {
+                betTypeGroups[k].copiedItem = null;
+            }
+
             for (var l = 0; l < betTypes.length; l++) {
                 var idCopied = "c$" + betTypeGroups[k].betTypes[0].id + "$" + betTypeGroups[k].betTypes[0].sportId + "$" + (betTypeGroups[k].isLive ? "0" : "1");
                 if (isDisable) {
