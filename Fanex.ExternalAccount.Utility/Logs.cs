@@ -9,9 +9,6 @@
 
 namespace Fanex.ExternalAccount.Utilities
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
     using System.Web;
     using Fanex.Logging;
 
@@ -20,89 +17,28 @@ namespace Fanex.ExternalAccount.Utilities
     /// </summary>
     public static class Logs
     {
-        public static void Write(string msg)
+        public static void Error(System.Exception ex, bool includeQuery = true)
         {
-            LogService.Error(msg);
-        }
-
-        /// <summary>
-        /// Writes log.
-        /// </summary>
-        /// <param name="msg">Log message.</param>
-        public static void Write(object msg)
-        {
-            if (msg is Exception)
+            if (Config.IsUM)
             {
-                LogService.Error(null, msg as Exception);
+                return;
             }
-            else if (msg != null)
-            {
-                LogService.Error(msg.ToString());
-            }
-        }
 
-        #region ILogger Members
+            var message = ex.Message +
+                            "<br>\r\nSOURCE: " + ex.Source +
+                            "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                            "<br>\r\nREFERRER: " + (includeQuery ? Utils.ToString(HttpContext.Current.Request.UrlReferrer) : string.Empty) +
+                            "<br>\r\nFORM: " + (includeQuery ? HttpContext.Current.Request.Form.ToString() : string.Empty) +
+                            "<br>\r\nQUERYSTRING: " + (includeQuery ? HttpContext.Current.Request.QueryString.ToString() : string.Empty) +
+                            "<br>\r\nTARGETSITE: " + ex.TargetSite +
+                            "<br>\r\nSTACKTRACE: " + ex.StackTrace;
 
-        public static void Critical(string message, string category)
-        {
-            LogService.Critical(message, category);
-        }
-
-        public static void Critical(string message)
-        {
-            LogService.Critical(message);
-        }
-
-        public static void Debug(string message, string category)
-        {
-            LogService.Debug(message, category);
-        }
-
-        public static void Debug(string message)
-        {
-            LogService.Debug(message);
-        }
-
-        public static void Error(string message, string category, System.Exception exception)
-        {
-            LogService.Error(message, category, exception);
-        }
-
-        public static void Error(string message, System.Exception exception)
-        {
-            LogService.Error(message, exception);
-        }
-
-        public static void Error(string message, string category)
-        {
-            LogService.Error(message, category);
-        }
-
-        public static void Error(string message)
-        {
             LogService.Error(message);
-        }
 
-        public static void Info(string message, string category)
-        {
-            LogService.Info(message, category);
+            if (HttpContext.Current.IsDebuggingEnabled)
+            {
+                throw ex;
+            }
         }
-
-        public static void Info(string message)
-        {
-            LogService.Info(message);
-        }
-
-        public static void Warn(string message, string category)
-        {
-            LogService.Warn(message, category);
-        }
-
-        public static void Warn(string message)
-        {
-            LogService.Warn(message);
-        }
-
-        #endregion ILogger Members
     }
 }

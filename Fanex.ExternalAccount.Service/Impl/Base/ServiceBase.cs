@@ -7,8 +7,7 @@
 namespace Fanex.ExternalAccount.Service.Impl.Base
 {
     using System;
-    using System.Web;
-    using Fanex.Logging;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -22,21 +21,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Base
         /// <param name="includeQuery">To prevent getting secure information.</param>
         protected void ProcessException(Exception ex, bool includeQuery = true)
         {
-            var message = ex.Message +
-                             "<br>\r\nSOURCE: " + ex.Source +
-                             "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                             "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                             "<br>\r\nFORM: " + (includeQuery ? HttpContext.Current.Request.Form.ToString() : string.Empty) +
-                             "<br>\r\nQUERYSTRING: " + (includeQuery ? HttpContext.Current.Request.QueryString.ToString() : string.Empty) +
-                             "<br>\r\nTARGETSITE: " + ex.TargetSite +
-                             "<br>\r\nSTACKTRACE: " + ex.StackTrace;
-
-            LogService.Error(message);
-
-            if (HttpContext.Current.IsDebuggingEnabled)
-            {
-                throw ex;
-            }
+            Logs.Error(ex, includeQuery);
         }
     }
 }

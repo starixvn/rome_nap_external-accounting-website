@@ -84,7 +84,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
@@ -132,7 +132,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
@@ -180,7 +180,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
@@ -312,7 +312,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
@@ -432,7 +432,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex) 
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -484,7 +484,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -597,7 +597,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -710,7 +710,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -823,7 +823,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -935,7 +935,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -1087,7 +1087,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             customer.BettingLimit = null;
@@ -1145,7 +1145,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             customer.BettingLimit = null;

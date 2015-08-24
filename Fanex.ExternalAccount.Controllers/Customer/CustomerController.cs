@@ -131,7 +131,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -235,7 +235,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -339,7 +339,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
             }
 
             return this.JsonBase(
@@ -933,7 +933,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     }
                     catch (Exception ex)
                     {
-                        Logs.Error(ex.Message, ex);
+                        Logs.Error(ex);
                     }
                 }
             }

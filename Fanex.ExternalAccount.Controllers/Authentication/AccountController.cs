@@ -246,7 +246,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
                 return (int)StatusKickedOut.Error;
             }
 
@@ -389,7 +389,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             catch (Exception ex)
             {
-                Logs.Error(ex.Message, ex);
+                Logs.Error(ex);
                 return this.RedirectToAction("Error", "Shared");
             }
         }

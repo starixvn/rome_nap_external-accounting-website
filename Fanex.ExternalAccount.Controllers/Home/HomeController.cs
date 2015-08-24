@@ -12,6 +12,7 @@
 
 namespace Fanex.ExternalAccount.Controllers.Home
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -56,7 +57,7 @@ namespace Fanex.ExternalAccount.Controllers.Home
 
         public ActionResult TestLog()
         {
-            Logging.LogService.Error("Testing, this is an exception!!!");
+            Logs.Error(new Exception("Testing log"));
 
             return this.ViewBase();
         }

@@ -69,11 +69,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
                 }
                 catch (SqlException ex)
                 {
-                    Logs.Error(ex.Message, ex);
+                    Logs.Error(ex);
                 }
                 catch (Exception ex)
                 {
-                    Logs.Error(ex.Message, ex);
+                    Logs.Error(ex);
                 }
                 
                 if (balanceUpDay != null)

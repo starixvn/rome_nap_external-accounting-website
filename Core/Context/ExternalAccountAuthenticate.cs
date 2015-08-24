@@ -24,7 +24,6 @@ namespace Fanex.ExternalAccount.Core.Context
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.Logging;
 
     /// <summary>
     /// TODO: Update summary.
@@ -374,7 +373,7 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <param name="response">Response object.</param>
         private void ProcessException(Exception ex, HttpResponseBase response)
         {
-            LogService.Error(ex.Message, ex);
+            Logs.Error(ex);
 
             this.SignOut(response);
         }        
