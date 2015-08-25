@@ -34,11 +34,6 @@ namespace Fanex.ExternalAccount.Utilities
                             "<br>\r\nSTACKTRACE: " + ex.StackTrace;
 
             LogService.Error(message);
-
-            if (HttpContext.Current.IsDebuggingEnabled)
-            {
-                throw ex;
-            }
         }
     }
 }
