@@ -226,12 +226,13 @@ namespace Fanex.ExternalAccount.Core.Context
                 currentSession.IsITAdmin = currentSession.GroupId == 1;
             }
 
+            var allGroups = new GroupService().GetAllGroup();
             var groups = loginService.GroupList();
             var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
-            var hasGroup = currentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
+            var hasGroup = currentSession.IsInternalAdmin ? allGroups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
                 groups.Where(o => o.GroupID == currentSession.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
 
-            return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
+            return (result != null && result.Rows.Count > 0 && hasGroup) || ((currentSession.IsInternalAdmin || custId == 0) && hasGroup);
         }
 
         /// <summary>

@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne">
+      <HintPath>..\Dependencies\EnableStatuses\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
@@ -78,7 +81,7 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\Dependencies\EnableStatuses\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
@@ -474,9 +477,7 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Scripts\KenoStatusController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Styles\EnableKeno.css" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\bet-setting.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\main.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\position-taking.controller.js" />
@@ -1205,10 +1206,9 @@
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
+    <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
+    <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.Convert.js" />
-    <Content Include="SpNames.CustDB.kbt67.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.css" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Pagination.css" />
@@ -1652,8 +1652,6 @@
     <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
     <Content Include="Scripts\Combobox\Combobox.js" />
     <Content Include="Scripts\Combobox\Combobox.css" />
-    <Content Include="Scripts\ContextMenu\jquery.contextMenu.css" />
-    <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
@@ -2414,10 +2412,6 @@
     <Content Include="Scripts\UnderMaintenance.js" />
     <Content Include="Scripts\Validators.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="SpNames.CustDB.production.xml" />
-    <Content Include="SpNames.CustDB.uat.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\BettypeReference\Themes\style.css" />
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bg.jpg" />
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bgnote.jpg" />
@@ -2425,12 +2419,6 @@
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\expand.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
@@ -2469,6 +2457,15 @@
     <Content Include="Configurations\appSettings.kbt67.config" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Products.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Template.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
@@ -2491,21 +2488,8 @@
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.uat.Debug.config">
-      <DependentUpon>Web.uat.config</DependentUpon>
-    </Content>
-    <Content Include="Web.uat.Release.config">
-      <DependentUpon>Web.uat.config</DependentUpon>
-    </Content>
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.production.Debug.config">
-      <DependentUpon>Web.production.config</DependentUpon>
-    </Content>
-    <Content Include="Web.production.Release.config">
-      <DependentUpon>Web.production.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplates\Customer\MemberList.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -2544,21 +2528,6 @@
     </Content>
     <Content Include="Web.kbt67.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.kbt67.Debug.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
-    </Content>
-    <Content Include="Web.kbt67.Release.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
-    </Content>
-    <Content Include="Web.kbt67.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.kbt67.Debug.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
-    </Content>
-    <Content Include="Web.kbt67.Release.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
     </Content>
     <None Include="deployment.ignore" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />

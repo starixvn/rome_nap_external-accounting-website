@@ -34,7 +34,7 @@
 <div ng-controller="mainController" class="content">
 <div id="page_main" >
     <div id="customerInfo" class="tableWidth"  >
-       <div id="errMsg" style="display: none;width: 839px;" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
+       <div id="errMsg" style="display: none" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
        </div>
      <div id="arrowUpDown" style="display: none;"  class="collapse ">
     </div>
@@ -82,7 +82,7 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/jquery.tipsy.js")" type="text/javascript"></script>
 <script type="text/javascript">
-    var model = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@KenoSetting'));
+    var model = @Html.Raw(KenoSetting);
     var domain = '@Url.Content("~")';
     var resources = {
         successful: "@Messages.Msg_0",

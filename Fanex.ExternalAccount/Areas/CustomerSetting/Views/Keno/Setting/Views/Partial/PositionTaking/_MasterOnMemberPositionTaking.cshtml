@@ -1,27 +1,28 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
+<div class="errMsg" style="color: #ff5411">@LayoutTexts.WarningPowerKeno</div>
 <table class="tableColor tableWidth" ng-controller="positionTakingController">
     <tr>
          <td colspan="6" class="header c b">
              <span>@LayoutTexts.PositionTaking</span>
            <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isPositionTakingPartial"
-                    ng-click="updated(true, 'PositionTaking')" type="button" title="Save"/>
+                    ng-click="updated(true, 'PositionTaking')" type="button" title="@LayoutTexts.Update"/>
         </td>
     </tr>
     <tr>
-        <td class="col21percent formatCol c b betSetting">
+        <td class="col21percent formatCol c b header">
             @LayoutTexts.CountryMarket
         </td>
-        <td class="col33percent formatCol c b betSetting">
+        <td class="col33percent formatCol c b header">
             @LayoutTexts.MasterPT
         </td>
-        <td class="formatCol c b betSetting" ng-hide="isDisableAutoMPT">
+        <td class="formatCol c b header" ng-hide="isDisableAutoMPT">
             @LayoutTexts.IsAuto
         </td>
-        <td class="col33percent formatCol c b betSetting">
+        <td class="col33percent formatCol c b header">
             @LayoutTexts.AgentPT
         </td>
     </tr>
     <tr ng-repeat="positionTaking in positionTakingList track by $index" master-on-member-position-taking-element ng-model="positionTaking" index="$index"
-             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="Copy all below position taking setting from Australia Acttab">
+             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="@LayoutTexts.lblCopyAllPT">
     </tr>
 </table>
