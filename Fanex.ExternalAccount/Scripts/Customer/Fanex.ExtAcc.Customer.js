@@ -1335,7 +1335,7 @@ Fanex.ExtAcc.Customer = {
             Name: 'Edit',
             Width: 30,
             CustomCellRender: function (cell) {
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (showGoldDeluxeSetting == 0 || cell.Value.HideGoldDeluxe) + ")";
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ")";
                 
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
             }
