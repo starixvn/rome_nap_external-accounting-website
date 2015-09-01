@@ -107,7 +107,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
 
                             if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                Fanex.PTEngine.PT_SetSelect(document.getElementById("discountMyanmarOdds"), 0, commission.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                                Fanex.PTEngine.PT_SetSelect(document.getElementById("discountMyanmarOdds"), 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
                             }
                             else {
                                 document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
