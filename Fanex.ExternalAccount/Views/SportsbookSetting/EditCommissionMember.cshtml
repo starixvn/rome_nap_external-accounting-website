@@ -72,7 +72,20 @@
                 data-bind="value: customer.commissionSetting.discountHRFixedOdds" />
         </div>
         <div class="commissionBlock2">
-            <select id="discountHRFixedOdds" name="discountNumber" class="widthGroup">
+            <select id="discountHRFixedOdds" name="discountHRFixedOdds" class="widthGroup">
+            </select>
+        </div>
+    </div>
+    <div class="clearBlock" data-bind="visible: customer.commissionSetting.isMyanmarOdds">
+        <div class="commissionBlock1">
+            % Odds
+        </div>
+        <div class="commissionBlock2">
+            <input type="text" id="textBoxDiscountMyanmarOdds" class="textBoxComm" disabled="true"
+                data-bind="value: customer.commissionSetting.discountMyanmarOdds" />
+        </div>
+        <div class="commissionBlock2">
+            <select id="discountMyanmarOdds" name="discountMyanmarOdds" class="widthGroup">
             </select>
         </div>
     </div>

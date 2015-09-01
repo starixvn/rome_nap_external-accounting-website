@@ -88,6 +88,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
                 Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
+
+                if (customer.commissionSetting.isMyanmarOdds) {
+                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                }
+                else {
+                    document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                }
             }
             else {
                 $("#textBoxDiscountAsian").val(commission.discount);
@@ -96,6 +103,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
                 Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
+
+                if (customer.commissionSetting.isMyanmarOdds) {
+                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                }
+                else {
+                    document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                }
 
                 $this.currentStatusClose = customer.statusSetting.closed;
                 $this.currentStatusSuspend = customer.statusSetting.suspended;

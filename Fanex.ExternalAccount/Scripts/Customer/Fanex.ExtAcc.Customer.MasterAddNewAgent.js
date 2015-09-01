@@ -85,6 +85,13 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
             Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
             Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
 
+            if (customer.commissionSetting.isMyanmarOdds) {
+                Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+            }
+            else {
+                document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+            }
+
             Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), null, customer.newUserName);
 
             // For Check Edit Postion Taking
