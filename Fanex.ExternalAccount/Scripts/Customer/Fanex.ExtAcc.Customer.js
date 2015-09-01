@@ -1474,6 +1474,12 @@ Fanex.ExtAcc.Customer = {
             CellAlign: 'center',
             CustomAttr: ' title="Number Game" '
         }, {
+            HeaderText: '% Odds',
+            Name: 'discountmo',
+            Width: 60,
+            CellAlign: 'center',
+            CustomAttr: ' title="Myanmar Odds" '
+        }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
             CellAlign: 'center',
@@ -1651,6 +1657,12 @@ Fanex.ExtAcc.Customer = {
             Width: 60,
             CellAlign: 'center',
             CustomAttr: ' title="Number Game" '
+        }, {
+            HeaderText: '% Odds',
+            Name: 'discountmo',
+            Width: 60,
+            CellAlign: 'center',
+            CustomAttr: ' title="Myanmar Odds" '
         }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
@@ -1830,6 +1842,12 @@ Fanex.ExtAcc.Customer = {
             CellAlign: 'center',
             CustomAttr: ' title="Number Game" '
         }, {
+            HeaderText: '% Odds',
+            Name: 'discountmo',
+            Width: 60,
+            CellAlign: 'center',
+            CustomAttr: ' title="Myanmar Odds" '
+        }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
             CellAlign: 'center',
@@ -1997,6 +2015,12 @@ Fanex.ExtAcc.Customer = {
             Width: 60,
             CustomAttr: ' title="Number Game" '
         }, {
+            HeaderText: '% Odds',
+            Name: 'discountmo',
+            Width: 60,
+            CellAlign: 'center',
+            CustomAttr: ' title="Myanmar Odds" '
+        }, {
             HeaderText: 'Group',
             Name: 'playerdiscount',
             CellAlign: 'center',
@@ -2020,6 +2044,12 @@ Fanex.ExtAcc.Customer = {
             CellAlign: 'center',
             Width: 60,
             CustomAttr: ' title="Number Game" '
+        }, {
+            HeaderText: '% Odds',
+            Name: 'playerdiscountmo',
+            Width: 60,
+            CellAlign: 'center',
+            CustomAttr: ' title="Myanmar Odds" '
         }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
@@ -2469,6 +2499,9 @@ Fanex.ExtAcc.Customer = {
                     Name: 'discountnumber',
                     Value: rows[i].discountnumber
                 }, {
+                    Name: 'discountmo',
+                    Value: rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0
+                }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
                 }, {
@@ -2515,7 +2548,7 @@ Fanex.ExtAcc.Customer = {
             }, {
                 HeaderText: 'Commission',
                 Name: 'groupa',
-                MergeColNumber: 7
+                MergeColNumber: 8
             }, {
                 HeaderText: 'Created Date',
                 Name: 'createdate',
@@ -2634,6 +2667,9 @@ Fanex.ExtAcc.Customer = {
                     Name: 'discountnumber',
                     Value: rows[i].discountnumber
                 }, {
+                    Name: 'discountmo',
+                    Value: rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0
+                }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
                 }, {
@@ -2680,7 +2716,7 @@ Fanex.ExtAcc.Customer = {
             }, {
                 HeaderText: 'Commission',
                 Name: 'groupa',
-                MergeColNumber: 7
+                MergeColNumber: 8
             }, {
                 HeaderText: 'Created Date',
                 Name: 'createdate',
@@ -2804,6 +2840,9 @@ Fanex.ExtAcc.Customer = {
                     Name: 'discountnumber',
                     Value: rows[i].discountnumber
                 }, {
+                    Name: 'discountmo',
+                    Value: rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0
+                }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
                 }, {
@@ -2850,7 +2889,7 @@ Fanex.ExtAcc.Customer = {
             }, {
                 HeaderText: 'Commission',
                 Name: 'groupa',
-                MergeColNumber: 7
+                MergeColNumber: 8
             }, {
                 HeaderText: 'Created Date',
                 Name: 'createdate',
@@ -2968,6 +3007,9 @@ Fanex.ExtAcc.Customer = {
                     Name: 'discountnumber',
                     Value: rows[i].discountnumber
                 }, {
+                    Name: 'discountmo',
+                    Value: rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0
+                }, {
                     Name: 'playerdiscount',
                     Value: rows[i].playerdiscount
                 }, {
@@ -2979,6 +3021,9 @@ Fanex.ExtAcc.Customer = {
                 }, {
                     Name: 'playerdiscountnumber',
                     Value: rows[i].playerdiscountnumber
+                }, {
+                    Name: 'playerdiscountmo',
+                    Value: rows[i].playerdiscountmyanmarodds ? rows[i].playerdiscountmyanmarodds : 0
                 }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
@@ -3034,11 +3079,11 @@ Fanex.ExtAcc.Customer = {
             }, {
                 HeaderText: 'Agent Commission',
                 Name: 'discount',
-                MergeColNumber: 4
+                MergeColNumber: 5
             }, {
                 HeaderText: 'Player Commission',
                 Name: 'playerdiscount',
-                MergeColNumber: 4
+                MergeColNumber: 5
             }, {
                 HeaderText: 'Created Date',
                 Name: 'createdate',
