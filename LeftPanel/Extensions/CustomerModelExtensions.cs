@@ -604,6 +604,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("GoldDeluxe");
             }
 
+            if (product.HideColossusBets)
+            {
+                model.RemoveEnableProduct("EnableColossusBets");
+                model.RemoveProduct("ColossusBets");
+            }
+
             return model;
         }
 
@@ -782,6 +788,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableGoldDeluxe)
             {
                 model.DisableProduct("EnableGoldDeluxe");
+            }
+
+            if (product.UplineStatuses.DisableColossusBets)
+            {
+                model.DisableProduct("EnableColossusBets");
             }
 
             if (product.UplineStatuses.Closed)
@@ -966,6 +977,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+
+            product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -985,6 +998,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
+               
+                product.UplineStatuses.DisableColossusBets = upperInfo.Rows[0].ToBoolean("DisableColossusBet");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
@@ -1033,6 +1048,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableGoldDeluxe", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
                                 Text = "Enable Gold Deluxe"
+                            },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableColossusBets", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                                Text = "Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1137,6 +1158,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableGoldDeluxe", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
                                 Text = "Enable Gold Deluxe"
+                            },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableColossusBets", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                                Text = "Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1210,6 +1237,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableGoldDeluxe", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
                                 Text = "Enable Gold Deluxe"
+                            },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableColossusBets", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                                Text = "Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1284,6 +1317,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableGoldDeluxe", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
                                 Text = "Enable Gold Deluxe"
+                            },
+                            new ObjectInfo 
+                            { 
+                                Key = "EnableColossusBets", 
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                                Text = "Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>

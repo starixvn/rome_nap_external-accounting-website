@@ -153,5 +153,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool DisableColossusBets
+        {
+            get;
+            set;
+        }
+
+        public bool HideColossusBets
+        {
+            get;
+            set;
+        }
     }
 }

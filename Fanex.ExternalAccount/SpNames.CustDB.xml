@@ -328,4 +328,9 @@
     <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="DBAGE.bodb02.bodbExtAccNet"  />
     <Setting Key="Acc_CustomerUpdHRStatus" SpName="Acc_CustomerUpdHRStatus_andy" DbName="DBCust.CustDB.bodbExtAccNet"  />
   </Function>
+  <Function Name="Colossus Bet Setting">
+    <Function Name="Update Status">
+      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet" DbName="DBCust.CustDB.bodbExtAccNet"/>
+    </Function>
+  </Function>
 </Functions>
