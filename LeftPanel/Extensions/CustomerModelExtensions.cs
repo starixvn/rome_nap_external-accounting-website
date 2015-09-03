@@ -998,7 +998,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
-               
+
                 product.UplineStatuses.DisableColossusBets = upperInfo.Rows[0].ToBoolean("DisableColossusBet");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
@@ -1053,7 +1053,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets"
+                                Text = "Colossus Bets",
+                                Tooltip ="Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1163,7 +1164,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets"
+                                Text = "Colossus Bets",
+                                Tooltip ="Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1242,7 +1244,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets"
+                                Text = "Colossus Bets",
+                                Tooltip ="Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1322,7 +1325,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             { 
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets"
+                                Text = "Colossus Bets",
+                                Tooltip ="Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
