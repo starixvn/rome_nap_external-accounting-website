@@ -115,7 +115,7 @@ namespace Fanex.ExternalAccount
         {
             if (Request.Headers["X-Requested-With"] != "XMLHttpRequest")
             {
-                Response.Redirect("~/Shared/Error");
+                // Response.Redirect("~/Shared/Error");
             }
         }
 
