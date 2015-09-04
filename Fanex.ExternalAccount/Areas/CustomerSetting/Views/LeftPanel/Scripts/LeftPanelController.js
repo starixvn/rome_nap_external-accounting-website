@@ -384,6 +384,36 @@ function LeftPanelController($scope, $element) {
     };
 };
 
+$scope.ColossusBets = function () {
+    parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+    parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+    parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
+    var roleId = $scope.model.personalInfo.roleId.value;
+    var custId = $scope.model.personalInfo.custId.value;
+    var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+    var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custid + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
+
+    switch (roleId) {
+        case 4:
+            break;
+        case 3:
+            url += "&srecommend=" + uplineId;
+            break;
+        case 2:
+            url += "&mrecommend=" + uplineId;
+            break;
+        case 1:
+            url += "&recommend=" + parentId;
+            breakuplineId
+        default:
+            break;
+    }
+
+    if (url !== '') {
+        parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
+    }
+};
 function PersonalInfoController($scope, $http) {
     $scope.className = 'fiftyPercent';
 

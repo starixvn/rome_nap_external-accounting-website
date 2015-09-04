@@ -1,0 +1,87 @@
+﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
+@model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
+<!DOCTYPE html>
+<html ng-app='colossusBetSettingModule' id="ng-app">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Areas/CustomerSetting/Views/ColossusBet/Setting/Styles/ColossusBet-setting.less"
+        rel="stylesheet" type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/ColossusBet/Setting/Styles/Accounting/theme-color.less"
+        rel="stylesheet" type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/Tipsy/tipsy.css"
+        rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div ng-controller="mainController" class="content">
+        <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+            <tbody>
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC fixfont">
+                        <div class=" divInline">
+                        @{
+                            var levelName = string.Empty;
+                            switch((int)Model.CustomerInformationPartial.RoleId)
+                            {
+                                case 4: 
+                                    levelName = Messages.UpdateSuper;
+                                    break;
+                                case 3: 
+                                    levelName = Messages.UpdateMaster;
+                                    break;
+                                case 2: 
+                                    levelName = Messages.UpdateAgent;
+                                    break;
+                                default: 
+                                    levelName = Messages.UpdateMember;
+                                    break;
+                            }                            
+                        }
+                        <span>@levelName</span>
+                        </div>
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="divShowInfo" class="maincontent_box tableWidth">
+        </div>
+        <div id="customerInfo">
+            @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_CustomerInfor.cshtml")
+            @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_Status.cshtml")
+            @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_Commission.cshtml", Model)
+            @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_CashInShare.cshtml", Model)
+            @Html.Hidden("UpdateSettingtUrl", Url.Content("~/customersetting/colossusBetSetting/colossusBetSetting/UpdateSetting"))
+        </div>
+        <div ng-if="customerInformationPartial.RoleId >1" class="btnLeft">
+            <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedAll" ng-click="updated(false)"
+                value="Update" type="button" class="btnUpdate b" />
+        </div>
+    </div>
+</body>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/controllers/main.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/controllers/status.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/controllers/cashInShare.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/controllers/commission.controller.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/repositories/repositories.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/directives/commonDirective.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/services/commonService.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Scripts/Tipsy/jquery.tipsy.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var colossusBetSetting = @Html.Raw(Json.Encode(Model));
+    var domain = '@Url.Content("~")';
+    var resources = {
+        successful: "@Messages.Msg_0",
+        failed: "@Messages.UpdatedFail",
+        more_than: "@Messages.MoreThan",
+        less_than: "@Messages.LessThan"
+    };
+</script>
+</html>

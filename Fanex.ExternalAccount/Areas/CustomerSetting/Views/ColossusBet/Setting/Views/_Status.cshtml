@@ -1,0 +1,25 @@
+﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
+@model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
+<table class="tableColor tableWidth" ng-controller="statusController">
+    <tr>
+        <td colspan="4" class="header c b">
+            <span>@Messages.Status</span>
+            <input ng-if="customerInformationPartial.RoleId >1" ng-class-name="btnSave" check-disable-element ng-model="statusPartial.IsStatusUpdated"
+                ng-click="updated(true, 'StatusPartial')" type="button" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" class="formatCol l betSetting" style="height: 34px;">
+            <span class="b" style="padding-left: 30px;">Colossus Bet </span>
+            <div style="display: inline-block; padding-left: 30px;">
+                <input ng-disabled="!statusPartial.Upline.IsEnabled || customerInformationPartial.RoleId == 1" type="checkbox" ng-model="statusPartial.IsEnabled" />
+                @Messages.Enable
+                @if (Model.CustomerInformationPartial.RoleId != 1 && Model.StatusPartial.IsHasDownlines)
+                {
+                    <input ng-disabled="IsDownlinechkDisabled" type="checkbox" ng-model="statusPartial.IsDownlinesEnabled" />
+                    @Messages.EnableDownlines
+                }
+            </div>
+        </td>
+    </tr>
+</table>
