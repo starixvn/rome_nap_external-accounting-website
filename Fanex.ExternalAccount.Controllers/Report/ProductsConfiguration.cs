@@ -22,7 +22,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         {
             get
             {
-                _instance = _instance ?? (ProductsConfiguration)ConfigurationManager.GetSection("report") as ProductsConfiguration;
+                _instance = _instance ?? ConfigurationManager.GetSection("report") as ProductsConfiguration;
                 return _instance;
             }
         }
