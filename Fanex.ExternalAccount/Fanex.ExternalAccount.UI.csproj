@@ -1315,9 +1315,6 @@
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.Convert.js" />
-    <Content Include="SpNames.CustDB.kbt67.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.css" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Pagination.css" />
@@ -2523,10 +2520,6 @@
     <Content Include="Scripts\UnderMaintenance.js" />
     <Content Include="Scripts\Validators.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="SpNames.CustDB.production.xml" />
-    <Content Include="SpNames.CustDB.uat.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\BettypeReference\Themes\style.css" />
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bg.jpg" />
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\bgnote.jpg" />
@@ -2534,12 +2527,6 @@
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\Images\expand.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
@@ -2610,21 +2597,8 @@
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.uat.Debug.config">
-      <DependentUpon>Web.uat.config</DependentUpon>
-    </Content>
-    <Content Include="Web.uat.Release.config">
-      <DependentUpon>Web.uat.config</DependentUpon>
-    </Content>
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.production.Debug.config">
-      <DependentUpon>Web.production.config</DependentUpon>
-    </Content>
-    <Content Include="Web.production.Release.config">
-      <DependentUpon>Web.production.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExcelTemplates\Customer\MemberList.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -2664,20 +2638,8 @@
     <Content Include="Web.kbt67.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.kbt67.Debug.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
-    </Content>
-    <Content Include="Web.kbt67.Release.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
-    </Content>
     <Content Include="Web.kbt67.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.kbt67.Debug.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
-    </Content>
-    <Content Include="Web.kbt67.Release.config">
-      <DependentUpon>Web.kbt67.config</DependentUpon>
     </Content>
     <None Include="deployment.ignore" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
