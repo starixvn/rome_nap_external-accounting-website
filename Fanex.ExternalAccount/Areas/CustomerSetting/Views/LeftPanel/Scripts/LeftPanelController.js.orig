@@ -113,12 +113,9 @@ function LeftPanelController($scope, $element) {
                     if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
                         isHideGoldDeluxe = false;
                     }
-<<<<<<< HEAD
                     if ($scope.model.setting.details[i].key == 'ColossusBets') {
                         isHideColossusBets = false;
                     }
-=======
->>>>>>> #42020 - Fix conflicted files
                     //}
                 }
 
@@ -398,11 +395,7 @@ function LeftPanelController($scope, $element) {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-<<<<<<< HEAD
         var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custId + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
-=======
-        var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custid + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
->>>>>>> #42020 - Fix conflicted files
 
         switch (roleId) {
             case 4:
@@ -414,13 +407,8 @@ function LeftPanelController($scope, $element) {
                 url += "&mrecommend=" + uplineId;
                 break;
             case 1:
-<<<<<<< HEAD
                 url += "&recommend=" + uplineId;
                 break;
-=======
-                url += "&recommend=" + parentId;
-                breakuplineId
->>>>>>> #42020 - Fix conflicted files
             default:
                 break;
         }
@@ -1694,7 +1682,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
             '&userid=' + parent.userId + '&productid=colossusbet&level=' + $scope.model.personalInfo.roleId.value +
-            '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+            '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Colossus Bets: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
