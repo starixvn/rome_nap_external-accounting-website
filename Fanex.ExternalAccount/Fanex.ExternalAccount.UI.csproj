@@ -583,6 +583,7 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\sucess.gif" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\undo.png" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Update.png" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Scripts\KenoStatusController.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Styles\EnableKeno.css" />
@@ -2575,6 +2576,13 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Commission.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_CustomerInfor.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Status.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Index.cshtml" />
+    <None Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />
+    <None Include="Areas\CustomerSetting\Views\EnableStatus\Styles\variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Products.config" />
+    <None Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Template.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
@@ -2593,6 +2601,7 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Reports\WinlossDetail\Products.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
