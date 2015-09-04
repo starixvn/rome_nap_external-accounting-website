@@ -103,15 +103,15 @@ function LeftPanelController($scope, $element) {
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
                     //if ($scope.model.personalInfo.roleId.value != 4) {
-                        if ($scope.model.setting.details[i].key == 'Keno') {
-                            isHideKeno = false;
-                        }
-                        if ($scope.model.setting.details[i].key == 'VirtualSports') {
-                            isHideVirtualSport = false;
-                        }
-                        if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
-                            isHideGoldDeluxe = false;
-                        }
+                    if ($scope.model.setting.details[i].key == 'Keno') {
+                        isHideKeno = false;
+                    }
+                    if ($scope.model.setting.details[i].key == 'VirtualSports') {
+                        isHideVirtualSport = false;
+                    }
+                    if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
+                        isHideGoldDeluxe = false;
+                    }
                     //}
                 }
 
@@ -382,38 +382,39 @@ function LeftPanelController($scope, $element) {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + "&actorId=" + parent.userId + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
         }
     };
+
+    $scope.ColossusBets = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custid + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
+
+        switch (roleId) {
+            case 4:
+                break;
+            case 3:
+                url += "&srecommend=" + uplineId;
+                break;
+            case 2:
+                url += "&mrecommend=" + uplineId;
+                break;
+            case 1:
+                url += "&recommend=" + parentId;
+                breakuplineId
+            default:
+                break;
+        }
+
+        if (url !== '') {
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
+        }
+    };
 };
 
-$scope.ColossusBets = function () {
-    parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-    parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-    parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-
-    var roleId = $scope.model.personalInfo.roleId.value;
-    var custId = $scope.model.personalInfo.custId.value;
-    var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-    var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custid + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
-
-    switch (roleId) {
-        case 4:
-            break;
-        case 3:
-            url += "&srecommend=" + uplineId;
-            break;
-        case 2:
-            url += "&mrecommend=" + uplineId;
-            break;
-        case 1:
-            url += "&recommend=" + parentId;
-            breakuplineId
-        default:
-            break;
-    }
-
-    if (url !== '') {
-        parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
-    }
-};
 function PersonalInfoController($scope, $http) {
     $scope.className = 'fiftyPercent';
 
@@ -1668,7 +1669,7 @@ function SettingController($scope, $http) {
             '&userid=' + parent.userId + '&productid=golddeluxe&level=' + $scope.model.personalInfo.roleId.value +
             '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ' ) + 'Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
@@ -1682,7 +1683,7 @@ function SettingController($scope, $http) {
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Colossus Bets: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
-    };    
+    };
 
     $scope.ViewSubTab = function (id) {
         switch (id) {
