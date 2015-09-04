@@ -330,16 +330,16 @@
   </Function>
   <Function Name="Colossus Bet Setting">
     <Function Name="Get Setting">
-      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet_xtest" DbName="DBCUST.CustDB.BODBDownlineNet"/>
-      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet_xtest" DbName="DBCUST.CustDB.BODBDownlineNet"/>
-      <Setting Key="Acc_CustomerSelEditAgentColossusBet" SpName="Acc_CustomerSelEditAgentColossusBet_xtest" DbName="DBCUST.CustDB.BODBDownlineNet"/>
-      <Setting Key="Acc_CustomerSelEditMemberColossusBet" SpName="Acc_CustomerSelEditMemberColossusBet_xtest" DbName="DBCUST.CustDB.BODBDownlineNet"/>
+      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet_xtest" DbName="DBCUST.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet_xtest" DbName="DBCUST.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerSelEditAgentColossusBet" SpName="Acc_CustomerSelEditAgentColossusBet_xtest" DbName="DBCUST.CustDB.bodbExtAccNet"/>
+      <Setting Key="Acc_CustomerSelEditMemberColossusBet" SpName="Acc_CustomerSelEditMemberColossusBet_xtest" DbName="DBCUST.CustDB.bodbExtAccNet"/>
     </Function>
     <Function Name="Update Setting">
-      <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet_xtest" DbName="DBCUST.CustDB.BODBDownlineNet"/>
+      <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet_xtest" DbName="DBCUST.CustDB.bodbExtAccNet"/>
     </Function>
     <Function Name="Update Status">
-      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet_xtest" DbName="DBCUST.CustDB.BODBDownlineNet"/>
+      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet_xtest" DbName="DBCUST.CustDB.bodbExtAccNet"/>
     </Function>
   </Function>
 </Functions>

@@ -540,6 +540,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
+            var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
 
             if (hideVS)
             {
@@ -554,6 +555,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideGoldDeluxe)
             {
                 model.RemoveProduct("GoldDeluxe");
+            }
+
+            if (hideColossusBets)
+            {
+                model.RemoveProduct("ColossusBets");
             }
 
             return model;
@@ -654,6 +660,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.HideGoldDeluxe)
             {
                 model.RemoveProduct("GoldDeluxe");
+            }
+
+            if (product.HideColossusBets)
+            {
+                model.RemoveProduct("ColossusBets");
             }
 
             return model;
@@ -1082,7 +1093,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
                         }
             };
             model.AddBettingLimitForSuper();
@@ -1193,7 +1205,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
                         }
             };
 
@@ -1273,7 +1286,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
                         }
             };
 
@@ -1352,7 +1366,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" }
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
                         }
             };
 

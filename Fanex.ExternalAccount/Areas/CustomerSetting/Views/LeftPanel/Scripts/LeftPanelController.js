@@ -78,6 +78,7 @@ function LeftPanelController($scope, $element) {
                 var isHideKeno = true;
                 var isHideVirtualSport = true;
                 var isHideGoldDeluxe = true;
+                var isHideColossusBets = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -111,6 +112,9 @@ function LeftPanelController($scope, $element) {
                     }
                     if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
                         isHideGoldDeluxe = false;
+                    }
+                    if ($scope.model.setting.details[i].key == 'ColossusBets') {
+                        isHideColossusBets = false;
                     }
                     //}
                 }
@@ -391,7 +395,7 @@ function LeftPanelController($scope, $element) {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
         var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custid + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
+        var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custId + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId);
 
         switch (roleId) {
             case 4:

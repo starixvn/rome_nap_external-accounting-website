@@ -11,7 +11,22 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
             $scope.cashInSharePartial = $scope.colossusBetSetting.CashInSharePartial;
 
             $scope.isUpdatedAll = false;
-            $scope.errors = {};
+            $scope.errors = false;
+
+            $scope.multipleEdit = {
+                isMultipleEdit: isMultipleEdit,
+                custids: isMultipleEdit ? custids : [],
+                usernameArray: usernames,
+                usernames: isMultipleEdit ? usernames.join(", ") : [],
+                updatedCount: 0
+            };
+
+            if ($scope.multipleEdit.isMultipleEdit) {
+                $scope.statusPartial.IsStatusUpdated = true;
+                $scope.comissionPartial.IsCommisionUpdated = true;
+                $scope.cashInSharePartial.IsCashInShareUpdated = true;
+                $scope.isUpdatedAll = true;
+            }
 
             $scope.$watch('[statusPartial.IsStatusUpdated, comissionPartial.IsCommisionUpdated, cashInSharePartial.IsCashInShareUpdated]', function (newValue, oldValue) {
                 if (newValue !== oldValue) {
@@ -39,58 +54,109 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
                     }
                 }
 
-
-                $scope.doUpdated($("#UpdateSettingtUrl").val());
+                $scope.doUpdated();
 
             };
 
-            $scope.showMesseges = function (html, isSuccess) {
-                if (isSuccess) {
-                    $timeout(function () {
-                        $("#divShowInfo").append(html);
-                        commonService.unblockUI();
-                    }, 4000);
-                }
-                else {
-                    $("#divShowInfo").append(html);
-                    commonService.unblockUI();
-                }
+            $scope.getUrlUpdated = function (username) {
+                return $("#UpdateSettingtUrl").val() + '?username=' + username;
+            }
+            $scope.showMesseges = function (html) {
+                $("#errMsg").append(html).show();
+                Fanex.CustomerSetting.Core.UnBlockUI();
             }
 
-            $scope.doUpdated = function (url) {
-                commonService.blockUI();
+            $scope.doUpdated = function () {
+                Fanex.CustomerSetting.Core.BlockUI();
+                $("#errMsg").empty();
 
-                colossusBetRepositories.save(url, $scope.colossusBetSetting).then(
-                    function (results) {
-                        $("#divShowInfo").empty().show();
+                if (!$scope.multipleEdit.isMultipleEdit) {
+                    $scope.save($scope.colossusBetSetting, 0);
+                }
+                else {
+                    $scope.multipleEdit.updatedCount = 0;
+                    $scope.save($scope.colossusBetSetting, 0);
+                }
+            };
 
-                        var html = "";
-                        if (typeof results != 'undefined') {
-                            var length = results.length;
-                            var isError = false;
-                            for (var i = 0; i < length; i++) {
-                                if (results[i].ErrorCode > 0) {
-                                    isError = true;
-                                    html += '<div class="alerterror">' + results[i].ErrorMessage + '</div>';
-                                }
+            $scope.save = function (colossusBetSetting, index) {
+                if ($scope.multipleEdit.isMultipleEdit) {
+                    if (index > 0) {
+                        colossusBetSetting.customerInformationPartial.IsMultiple = true;
+                    }
+
+                    colossusBetSetting.CustomerInformationPartial.CustId = $scope.multipleEdit.custids[index];
+                    colossusBetSetting.CustomerInformationPartial.Username = $scope.multipleEdit.usernameArray[index];
+                }
+                var url = $scope.getUrlUpdated(colossusBetSetting.CustomerInformationPartial.Username);
+
+                colossusBetRepositories.save(url, colossusBetSetting)
+                .then(function (data, status, headers, config) {
+                    if ($scope.multipleEdit.isMultipleEdit && typeof data != "string") {
+                        data.custId = $scope.multipleEdit.custids[index];
+                        data.username = $scope.multipleEdit.usernameArray[index];
+                    }
+                    $scope.afterUpdatedSuccessfully(data, colossusBetSetting, ++index);
+                }),
+                function () { $scope.afterUpdatedFailed(colossusBetSetting, ++index); };
+            };
+
+            $scope.afterUpdatedSuccessfully = function (results, colossusBetSetting, index) {
+                var usermessageGroup = '<div class="alertfailgroup">' + colossusBetSetting.CustomerInformationPartial.Username + '</div>';
+                var multipleEditClass = ' multipleedit';
+
+                if (typeof results != 'undefined') {
+                    var length = results.length;
+                    var isError = false;
+                    var html = usermessageGroup;
+
+                    if (typeof results == 'string') {
+                        html += results;
+                        $scope.errors = true;
+                        isError = true;
+                    }
+                    else {
+                        for (var i = 0; i < length; i++) {
+                            if (results[i].ErrorCode > 0) {
+                                html += '<div class="alerterror' + multipleEditClass + '">' + results[i].ErrorMessage + '</div>';
+                                $scope.errors = true;
+                                isError = true;
                             }
-
-                            if (!isError) {
-                                $scope.showMesseges('<div class="alertsuccess">' + resources.successful + '</div>', true);
-                                $timeout(function () {
-                                    location.reload();
-                                    parent.frames["centerFr"].location.reload();
-                                }, 5000);
-                            } else {
-                                $scope.showMesseges(html, false);
-                            }
-                        } else {
-                            $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
                         }
-                    },
-                    function () {
-                        $scope.showMesseges('<div class="alerterror">' + resources.failed + '</div>', false);
-                    });
+                    }
+
+                    if (!isError) {
+                        var usermessageGroupSuccess = '<div class="alertsuccessgroup">' + colossusBetSetting.CustomerInformationPartial.Username + '</div>';
+                        $scope.multipleEdit.updatedCount++;
+                        $scope.showMesseges(usermessageGroupSuccess + '<div class="alertsuccess' + multipleEditClass + '">' + resources.successful + '</div><br>');
+
+                        if (($scope.multipleEdit.isMultipleEdit && $scope.multipleEdit.updatedCount == $scope.multipleEdit.custids.length)
+                        || !$scope.multipleEdit.isMultipleEdit) {
+                            $timeout(function () {
+                               location.reload();
+                            }, 2000);
+                        }
+                    } else {
+                        $scope.showMesseges(html);
+                    }
+                }
+                else {
+                    var html = usermessageGroup + '<div class="alerterror' + multipleEditClass + '">' + resources.failed + '</div><br>';
+                    $scope.showMesseges(html);
+                }
+
+                if ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length) {
+                    $scope.save(colossusBetSetting, index);
+                }
+            };
+
+            $scope.afterUpdatedFailed = function (colossusBetSetting, index) {
+                var html = '<div class="alerterror">' + resources.failed + '</div><br>';
+                $scope.showMesseges(html);
+
+                if ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length) {
+                    $scope.save(colossusBetSetting, index);
+                }
             };
         }, function (reason) { }, function (update) { });
 });
