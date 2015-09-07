@@ -2564,10 +2564,10 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
     <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Document.doc" />
-    <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\ColossusBet-setting.less" />
-    <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Common.less" />
+    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\ColossusBet-setting.less" />
+    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Common.less" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\theme-color.less" />
-    <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Variables.less" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_CashInShare.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Commission.cshtml" />
