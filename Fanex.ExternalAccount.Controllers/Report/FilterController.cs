@@ -33,9 +33,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
             var products = ProductsConfiguration.Instance.ProductCollection;
             foreach (ProductElementConfiguration product in products)
             {
-                if (!product.Hide && !product.Id.Equals("showall"))
+                if (!product.Hide && !product.Id.Equals("showAll"))
                 {
-                    list.Add(new KeyValuePair<string, bool>(product.Id, CheckRequest.GetBooleanRequest(product.Id, true)));
+                    list.Add(new KeyValuePair<string, bool>(product.Id.ToLower(), CheckRequest.GetBooleanRequest(product.Id, true)));
                 }
             }
 

@@ -95,7 +95,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._products += o.Key + o.Value;
                 list.ForEach(p =>
                 {
-                    if (p.Key != "showall" && o.Value && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                    if (!p.Key.Equals("showAll", StringComparison.OrdinalIgnoreCase) && o.Value && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         this._formatedProducts += p.Value + ", ";
                     }
