@@ -42,12 +42,12 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
                             $scope.colossusBetSetting.CashInSharePartial.IsCashInShareUpdated = false;
                             break;
                         case "ComissionPartial":
-                            $scope.colossusBetSetting.StatusPartia.IsStatusUpdatedl = false;
+                            $scope.colossusBetSetting.StatusPartial.IsStatusUpdated = false;
                             $scope.colossusBetSetting.CashInSharePartial.IsCashInShareUpdated = false;
                             break;
                         case "CashInSharePartial":
                             $scope.colossusBetSetting.ComissionPartial.IsCommisionUpdated = false;
-                            $scope.colossusBetSetting.StatusPartia.IsStatusUpdatedl = false;
+                            $scope.colossusBetSetting.StatusPartial.IsStatusUpdated = false;
                             break;
                         default:
                             break;
