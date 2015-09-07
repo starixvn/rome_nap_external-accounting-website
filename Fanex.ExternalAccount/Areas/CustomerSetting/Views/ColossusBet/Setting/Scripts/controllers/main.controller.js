@@ -82,7 +82,7 @@ ColossusBetModule.controller('mainController', function ($scope, $timeout, colos
             $scope.save = function (colossusBetSetting, index) {
                 if ($scope.multipleEdit.isMultipleEdit) {
                     if (index > 0) {
-                        colossusBetSetting.customerInformationPartial.IsMultiple = true;
+                        colossusBetSetting.CustomerInformationPartial.IsMultiple = true;
                     }
 
                     colossusBetSetting.CustomerInformationPartial.CustId = $scope.multipleEdit.custids[index];
