@@ -19,8 +19,11 @@
     <tr>
         <td colspan="4" class="header c b">
             <span>@Messages.CashInShare</span>
+              @if (Model.CustomerInformationPartial.RoleId < 4)
+              {
             <input ng-if="customerInformationPartial.RoleId >1" ng-class-name="btnSave" check-disable-element ng-model="cashInSharePartial.IsCashInShareUpdated"
                 ng-click="updated(true, 'CashInSharePartial')" type="button" />
+              }
         </td>
     </tr>
     <tr>
