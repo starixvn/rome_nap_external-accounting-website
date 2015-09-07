@@ -1065,7 +1065,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
-                                Tooltip ="Enable Colossus Bets"
+                                Tooltip = "Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1177,7 +1177,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
-                                Tooltip ="Enable Colossus Bets"
+                                Tooltip = "Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1258,7 +1258,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
-                                Tooltip ="Enable Colossus Bets"
+                                Tooltip = "Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -1340,7 +1340,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableColossusBets", 
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
-                                Tooltip ="Enable Colossus Bets"
+                                Tooltip = "Enable Colossus Bets"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
