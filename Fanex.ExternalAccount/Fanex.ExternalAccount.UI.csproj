@@ -584,9 +584,6 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\undo.png" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Update.png" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Scripts\KenoStatusController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Keno\EnableStatus\Styles\EnableKeno.css" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\bet-setting.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\main.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\position-taking.controller.js" />
