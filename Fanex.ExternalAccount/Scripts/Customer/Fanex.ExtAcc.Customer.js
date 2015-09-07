@@ -3567,6 +3567,18 @@ Fanex.ExtAcc.Customer = {
                 menuItems.separate8 = "------";
             }
 
+            if (!this.HideColossusBet) {
+                menuItems.colossusBets = {
+                    name: "Edit Multiple ColossusBets",
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=1&groupName=" + parent.$('#selectedGroupName').html();
+                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, null, 1);
+                    }
+                };
+
+            }
+
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {
                     name: "Edit Multiple Double Comm",

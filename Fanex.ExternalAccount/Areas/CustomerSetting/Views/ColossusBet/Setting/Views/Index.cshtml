@@ -30,12 +30,12 @@
             @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_CashInShare.cshtml", Model)
             @Html.Hidden("UpdateSettingtUrl", Url.Content("~/customersetting/colossusBetSetting/colossusBetSetting/UpdateSetting"))
 
-          @if (Model.CustomerInformationPartial.RoleId.Equals(2) || Model.CustomerInformationPartial.RoleId.Equals(3))
+          @if (Model.CustomerInformationPartial.RoleId < 4)
           {
-        <div class="btnLeft">
-            <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedAll" ng-click="updated(false)"
-                value="Update" type="button" class="btnUpdate b" />
-        </div>
+           <div  class="btnLeft">
+                <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedAll" ng-click="updated(false)"
+                    value="Update" type="button" class="btnUpdate b" />
+            </div>
           }
         </div>
         </div>
