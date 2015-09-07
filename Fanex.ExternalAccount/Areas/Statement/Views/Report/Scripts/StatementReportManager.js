@@ -198,8 +198,7 @@ var StatementReportManager = function () {
                 Name: "ColCommission",
                 HeaderAlign: "center",
                 CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
+                FormatNumber: self.Constants.Format.Number.TwoDecimal
             },
             {
                 HeaderText: statementResources.Transfer_Amt,
@@ -299,7 +298,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColVoid_Cancelled",
                             Value: statement.VoidCancelled.HasData ?
-                               ('<div class="' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="column-void-cancelled ' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.VoidCancelled.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -307,7 +306,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColOutstanding",
                             Value: statement.Outstanding.HasData ?
-                               ('<div class="' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="column-outstanding ' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.Outstanding.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -315,7 +314,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColWinLoss",
                             Value: statement.WinLoss.HasData ?
-                               ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                               ('<div class="column-winloss ' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
                                 statementResources.Symbol_NoData
@@ -324,6 +323,12 @@ var StatementReportManager = function () {
                             Name: "ColCommission",
                             Value: statement.Commission.HasData ?
                                 statement.Commission.Value :
+                                statementResources.Symbol_NoData
+                        },
+                        {
+                            Name: "ColGrandPrize",
+                            Value: statement.GrandPrize.HasData ?
+                                statement.GrandPrize.Value :
                                 statementResources.Symbol_NoData
                         },
                         {
@@ -399,8 +404,15 @@ var StatementReportManager = function () {
                 Name: "ColCommission",
                 HeaderAlign: "center",
                 CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
+                FormatNumber: self.Constants.Format.Number.TwoDecimal
+            },
+            {
+                HeaderText: statementResources.GrandPrize,
+                Width: 120,
+                Name: "ColGrandPrize",
+                HeaderAlign: "center",
+                CellAlign: "right",
+                FormatNumber: self.Constants.Format.Number.TwoDecimal
             },
             {
                 HeaderText: statementResources.Transfer_Amt,
@@ -477,7 +489,7 @@ var StatementReportManager = function () {
             TransferDate: statement.StatementDateString,
             Username: self.cachedData.statementReportCriteria.username,
             BalanceUpDate: balanceUpDay,
-            SiteName: ''
+            SiteName: 'NAP'
         };
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
@@ -485,7 +497,7 @@ var StatementReportManager = function () {
                 title: statementResources.Transfer_Details + " (" + self.cachedData.statementReportCriteria.username + ")",
                 left: 400,
                 top: 100,
-                width: 800,
+                width: 900,
                 height: 600
             });
         }

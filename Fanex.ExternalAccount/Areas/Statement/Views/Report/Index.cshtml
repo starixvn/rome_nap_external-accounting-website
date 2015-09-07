@@ -5,8 +5,8 @@
     Layout = "";
     var isInternalCustomer = 0;
     var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
-    var balanceUpDay = "12/13/2014";
-    var moveBetsDay = "12/15/2014"; 
+    var balanceUpDay = "1/10/2015";
+    var moveBetsDay = "1/11/2015"; 
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +21,9 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Statement/Views/Report/Styles/Statement.css?ver=1")" />
 </head>
 <body>
+    <div id="view-guidelines-icon">
+        View Guildelines
+    </div>
     <div id="GridContainer" class="freegrid">
     </div>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
@@ -51,22 +54,35 @@
             Accumulated_Total: "@Labels.Accumulated_Total",
             Symbol_NoData: "@Labels.Symbol_NoData",
             Transfer_Details: "@Labels.Transfer_Details",
-            Bet_List: '@Labels.Bet_List'
+            Bet_List: '@Labels.Bet_List',
+            GrandPrize: '@Labels.GrandPrize'
         };
+
+        function viewGuidelines() {
+             OpenPopup( 
+                window.rootUrl + "StatementReport/Guideline/?roleId=" + 2, 
+                "Statement Guidelines", 
+                900,
+                600);
+        }
 
         jQuery(document).ready(function() {
             domain = window.rootUrl;
+            $("#view-guidelines-icon").click(function() {
+                viewGuidelines();
+            });
+
             statementReportManager.initFunction(null, function(options) {
-                OpenPopup( options.url, options.title, options.width, options.height);
+                OpenPopup(options.url, options.title, options.width, options.height);
             });
             statementReportManager.getStatementReport( {
-                fromDate: "11/01/2014",
-                toDate: "12/19/2014",
-                custId: 2198112,
+                fromDate: "12/1/2014",
+                toDate: "1/23/2015",
+                custId: 0,
                 roleId: 1,
                 balanceUpDay: balanceUpDay,
                 moveBetDay: moveBetsDay,
-                username: "agent01"
+                username: "member01"
             });
         });
     </script>
