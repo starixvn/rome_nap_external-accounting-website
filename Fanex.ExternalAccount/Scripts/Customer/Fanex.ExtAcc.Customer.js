@@ -234,11 +234,12 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-    ShowEditSuper: function (custId, title) {
+    ShowEditSuper: function (custId, title, hideGoldDeluxe) {
         this.TransferCondition = false;
         this.UserId = custId;
         this.TitleEditInfo = unescape(title);
         this.CurrentLevel = this.Super;
+        this.HideGoldDeluxe = hideGoldDeluxe;
 
         this.ResetFlags();
 
@@ -312,7 +313,7 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
-        if (showGoldDeluxeSetting == 1) {
+        if (!this.HideGoldDeluxe) {
             items.goldDeluxe = {
                 name: "Gold Deluxe",
                 className: "iconViewEdit",
@@ -366,6 +367,8 @@ Fanex.ExtAcc.Customer = {
                 }
             };
         }
+
+        if ($.contextMenu) $.contextMenu('destroy');
 
         $.contextMenu({
             selector: '.editInfo',
@@ -1332,8 +1335,8 @@ Fanex.ExtAcc.Customer = {
             Name: 'Edit',
             Width: 30,
             CustomCellRender: function (cell) {
-                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "')";
-
+                var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ")";
+                
                 return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
             }
         }, {
