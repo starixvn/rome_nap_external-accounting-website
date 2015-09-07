@@ -2574,8 +2574,8 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_CustomerInfor.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Status.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Index.cshtml" />
-    <None Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />
-    <None Include="Areas\CustomerSetting\Views\EnableStatus\Styles\variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\variables.less" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Products.config" />
     <None Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Template.xsd">
       <SubType>Designer</SubType>
