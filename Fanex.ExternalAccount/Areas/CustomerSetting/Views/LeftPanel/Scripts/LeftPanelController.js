@@ -1541,7 +1541,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=casino&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[0].value + '&isCasino=true';
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[0].value + '&isCasino=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1552,7 +1552,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=bingo&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[1].value;
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[1].value;
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1563,7 +1563,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=numbergame&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Number Game: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1574,7 +1574,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1585,7 +1585,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=virtualsports&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Virtual Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1596,7 +1596,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1607,7 +1607,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
@@ -1626,7 +1626,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
             '&userid=' + parent.userId + '&productid=keno&level=' + $scope.model.personalInfo.roleId.value +
-            '&enable=true&enabledownlines=true&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+            '&enable=true&enabledownlines=true&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Enable Keno: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 420, false, null, 1, 'enableGD');
 
@@ -1636,7 +1636,7 @@ function SettingController($scope, $http) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
             '&userid=' + parent.userId + '&productid=golddeluxe&level=' + $scope.model.personalInfo.roleId.value +
-            '&enable=' + !enable + '&enabledownlines=false&hasdownline=true&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+            '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ' ) + 'Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
             document.getElementById(id).checked = enable;
