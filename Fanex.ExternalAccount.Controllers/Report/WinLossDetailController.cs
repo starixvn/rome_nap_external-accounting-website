@@ -86,7 +86,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             {
                 if (!product.Hide)
                 {
-                    list.Add(new KeyValuePair<string, string>(product.Id, CheckRequest.GetStringRequest(product.Id, string.Empty)));
+                    list.Add(new KeyValuePair<string, string>(product.Id, product.Name));
                 }
             }
 
