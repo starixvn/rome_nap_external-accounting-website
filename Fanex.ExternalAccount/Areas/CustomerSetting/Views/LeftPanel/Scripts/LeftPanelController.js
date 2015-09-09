@@ -407,8 +407,8 @@ function LeftPanelController($scope, $element) {
                 url += "&mrecommend=" + uplineId;
                 break;
             case 1:
-                url += "&recommend=" + parentId;
-                breakuplineId
+                url += "&recommend=" + uplineId;
+                break;
             default:
                 break;
         }
