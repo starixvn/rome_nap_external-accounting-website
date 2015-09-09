@@ -1075,10 +1075,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel context.</returns>
         private static CustomerModel AddBettingLimitForSuper(this CustomerModel model)
         {
-            IList<int> groups = GroupConfigurations.AllowBettingGroups;
-            int groupId = CurrentSession.Instance.GroupId;
-
-            if (groups.Contains(groupId))
+            var userId = CurrentSession.Instance.UserId;
+            var showBetSetting = IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
+                IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ? true : false;
+                        
+            if (showBetSetting)
             {
                 model.Setting.Details.Add(new ObjectInfo
                 {
