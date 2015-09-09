@@ -35,7 +35,7 @@
             @if (Model.CustomerInformationPartial.RoleId > 1)
             {
                <input input-format pattern="[0-9]+([\.,][0-9]+)*" id="commissionInputId" ng-model="comissionPartial.CommisionValue"class="r" type="text" title="" style="text-align: right; padding-right: 5px; width:100px;" />
-                 <span>  <= <label ng-bind="comissionPartial.MaxCommisionValue"></label> </span>  
+                 <span>  <= <label ng-bind="comissionPartial.MaxCommisionValue"></label>% </span>  
             }
             else
             {
