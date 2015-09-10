@@ -32,7 +32,7 @@ ColossusBetModule.directive('inputFormat', ['$filter',
                     var decimalCheck = clean.split('.');
 
                     if (!angular.isUndefined(decimalCheck[1])) {
-                        decimalCheck[1] = decimalCheck[1].slice(0, 5);
+                        decimalCheck[1] = decimalCheck[1].slice(0, 3);
                         clean = decimalCheck[0] + '.' + decimalCheck[1];
                     }
 
