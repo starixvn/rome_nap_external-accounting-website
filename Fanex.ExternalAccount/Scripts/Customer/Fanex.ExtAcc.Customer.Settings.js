@@ -27,7 +27,9 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
-
+        $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
+        $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
+        
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
             Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
@@ -95,6 +97,11 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab10').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetGoldDeluxeSetting();
+        });
+
+        $('#tab11').bind('click', function () {
+            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
+            Fanex.ExtAcc.Customer.Settings.GetColossusBetsSetting();
         });
     },
 
@@ -297,6 +304,29 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-10').height($('#leftFrame').height() - 10);
         $('#tabs-10').css('display', 'block');
         $('#goldDeluxeFrame').attr('src', url);
+    },
+
+    GetColossusBetsSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
+        var action = '';
+        var url = 'customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + this.UserId + '&isMultipleEdit=0&userId=' + parent.userId;
+
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            url += "&srecommend=" + Fanex.ExtAcc.Customer.superId + '&roleId=3';
+        }
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            url += "&mrecommend=" + Fanex.ExtAcc.Customer.masterId + '&roleId=2';
+        }
+        else {
+            url += "&recommend=" + Fanex.ExtAcc.Customer.agentId + '&roleId=1';
+        }
+
+
+        var url = resolveClientUrl(url);
+        $('#tabs-11').height($('#leftFrame').height() - 10);
+        $('#tabs-11').css('display', 'block');
+        $('#colossusBetsFrame').attr('src', url);
     },
 
     GetVirtualSportSetting: function () {
