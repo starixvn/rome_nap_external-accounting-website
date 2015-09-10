@@ -89,6 +89,9 @@ Fanex.ExtAcc.Customer.Commission = {
                 if (commission.isMyanmarOdds) {
                     Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountMyanmarOdds);
                 }
+                else {
+                    $('#discountMyanmar').hide();
+                }
             }
             else {
                 Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);

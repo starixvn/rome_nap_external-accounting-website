@@ -110,7 +110,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.PTEngine.PT_SetSelect(document.getElementById("discountMyanmarOdds"), 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
                             }
                             else {
-                                document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                                $("#discountMyanmar").hide();
                             }
                         }
                         else {
@@ -124,7 +124,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
                             }
                             else {
-                                document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                                $("#discountMyanmar").hide();
                             }
 
                             Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
@@ -263,7 +263,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
                             }
                             else {
-                                document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                                $("#discountMyanmar").hide();
                             }
                         }
                         else {
@@ -277,7 +277,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
                             }
                             else {
-                                document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                                $("#discountMyanmar").hide();
                             }
 
                             Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
