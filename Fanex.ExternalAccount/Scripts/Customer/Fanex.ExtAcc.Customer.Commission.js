@@ -129,6 +129,8 @@ Fanex.ExtAcc.Customer.Commission = {
                 commission.playerDiscountCs = $("#discountCS").val();
                 commission.playerDiscountNumber = $("#discountNumber").val();
                 commission.playerDiscountHRFixedOdds = $("#discountHRFixedOdds").val();
+                if (commission.isMyanmarOdds)
+                    commission.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
             }
             else {
                 commission.groupA = $("#groupA").val();
@@ -139,6 +141,8 @@ Fanex.ExtAcc.Customer.Commission = {
                 commission.discountCS = $("#discountCS").val();
                 commission.discountNumber = $("#discountNumber").val();
                 commission.discountHRFixedOdds = $("#discountHRFixedOdds").val();
+                if (commission.isMyanmarOdds)
+                    commission.discountMyanmarOdds = $("#discountMyanmarOdds").val();
             }
 
             var text = JSON.stringify(commission);

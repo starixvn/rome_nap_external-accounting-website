@@ -7,6 +7,7 @@
 @using Fanex.CustomerSetting.Security.Authenticate
 @using Fanex.CustomerSetting.Module.KenoStatus.Configurations
 @{
+    var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
     var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] {};
     var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
@@ -188,6 +189,7 @@
         Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
         Fanex.ExtAcc.IsITAdmin = '@CurrentSession.Instance.IsITAdmin';
 
+        var isLocal = @isLocal;
         var showBetSetting = '@showBetSetting';        
         var allowAdminEditSuperStatus = '@allowAdminEditSuperStatus';
         var userId = '@userId';

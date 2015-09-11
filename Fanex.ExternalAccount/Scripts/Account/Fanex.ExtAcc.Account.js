@@ -30,7 +30,8 @@ Fanex.ExtAcc.Account = {
                 case 403:
                 case 404:
                 case 500:
-                    //location.href = resolveClientUrl('Shared/Error');
+                    if (!isLocal)
+                        location.href = resolveClientUrl('Shared/Error');
                     break;
                 default:
                     break;
