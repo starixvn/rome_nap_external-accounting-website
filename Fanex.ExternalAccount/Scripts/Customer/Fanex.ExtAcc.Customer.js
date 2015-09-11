@@ -2500,7 +2500,7 @@ Fanex.ExtAcc.Customer = {
                     Value: rows[i].discountnumber
                 }, {
                     Name: 'discountmo',
-                    Value: rows[i].ismyanmarodds? (rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0) : 'N/A'
+                    Value: rows[i].IsMyanmarOdds? (rows[i].discountMyanmarOdds ? rows[i].discountMyanmarOdds : 0) : 'N/A'
                 }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
@@ -2668,7 +2668,7 @@ Fanex.ExtAcc.Customer = {
                     Value: rows[i].discountnumber
                 }, {
                     Name: 'discountmo',
-                    Value: rows[i].ismyanmarodds? (rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0) : 'N/A'
+                    Value: rows[i].IsMyanmarOdds? (rows[i].discountMyanmarOdds ? rows[i].discountMyanmarOdds : 0) : 'N/A'
                 }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
@@ -2841,7 +2841,7 @@ Fanex.ExtAcc.Customer = {
                     Value: rows[i].discountnumber
                 }, {
                     Name: 'discountmo',
-                    Value: rows[i].ismyanmarodds? (rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0) : 'N/A'
+                    Value: rows[i].IsMyanmarOdds? (rows[i].discountMyanmarOdds ? rows[i].discountMyanmarOdds : 0) : 'N/A'
                 }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
@@ -3008,7 +3008,7 @@ Fanex.ExtAcc.Customer = {
                     Value: rows[i].discountnumber
                 }, {
                     Name: 'discountmo',
-                    Value: rows[i].ismyanmarodds? (rows[i].discountmyanmarodds ? rows[i].discountmyanmarodds : 0) : 'N/A'
+                    Value: rows[i].IsMyanmarOdds? (rows[i].discountMyanmarOdds ? rows[i].discountMyanmarOdds : 0) : 'N/A'
                 }, {
                     Name: 'playerdiscount',
                     Value: rows[i].playerdiscount
@@ -3023,7 +3023,7 @@ Fanex.ExtAcc.Customer = {
                     Value: rows[i].playerdiscountnumber
                 }, {
                     Name: 'playerdiscountmo',
-                    Value: rows[i].ismyanmarodds? (rows[i].playerdiscountmyanmarodds ? rows[i].playerdiscountmyanmarodds : 0) : 'N/A'
+                    Value: rows[i].IsMyanmarOdds? (rows[i].playerDiscountMyanmarOdds ? rows[i].playerDiscountMyanmarOdds : 0) : 'N/A'
                 }, {
                     Name: 'createdate',
                     Value: rows[i].createdate
