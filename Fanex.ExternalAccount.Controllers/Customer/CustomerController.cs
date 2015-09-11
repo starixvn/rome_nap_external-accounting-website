@@ -977,11 +977,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 status = enabled == false ? "Disabled" : closed == true ? "Closed" : suspended == true ? "Suspended" : "Open";
             }
 
+            var result = this._cache.Get<DataTable>(this._cacheList);
             var builder = new Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder(
-                this.CheckVNIP(this._cache.Get<DataTable>(this._cacheList)),
+                this.CheckVNIP(result),
                 false,
                 status,
-                Convert.ToInt32(currentLevel));
+                Convert.ToInt32(currentLevel),
+                result != null && result.Rows.Count > 0 && result.Rows[0].ToBoolean("ismyanmarodds"));
             var excelStream = builder.Build();
             if (excelStream != null)
             {

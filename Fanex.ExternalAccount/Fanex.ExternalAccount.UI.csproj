@@ -2645,6 +2645,8 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="deployment.ignore" />
+    <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
+    <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
