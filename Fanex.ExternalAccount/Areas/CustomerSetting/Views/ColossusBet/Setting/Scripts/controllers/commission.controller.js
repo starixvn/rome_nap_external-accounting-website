@@ -10,6 +10,8 @@ ColossusBetModule.controller('commissionController', function ($scope, colossusB
                     if ($scope.comissionPartial.CommisionValue > $scope.comissionPartial.MaxCommisionValue) {
                         commonService.createTooltip(element, resources.less_than + $scope.comissionPartial.MaxCommisionValue);
                         element.addClass('invalidValue');
+                        $scope.cashInSharePartial.IsCommisionUpdated = false;
+                        return;
                     }
                     else {
                         element.removeClass('invalidValue');
