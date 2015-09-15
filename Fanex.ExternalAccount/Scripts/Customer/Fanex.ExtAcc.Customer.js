@@ -1691,7 +1691,7 @@ Fanex.ExtAcc.Customer = {
                 type: 'post'
             })
                 .success(function (result) {
-                    if (!(result.rows.length > 0 && result.rows[0].IsMyanmarOdds))
+                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds))
                         Fanex.ExtAcc.Customer.DataFields.splice(15, 1);
                     Fanex.ExtAcc.Customer.RenderMasterList(result);
                 })
@@ -1879,7 +1879,7 @@ Fanex.ExtAcc.Customer = {
                 type: 'post'
             })
                 .success(function (result) {
-                    if (!(result.rows.length > 0 && result.rows[0].IsMyanmarOdds))
+                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds))
                         Fanex.ExtAcc.Customer.DataFields.splice(15, 1);
                     Fanex.ExtAcc.Customer.RenderAgentList(result);
                 })
@@ -2088,7 +2088,7 @@ Fanex.ExtAcc.Customer = {
                 type: 'post'
             })
                 .success(function (result) {
-                    if (!(result.rows.length > 0 && result.rows[0].IsMyanmarOdds)) {
+                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
                         Fanex.ExtAcc.Customer.DataFields.splice(14, 1);
                         Fanex.ExtAcc.Customer.DataFields.splice(18, 1);
                     }
