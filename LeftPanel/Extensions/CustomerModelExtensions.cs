@@ -279,7 +279,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
             model.Login = new List<ObjectInfo>
                 {
-                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["site"]), Text = "Site" },
+                    new ObjectInfo { Value = roleId != 1 ? Utils.ToString(tableCustomer.Rows[0]["site"]) : Utils.ToString(tableCustomer.Rows[0]["membersite"]), Text = "Site" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Created Date" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Login" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
