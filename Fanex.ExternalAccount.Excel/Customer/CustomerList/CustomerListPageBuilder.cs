@@ -45,7 +45,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
         {
             TemplateReport report = null;
             TemplateSettings settings = new TemplateSettings();
-            string filePath = settings.CustomerListPath(this.RoleId, IsMyanmarOdds || RoleId == 4);
+            string filePath = settings.CustomerListPath(this.RoleId, IsMyanmarOdds);
 
             report = new CustomerListPage(filePath, this);
 

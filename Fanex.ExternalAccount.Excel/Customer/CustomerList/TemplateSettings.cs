@@ -27,6 +27,10 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             {
                 return this._dir + "\\" + (isMyanmarOdds ? "MemberListMO.xls" : "MemberList.xls");
             }
+            else if (roleId == 4)
+            {
+                return this._dir + "\\SuperList.xls";
+            }
             else
             {
                 return this._dir + "\\" + (isMyanmarOdds ? "CustomerListMO.xls" : "CustomerList.xls");

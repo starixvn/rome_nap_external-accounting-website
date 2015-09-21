@@ -70,13 +70,13 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                 int lastColumnIndex = colId + totalColumn - 1;
                 if (_builder.RoleId != 1)
                 {
-                    GetOtherList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex, _builder.IsMyanmarOdds || _builder.RoleId == 4);
+                    GetOtherList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex, _builder.IsMyanmarOdds);
                 }
                 else
                 {
-                    totalColumn = 19;
+                    totalColumn = 20;
                     lastColumnIndex = colId + totalColumn - 1;
-                    GetMemberList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex, _builder.IsMyanmarOdds || _builder.RoleId == 4);
+                    GetMemberList(templateSheet, resultSheet, ref rowId, colId, ref id, dtr, ref values, lastColumnIndex, _builder.IsMyanmarOdds);
                 }
             }
 
@@ -135,7 +135,8 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 
                 if (isMyanmarOdds)
                 {
-                    values.Insert(16, _builder.IsMyanmarOdds ? Utils.ToString(items["playerdiscountmyanmarodds"]) : "N/A");
+                    values.Insert(12, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDecimal(items["discountmyanmarodds"]).ToString() : "N/A");
+                    values.Insert(17, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDecimal(items["playerdiscountmyanmarodds"]).ToString() : "N/A");
                 }
 
                 resultSheet.GetRow(rowId).WriteCells(colId, values);
@@ -191,12 +192,16 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                         items["lastloginip"].ToString()
                     };
 
-                if (isMyanmarOdds)
+                if (isMyanmarOdds || _builder.RoleId == 4)
                 {
-                    values.Insert(13, _builder.IsMyanmarOdds ? Utils.ToString(items["discountmyanmarodds"]) : "N/A");
-                    values.RemoveAt(7);
-                    values.RemoveAt(8);
-                    values.RemoveAt(9);
+                    values.Insert(13, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDecimal(items["discountmyanmarodds"]).ToString() : "N/A");
+
+                    if (_builder.RoleId != 4)
+                    {
+                        values.RemoveAt(7);
+                        values.RemoveAt(8);
+                        values.RemoveAt(9);
+                    }
                 }
 
                 resultSheet.GetRow(rowId).WriteCells(colId, values);
