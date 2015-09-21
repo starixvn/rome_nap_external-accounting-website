@@ -687,7 +687,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.agentId;
         data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
-
+        
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTMemberGet'),
             data: data,
