@@ -296,7 +296,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 UserName = CurrentSession.UserName.ToUpper(),
                 CustId = parentId,
                 TargetCustId = custId,
-                RoleId = (int)CustomerRole.Super,
+                RoleId = Utils.ToInt32(Request["roleId"]),
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 SiteName = SiteName,

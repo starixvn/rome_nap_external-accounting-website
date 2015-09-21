@@ -33,6 +33,7 @@ Fanex.ExtAcc.Customer.Commission = {
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
             parentId: parentId,
+            roleId: Fanex.ExtAcc.Customer.CurrentLevel,
             groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         };
 
