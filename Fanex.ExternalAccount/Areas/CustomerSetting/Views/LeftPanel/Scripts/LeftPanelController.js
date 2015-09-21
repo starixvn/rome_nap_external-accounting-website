@@ -151,7 +151,7 @@ function LeftPanelController($scope, $element) {
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.Info = function () {
