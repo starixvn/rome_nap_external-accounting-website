@@ -81,7 +81,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             if (context.targetCustId == 0) {
                 Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
-                Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
+                Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName, commission.isMyanmarOdds);
 
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
@@ -248,10 +248,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     },
 
     // Load Group Commission
-    LoadGroupCommission: function (selectId, currencyId, siteName) {
+    LoadGroupCommission: function (selectId, currencyId, siteName, isMyanmarOdds) {
         var listGroupCommission;
         // If Currency name is Won
-        if (currencyId == 45) {
+        if (isMyanmarOdds) {
+            listGroupCommission = new Array("a");
+        }
+        else if (currencyId == 45) {
             listGroupCommission = new Array("dea", "deb", "dec", "ded");
         }
         else if (siteName == "IBSBET") {

@@ -1680,8 +1680,15 @@ Fanex.ExtAcc.Customer = {
         }];
 
         if (dataSource) {
-            if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds))
+            if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds)) {
                 this.DataFields.splice(15, 1);
+            }
+            else {
+                Fanex.ExtAcc.Customer.DataFields.splice(11, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(10, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(9, 1);
+            }
+
             this.RenderMasterList(dataSource);
         } else {
             $.ajax({
@@ -1691,8 +1698,15 @@ Fanex.ExtAcc.Customer = {
                 type: 'post'
             })
                 .success(function (result) {
-                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds))
+                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
                         Fanex.ExtAcc.Customer.DataFields.splice(15, 1);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.DataFields.splice(11, 1);
+                        Fanex.ExtAcc.Customer.DataFields.splice(10, 1);
+                        Fanex.ExtAcc.Customer.DataFields.splice(9, 1);
+                    }
+
                     Fanex.ExtAcc.Customer.RenderMasterList(result);
                 })
                 .error(function (xhr, status, err) {
@@ -1868,8 +1882,15 @@ Fanex.ExtAcc.Customer = {
         }];
 
         if (dataSource) {
-            if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds))
+            if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds)) {
                 this.DataFields.splice(15, 1);
+            }
+            else {
+                Fanex.ExtAcc.Customer.DataFields.splice(11, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(10, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(9, 1);
+            }
+
             this.RenderAgentList(dataSource);
         } else {
             $.ajax({
@@ -1879,8 +1900,15 @@ Fanex.ExtAcc.Customer = {
                 type: 'post'
             })
                 .success(function (result) {
-                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds))
+                    if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
                         Fanex.ExtAcc.Customer.DataFields.splice(15, 1);
+                    }
+                    else {
+                        Fanex.ExtAcc.Customer.DataFields.splice(11, 1);
+                        Fanex.ExtAcc.Customer.DataFields.splice(10, 1);
+                        Fanex.ExtAcc.Customer.DataFields.splice(9, 1);
+                    }
+
                     Fanex.ExtAcc.Customer.RenderAgentList(result);
                 })
                 .error(function (xhr, status, err) {
@@ -2732,7 +2760,7 @@ Fanex.ExtAcc.Customer = {
             }, {
                 HeaderText: 'Commission',
                 Name: 'groupa',
-                MergeColNumber: (isMyanmarOdds ? 8 : 7)
+                MergeColNumber: (isMyanmarOdds ? 5 : 7)
             }, {
                 HeaderText: 'Created Date',
                 Name: 'createdate',
@@ -2744,9 +2772,14 @@ Fanex.ExtAcc.Customer = {
             }]
         }]
 
-        if (!isMyanmarOdds) {
-            for (var i = 0; i < bodyRows.length; i++) {
+        for (var i = 0; i < bodyRows.length; i++) {
+            if (!isMyanmarOdds) {
                 bodyRows[i].Columns.splice(15, 1);
+            }
+            else {
+                bodyRows[i].Columns.splice(11, 1);
+                bodyRows[i].Columns.splice(10, 1);
+                bodyRows[i].Columns.splice(9, 1);
             }
         }
 
@@ -2911,7 +2944,7 @@ Fanex.ExtAcc.Customer = {
             }, {
                 HeaderText: 'Commission',
                 Name: 'groupa',
-                MergeColNumber: (isMyanmarOdds ? 8 : 7)
+                MergeColNumber: (isMyanmarOdds ? 5 : 7)
             }, {
                 HeaderText: 'Created Date',
                 Name: 'createdate',
@@ -2923,9 +2956,14 @@ Fanex.ExtAcc.Customer = {
             }]
         }]
 
-        if (!isMyanmarOdds) {
-            for (var i = 0; i < bodyRows.length; i++) {
+        for (var i = 0; i < bodyRows.length; i++) {
+            if (!isMyanmarOdds) {
                 bodyRows[i].Columns.splice(15, 1);
+            }
+            else {
+                bodyRows[i].Columns.splice(11, 1);
+                bodyRows[i].Columns.splice(10, 1);
+                bodyRows[i].Columns.splice(9, 1);
             }
         }
 

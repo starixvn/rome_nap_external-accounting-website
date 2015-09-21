@@ -10,8 +10,14 @@
         </tr>
         <tr>
             <td>
-                @Html.Action("EditCommission", "SportsbookSetting")
-                <div id="commissionContainer">
+                <div class="commission">
+                    <div class="headerTab" id="commissionHeader">
+                        @ViewLang.commission</div>
+                    <div class="pt3 pb3">
+                        @Html.Action("EditCommission", "SportsbookSetting")
+                        <div id="commissionContainer">
+                        </div>
+                    </div>
                 </div>
             </td>
         </tr>

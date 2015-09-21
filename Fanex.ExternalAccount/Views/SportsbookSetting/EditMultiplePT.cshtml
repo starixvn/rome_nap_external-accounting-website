@@ -173,7 +173,7 @@
 <div id="commissionHeader" class="headerPositionTaking" style="padding: 0; float: left; width: 850px; border-bottom: 0; border-top: 1px solid #ccc">
     Commission</div>
 <div class="positionTaking" style="padding: 0; float: left; width: 850px">
-    <table id="tblMasterAgent" width="100%" border="0" cellpadding="0">
+@*    <table id="tblMasterAgent" width="100%" border="0" cellpadding="0">
         <tr>
             <td>
                 <div class="commission" style="border-left: 0; border-bottom: 0">
@@ -351,6 +351,10 @@
             </td>
         </tr>
     </table>
+*@
+<div style="margin: 5px">
+ @Html.Action("EditCommission", "SportsbookSetting")
+</div>
 </div>
 <div class="headerPositionTaking">
     Bet Setting</div>
@@ -375,6 +379,7 @@
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.MemberInfo.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.PTSetting.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.Commission.js")" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         if (Fanex.ExtAcc.Customer.CurrentLevel == 1) {

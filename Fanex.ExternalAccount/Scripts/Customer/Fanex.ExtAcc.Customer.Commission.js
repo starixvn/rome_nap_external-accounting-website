@@ -5,22 +5,22 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 
 Fanex.ExtAcc.Customer.Commission = {
     commission: null,
-    currentLevel: 1,
+    currentLevel: 4,
     $this: null,
     Init: function () {
         $this = this;
 
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            this.GetCommission(Fanex.ExtAcc.Customer.superId);
-            this.currentLevel = 3;
+            $this.GetCommission(Fanex.ExtAcc.Customer.superId);
+            $this.currentLevel = 3;
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            this.GetCommission(Fanex.ExtAcc.Customer.masterId);
-            this.currentLevel = 2;
+            $this.GetCommission(Fanex.ExtAcc.Customer.masterId);
+            $this.currentLevel = 2;
         }
         else {
-            this.GetCommission(Fanex.ExtAcc.Customer.agentId);
-            this.currentLevel = 1;
+            $this.GetCommission(Fanex.ExtAcc.Customer.agentId);
+            $this.currentLevel = 1;
         }
 
         $('#btnUpdate').click(function (e) {
@@ -28,7 +28,7 @@ Fanex.ExtAcc.Customer.Commission = {
         });
     },
 
-    GetCommission: function (parentId) {
+    GetCommission: function (parentId) {        
         Fanex.ExtAcc.BlockUI();
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
@@ -42,7 +42,7 @@ Fanex.ExtAcc.Customer.Commission = {
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {
+        .success(function (result) {            
             if (result.errorCode && result.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
@@ -54,7 +54,7 @@ Fanex.ExtAcc.Customer.Commission = {
                 return;
             }
 
-            if (!result.commission) {
+            if (!result.context.targetCustId) {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
                 var timeout = setTimeout(function () {
@@ -67,7 +67,7 @@ Fanex.ExtAcc.Customer.Commission = {
 
             commission = result.commission;
             var context = result.context;
-            if ($this.currentLevel == 1) {
+            if (context.roleId == 1) {
                 $("#textBoxDiscountAsian").val(commission.discount);
                 $("#textBoxDiscount1x2").val(commission.discount1x2);
                 $("#textBoxDiscountCS").val(commission.discountCS);
@@ -105,6 +105,11 @@ Fanex.ExtAcc.Customer.Commission = {
 
                 if (commission.isMyanmarOdds) {
                     Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+
+                    var groups = $('.group');
+                    for (var i = 0; i < groups.length; i++) {
+                        groups[i].remove();
+                    }
                 }
                 else {
                     $('#discountMyanmar').hide();
@@ -134,15 +139,17 @@ Fanex.ExtAcc.Customer.Commission = {
             }
             else {
                 commission.groupA = $("#groupA").val();
-                commission.groupB = $("#groupB").val();
-                commission.groupC = $("#groupC").val();
-                commission.groupD = $("#groupD").val();
                 commission.discount1x2 = $("#discount1x2").val();
                 commission.discountCS = $("#discountCS").val();
                 commission.discountNumber = $("#discountNumber").val();
                 commission.discountHRFixedOdds = $("#discountHRFixedOdds").val();
                 if (commission.isMyanmarOdds)
                     commission.discountMyanmarOdds = $("#discountMyanmarOdds").val();
+                else {
+                    commission.groupB = $("#groupB").val();
+                    commission.groupC = $("#groupC").val();
+                    commission.groupD = $("#groupD").val();
+                }
             }
 
             var text = JSON.stringify(commission);
@@ -165,21 +172,7 @@ Fanex.ExtAcc.Customer.Commission = {
             if (result.errorCode == 0) {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
-
-                    if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
-                        Fanex.ExtAcc.Customer.GetSuperList();
-                    }
-                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-                        Fanex.ExtAcc.Customer.GetMasterList(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino);
-                    }
-                    else if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-                        Fanex.ExtAcc.Customer.GetAgentList(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino);
-                    }
-                    else {
-                        Fanex.ExtAcc.Customer.GetMemberList(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.AllowDoubleComm, null, null, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino);
-                    }
-
-                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Customer.CallBackCustomerList();
                     Fanex.ExtAcc.Form.Close(false);
                 }, 2000);
             }

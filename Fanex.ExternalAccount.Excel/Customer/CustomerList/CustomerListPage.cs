@@ -194,6 +194,9 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                 if (isMyanmarOdds)
                 {
                     values.Insert(13, _builder.IsMyanmarOdds ? Utils.ToString(items["discountmyanmarodds"]) : "N/A");
+                    values.RemoveAt(7);
+                    values.RemoveAt(8);
+                    values.RemoveAt(9);
                 }
 
                 resultSheet.GetRow(rowId).WriteCells(colId, values);

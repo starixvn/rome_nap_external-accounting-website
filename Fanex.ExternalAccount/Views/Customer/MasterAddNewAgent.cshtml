@@ -108,7 +108,15 @@
             </div>
         </div>
     </div>
-    @Html.Action("EditCommission", "SportsbookSetting")
+    <div class="clear" style="border: 1px solid #ccc; height: 75px">
+        <div class="headerTab" style="width: 841px; border-right: 1px solid #ccc; margin-bottom: 2px;">
+            @ViewLang.commission</div>
+        <div style="width: 841px">
+            @Html.Action("EditCommission", "SportsbookSetting")
+            <div id="commissionContainer">
+            </div>
+        </div>
+    </div>
     @Html.Action("TransferCondition", "Customer")
     <div class="clear">
     </div>

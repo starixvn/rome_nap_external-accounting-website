@@ -327,14 +327,16 @@
 .groupCom
 {
 	text-align: right;
-	width: 80px;
+	width: 130px !important;
 	padding-right: 5px;
 	font-size: 11px !important;
+	float: left !important;
 }
 .widthGroup
 {
-	width: 70px;
+	width: 70px !important;
 	font-size: 11px !important;
+	float: left !important;
 }
 .headerTab
 {
