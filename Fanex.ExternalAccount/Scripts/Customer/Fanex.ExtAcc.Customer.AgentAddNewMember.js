@@ -79,7 +79,6 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             /* Render Commission to selected*/
             var commission = $this.commission = customer.commissionSetting;
             if (context.targetCustId == 0) {
-                console.log(commission)
                 Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
                 $("#textBoxDiscount1x2").val(commission.discount1x2);
@@ -95,11 +94,11 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
 
                 if (customer.commissionSetting.isMyanmarOdds) {
-                    $("#textBoxDiscountHRFixedOdds").val(commission.discountMyanmarOdds);
+                    $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
                     Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
                 }
                 else {
-                    document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                    $("#discountMyanmar").remove();
                 }
             }
             else {
@@ -114,7 +113,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
                 }
                 else {
-                    document.getElementById("discountMyanmar").setAttribute('style', 'display: none');
+                    $("#discountMyanmar").remove();
                 }
 
                 $this.currentStatusClose = customer.statusSetting.closed;
