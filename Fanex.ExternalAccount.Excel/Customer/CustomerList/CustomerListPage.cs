@@ -10,10 +10,10 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.ExternalAccount.Utilities;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
-    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// Customer list.
