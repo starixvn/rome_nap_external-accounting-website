@@ -121,22 +121,22 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                         items["firstname"].ToString(),
                         items["lastname"].ToString(),
                         items["ugroup"].ToString(),
-                        Utils.ToDecimal(items["discount"]),
-                        Utils.ToDecimal(items["discount1x2"]),
-                        Utils.ToDecimal(items["discountcs"]),
-                        Utils.ToDecimal(items["discountnumber"]),
-                        Utils.ToDecimal(items["playerdiscount"]),
-                        Utils.ToDecimal(items["playerdiscount1x2"]),
-                        Utils.ToDecimal(items["playerdiscountcs"]),
-                        Utils.ToDecimal(items["playerdiscountnumber"]),
+                        Utils.ToDouble(items["discount"]),
+                        Utils.ToDouble(items["discount1x2"]),
+                        Utils.ToDouble(items["discountcs"]),
+                        Utils.ToDouble(items["discountnumber"]),
+                        Utils.ToDouble(items["playerdiscount"]),
+                        Utils.ToDouble(items["playerdiscount1x2"]),
+                        Utils.ToDouble(items["playerdiscountcs"]),
+                        Utils.ToDouble(items["playerdiscountnumber"]),
                         string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
                         items["lastloginip"].ToString()
                     };
 
                 if (isMyanmarOdds)
                 {
-                    values.Insert(12, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDecimal(items["discountmyanmarodds"]).ToString() : "N/A");
-                    values.Insert(17, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDecimal(items["playerdiscountmyanmarodds"]).ToString() : "N/A");
+                    values.Insert(12, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString() : "N/A");
+                    values.Insert(17, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["playerdiscountmyanmarodds"]).ToString() : "N/A");
                 }
 
                 resultSheet.GetRow(rowId).WriteCells(colId, values);
@@ -173,34 +173,48 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             {
                 custStatus = SetBackgroundRow(templateSheet, resultSheet, rowId, colId, lastColumnIndex, custStatus, items);
 
-                values = new List<object>   
-                    {
-                        id,
-                        items["username"].ToString(),
-                        custStatus,
-                        Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
-                        items["firstname"].ToString(),
-                        items["lastname"].ToString(),
-                        Utils.ToDecimal(items["groupa"]),
-                        Utils.ToDecimal(items["groupb"]),
-                        Utils.ToDecimal(items["groupc"]),
-                        Utils.ToDecimal(items["groupd"]),
-                        Utils.ToDecimal(items["discount1x2"]),
-                        Utils.ToDecimal(items["discountcs"]),
-                        Utils.ToDecimal(items["discountnumber"]),
-                        string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
-                        items["lastloginip"].ToString()
-                    };
-
                 if (isMyanmarOdds || _builder.RoleId == 4)
                 {
-                    values.Insert(13, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDecimal(items["discountmyanmarodds"]).ToString() : "N/A");
-
                     if (_builder.RoleId != 4)
                     {
-                        values.RemoveAt(7);
-                        values.RemoveAt(8);
-                        values.RemoveAt(9);
+                        values = new List<object>   
+                        {
+                            id,
+                            items["username"].ToString(),
+                            custStatus,
+                            Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
+                            items["firstname"].ToString(),
+                            items["lastname"].ToString(),
+                            Utils.ToDouble(items["groupa"]),                            
+                            Utils.ToDouble(items["discount1x2"]),
+                            Utils.ToDouble(items["discountcs"]),
+                            Utils.ToDouble(items["discountnumber"]),
+                            string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
+                            items["lastloginip"].ToString()
+                        };
+                        values.Insert(10, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString() : "N/A");
+                    }
+                    else
+                    {
+                        values = new List<object>   
+                        {
+                            id,
+                            items["username"].ToString(),
+                            custStatus,
+                            Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
+                            items["firstname"].ToString(),
+                            items["lastname"].ToString(),
+                            Utils.ToDouble(items["groupa"]),
+                            Utils.ToDouble(items["groupb"]),
+                            Utils.ToDouble(items["groupc"]),
+                            Utils.ToDouble(items["groupd"]),
+                            Utils.ToDouble(items["discount1x2"]),
+                            Utils.ToDouble(items["discountcs"]),
+                            Utils.ToDouble(items["discountnumber"]),
+                            string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
+                            items["lastloginip"].ToString()
+                        };
+                        values.Insert(13, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString() : "N/A");
                     }
                 }
 

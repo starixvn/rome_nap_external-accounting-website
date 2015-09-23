@@ -2697,6 +2697,10 @@
       <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
+      <Project>{E397E628-A155-4259-A806-D8210D54025D}</Project>
+      <Name>Fanex.ExternalAccount.Excel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
       <Name>Fanex.ExternalAccount.Utilities</Name>
