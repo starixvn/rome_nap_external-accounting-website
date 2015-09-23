@@ -3089,7 +3089,7 @@ Fanex.ExtAcc.Customer = {
                     Value: rows[i].playerdiscountnumber
                 }, {
                     Name: 'playerdiscountmo',
-                    Value: rows[i].IsMyanmarOdds ? (rows[i].playerDiscountMyanmarOdds ? rows[i].playerDiscountMyanmarOdds : 0) : 'N/A'
+                    Value: rows[i].IsMyanmarOdds ? (rows[i].playerdiscountMyanmarOdds ? rows[i].playerdiscountMyanmarOdds : 0) : 'N/A'
                 }, {
                     Name: 'createdate',
                     Value: rows[i].createdate

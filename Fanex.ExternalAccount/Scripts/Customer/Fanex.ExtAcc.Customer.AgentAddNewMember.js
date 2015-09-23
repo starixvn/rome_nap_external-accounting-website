@@ -152,6 +152,10 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     customer.commissionSetting.playerDiscountCs = $("#discountCS").val();
                     customer.commissionSetting.playerDiscountNumber = $("#discountNumber").val();
                     customer.commissionSetting.playerDiscountHRFixedOdds = $("#discountHRFixedOdds").val();
+
+                    if (customer.commissionSetting.isMyanmarOdds)
+                        customer.commissionSetting.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
+
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                     // EscapeHTML String
