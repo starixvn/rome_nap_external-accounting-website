@@ -1128,6 +1128,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
         if (document.getElementById("discountHRFixedOdds")) {
             document.getElementById("discountHRFixedOdds").disabled = isDisable;
         }
+
+        if (document.getElementById("discountMyanmarOdds")) {
+            document.getElementById("discountMyanmarOdds").disabled = isDisable;
+        }
     },
 
     GenerateCheckBoxBettingLimit: function () {
@@ -2550,6 +2554,9 @@ function saveCommissionSettings(comm) {
 
         if (document.getElementById("discountHRFixedOdds"))
             comm.playerDiscountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+
+        if (document.getElementById("discountMyanmarOdds"))
+            comm.playerDiscountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
     }
     else {
         if (document.getElementById("discountAsian"))
@@ -2566,6 +2573,9 @@ function saveCommissionSettings(comm) {
 
         if (document.getElementById("discountHRFixedOdds"))
             comm.discountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+
+        if (document.getElementById("discountMyanmarOdds"))
+            comm.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
     }
 
     if (document.getElementById("groupA"))

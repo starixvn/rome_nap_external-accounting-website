@@ -28,7 +28,7 @@ Fanex.ExtAcc.Customer.Commission = {
         });
     },
 
-    GetCommission: function (parentId) {        
+    GetCommission: function (parentId) {
         Fanex.ExtAcc.BlockUI();
         var data = {
             custId: Fanex.ExtAcc.Customer.UserId,
@@ -43,7 +43,7 @@ Fanex.ExtAcc.Customer.Commission = {
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {            
+        .success(function (result) {
             if (result.errorCode && result.errorCode == "1") {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();

@@ -205,7 +205,7 @@ Fanex.ExtAcc.Customer = {
             enabled = null;
             closed = null;
             suspended = true;
-        } else {
+        } else if ($('#customerStatus').val() == '4') {
             enabled = false;
             closed = null;
             suspended = null;
@@ -213,9 +213,9 @@ Fanex.ExtAcc.Customer = {
 
         var data = new Object();
 
-        data.srecommend = this.superId;
-        data.mrecommend = this.masterId;
-        data.recommend = this.agentId;
+        data.srecommend = this.superId == 0 ? null : this.superId;
+        data.mrecommend = this.masterId == 0 ? null : this.masterId;
+        data.recommend = this.agentId == 0 ? null : this.agentId;
         data.groupName = $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html();
         data.enabled = enabled;
         data.closed = closed;
@@ -3733,7 +3733,7 @@ Fanex.ExtAcc.Customer = {
         if (!this.IsMultiple)
             Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 700, false, false, 1);
         else
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
     },
 
     AppendInputToForm: function (id, name, value, targetForm) {
@@ -3875,7 +3875,7 @@ Fanex.ExtAcc.Customer = {
         if (!this.IsMultiple) {
             Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 700, false, false, 1);
         } else {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/SuperMasterEditMultiplePTMember?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/SuperMasterEditMultiplePTMember?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
         }
     },
 
