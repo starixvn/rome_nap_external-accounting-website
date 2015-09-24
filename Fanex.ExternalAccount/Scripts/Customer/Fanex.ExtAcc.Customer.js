@@ -185,7 +185,7 @@ Fanex.ExtAcc.Customer = {
     },
 
     GetParams: function () {
-        var enabled = false;
+        var enabled = null;
         var closed = false;
         var suspended = false;
 
