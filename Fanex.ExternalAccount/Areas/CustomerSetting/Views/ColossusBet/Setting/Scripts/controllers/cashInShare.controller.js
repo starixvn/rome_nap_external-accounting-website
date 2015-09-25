@@ -17,8 +17,13 @@ ColossusBetModule.controller('cashInShareController', function ($scope, colossus
                         element.removeClass('invalidValue');
                     }
 
-
-                    $scope.cashInSharePartial.IsCashInShareUpdated = $scope.originalCashInSharePartial.CashInShareValue != $scope.cashInSharePartial.CashInShareValue ? true : false;
+                    if ($scope.multipleEdit.isMultipleEdit) {
+                        $scope.cashInSharePartial.IsCashInShareUpdated = true;
+                    }
+                    else
+                    {
+                        $scope.cashInSharePartial.IsCashInShareUpdated = $scope.originalCashInSharePartial.CashInShareValue != $scope.cashInSharePartial.CashInShareValue ? true : false;
+                    }
                 }
             }, true);
 

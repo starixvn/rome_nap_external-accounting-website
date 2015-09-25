@@ -16,8 +16,12 @@ ColossusBetModule.controller('commissionController', function ($scope, colossusB
                     else {
                         element.removeClass('invalidValue');
                     }
-
-                    $scope.comissionPartial.IsCommisionUpdated = $scope.originalComissionPartial.CommisionValue != $scope.comissionPartial.CommisionValue ? true : false;
+                    if ($scope.multipleEdit.isMultipleEdit) {
+                        $scope.comissionPartial.IsCommisionUpdated = true;
+                    }
+                    else {
+                        $scope.comissionPartial.IsCommisionUpdated = $scope.originalComissionPartial.CommisionValue != $scope.comissionPartial.CommisionValue ? true : false;
+                    }
                 }
             }, true);
 
