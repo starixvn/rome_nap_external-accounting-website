@@ -4,7 +4,7 @@ ColossusBetModule.controller('statusController', function ($scope, colossusBetRe
     colossusBetRepositories.getData().then(function () {
         $scope.originalstatusPartial = angular.copy($scope.statusPartial);
         $scope.$watch('[statusPartial.IsEnabled, statusPartial.IsDownlinesEnabled]', function (newValue, oldValue) {
-            if (newValue !== oldValue) {
+            if ((newValue !== oldValue) && !$scope.multipleEdit.isMultipleEdit) {
                 if ($scope.originalstatusPartial.IsEnabled) {
                     $scope.IsDownlinechkDisabled = true;
                     if ($scope.statusPartial.IsEnabled != $scope.originalstatusPartial.IsEnabled) {

@@ -6,7 +6,7 @@ ColossusBetModule.controller('cashInShareController', function ($scope, colossus
             $scope.originalCashInSharePartial = angular.copy($scope.cashInSharePartial);
             $scope.$watch('cashInSharePartial.CashInShareValue', function (newValue, oldValue) {
                 var element = $("#cashInShareInputId");
-                if (newValue !== oldValue) {
+                if ((newValue !== oldValue) && !$scope.multipleEdit.isMultipleEdit) {
                     if ($scope.cashInSharePartial.CashInShareValue > $scope.cashInSharePartial.MaxCashInShareValue) {
                         commonService.createTooltip(element, resources.less_than + $scope.cashInSharePartial.MaxCashInShareValue);
                         element.addClass('invalidValue');

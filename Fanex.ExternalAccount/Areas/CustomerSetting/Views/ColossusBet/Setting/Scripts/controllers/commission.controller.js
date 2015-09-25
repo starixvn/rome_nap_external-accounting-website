@@ -6,7 +6,7 @@ ColossusBetModule.controller('commissionController', function ($scope, colossusB
             $scope.originalComissionPartial = angular.copy($scope.comissionPartial);
             $scope.$watch('comissionPartial.CommisionValue', function (newValue, oldValue) {
                 var element = $("#commissionInputId");
-                if (newValue !== oldValue) {
+                if ((newValue !== oldValue) && !$scope.multipleEdit.isMultipleEdit) {
                     if ($scope.comissionPartial.CommisionValue > $scope.comissionPartial.MaxCommisionValue) {
                         commonService.createTooltip(element, resources.less_than + $scope.comissionPartial.MaxCommisionValue);
                         element.addClass('invalidValue');
