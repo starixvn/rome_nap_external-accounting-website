@@ -1,6 +1,6 @@
 <Functions>
   <Function Name="PT Setting Information">
-    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype_mo" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype_xtest" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="E-Sports">
     <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
@@ -143,10 +143,10 @@
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0"/>
   </Function>
   <Function Name="Customer List">
-    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
@@ -157,42 +157,42 @@
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Sportsbook">
-    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSAgentInfo_Multiple" SpName="Acc_CustomerSelSAgentInfo_Multiple" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserComm" SpName="Age_CustomerSelUserComm_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerSelUserComm" SpName="Age_CustomerSelUserComm_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Ag" SpName="Acc_CustomerInsMember_CloneSetting_Ag_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_MAg" SpName="Acc_CustomerInsMember_CloneSetting_MAg_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_SAg" SpName="Acc_CustomerInsMember_CloneSetting_SAg_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Ag" SpName="Acc_CustomerInsMember_CloneSetting_Ag_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_MAg" SpName="Acc_CustomerInsMember_CloneSetting_MAg_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_SAg" SpName="Acc_CustomerInsMember_CloneSetting_SAg_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer_mo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerCheckExists" SpName="Age_CustomerCheckExists" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Edit Commission">
-    <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm_mo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Live Casino - Get PT Setting">
     <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
