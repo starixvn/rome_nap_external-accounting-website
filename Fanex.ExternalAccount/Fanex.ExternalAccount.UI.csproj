@@ -20,6 +20,8 @@
     <SccProvider>
     </SccProvider>
     <UseIISExpress>false</UseIISExpress>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,8 +62,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne">
-      <HintPath>..\Dependencies\EnableStatuses\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.0.1\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -80,8 +83,8 @@
       <HintPath>..\Dependencies\Casino\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\EnableStatuses\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
@@ -185,8 +188,8 @@
       <HintPath>..\Dependencies\NetUtility.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.NAP.3.5.0\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NPOI">
       <HintPath>..\Dependencies\NPOI.dll</HintPath>
@@ -2637,4 +2640,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
 </Project>

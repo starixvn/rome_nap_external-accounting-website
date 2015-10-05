@@ -176,7 +176,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
-      <Name>Core %28Controller\Core%29</Name>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
       <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
