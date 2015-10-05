@@ -158,6 +158,9 @@
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\VirtualSportsController.cs" />
+    <Compile Include="Report\ProductCollectionConfiguration.cs" />
+    <Compile Include="Report\ProductElementConfiguration.cs" />
+    <Compile Include="Report\ProductsConfiguration.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />

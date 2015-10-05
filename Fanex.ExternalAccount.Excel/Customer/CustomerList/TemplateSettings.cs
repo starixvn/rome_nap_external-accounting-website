@@ -21,15 +21,19 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             this._dir = HttpContext.Current.Server.MapPath("~/") + "\\ExcelTemplates\\Customer";
         }
 
-        public string CustomerListPath(int roleId)
+        public string CustomerListPath(int roleId, bool isMyanmarOdds = false)
         {
             if (roleId == 1)
             {
-                return this._dir + "\\" + "MemberList.xls";
+                return this._dir + "\\" + (isMyanmarOdds ? "MemberListMO.xls" : "MemberList.xls");
+            }
+            else if (roleId == 4)
+            {
+                return this._dir + "\\SuperList.xls";
             }
             else
             {
-                return this._dir + "\\" + "CustomerList.xls";
+                return this._dir + "\\" + (isMyanmarOdds ? "CustomerListMO.xls" : "CustomerList.xls");
             }
         }
     }

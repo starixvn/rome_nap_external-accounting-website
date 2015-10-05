@@ -81,34 +81,21 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._filterParams = new FilterController().AsCollection();
 
             var list = new List<KeyValuePair<string, string>>();
-            
-            list.Add(new KeyValuePair<string, string>("showAll", ViewLang.All));
-            list.Add(new KeyValuePair<string, string>("showSB", ViewLang.Sportsbook));
-            list.Add(new KeyValuePair<string, string>("showCasino", ViewLang.Casino));
-            list.Add(new KeyValuePair<string, string>("showRB", ViewLang.Racing));
-            list.Add(new KeyValuePair<string, string>("showBI", ViewLang.Bingo));
-            list.Add(new KeyValuePair<string, string>("showNG", ViewLang.NumberGame));
-            list.Add(new KeyValuePair<string, string>("showP2P", ViewLang.Poker));
-            list.Add(new KeyValuePair<string, string>("showLiveCasino", ViewLang.LiveCasino));
-
-            if (!Config.HideGoldDeluxe)
+            var products = ProductsConfiguration.Instance.ProductCollection;
+            foreach (ProductElementConfiguration product in products)
             {
-                list.Add(new KeyValuePair<string, string>("showGD", ViewLang.GoldDeluxe));
+                if (!product.Hide)
+                {
+                    list.Add(new KeyValuePair<string, string>(product.Id, product.Name));
+                }
             }
-
-            if (Config.IsShowVirtualSports)
-            {
-                list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
-            }
-
-            list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
 
             this._filterParams.ToList().ForEach(o => 
             { 
                 this._products += o.Key + o.Value;
                 list.ForEach(p =>
                 {
-                    if (p.Key != "showAll" && o.Value && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                    if (!p.Key.Equals("showAll", StringComparison.OrdinalIgnoreCase) && o.Value && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         this._formatedProducts += p.Value + ", ";
                     }

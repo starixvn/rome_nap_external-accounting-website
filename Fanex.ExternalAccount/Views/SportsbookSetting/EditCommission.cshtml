@@ -1,83 +1,66 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-<div class="commission">
-    <div class="headerTab" id="commissionHeader">
-        @ViewLang.commission</div>
-    <div class="pt3 pb3">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody>
-                <tr>
-                    <td class="groupCom">
-                        @ViewLang.Groupa
-                    </td>
-                    <td class="widthGroup">
-                        <select id="groupA" name="groupA" class="widthGroup">
-                        </select>
-                    </td>
-                    <td class="groupCom">
-                        @ViewLang.Groupb
-                    </td>
-                    <td class="widthGroup">
-                        <select id="groupB" class="widthGroup">
-                        </select>
-                    </td>
-                    <td class="groupCom">
-                        @ViewLang.Groupc
-                    </td>
-                    <td class="widthGroup">
-                        <select id="groupC" class="widthGroup">
-                        </select>
-                    </td>
-                    <td class="groupCom">
-                        @ViewLang.Groupd
-                    </td>
-                    <td class="widthGroup">
-                        <select id="groupD" class="widthGroup">
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="8" height="5">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="8" class="line">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="8" height="5">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="groupCom">
-                        @ViewLang.lbl1x2Comm
-                    </td>
-                    <td>
-                        <select id="discount1x2" class="widthGroup">
-                        </select>
-                    </td>
-                    <td class="groupCom">
-                        @ViewLang.OtherComm
-                    </td>
-                    <td>
-                        <select id="discountCS" class="widthGroup">
-                        </select>
-                    </td>
-                    <td class="groupCom" style="width: 120px">
-                        @ViewLang.numbergamecomm
-                    </td>
-                    <td>
-                        <select id="discountNumber" class="widthGroup">
-                        </select>
-                    </td>                        
-                    <td class="groupCom">
-                        @ViewLang.HRFixedOdds
-                    </td>
-                    <td>
-                        <select id="discountHRFixedOdds" class="widthGroup">
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="groupCom">
+    @ViewLang.Groupa
+</div>
+<div class="widthGroup">
+    <select id="groupA" name="groupA" class="widthGroup">
+    </select>
+</div>
+<div class="groupCom group">
+    @ViewLang.Groupb
+</div>
+<div class="widthGroup group">
+    <select id="groupB" class="widthGroup">
+    </select>
+</div>
+<div class="groupCom group">
+    @ViewLang.Groupc
+</div>
+<div class="widthGroup group">
+    <select id="groupC" class="widthGroup">
+    </select>
+</div>
+<div class="groupCom group">
+    @ViewLang.Groupd
+</div>
+<div class="widthGroup group">
+    <select id="groupD" class="widthGroup">
+    </select>
+</div>
+<div class="groupCom">
+    @ViewLang.lbl1x2Comm
+</div>
+<div>
+    <select id="discount1x2" class="widthGroup">
+    </select>
+</div>
+<div class="groupCom">
+    @ViewLang.OtherComm
+</div>
+<div>
+    <select id="discountCS" class="widthGroup">
+    </select>
+</div>
+<div class="groupCom" style="width: 120px">
+    @ViewLang.numbergamecomm
+</div>
+<div>
+    <select id="discountNumber" class="widthGroup">
+    </select>
+</div>                        
+<div class="groupCom">
+    @ViewLang.HRFixedOdds
+</div>
+<div>
+    <select id="discountHRFixedOdds" class="widthGroup">
+    </select>
+</div> 
+<div id="discountMyanmar" style="float: left">
+    <div class="groupCom">
+        % Odds
+    </div>
+    <div class="widthGroup">
+        <select id="discountMyanmarOdds" class="widthGroup">
+        </select>
     </div>
 </div>

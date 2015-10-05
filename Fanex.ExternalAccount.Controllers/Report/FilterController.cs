@@ -23,43 +23,20 @@ namespace Fanex.ExternalAccount.Controllers.Report
     /// </summary>
     public partial class FilterController : BaseController
     {
-        public const string SHOWALL = "all";
-        public const string SHOWSB = "showsb";
-        public const string SHOWCASINO = "showcasino";
-        public const string SHOWRB = "showrb";
-        public const string ShowIbcBingo = "showbi";
-        public const string ShowNumberGame = "showng";
-        public const string ShowP2P = "showp2p";
-        public const string ShowLiveCasino = "showlivecasino";
-        public const string ShowVirtualSport = "showvs";
-        public const string ShowKeno = "showkeno";
-        public const string ShowGoldDeluxe = "showgd";
-
         /// <summary>
         /// Gets list of request from filter condition.
         /// </summary>
         /// <returns>ICollection object.</returns>
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
-            List<KeyValuePair<string, bool>> list = new List<KeyValuePair<string, bool>>();
-
-            list.Add(new KeyValuePair<string, bool>(SHOWSB, CheckRequest.GetBooleanRequest(SHOWSB, true)));
-            list.Add(new KeyValuePair<string, bool>(SHOWCASINO, CheckRequest.GetBooleanRequest(SHOWCASINO, true)));
-            list.Add(new KeyValuePair<string, bool>(SHOWRB, CheckRequest.GetBooleanRequest(SHOWRB, true)));
-            list.Add(new KeyValuePair<string, bool>(ShowIbcBingo, CheckRequest.GetBooleanRequest(ShowIbcBingo, true)));
-            list.Add(new KeyValuePair<string, bool>(ShowNumberGame, CheckRequest.GetBooleanRequest(ShowNumberGame, true)));
-            list.Add(new KeyValuePair<string, bool>(ShowP2P, CheckRequest.GetBooleanRequest(ShowP2P, true)));
-            list.Add(new KeyValuePair<string, bool>(ShowLiveCasino, CheckRequest.GetBooleanRequest(ShowLiveCasino, true)));
-            if (Config.IsShowVirtualSports)
+            var list = new List<KeyValuePair<string, bool>>();
+            var products = ProductsConfiguration.Instance.ProductCollection;
+            foreach (ProductElementConfiguration product in products)
             {
-                list.Add(new KeyValuePair<string, bool>(ShowVirtualSport, CheckRequest.GetBooleanRequest(ShowVirtualSport, true)));
-            }
-
-            list.Add(new KeyValuePair<string, bool>(ShowKeno, CheckRequest.GetBooleanRequest(ShowKeno, true)));
-
-            if (!Config.HideGoldDeluxe)
-            {
-                list.Add(new KeyValuePair<string, bool>(ShowGoldDeluxe, CheckRequest.GetBooleanRequest(ShowGoldDeluxe, true)));
+                if (!product.Hide && !product.Id.Equals("showAll"))
+                {
+                    list.Add(new KeyValuePair<string, bool>(product.Id.ToLower(), CheckRequest.GetBooleanRequest(product.Id, true)));
+                }
             }
 
             return list;
@@ -71,26 +48,14 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// <returns>ActionResult object.</returns>
         public ActionResult ProductsList()
         {
-            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
-
-            list.Add(new KeyValuePair<string, string>("showAll", ViewLang.All));
-            list.Add(new KeyValuePair<string, string>("showSB", ViewLang.Sportsbook));
-            list.Add(new KeyValuePair<string, string>("showCasino", ViewLang.Casino));
-            list.Add(new KeyValuePair<string, string>("showRB", ViewLang.Racing));
-            list.Add(new KeyValuePair<string, string>("showBI", ViewLang.Bingo));
-            list.Add(new KeyValuePair<string, string>("showNG", ViewLang.NumberGame));
-            list.Add(new KeyValuePair<string, string>("showP2P", ViewLang.Poker));
-            list.Add(new KeyValuePair<string, string>("showLiveCasino", ViewLang.LiveCasino));
-            if (Config.IsShowVirtualSports)
+            var list = new List<KeyValuePair<string, string>>();
+            var products = ProductsConfiguration.Instance.ProductCollection;
+            foreach (ProductElementConfiguration product in products)
             {
-                list.Add(new KeyValuePair<string, string>("showVS", ViewLang.VirtualSports));
-            }
-
-            list.Add(new KeyValuePair<string, string>("showKeno", ViewLang.Keno));
-
-            if (!Config.HideGoldDeluxe)
-            {
-                list.Add(new KeyValuePair<string, string>("showGD", ViewLang.GoldDeluxe));
+                if (!product.Hide)
+                {
+                    list.Add(new KeyValuePair<string, string>(product.Id, product.Name));
+                }
             }
 
             return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());

@@ -93,33 +93,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                     /* Render Commission && bet setting*/
                     if (!Fanex.ExtAcc.Customer.isSuperEditMember && !Fanex.ExtAcc.Customer.isMasterEditMember) {
-                        var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
-
-                        if (Fanex.ExtAcc.Customer.CurrentLevel != 1) {
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupD"), 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
-
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discount1x2"), 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountCS"), 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountNumber"), 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
-                            Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
-                        }
-                        else {
-                            $("#textBoxDiscountAsian").val(commission.discount);
-                            $("#textBoxDiscount1x2").val(commission.discount1x2);
-                            $("#textBoxDiscountCS").val(commission.discountCS);
-                            $("#textBoxDiscountNumber").val(commission.discountNumber);
-                            $("#textBoxDiscountHRFixedOdds").val(commission.discountHRFixedOdds);
-
-                            Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
-                            Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
-                            Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
-                            Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
-                            Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOdds, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountHRFixedOdds);
-                        }
-
                         Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Render(bettingLimitContainer);
                     }
                     else {
@@ -226,34 +199,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         initBettingLimit();
                         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxPositionTaking();
                         initPositionTaking();
-
-                        /* Render Commission to selected*/
-                        var commission = Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting;
-
-                        if (Fanex.ExtAcc.Customer.CurrentLevel != 1) {
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupA"), 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupB"), 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupC"), 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("groupD"), 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
-
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discount1x2"), 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountCS"), 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
-                            Fanex.PTEngine.PT_SetSelect(document.getElementById("discountNumber"), 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
-                            Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
-                        }
-                        else {
-                            $("#textBoxDiscountAsian").val(commission.discount);
-                            $("#textBoxDiscount1x2").val(commission.discount1x2);
-                            $("#textBoxDiscountCS").val(commission.discountCS);
-                            $("#textBoxDiscountNumber").val(commission.discountNumber);
-                            $("#textBoxDiscountHRFixedOdds").val(commission.discountHRFixedOdds);
-
-                            Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
-                            Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
-                            Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
-                            Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
-                            Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOdds, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountHRFixedOdds);
-                        }
                     }
                 }, 100);
             }
@@ -306,6 +251,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
         .success(function (result) {
             if (result.customer.custId == 0) {
+                console.log(result.customer.custId);
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Close();
                 var timeout = setTimeout(function () {
@@ -359,7 +305,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         });
     },
 
-    GetMasterPTSetting: function () {
+    GetMasterPTSetting: function () {        
         Fanex.ExtAcc.BlockUI();
 
         Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
@@ -444,6 +390,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
                                     customer.commissionSetting.discountNumber = parseFloat($("#textBoxDiscountNumber").val());
                                     customer.commissionSetting.discountHRFixedOdds = parseFloat($("#textBoxDiscountHRFixedOdds").val());
+                                    if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
+                                        customer.commissionSetting.discountMyanmarOdds = parseFloat($("#textBoxDiscountMyanmarOdds").val());
+                                    }
                                 }
                                 else {
                                     if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
@@ -451,13 +400,18 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     }
 
                                     customer.commissionSetting.groupA = parseFloat($("#groupA").val());
-                                    customer.commissionSetting.groupB = parseFloat($("#groupB").val());
-                                    customer.commissionSetting.groupC = parseFloat($("#groupC").val());
-                                    customer.commissionSetting.groupD = parseFloat($("#groupD").val());
                                     customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                     customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                     customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     customer.commissionSetting.discountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+                                    if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
+                                        customer.commissionSetting.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
+                                    }
+                                    else {
+                                        customer.commissionSetting.groupB = parseFloat($("#groupB").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupC").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupD").val());
+                                    }
                                 }
 
                                 var min = parseFloat(Fanex.ExtAcc.ReplaceAll($('#minCredit').text(), ',', ''));
@@ -617,6 +571,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
                                     customer.commissionSetting.discountNumber = parseFloat($("#textBoxDiscountNumber").val());
                                     customer.commissionSetting.discountHRFixedOdds = parseFloat($("#textBoxDiscountHRFixedOdds").val());
+                                    if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
+                                        customer.commissionSetting.discountMyanmarOdds = parseFloat($("#textBoxDiscountMyanmarOdds").val());
+                                    }
                                 }
                                 else {
                                     if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
@@ -624,13 +581,18 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     }
 
                                     customer.commissionSetting.groupA = parseFloat($("#groupA").val());
-                                    customer.commissionSetting.groupB = parseFloat($("#groupB").val());
-                                    customer.commissionSetting.groupC = parseFloat($("#groupC").val());
-                                    customer.commissionSetting.groupD = parseFloat($("#groupD").val());
                                     customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                     customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                     customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     customer.commissionSetting.discountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+                                    if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
+                                        customer.commissionSetting.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
+                                    }
+                                    else {
+                                        customer.commissionSetting.groupB = parseFloat($("#groupB").val());
+                                        customer.commissionSetting.groupC = parseFloat($("#groupC").val());
+                                        customer.commissionSetting.groupD = parseFloat($("#groupD").val());
+                                    }
                                 }
 
                                 var min = parseFloat(Fanex.ExtAcc.ReplaceAll($('#minCredit').text(), ',', ''));
@@ -797,6 +759,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.commissionSetting.playerDiscountCS = parseFloat($("#discountCS").val());
                                     customer.commissionSetting.playerDiscountNumber = parseFloat($("#discountNumber").val());
                                     customer.commissionSetting.playerDiscountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+                                    if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
+                                        customer.commissionSetting.playerDiscountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
+                                    }
                                 }
                                 else {
                                     if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
@@ -812,6 +777,9 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                     customer.commissionSetting.discountNumber = parseFloat($("#discountNumber").val());
                                     customer.commissionSetting.discountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+                                    if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
+                                        customer.commissionSetting.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
+                                    }
                                 }
 
                                 var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
@@ -983,6 +951,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $('#masterComm4').remove();
         $('#masterComm5').remove();
         $('#masterComm6').remove();
+        $('#masterComm7').remove();
 
         var data = new Object();
 
@@ -1159,6 +1128,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
         if (document.getElementById("discountHRFixedOdds")) {
             document.getElementById("discountHRFixedOdds").disabled = isDisable;
         }
+
+        if (document.getElementById("discountMyanmarOdds")) {
+            document.getElementById("discountMyanmarOdds").disabled = isDisable;
+        }
     },
 
     GenerateCheckBoxBettingLimit: function () {
@@ -1308,7 +1281,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }, 2000);
     },
 
-    SuperUpdateMasterPT: function (custId, data, i, customer) {
+    SuperUpdateMasterPT: function (custId, data, i, customer) {        
         if (!i) {
             data.custId = custId;
         }
@@ -2581,6 +2554,9 @@ function saveCommissionSettings(comm) {
 
         if (document.getElementById("discountHRFixedOdds"))
             comm.playerDiscountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+
+        if (comm.isMyanmarOdds)
+            comm.playerDiscountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
     }
     else {
         if (document.getElementById("discountAsian"))
@@ -2597,6 +2573,9 @@ function saveCommissionSettings(comm) {
 
         if (document.getElementById("discountHRFixedOdds"))
             comm.discountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
+
+        if (comm.isMyanmarOdds)
+            comm.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
     }
 
     if (document.getElementById("groupA"))

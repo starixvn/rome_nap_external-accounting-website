@@ -18,12 +18,13 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
     /// </summary>
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(DataTable customerList, bool isBold, string status, int roleId)
+        public CustomerListPageBuilder(DataTable customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false)
         {
             this.Status = status;
             this.RoleId = roleId;
             this.IsBold = isBold;
             this.Data = customerList;
+            this.IsMyanmarOdds = isMyanmarOdds;
         }
 
         public DataTable Data { get; private set; }
@@ -34,6 +35,8 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 
         public string Status { get; private set; }
 
+        public bool IsMyanmarOdds { get; private set; }
+
         /// <summary>
         /// Builds customer list stream.
         /// </summary>
@@ -42,7 +45,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
         {
             TemplateReport report = null;
             TemplateSettings settings = new TemplateSettings();
-            string filePath = settings.CustomerListPath(this.RoleId);
+            string filePath = settings.CustomerListPath(this.RoleId, IsMyanmarOdds);
 
             report = new CustomerListPage(filePath, this);
 

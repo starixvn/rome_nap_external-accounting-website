@@ -1,9 +1,7 @@
 ﻿@using Fanex.Module.Statement.Resources;
-@model bool
 @{
     ViewBag.Title = Labels.Statement_Guidelines;
     Layout = "";
-    var canViewBetListStatement = Model;
 }
 <!DOCTYPE html>
 <html lang="en" class="linen">
@@ -22,19 +20,23 @@
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
-            @Labels.Void/@Labels.Rejected:</span> <span>@(canViewBetListStatement ? Labels.Guidelines_VoidRejected : Labels.Guidelines_VoidRejected_DisableBetList)</span>
+            @Labels.Void/@Labels.Rejected:</span> <span>@Labels.Guidelines_VoidRejected</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
-            @Labels.Outstanding:</span> <span>@(canViewBetListStatement ? Labels.Guidelines_Outstanding : Labels.Guidelines_Outstanding_DisableBetList)</span>
+            @Labels.Outstanding:</span> <span>@Labels.Guidelines_Outstanding</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
-            @Labels.Win_Loss:</span> <span>@(canViewBetListStatement ? Labels.Guidelines_WinLoss_Member : Labels.Guidelines_WinLoss_Member_DisableBetList)</span>
+            @Labels.Win_Loss:</span> <span>@Labels.Guidelines_WinLoss_Member</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">
             @Labels.Commission:</span> <span>@Labels.Guidelines_Commission_Member</span>
+    </div>
+    <div class="guideline-row">
+        <span class="bold-weight">
+            @Labels.GrandPrize:</span> <span>@Labels.GrandPrize_Guidelines</span>
     </div>
     <div class="guideline-row">
         <span class="bold-weight">

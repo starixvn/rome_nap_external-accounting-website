@@ -143,7 +143,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
                     var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
 
-                    SetSessionIfSuccess(model, custId, onuserId, isIntAcc, group);
+                    RegisterLoginTicket(model, custId, onuserId, isIntAcc, group);
 
                     return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
                 }
@@ -395,14 +395,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         }
 
         /// <summary>
-        /// Set session if success.
+        /// Registers a session login ticket.
         /// </summary>
         /// <param name="model">Login object.</param>
         /// <param name="custId">Identify of customer.</param>
         /// <param name="onuserId">Identify of login user.</param>
         /// <param name="isIntAcc">Is internal account or not.</param>
         /// <param name="group">Group object.</param>
-        private void SetSessionIfSuccess(Login model, int custId, int onuserId, bool isIntAcc, Group group)
+        private void RegisterLoginTicket(Login model, int custId, int onuserId, bool isIntAcc, Group group)
         {
             this._currentSession.UserName = model.UserName;
             this._currentSession.UserId = custId;

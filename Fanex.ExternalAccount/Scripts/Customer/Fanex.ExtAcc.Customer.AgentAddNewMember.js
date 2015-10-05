@@ -81,13 +81,25 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             if (context.targetCustId == 0) {
                 Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
-                Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
+                $("#textBoxDiscount1x2").val(commission.discount1x2);
+                $("#textBoxDiscountCS").val(commission.discountCS);
+                $("#textBoxDiscountNumber").val(commission.discountNumber);
+                $("#textBoxDiscountHRFixedOdds").val(commission.discountHRFixedOdds);
+                Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName, commission.isMyanmarOdds);
 
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
                 Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
+
+                if (customer.commissionSetting.isMyanmarOdds) {
+                    $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
+                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                }
+                else {
+                    $("#discountMyanmar").remove();
+                }
             }
             else {
                 $("#textBoxDiscountAsian").val(commission.discount);
@@ -96,6 +108,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
                 Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountNumber);
                 Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
+
+                if (customer.commissionSetting.isMyanmarOdds) {
+                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                }
+                else {
+                    $("#discountMyanmar").remove();
+                }
 
                 $this.currentStatusClose = customer.statusSetting.closed;
                 $this.currentStatusSuspend = customer.statusSetting.suspended;
@@ -133,6 +152,10 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     customer.commissionSetting.playerDiscountCs = $("#discountCS").val();
                     customer.commissionSetting.playerDiscountNumber = $("#discountNumber").val();
                     customer.commissionSetting.playerDiscountHRFixedOdds = $("#discountHRFixedOdds").val();
+
+                    if (customer.commissionSetting.isMyanmarOdds)
+                        customer.commissionSetting.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
+
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                     // EscapeHTML String
@@ -234,10 +257,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     },
 
     // Load Group Commission
-    LoadGroupCommission: function (selectId, currencyId, siteName) {
+    LoadGroupCommission: function (selectId, currencyId, siteName, isMyanmarOdds) {
         var listGroupCommission;
         // If Currency name is Won
-        if (currencyId == 45) {
+        if (isMyanmarOdds) {
+            listGroupCommission = new Array("a");
+        }
+        else if (currencyId == 45) {
             listGroupCommission = new Array("dea", "deb", "dec", "ded");
         }
         else if (siteName == "IBSBET") {

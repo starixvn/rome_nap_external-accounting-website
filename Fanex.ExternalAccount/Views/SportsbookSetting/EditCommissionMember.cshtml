@@ -1,7 +1,5 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-<div class="commission">
-    <div class="headerTab">
-        @ViewLang.commission</div>
+<div class="commission">    
     <div class="clear">
         <div class="commissionBlock1 commissionHeader">
             &nbsp;
@@ -22,7 +20,7 @@
                 disabled="true" />
         </div>
         <div class="commissionBlock2">
-            <select id="discountAsian" name="discountAsian" class="widthGroup">
+            <select id="discountAsian" name="discountAsian" style="width: 70px">
             </select>
         </div>
     </div>
@@ -31,10 +29,10 @@
             @ViewLang.lbl1x2
         </div>
         <div class="commissionBlock2">
-            <input type="text" id="textBoxDiscount1x2" class="textBoxComm" disabled="true" data-bind="value: customer.commissionSetting.discount1x2" />
+            <input type="text" id="textBoxDiscount1x2" class="textBoxComm" disabled="true" />
         </div>
         <div class="commissionBlock2">
-            <select id="discount1x2" name="discount1x2" class="widthGroup">
+            <select id="discount1x2" name="discount1x2" style="width: 70px">
             </select>
         </div>
     </div>
@@ -43,10 +41,10 @@
             @ViewLang.OtherTypes
         </div>
         <div class="commissionBlock2">
-            <input type="text" id="textBoxDiscountCS" class="textBoxComm" disabled="true" data-bind="value: customer.commissionSetting.discountCS" />
+            <input type="text" id="textBoxDiscountCS" class="textBoxComm" disabled="true" />
         </div>
         <div class="commissionBlock2">
-            <select id="discountCS" name="discountCS" class="widthGroup">
+            <select id="discountCS" name="discountCS" style="width: 70px">
             </select>
         </div>
     </div>
@@ -55,11 +53,10 @@
             @ViewLang.numbergamecomm
         </div>
         <div class="commissionBlock2">
-            <input type="text" id="textBoxDiscountNumber" class="textBoxComm" disabled="true"
-                data-bind="value: customer.commissionSetting.discountNumber" />
+            <input type="text" id="textBoxDiscountNumber" class="textBoxComm" disabled="true" />
         </div>
         <div class="commissionBlock2">
-            <select id="discountNumber" name="discountNumber" class="widthGroup">
+            <select id="discountNumber" name="discountNumber" style="width: 70px">
             </select>
         </div>
     </div>
@@ -68,11 +65,22 @@
             @ViewLang.HRFixedOdds
         </div>
         <div class="commissionBlock2">
-            <input type="text" id="textBoxDiscountHRFixedOdds" class="textBoxComm" disabled="true"
-                data-bind="value: customer.commissionSetting.discountHRFixedOdds" />
+            <input type="text" id="textBoxDiscountHRFixedOdds" class="textBoxComm" disabled="true" />
         </div>
         <div class="commissionBlock2">
-            <select id="discountHRFixedOdds" name="discountNumber" class="widthGroup">
+            <select id="discountHRFixedOdds" name="discountHRFixedOdds" style="width: 70px">
+            </select>
+        </div>
+    </div>
+    <div class="clearBlock" id="discountMyanmar">
+        <div class="commissionBlock1">
+            % Odds
+        </div>
+        <div class="commissionBlock2">
+            <input type="text" id="textBoxDiscountMyanmarOdds" class="textBoxComm" disabled="true" />
+        </div>
+        <div class="commissionBlock2">
+            <select id="discountMyanmarOdds" name="discountMyanmarOdds" style="width: 70px">
             </select>
         </div>
     </div>
