@@ -305,7 +305,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         });
     },
 
-    GetMasterPTSetting: function () {
+    GetMasterPTSetting: function () {        
         Fanex.ExtAcc.BlockUI();
 
         Fanex.ExtAcc.Customer.PTSetting.errorMessage = '';
@@ -687,7 +687,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.agentId;
         data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
-        
+
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditPTMemberGet'),
             data: data,
@@ -1281,7 +1281,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         }, 2000);
     },
 
-    SuperUpdateMasterPT: function (custId, data, i, customer) {
+    SuperUpdateMasterPT: function (custId, data, i, customer) {        
         if (!i) {
             data.custId = custId;
         }
@@ -2555,7 +2555,7 @@ function saveCommissionSettings(comm) {
         if (document.getElementById("discountHRFixedOdds"))
             comm.playerDiscountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
 
-        if (document.getElementById("discountMyanmarOdds"))
+        if (comm.isMyanmarOdds)
             comm.playerDiscountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
     }
     else {
@@ -2574,7 +2574,7 @@ function saveCommissionSettings(comm) {
         if (document.getElementById("discountHRFixedOdds"))
             comm.discountHRFixedOdds = parseFloat($("#discountHRFixedOdds").val());
 
-        if (document.getElementById("discountMyanmarOdds"))
+        if (comm.isMyanmarOdds)
             comm.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
     }
 
