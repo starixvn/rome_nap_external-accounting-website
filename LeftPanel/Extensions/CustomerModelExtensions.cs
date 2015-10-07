@@ -604,9 +604,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveEnableProduct("EnableESports");
             }
 
+            model.RemoveEnableProduct("EnableGoldDeluxe");
+
             if (product.HideGoldDeluxe)
-            {
-                model.RemoveEnableProduct("EnableGoldDeluxe");
+            {                
                 model.RemoveProduct("GoldDeluxe");
             }
 
