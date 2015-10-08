@@ -69,7 +69,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             if (this.IsBelong(this._groupname, this._custId, null, true))
             {
                 if (this._custId != 0)
-                {
+                {                    
                     return this.GetDailyWinLossDownline();
                 }
                 else
@@ -95,6 +95,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
             if (this.IsBelong(this._groupname, this._custId, null, true))
             {
+                ++this._viewlevel;
+
                 // Expired Cache
                 if (!Config.IsCache || this._cache.Get<List<DailyWinLoss>>(this._cacheList) == null)
                 {
@@ -102,7 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 }
 
                 var builder = new DailyWinLossReportBuilder(
-                    this._cache.Get<List<DailyWinLoss>>(this._cacheList), 
+                    this._listDailyWinLoss, 
                     false, 
                     this._viewlevel, 
                     CheckRequest.GetStringRequest("date", string.Empty));
@@ -216,6 +218,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             {
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossSuper(this._winlostDate, this._custId, 0);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                Logs.Error(new Exception(string.Format("Win Loss Daily of {0}: {1} row(s)", this.LevelName(this._viewlevel), this._cache.Get<List<DailyWinLoss>>(this._cacheList).Count)));
                 return this.JsonBase(
                     new { viewlevel = 3, srecommend = this._custId, rows = this._listDailyWinLoss }, 
                     new Newtonsoft.Json.JsonSerializerSettings());
@@ -224,6 +227,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             {
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossMaster(this._winlostDate, this._custId, 0);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                Logs.Error(new Exception(string.Format("Win Loss Daily of {0}: {1} row(s)", this.LevelName(this._viewlevel), this._cache.Get<List<DailyWinLoss>>(this._cacheList).Count))); 
                 return this.JsonBase(
                     new
                     {
@@ -238,10 +242,11 @@ namespace Fanex.ExternalAccount.Controllers.Report
             {
                 this._listDailyWinLoss = this._reportService.GetDailyWinLossAgent(this._winlostDate, this._custId, 0);
                 this._cache.Set<List<DailyWinLoss>>(this._cacheList, this._listDailyWinLoss, 120);
+                Logs.Error(new Exception(string.Format("Win Loss Daily of {0}: {1} row(s)", this.LevelName(this._viewlevel), this._cache.Get<List<DailyWinLoss>>(this._cacheList).Count))); 
                 return this.JsonBase(
                     new { viewlevel = 1, srecommend = _srecommend, mrecommend = _mrecommend, recommend = _custId, rows = _listDailyWinLoss }, 
                     new Newtonsoft.Json.JsonSerializerSettings());
-            }
+            }            
         }        
     }
 }
