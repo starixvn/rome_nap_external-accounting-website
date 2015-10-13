@@ -46,7 +46,7 @@ namespace Fanex.ExternalAccount.Excel.Utility
                 }
                 else if (value is double)
                 {
-                    cell.SetCellValue(Utils.ToString(value));
+                    cell.SetCellValue((double)value);
                 }
                 else if (value is decimal)
                 {
