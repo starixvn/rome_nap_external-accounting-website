@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Excel.Utility
     using System;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -45,7 +46,7 @@ namespace Fanex.ExternalAccount.Excel.Utility
                 }
                 else if (value is double)
                 {
-                    cell.SetCellValue((double)value);
+                    cell.SetCellValue(Utils.ToString(value));
                 }
                 else if (value is decimal)
                 {
