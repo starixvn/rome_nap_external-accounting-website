@@ -98,13 +98,13 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 ++this._viewlevel;
 
                 // Expired Cache
-                if (!Config.IsCache || this._cache.Get<List<DailyWinLoss>>(this._cacheList) == null)
+                if (!Config.IsCache)
                 {
                     this.GetDailyWinLoss();
                 }
 
                 var builder = new DailyWinLossReportBuilder(
-                    this._listDailyWinLoss, 
+                    this._cache.Get<List<DailyWinLoss>>(this._cacheList), 
                     false, 
                     this._viewlevel, 
                     CheckRequest.GetStringRequest("date", string.Empty));
