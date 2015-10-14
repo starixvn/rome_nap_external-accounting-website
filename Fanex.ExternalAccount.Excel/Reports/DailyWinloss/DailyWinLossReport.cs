@@ -46,7 +46,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
             }
 
             int rowId = 0, colId = 0, id = 1;
-            var mainTitle = (_builder.RoleId == 4 ? "Super" : _builder.RoleId == 3 ? "Master" : _builder.RoleId == 2 ? "Agent" : "Member") + 
+            var mainTitle = (_builder.RoleId == 5 ? "Super" : _builder.RoleId == 4 ? "Master" : _builder.RoleId == 3 ? "Agent" : "Member") + 
                 " Daily Win Loss on " + this._builder.WinlostDate;                        
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
             rowId = 3;
