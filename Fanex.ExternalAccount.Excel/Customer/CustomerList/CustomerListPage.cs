@@ -175,7 +175,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 
                 if (_builder.RoleId != 1)
                 {
-                    if (_builder.RoleId != 4)
+                    if (_builder.RoleId != 4 && Utils.ToBoolean(items["ismyanmarodds"]))
                     {
                         values = new List<object>   
                         {
@@ -193,10 +193,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                             items["lastloginip"].ToString()
                         };
 
-                        if (Utils.ToBoolean(items["ismyanmarodds"]))
-                        {
-                            values.Insert(10, Utils.ToDouble(items["discountmyanmarodds"]).ToString());
-                        }
+                        values.Insert(10, Utils.ToDouble(items["discountmyanmarodds"]).ToString());
                     }
                     else
                     {
@@ -218,8 +215,18 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
                             string.Format("{0:MM/dd/yyyy HH:mm:ss tt}", items["createdate"]),
                             items["lastloginip"].ToString()
                         };
-                                               
-                        values.Insert(13, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString() : "N/A");
+
+                        if (_builder.RoleId == 4 || Utils.ToBoolean(items["ismyanmarodds"]))
+                        {
+                            values.Insert(13, Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString() : "N/A");
+
+                            if (_builder.RoleId != 4)
+                            {
+                                values.RemoveAt(7);
+                                values.RemoveAt(8);
+                                values.RemoveAt(9);
+                            }
+                        }
                     }
                 }
 
