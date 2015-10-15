@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Excel.Utility
     using System;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.

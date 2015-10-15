@@ -983,7 +983,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 false,
                 status,
                 Convert.ToInt32(currentLevel),
-                result != null && result.Rows.Count > 0 && result.Rows[0].ToBoolean("ismyanmarodds"));
+                result != null && result.Rows.Count > 0 && (result.Rows[0].ToBoolean("ismyanmarodds") || currentLevel == 4));
             var excelStream = builder.Build();
             if (excelStream != null)
             {

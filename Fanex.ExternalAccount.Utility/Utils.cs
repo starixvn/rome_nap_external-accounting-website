@@ -313,6 +313,11 @@ namespace Fanex.ExternalAccount.Utilities
                 return false;
             }
 
+            if (obj[fieldName].ToString() == "1")
+            {
+                return true;
+            }
+
             bool.TryParse(obj[fieldName].ToString(), out val);
 
             return val;
