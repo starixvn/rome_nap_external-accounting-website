@@ -256,6 +256,12 @@
     <Reference Include="System.Json">
       <HintPath>..\Dependencies\System.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Json">
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Client40.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json">
+      <HintPath>..\Dependencies\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\Dependencies\System.Net.Http.dll</HintPath>
     </Reference>
