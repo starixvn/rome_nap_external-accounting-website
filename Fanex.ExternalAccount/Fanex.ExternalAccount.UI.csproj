@@ -362,6 +362,7 @@
     <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\btn-bgsubmit-original.png" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\loading.gif" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\save.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowblue-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowdown-icn.png" />
