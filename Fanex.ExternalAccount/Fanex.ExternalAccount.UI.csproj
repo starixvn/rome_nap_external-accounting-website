@@ -359,6 +359,10 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Common\Views\Web.config" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\btn-bgsubmit-original.png" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\save.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowblue-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowdown-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\btn-bgsubmit-hover.png" />

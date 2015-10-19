@@ -994,7 +994,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsAgent.sportsbook2 = {
             name: "Sportsbook2",
-            className: "iconViewEdit",
+            className: "iconEnableEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
@@ -1286,7 +1286,7 @@ Fanex.ExtAcc.Customer = {
 
         itemsMember.sportsbook2 = {
             name: "Sportsbook2",
-            className: "iconViewEdit",
+            className: "iconEnableEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
