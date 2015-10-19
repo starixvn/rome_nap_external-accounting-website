@@ -16,7 +16,7 @@
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            return true;
+            return true ;
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
