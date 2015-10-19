@@ -1062,7 +1062,6 @@
     <Content Include="bundles\images\sucess.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
-    <Compile Include="Areas\CustomerSettingRenovation\CustomerSettingClientRegistration.cs" />
     <Compile Include="Areas\GoldDeluxeSetting\Services\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Areas\LiveCasinoSetting\Services\LiveCasinoAuthorizationService.cs">
       <SubType>Code</SubType>
