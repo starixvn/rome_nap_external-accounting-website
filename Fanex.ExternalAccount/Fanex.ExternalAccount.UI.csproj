@@ -2674,7 +2674,6 @@
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperList.xls" />
-    <Content Include="packages.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
