@@ -328,6 +328,18 @@ Fanex.ExtAcc.Customer = {
             }
         }
 
+        items.sportsbook2 = {
+            name: "Sportsbook2",
+            className: "iconViewEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(Fanex.ExtAcc.Customer.UserId, 5, 4);
+            }
+        }
+
+
         if (showColossusBets == 1) {
             items.colossusBets = {
                 name: "Colossus Bets",
@@ -644,11 +656,22 @@ Fanex.ExtAcc.Customer = {
                 callback: function () {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    url  = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&srecommend=" + Fanex.ExtAcc.Customer.superId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=3&groupName=" + parent.$('#selectedGroupName').html();
+                    url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&srecommend=" + Fanex.ExtAcc.Customer.superId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=3&groupName=" + parent.$('#selectedGroupName').html();
                     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit ColossusBets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             }
         }
+
+        itemsMaster.sportsbook2 = {
+            name: "Sportsbook2",
+            className: "iconEnableEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(custId, 4, 3);
+            }
+        };
 
 
         if (has3rdParty)
@@ -963,11 +986,22 @@ Fanex.ExtAcc.Customer = {
                 callback: function () {
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    url  = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&mrecommend=" + Fanex.ExtAcc.Customer.masterId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=2&groupName=" + parent.$('#selectedGroupName').html();
+                    url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&mrecommend=" + Fanex.ExtAcc.Customer.masterId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=2&groupName=" + parent.$('#selectedGroupName').html();
                     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit ColossusBets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             };
         }
+
+        itemsAgent.sportsbook2 = {
+            name: "Sportsbook2",
+            className: "iconViewEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(custId, 3, 2);
+            }
+        };
 
         if (has3rdParty)
             itemsAgent.separator2 = "-----";
@@ -1248,6 +1282,17 @@ Fanex.ExtAcc.Customer = {
                     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit ColossusBets <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
                 }
             };
+        }
+
+        itemsMember.sportsbook2 = {
+            name: "Sportsbook2",
+            className: "iconViewEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(custId, 2, 1);
+            }
         }
 
         if (has3rdParty)
@@ -1715,7 +1760,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-        GetAgentList: function (mrecommend, allow, custId, dataSource, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, disableColossusBets) {
+    GetAgentList: function (mrecommend, allow, custId, dataSource, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, disableColossusBets) {
         Fanex.ExtAcc.BlockUI();
 
         this.masterId = mrecommend;
@@ -1917,7 +1962,7 @@ Fanex.ExtAcc.Customer = {
         }
     },
 
-        GetMemberList: function (recommend, allow, custId, dataSource, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets) {
+    GetMemberList: function (recommend, allow, custId, dataSource, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets) {
         Fanex.ExtAcc.BlockUI();
 
         this.agentId = recommend;
@@ -3339,6 +3384,14 @@ Fanex.ExtAcc.Customer = {
 
             }
 
+            menuItems.sportsbook2 = {
+                name: "Edit Multiple Sportsbook2",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 3);
+                }
+            };
+
             if (this.AllowDoubleCommMaster) {
                 menuItems.doubleComm = {
                     name: "Edit Multiple Double Comm",
@@ -3446,6 +3499,14 @@ Fanex.ExtAcc.Customer = {
                 };
 
             }
+
+            menuItems.sportsbook2 = {
+                name: "Edit Multiple Sportsbook2",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 2);
+                }
+            };
 
             if (this.AllowDoubleCommAgent) {
                 menuItems.doubleComm = {
@@ -3685,6 +3746,7 @@ Fanex.ExtAcc.Customer = {
                 menuItems.separate8 = "------";
             }
 
+
             if (!this.HideColossusBet) {
                 menuItems.colossusBets = {
                     name: "Edit Multiple ColossusBets",
@@ -3696,6 +3758,35 @@ Fanex.ExtAcc.Customer = {
                 };
 
             }
+
+            menuItems.sportsbook2 = {
+                name: "Edit Multiple Sportsbook2",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(2, 1);
+                }
+            };
+            menuItems.sportsbook2Super = {
+                name: "Super Edit Multiple Sportsbook2",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                    Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
+                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 1);
+                }
+            };
+            menuItems.sportsbook2Master = {
+                name: "Master Edit Multiple Sportsbook2",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                    Fanex.ExtAcc.Customer.isMasterEditMember = true;
+
+                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 1);
+                }
+            };
+            menuItems.separate8 = "------";
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {
@@ -3859,6 +3950,69 @@ Fanex.ExtAcc.Customer = {
             }
 
             Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Gold Deluxe Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, false, 1);
+        }
+    },
+
+    ShowEditSingleSportsbook2: function (custid, uplineRoleId, targetRoleId) {
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 16;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('customerId').value = custid;
+        document.getElementById('isMultiple').value = false;
+        document.getElementById('uplineLevel').value = "";
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Sportsbook2 Setting', 900, 600, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    },
+
+
+    ShowEditMultipleSportsbook2: function (uplineRoleId, targetRoleId) {
+        var ret = this.IdsAndNames();
+
+        var actionName = '';
+        var levelText = '';
+
+        if (this.IsMultiple) {
+            var goldDeluxeUsernames = '';
+            var goldDeluxeCustIds = '';
+            var userNamesArr = this.Names();
+            var custIdsArr = this.Ids()
+
+            var customerlength = userNamesArr.length;
+            for (var i = 0; i < customerlength; i++) {
+                var linkChar = i == customerlength - 1 ? "" : ", ";
+                goldDeluxeUsernames += userNamesArr[i] + linkChar;
+                goldDeluxeCustIds += custIdsArr[i] + linkChar;
+            }
+
+            document.getElementById('language').value = "en-US";
+            document.getElementById('productId').value = 16;
+            document.getElementById('customerLevel').value = targetRoleId;
+            document.getElementById('isMultiple').value = true;
+            document.getElementById('customerIds').value = goldDeluxeCustIds;
+            document.getElementById('customerNames').value = goldDeluxeUsernames;
+            document.getElementById('uplineLevel').value = "";
+
+
+            if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+                document.getElementById('uplineLevel').value = "";
+            }
+            else {
+                document.getElementById('uplineLevel').value = uplineRoleId;
+            }
+
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Sportsbook2 Setting', 900, 600, false, false, 1);
+            $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+        }
+        else {
+            this.ShowEditSingleSportsbook2(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
         }
     },
 

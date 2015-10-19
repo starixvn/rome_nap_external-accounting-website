@@ -83,6 +83,7 @@ namespace Fanex.ExternalAccount
         {
             AreaRegistration.RegisterAllAreas();
 
+            CustomerSettingRegistration.Init();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 

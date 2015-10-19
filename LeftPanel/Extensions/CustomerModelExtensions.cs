@@ -1095,7 +1095,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
+                            new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook2" }
                         }
             };
             model.AddBettingLimitForSuper();
@@ -1207,7 +1208,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                              new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook2" }
                         }
             };
 
@@ -1288,7 +1290,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                              new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook2" }
                         }
             };
 
@@ -1368,7 +1371,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
+                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                              new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook2" }
                         }
             };
 
