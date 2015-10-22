@@ -93,7 +93,7 @@ body
 }
 
 .block-ui-loading {
-    background: rgba(0, 0, 0, 0) url("images/loading.gif") no-repeat scroll 0 0;
+    background: none !important;
 }
 
 .btn {

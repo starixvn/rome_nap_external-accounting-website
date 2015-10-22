@@ -398,7 +398,7 @@ function LeftPanelController($scope, $element) {
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=4&customerId=");
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&IsReadOnly=true&customerLevel=4&customerId=");
                 break;
             case 3:
                 url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=3&customerId=");
@@ -407,7 +407,7 @@ function LeftPanelController($scope, $element) {
                 url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=2&customerId=");
                 break;
             case 1:
-                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&customerId=");
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&UplineLevel=2&customerId=");
                 break;
             default:
                 break;
