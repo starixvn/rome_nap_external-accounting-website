@@ -2597,6 +2597,7 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Reports\WinlossDetail\Products.config" />
+    <Content Include="Areas\Logs\LogsConfiguration.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
