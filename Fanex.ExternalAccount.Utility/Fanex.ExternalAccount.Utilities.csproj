@@ -40,16 +40,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Logging">
-      <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="IBCFile">
-      <HintPath>..\_Dependency\UM\IBCFile.dll</HintPath>
+    <Reference Include="Fanex.Module.Logs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Fanex.Module.Logs.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="SPSRemoting">
-      <HintPath>..\_Dependency\UM\SPSRemoting.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -88,7 +83,6 @@
       <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
