@@ -9,24 +9,6 @@
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
             var uplineUncheckedAllMsg = '';
 
-            if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
-                angular.forEach($scope.gameSetting, function (gameType) {
-                    if (gameType.CheckedStakeLevelId === '') {
-                        gameType.BettingLimit[0].IsChecked = true;
-                        gameType.CheckedStakeLevelId = String(gameType.BettingLimit[0].Id);
-                        uplineUncheckedAllMsg += gameType.Name + ', ';
-                    }
-                });
-
-                if (uplineUncheckedAllMsg !== '') {
-                    uplineUncheckedAllMsg = '{' + uplineUncheckedAllMsg.slice(0, -2) + '} ' + language.getString('WarningUplineUncheckAllStakeLevelMsg');
-                    $scope.$parent.mainResult.Warning = {
-                        IsShow: true,
-                        Message: uplineUncheckedAllMsg
-                    };
-                }
-            }
-
             $scope.getGameSetting = function () {
                 if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {
