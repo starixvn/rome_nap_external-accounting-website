@@ -6,22 +6,23 @@
     using System.Web;
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
+    using Fanex.ExternalAccount.Core.Context;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
-            return true;
+            return this.AllowRead();
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            return true ;
+            return this.AllowRead();
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return false;
+            return this.AllowUpdated();
         }
 
         public override SettingContext FetchSettingContext()
@@ -92,6 +93,18 @@
             }
 
             return null;
+        }
+
+        private bool AllowRead()
+        {
+            ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.Sportsbook2Setting);
+        }
+
+        private bool AllowUpdated()
+        {
+            ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
         }
     }
 }

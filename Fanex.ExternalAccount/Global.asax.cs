@@ -82,14 +82,12 @@ namespace Fanex.ExternalAccount
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
             CustomerSettingRegistration.Init();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
-            
+          
             var logger = new CasinoAPILogger();
             var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
             string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
