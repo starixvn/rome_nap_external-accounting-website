@@ -3965,9 +3965,11 @@ Fanex.ExtAcc.Customer = {
         }
         if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
             document.getElementById('uplineLevel').value = "";
+            document.getElementById('IsReadOnly').value = false;
         }
         else {
             document.getElementById('uplineLevel').value = uplineRoleId;
+            document.getElementById('IsReadOnly').value = false;
         }
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Sportsbook2 Setting', 900, 600, false, false, 1);
