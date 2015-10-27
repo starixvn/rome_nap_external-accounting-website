@@ -17,6 +17,7 @@ namespace Fanex.ExternalAccount
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
+    using Fanex.CustomerSetting.Client40;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
