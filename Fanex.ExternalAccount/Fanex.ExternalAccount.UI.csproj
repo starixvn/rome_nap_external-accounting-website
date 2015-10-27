@@ -121,6 +121,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Module.Logs">
+      <HintPath>..\Dependencies\Fanex.Module.Logs.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependency\Modules\Statement\Fanex.Module.Statement.dll</HintPath>
