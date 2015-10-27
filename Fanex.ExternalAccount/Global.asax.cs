@@ -20,6 +20,7 @@ namespace Fanex.ExternalAccount
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
+    using Fanex.Module.Logs.Services;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -113,9 +114,12 @@ namespace Fanex.ExternalAccount
         /// <param name="e">Event is sent.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
+            var ex = Server.GetLastError();
+            ex.Write();
+
             if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Request.IsLocal)
             {
-                // Response.Redirect("~/Shared/Error");
+                Response.Redirect("~/Shared/Error");
             }
         }
 
