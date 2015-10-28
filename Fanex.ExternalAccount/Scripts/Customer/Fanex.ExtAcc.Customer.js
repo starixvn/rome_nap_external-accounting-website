@@ -3961,6 +3961,7 @@ Fanex.ExtAcc.Customer = {
         document.getElementById('isMultiple').value = false;
         document.getElementById('uplineLevel').value = "";
         if (this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
             document.getElementById('IsReadOnly').value = true;
         }
         if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
