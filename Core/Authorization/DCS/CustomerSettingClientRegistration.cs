@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.UI.Services
+﻿namespace Fanex.ExternalAccount.Core.Authorization.DCS
 {
     using System;
     using System.Linq;
