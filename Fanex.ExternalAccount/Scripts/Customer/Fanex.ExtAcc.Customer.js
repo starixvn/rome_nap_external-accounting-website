@@ -3742,7 +3742,7 @@ Fanex.ExtAcc.Customer = {
 
             if (!this.HideKeno) {
                 menuItems.keno = {
-                    name: "Edit Multiple Keno",
+                    name: "Keno",
                     className: "iconEnableEdit",
                     items: {
                         agentKN: {
@@ -3775,7 +3775,7 @@ Fanex.ExtAcc.Customer = {
 
             if (!this.HideGoldDeluxe) {
                 menuItems.goldDeluxe = {
-                    name: "Edit Multiple Gold Deluxe",
+                    name: "Gold Deluxe",
                     className: "iconEnableEdit",
                     items: {
                         agentGD: {
@@ -3820,7 +3820,7 @@ Fanex.ExtAcc.Customer = {
 
             if (!this.HideSportsbook2) {
                 menuItems.sportsbook2 = {
-                    name: "Edit Multiple Sportsbook2",
+                    name: "Sportsbook2",
                     className: "iconEnableEdit",
                     items: {
                         agentSB2: {
