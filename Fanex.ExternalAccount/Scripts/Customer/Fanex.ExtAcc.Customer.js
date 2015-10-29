@@ -3781,7 +3781,7 @@ Fanex.ExtAcc.Customer = {
                         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, null, 1);
                     }
                 };
-
+                menuItems.separate9 = "------";
             }
 
             if (!this.HideSportsbook2) {
@@ -3814,7 +3814,7 @@ Fanex.ExtAcc.Customer = {
                 };
             }
 
-            menuItems.separate8 = "------";
+            menuItems.separate10 = "------";
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {
