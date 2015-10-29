@@ -3547,228 +3547,263 @@ Fanex.ExtAcc.Customer = {
         } else {
             menuItems = {
                 sportbook: {
-                    name: "Edit Multiple Sportsbook",
+                    name: "Sportsbook",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.ShowEditMultiplePT();
+                    items: {
+                        agentSB: {
+                            name: "Edit Multiple Sportsbook",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultiplePT();
+                            }
+                        },
+                        superSB: {
+                            name: "Super Edit Multiple Sportsbook",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT();
+                            }
+                        },
+                        maserSB: {
+                            name: "Master Edit Multiple Sportsbook",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT();
+                            }
+                        }
                     }
                 },
-                superEditSportbook: {
-                    name: "Super Edit Multiple Sportsbook",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                        Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT();
-                    }
-                },
-                masterEditSportbook: {
-                    name: "Master Edit Multiple Sportsbook",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                        Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT();
-                    }
-                },
-                separate: "------",
                 racing: {
-                    name: "Edit Multiple Racing",
+                    name: "Racing",
                     className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/member?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                    items: {
+                        agentRC: {
+                            name: "Edit Multiple Racing",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/member?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Racing Setting' : 'Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                            }
+                        },
+                        superRC: {
+                            name: "Super Edit Multiple Racing",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Racing Setting' : 'Super Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                            }
+                        },
+                        masterRC: {
+                            name: "Master Edit Multiple Racing",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Racing Setting' : 'Master Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
+                            }
+                        }
                     }
-                },
-                racingSuper: {
-                    name: "Super Edit Multiple Racing",
-                    className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Racing Setting' : 'Super Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
-                    }
-                },
-                racingMaster: {
-                    name: "Master Edit Multiple Racing",
-                    className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + info.custId + '&uplineid=' + info.uplineId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Racing Setting' : 'Master Edit Racing Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 775, false, null, 1);
-                    }
-                },
-                separate1: "------"
+                }
             };
 
             if (this.agentSyncCasino) {
                 menuItems.casino = {
-                    name: "Edit Multiple Casino",
+                    name: "Casino",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
+                    items: {
+                        agentCS: {
+                            name: "Edit Multiple Casino",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
+                            }
+                        },
+                        superCS: {
+                            name: "Super Edit Multiple Casino",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
+                            }
+                        },
+                        masterCS: {
+                            name: "Master Edit Multiple Casino",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
+                            }
+                        }
                     }
                 };
-                menuItems.scasino = {
-                    name: "Super Edit Multiple Casino",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                        Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                    }
-                };
-                menuItems.mcasino = {
-                    name: "Master Edit Multiple Casino",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                        Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                    }
-                };
-                menuItems.separate2 = "------";
             }
 
             if (this.agentSyncBingo) {
                 menuItems.bingo = {
-                    name: "Edit Multiple Bingo",
+                    name: "Bingo",
                     className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                    items: {
+                        agentBG: {
+                            name: "Edit Multiple Bingo",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                            }
+                        },
+                        superBG: {
+                            name: "Super Edit Multiple Bingo",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Bingo Setting' : 'Super Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                            }
+                        },
+                        masterBG: {
+                            name: "Master Edit Multiple Bingo",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Bingo Setting' : 'Master Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
+                            }
+                        }
                     }
                 };
-                menuItems.sbingo = {
-                    name: "Super Edit Multiple Bingo",
-                    className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Bingo Setting' : 'Super Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
-                    }
-                };
-                menuItems.mbingo = {
-                    name: "Master Edit Multiple Bingo",
-                    className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Bingo Setting' : 'Master Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
-                    }
-                };
-                menuItems.separate3 = "------";
-            }
-
-            if (!this.agentDisableP2P) {
-                //menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
-                //menuItems.separate4 = "------";
             }
 
             if (this.agentSyncLiveCasino) {
                 menuItems.liveCasino = {
-                    name: "Edit Multiple Live Casino",
+                    name: "Live Casino",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.agentId, 2, 1);
+                    items: {
+                        agentLC: {
+                            name: "Edit Multiple Live Casino",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino(Fanex.ExtAcc.Customer.agentId, Fanex.ExtAcc.Customer.agentId, 2, 1);
+                            }
+                        },
+                        superLC: {
+                            name: "Super Edit Multiple Live Casino",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.agentId, 4, 1);
+                            }
+                        },
+                        masterLC: {
+                            name: "Master Edit Multiple Live Casino",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.agentId, 3, 1);
+                            }
+                        }
                     }
                 };
-                menuItems.liveCasinoSuper = {
-                    name: "Super Edit Multiple Live Casino",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
-
-                        Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino(Fanex.ExtAcc.Customer.superId, Fanex.ExtAcc.Customer.agentId, 4, 1);
-                    }
-                };
-                menuItems.liveCasinoMaster = {
-                    name: "Master Edit Multiple Live Casino",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
-
-                        Fanex.ExtAcc.Customer.ShowEditMultipleLiveCasino(Fanex.ExtAcc.Customer.masterId, Fanex.ExtAcc.Customer.agentId, 3, 1);
-                    }
-                };
-                menuItems.separate5 = "------";
             }
 
             if (!this.HideVirtualSports) {
                 menuItems.virtualSport = {
-                    name: "Edit Multiple Virtual Sports",
+                    name: "Virtual Sports",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.agentId + '&roleId=' + Fanex.ExtAcc.Customer.Agent + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Virtual Sports Setting' : 'Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
+                    items: {
+                        agentVS: {
+                            name: "Edit Multiple Virtual Sports",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.agentId + '&roleId=' + Fanex.ExtAcc.Customer.Agent + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Virtual Sports Setting' : 'Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
+                            }
+                        },
+                        superVS: {
+                            name: "Super Edit Multiple Virtual Sports",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.superId + '&roleId=' + Fanex.ExtAcc.Customer.Super + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Virtual Sports Setting' : 'Super Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
+                            }
+                        },
+                        masterVS: {
+                            name: "Master Edit Multiple Virtual Sports",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.masterId + '&roleId=' + Fanex.ExtAcc.Customer.Master + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Virtual Sports Setting' : 'Master Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
+                            }
+                        }
                     }
                 };
-                menuItems.svirtualSport = {
-                    name: "Super Edit Multiple Virtual Sports",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.superId + '&roleId=' + Fanex.ExtAcc.Customer.Super + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Virtual Sports Setting' : 'Super Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
-                    }
-                };
-                menuItems.mvirtualSport = {
-                    name: "Master Edit Multiple Virtual Sports",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                        Fanex.ExtAcc.Form.Show(resolveClientUrl('VirtualSports/EditSingle?custId=' + Fanex.ExtAcc.Customer.masterId + '&roleId=' + Fanex.ExtAcc.Customer.Master + '&targetCustId=' + Fanex.ExtAcc.Customer.UserId + '&targetRoleId=' + Fanex.ExtAcc.Customer.Member + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Virtual Sports Setting' : 'Master Edit Virtual Sports Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 880, 700, false, null, 1);
-                    }
-                };
-                menuItems.separate6 = "------";
             }
 
             if (!this.HideKeno) {
                 menuItems.keno = {
                     name: "Edit Multiple Keno",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                    items: {
+                        agentKN: {
+                            name: "Edit Multiple Keno",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                            }
+                        },
+                        superKN: {
+                            name: "Super Edit Multiple Keno",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                            }
+                        },
+                        masterKN: {
+                            name: "Master Edit Multiple Keno",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                            }
+                        }
                     }
                 };
-                menuItems.skeno = {
-                    name: "Super Edit Multiple Keno",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
-                    }
-                };
-                menuItems.mkeno = {
-                    name: "Master Edit Multiple Keno",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
-                    }
-                };
-                menuItems.separate7 = "------";
             }
 
             if (!this.HideGoldDeluxe) {
                 menuItems.goldDeluxe = {
                     name: "Edit Multiple Gold Deluxe",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 2, 1);
+                    items: {
+                        agentGD: {
+                            name: "Edit Multiple Gold Deluxe",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 2, 1);
+                            }
+                        },
+                        superGD: {
+                            name: "Super Edit Multiple Gold Deluxe",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 4, 1);
+                            }
+                        },
+                        masterGD: {
+                            name: "Master Edit Multiple Gold Deluxe",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 3, 1);
+                            }
+                        }
                     }
                 };
-                menuItems.goldDeluxeSuper = {
-                    name: "Super Edit Multiple Gold Deluxe",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
-
-                        Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 4, 1);
-                    }
-                };
-                menuItems.goldDeluxeMaster = {
-                    name: "Master Edit Multiple Gold Deluxe",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
-
-                        Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 3, 1);
-                    }
-                };
-                menuItems.separate8 = "------";
             }
 
 
@@ -3781,40 +3816,42 @@ Fanex.ExtAcc.Customer = {
                         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, null, 1);
                     }
                 };
-                menuItems.separate9 = "------";
             }
 
             if (!this.HideSportsbook2) {
                 menuItems.sportsbook2 = {
                     name: "Edit Multiple Sportsbook2",
                     className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(2, 1);
-                    }
-                };
-                menuItems.sportsbook2Super = {
-                    name: "Super Edit Multiple Sportsbook2",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = false;
-
-                        Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 1);
-                    }
-                };
-                menuItems.sportsbook2Master = {
-                    name: "Master Edit Multiple Sportsbook2",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                        Fanex.ExtAcc.Customer.isMasterEditMember = true;
-
-                        Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 1);
+                    items: {
+                        agentSB2: {
+                            name: "Edit Multiple Sportsbook 2",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(2, 1);
+                            }
+                        },
+                        superSB2: {
+                            name: "Super Edit Multiple Sportsbook2",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 1);
+                            }
+                        },
+                        masterSB2: {
+                            name: "Master Edit Multiple Sportsbook2",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                                Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                                Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 1);
+                            }
+                        }
                     }
                 };
             }
 
-            menuItems.separate10 = "------";
+            menuItems.separate1 = "------";
 
             if (this.AllowDoubleComm) {
                 menuItems.doubleComm = {
