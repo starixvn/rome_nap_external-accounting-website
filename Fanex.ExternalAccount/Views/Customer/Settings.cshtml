@@ -13,7 +13,7 @@
     var HideKeno = ViewBag.HideKeno || !KenoSection.Instance.ShowSetting;
     var HideGoldDeluxe = ViewBag.HideGoldDeluxe || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
     var HideColossusBets = ViewBag.HideColossusBets || ConfigurationManager.AppSettings["IsShowColossusBets"] == "0";
-    var HideSportsbook2 = false;
+    var HideSportsbook2 = ViewBag.HideSportsbook2 || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
     var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2 };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }

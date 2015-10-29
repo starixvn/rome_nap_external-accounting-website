@@ -541,7 +541,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
             var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
-
+            var hideSportsbook2 = ConfigurationManager.AppSettings["IsShowSportsbook2"].Equals("0");
+                
             if (hideVS)
             {
                 model.RemoveProduct("VirtualSports");
@@ -560,6 +561,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideColossusBets)
             {
                 model.RemoveProduct("ColossusBets");
+            }
+
+            if (hideSportsbook2)
+            {
+                model.RemoveProduct("Sportsbook2");
             }
 
             return model;
@@ -617,6 +623,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("ColossusBets");
             }
 
+            if (product.HideSportsbook2)
+            {
+                model.RemoveProduct("Sportsbook2");
+            }
+
             return model;
         }
 
@@ -668,6 +679,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("ColossusBets");
             }
 
+            if (product.HideSportsbook2)
+            {
+                model.RemoveProduct("Sportsbook2");
+            }
             return model;
         }
 
@@ -683,6 +698,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
             bool hideKeno = product.HideKeno;
             bool hideGoldDeluxe = product.HideGoldDeluxe;
+            bool hideSportsbook2 = product.HideSportsbook2;
 
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
@@ -698,7 +714,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "VirtualSports" && !hideVS) ||
                        o.Key.ToString() == "Racing" ||
                        (o.Key.ToString() == "Keno" && !hideKeno) ||
-                       (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe)).ToList();
+                       (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe)||
+                       (o.Key.ToString() == "Sportsbook2" && !hideSportsbook2)).ToList();
+
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
@@ -708,8 +726,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var virtualSports = model.Setting.MasterPts.Where(o => o.Key.ToString() == "VirtualSports");
             var keno = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Keno");
             var goldDeluxe = model.Setting.MasterPts.Where(o => o.Key.ToString() == "GoldDeluxe");
+            var sportsbook2 = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Sportsbook2");
 
-            model.Setting.MasterPts.Add(new ObjectInfo { Key = "Sportsbook2", Value = "Sportsbook 2" });
             if (casino.Count() > 0)
             {
                 casino.FirstOrDefault().Value = "Casino";
@@ -738,6 +756,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (goldDeluxe.Count() > 0)
             {
                 goldDeluxe.FirstOrDefault().Value = "Gold Deluxe";
+            }
+
+            if (sportsbook2.Count() > 0)
+            {
+                sportsbook2.FirstOrDefault().Value = "Sportsbook 2";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;
@@ -990,6 +1013,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+            product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
 
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
@@ -1209,8 +1233,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
-                              new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
+                            new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
                         }
             };
 
@@ -1291,8 +1315,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
-                              new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
+                            new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
                         }
             };
 
@@ -1372,8 +1396,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
-                              new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
+                            new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
                         }
             };
 
