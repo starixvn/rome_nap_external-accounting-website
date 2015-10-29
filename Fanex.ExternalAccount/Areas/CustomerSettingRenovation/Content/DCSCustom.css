@@ -112,6 +112,13 @@ body
 	padding-bottom: 2px;
 	margin-top: 5px;
 	text-indent: 0 !important;
-	margin-bottom: 5px;
-	float: right;
+	margin-left: 5px;
+}
+.msg-container
+{
+    margin: 2px 20px 2px 2px;
+}
+.btn--margin-top
+{
+    float: right;
 }
