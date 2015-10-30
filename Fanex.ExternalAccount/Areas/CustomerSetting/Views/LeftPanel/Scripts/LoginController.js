@@ -1,0 +1,23 @@
+﻿function LoginController($scope) {
+    if ($scope.$parent.model) {
+        $scope.loginInfo = $scope.$parent.model.login;
+        $scope.model = $scope.$parent.model;
+    }
+    else {
+        $scope.model = null;
+    }
+
+    $scope.ResetPassword = function (custId, title) {
+        var roleId = model.personalInfo.roleId.value;
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
+    };
+
+    $scope.ShowIp = function (ip) {
+        parent.Fanex.ExtAcc.Customer.ShowIpInfo(ip);
+    };
+
+    $scope.ResetSecurityCode = function (id, roleId, username) {
+        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
+        parent.Fanex.ExtAcc.LoadMainIFrame(url);
+    };
+};

@@ -1,0 +1,37 @@
+﻿function PersonalInfoController($scope, $http) {
+    $scope.className = 'fiftyPercent';
+
+    if ($scope.$parent.model) {
+        $scope.personalInfo = $scope.$parent.model.personalInfo;
+        $scope.model = $scope.$parent.model;
+
+        $scope.personalInfoHeight = $('#customerInfo').height();
+
+        if ($scope.personalInfo.roleId.value == 2) {
+            $scope.className = 'thirdtyThreePercent';
+        }
+        else if ($scope.personalInfo.roleId.value == 1) {
+            $scope.className = 'onehundredPercent';
+        }
+    }
+    else {
+        $scope.model = null;
+    }
+
+    $scope.TooglePersonalInfo = function () {
+        if ($('#personalInfo').hasClass('userDown')) {
+            $('#personalInfo').removeClass('userDown');
+            $('#personalInfo').addClass('userUp');
+            $('#customerInfo').height(25);
+        }
+        else {
+            $('#personalInfo').addClass('userDown');
+            $('#personalInfo').removeClass('userUp');
+            $('#customerInfo').height(140);
+        }
+    };
+
+    $scope.ViewUser = function (username) {
+        parent.Fanex.ExtAcc.ViewUser(username);
+    };
+};
