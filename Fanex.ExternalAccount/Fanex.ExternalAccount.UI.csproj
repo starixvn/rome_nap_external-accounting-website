@@ -1345,6 +1345,11 @@
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
+    <Content Include="Scripts\Customer\EditMultiple.js" />
+    <Content Include="Scripts\Customer\MemberList.js" />
+    <Content Include="Scripts\Customer\AgentList.js" />
+    <Content Include="Scripts\Customer\MasterList.js" />
+    <Content Include="Scripts\Customer\SuperList.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.Convert.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.css" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.js" />

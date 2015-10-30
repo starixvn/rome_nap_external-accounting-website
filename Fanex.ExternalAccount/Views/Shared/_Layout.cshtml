@@ -9,7 +9,7 @@
 @{
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
-    var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] {};
+    var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] { };
     var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
@@ -167,6 +167,11 @@
         <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/SuperList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/MasterList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/AgentList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/MemberList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/EditMultiple.js")" type="text/javascript"></script>
         <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>
         <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
         <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.knockout-2.0.0.js")" type="text/javascript"></script>
@@ -174,6 +179,11 @@
     else
     {
         <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/SuperList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/MasterList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/AgentList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/MemberList.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/Customer/EditMultiple.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Fanex.Grid/moment.min.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/knockout.min-2.0.js")" type="text/javascript"></script>
     }
