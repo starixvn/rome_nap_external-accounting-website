@@ -20,7 +20,7 @@
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return this.AllowUpdated();
+            return HttpContext.Current.Request.QueryString["customerLevel"] != "4" ? this.AllowUpdated() : false;
         }
 
         public override SettingContext FetchSettingContext()
