@@ -29,6 +29,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
+    using Fanex.Data;
+    using Fanex.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -433,7 +435,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"];
             ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"];
-            ViewBag.HideSportsbook2 = (bool)result.Rows[0]["HideMuayThai"];
+            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
 
             return this.PartialViewBase();
         }
