@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.DCS
 {
     using System.Globalization;
+    using System.Linq;
     using System.Web;
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
@@ -20,7 +21,7 @@
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return HttpContext.Current.Request.QueryString["customerLevel"] != "4" ? this.AllowUpdated() : false;
+            return this.AllowUpdated();
         }
 
         public override SettingContext FetchSettingContext()
@@ -47,8 +48,11 @@
 
         private bool AllowUpdated()
         {
+            var queries = HttpContext.Current.Request.UrlReferrer.Query.Split('&');
+            var isSuper = queries.Where(q => q.Contains("customerLevel")).First().Split('=').ElementAt(1).Equals("4");
+
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
+            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
         }
     }
 }
