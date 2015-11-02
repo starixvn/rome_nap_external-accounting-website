@@ -72,6 +72,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
