@@ -107,6 +107,13 @@ namespace Fanex.ExternalAccount
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
         }
 
+        protected void Session_End(object sender, EventArgs e)
+        {
+            var userService = new Fanex.ExternalAccount.Service.Impl.Login.LoginService();
+            userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
+            Session.Abandon();
+        }
+
         /// <summary>
         /// Processes application error.
         /// </summary>

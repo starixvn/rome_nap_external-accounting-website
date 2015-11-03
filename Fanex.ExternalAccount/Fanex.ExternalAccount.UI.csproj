@@ -2729,6 +2729,10 @@
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>
       <Name>Fanex.ExternalAccount.Controllers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
+      <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
+      <Name>Fanex.ExternalAccount.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
       <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>
@@ -2736,6 +2740,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
       <Project>{E397E628-A155-4259-A806-D8210D54025D}</Project>
       <Name>Fanex.ExternalAccount.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
+      <Project>{D172255E-6B0A-4602-B22C-8A4BABA84D07}</Project>
+      <Name>Fanex.ExternalAccount.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
