@@ -32,7 +32,7 @@
     var showKenoSetting = KenoSection.Instance.ShowSetting == true ? "true" : "false";
     var showGoldDeluxeSetting = System.Configuration.ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1" ? 1 : 0;
     var showColossusBets = System.Configuration.ConfigurationManager.AppSettings["IsShowColossusBets"] == "1" ? 1 : 0;
-    var showSportsbook2 = System.Configuration.ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1" ? 1 : 0;
+    var showSportsbook2 = System.Configuration.ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1" && CurrentSession.Instance.CurrencyGroup.Equals("ACCUUS", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
 }
 <!DOCTYPE html>
 <html lang="en">
