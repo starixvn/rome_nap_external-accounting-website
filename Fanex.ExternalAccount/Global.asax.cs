@@ -83,10 +83,10 @@ namespace Fanex.ExternalAccount
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            CustomerSettingRegistration.Init();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            CustomerSettingRegistration.Init();            
-            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();            
             AutoMapperConfiguration.Configure();
           
             var logger = new CasinoAPILogger();
