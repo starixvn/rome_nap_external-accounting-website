@@ -6,7 +6,6 @@
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.ExternalAccount.Core.Context;
-    using System.IO;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {

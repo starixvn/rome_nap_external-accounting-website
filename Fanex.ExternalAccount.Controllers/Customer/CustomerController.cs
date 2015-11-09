@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.Common;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
@@ -29,8 +30,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
-    using Fanex.Data;
-    using Fanex.Common;
 
     /// <summary>
     /// TODO: Update summary.
