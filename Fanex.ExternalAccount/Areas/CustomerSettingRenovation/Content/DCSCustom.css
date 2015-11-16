@@ -1,0 +1,124 @@
+﻿/* File Created: October 12, 2015 */
+body
+{
+    /*font-size: 20px;*/
+}
+
+.customer-setting
+{
+    border: 1px solid #999999;
+    background-color: #e6e9f0;
+    margin: 2px 20px 2px 2px;
+}
+
+.block__header
+{
+    color: #464646 !important;
+    background-color: #F1F1A6 !important;
+    height: 24px;
+}
+
+.block__sub-header
+{
+    background: #e7f7ff;
+}
+
+.icon--update
+{
+    background-image: url("Images/save.png");
+    height: 20px;
+    width: 20px;
+}
+
+.block__lbl
+{
+    background: none repeat scroll 0 0 #e7f7ff;
+}
+
+.full-width .block__item--near-last
+{
+    border-bottom: 1px solid #999999;
+}
+
+
+.block__item--even
+{
+    border-right: none;
+}
+
+.block__item
+{
+    border-bottom: 1px solid #999999;
+    border-right: 1px solid #999999;
+}
+
+.block__header
+{
+    border-bottom: 1px solid #999999;
+}
+
+.block__lbl-group
+{
+    border-bottom: 1px solid #999999;
+}
+
+.block
+{
+    border: 1px solid #999999;
+}
+
+.block__item--full-width
+{
+    width: 100%;
+    border-right: none;
+}
+.block__item--last
+{
+    border-bottom: none;
+    border-right: none;
+}
+
+.block__value
+{
+    width: 60%;
+    border: none;
+}
+
+.block__item--near-last
+{
+    border-bottom: none;
+}
+
+.block__item--even {
+    border-right: none;
+}
+
+.block-ui-loading {
+    background: none !important;
+}
+
+.btn {
+    background: url(Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
+	color: #fff !important;
+	cursor: pointer;
+	font: Verdana,Arial,sans-serif;
+    font-size: 12px;
+	width: 80px;
+	height: 30px;
+	border: none !important;
+	border-radius: 3px !important;
+	-moz-border-radius: 3px !important;
+	-webkit-border-radius: 3px !important;
+	padding-bottom: 2px;
+	margin-top: 5px;
+	text-indent: 0 !important;
+	margin-left: 5px;
+}
+.msg-container
+{
+    margin: 2px 20px 2px 2px;
+}
+.btn--margin-top
+{
+    float: right;
+}

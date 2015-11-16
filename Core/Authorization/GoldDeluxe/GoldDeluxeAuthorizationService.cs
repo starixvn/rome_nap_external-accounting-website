@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.UI.Services
+﻿namespace Fanex.ExternalAccount.Core.Authorization.GoldDeluxe
 {
     using System.Collections.Generic;
     using System.Web.Mvc;

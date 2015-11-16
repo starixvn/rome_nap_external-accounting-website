@@ -165,5 +165,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool DisableSportsbook2
+        {
+            get;
+            set;
+        }
+
+        public bool HideSportsbook2
+        {
+            get;
+            set;
+        }
     }
 }

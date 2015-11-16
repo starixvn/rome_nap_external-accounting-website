@@ -139,7 +139,11 @@ namespace Fanex.ExternalAccount.Core.Base
         [OutputCache(Duration = 604800, VaryByParam = "*")]
         protected virtual ActionResult ViewBase(string viewName = null, object model = null)
         {
-            Response.AppendHeader("Content-Encoding", "gzip");
+            if (!Response.IsRequestBeingRedirected)
+            {
+                Response.AppendHeader("Content-Encoding", "gzip");
+            }
+
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
             return string.IsNullOrWhiteSpace(viewName) ? this.View(model) : this.View(viewName, model);

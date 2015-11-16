@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
+    using Fanex.Common;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
@@ -433,6 +434,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"];
             ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"];
+            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
 
             return this.PartialViewBase();
         }

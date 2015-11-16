@@ -48,6 +48,9 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Client40">
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Client40.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.IP">
       <HintPath>..\Dependencies\Fanex.CustomerSetting.IP.dll</HintPath>
     </Reference>
@@ -60,6 +63,9 @@
     </Reference>
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.GoldDeluxe.CoreSetting">
+      <HintPath>..\Dependencies\GoldDeluxe\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting">
       <HintPath>..\Dependencies\Fanex.LiveCasino.CoreSetting.dll</HintPath>
@@ -147,6 +153,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\DCS\CustomerSettingClientRegistration.cs" />
+    <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
+    <Compile Include="Authorization\LiveCasino\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Base\ControllerExtentions.cs" />
     <Compile Include="Base\CustomerBase.cs" />

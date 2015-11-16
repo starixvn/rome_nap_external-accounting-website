@@ -364,147 +364,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         }
 
         /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
-        public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds)
-        {
-            var tableCustomer = ds.Tables[0];
-            var tableLine = ds.Tables[1];
-            var tableCash = ds.Tables[2];
-            model.BalanceInfo.Balances.Add(
-                new ObjectInfo
-                {
-                    Value = Utils.ToDecimal(tableCash.Rows[0]["superCash"]) +
-                            Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
-                            Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
-                            Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
-                    Text = "Total Balance"
-                });
-            model.BalanceInfo.Balances.Add(new ObjectInfo
-            {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_superCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
-                Text = "Yesterday Balance"
-            });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Master Outstanding" });
-            model.PersonalInfo.Downlines = new List<ObjectInfo>
-            {
-                new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" }
-            };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
-            model.SuperSettings(tableCustomer);
-
-            return model;
-        }
-
-        /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
-        public static CustomerModel MasterInfo(this CustomerModel model, DataSet ds)
-        {
-            var tableCustomer = ds.Tables[0];
-            var tableLine = ds.Tables[1];
-            var tableCash = ds.Tables[2];
-
-            model.BalanceInfo.Balances.Add(new ObjectInfo
-            {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
-                Text = "Total Balance"
-            });
-            model.BalanceInfo.Balances.Add(new ObjectInfo
-            {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
-                Text = "Yesterday Balance"
-            });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Agent Outstanding" });
-
-            model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["superID"]), Text = "Super ID" };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" };
-            model.PersonalInfo.Downlines = new List<ObjectInfo>
-                    {
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" }
-                    };
-            model.MasterSettings(tableCustomer, tableCash);
-
-            return model;
-        }
-
-        /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
-        public static CustomerModel AgentInfo(this CustomerModel model, DataSet ds)
-        {
-            var tableCustomer = ds.Tables[0];
-            var tableLine = ds.Tables[1];
-            var tableCash = ds.Tables[2];
-
-            model.BalanceInfo.Balances.Add(new ObjectInfo
-            {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
-                Text = "Total Balance"
-            });
-            model.BalanceInfo.Balances.Add(new ObjectInfo
-            {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
-                Text = "Yesterday Balance"
-            });
-            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Member Outstanding" });
-
-            model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["masterID"]), Text = "Master ID" };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" };
-            model.PersonalInfo.Downlines = new List<ObjectInfo>
-                    {
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("agentID"), Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" }
-                    };
-            model.AgentSettings(ds);
-
-            return model;
-        }
-
-        /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
-        public static CustomerModel MemberInfo(this CustomerModel model, DataSet ds)
-        {
-            var tableCustomer = ds.Tables[0];
-            var tableLine = ds.Tables[1];
-            model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["agentID"]), Text = "Agent ID" };
-            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["memberName"]), Text = "Member" };
-            model.PersonalInfo.Downlines = new List<ObjectInfo>
-                    {
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" },
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("agentID"), Value = Utils.ToString(tableLine.Rows[0]["agentName"]), Text = "Agent" }
-                    };
-            model.MemberSettings(ds);
-
-            return model;
-        }
-
-        /// <summary>
         /// Checks product statues.
         /// </summary>
         /// <param name="model">Customer model item.</param>
@@ -541,7 +400,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
             var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
-
+            var hideSportsbook2 = ConfigurationManager.AppSettings["IsShowSportsbook2"].Equals("0");
+                
             if (hideVS)
             {
                 model.RemoveProduct("VirtualSports");
@@ -560,6 +420,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideColossusBets)
             {
                 model.RemoveProduct("ColossusBets");
+            }
+
+            if (hideSportsbook2)
+            {
+                model.RemoveProduct("Sportsbook2");
             }
 
             return model;
@@ -617,6 +482,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("ColossusBets");
             }
 
+            if (product.HideSportsbook2)
+            {
+                model.RemoveProduct("Sportsbook2");
+            }
+
             return model;
         }
 
@@ -668,78 +538,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("ColossusBets");
             }
 
-            return model;
-        }
-
-        /// <summary>
-        /// Gets PT products on member level.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="product">ProductStatuses item.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
-        {
-            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
-            bool hideKeno = product.HideKeno;
-            bool hideGoldDeluxe = product.HideGoldDeluxe;
-
-            model.Setting.SuperPts.Clear();
-            model.Setting.MasterPts.Clear();
-            model.Setting.Details.ForEach(o =>
+            if (product.HideSportsbook2)
             {
-                model.Setting.MasterPts.Add(new ObjectInfo { Key = o.Key, Value = o.Value });
-            });
-            model.Setting.MasterPts =
-                   model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT" ||
-                       (o.Key.ToString() == "Casino" && syncCasino) ||
-                       (o.Key.ToString() == "Bingo" && syncBingo) ||
-                       (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
-                       (o.Key.ToString() == "VirtualSports" && !hideVS) ||
-                       o.Key.ToString() == "Racing" ||
-                       (o.Key.ToString() == "Keno" && !hideKeno) ||
-                       (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe)).ToList();
-            model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
-            model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
-            model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
-            var casino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Casino");
-            var bingo = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Bingo");
-            var liveCasino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "LiveCasino");
-            var virtualSports = model.Setting.MasterPts.Where(o => o.Key.ToString() == "VirtualSports");
-            var keno = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Keno");
-            var goldDeluxe = model.Setting.MasterPts.Where(o => o.Key.ToString() == "GoldDeluxe");
-
-            if (casino.Count() > 0)
-            {
-                casino.FirstOrDefault().Value = "Casino";
+                model.RemoveProduct("Sportsbook2");
             }
-
-            if (bingo.Count() > 0)
-            {
-                bingo.FirstOrDefault().Value = "Bingo";
-            }
-
-            if (liveCasino.Count() > 0)
-            {
-                liveCasino.FirstOrDefault().Value = "Live Casino";
-            }
-
-            if (virtualSports.Count() > 0)
-            {
-                virtualSports.FirstOrDefault().Value = "Virtual Sports";
-            }
-
-            if (keno.Count() > 0)
-            {
-                keno.FirstOrDefault().Value = "Keno";
-            }
-
-            if (goldDeluxe.Count() > 0)
-            {
-                goldDeluxe.FirstOrDefault().Value = "Gold Deluxe";
-            }
-
-            model.Setting.SuperPts = model.Setting.MasterPts;
             return model;
         }
 
@@ -989,6 +791,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+            product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
 
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
@@ -1020,359 +823,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             return product;
-        }
-
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="tableCustomer">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer)
-        {
-            model.Setting = new Setting
-            {
-                EnableItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },
-                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
-                            new ObjectInfo { Key = "EnableCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
-                            new ObjectInfo { Key = "EnableBingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
-                            new ObjectInfo
-                            {
-                                Key = "EnableNumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game"
-                            },
-                            new ObjectInfo { Key = "EnableLiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },
-                            new ObjectInfo { Key = "EnableVirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
-                            new ObjectInfo
-                            {
-                                Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
-                                Text = "Enable Gold Deluxe"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets",
-                                Tooltip = "Enable Colossus Bets"
-                            }
-                        },
-                SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" }
-                        },
-                Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "AddNew", Value = "Add New" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
-                        }
-            };
-            model.AddBettingLimitForSuper();
-
-            return model;
-        }
-
-        /// <summary>
-        /// Adds betting limit link for special admin.
-        /// </summary>
-        /// <param name="model">CustomerModel object.</param>
-        /// <returns>CustomerModel context.</returns>
-        private static CustomerModel AddBettingLimitForSuper(this CustomerModel model)
-        {
-            var userId = CurrentSession.Instance.UserId;
-            var showBetSetting = IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
-                IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ? true : false;
-                        
-            if (showBetSetting)
-            {
-                model.Setting.Details.Add(new ObjectInfo
-                {
-                    Key = "BetSetting",
-                    Value = "Edit Betting Limit"
-                });
-            }
-
-            return model;
-        }
-
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="tableCustomer">Customer data.</param>
-        /// <param name="tableCash">Cash info table.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel MasterSettings(this CustomerModel model, DataTable tableCustomer, DataTable tableCash = null)
-        {
-            model.Setting = new Setting
-            {
-                EnableItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },
-                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
-                            new ObjectInfo { Key = "AutoPT", Value = !Utils.ToBoolean(tableCash.Rows[0]["disableAutoMPT"]), Text = "Allow Auto PT" },
-                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
-                            new ObjectInfo { Key = "EnableCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
-                            new ObjectInfo { Key = "EnableBingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
-                            new ObjectInfo
-                            {
-                                Key = "EnableNumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game"
-                            },
-                            new ObjectInfo { Key = "EnableLiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },
-                            new ObjectInfo { Key = "EnableVirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
-                            new ObjectInfo
-                            {
-                                Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
-                                Text = "Enable Gold Deluxe"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets",
-                                Tooltip = "Enable Colossus Bets"
-                            }
-                        },
-                SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" }
-                        },
-                Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "AddNew", Value = "Add New" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
-                        }
-            };
-
-            return model;
-        }
-
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel AgentSettings(this CustomerModel model, DataSet ds)
-        {
-            var tableCustomer = ds.Tables[0];
-            model.Setting = new Setting
-            {
-                EnableItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },
-                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
-                            new ObjectInfo { Key = "EnableCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
-                            new ObjectInfo { Key = "EnableBingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
-                            new ObjectInfo
-                            {
-                                Key = "EnableNumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game"
-                            },
-                            new ObjectInfo { Key = "EnableLiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },
-                            new ObjectInfo { Key = "EnableVirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
-                            new ObjectInfo
-                            {
-                                Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
-                                Text = "Enable Gold Deluxe"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets",
-                                Tooltip = "Enable Colossus Bets"
-                            }
-                        },
-                SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" }
-                        },
-                Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "AddNew", Value = "Add New" },
-                            new ObjectInfo { Key = "Transfer", Value = "Edit Transfer Condition" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
-                        }
-            };
-
-            return model;
-        }
-
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel MemberSettings(this CustomerModel model, DataSet ds)
-        {
-            var tableCustomer = ds.Tables[0];
-            model.Setting = new Setting
-            {
-                EnableItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(tableCustomer.Rows[0]["closed"]), Text = "Closed" },
-                            new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
-                            new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
-                            new ObjectInfo { Key = "EnableCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
-                            new ObjectInfo { Key = "EnableBingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
-                            new ObjectInfo
-                            {
-                            Key = "EnableNumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]),
-                            Text = "Enable Num Game", Tooltip = "Enable Number Game"
-                            },
-                            new ObjectInfo { Key = "EnableLiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },
-                            new ObjectInfo { Key = "EnableVirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
-                            new ObjectInfo
-                            {
-                                Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
-                            },
-                            new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
-                                Text = "Enable Gold Deluxe"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
-                                Text = "Colossus Bets",
-                                Tooltip = "Enable Colossus Bets"
-                            }
-                        },
-                SyncItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
-                            new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" }
-                        },
-                Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" }
-                        }
-            };
-
-            return model;
-        }
+        }        
     }
 }

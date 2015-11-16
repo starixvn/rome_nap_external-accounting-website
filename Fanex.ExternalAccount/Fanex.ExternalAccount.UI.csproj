@@ -63,7 +63,7 @@
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.0.1\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.0.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -176,15 +176,26 @@
       <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
       <HintPath>..\_Dependency\Entlib\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\packages\EnterpriseLibrary.Logging.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\Dependencies\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -244,6 +255,12 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Json">
       <HintPath>..\Dependencies\System.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json">
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Client40.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json">
+      <HintPath>..\Dependencies\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\Dependencies\System.Net.Http.dll</HintPath>
@@ -341,6 +358,11 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Common\Views\Web.config" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\btn-bgsubmit-original.png" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\loading.gif" />
+    <Content Include="Areas\CustomerSettingRenovation\Content\Images\save.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowblue-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowdown-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\btn-bgsubmit-hover.png" />
@@ -748,6 +770,17 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\inactive-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\up-down-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\SettingPTController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\PersonalInfoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\NoInfoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\LineInfoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\ViewInfoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\BalanceDownlineInfoController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\BalanceController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\DownlineListController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\SettingController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\LoginController.js" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\OnlineListController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\LeftPanelController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\SecurityCode\Scripts\SecurityCode.js" />
@@ -1046,10 +1079,6 @@
     <Content Include="bundles\images\sucess.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="Configurations\Permissions.txt" />
-    <Compile Include="Areas\GoldDeluxeSetting\Services\GoldDeluxeAuthorizationService.cs" />
-    <Compile Include="Areas\LiveCasinoSetting\Services\LiveCasinoAuthorizationService.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1316,6 +1345,11 @@
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
+    <Content Include="Scripts\Customer\EditMultiple.js" />
+    <Content Include="Scripts\Customer\MemberList.js" />
+    <Content Include="Scripts\Customer\AgentList.js" />
+    <Content Include="Scripts\Customer\MasterList.js" />
+    <Content Include="Scripts\Customer\SuperList.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.Convert.js" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.css" />
     <Content Include="Scripts\_Libs\FanexGrid\Fanex.Grid.js" />
@@ -2576,8 +2610,8 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Status.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />
-    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\variables.less" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Products.config" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\NAP\variables.less" />
     <None Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>

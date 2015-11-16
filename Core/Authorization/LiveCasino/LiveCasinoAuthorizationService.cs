@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.UI.Services
+﻿namespace Fanex.ExternalAccount.Core.Authorization.LiveCasino
 {
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Context;

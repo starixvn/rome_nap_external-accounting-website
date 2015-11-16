@@ -19,10 +19,16 @@ function EnableStatusController($scope) {
     }
 
     $scope.Init = function () {
+        if ($scope.context.newMode) {
+            $('#submit').addClass('disabledButton');
+            $('#submit').attr('disabled', true);
+        }
+
+        $('#title').html('Enable ' + model.requestContext.productId);
         $scope.sortedModel = groupBy($scope.entities, function (item) {
             return [item.sportTypeName];
         });
-        
+
         var allChecked = true;
         for (var i = 0; i < $scope.entities.length; i++) {
             if (!$scope.entities[i].hide && (($scope.entities[i].disabled && !$scope.entities[i].disabledUplines) || $scope.isDisabledAll)) {
@@ -39,9 +45,19 @@ function EnableStatusController($scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
         var allChecked = true;
 
+        if ($scope.context.newMode) {
+            if (preVal == scope.item.enable) {
+                $('#submit').addClass('disabledButton');
+                $('#submit').attr('disabled', true);
+            }
+            else {
+                $('#submit').removeClass('disabledButton');
+                $('#submit').attr('disabled', false);
+            } 
+        }
+
         if (preVal) {
             if (scope.item.enable) {
-                scope.item.enableDownline = true;
                 scope.item.enableDownline = scope.item.preValDownline;
                 scope.item.disableDownline = true;
 
@@ -105,10 +121,8 @@ function EnableStatusController($scope) {
         document.getElementById(scope.item.betTypeId).checked = scope.item.enableDownline;
     };
 
-    $scope.Update = function () {
+    $scope.Update = function (onCompleted) {
         Fanex.CustomerSetting.Core.BlockUI();
-
-        var length = model.entities.length;
 
         $.ajax({
             dataType: 'json',
@@ -148,6 +162,7 @@ function EnableStatusController($scope) {
                     else if (model.reloadAfterUpdate) {
                         document.location.reload(true);
                     }
+
                 }, 3000);
             }
             else {
@@ -157,11 +172,19 @@ function EnableStatusController($scope) {
             }
 
             Fanex.CustomerSetting.Core.UnBlockUI();
+
+            if (typeof onCompleted == 'function') {
+                onCompleted(data);
+            }
         }).error(function (data) {
             if (typeof console != 'undefined')
                 console.log(data);
 
             Fanex.CustomerSetting.Core.BlockUI();
+
+            if (typeof onCompleted == 'function') {
+                onCompleted(data);
+            }
         });
     };
 

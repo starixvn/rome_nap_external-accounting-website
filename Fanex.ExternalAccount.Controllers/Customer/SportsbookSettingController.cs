@@ -228,6 +228,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         #region Edit Commission
 
+        public ActionResult ActionDenied()
+        {
+            return new ViewResult
+            {
+                ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
+            };
+        }
+
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditCommission()
         {
