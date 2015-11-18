@@ -958,7 +958,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult GetExportToExcel(
+        public void GetExportToExcel(
             int? currentLevel = null,
             string groupName = "ACCDDD",
             int? srecommend = null,
@@ -992,8 +992,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 this.ExportToExcel(excelStream, status + fileName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".xls");
                 excelStream.Dispose();
             }
-
-            return this.PartialViewBase();
         }
 
         /// <summary>
