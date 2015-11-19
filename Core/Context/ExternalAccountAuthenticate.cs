@@ -45,18 +45,18 @@ namespace Fanex.ExternalAccount.Core.Context
             this._request = currentContext.Context.Request;
             this._response = currentContext.Context.Response;
 
-            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login") && !_response.IsRequestBeingRedirected)
             {
                 this._response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
-                (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Equals("/")))
+            if (((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
+                (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Equals("/"))) && !_response.IsRequestBeingRedirected)
             {
                 this._groups = new LoginService().GroupList().ToList();
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
 
-                currentContext.Context.Response.Redirect("~/Home/Index" + group);
+                _response.Redirect("~/Home/Index" + group);
             }
         }
 
@@ -97,12 +97,13 @@ namespace Fanex.ExternalAccount.Core.Context
                 return;
             }
 
-            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login"))
+            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login") && !response.IsRequestBeingRedirected)
             {
                 response.Redirect("~/Account/Login");
             }
 
-            if ((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if (((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
+                 && !response.IsRequestBeingRedirected)
             {
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
                 response.Redirect("~/Home/Index" + group);
@@ -307,7 +308,10 @@ namespace Fanex.ExternalAccount.Core.Context
                 currentContext.Context.Session.Abandon();
             }
 
-            response.Redirect("~/Account/Login", true);
+            if (!response.IsRequestBeingRedirected)
+            {
+                response.Redirect("~/Account/Login", true);
+            }
         }
 
         private bool IsHomeAuthorized()
