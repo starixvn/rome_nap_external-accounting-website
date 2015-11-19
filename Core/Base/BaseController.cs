@@ -196,8 +196,12 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="fileName">Name of excel file.</param>
         protected virtual void ExportToExcel(MemoryStream excelStream, string fileName)
         {
-            Response.ContentType = "application/vnd.ms-excel";
-            Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", fileName));
+            if (!Response.IsRequestBeingRedirected)
+            {
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", fileName));
+            }
+
             Response.Clear();
             Response.BinaryWrite(excelStream.GetBuffer());
             Response.End();

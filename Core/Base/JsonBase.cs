@@ -78,13 +78,16 @@ namespace Fanex.ExternalAccount.Core.Base
             var response = context.HttpContext.Response;
 
             // set content type
-            if (!string.IsNullOrEmpty(this.ContentType))
+            if (!response.IsRequestBeingRedirected)
             {
-                response.ContentType = this.ContentType;
-            }
-            else
-            {
-                response.ContentType = "application/json";
+                if (!string.IsNullOrEmpty(this.ContentType))
+                {
+                    response.ContentType = this.ContentType;
+                }
+                else
+                {
+                    response.ContentType = "application/json";
+                }
             }
 
             // set content encoding
