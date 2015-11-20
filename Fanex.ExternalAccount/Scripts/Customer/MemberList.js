@@ -100,7 +100,7 @@
         }
     }
 
-    if (agentSyncBingo) {
+    if (!hideBingo && agentSyncBingo) {
         has3rdParty = true;
         if (syncBingo) {
             if (disableBingo) {
