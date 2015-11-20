@@ -422,9 +422,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("ColossusBets");
             }
 
-            if (hideSportsbook2)
+            if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
-                model.RemoveProduct("Sportsbook2");
+                model.RemoveProduct("Bingo");
+            }
+            
+            if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
+            {
+                model.RemoveProduct("Bingo");
             }
 
             return model;
@@ -444,7 +449,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         private static CustomerModel RemoveEnableProducts(this CustomerModel model, ProductStatuses product)
         {
-            if (!product.SyncBingo)
+            if (!product.SyncBingo ||
+                !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveEnableProduct("EnableBingo");
             }
@@ -503,7 +509,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Transfer");
             }
 
-            if (!product.UplineStatuses.SyncBingo)
+            if (!product.UplineStatuses.SyncBingo ||
+                !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveProduct("Bingo");
             }

@@ -150,7 +150,7 @@
         };
     }
 
-    if (masterSyncBingo) {
+    if (!hideBingo && masterSyncBingo) {
         has3rdParty = true;
         if (syncBingo) {
             if (disableBingo) {

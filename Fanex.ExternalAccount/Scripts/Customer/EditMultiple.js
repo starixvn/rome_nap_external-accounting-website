@@ -51,7 +51,7 @@
             };
         }
 
-        if (this.superSyncBingo) {
+        if (!hideBingo && this.superSyncBingo) {
             menuItems.bingo = {
                 name: "Edit Multiple Bingo",
                 className: "iconEnableEdit",
@@ -168,7 +168,7 @@
             };
         }
 
-        if (this.masterSyncBingo) {
+        if (!hideBingo && this.masterSyncBingo) {
             menuItems.bingo = {
                 name: "Edit Multiple Bingo",
                 className: "iconEnableEdit",
@@ -355,7 +355,7 @@
             };
         }
 
-        if (this.agentSyncBingo) {
+        if (!hideBingo && this.agentSyncBingo) {
             menuItems.bingo = {
                 name: "Bingo",
                 className: "iconEnableEdit",

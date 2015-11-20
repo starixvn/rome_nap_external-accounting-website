@@ -6,7 +6,7 @@
 
 @{
     var SyncCasino = ViewBag.SyncCasino;
-    var SyncBingo = ViewBag.SyncBingo;
+    var SyncBingo = ViewBag.SyncBingo &&  Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled;
     var SyncLiveCasino = ViewBag.SyncLiveCasino;
     var DisableP2P = ViewBag.DisableP2P;
     var HideVirtualSports = ViewBag.HideVirtualSports;
