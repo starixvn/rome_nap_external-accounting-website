@@ -122,11 +122,14 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             var ex = Server.GetLastError();
-            ex.Write();
-
-            if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
+            if (ex.GetType() != typeof(System.Web.HttpException))
             {
-                Response.Redirect("~/Shared/Error");
+                ex.Write();
+
+                if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
+                {
+                    Response.Redirect("~/Shared/Error");
+                }
             }
         }
 
