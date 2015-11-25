@@ -18,14 +18,14 @@
             return this.AllowRead();
         }
 
-        public override bool VerifyUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
+        public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            return this.AllowUpdated(authorizationContext);
+            return this.AllowUpdated(permissionContext);
         }
 
-        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
+        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return this.AllowUpdated(authorizationContext);
+            return this.AllowUpdated(permissionContext);
         }
 
         public override SettingContext FetchSettingContext()
@@ -50,16 +50,16 @@
             return _authenticationService.AllowReadByAuthenticationParam(eFunctions.Sportsbook2Setting);
         }
 
-        private bool AllowUpdated(AuthorizationContext authorizationContext)
+        private bool AllowUpdated(PermissionContext permissionContext)
         {
-            bool isSuper = this.CheckIsSuperLevel(authorizationContext);
+            bool isSuper = this.CheckIsSuperLevel(permissionContext);
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
             return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
         }
 
-        private bool CheckIsSuperLevel(AuthorizationContext authorizationContext)
+        private bool CheckIsSuperLevel(PermissionContext permissionContext)
         {
-            var trackingValue = authorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
+            var trackingValue = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
             if (!string.IsNullOrWhiteSpace(trackingValue))
             {
                 var pattern = "(\"customerLevel\":{\"value\")([^\r\n][0-9]+)";
