@@ -4,13 +4,17 @@
     using System.Linq;
     using System.Web;
     using Fanex.CustomerSetting.Client40;
+
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.ExternalAccount.Core.Context;
+    using System.IO;
+    using System.Text.RegularExpressions;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using Fanex.Common;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private bool isSuper = false;
-
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
             return this.AllowRead();
@@ -50,18 +54,23 @@
 
         private bool AllowUpdated()
         {
-            var queries = HttpContext.Current.Request.RawUrl.Split('&');
-            if (queries.Length.Equals(1))
+            bool isSuper = false;
+            var trackingValue = new StreamReader(HttpContext.Current.Request.InputStream).ReadToEnd();
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(trackingValue);
+            if (!string.IsNullOrWhiteSpace(trackingValue))
             {
-                this.isSuper = HttpContext.Current.Request.Form["customerLevel"] != null ? HttpContext.Current.Request.Form["customerLevel"].Equals(4) : false;
-            }
-            else
-            {
-                this.isSuper = queries.Where(q => q.Contains("customerLevel")).First() != null ? queries.Where(q => q.Contains("customerLevel")).First().Split('=').ElementAt(1).Equals("4") : false;
+                var pattern = "(\"customerLevel\":{\"value\")([^\r\n][0-9]+)";
+                Match regexMatch = Regex.Match(data["setting"], pattern, RegexOptions.IgnoreCase);
+
+                if (regexMatch.Success)
+                {
+                    string customerLevelFounded = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
+                    isSuper = customerLevelFounded.Equals("4"); 
+                }
             }
 
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return this.isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
+            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
         }
     }
 }
