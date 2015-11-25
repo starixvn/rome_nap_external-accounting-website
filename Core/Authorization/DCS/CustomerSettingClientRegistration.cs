@@ -1,17 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.DCS
 {
+    using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
-    using System.Web;
-    using Fanex.CustomerSetting.Client40;
-
-    using Fanex.CustomerSetting.Client40.Models;
-    using Fanex.ExternalAccount.Core.Context;
     using System.IO;
     using System.Text.RegularExpressions;
+    using System.Web;
+    using System.Web.Mvc;
+    using Fanex.CustomerSetting.Client40;
+    using Fanex.CustomerSetting.Client40.Models;
+    using Fanex.ExternalAccount.Core.Context;
     using Newtonsoft.Json;
-    using System.Collections.Generic;
-    using Fanex.Common;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
@@ -20,14 +18,14 @@
             return this.AllowRead();
         }
 
-        public override bool VerifyUpdatePermission(PermissionContext permissionContext)
+        public override bool VerifyUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
         {
-            return this.AllowUpdated();
+            return this.AllowUpdated(authorizationContext);
         }
 
-        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
+        public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext, AuthorizationContext authorizationContext)
         {
-            return this.AllowUpdated();
+            return this.AllowUpdated(authorizationContext);
         }
 
         public override SettingContext FetchSettingContext()
@@ -52,25 +50,29 @@
             return _authenticationService.AllowReadByAuthenticationParam(eFunctions.Sportsbook2Setting);
         }
 
-        private bool AllowUpdated()
+        private bool AllowUpdated(AuthorizationContext authorizationContext)
         {
-            bool isSuper = false;
-            var trackingValue = new StreamReader(HttpContext.Current.Request.InputStream).ReadToEnd();
-            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(trackingValue);
+            bool isSuper = this.CheckIsSuperLevel(authorizationContext);
+            ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
+        }
+
+        private bool CheckIsSuperLevel(AuthorizationContext authorizationContext)
+        {
+            var trackingValue = authorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
             if (!string.IsNullOrWhiteSpace(trackingValue))
             {
                 var pattern = "(\"customerLevel\":{\"value\")([^\r\n][0-9]+)";
-                Match regexMatch = Regex.Match(data["setting"], pattern, RegexOptions.IgnoreCase);
+                Match regexMatch = Regex.Match(trackingValue, pattern, RegexOptions.IgnoreCase);
 
                 if (regexMatch.Success)
                 {
                     string customerLevelFounded = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
-                    isSuper = customerLevelFounded.Equals("4"); 
+                    return customerLevelFounded.Equals("4");
                 }
             }
 
-            ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
+            return false;
         }
     }
 }
