@@ -375,7 +375,7 @@
         var url = '';
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&IsReadOnly=true&customerLevel=4&customerId=");
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=4&customerId=");
                 break;
             case 3:
                 url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=3&customerId=");

@@ -732,7 +732,7 @@ Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2 = function (custid, uplineRoleId
     document.getElementById('uplineLevel').value = "";
     if (this.CurrentLevel == this.Super) {
         document.getElementById('uplineLevel').value = "";
-        document.getElementById('IsReadOnly').value = true;
+        document.getElementById('IsReadOnly').value = false;
     }
     else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
         document.getElementById('uplineLevel').value = "";

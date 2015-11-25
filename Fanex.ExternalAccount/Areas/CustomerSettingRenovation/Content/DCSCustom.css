@@ -122,3 +122,6 @@ body
 {
     float: right;
 }
+.customer-level-4 .icon--update, .customer-level-4 .icon--copy, .customer-level-4 .btn {
+    display: none;
+}
