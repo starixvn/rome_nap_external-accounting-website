@@ -1,15 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.DCS
 {
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Text.RegularExpressions;
     using System.Web;
-    using System.Web.Mvc;
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.ExternalAccount.Core.Context;
-    using Newtonsoft.Json;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
