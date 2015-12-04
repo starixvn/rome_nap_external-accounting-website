@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Utilities
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Web;
     using Fanex.ExternalAccount.DTO;
     using Sunplus.UMControllerLibrary;
 
@@ -56,7 +57,7 @@ namespace Fanex.ExternalAccount.Utilities
             get
             {
                 var checkUM = Utils.ToBoolean(GetValue("CheckUM"));
-                if (!checkUM) 
+                if (!checkUM || HttpContext.Current.Request.IsLocal) 
                 { 
                     return false; 
                 }
