@@ -337,9 +337,10 @@ namespace Fanex.ExternalAccount.Core.Base
             }
 
             var groups = loginService.GroupList();
+            var userGroup = groups.Where(o => o.GroupID == CurrentSession.GroupId);
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
             var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase)) :
-                groups.Where(o => o.GroupID == CurrentSession.GroupId).First().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase);
+                userGroup.Count() > 0 ? userGroup.FirstOrDefault().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase) : false;
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
