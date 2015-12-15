@@ -2585,12 +2585,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configurations\appSettings.config" />
+    <Content Include="Configurations\appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Configurations\connectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\appSettings.production.config" />
+    <Content Include="Configurations\appSettings.production.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\appSettings.uat.config" />
     <Content Include="Configurations\connectionStrings.production.config" />
     <Content Include="Configurations\connectionStrings.uat.config" />
@@ -2635,7 +2639,9 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Reports\WinlossDetail\Products.config" />
     <Content Include="Areas\Logs\LogsConfiguration.config" />
-    <Content Include="Configurations\appSettings.sit.config" />
+    <Content Include="Configurations\appSettings.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\connectionStrings.sit.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">

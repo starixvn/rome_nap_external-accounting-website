@@ -842,6 +842,15 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
+    $scope.SuperCockFighting = function () {
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
+    };
+
     $scope.MasterPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -930,6 +939,15 @@
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
 
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&UplineLevel=3&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
+    };
+
+    $scope.MasterCockFighting = function () {
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&UplineLevel=3&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterLiveCasino = function () {

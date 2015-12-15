@@ -55,6 +55,7 @@
                 var isHideGoldDeluxe = true;
                 var isHideColossusBets = true;
                 var isHideSportsbook2 = true;
+                var isHideCockFighting = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -94,18 +95,21 @@
                     if ($scope.model.setting.details[i].key == 'Sportsbook2') {
                         isHideSportsbook2 = false;
                     }
+                    if ($scope.model.setting.details[i].key == 'CockFighting') {
+                        isHideCockFighting = false;
+                    }
                 }
 
 
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockFighting);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockFighting);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockFighting);
                         break;
                     default:
                         break;
@@ -395,6 +399,36 @@
         }
     };
 
+    $scope.CockFighting = function () {
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var custId = $scope.model.personalInfo.custId.value;
+        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var url = '';
+        switch (roleId) {
+            case 4:
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=4&customerId=");
+                break;
+            case 3:
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=3&customerId=");
+                break;
+            case 2:
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=2&customerId=");
+                break;
+            case 1:
+                url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&UplineLevel=2&customerId=");
+                break;
+            default:
+                break;
+        }
+
+        if (url != '') {
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
+        }
+    };
     $scope.ColossusBets = function () {
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;

@@ -33,6 +33,7 @@
     var showGoldDeluxeSetting = System.Configuration.ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1" ? 1 : 0;
     var showColossusBets = System.Configuration.ConfigurationManager.AppSettings["IsShowColossusBets"] == "1" ? 1 : 0;
     var showSportsbook2 = System.Configuration.ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1" ? 1 : 0;
+    var showCockFighting = System.Configuration.ConfigurationManager.AppSettings["IsShowCockFighting"] == "1" ? 1 : 0;
     var hideBingo = Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled ? 0 : 1;
 }
 <!DOCTYPE html>
@@ -218,6 +219,7 @@
         var showColossusBets = '@showColossusBets';
         var hideBingo = @hideBingo;
         var showSportsbook2 = @showSportsbook2;
+        var showCockFighting = @showCockFighting;
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

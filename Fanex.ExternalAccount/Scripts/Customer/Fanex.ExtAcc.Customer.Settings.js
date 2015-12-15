@@ -30,6 +30,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
         $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
         $('#tab12').css('display', Fanex.ExtAcc.Customer.HideSportsbook2 ? 'none' : 'block');
+        $('#tab13').css('display', Fanex.ExtAcc.Customer.HideCockFighting ? 'none' : 'block');
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
@@ -107,6 +108,10 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab12').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetSportsbook2Setting();
+        });
+        $('#tab13').bind('click', function () {
+            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
+            Fanex.ExtAcc.Customer.Settings.GetCockFightingSetting();
         });
     },
 
@@ -353,6 +358,27 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-12').height($('#leftFrame').height() - 10);
         $('#tabs-12').css('display', 'block');
         $('#sportsbook2Frame').attr('src', resolveClientUrl(url));
+    },
+
+    GetCockFightingSetting: function () {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
+        var action = '';
+        var url = "DCS/ViewCustomerSetting?language=en-US&productId=19&customerId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html() + "&customerLevel=";
+
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
+            url += 3;
+        }
+        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
+            url += 2;
+        }
+        else {
+            url += 1 + "&UplineLevel=2";
+        }
+
+        $('#tabs-13').height($('#leftFrame').height() - 10);
+        $('#tabs-13').css('display', 'block');
+        $('#cockFightingFrame').attr('src', resolveClientUrl(url));
     },
 
     GetVirtualSportSetting: function () {

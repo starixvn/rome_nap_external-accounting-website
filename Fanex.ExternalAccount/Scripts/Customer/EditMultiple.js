@@ -129,6 +129,16 @@
             };
         }
 
+        if (!this.HideCockFighting) {
+            menuItems.cockFighting = {
+                name: "Edit Multiple Cock Fighting",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(4, 3);
+                }
+            };
+        }
+
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
@@ -243,6 +253,16 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 2);
+                }
+            };
+        }
+
+        if (!this.HideCockFighting) {
+            menuItems.cockFighting = {
+                name: "Edit Multiple Cock Fighting",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(3, 2);
                 }
             };
         }
@@ -565,6 +585,39 @@
             };
         }
 
+        if (!this.HideCockFighting) {
+            menuItems.cockFighting = {
+                name: "CockFighting",
+                className: "iconEnableEdit",
+                items: {
+                    agentSB2: {
+                        name: "Edit Multiple Cock Fighting",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(2, 1);
+                        }
+                    },
+                    superSB2: {
+                        name: "Super Edit Multiple Cock Fighting",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(4, 1);
+                        }
+                    },
+                    masterSB2: {
+                        name: "Master Edit Multiple Cock Fighting",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(3, 1);
+                        }
+                    }
+                }
+            };
+        }
+
         menuItems.separate1 = "------";
 
         if (this.AllowDoubleComm) {
@@ -789,6 +842,74 @@ Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targ
         this.ShowEditSingleSportsbook2(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
+
+Fanex.ExtAcc.Customer.ShowEditSingleCockFighting = function (custid, uplineRoleId, targetRoleId) {
+    document.getElementById('language').value = "en-US";
+    document.getElementById('productId').value = 19;
+    document.getElementById('customerLevel').value = targetRoleId;
+    document.getElementById('customerId').value = custid;
+    document.getElementById('isMultiple').value = false;
+    document.getElementById('uplineLevel').value = "";
+    if (this.CurrentLevel == this.Super) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else {
+        document.getElementById('uplineLevel').value = uplineRoleId;
+        document.getElementById('IsReadOnly').value = false;
+    }
+
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Cock Fighting Setting', 900, 600, false, false, 1);
+    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting = function (uplineRoleId, targetRoleId) {
+    var ret = this.IdsAndNames();
+
+    var actionName = '';
+    var levelText = '';
+
+    if (this.IsMultiple) {
+        var goldDeluxeUsernames = '';
+        var goldDeluxeCustIds = '';
+        var userNamesArr = this.Names();
+        var custIdsArr = this.Ids()
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            goldDeluxeUsernames += userNamesArr[i] + linkChar;
+            goldDeluxeCustIds += custIdsArr[i] + linkChar;
+        }
+
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 19;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('isMultiple').value = true;
+        document.getElementById('customerIds').value = goldDeluxeCustIds;
+        document.getElementById('customerNames').value = goldDeluxeUsernames;
+        document.getElementById('uplineLevel').value = "";
+
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Cock Fighting Setting', 900, 600, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    }
+    else {
+        this.ShowEditSingleCockFighting(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+    }
+};
+
 
 Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT = function () {
     var ret = this.IdsAndNames();
