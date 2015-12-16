@@ -107,11 +107,11 @@ Fanex.ExtAcc.Customer.Settings = {
         });
         $('#tab12').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetSportsbook2Setting();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(16, "#sportsbook2Frame", "#tabs-12");
         });
         $('#tab13').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetCockFightingSetting();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(19, "#cockFightingFrame", "#tabs-13");
         });
     },
 
@@ -339,11 +339,11 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#colossusBetsFrame').attr('src', url);
     },
 
-    GetSportsbook2Setting: function () {
+    RenderDCS: function (productId, frameId, tabId) {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
-        var url = "DCS/ViewCustomerSetting?language=en-US&productId=16&customerId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html() + "&customerLevel=";
+        var url = "DCS/ViewCustomerSetting?language=en-US&productId=" + productId + "&customerId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html() + "&customerLevel=";
 
         if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             url += 3;
@@ -355,30 +355,9 @@ Fanex.ExtAcc.Customer.Settings = {
             url += 1 + "&UplineLevel=2";
         }
 
-        $('#tabs-12').height($('#leftFrame').height() - 10);
-        $('#tabs-12').css('display', 'block');
-        $('#sportsbook2Frame').attr('src', resolveClientUrl(url));
-    },
-
-    GetCockFightingSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-        var url = "DCS/ViewCustomerSetting?language=en-US&productId=19&customerId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html() + "&customerLevel=";
-
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            url += 3;
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            url += 2;
-        }
-        else {
-            url += 1 + "&UplineLevel=2";
-        }
-
-        $('#tabs-13').height($('#leftFrame').height() - 10);
-        $('#tabs-13').css('display', 'block');
-        $('#cockFightingFrame').attr('src', resolveClientUrl(url));
+        $(tabId).height($('#leftFrame').height() - 10);
+        $(tabId).css('display', 'block');
+        $(frameId).attr('src', resolveClientUrl(url));
     },
 
     GetVirtualSportSetting: function () {
