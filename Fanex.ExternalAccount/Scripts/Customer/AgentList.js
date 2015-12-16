@@ -359,7 +359,7 @@ Fanex.ExtAcc.Customer.GetAgentList = function (mrecommend, allow, custId, dataSo
     this.HideGoldDeluxe = isHideGoldDeluxe;
     this.HideColossusBet = isHideColossusBets;
     this.HideSportsbook2 = isHideSportsbook2;
-    this.HideCockFighting = isHideCockFighting; ;
+    this.HideCockFighting = isHideCockFighting; 
 
     var url = resolveClientUrl('Customer/AgentListPost');
     var data = this.GetParams();

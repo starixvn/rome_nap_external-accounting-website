@@ -754,48 +754,36 @@
         var masterId = $scope.model.personalInfo.downlines[1].key;
         var agentId = $scope.model.personalInfo.downlines[2].key;
 
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
+        $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperBingo = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperCasino = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperRacing = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperLiveCasino = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + superId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=4&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
@@ -803,52 +791,25 @@
     };
 
     $scope.SuperVirtualSports = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperKeno = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = superId;
+        $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
     };
 
     $scope.SuperGoldDeluxe = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-
+        $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&uplineId=' + superId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.SuperSportsbook2 = function () {
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.SuperCockFighting = function () {
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterPT = function () {
@@ -856,10 +817,7 @@
         var masterId = $scope.model.personalInfo.downlines[1].key;
         var agentId = $scope.model.personalInfo.downlines[2].key;
 
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        $scope.ResetGlobalValueAtMasterOnMember();
         parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
@@ -869,130 +827,120 @@
     };
 
     $scope.MasterBingo = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterCasino = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId + '/' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterRacing = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
+    $scope.MasterVirtualSports = function () {
+        $scope.ResetGlobalValueAtMasterOnMember();
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
+    };
+
+    $scope.MasterKeno = function () {
+        $scope.ResetGlobalValueAtMasterOnMember();
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
+    };
+
     $scope.MasterLiveCasino = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+        $scope.ResetGlobalValueAtMasterOnMember();
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + masterId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=3&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
-    $scope.MasterVirtualSports = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
-    };
-
-    $scope.MasterKeno = function () {
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
     $scope.MasterGoldDeluxe = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
-
+        $scope.ResetGlobalValueAtMasterOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
-
-    $scope.MasterSportsbook2 = function () {
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=16&customerLevel=1&UplineLevel=3&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.MasterCockFighting = function () {
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=19&customerLevel=1&UplineLevel=3&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.MasterLiveCasino = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
+    
     $scope.SuperSBPT = function () {
         parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         var agentId = $scope.model.personalInfo.downlines[2].key;
 
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        $scope.ResetGlobalValueAtSuperOnMember();
+
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.MasterSBPT = function () {
         parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
-        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
         var agentId = $scope.model.personalInfo.downlines[2].key;
 
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
-        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        $scope.ResetGlobalValueAtMasterOnMember();
+
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
+
+    $scope.SuperSportsbook2 = function () {
+        $scope.RenderSupeOnMemberDCS(16);
+    };
+
+    $scope.SuperCockFighting = function () {
+        $scope.RenderSupeOnMemberDCS(19);
+    };
+
+    $scope.RenderSupeOnMemberDCS = function (productId) {
+        $scope.ResetGlobalValueAtSuperOnMember();
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
+    };
+
+    $scope.MasterSportsbook2 = function () {
+        $scope.RenderMasterOnMemberDCS(16);
+    };
+
+    $scope.MasterCockFighting = function () {
+        $scope.RenderMasterOnMemberDCS(19);
+    };
+
+    $scope.RenderMasterOnMemberDCS = function (productId) {
+        $scope.ResetGlobalValueAtMasterOnMember();
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=3&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
+    };
+
+    $scope.ResetGlobalValueAtMasterOnMember = function (productId) {
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = true;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+    }
+
+    $scope.ResetGlobalValueAtSuperOnMember = function (productId) {
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember = true;
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+        parent.Fanex.ExtAcc.Customer.IsMultiple = false;
+    }
 };
