@@ -669,7 +669,7 @@
             '&userid=' + parent.userId + '&productid=cockfighting&level=' + $scope.model.personalInfo.roleId.value +
             '&enable=true&enabledownlines=true&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Enable Cockfighting: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, null, 1, 'enableCF');
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Enable Cockfighting: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 200, false, null, 1, 'enableCF');
 
     };
 

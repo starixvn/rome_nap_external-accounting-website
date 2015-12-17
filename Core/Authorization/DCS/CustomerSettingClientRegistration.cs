@@ -93,9 +93,9 @@
             switch (trackingValue)
             {
                 case 16:
-                    return "Sportsbook2Setting";
+                    return eFunctions.Sportsbook2Setting;
                 case 19:
-                    return "CockfightingSetting";
+                    return eFunctions.CockfightingSetting;
                 default:
                     break;
             }
