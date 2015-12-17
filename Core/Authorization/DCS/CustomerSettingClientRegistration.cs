@@ -6,12 +6,13 @@
     using Fanex.CustomerSetting.Client40;
     using Fanex.CustomerSetting.Client40.Models;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Utilities;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
-            return this.AllowRead();
+            return this.AllowRead(permissionContext);
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
@@ -38,19 +39,19 @@
             settingContext.IP = CurrentContext.Instance.Ip4Address;         
 
             return settingContext;
-        }        
+        }
 
-        private bool AllowRead()
+        private bool AllowRead(PermissionContext permissionContext)
         {
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.Sportsbook2Setting);
+            return _authenticationService.AllowReadByAuthenticationParam(GetProductName(permissionContext));
         }
 
         private bool AllowUpdated(PermissionContext permissionContext)
         {
             bool isSuper = this.CheckIsSuperLevel(permissionContext);
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.Sportsbook2Setting);
+            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(GetProductName(permissionContext));
         }
 
         private bool CheckIsSuperLevel(PermissionContext permissionContext)
@@ -69,6 +70,36 @@
             }
 
             return false;
+        }
+
+        private string GetProductName(PermissionContext permissionContext)
+        {
+            var val = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("productId") != null ? permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("productId").AttemptedValue : null;
+            if (string.IsNullOrWhiteSpace(val))
+            {
+                val = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
+                var pattern = "(\"productId\":)([^\r\n][0-9]+)";
+                Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
+
+                if (regexMatch.Success)
+                {
+                    val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);                    
+                }
+            }
+
+            var trackingValue = Utils.ToInt32(val);
+
+            switch (trackingValue)
+            {
+                case 16:
+                    return "Sportsbook2Setting";
+                case 19:
+                    return "CockfightingSetting";
+                default:
+                    break;
+            }
+
+            return string.Empty;
         }
     }
 }
