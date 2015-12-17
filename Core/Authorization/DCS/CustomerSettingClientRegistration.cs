@@ -74,7 +74,8 @@
 
         private string GetProductName(PermissionContext permissionContext)
         {
-            var val = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("productId") != null ? permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("productId").AttemptedValue : null;
+            var queryString = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("productId");
+            var val = queryString != null ? queryString.AttemptedValue : null;
             if (string.IsNullOrWhiteSpace(val))
             {
                 val = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
