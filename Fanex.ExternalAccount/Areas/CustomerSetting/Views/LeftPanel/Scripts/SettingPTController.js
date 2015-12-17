@@ -55,7 +55,7 @@
                 var isHideGoldDeluxe = true;
                 var isHideColossusBets = true;
                 var isHideSportsbook2 = true;
-                var isHideCockFighting = true;
+                var isHideCockfighting = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -95,21 +95,21 @@
                     if ($scope.model.setting.details[i].key == 'Sportsbook2') {
                         isHideSportsbook2 = false;
                     }
-                    if ($scope.model.setting.details[i].key == 'CockFighting') {
-                        isHideCockFighting = false;
+                    if ($scope.model.setting.details[i].key == 'Cockfighting') {
+                        isHideCockfighting = false;
                     }
                 }
 
 
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockFighting);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockFighting);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockFighting);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting);
                         break;
                     default:
                         break;
@@ -382,7 +382,7 @@
         $scope.RenderDCS(16);
     };
 
-    $scope.CockFighting = function () {
+    $scope.Cockfighting = function () {
         $scope.RenderDCS(19);
     };
 

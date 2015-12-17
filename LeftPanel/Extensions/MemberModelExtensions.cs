@@ -100,7 +100,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         {
                             new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
                             new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" }
+                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
+                            new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -116,7 +117,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
-                            new ObjectInfo { Key = "CockFighting", Value = "Edit Cock Fighting" }
+                            new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" }
                         }
             };
 
@@ -136,7 +137,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool hideKeno = product.HideKeno;
             bool hideGoldDeluxe = product.HideGoldDeluxe;
             bool hideSportsbook2 = product.HideSportsbook2;
-            bool hideCockFighting = product.HideCockFighting;
+            bool hideCockfighting = product.HideCockfighting;
 
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
@@ -154,7 +155,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "Keno" && !hideKeno) ||
                        (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe) ||
                        (o.Key.ToString() == "Sportsbook2" && !hideSportsbook2) ||
-                       (o.Key.ToString() == "CockFighting" && !hideCockFighting)).ToList();
+                       (o.Key.ToString() == "Cockfighting" && !hideCockfighting)).ToList();
 
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
@@ -166,7 +167,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var keno = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Keno");
             var goldDeluxe = model.Setting.MasterPts.Where(o => o.Key.ToString() == "GoldDeluxe");
             var sportsbook2 = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Sportsbook2");
-            var cockFighting = model.Setting.MasterPts.Where(o => o.Key.ToString() == "CockFighting");
+            var cockFighting = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Cockfighting");
 
             if (casino.Count() > 0)
             {
@@ -205,7 +206,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             if (cockFighting.Count() > 0)
             {
-                cockFighting.FirstOrDefault().Value = "Cock Fighting";
+                cockFighting.FirstOrDefault().Value = "Cockfighting";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;

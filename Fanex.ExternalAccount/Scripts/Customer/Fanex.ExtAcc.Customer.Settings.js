@@ -30,7 +30,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
         $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
         $('#tab12').css('display', Fanex.ExtAcc.Customer.HideSportsbook2 ? 'none' : 'block');
-        $('#tab13').css('display', Fanex.ExtAcc.Customer.HideCockFighting ? 'none' : 'block');
+        $('#tab13').css('display', Fanex.ExtAcc.Customer.HideCockfighting ? 'none' : 'block');
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)

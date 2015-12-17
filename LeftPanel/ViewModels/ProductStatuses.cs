@@ -178,13 +178,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             set;
         }
 
-        public bool DisableCockFighting
+        public bool DisableCockfighting
         {
             get;
             set;
         }
 
-        public bool HideCockFighting
+        public bool HideCockfighting
         {
             get;
             set;

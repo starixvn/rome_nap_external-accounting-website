@@ -908,7 +908,7 @@
         $scope.RenderSupeOnMemberDCS(16);
     };
 
-    $scope.SuperCockFighting = function () {
+    $scope.SuperCockfighting = function () {
         $scope.RenderSupeOnMemberDCS(19);
     };
 
@@ -921,7 +921,7 @@
         $scope.RenderMasterOnMemberDCS(16);
     };
 
-    $scope.MasterCockFighting = function () {
+    $scope.MasterCockfighting = function () {
         $scope.RenderMasterOnMemberDCS(19);
     };
 

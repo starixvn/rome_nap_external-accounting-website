@@ -1,11 +1,11 @@
-﻿Fanex.ExtAcc.Customer.ShowEditSuper = function (custId, title, hideGoldDeluxe, hideSportsbook2, hideCockFighting) {
+﻿Fanex.ExtAcc.Customer.ShowEditSuper = function (custId, title, hideGoldDeluxe, hideSportsbook2, hideCockfighting) {
     this.TransferCondition = false;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
     this.CurrentLevel = this.Super;
     this.HideGoldDeluxe = hideGoldDeluxe;
     this.HideSportsbook2 = hideSportsbook2;
-    this.HideCockFighting = hideCockFighting;
+    this.HideCockfighting = hideCockfighting;
 
     this.ResetFlags();
 
@@ -120,14 +120,14 @@
         }
     }
 
-    if (!this.HideCockFighting) {
+    if (!this.HideCockfighting) {
         items.cockFighting = {
-            name: "CockFighting",
+            name: "Cockfighting",
             className: "iconViewEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleCockFighting(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.ShowEditSingleCockfighting(Fanex.ExtAcc.Customer.UserId, 5, 4);
             }
         }
     }

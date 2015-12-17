@@ -57,5 +57,5 @@ public static class eFunctions
 			public const string KenoBetting = "KenoBetting";
 			public const string OpenSuper = "OpenSuper";
             public const string Sportsbook2Setting = "Sportsbook2Setting";
-            public const string CockFightingSetting = "CockFightingSetting";
+            public const string CockfightingSetting = "CockfightingSetting";
 		}

@@ -129,12 +129,12 @@
             };
         }
 
-        if (!this.HideCockFighting) {
+        if (!this.HideCockfighting) {
             menuItems.cockFighting = {
-                name: "Edit Multiple Cock Fighting",
+                name: "Edit Multiple Cockfighting",
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(4, 3);
+                    Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(4, 3);
                 }
             };
         }
@@ -257,12 +257,12 @@
             };
         }
 
-        if (!this.HideCockFighting) {
+        if (!this.HideCockfighting) {
             menuItems.cockFighting = {
-                name: "Edit Multiple Cock Fighting",
+                name: "Edit Multiple Cockfighting",
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(3, 2);
+                    Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(3, 2);
                 }
             };
         }
@@ -585,33 +585,33 @@
             };
         }
 
-        if (!this.HideCockFighting) {
+        if (!this.HideCockfighting) {
             menuItems.cockFighting = {
-                name: "CockFighting",
+                name: "Cockfighting",
                 className: "iconEnableEdit",
                 items: {
                     agentSB2: {
-                        name: "Edit Multiple Cock Fighting",
+                        name: "Edit Multiple Cockfighting",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(2, 1);
+                            Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(2, 1);
                         }
                     },
                     superSB2: {
-                        name: "Super Edit Multiple Cock Fighting",
+                        name: "Super Edit Multiple Cockfighting",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(4, 1);
+                            Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(4, 1);
                         }
                     },
                     masterSB2: {
-                        name: "Master Edit Multiple Cock Fighting",
+                        name: "Master Edit Multiple Cockfighting",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting(3, 1);
+                            Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(3, 1);
                         }
                     }
                 }
@@ -843,7 +843,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targ
     }
 };
 
-Fanex.ExtAcc.Customer.ShowEditSingleCockFighting = function (custid, uplineRoleId, targetRoleId) {
+Fanex.ExtAcc.Customer.ShowEditSingleCockfighting = function (custid, uplineRoleId, targetRoleId) {
     document.getElementById('language').value = "en-US";
     document.getElementById('productId').value = 19;
     document.getElementById('customerLevel').value = targetRoleId;
@@ -863,11 +863,11 @@ Fanex.ExtAcc.Customer.ShowEditSingleCockFighting = function (custid, uplineRoleI
         document.getElementById('IsReadOnly').value = false;
     }
 
-    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Cock Fighting Setting', 900, 600, false, false, 1);
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Cockfighting Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
 
-Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting = function (uplineRoleId, targetRoleId) {
+Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting = function (uplineRoleId, targetRoleId) {
     var ret = this.IdsAndNames();
 
     var actionName = '';
@@ -902,11 +902,11 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCockFighting = function (uplineRoleId, tar
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Cock Fighting Setting', 900, 600, false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Cockfighting Setting', 900, 600, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {
-        this.ShowEditSingleCockFighting(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+        this.ShowEditSingleCockfighting(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 
