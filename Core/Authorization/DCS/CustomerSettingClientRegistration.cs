@@ -88,9 +88,9 @@
                 }
             }
 
-            var trackingValue = Utils.ToInt32(val);
+            var productId = Utils.ToInt32(val);
 
-            switch (trackingValue)
+            switch (productId)
             {
                 case 16:
                     return eFunctions.Sportsbook2Setting;
