@@ -590,7 +590,7 @@
                 name: "Cockfighting",
                 className: "iconEnableEdit",
                 items: {
-                    agentSB2: {
+                    agentCF: {
                         name: "Edit Multiple Cockfighting",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
@@ -598,7 +598,7 @@
                             Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(2, 1);
                         }
                     },
-                    superSB2: {
+                    superCF: {
                         name: "Super Edit Multiple Cockfighting",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
@@ -606,7 +606,7 @@
                             Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(4, 1);
                         }
                     },
-                    masterSB2: {
+                    masterCF: {
                         name: "Master Edit Multiple Cockfighting",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;

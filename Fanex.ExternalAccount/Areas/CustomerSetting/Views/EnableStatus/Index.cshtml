@@ -34,12 +34,12 @@
     <div>
     <table class="tableInfo" cellpadding="0" cellspacing="0" border="0" data-ng-repeat="group in sortedModel">
         <tr data-ng-hide="sortedModel.length == 1"><td colspan="2" class="bold bgHeader">{{group.sportTypeName}}</td></tr>
-        <tr data-ng-repeat="item in group" data-ng-init="item.disable = false; item.enable = !item.disabled; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.disabledDownlines; item.preValDownline = item.enableDownline" data-ng-hide="item.hide" >
+        <tr data-ng-repeat="item in group" data-ng-init="item.isDirty = item.betTypeId == 0 || item.betTypeId == -1 || !context.enableUplines; item.disable = false; item.enable = !item.disabled; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.disabledDownlines; item.preValDownline = item.enableDownline" data-ng-hide="item.hide" >
             <td style="border-bottom: none !important">
-                <input id="{{(item.hide) + '_' + item.betTypeId}}" name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.disabledUplines || item.betTypeId == 0 || !context.enableUplines || model.readOnly" /><span>{{item.enableText}}</span>
+                <input id="{{(item.hide) + '_' + item.betTypeId}}" name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.disabledUplines || item.betTypeId == 0 || model.readOnly || (item.betTypeId == -1 && !context.enableUplines)" /><span>{{item.enableText}}</span>
             </td>
             <td style="border-bottom: none !important">
-                <input id="{{item.betTypeId}}" data-ng-click="CheckDownline({{item.betTypeId}}, this)" name="betTypes1" data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline" type="checkbox" data-ng-change="item.disabledDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="{{ item.betTypeId == 0 ? !item.enable : item.disableDownline }}" /><span  data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline">{{item.enableDownlinesText}}</span>
+                <input id="{{item.betTypeId}}" data-ng-click="CheckDownline({{item.betTypeId}}, this)" name="betTypes1" data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline" type="checkbox" data-ng-change="item.disabledDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="{{ item.betTypeId == 0 || (item.betTypeId == -1 && !context.enableUplines) ? !item.enable : item.disableDownline }}" /><span  data-ng-hide="context.level == 1 || !context.hasDownline || context.hideDownline">{{item.enableDownlinesText}}</span>
             </td>
         </tr>            
     </table> 
@@ -50,7 +50,7 @@
         </tr>
     </table>  
     <div style="text-align: right" >
-        <input id="submit" data-ng-hide="model.readOnly" class="buttonPopup" type="button" value="@EnableStatusResources.submit" data-ng-click="isDisabledAll == true || !context.enableUplines ? void() : Update()" style="margin-right: 0" />
+        <input id="submit" data-ng-hide="model.readOnly" class="buttonPopup" type="button" value="@EnableStatusResources.submit" data-ng-click="isDisabledAll == true ? void() : Update()" style="margin-right: 0" />
     </div>
 </div>
 <script type="text/javascript">  
