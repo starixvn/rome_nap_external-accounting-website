@@ -45,7 +45,7 @@
     <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Statement">
-    <Setting Key="Acc_AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_AllStatement_Full" SpName="Acc_AllStatement_Full_xtest" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Report">
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -293,7 +293,7 @@
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog" />
   </Function>
   <Function Name="Statement - Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel_xtest" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBRPT.bodb_report.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBRPT.bodb_report.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
