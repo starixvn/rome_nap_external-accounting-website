@@ -68,7 +68,7 @@
             <td style="width: 20%"><div>
                 <select id="maxWinLimit" style="width: 80px !important" data-ng-model="CustomerModel.memberWinLimit.maximumWin" data-ng-options="opt.key for opt in CustomerModel.memberWinLimit.maximumWinLimits track by opt.value">
                 </select>&nbsp;@NGCasinoLang.lblOnGivenCredit</div></td>
-            <td class="noneBorderRight" rowspan="{{CustomerModel.roleId != 1 ? 3 : 4}}"><div><label><input type="checkbox" data-ng-model="CustomerModel.memberWinLimit.isDailyAutoReset" />@NGCasinoLang.lblDailyAutoResetLimit</label></div></td>
+            <td class="noneBorderRight" rowspan="{{CustomerModel.roleId != 1 ? 3 : 4}}"><div><label><input type="checkbox" data-ng-disabled="CustomerModel.memberWinLimit.isDailyAutoResetUpline == false && CustomerModel.roleId != 4" data-ng-model="CustomerModel.memberWinLimit.isDailyAutoReset" />@NGCasinoLang.lblDailyAutoResetLimit</label></div></td>
         </tr>
         <tr data-ng-hide="CustomerModel.roleId != 1">
             <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblCurrentWinLimit</td>
@@ -83,7 +83,7 @@
         </tr>
         <tr>
             <td class="noneBorderLeft tdTitleRight"></td>
-            <td><div>(<span id="minCredit1">{{CustomerModel.memberWinLimit.minimumLoss.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit1">{{CustomerModel.memberWinLimit.maximumLossLimit == 0 ? '@NGCasinoLang.noLimited' : CustomerModel.memberWinLimit.maximumLossLimit.formatNumber()}}</span>)</div></td>
+            <td><div>(<span id="minCredit1">{{CustomerModel.memberWinLimit.minimumLoss.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit1">{{CustomerModel.memberWinLimit.maximumLossLimit == 0 && CustomerModel.roleId == 4 ? '@NGCasinoLang.noLimited' : CustomerModel.memberWinLimit.maximumLossLimit.formatNumber()}}</span>)</div></td>
         </tr>
     </table>
     <div data-ng-hide="true" class="headerPositionTaking noneBorderLR noneBorderBottom">
