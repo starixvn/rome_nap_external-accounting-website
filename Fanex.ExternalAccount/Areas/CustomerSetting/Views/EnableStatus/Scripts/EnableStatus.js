@@ -15,7 +15,7 @@ function EnableStatusController($scope) {
         if (!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) {
             $scope.isDisabledAll = false;
             break;
-        }
+        }        
     }
 
     $scope.Init = function () {
@@ -45,15 +45,25 @@ function EnableStatusController($scope) {
         var betTypesCheckboxes = document.getElementsByName('betTypes0');
         var allChecked = true;
 
+        scope.item.isDirty = preVal != scope.item.enable;
+
         if ($scope.context.newMode) {
-            if (preVal == scope.item.enable) {
+            var dirty = false;
+            for (var i = 0; i < $scope.entities.length; i++) {
+                if ($scope.entities[i].isDirty) {
+                    dirty = true;
+                    break;
+                }
+            }
+
+            if (!dirty) {
                 $('#submit').addClass('disabledButton');
                 $('#submit').attr('disabled', true);
             }
             else {
                 $('#submit').removeClass('disabledButton');
                 $('#submit').attr('disabled', false);
-            } 
+            }
         }
 
         if (preVal) {
@@ -192,6 +202,7 @@ function EnableStatusController($scope) {
         var checkbox = document.getElementById('chkAll');
         var betTypeChexkboxes = document.getElementsByName('betTypes0');
         var betTypeChexkboxesDownlines = document.getElementsByName('betTypes1');
+        var isDirty = false;
 
         if (checkbox.checked) {
             for (var i = 0; i < betTypeChexkboxes.length; i++) {
@@ -210,6 +221,14 @@ function EnableStatusController($scope) {
                 }
 
                 $scope.entities[i].disabled = false;
+
+                if (checkbox.checked == $scope.entities[i].preVal) {
+                    $scope.entities[i].isDirty = false;
+                }
+                else {
+                    isDirty = true;
+                    $scope.entities[i].isDirty = true;
+                }
             }
         }
         else {
@@ -228,7 +247,26 @@ function EnableStatusController($scope) {
 
                 $scope.entities[i].disabled = true;
                 $scope.entities[i].disabledDownlines = true;
+
+                if (checkbox.checked == $scope.entities[i].preVal) {
+                    $scope.entities[i].isDirty = false;
+                }
+                else {
+                    isDirty = true;
+                    $scope.entities[i].isDirty = true;
+                }
             }
+        }
+
+        if ($scope.context.newMode) {
+            if (isDirty) {
+                $('#submit').removeClass('disabledButton');
+                $('#submit').attr('disabled', false);
+            }
+            else {
+                $('#submit').addClass('disabledButton');
+                $('#submit').attr('disabled', true);
+            } 
         }
     };
 

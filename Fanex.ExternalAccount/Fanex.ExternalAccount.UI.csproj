@@ -63,7 +63,7 @@
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.0.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.1.0.1.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -2585,12 +2585,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configurations\appSettings.config" />
+    <Content Include="Configurations\appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Configurations\connectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\appSettings.production.config" />
+    <Content Include="Configurations\appSettings.production.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\appSettings.uat.config" />
     <Content Include="Configurations\connectionStrings.production.config" />
     <Content Include="Configurations\connectionStrings.uat.config" />
@@ -2635,7 +2639,9 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Reports\WinlossDetail\Products.config" />
     <Content Include="Areas\Logs\LogsConfiguration.config" />
-    <Content Include="Configurations\appSettings.sit.config" />
+    <Content Include="Configurations\appSettings.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\connectionStrings.sit.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
@@ -2689,6 +2695,7 @@
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperList.xls" />
+    <Content Include="packages.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
@@ -2808,4 +2815,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
 </Project>

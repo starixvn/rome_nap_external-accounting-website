@@ -114,7 +114,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         {
                             new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
                             new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" }
+                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
+                            new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -131,7 +132,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
                             new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
-                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" }
+                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
+                            new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" }
                         }
             };
 
