@@ -78,7 +78,8 @@
             var val = queryString != null ? queryString.AttemptedValue : null;
             if (string.IsNullOrWhiteSpace(val))
             {
-                val = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
+                var setting = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting");
+                val = setting != null ? setting.AttemptedValue : string.Empty;
                 var pattern = "(\"productId\":)([^\r\n][0-9]+)";
                 Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
 
