@@ -496,6 +496,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             if (product.HideCockfighting)
             {
+                model.RemoveEnableProduct("EnableCockfighting");
                 model.RemoveProduct("Cockfighting");
             }
 
@@ -681,13 +682,22 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
+                    model.Setting.EnableItems.RemoveAt(index);
                     break;
                 }
             }
 
-            if (index != -1)
+            if (index == -1)
             {
-                model.Setting.EnableItems.RemoveAt(index);
+                for (int i = 0; i < model.Setting.EditItems.Count; i++)
+                {
+                    if (model.Setting.EditItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                        index = i;
+                        model.Setting.EditItems.RemoveAt(index);
+                        break;
+                    }
+                }
             }
 
             return model;

@@ -238,7 +238,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         Name: 'Edit',
         Width: 30,
         CustomCellRender: function (cell) {
-            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ", " + (cell.Value.HideCockFighting) + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
         }
