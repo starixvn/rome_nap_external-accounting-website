@@ -138,7 +138,8 @@ function CustomerController($scope, $element) {
         }).success(function (result) {
             if (result.errorCode == 0) {
                 var obj = result.result;
-                var info = obj.maxWinLimit == 0 ? 'Unlimited' : obj.winPercent.toFixed(2).formatNumber() + '%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;' + obj.maxWinCredit.toFixed(2).formatNumber();
+                var percent = obj.winPercent >= 100 ? '<font style="color: red">' + obj.winPercent.toFixed(2).formatNumber() + '%</font>' : obj.winPercent.toFixed(2).formatNumber() + '%';
+                var info = obj.maxWinLimit == 0 ? 'Unlimited' : percent + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;' + obj.maxWinCredit.toFixed(2).formatNumber();
                 $('#currentWinLimit').attr('style', '');
                 $('#currentWinLimit').unbind('click');
                 $('#currentWinLimit').html(info);
