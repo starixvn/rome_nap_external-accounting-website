@@ -50,10 +50,20 @@
         $(document).scrollTop(0);
         actionName = ActionName();
 
+        var min1 = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#minCredit1').html(), ',', ''));
+        var max1 = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxCredit1').html(), ',', ''));
+        var cur1 = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxTransfer1').val(), ',', ''));
+        max1 = isNaN(max1) ? 0 : max1;
+
         var min = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#minCredit').html(), ',', ''));
         var max = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxCredit').html(), ',', ''));
         var cur = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxTransfer').val(), ',', ''));
         max = isNaN(max) ? 0 : max;
+
+        if (isNaN(cur1) || cur1 < min1 || (max1 != 0 && cur1 > max1)) {
+            Validators.show($('#maxTransfer1').get(0), 'Maximum Loss must be between ' + $('#minCredit1').html() + ' and ' + $('#maxCredit1').html(), undefined, undefined, 1500);
+            return;
+        }
 
         if (isNaN(cur) || cur < min || (max != 0 && cur > max)) {
             Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').html() + ' and ' + $('#maxCredit').html(), undefined, undefined, 1500);
