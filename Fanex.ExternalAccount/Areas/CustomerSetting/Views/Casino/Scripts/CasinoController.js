@@ -1,4 +1,5 @@
 ﻿function CasinoController(userId, username, isMultiple, custIds, usernames, syncStatuses) {
+    var defaultTransferCredit = customerModel.defaultTransferCredit;
     var maxTransferCredit = customerModel.maxTransferCredit;
     var isAutoReset = customerModel.isAutoReset;
     var CustomerModel = customerModel;
@@ -103,9 +104,12 @@
     };
 
     var ProcessUpdate = function (custIdIndex, ondone) {
+        CustomerModel.isAutoReset = isAutoReset;
         if (CustomerModel.casinoSync) {
-            CustomerModel.isAutoReset = isAutoReset;
             CustomerModel.maxTransferCredit = maxTransferCredit;
+        }
+        else {
+            CustomerModel.maxTransferCredit = CustomerModel.defaultTransferCredit = defaultTransferCredit;
         }
         var isSync = SyncStatuses[custIdIndex] == 1 ? true : false;
         CustomerModel.casinoSync = custIdIndex == null ? CustomerModel.casinoSync : isSync;
