@@ -56,6 +56,7 @@
                 var isHideColossusBets = true;
                 var isHideSportsbook2 = true;
                 var isHideCockfighting = true;
+                var isHideCricket = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -96,6 +97,9 @@
                         isHideSportsbook2 = false;
                     }
                     if ($scope.model.setting.details[i].key == 'Cockfighting') {
+                        isHideCockfighting = false;
+                    }
+                    if ($scope.model.setting.details[i].key == 'Cricket') {
                         isHideCockfighting = false;
                     }
                 }
@@ -386,6 +390,10 @@
         $scope.RenderDCS(19);
     };
 
+    $scope.Cricket = function () {
+        $scope.RenderDCS(20);
+
+    };
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

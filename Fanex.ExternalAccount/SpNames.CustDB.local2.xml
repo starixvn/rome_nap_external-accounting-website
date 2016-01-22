@@ -107,7 +107,7 @@
   <Function Name="Left Panel">
     <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
@@ -298,7 +298,7 @@
     <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBRPT.bodb_report.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.bodbExtAccNet" Plain="0" />
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbExtAccNet" />
   </Function>
   <Functions Name="Gold Deluxe">

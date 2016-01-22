@@ -189,5 +189,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool HideCricket
+        {
+            get;
+            set;
+        }
     }
 }
