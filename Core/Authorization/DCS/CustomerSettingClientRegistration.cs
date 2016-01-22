@@ -97,6 +97,8 @@
                     return eFunctions.Sportsbook2Setting;
                 case 19:
                     return eFunctions.CockfightingSetting;
+                case 20:
+                    return eFunctions.CricketSetting;
                 default:
                     break;
             }

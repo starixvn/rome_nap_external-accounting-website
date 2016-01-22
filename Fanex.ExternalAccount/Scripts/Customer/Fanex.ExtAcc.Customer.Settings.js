@@ -31,6 +31,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
         $('#tab12').css('display', Fanex.ExtAcc.Customer.HideSportsbook2 ? 'none' : 'block');
         $('#tab13').css('display', Fanex.ExtAcc.Customer.HideCockfighting ? 'none' : 'block');
+        $('#tab14').css('display', Fanex.ExtAcc.Customer.HideCricket ? 'none' : 'block');
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
@@ -112,6 +113,10 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab13').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(19, "#cockFightingFrame", "#tabs-13");
+        });
+        $('#tab14').bind('click', function () {
+            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(20, "#cricketFrame", "#tabs-14");
         });
     },
 
