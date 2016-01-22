@@ -139,7 +139,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColCommission",
                             Value: statement.Commission.HasData ?
-                                statement.Commission.Value :
+                                statement.Commission.Value.toFixed(2) :
                                 statementResources.Symbol_NoData
                         },
                         {
@@ -324,7 +324,7 @@ var StatementReportManager = function () {
                         {
                             Name: "ColCommission",
                             Value: statement.Commission.HasData ?
-                                statement.Commission.Value :
+                                statement.Commission.Value.toFixed(2) :
                                 statementResources.Symbol_NoData
                         },
                         {
