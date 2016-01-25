@@ -86,9 +86,9 @@
             <td><div>(<span id="minCredit1">{{CustomerModel.memberWinLimit.minimumLoss.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit1">{{CustomerModel.memberWinLimit.maximumLossLimit == 0 && CustomerModel.roleId == 4 ? '@NGCasinoLang.noLimited' : CustomerModel.memberWinLimit.maximumLossLimit.formatNumber()}}</span>)</div></td>
         </tr>
     </table>
-    <div data-ng-hide="false" class="headerPositionTaking noneBorderLR noneBorderBottom">
+    <div data-ng-hide="true" class="headerPositionTaking noneBorderLR noneBorderBottom">
         @NGCasinoLang.BetSetting</div>
-    <table data-ng-hide="false" cellpadding="0" cellspacing="0" class="tableInfo">
+    <table data-ng-hide="true" cellpadding="0" cellspacing="0" class="tableInfo">
         <tr>
             <td style="width: 35%" class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblAccumulatedWinLoss</td>
             <td class="noneBorderRight"><span style="margin-left: 4px; float: left; width: 130px">{{CustomerModel.totalWinLoss.formatNumber()}}</span>
