@@ -215,7 +215,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             if (cricket.Count() > 0)
             {
-                cockFighting.FirstOrDefault().Value = "Cricket";
+                cricket.FirstOrDefault().Value = "Cricket";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;
