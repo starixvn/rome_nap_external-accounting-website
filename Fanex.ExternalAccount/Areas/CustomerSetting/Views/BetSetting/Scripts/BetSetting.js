@@ -2,7 +2,13 @@
 
 angular.element($('#ng-app')).ready(function () {
     $('#ng-app').show();
-    parent.$('#ng-app').show();
+    try {
+        parent.$('#ng-app').show();
+    } catch (e) {
+        if (typeof console != 'undefined') {
+            console.log(e);
+        }
+    }    
 });
 
 function LoadSB() {

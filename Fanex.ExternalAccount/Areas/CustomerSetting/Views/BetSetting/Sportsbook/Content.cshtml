@@ -92,7 +92,7 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Scripts/SportsbookController.js")" type="text/javascript"></script>
 <script type="text/javascript">
-    var model = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@bettingLimit'));
+    var model = @Html.Raw(bettingLimit);
     var custId = parseInt('@id');
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');

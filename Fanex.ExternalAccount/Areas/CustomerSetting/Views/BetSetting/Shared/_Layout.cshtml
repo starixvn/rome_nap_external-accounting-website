@@ -86,7 +86,7 @@
 
             $('#tabs').tabs({ selected: index });
 
-            var custInfo = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@custInfo'));
+            var custInfo = @Html.Raw(custInfo);
 
             if (!custInfo.syncCasino) {
                 $('#tab6').remove();

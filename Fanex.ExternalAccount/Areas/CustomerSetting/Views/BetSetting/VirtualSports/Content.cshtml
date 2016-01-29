@@ -73,7 +73,7 @@
     parent.$('#tabs-5').hide();
     parent.$('#tabs-6').hide();
 
-    var model = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@bettingLimit'));
+    var model = @Html.Raw(bettingLimit);
     var custId = parseInt('@id');
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
