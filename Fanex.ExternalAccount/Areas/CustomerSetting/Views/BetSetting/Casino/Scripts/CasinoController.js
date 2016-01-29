@@ -21,7 +21,7 @@ Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
 
 Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
     $(document).scrollTop(0);
-
+    /*
     var max = model.customerModel.maxWin;
     var isUnlimit = max == 0;
 
@@ -33,7 +33,7 @@ Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
     if (model.customerModel.maxTransferCredit.replaceAll(',', '') < model.customerModel.minTransferCreditLimit && !isUnlimit) {
         Validators.show($('#maxTransferCredit').get(0), 'Member Max Transfer Credit must be between ' + model.customerModel.minTransferCreditLimit.formatNumber() + ' and ' + max.formatNumber(), undefined, undefined, 3000);
         return;
-    };
+    };*/
 
     Fanex.CustomerSetting.Core.BlockUI();
 

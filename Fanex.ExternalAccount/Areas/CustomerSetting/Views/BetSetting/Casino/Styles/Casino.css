@@ -54,7 +54,6 @@ input[type="text"], input[type="password"] {
 {
      height: 25px; 
      border: 1px solid #CCC; 
-     border-bottom: none;
 }
 .normal
 {
