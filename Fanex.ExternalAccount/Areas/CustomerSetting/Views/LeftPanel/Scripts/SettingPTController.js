@@ -394,6 +394,11 @@
         $scope.RenderDCS(20);
 
     };
+
+    $scope.Allbet = function () {
+        $scope.RenderDCS(21);
+    };
+    
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

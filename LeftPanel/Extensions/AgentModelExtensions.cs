@@ -66,6 +66,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel AgentSettings(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
+            var table3rdDCS = ds.Tables[4];
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
@@ -102,6 +103,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "EnableAllbet",
+                                Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
+                                Text = "Allbet",
+                                Tooltip = "Enable Allbet"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -134,7 +142,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
                             new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
+                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" },
+                            new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" }
                         }
             };
 

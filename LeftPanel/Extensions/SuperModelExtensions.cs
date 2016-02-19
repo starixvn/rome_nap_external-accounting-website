@@ -30,6 +30,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
             var tableCash = ds.Tables[2];
+            var table3rdDCS = ds.Tables[4];
             model.BalanceInfo.Balances.Add(
                 new ObjectInfo
                 {
@@ -53,7 +54,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" }
             };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
-            model.SuperSettings(tableCustomer);
+            model.SuperSettings(tableCustomer, table3rdDCS);
 
             return model;
         }
@@ -65,7 +66,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="tableCustomer">Customer data.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer)
+        private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer, DataTable table3rdDCS)
         {
             model.Setting = new Setting
             {
@@ -103,6 +104,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
+                            }, new ObjectInfo
+                            {
+                                Key = "EnableAllbet",
+                                Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
+                                Text = "Allbet",
+                                Tooltip = "Enable Allbet"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -135,7 +142,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
                             new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
+                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" },
+                            new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" }
                         }
             };
             model.AddBettingLimitForSuper();

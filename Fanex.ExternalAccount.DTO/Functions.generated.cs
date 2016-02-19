@@ -59,4 +59,5 @@ public static class eFunctions
             public const string Sportsbook2Setting = "Sportsbook2Setting";
             public const string CockfightingSetting = "CockfightingSetting";
             public const string CricketSetting = "CricketSetting";
+            public const string AllbetSetting = "AllbetSetting";
 		}

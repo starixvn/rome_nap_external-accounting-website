@@ -12,6 +12,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
+    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
@@ -51,6 +52,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel MemberSettings(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
+            var table3rdDCS = ds.Tables[4];
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
@@ -88,6 +90,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "EnableAllbet",
+                                Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
+                                Text = "Allbet",
+                                Tooltip = "Enable Allbet"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -118,7 +127,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
                             new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
+                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" },
+                            new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" }
                         }
             };
 
@@ -140,6 +150,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool hideSportsbook2 = product.HideSportsbook2;
             bool hideCockfighting = product.HideCockfighting;
             bool hideCricket = product.HideCricket;
+            bool hideAllbet = product.HideAllbet;
 
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
@@ -158,7 +169,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe) ||
                        (o.Key.ToString() == "Sportsbook2" && !hideSportsbook2) ||
                        (o.Key.ToString() == "Cockfighting" && !hideCockfighting) ||
-                       (o.Key.ToString() == "Cricket" && !hideCricket)).ToList();
+                       (o.Key.ToString() == "Cricket" && !hideCricket) ||
+                       (o.Key.ToString() == "Allbet" && !hideAllbet)).ToList();
 
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
@@ -172,6 +184,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var sportsbook2 = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Sportsbook2");
             var cockFighting = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Cockfighting");
             var cricket = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Cricket");
+            var allbet = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Allbet");
 
             if (casino.Count() > 0)
             {
@@ -216,6 +229,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (cricket.Count() > 0)
             {
                 cricket.FirstOrDefault().Value = "Cricket";
+            }
+
+            if (allbet.Count() > 0)
+            {
+                allbet.FirstOrDefault().Value = "Allbet";
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;

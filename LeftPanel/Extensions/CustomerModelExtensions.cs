@@ -505,6 +505,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.RemoveProduct("Cricket");
             }
+
+            if (product.HideAllbet)
+            {
+                model.RemoveEnableProduct("EnableAllbet");
+                model.RemoveProduct("Allbet");
+            }
+
             return model;
         }
 
@@ -647,6 +654,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.Suspended)
             {
                 model.DisableProduct("Suspended");
+            }
+
+            if (product.UplineStatuses.DisableAllbet)
+            {
+                model.DisableProduct("EnableAllbet");
             }
 
             return model;
@@ -833,8 +845,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
             product.HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
             product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
+            
 
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
+            product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||

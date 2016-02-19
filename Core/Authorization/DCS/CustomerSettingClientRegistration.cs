@@ -99,6 +99,8 @@
                     return eFunctions.CockfightingSetting;
                 case 20:
                     return eFunctions.CricketSetting;
+                case 21:
+                    return eFunctions.AllbetSetting;
                 default:
                     break;
             }
