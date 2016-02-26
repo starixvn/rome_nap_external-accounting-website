@@ -937,6 +937,10 @@
         $scope.RenderSupeOnMemberDCS(20);
     };
 
+    $scope.SuperAllbet = function () {
+        $scope.RenderSupeOnMemberDCS(21);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -952,6 +956,10 @@
 
     $scope.MasterCricket = function () {
         $scope.RenderMasterOnMemberDCS(20);
+    };
+
+    $scope.MasterAllbet = function () {
+        $scope.RenderMasterOnMemberDCS(21);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
