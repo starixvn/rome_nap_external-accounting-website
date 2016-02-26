@@ -44,14 +44,18 @@
         private bool AllowRead(PermissionContext permissionContext)
         {
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return _authenticationService.AllowReadByAuthenticationParam(GetProductName(permissionContext));
+            var productName = GetProductName(permissionContext);
+
+            return string.IsNullOrWhiteSpace(productName) ? true : _authenticationService.AllowReadByAuthenticationParam(productName);
         }
 
         private bool AllowUpdated(PermissionContext permissionContext)
         {
             bool isSuper = this.CheckIsSuperLevel(permissionContext);
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-            return isSuper ? false : _authenticationService.AllowUpdateByAuthenticationParam(GetProductName(permissionContext));
+            var productName = GetProductName(permissionContext);
+
+            return isSuper ? false : string.IsNullOrWhiteSpace(productName) ? true : _authenticationService.AllowUpdateByAuthenticationParam(productName);
         }
 
         private bool CheckIsSuperLevel(PermissionContext permissionContext)
