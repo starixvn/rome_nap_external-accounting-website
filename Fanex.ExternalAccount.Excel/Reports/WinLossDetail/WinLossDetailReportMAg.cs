@@ -74,7 +74,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
             if (data.Count > 0)
             {
                 var values = new List<object> { };
-                int totalColumn = 13;
+                int totalColumn = 14;
                 int lastColumnIndex = colId + totalColumn - 1;
 
                 foreach (var item in data)
@@ -92,6 +92,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
                     { 
                         item.Username, 
                         item.Turnover,
+                        item.NetTurnover,
                         item.GrossComm,
                         item.MemberWinlost,
                         item.PlayerComm,
@@ -117,6 +118,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
                 {
                     "Grand Total",
                     data.Sum(p => p.Turnover),
+                    data.Sum(p => p.NetTurnover),
                     data.Sum(p => p.GrossComm),
                     data.Sum(p => p.MemberWinlost),
                     data.Sum(p => p.PlayerComm),

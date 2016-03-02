@@ -22,6 +22,8 @@ namespace Fanex.ExternalAccount.DTO.Report
 
         public double Turnover { get; set; }
 
+        public double NetTurnover { get; set; }
+
         public double GrossComm { get; set; }
 
         public double MemberWinlost { get; set; }

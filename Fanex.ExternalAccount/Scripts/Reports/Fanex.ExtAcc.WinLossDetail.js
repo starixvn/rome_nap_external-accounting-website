@@ -351,6 +351,7 @@ Fanex.ExtAcc.WinLossDetail = {
     defaultColumns: [
         { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -369,6 +370,7 @@ Fanex.ExtAcc.WinLossDetail = {
     MAgColumns: [
         { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -384,6 +386,7 @@ Fanex.ExtAcc.WinLossDetail = {
     AgColumns: [
         { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -396,6 +399,7 @@ Fanex.ExtAcc.WinLossDetail = {
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
@@ -406,6 +410,7 @@ Fanex.ExtAcc.WinLossDetail = {
     MAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
@@ -415,6 +420,7 @@ Fanex.ExtAcc.WinLossDetail = {
     AgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
@@ -468,6 +474,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         // For Summary Footer
         var sumTurnover = 0;
+        var sumNetTurnover = 0;
         var sumGrossComm = 0;
         var sumMemberWinlost = 0;
         var sumPlayerComm = 0;
@@ -492,6 +499,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     Columns: [
                     { Name: "Username", Value: this.dataSource[i] },
                     { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                     { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
                     { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
                     { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
@@ -507,6 +515,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     Columns: [
                     { Name: "Username", Value: this.dataSource[i] },
                     { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                     { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
                     { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
                     { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
@@ -525,6 +534,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     Columns: [
                     { Name: "Username", Value: this.dataSource[i] },
                     { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                     { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
                     { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
                     { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
@@ -544,6 +554,7 @@ Fanex.ExtAcc.WinLossDetail = {
             }
 
             sumTurnover += this.dataSource[i].Turnover;
+            sumNetTurnover += this.dataSource[i].NetTurnover;
             sumGrossComm += this.dataSource[i].GrossComm;
             sumMemberWinlost += this.dataSource[i].MemberWinlost;
             sumPlayerComm += this.dataSource[i].PlayerComm;
@@ -573,6 +584,7 @@ Fanex.ExtAcc.WinLossDetail = {
             footerData.push({ Columns: [
                 { Name: "Username", Value: "Grand Total" },
                 { Name: "Turnover", Value: sumTurnover },
+                { Name: "NetTurnover", Value: sumNetTurnover },
                 { Name: "GrossComm", Value: sumGrossComm },
                 { Name: "MemberWinlost", Value: sumMemberWinlost },
                 { Name: "PlayerComm", Value: sumPlayerComm },
@@ -587,6 +599,7 @@ Fanex.ExtAcc.WinLossDetail = {
             footerData.push({ Columns: [
                 { Name: "Username", Value: "Grand Total" },
                 { Name: "Turnover", Value: sumTurnover },
+                { Name: "NetTurnover", Value: sumNetTurnover },
                 { Name: "GrossComm", Value: sumGrossComm },
                 { Name: "MemberWinlost", Value: sumMemberWinlost },
                 { Name: "PlayerComm", Value: sumPlayerComm },
@@ -604,6 +617,7 @@ Fanex.ExtAcc.WinLossDetail = {
             footerData.push({ Columns: [
                 { Name: "Username", Value: "Grand Total" },
                 { Name: "Turnover", Value: sumTurnover },
+                { Name: "NetTurnover", Value: sumNetTurnover },
                 { Name: "GrossComm", Value: sumGrossComm },
                 { Name: "MemberWinlost", Value: sumMemberWinlost },
                 { Name: "PlayerComm", Value: sumPlayerComm },
