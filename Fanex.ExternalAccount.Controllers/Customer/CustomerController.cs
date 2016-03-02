@@ -436,6 +436,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"];
             ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
             ViewBag.HideCockfighting = Converter.ToBool(result.Rows[0]["HideCockfighting"]);
+            ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]);
 
             return this.PartialViewBase();
         }

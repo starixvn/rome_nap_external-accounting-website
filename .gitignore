@@ -28,4 +28,5 @@ _ReSharper*/
 $tf*/
 Fanex.ExternalAccount/Fanex.ExternalAccount.UI.Publish.xml
 ExternalAccount.suo
-.vs/config/applicationhost.config
+.vs/*
+packages/*

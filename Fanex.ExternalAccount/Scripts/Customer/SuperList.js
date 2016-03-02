@@ -1,4 +1,4 @@
-﻿Fanex.ExtAcc.Customer.ShowEditSuper = function (custId, title, hideGoldDeluxe, hideSportsbook2, hideCockfighting, hideColossusBets) {
+﻿Fanex.ExtAcc.Customer.ShowEditSuper = function (custId, title, hideGoldDeluxe, hideSportsbook2, hideCockfighting, hideColossusBets, hideCricket) {
     this.TransferCondition = false;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
@@ -6,6 +6,7 @@
     this.HideGoldDeluxe = hideGoldDeluxe;
     this.HideSportsbook2 = hideSportsbook2;
     this.HideCockfighting = hideCockfighting;
+    this.HideCricket = hideCricket;
 
     this.ResetFlags();
 
@@ -131,6 +132,19 @@
             }
         }
     }
+
+    if (!this.HideCricket) {
+        items.cricket = {
+            name: "Cricket",
+            className: "iconViewEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleCricket(Fanex.ExtAcc.Customer.UserId, 5, 4);
+            }
+        }
+    }
+
     items.separator4 = "-----";
 
     items.editInfo = {
@@ -238,7 +252,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         Name: 'Edit',
         Width: 30,
         CustomCellRender: function (cell) {
-            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ", " + (cell.Value.HideCockFighting) + ", " + cell.Value.HideColossusBet + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ", " + (cell.Value.HideCockFighting) + ", " + cell.Value.HideColossusBet + ", " + (cell.Value.HideCricket) + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
         }

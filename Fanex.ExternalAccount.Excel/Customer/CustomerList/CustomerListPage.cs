@@ -10,6 +10,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.ExternalAccount.Utilities;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
@@ -157,6 +158,7 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
         /// <param name="dtr">Data rows.</param>
         /// <param name="values">Object values.</param>
         /// <param name="lastColumnIndex">Last column index.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static void GetOtherList(
             ISheet templateSheet, 
             ISheet resultSheet, 

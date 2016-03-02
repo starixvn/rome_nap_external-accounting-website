@@ -13,6 +13,7 @@
 namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -130,6 +131,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="groupId">Id of group.</param>
         /// <param name="groupName">Group name.</param>
         /// <returns>ActionResult object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GrantPermission(int groupId, string groupName)
         {

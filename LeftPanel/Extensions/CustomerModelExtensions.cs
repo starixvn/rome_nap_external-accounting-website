@@ -402,7 +402,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
             var hideSportsbook2 = ConfigurationManager.AppSettings["IsShowSportsbook2"].Equals("0");
             var hideCockfighting = ConfigurationManager.AppSettings["IsShowCockfighting"].Equals("0");
- 
+            var hideCricket = ConfigurationManager.AppSettings["IsShowCricket"].Equals("0");
+
             if (hideVS)
             {
                 model.RemoveProduct("VirtualSports");
@@ -500,6 +501,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Cockfighting");
             }
 
+            if (product.HideCricket)
+            {
+                model.RemoveProduct("Cricket");
+            }
             return model;
         }
 
@@ -560,6 +565,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.HideCockfighting)
             {
                 model.RemoveProduct("Cockfighting");
+            }
+
+            if (product.HideCricket)
+            {
+                model.RemoveProduct("Cricket");
             }
 
             return model;
@@ -822,6 +832,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
             product.HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
+            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
 
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
