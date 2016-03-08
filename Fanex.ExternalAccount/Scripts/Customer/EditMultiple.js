@@ -149,6 +149,16 @@
             };
         }
 
+        if (!this.HideAllbet) {
+            menuItems.cricket = {
+                name: "Edit Multiple Allbet",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(4, 3);
+                }
+            };
+        }
+
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
@@ -283,6 +293,16 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleCricket(3, 2);
+                }
+            };
+        }
+
+        if (!this.HideAllbet) {
+            menuItems.allbet = {
+                name: "Edit Multiple Allbet",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 2);
                 }
             };
         }
@@ -671,6 +691,39 @@
             };
         }
 
+        if (!this.HideAllbet) {
+            menuItems.allbet = {
+                name: "Allbet",
+                className: "iconEnableEdit",
+                items: {
+                    agentCK: {
+                        name: "Edit Multiple Allbet",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(2, 1);
+                        }
+                    },
+                    superCK: {
+                        name: "Super Edit Multiple Allbet",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(4, 1);
+                        }
+                    },
+                    masterCK: {
+                        name: "Master Edit Multiple Allbet",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 1);
+                        }
+                    }
+                }
+            };
+        }
+
         if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
@@ -1025,6 +1078,73 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCricket = function (uplineRoleId, targetRo
     }
     else {
         this.ShowEditSingleCricket(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+    }
+};
+
+Fanex.ExtAcc.Customer.ShowEditSingleAllbet = function (custid, uplineRoleId, targetRoleId) {
+    document.getElementById('language').value = "en-US";
+    document.getElementById('productId').value = 21;
+    document.getElementById('customerLevel').value = targetRoleId;
+    document.getElementById('customerId').value = custid;
+    document.getElementById('isMultiple').value = false;
+    document.getElementById('uplineLevel').value = "";
+    if (this.CurrentLevel == this.Super) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else {
+        document.getElementById('uplineLevel').value = uplineRoleId;
+        document.getElementById('IsReadOnly').value = false;
+    }
+
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Allbet Setting', 900, 600, false, false, 1);
+    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRoleId) {
+    var ret = this.IdsAndNames();
+
+    var actionName = '';
+    var levelText = '';
+
+    if (this.IsMultiple) {
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = this.Names();
+        var custIdsArr = this.Ids()
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+           Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 21;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('isMultiple').value = true;
+        document.getElementById('customerIds').value = CustIds;
+        document.getElementById('customerNames').value = Usernames;
+        document.getElementById('uplineLevel').value = "";
+
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Allbet Setting', 900, 600, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    }
+    else {
+        this.ShowEditSingleAllbet(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 
