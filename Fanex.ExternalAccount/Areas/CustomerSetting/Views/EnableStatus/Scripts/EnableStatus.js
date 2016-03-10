@@ -19,6 +19,15 @@ function EnableStatusController($scope) {
     }
 
     $scope.Init = function () {
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+                if (antiXSRFToken.length > 0) {
+                    xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+                }
+            }
+        });
+
         if ($scope.context.newMode) {
             $('#submit').addClass('disabledButton');
             $('#submit').attr('disabled', true);
