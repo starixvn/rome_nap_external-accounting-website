@@ -152,7 +152,6 @@ Fanex.ExtAcc.WinLossDetail = {
 
     Init: function () {
         $this = this;
-
         Fanex.ExtAcc.InitSuggestion();
 
         $("#DateList").combobox({
@@ -399,7 +398,7 @@ Fanex.ExtAcc.WinLossDetail = {
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
-        { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
@@ -410,7 +409,7 @@ Fanex.ExtAcc.WinLossDetail = {
     MAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
-        { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
@@ -420,7 +419,7 @@ Fanex.ExtAcc.WinLossDetail = {
     AgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
-        { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
@@ -636,7 +635,8 @@ Fanex.ExtAcc.WinLossDetail = {
             });
         }
 
-        gridOption.footerRows = footerData;
+        gridOption.footerRows = footerData;               
+
         return gridOption;
     },
     customsortfunc: function (rows) {
@@ -796,6 +796,11 @@ Fanex.ExtAcc.WinLossDetail = {
                 if ($this.totalRows > 0) {
                     $("#jqgrid").fanexGrid($this.Render());
                 }
+				
+                $('#netTurnover').bind('click', function () {
+                    Fanex.ExtAcc.Form.Alert("Net Turnover Information", "Net Turnover: Turnover which excludes drawn tickets and halves of half won, half lost tickets of the Sportsbook product.", 430, 150);
+                    return false;
+                });
 
                 Fanex.ExtAcc.UnBlockUI();
             },

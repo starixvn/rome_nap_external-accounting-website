@@ -68,6 +68,7 @@
     else
     {
         <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/css")" rel="stylesheet" type="text/css" />
+        <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
     }
     @RenderSection("StyleSheet", false)
 </head>
