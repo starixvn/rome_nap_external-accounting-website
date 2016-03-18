@@ -150,7 +150,7 @@
         }
 
         if (!this.HideAllbet) {
-            menuItems.cricket = {
+            menuItems.allbet = {
                 name: "Edit Multiple Allbet",
                 className: "iconEnableEdit",
                 callback: function () {
@@ -696,7 +696,7 @@
                 name: "Allbet",
                 className: "iconEnableEdit",
                 items: {
-                    agentCK: {
+                    agentAB: {
                         name: "Edit Multiple Allbet",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
@@ -704,7 +704,7 @@
                             Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(2, 1);
                         }
                     },
-                    superCK: {
+                    superAB: {
                         name: "Super Edit Multiple Allbet",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
@@ -712,7 +712,7 @@
                             Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(4, 1);
                         }
                     },
-                    masterCK: {
+                    masterAB: {
                         name: "Master Edit Multiple Allbet",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
