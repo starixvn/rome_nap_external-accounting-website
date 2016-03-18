@@ -9,14 +9,16 @@
 // <history>
 //   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
 // </history>
-namespace Fanex.ExternalAccount.Controllers.Report
+namespace Fanex.ExternalAccount.Core.Reports
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
+    using WinLossDetail;
 
     /// <summary>
     /// Report controller.
@@ -33,7 +35,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             var products = ProductsConfiguration.Instance.ProductCollection;
             foreach (ProductElementConfiguration product in products)
             {
-                if (!product.Hide && !product.Id.Equals("showAll"))
+                if (!this.IsHiddenProduct(product) && !product.Id.Equals("showAll"))
                 {
                     list.Add(new KeyValuePair<string, bool>(product.Id.ToLower(), CheckRequest.GetBooleanRequest(product.Id, true)));
                 }
@@ -52,7 +54,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             var products = ProductsConfiguration.Instance.ProductCollection;
             foreach (ProductElementConfiguration product in products)
             {
-                if (!product.Hide)
+                if (!this.IsHiddenProduct(product))
                 {
                     list.Add(new KeyValuePair<string, string>(product.Id, product.Name));
                 }
@@ -82,5 +84,32 @@ namespace Fanex.ExternalAccount.Controllers.Report
             
             return this.JsonBase(users, new Newtonsoft.Json.JsonSerializerSettings());
         }
+
+        public bool IsHiddenProduct(ProductElementConfiguration product)
+        {
+            if (product.Hide)
+            {
+                return true;
+            }
+
+            if (product.ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            var groups = product.ShowForGroups.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            var requestURL = Request != null ? Request.UrlReferrer.AbsolutePath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries) : new string[0];
+            var groupName = requestURL.Length == 0 ? CurrentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
+
+            foreach (var group in groups)
+            {
+                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+                        
+            return true;
+        }        
     }
 }

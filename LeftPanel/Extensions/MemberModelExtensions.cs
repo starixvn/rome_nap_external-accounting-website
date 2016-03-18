@@ -12,7 +12,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
-    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.

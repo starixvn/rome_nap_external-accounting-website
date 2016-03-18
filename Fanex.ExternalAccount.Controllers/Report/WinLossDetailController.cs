@@ -15,6 +15,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
+    using Core.Reports;
+    using Core.Reports.WinLossDetail;
     using Fanex.Caching;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;

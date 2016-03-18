@@ -7,7 +7,7 @@
 //   <change who="Andy.Nguyen" date="2015.9.3">Created</change>
 // </history>
 
-namespace Fanex.ExternalAccount.Controllers.Report
+namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
 {
     using System.Configuration;
 
@@ -37,6 +37,15 @@ namespace Fanex.ExternalAccount.Controllers.Report
             get
             {
                 return (bool)base["hide"];
+            }
+        }
+
+        [ConfigurationProperty("showForGroups", IsRequired = false, DefaultValue = "*")]
+        public string ShowForGroups
+        {
+            get
+            {
+                return (string)base["showForGroups"];
             }
         }
     }

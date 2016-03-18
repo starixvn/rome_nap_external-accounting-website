@@ -7,7 +7,7 @@
 //   <change who="Andy.Nguyen" date="2015.9.3">Created</change>
 // </history>
 
-namespace Fanex.ExternalAccount.Controllers.Report
+namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
 {
     using System.Collections.Generic;
     using System.Configuration;

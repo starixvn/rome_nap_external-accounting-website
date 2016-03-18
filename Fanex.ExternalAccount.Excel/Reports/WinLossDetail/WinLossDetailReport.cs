@@ -131,7 +131,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
                 {
                     "Grand Total",
                     data.Sum(p => p.Turnover),
-                    data.Sum(p=>p.NetTurnover),
+                    data.Sum(p => p.NetTurnover),
                     data.Sum(p => p.GrossComm),
                     data.Sum(p => p.MemberWinlost),
                     data.Sum(p => p.PlayerComm),
