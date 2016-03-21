@@ -53,7 +53,7 @@ function LoadGoldDeluxe() {
 
 function LoadAllBet() {
     Fanex.CustomerSetting.Core.BlockUI();
-    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=21&customerId=" + custId + "&system=5&customerLevel=4&groupName=" + parent.$('#selectedGroupName').html());
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=21&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html());
     document.getElementById('allbet').src = url;
     setTimeout(function () {
         Fanex.CustomerSetting.Core.UnBlockUI();

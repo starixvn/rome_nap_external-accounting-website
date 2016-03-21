@@ -36,7 +36,10 @@
             settingContext.SubAccountId = 0;
             settingContext.Language = CultureInfo.CurrentCulture.Name;
             settingContext.Domain = HttpContext.Current.Request.Url.Host;
-            settingContext.IP = CurrentContext.Instance.Ip4Address;         
+            settingContext.IP = CurrentContext.Instance.Ip4Address;
+            settingContext.System = 
+                HttpContext.Current.Request.UrlReferrer.PathAndQuery.ToLower().Contains("customersetting/betsetting") ||
+                HttpContext.Current.Request.UrlReferrer.PathAndQuery.ToLower().Contains("sssss=v") ? (byte)5 : settingContext.System;
 
             return settingContext;
         }
@@ -55,7 +58,8 @@
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
             var productName = GetProductName(permissionContext);
 
-            return isSuper ? false : string.IsNullOrWhiteSpace(productName) ? true : _authenticationService.AllowUpdateByAuthenticationParam(productName);
+            return isSuper && permissionContext.System == 4 ? false : string.IsNullOrWhiteSpace(productName) ? true : 
+                _authenticationService.AllowUpdateByAuthenticationParam(productName);
         }
 
         private bool CheckIsSuperLevel(PermissionContext permissionContext)
@@ -85,26 +89,32 @@
                 var setting = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting");
                 val = setting != null ? setting.AttemptedValue : string.Empty;
                 var pattern = "(\"productId\":)([^\r\n][0-9]+)";
+                
                 Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
-
+            
                 if (regexMatch.Success)
                 {
                     val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);                    
                 }
             }
-
+                        
             var productId = Utils.ToInt32(val);
+            
+            return GetProductFunction(productId, permissionContext.System);
+        }
 
+        private string GetProductFunction(int productId, byte systemId = 4)
+        {
             switch (productId)
             {
                 case 16:
-                    return eFunctions.Sportsbook2Setting;
+                    return systemId == 4 ? eFunctions.Sportsbook2Setting : eFunctions.Sportsbook2Betting;
                 case 19:
-                    return eFunctions.CockfightingSetting;
+                    return systemId == 4 ? eFunctions.CockfightingSetting : eFunctions.CockfightingBetting;
                 case 20:
-                    return eFunctions.CricketSetting;
+                    return systemId == 4 ? eFunctions.CricketSetting : eFunctions.CricketBetting;
                 case 21:
-                    return eFunctions.AllbetSetting;
+                    return systemId == 4 ? eFunctions.AllbetSetting : eFunctions.AllbetBetting;
                 default:
                     break;
             }
