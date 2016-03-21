@@ -50,3 +50,12 @@ function LoadGoldDeluxe() {
     Fanex.CustomerSetting.Core.BlockUI();
     document.location.href = toUrl('GoldDeluxeBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
+
+function LoadAllBet() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=21&customerId=" + custId + "&system=5&customerLevel=4&groupName=" + parent.$('#selectedGroupName').html());
+    document.getElementById('allbet').src = url;
+    setTimeout(function () {
+        Fanex.CustomerSetting.Core.UnBlockUI();
+    }, 1000);
+};
