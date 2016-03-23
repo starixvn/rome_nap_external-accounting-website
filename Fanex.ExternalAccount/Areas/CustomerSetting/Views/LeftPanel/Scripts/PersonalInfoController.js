@@ -4,6 +4,10 @@
     if ($scope.$parent.model) {
         $scope.personalInfo = $scope.$parent.model.personalInfo;
         $scope.model = $scope.$parent.model;
+                
+        if ($scope.personalInfo.isShowProducts.length > 0) {
+            parent.showAllbet = $scope.personalInfo.isShowProducts[0].value;
+        }
 
         $scope.personalInfoHeight = $('#customerInfo').height();
 

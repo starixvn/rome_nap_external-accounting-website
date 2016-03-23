@@ -104,12 +104,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
-                            }, new ObjectInfo
-                            {
-                                Key = "EnableAllbet",
-                                Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
-                                Text = "AllBet",
-                                Tooltip = "Enable AllBet"
                             }
                         },
                 SyncItems = new List<ObjectInfo>
@@ -146,6 +140,23 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Allbet", Value = "Edit AllBet" }
                         }
             };
+
+            if (table3rdDCS.Select("ProductID = 21").Length > 0)
+            {
+                model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
+                model.Setting.EnableItems.Add(new ObjectInfo
+                {
+                    Key = "EnableAllbet",
+                    Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
+                    Text = "AllBet",
+                    Tooltip = "Enable AllBet"
+                });
+            }
+            else
+            {
+                model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = false });
+            }
+
             model.AddBettingLimitForSuper();
 
             return model;

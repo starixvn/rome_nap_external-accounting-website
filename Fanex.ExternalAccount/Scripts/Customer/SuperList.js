@@ -8,6 +8,7 @@
     this.HideCockfighting = hideCockfighting;
     this.HideCricket = hideCricket;
     this.HideAllbet = hideAllbet;
+    showAllbet = !hideAllbet;
 
     this.ResetFlags();
 

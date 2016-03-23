@@ -9,6 +9,8 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Personal information object.
     /// </summary>
@@ -17,6 +19,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public PersonalInfo()
             : base()
         {
+            IsShowProducts = new List<ObjectInfo>();
         }
 
         public ObjectInfo CurrentLevel { get; set; }
@@ -38,5 +41,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public ObjectInfo BackgroundColor { get; set; }
 
         public ObjectInfo IsInternal { get; set; }
+
+        public IList<ObjectInfo> IsShowProducts { get; set; }
     }
 }
