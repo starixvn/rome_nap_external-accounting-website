@@ -23,7 +23,6 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Login;
