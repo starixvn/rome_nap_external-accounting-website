@@ -151,7 +151,7 @@
 
         if (!this.HideAllbet) {
             menuItems.allbet = {
-                name: "Edit Multiple AllBet",
+                name: "Edit Multiple Allbet",
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(4, 3);
@@ -299,7 +299,7 @@
 
         if (!this.HideAllbet) {
             menuItems.allbet = {
-                name: "Edit Multiple AllBet",
+                name: "Edit Multiple Allbet",
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 2);
@@ -697,7 +697,7 @@
                 className: "iconEnableEdit",
                 items: {
                     agentAB: {
-                        name: "Edit Multiple AllBet",
+                        name: "Edit Multiple Allbet",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -705,7 +705,7 @@
                         }
                     },
                     superAB: {
-                        name: "Super Edit Multiple AllBet",
+                        name: "Super Edit Multiple Allbet",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -713,7 +713,7 @@
                         }
                     },
                     masterAB: {
-                        name: "Master Edit Multiple AllBet",
+                        name: "Master Edit Multiple Allbet",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;

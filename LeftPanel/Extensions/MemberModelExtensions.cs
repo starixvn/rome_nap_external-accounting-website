@@ -120,7 +120,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
                             new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
                             new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" },
-                            new ObjectInfo { Key = "Allbet", Value = "Edit AllBet" }
+                            new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" }
                         }
             };
 
@@ -130,8 +130,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 {
                     Key = "EnableAllbet",
                     Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
-                    Text = "AllBet",
-                    Tooltip = "Enable AllBet"
+                    Text = "Allbet",
+                    Tooltip = "Enable Allbet"
                 });
             }
 
