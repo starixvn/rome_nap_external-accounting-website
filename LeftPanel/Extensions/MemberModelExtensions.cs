@@ -12,7 +12,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
-
+    using System.Configuration;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -119,20 +119,45 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
                             new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" },
-                            new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" }
+                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
                         }
             };
 
-            if (table3rdDCS.Select("ProductID = 21").Length > 0)
+            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
             {
-                model.Setting.EnableItems.Add(new ObjectInfo
+                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
+                var isHidden = Utils.ToBoolean(allbetDataRow["isHidden"]);
+                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
+                var isSync = Utils.ToBoolean(allbetDataRow["isSync"]);
+                var isSyncedUpline = Utils.ToBoolean(allbetDataRow["isSyncedUpline"]);
+                var isSyncedDownline = Utils.ToBoolean(allbetDataRow["isSyncedDownline"]);
+                var hasDownline = Utils.ToBoolean(allbetDataRow["HasDownline"]);
+                var roleId = Utils.ToInt32(model.PersonalInfo.RoleId.Value);
+
+                if (!isHidden && isSyncedUpline)
                 {
-                    Key = "EnableAllbet",
-                    Value = !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21")[0]["IsDisabled"]),
-                    Text = "Allbet",
-                    Tooltip = "Enable Allbet"
-                });
+                    model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
+                    model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
+                    if (roleId != 4 && isSync && (isSyncedDownline || !hasDownline))
+                    {
+                        // Search non-super.
+                        model.Setting.EnableItems.Add(new ObjectInfo
+                        {
+                            Key = "EnableAllbet",
+                            Value = !isDisabled,
+                            Text = "Allbet",
+                            Tooltip = "Enable Allbet"
+                        });
+                    }
+                }
+                else
+                {
+                    model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = false });
+                }
+            }
+            else
+            {
+                model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = false });
             }
 
             return model;
@@ -153,7 +178,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool hideSportsbook2 = product.HideSportsbook2;
             bool hideCockfighting = product.HideCockfighting;
             bool hideCricket = product.HideCricket;
-            bool hideAllbet = product.HideAllbet;
 
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
@@ -173,7 +197,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                        (o.Key.ToString() == "Sportsbook2" && !hideSportsbook2) ||
                        (o.Key.ToString() == "Cockfighting" && !hideCockfighting) ||
                        (o.Key.ToString() == "Cricket" && !hideCricket) ||
-                       (o.Key.ToString() == "Allbet" && !hideAllbet)).ToList();
+                       (o.Key.ToString() == "Allbet")).ToList();
 
             model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
             model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
