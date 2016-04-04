@@ -41,7 +41,10 @@
         <li id="tab12"><a href="#tabs-12">Sportsbook 2</a></li>
         <li id="tab13"><a href="#tabs-13">Cockfighting</a></li>
         <li id="tab14"><a href="#tabs-14">Cricket</a></li>
-        <li id="tab15"><a href="#tabs-15">Allbet</a></li>
+        @if(!HideAllbet)
+        {
+            <li id="tab15"><a href="#tabs-15">Allbet</a></li>
+        }
     </ul>
     <div id="tabs-1" class="divTab">
     </div>

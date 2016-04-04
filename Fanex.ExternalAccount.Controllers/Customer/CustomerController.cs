@@ -437,7 +437,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
             ViewBag.HideCockfighting = Converter.ToBool(result.Rows[0]["HideCockfighting"]);
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]);
-            ViewBag.HideAllbet = Converter.ToBool(result.Rows[0]["HideAllBet"]);
+            ViewBag.HideAllbet = Utils.ToBoolean(result.Rows[0]["HideAllBet"]) || !Utils.ToBoolean(result.Rows[0]["SyncedAllBetUpline"]);
 
             return this.PartialViewBase();
         }
