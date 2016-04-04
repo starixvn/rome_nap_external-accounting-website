@@ -7,12 +7,13 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
-    using System.Configuration;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
