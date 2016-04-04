@@ -99,7 +99,7 @@ namespace Fanex.ExternalAccount.Core.Reports
 
             var groups = product.ShowForGroups.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             var requestURL = Request != null ? Request.UrlReferrer.AbsolutePath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries) : new string[0];
-            var groupName = requestURL.Length == 0 ? CurrentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
+            var groupName = requestURL.Length == 0 || !CurrentSession.IsInternalAdmin ? CurrentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
 
             foreach (var group in groups)
             {
