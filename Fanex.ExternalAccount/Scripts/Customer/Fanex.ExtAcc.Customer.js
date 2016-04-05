@@ -108,14 +108,14 @@
                             }, 1000);
                         }
                     } catch (e) {
-                        location.href = resolveClientUrl('Account/Login');
+                        top.location.href = resolveClientUrl('Account/Login');
                     }
                 }
                 else if (data == 2) {
-                    location.href = resolveClientUrl('Account/Offline');
+                    top.location.href = resolveClientUrl('Account/Offline');
                 }
                 else if (data == 3) {
-                    location.href = resolveClientUrl('Shared/Error');
+                    top.location.href = resolveClientUrl('Shared/Error');
                 }
 
                 Fanex.ExtAcc.Account.RecheckinXHR = null;

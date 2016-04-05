@@ -139,7 +139,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 {
                     model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
                     model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
-                    if (roleId != 4 && isSync && (isSyncedDownline || !hasDownline))
+                    if (isSync && (isSyncedDownline || !hasDownline))
                     {
                         // Search non-super.
                         model.Setting.EnableItems.Add(new ObjectInfo
