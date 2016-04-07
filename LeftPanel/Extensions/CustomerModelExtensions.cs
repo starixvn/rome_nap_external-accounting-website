@@ -507,11 +507,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Cricket");
             }
 
-            if (product.UplineStatuses.HideAllbet || !product.UplineStatuses.SyncAllbet)
+            if ((product.UplineStatuses.HideAllbet || !product.UplineStatuses.SyncAllbet) && product.RoleId < 4)
             {
                 model.RemoveEnableProduct("EnableAllbet");
                 model.RemoveProduct("Allbet");
                 model.PersonalInfo.IsShowProducts.ElementAt(0).Value = false;
+            }
+            else if (!product.HideAllbet && !product.SyncAllbet) // Show but not sync => don't show enable, show edit setting link only
+            {
+                model.RemoveEnableProduct("EnableAllbet");
             }
 
             return model;
@@ -851,6 +855,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
+            product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllbet");
             product.DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
