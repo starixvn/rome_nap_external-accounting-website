@@ -429,6 +429,8 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
         CustomCellRender: function (cell) {
             var custId = cell.Value.custid;
             var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + ")";
+            var hideAllbetSettingLink = !showAllbet || (cell.Value.HideAllBet || !cell.Value.SyncedAllBetUpline);
+            Fanex.ExtAcc.Customer.HideAllbet = hideAllbetSettingLink;
             Fanex.ExtAcc.Customer.masterDisableP2P = cell.Value.DisableP2P;
             var len = cell.Value.username.length;
             var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
