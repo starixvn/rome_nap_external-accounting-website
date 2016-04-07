@@ -449,6 +449,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel item.</param>
         /// <param name="product">ProductStatuses item.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel RemoveEnableProducts(this CustomerModel model, ProductStatuses product)
         {
             if (!product.SyncBingo ||
@@ -506,10 +507,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Cricket");
             }
 
-            if (product.HideAllbet)
+            if (product.UplineStatuses.HideAllbet || !product.UplineStatuses.SyncAllbet)
             {
                 model.RemoveEnableProduct("EnableAllbet");
                 model.RemoveProduct("Allbet");
+                model.PersonalInfo.IsShowProducts.ElementAt(0).Value = false;
             }
 
             return model;
@@ -521,6 +523,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="model">CustomerModel item.</param>
         /// <param name="product">ProductStatuses item.</param>
         /// <returns>CustomerModel object.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel RemoveProducts(this CustomerModel model, ProductStatuses product)
         {
             if (product.RoleId != 1 && product.DisableTransfer)
@@ -844,11 +847,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
             product.HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
-            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
-            
-
+            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || 
+                ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
             product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
+            product.DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet");
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -868,7 +871,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
-
                 product.UplineStatuses.DisableColossusBets = upperInfo.Rows[0].ToBoolean("DisableColossusBet");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");
@@ -876,6 +878,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableHRFixedOdds = upperInfo.Rows[0].ToBoolean("disableHRFixedOdds");
                 product.UplineStatuses.DisableESports = upperInfo.Rows[0].ToBoolean("DisableESports");
                 product.UplineStatuses.DisableAllbet = upperInfo.Rows[0].ToBoolean("DisableAllbet");
+                product.UplineStatuses.HideAllbet = upperInfo.Rows[0].ToBoolean("HideAllbet");
+                product.UplineStatuses.SyncAllbet = upperInfo.Rows[0].ToBoolean("SyncedAllbet");
             }
 
             return product;

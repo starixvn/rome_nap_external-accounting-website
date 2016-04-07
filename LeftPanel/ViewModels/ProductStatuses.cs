@@ -207,5 +207,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool SyncAllbet
+        {
+            get;
+            set;
+        }
     }
 }

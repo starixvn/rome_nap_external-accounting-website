@@ -140,41 +140,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
             if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
             {
                 var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
-                var isHidden = Utils.ToBoolean(allbetDataRow["isHidden"]);
                 var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
-                var isSync = Utils.ToBoolean(allbetDataRow["isSync"]);
-                var isSyncedUpline = Utils.ToBoolean(allbetDataRow["isSyncedUpline"]);
-                var isSyncedDownline = Utils.ToBoolean(allbetDataRow["isSyncedDownline"]);
-                var hasDownline = Utils.ToBoolean(allbetDataRow["HasDownline"]);
-                var roleId = Utils.ToInt32(model.PersonalInfo.RoleId.Value);
-
-                if (!isHidden && isSyncedUpline)
+                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
+                model.Setting.EnableItems.Add(new ObjectInfo
                 {
-                    model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
-                    model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
-                    if (isSync && (isSyncedDownline || !hasDownline))
-                    {
-                        // Search non-super.
-                        model.Setting.EnableItems.Add(new ObjectInfo
-                        {
-                            Key = "EnableAllbet",
-                            Value = !isDisabled,
-                            Text = "Allbet",
-                            Tooltip = "Enable Allbet"
-                        });
-                    }
-                }
-                else
-                {
-                    model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = false });
-                }
-            }
-            else
-            {
-                model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = false });
+                    Key = "EnableAllbet",
+                    Value = !isDisabled,
+                    Text = "Allbet",
+                    Tooltip = "Enable Allbet"
+                });
             }
 
             return model;
