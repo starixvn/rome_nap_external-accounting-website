@@ -7,6 +7,9 @@
                 
         if ($scope.personalInfo.isShowProducts.length > 0) {
             parent.showAllbet = $scope.personalInfo.isShowProducts[0].value;
+            
+            if ($scope.personalInfo.roleId.value == 4)
+                parent.showAllbetBetting = $scope.personalInfo.isShowProducts[1].value;
         }
 
         $scope.personalInfoHeight = $('#customerInfo').height();

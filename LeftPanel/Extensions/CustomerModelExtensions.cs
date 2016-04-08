@@ -373,6 +373,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+            model.GetSuperMasterPtsOnMember(product);
             model.RemoveEnableProducts(product);
 
             if (product.RoleId == 4)
@@ -383,8 +384,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             model.UplineStatuses(product);
-            model.RemoveProducts(product);
-            model.GetSuperMasterPtsOnMember(product);
+            model.RemoveProducts(product);            
 
             return model;
         }
@@ -517,6 +517,29 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("EnableAllbet");
+                if (product.RoleId == 4)
+                {
+                    model.PersonalInfo.IsShowProducts.ElementAt(1).Value = false;
+                }
+
+                if(product.RoleId == 1)
+                {
+                    var index = -1;
+                    for (int i = 0; i < model.Setting.SuperPts.Count; i++)
+                    {
+                        if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Contains("Allbet"))
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index != -1)
+                    {
+                        model.Setting.SuperPts.RemoveAt(index);
+                        model.Setting.MasterPts.RemoveAt(index);
+                    }
+                }
             }
 
             return model;

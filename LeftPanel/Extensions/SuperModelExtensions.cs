@@ -142,6 +142,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             };
 
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBetBetting", Value = true });
             if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
             {
                 var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
