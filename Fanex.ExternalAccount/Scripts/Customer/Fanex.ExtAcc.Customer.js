@@ -64,6 +64,8 @@
     Usernames: '',
     CustIds: '',
     LiveCasinoStatuses: '',
+    AllbetSyncList: [],
+    AllbetSyncIdList: [],
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
     MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
@@ -439,11 +441,21 @@
             $('#editMult').attr('style', 'cursor: pointer !important');
             $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
             $('#editMult').contextMenu(true);
+
+            if ($(div).attr('sync-allbet') == 'true' && !Fanex.ExtAcc.Customer.AllbetSyncIdList.contains($(div).attr('id'))) {
+                Fanex.ExtAcc.Customer.AllbetSyncIdList.push($(div).attr('id'));
+                Fanex.ExtAcc.Customer.AllbetSyncList.push($(div).attr('name'));
+            }
         } else {
             div.className = 'menuInactive';
             $('#editMult').attr('style', 'cursor: default !important');
             $('#editMult').attr('onclick', '');
             $('#editMult').contextMenu(false);
+
+            if ($(div).attr('sync-allbet') == 'true') {
+                Fanex.ExtAcc.Customer.AllbetSyncIdList.pop($(div).attr('id'));
+                Fanex.ExtAcc.Customer.AllbetSyncList.pop($(div).attr('name'));
+            }
         }
 
         var divs = $('div');
@@ -481,6 +493,15 @@
         for (var i = 0; i < divs.length; i++) {
             if (divs[i].id && (divs[i].className == 'menuActive' || divs[i].className == 'menuInactive')) {
                 divs[i].className = className;
+
+                if ($(divs[i]).attr('sync-allbet') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.AllbetSyncIdList.contains($(divs[i]).attr('id'))) {
+                    Fanex.ExtAcc.Customer.AllbetSyncIdList.push($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.AllbetSyncList.push($(divs[i]).attr('name'));
+                }
+                else if ($(divs[i]).attr('sync-allbet') == 'true' && divs[i].className == 'menuInactive') {
+                    Fanex.ExtAcc.Customer.AllbetSyncIdList.pop($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.AllbetSyncList.pop($(divs[i]).attr('name'));
+                }
             }
         }
     },

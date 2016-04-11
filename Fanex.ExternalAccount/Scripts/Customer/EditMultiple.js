@@ -1128,8 +1128,8 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
         document.getElementById('productId').value = 21;
         document.getElementById('customerLevel').value = targetRoleId;
         document.getElementById('isMultiple').value = true;
-        document.getElementById('customerIds').value = CustIds;
-        document.getElementById('customerNames').value = Usernames;
+        document.getElementById('customerIds').value = (uplineRoleId - this.CurrentLevel != 1 ? this.AllbetSyncIdList.join(', ') : CustIds);
+        document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.AllbetSyncList.join(', ') : Usernames);
         document.getElementById('uplineLevel').value = "";
 
 

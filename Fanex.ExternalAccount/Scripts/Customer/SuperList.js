@@ -270,7 +270,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         Name: 'Edit',
         Width: 30,
         CustomCellRender: function (cell) {
-            var hideAllbetSettingLink = !showAllbet;
+            var hideAllbetSettingLink = !showAllbet || cell.Value.HideAllBet;
             Fanex.ExtAcc.Customer.HideAllbet = hideAllbetSettingLink;
             var showABBetting = cell.Value.SyncedAllBet;
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ", " + (cell.Value.HideCockFighting) + ", " + cell.Value.HideColossusBet + ", " + (cell.Value.HideCricket) + ", " + (hideAllbetSettingLink) + ", " + showABBetting + ")";

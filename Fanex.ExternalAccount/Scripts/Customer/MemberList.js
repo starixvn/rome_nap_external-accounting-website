@@ -368,7 +368,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (recommend, allow, custId, dataSo
             return '<div id="editMult" class="editMult"></div>';
         },
         CustomCellRender: function (cell) {
-            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
+            return '<div sync-allbet="' + cell.Value.SyncedAllBet + '" onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive" name="' + cell.Value.username + '"></div>';
         }
     }, {
         HeaderText: 'Username',
