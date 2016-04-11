@@ -341,7 +341,8 @@ Fanex.ExtAcc.Customer.GetMemberList = function (recommend, allow, custId, dataSo
     this.HideSportsbook2 = isHideSportsbook2;
     this.HideCockfighting = isHideCockfighting;
     this.HideCricket = isHideCricket;
-
+    this.AllbetSyncIdList = [];
+    this.AllbetSyncList = [];
     var url = resolveClientUrl('Customer/MemberListPost');
 
     var data = this.GetParams();
