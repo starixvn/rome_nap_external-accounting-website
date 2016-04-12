@@ -7,6 +7,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
@@ -66,6 +67,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel AgentSettings(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
+            var table3rdDCS = ds.Tables[4];
             model.Setting = new Setting
             {
                 EnableItems = new List<ObjectInfo>
@@ -137,6 +139,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
                         }
             };
+
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
+            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
+            {
+                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
+                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
+                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
+                model.Setting.EnableItems.Add(new ObjectInfo
+                {
+                    Key = "EnableAllbet",
+                    Value = !isDisabled,
+                    Text = "Allbet",
+                    Tooltip = "Enable Allbet"
+                });
+            }
 
             return model;
         }

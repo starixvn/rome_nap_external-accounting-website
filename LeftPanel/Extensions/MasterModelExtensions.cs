@@ -7,6 +7,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
@@ -28,7 +29,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
             var tableCash = ds.Tables[2];
-
+            var table3rdDCS = ds.Tables[4];
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
                 Value = Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
@@ -52,7 +53,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
                         new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" }
                     };
-            model.MasterSettings(tableCustomer, tableCash);
+            model.MasterSettings(table3rdDCS, tableCustomer, tableCash);
 
             return model;
         }
@@ -65,7 +66,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="tableCash">Cash info table.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel MasterSettings(this CustomerModel model, DataTable tableCustomer, DataTable tableCash = null)
+        private static CustomerModel MasterSettings(this CustomerModel model, DataTable table3rdDCS, DataTable tableCustomer, DataTable tableCash = null)
         {
             model.Setting = new Setting
             {
@@ -87,21 +88,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
                             },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
+                            new ObjectInfo
+                            {
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds"
                             },
                             new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                            new ObjectInfo
+                            {
+                                Key = "EnableGoldDeluxe",
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]),
                                 Text = "Enable Gold Deluxe"
                             },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                            new ObjectInfo
+                            {
+                                Key = "EnableColossusBets",
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]),
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
                             }
@@ -139,6 +140,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
                         }
             };
+
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
+            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
+            {
+                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
+                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
+                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
+                model.Setting.EnableItems.Add(new ObjectInfo
+                {
+                    Key = "EnableAllbet",
+                    Value = !isDisabled,
+                    Text = "Allbet",
+                    Tooltip = "Enable Allbet"
+                });
+            }
 
             return model;
         }

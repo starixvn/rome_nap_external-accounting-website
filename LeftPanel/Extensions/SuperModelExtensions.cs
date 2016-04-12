@@ -7,6 +7,7 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -30,6 +31,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
             var tableCash = ds.Tables[2];
+            var table3rdDCS = ds.Tables[4];
             model.BalanceInfo.Balances.Add(
                 new ObjectInfo
                 {
@@ -53,7 +55,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" }
             };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
-            model.SuperSettings(tableCustomer);
+            model.SuperSettings(tableCustomer, table3rdDCS);
 
             return model;
         }
@@ -65,7 +67,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="tableCustomer">Customer data.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer)
+        private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer, DataTable table3rdDCS)
         {
             model.Setting = new Setting
             {
@@ -138,6 +140,23 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
                         }
             };
+
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBetBetting", Value = true });
+            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
+            {
+                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
+                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
+                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
+                model.Setting.EnableItems.Add(new ObjectInfo
+                {
+                    Key = "EnableAllbet",
+                    Value = !isDisabled,
+                    Text = "Allbet",
+                    Tooltip = "Enable Allbet"
+                });
+            }
+
             model.AddBettingLimitForSuper();
 
             return model;
@@ -158,7 +177,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
-                CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ? true : false;
+                CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ||
+                CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ? true : false;
 
             if (showBetSetting)
             {

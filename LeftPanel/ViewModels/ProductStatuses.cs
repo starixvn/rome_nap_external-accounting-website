@@ -195,5 +195,28 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+
+        public bool DisableAllbet
+        {
+            get;
+            set;
+        }
+
+        public bool HideAllbet
+        {
+            get;
+            set;
+        }
+
+        public bool SyncAllbet
+        {
+            get;
+            set;
+        }
+
+        public bool SyncAllbetDownlines
+        {
+            get; set;
+        }
     }
 }

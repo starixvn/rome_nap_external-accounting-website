@@ -34,7 +34,7 @@
     <div>
     <table class="tableInfo" cellpadding="0" cellspacing="0" border="0" data-ng-repeat="group in sortedModel">
         <tr data-ng-hide="sortedModel.length == 1"><td colspan="2" class="bold bgHeader">{{group.sportTypeName}}</td></tr>
-        <tr data-ng-repeat="item in group" data-ng-init="item.isDirty = item.betTypeId == 0 || item.betTypeId == -1 || !context.enableUplines; item.disable = false; item.enable = !item.disabled; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.disabledDownlines; item.preValDownline = item.enableDownline" data-ng-hide="item.hide" >
+        <tr data-ng-repeat="item in group" data-ng-init="item.isDirty = item.betTypeId == 0 || item.betTypeId == -1 || !context.enableUplines; item.disable = false; item.enable = !item.disabled; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.disabledDownlines; item.preValDownline = item.enableDownline" data-ng-hide="(item.hide && context.product != 21) || (!item.synced && context.product == 21)" >
             <td style="border-bottom: none !important">
                 <label><input id="{{(item.hide) + '_' + item.betTypeId}}" name="betTypes0" type="checkbox" data-ng-click="item.disable = !item.enable; item.isDisabledDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.disabledUplines || item.betTypeId == 0 || model.readOnly || (item.betTypeId == -1 && !context.enableUplines)" /><span>{{item.enableText}}</span></label>
             </td>

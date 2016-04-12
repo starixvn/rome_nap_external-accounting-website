@@ -673,6 +673,17 @@
 
     };
 
+    $scope.EnableAllbet = function (enable, id) {
+        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
+            '&userid=' + parent.userId + '&product=21&productid=allbet&level=' + $scope.model.personalInfo.roleId.value +
+            '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update Allbet Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+            document.getElementById(id).checked = enable;
+        }, 1, null);
+    };
+
     $scope.ViewSubTab = function (id) {
         switch (id) {
             case 'sub-edit':
@@ -926,6 +937,10 @@
         $scope.RenderSupeOnMemberDCS(20);
     };
 
+    $scope.SuperAllbet = function () {
+        $scope.RenderSupeOnMemberDCS(21);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -941,6 +956,10 @@
 
     $scope.MasterCricket = function () {
         $scope.RenderMasterOnMemberDCS(20);
+    };
+
+    $scope.MasterAllbet = function () {
+        $scope.RenderMasterOnMemberDCS(21);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

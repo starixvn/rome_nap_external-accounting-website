@@ -73,6 +73,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.0-beta4\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.2\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
@@ -244,6 +248,10 @@
     <Reference Include="RemotingRef">
       <HintPath>..\Dependencies\RemotingRef.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
@@ -289,9 +297,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Json">
       <HintPath>..\Dependencies\System.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Json">
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Client40.dll</HintPath>
     </Reference>
     <Reference Include="System.Json">
       <HintPath>..\Dependencies\RestSharp.dll</HintPath>

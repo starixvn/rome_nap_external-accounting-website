@@ -187,16 +187,12 @@
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\VirtualSportsController.cs" />
-    <Compile Include="Report\ProductCollectionConfiguration.cs" />
-    <Compile Include="Report\ProductElementConfiguration.cs" />
-    <Compile Include="Report\ProductsConfiguration.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />
     <Compile Include="Home\HomeController.cs" />
     <Compile Include="UserControl\MenuController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report\FilterController.cs" />
     <Compile Include="Report\WinLossDetailController.cs" />
     <Compile Include="Report\DailyWinlossController.cs" />
     <Compile Include="Shared\SharedController.cs" />
