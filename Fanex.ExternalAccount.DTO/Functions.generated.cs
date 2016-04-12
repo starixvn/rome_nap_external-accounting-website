@@ -64,4 +64,6 @@ public static class eFunctions
     public const string CricketBetting = "CricketBetting";
     public const string CockfightingBetting = "CockfightingBetting";
     public const string Sportsbook2Betting = "Sportsbook2Betting";
+    public const string VoidbridgeBetting = "VoidbridgeBetting";
+    public const string VoidbridgeSetting = "VoidbridgeSetting";
 }

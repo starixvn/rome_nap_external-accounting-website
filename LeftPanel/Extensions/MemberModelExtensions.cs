@@ -124,20 +124,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
-            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
-            {                
-                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
-                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
-                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
-                model.Setting.EnableItems.Add(new ObjectInfo
-                {
-                    Key = "EnableAllbet",
-                    Value = !isDisabled,
-                    Text = "Allbet",
-                    Tooltip = "Enable Allbet"
-                });
-            }
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet");
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Voidbridge");
 
             return model;
         }
@@ -151,98 +139,58 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {
-            bool syncCasino = product.SyncCasino, syncBingo = product.SyncBingo, syncLiveCasino = product.SyncLiveCasino, hideVS = product.HideVirtualSports;
-            bool hideKeno = product.HideKeno;
-            bool hideGoldDeluxe = product.HideGoldDeluxe;
-            bool hideSportsbook2 = product.HideSportsbook2;
-            bool hideCockfighting = product.HideCockfighting;
-            bool hideCricket = product.HideCricket;
-
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
-            model.Setting.Details.ForEach(o =>
+            
+            foreach (var item in model.Setting.Details)            
             {
-                model.Setting.MasterPts.Add(new ObjectInfo { Key = o.Key, Value = o.Value });
-            });
-            model.Setting.MasterPts =
-                   model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT" ||
-                       (o.Key.ToString() == "Casino" && syncCasino) ||
-                       (o.Key.ToString() == "Bingo" && syncBingo) ||
-                       (o.Key.ToString() == "LiveCasino" && syncLiveCasino) ||
-                       (o.Key.ToString() == "VirtualSports" && !hideVS) ||
-                       o.Key.ToString() == "Racing" ||
-                       (o.Key.ToString() == "Keno" && !hideKeno) ||
-                       (o.Key.ToString() == "GoldDeluxe" && !hideGoldDeluxe) ||
-                       (o.Key.ToString() == "Sportsbook2" && !hideSportsbook2) ||
-                       (o.Key.ToString() == "Cockfighting" && !hideCockfighting) ||
-                       (o.Key.ToString() == "Cricket" && !hideCricket) ||
-                       (o.Key.ToString() == "Allbet")).ToList();
-
-            model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });
-            model.Setting.MasterPts.Where(o => o.Key.ToString() == "PT").FirstOrDefault().Value = "Sportsbook";
-            model.Setting.MasterPts.Where(o => o.Key.ToString() == "Racing").FirstOrDefault().Value = "Racing";
-            var casino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Casino");
-            var bingo = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Bingo");
-            var liveCasino = model.Setting.MasterPts.Where(o => o.Key.ToString() == "LiveCasino");
-            var virtualSports = model.Setting.MasterPts.Where(o => o.Key.ToString() == "VirtualSports");
-            var keno = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Keno");
-            var goldDeluxe = model.Setting.MasterPts.Where(o => o.Key.ToString() == "GoldDeluxe");
-            var sportsbook2 = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Sportsbook2");
-            var cockFighting = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Cockfighting");
-            var cricket = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Cricket");
-            var allbet = model.Setting.MasterPts.Where(o => o.Key.ToString() == "Allbet");
-
-            if (casino.Count() > 0)
-            {
-                casino.FirstOrDefault().Value = "Casino";
+                if (!IgnoreOrExcludeProducts().Contains(item.Key.ToString()))
+                {
+                    model.Setting.MasterPts.Add(new ObjectInfo { Key = item.Key, Value = item.Value });
+                }
             }
 
-            if (bingo.Count() > 0)
-            {
-                bingo.FirstOrDefault().Value = "Bingo";
-            }
+            model.Setting.MasterPts.Add(new ObjectInfo { Key = "SBPT", Value = "Sportsbook's PT" });                
+                    
+            model.AddDetailProductForCrossLevel("PT", "Sportsbook");
+            model.AddDetailProductForCrossLevel("Racing", "Racing");
 
-            if (liveCasino.Count() > 0)
-            {
-                liveCasino.FirstOrDefault().Value = "Live Casino";
-            }
+            model.AddDetailProductForCrossLevel("Casino", "Casino");
+            model.AddDetailProductForCrossLevel("Bingo", "Bingo");
+            model.AddDetailProductForCrossLevel("LiveCasino", "Live Casino");
+            model.AddDetailProductForCrossLevel("VirtualSports", "Virtual Sports");
+            model.AddDetailProductForCrossLevel("Keno", "Keno");
+            model.AddDetailProductForCrossLevel("GoldDeluxe", "Gold Deluxe");
+            model.AddDetailProductForCrossLevel("Sportsbook2", "Sportsbook 2");
+            model.AddDetailProductForCrossLevel("Cockfighting", "Cockfighting");
+            model.AddDetailProductForCrossLevel("Cricket", "Cricket");
+            model.AddDetailProductForCrossLevel("Allbet", "Allbet");
+            model.AddDetailProductForCrossLevel("Voidbridge", "Voidbridge");
 
-            if (virtualSports.Count() > 0)
-            {
-                virtualSports.FirstOrDefault().Value = "Virtual Sports";
-            }
+            return model;
+        }
 
-            if (keno.Count() > 0)
-            {
-                keno.FirstOrDefault().Value = "Keno";
-            }
+        private static IList<string> IgnoreOrExcludeProducts()
+        {
+            var items = new List<string>();
+            items.Add("Info");
+            items.Add("Poker");
+            items.Add("ColossusBets");
+            items.Add("Bingo");
 
-            if (goldDeluxe.Count() > 0)
-            {
-                goldDeluxe.FirstOrDefault().Value = "Gold Deluxe";
-            }
+            return items;
+        }
 
-            if (sportsbook2.Count() > 0)
+        private static CustomerModel AddDetailProductForCrossLevel(this CustomerModel model, string productKey, string productName)
+        {
+            var product = model.Setting.MasterPts.Where(p => p.Key.ToString().Equals(productKey));
+            if (product.Count() > 0)
             {
-                sportsbook2.FirstOrDefault().Value = "Sportsbook 2";
-            }
-
-            if (cockFighting.Count() > 0)
-            {
-                cockFighting.FirstOrDefault().Value = "Cockfighting";
-            }
-
-            if (cricket.Count() > 0)
-            {
-                cricket.FirstOrDefault().Value = "Cricket";
-            }
-
-            if (allbet.Count() > 0)
-            {
-                allbet.FirstOrDefault().Value = "Allbet";
+                product.FirstOrDefault().Value = productName;
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;
+
             return model;
         }
     }

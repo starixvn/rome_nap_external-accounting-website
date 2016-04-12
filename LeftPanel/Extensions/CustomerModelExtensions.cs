@@ -522,7 +522,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     model.PersonalInfo.IsShowProducts.ElementAt(1).Value = false;
                 }
 
-                if(product.RoleId == 1)
+                if (product.RoleId == 1)
                 {
                     var index = -1;
                     for (int i = 0; i < model.Setting.SuperPts.Count; i++)
@@ -913,6 +913,27 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             return product;
-        }        
+        }
+
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName)
+        {
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName, Value = true });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName + "Betting", Value = true });
+            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName]))
+            {
+                var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
+                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
+                model.Setting.Details.Add(new ObjectInfo { Key = productName, Value = "Edit " + productName });
+                model.Setting.EnableItems.Add(new ObjectInfo
+                {
+                    Key = "Enable" + productName,
+                    Value = !isDisabled,
+                    Text = productName,
+                    Tooltip = "Enable " + productName
+                });
+            }
+
+            return model;
+        }
     }
 }

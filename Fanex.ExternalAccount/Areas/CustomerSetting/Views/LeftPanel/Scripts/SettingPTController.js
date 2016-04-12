@@ -403,6 +403,10 @@
         $scope.RenderDCS(21);
     };
     
+    $scope.Voidbridge = function () {
+        $scope.RenderDCS(22);
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

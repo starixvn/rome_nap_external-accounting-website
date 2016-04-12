@@ -140,20 +140,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
-            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
-            {
-                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
-                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
-                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
-                model.Setting.EnableItems.Add(new ObjectInfo
-                {
-                    Key = "EnableAllbet",
-                    Value = !isDisabled,
-                    Text = "Allbet",
-                    Tooltip = "Enable Allbet"
-                });
-            }
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet");
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Voidbridge");
 
             return model;
         }
