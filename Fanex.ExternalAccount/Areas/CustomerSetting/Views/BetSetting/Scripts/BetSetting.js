@@ -59,3 +59,12 @@ function LoadAllBet() {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);
 };
+
+function LoadVoidbridge() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=22&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html());
+    document.getElementById('voidbridge').src = url;
+    setTimeout(function () {
+        Fanex.CustomerSetting.Core.UnBlockUI();
+    }, 1000);
+};

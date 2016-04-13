@@ -1,4 +1,4 @@
-﻿Fanex.ExtAcc.Customer.ShowEditAgent = function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe, isHideColossusBets, disableColossusBets, isHideSportsbook2, disableSportsbook2, isHideCockfighting, disableCockfighting, isHideCricket, disableCricket, isHideAllbet, disableAllbet) {
+﻿Fanex.ExtAcc.Customer.ShowEditAgent = function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, masterSyncCasino, masterSyncBingo, masterSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe, isHideColossusBets, disableColossusBets, isHideSportsbook2, disableSportsbook2, isHideCockfighting, disableCockfighting, isHideCricket, disableCricket, isHideAllbet, disableAllbet, isHideVoidbridge, disableVoidbridge) {
     this.TransferCondition = transferCondition;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
@@ -10,8 +10,10 @@
     this.HideCockfighting = showCockfighting == 0 || isHideCockfighting;
     this.HideCricket = showCricket == 0 || isHideCricket;
     this.HideAllbet = isHideAllbet;
+    this.HideVoidbridge = isHideVoidbridge;
 
     showAllbet = !this.HideAllbet;
+    showVoidbridge = !this.HideVoidbridge;
 
     this.ResetFlags();
 
@@ -325,6 +327,19 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleAllbet(custId, 3, 2);
+            }
+        };
+    }
+
+    if (!this.HideAllbet) {
+        itemsAgent.voidbridge = {
+            name: "Voidbridge",
+            className: disableVoidbridge == true ? "iconDisableEdit" : "iconEnableEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge(custId, 3, 2);
             }
         };
     }
