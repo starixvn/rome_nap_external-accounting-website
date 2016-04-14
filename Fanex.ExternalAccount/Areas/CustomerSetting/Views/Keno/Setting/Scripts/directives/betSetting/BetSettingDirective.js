@@ -51,6 +51,10 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                     });
 
                     ctrl.$parsers.unshift(function (viewValue) {
+                        if (viewValue == "") {
+                            viewValue = "0";
+                        }
+
                         var plainNumber = viewValue.replace(/[^\d|\-+|\.+]/g, '');
                         ctrl.$modelValue = eval(plainNumber);
                         element.val($scope.formatNumber(plainNumber));
