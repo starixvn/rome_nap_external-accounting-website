@@ -80,15 +80,12 @@
 
 .btn {
     background: url(Images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
-    color: #fff;
     cursor: pointer;
     font-family: Verdana,Arial,sans-serif;
     font-size: 12px;
     width: 80px;
     height: 30px;
-    padding: 2px;
     margin-top: 5px;
-    margin-left: 5px;
 }
 
 .btn--update {
@@ -153,4 +150,17 @@
 
 .settingtype8 .block__cell--no-border-bottom {
     border-bottom: none;
+}
+
+.settingtype8 .modal__content {
+    max-height: 300px;
+}
+
+.system-5 .settingtype8 .modal {
+    margin-top: 50px;
+    width: 60%;
+}
+
+.system-5 .settingtype8 .modal__content {
+    max-height: 200px;
 }

@@ -218,5 +218,28 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         {
             get; set;
         }
+
+        public bool DisableVoidbridge
+        {
+            get;
+            set;
+        }
+
+        public bool HideVoidbridge
+        {
+            get;
+            set;
+        }
+
+        public bool SyncVoidbridge
+        {
+            get;
+            set;
+        }
+
+        public bool SyncVoidbridgeDownlines
+        {
+            get; set;
+        }
     }
 }

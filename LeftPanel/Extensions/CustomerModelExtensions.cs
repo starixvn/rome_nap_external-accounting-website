@@ -507,19 +507,53 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("Cricket");
             }
 
-            if ((product.UplineStatuses.HideAllbet || !product.UplineStatuses.SyncAllbet) && product.RoleId < 4)
+            model.RemoveEnableAndEditProductDCS(
+                product, 
+                0, 
+                product.UplineStatuses.HideAllbet, 
+                product.UplineStatuses.SyncAllbet, 
+                product.HideAllbet, 
+                product.SyncAllbet, 
+                product.SyncAllbetDownlines, 
+                "Allbet");
+
+            model.RemoveEnableAndEditProductDCS(
+                product,
+                2,
+                product.UplineStatuses.HideVoidbridge,
+                product.UplineStatuses.SyncVoidbridge,
+                product.HideVoidbridge,
+                product.SyncVoidbridge,
+                product.SyncVoidbridgeDownlines,
+                "Voidbridge");
+
+            return model;
+        }
+
+        private static CustomerModel RemoveEnableAndEditProductDCS(
+            this CustomerModel model, 
+            ProductStatuses product, 
+            int productIndex,
+            bool hideUpline,
+            bool syncUpline,
+            bool hide,
+            bool sync,
+            bool syncDownline,
+            string productName)
+        {
+            if ((hideUpline || !syncUpline) && product.RoleId < 4)
             {
-                model.RemoveEnableProduct("EnableAllbet");
-                model.RemoveProduct("Allbet");
-                model.PersonalInfo.IsShowProducts.ElementAt(0).Value = false;
+                model.RemoveEnableProduct("Enable" + productName);
+                model.RemoveProduct(productName);
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
             }
-            else if ((!product.HideAllbet && !product.SyncAllbet) || !product.SyncAllbetDownlines)                 
+            else if ((!hide && !sync) || !syncDownline)
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
-                model.RemoveEnableProduct("EnableAllbet");
+                model.RemoveEnableProduct("Enable" + productName);
                 if (product.RoleId == 4)
                 {
-                    model.PersonalInfo.IsShowProducts.ElementAt(1).Value = false;
+                    model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;
                 }
 
                 if (product.RoleId == 1)
@@ -527,7 +561,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     var index = -1;
                     for (int i = 0; i < model.Setting.SuperPts.Count; i++)
                     {
-                        if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Contains("Allbet"))
+                        if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Contains(productName))
                         {
                             index = i;
                             break;
@@ -690,6 +724,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableAllbet)
             {
                 model.DisableProduct("EnableAllbet");
+            }
+
+            if (product.UplineStatuses.DisableVoidbridge)
+            {
+                model.DisableProduct("EnableVoidbridge");
             }
 
             return model;
@@ -878,10 +917,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || 
                 ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
+
             product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
             product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllbet");
             product.SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllbetDownline");
             product.DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet");
+
+            product.HideVoidbridge = ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0" || result.Rows[0].ToBoolean("HideVoidBridge");
+            product.SyncVoidbridge = result.Rows[0].ToBoolean("SyncedVoidBridge");
+            product.SyncVoidbridgeDownlines = result.Rows[0].ToBoolean("SyncedVoidBridgeDownline");
+            product.DisableVoidbridge = result.Rows[0].ToBoolean("DisableVoidBridge");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -907,9 +953,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
                 product.UplineStatuses.DisableHRFixedOdds = upperInfo.Rows[0].ToBoolean("disableHRFixedOdds");
                 product.UplineStatuses.DisableESports = upperInfo.Rows[0].ToBoolean("DisableESports");
+
                 product.UplineStatuses.DisableAllbet = upperInfo.Rows[0].ToBoolean("DisableAllbet");
                 product.UplineStatuses.HideAllbet = upperInfo.Rows[0].ToBoolean("HideAllbet");
                 product.UplineStatuses.SyncAllbet = upperInfo.Rows[0].ToBoolean("SyncedAllbet");
+
+                product.UplineStatuses.DisableVoidbridge = upperInfo.Rows[0].ToBoolean("DisableVoidBridge");
+                product.UplineStatuses.HideVoidbridge = upperInfo.Rows[0].ToBoolean("HideVoidBridge");
+                product.UplineStatuses.SyncVoidbridge = upperInfo.Rows[0].ToBoolean("SyncedVoidBridge");
             }
 
             return product;

@@ -392,7 +392,8 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
     isHideColossusBets,
     isHideSportsbook2,
     isHideCockfighting,
-    isHideCricket) {
+    isHideCricket,
+    isHideVoidbridge) {
     Fanex.ExtAcc.BlockUI();
 
     this.superId = srecommend;
@@ -410,6 +411,7 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
     this.HideSportsbook2 = isHideSportsbook2;
     this.HideCockfighting = isHideCockfighting;
     this.HideCricket = isHideCricket;
+    this.HideVoidbridge = isHideVoidbridge;
 
     var url = resolveClientUrl('Customer/MasterListPost');
     var data = this.GetParams();
