@@ -374,7 +374,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.GetSuperMasterPtsOnMember(product);
-            model.RemoveEnableProducts(product);
+            model.RemoveEnableAndPtforProducts(product);
 
             if (product.RoleId == 4)
             {
@@ -383,8 +383,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 return model;
             }
 
-            model.UplineStatuses(product);
-            model.RemoveProducts(product);            
+            model.DisableUplineStatuses(product);
 
             return model;
         }
@@ -400,9 +399,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
             var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
-            var hideSportsbook2 = ConfigurationManager.AppSettings["IsShowSportsbook2"].Equals("0");
-            var hideCockfighting = ConfigurationManager.AppSettings["IsShowCockfighting"].Equals("0");
-            var hideCricket = ConfigurationManager.AppSettings["IsShowCricket"].Equals("0");
 
             if (hideVS)
             {
@@ -427,12 +423,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveProduct("Bingo");
-            }
-            
-            if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-            {
-                model.RemoveProduct("Bingo");
-            }
+            }            
 
             return model;
         }
@@ -450,61 +441,91 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="product">ProductStatuses item.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel RemoveEnableProducts(this CustomerModel model, ProductStatuses product)
+        private static CustomerModel RemoveEnableAndPtforProducts(this CustomerModel model, ProductStatuses product)
         {
             if (!product.SyncBingo ||
                 !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveEnableProduct("EnableBingo");
+
+                if (!product.UplineStatuses.SyncBingo || !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
+                {
+                    model.RemoveProduct("Bingo")
+                        .RemoveCrossLevelProduct("Bingo");
+                }
             }
 
             if (!product.SyncCasino)
             {
                 model.RemoveEnableProduct("EnableCasino");
+
+                if (!product.UplineStatuses.SyncCasino)
+                {
+                    model.RemoveProduct("Casino")
+                        .RemoveCrossLevelProduct("Casino");
+                }
             }
 
             if (!product.SyncLiveCasino)
             {
                 model.RemoveEnableProduct("EnableLiveCasino");
+
+                if (!product.UplineStatuses.SyncLiveCasino)
+                {
+                    model.RemoveProduct("LiveCasino")
+                        .RemoveCrossLevelProduct("LiveCasino");
+                }
             }
 
             if (product.HideVirtualSports)
             {
                 model.RemoveEnableProduct("EnableVirtualSports");
+
+                if (product.UplineStatuses.HideVirtualSports)
+                {
+                    model.RemoveProduct("VirtualSports")
+                        .RemoveCrossLevelProduct("VirtualSports");
+                }
             }
 
             if (product.HideEsports)
             {
-                model.RemoveEnableProduct("EnableESports");
+                model.RemoveEnableProduct("EnableESports")
+                    .RemoveProduct("ESports")
+                    .RemoveCrossLevelProduct("ESports");
             }
 
             model.RemoveEnableProduct("EnableGoldDeluxe");
 
             if (product.HideGoldDeluxe)
             {                
-                model.RemoveProduct("GoldDeluxe");
+                model.RemoveProduct("GoldDeluxe")
+                    .RemoveCrossLevelProduct("GoldDeluxe");
             }
 
             if (product.HideColossusBets)
             {
-                model.RemoveEnableProduct("EnableColossusBets");
-                model.RemoveProduct("ColossusBets");
+                model.RemoveEnableProduct("EnableColossusBets")
+                    .RemoveProduct("ColossusBets");
             }
 
             if (product.HideSportsbook2)
             {
-                model.RemoveProduct("Sportsbook2");
+                model.RemoveProduct("Sportsbook2")
+                    .RemoveCrossLevelProduct("Sportsbook2");
             }
 
             if (product.HideCockfighting)
             {
-                model.RemoveEnableProduct("EnableCockfighting");
-                model.RemoveProduct("Cockfighting");
+                model.RemoveEnableProduct("EnableCockfighting")
+                    .RemoveProduct("Cockfighting")
+                    .RemoveCrossLevelProduct("Cockfighting");
             }
 
             if (product.HideCricket)
             {
-                model.RemoveProduct("Cricket");
+                model.RemoveProduct("Cricket")
+                    .RemoveCrossLevelProduct("Cricket");
             }
 
             model.RemoveEnableAndEditProductDCS(
@@ -546,6 +567,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveEnableProduct("Enable" + productName);
                 model.RemoveProduct(productName);
                 model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
+
+                if (product.RoleId == 1)
+                {
+                    model.RemoveCrossLevelProduct(productName);
+                }
             }
             else if ((!hide && !sync) || !syncDownline)
             {
@@ -558,95 +584,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
                 if (product.RoleId == 1)
                 {
-                    var index = -1;
-                    for (int i = 0; i < model.Setting.SuperPts.Count; i++)
-                    {
-                        if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Contains(productName))
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    if (index != -1)
-                    {
-                        model.Setting.SuperPts.RemoveAt(index);
-                        model.Setting.MasterPts.RemoveAt(index);
-                    }
+                    model.RemoveCrossLevelProduct(productName);
                 }
             }
 
             return model;
         }
-
-        /// <summary>
-        /// Removes Detail products.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="product">ProductStatuses item.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel RemoveProducts(this CustomerModel model, ProductStatuses product)
-        {
-            if (product.RoleId != 1 && product.DisableTransfer)
-            {
-                model.RemoveProduct("Transfer");
-            }
-
-            if (!product.UplineStatuses.SyncBingo ||
-                !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-            {
-                model.RemoveProduct("Bingo");
-            }
-
-            if (!product.UplineStatuses.SyncCasino)
-            {
-                model.RemoveProduct("Casino");
-            }
-
-            if (!product.UplineStatuses.SyncLiveCasino)
-            {
-                model.RemoveProduct("LiveCasino");
-            }
-
-            if (product.UplineStatuses.HideVirtualSports)
-            {
-                model.RemoveProduct("VirtualSports");
-            }
-
-            if (product.HideKeno)
-            {
-                model.RemoveProduct("Keno");
-            }
-
-            if (product.HideGoldDeluxe)
-            {
-                model.RemoveProduct("GoldDeluxe");
-            }
-
-            if (product.HideColossusBets)
-            {
-                model.RemoveProduct("ColossusBets");
-            }
-
-            if (product.HideSportsbook2)
-            {
-                model.RemoveProduct("Sportsbook2");
-            }
-
-            if (product.HideCockfighting)
-            {
-                model.RemoveProduct("Cockfighting");
-            }
-
-            if (product.HideCricket)
-            {
-                model.RemoveProduct("Cricket");
-            }
-
-            return model;
-        }
-
+        
         /// <summary>
         /// Gets upper statuses.
         /// </summary>
@@ -654,7 +598,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="product">Product statuses.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel UplineStatuses(this CustomerModel model, ProductStatuses product)
+        private static CustomerModel DisableUplineStatuses(this CustomerModel model, ProductStatuses product)
         {
             if (!product.UplineStatuses.AllowDoubleComm)
             {
@@ -755,6 +699,26 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (index != -1)
             {
                 model.Setting.Details.RemoveAt(index);
+            }
+
+            return model;
+        }
+
+        private static CustomerModel RemoveCrossLevelProduct(this CustomerModel model, string key)
+        {
+            int index = -1;
+            for (int i = 0; i < model.Setting.SuperPts.Count; i++)
+            {
+                if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1)
+            {
+                model.Setting.MasterPts.RemoveAt(index);
             }
 
             return model;
