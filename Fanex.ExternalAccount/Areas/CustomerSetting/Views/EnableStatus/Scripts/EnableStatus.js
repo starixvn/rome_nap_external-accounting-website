@@ -10,12 +10,14 @@ function EnableStatusController($scope) {
     $scope.entities = model.entities;
     $scope.isDisabledAll = true;
 
+    $scope.checkSyncProducts = [21, 22];
+
     var length = $scope.entities.length;
     for (var i = 0; i < length; i++) {
-        if ((!$scope.entities[i].disabledUplines && !$scope.entities[i].hide && $scope.context.product != 21) || ($scope.entities[i].synced && $scope.context.product == 21)) {
+        if ((!$scope.entities[i].disabledUplines && !$scope.entities[i].hide) || ($scope.entities[i].synced && $($scope.checkSyncProducts).index($scope.context.product) != -1)) {
             $scope.isDisabledAll = false;
             break;
-        }        
+        }
     }
 
     $scope.Init = function () {
@@ -28,6 +30,14 @@ function EnableStatusController($scope) {
             }
         });
 
+        // Check hidden status of product
+        var length = $scope.entities.length;
+        for (var i = 0; i < length; i++) {
+            $scope.entities[i].hide =
+                ($scope.entities[i].hide && $($scope.checkSyncProducts).index($scope.context.product) == -1) ||
+                (!$scope.entities[i].synced && $($scope.checkSyncProducts).index($scope.context.product) != -1);
+        }
+        
         if ($scope.context.newMode) {
             $('#submit').addClass('disabledButton');
             $('#submit').attr('disabled', true);
