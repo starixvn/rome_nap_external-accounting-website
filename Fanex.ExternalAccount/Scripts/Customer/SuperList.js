@@ -1,4 +1,15 @@
-﻿Fanex.ExtAcc.Customer.ShowEditSuper = function (custId, title, hideGoldDeluxe, hideSportsbook2, hideCockfighting, hideColossusBets, hideCricket, hideAllbet, showABBetting, hideVoidbridge, showVBBetting) {
+﻿Fanex.ExtAcc.Customer.ShowEditSuper = function (
+    custId,
+    title,
+    hideGoldDeluxe,
+    hideSportsbook2,
+    hideCockfighting,
+    hideColossusBets,
+    hideCricket,
+    hideAllbet,
+    showABBetting,
+    hideVoidbridge,
+    showVBBetting) {
     this.TransferCondition = false;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
@@ -272,10 +283,12 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
             var hideColossusBets = showColossusBets == 0 || cell.Value.HideColossusBet == true;
 
-            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + ")";
             Fanex.ExtAcc.Customer.superDisableP2P = cell.Value.DisableP2P;
+
             var hideAllbetSettingLink = !showAllbet || (cell.Value.HideAllBet || !cell.Value.SyncedAllBetUpline);
-            Fanex.ExtAcc.Customer.HideAllbet = hideAllbetSettingLink;
+            var hideVoidbridgeSettingLink = !showAllbet || (cell.Value.HideVoidBridge || !cell.Value.SyncedVoidBridgeUpline);
+            var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + ")";
+
             var len = cell.Value.username.length;
             var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
 
@@ -288,10 +301,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         CustomCellRender: function (cell) {
             var hideAllbetSettingLink = !showAllbet || cell.Value.HideAllBet;
             var hideVoidbridgeSettingLink = !showVoidbridge || cell.Value.HideVoidBridge;
-
-            Fanex.ExtAcc.Customer.HideAllbet = hideAllbetSettingLink;
-            Fanex.ExtAcc.Customer.HideVoidbridge = hideVoidbridgeSettingLink;
-
+            
             var showABBetting = cell.Value.SyncedAllBet && !hideAllbetSettingLink && cell.Value.SyncedAllBetDownline;
             var showVBBetting = cell.Value.SyncedVoidBridge && !hideVoidbridgeSettingLink && cell.Value.SyncedVoidBridgeDownline;
 

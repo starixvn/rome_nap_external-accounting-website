@@ -531,8 +531,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.RemoveEnableAndEditProductDCS(
                 product, 
                 0, 
-                product.UplineStatuses.HideAllbet, 
-                product.UplineStatuses.SyncAllbet, 
+                product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet, 
+                product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet, 
                 product.HideAllbet, 
                 product.SyncAllbet, 
                 product.SyncAllbetDownlines, 
@@ -541,8 +541,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.RemoveEnableAndEditProductDCS(
                 product,
                 2,
-                product.UplineStatuses.HideVoidbridge,
-                product.UplineStatuses.SyncVoidbridge,
+                product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVirtualSports,
+                product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
                 product.HideVoidbridge,
                 product.SyncVoidbridge,
                 product.SyncVoidbridgeDownlines,
@@ -562,11 +562,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool syncDownline,
             string productName)
         {
-            if ((hideUpline || !syncUpline) && product.RoleId < 4)
+            if (hideUpline || !syncUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
                 model.RemoveProduct(productName);
                 model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;
 
                 if (product.RoleId == 1)
                 {
@@ -576,11 +577,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             else if ((!hide && !sync) || !syncDownline)
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
-                model.RemoveEnableProduct("Enable" + productName);
-                if (product.RoleId == 4)
-                {
-                    model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;
-                }
+                model.RemoveEnableProduct("Enable" + productName);                
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;                
 
                 if (product.RoleId == 1)
                 {

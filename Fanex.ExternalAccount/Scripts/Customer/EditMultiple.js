@@ -711,7 +711,7 @@
             };
         }
 
-        if (!this.HideAllbet) {
+        if (!this.HideAllbetMember) {
             menuItems.allbet = {
                 name: "Allbet",
                 className: "iconEnableEdit",
@@ -744,7 +744,7 @@
             };
         }
 
-        if (!this.HideVoidbridge) {
+        if (!this.HideVoidbridgeMember) {
             menuItems.voidbridge = {
                 name: "Voidbridge",
                 className: "iconEnableEdit",
@@ -1264,7 +1264,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targe
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {
-        this.ShowEditSingleAllbet(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+        this.ShowEditSingleVoidbridge(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 

@@ -35,6 +35,9 @@
     HideAllbet: false,
     HideVoidbridge: false,
 
+    HideAllbetMember: false,
+    HideVoidbridgeMember: false,
+
     superSyncCasino: false,
     superSyncBingo: false,
     superSyncLiveCasino: false,
