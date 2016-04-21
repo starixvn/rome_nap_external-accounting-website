@@ -541,7 +541,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.RemoveEnableAndEditProductDCS(
                 product,
                 2,
-                product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVirtualSports,
+                product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
                 product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
                 product.HideVoidbridge,
                 product.SyncVoidbridge,
