@@ -168,7 +168,7 @@
       <HintPath>..\Dependencies\Fanex.PTEngine.Age.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTRacing, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTRacing.1.0.0.3-AddCopyAllToBetting2\lib\net40\Fanex.PTRacing.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTRacing.1.0.0.3\lib\net40\Fanex.PTRacing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference">
