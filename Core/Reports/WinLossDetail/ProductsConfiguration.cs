@@ -16,14 +16,11 @@ namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
     /// </summary>
     public class ProductsConfiguration : ConfigurationSection
     {
-        private static ProductsConfiguration _instance = null;
-
         public static ProductsConfiguration Instance
         {
             get
             {
-                _instance = _instance ?? ConfigurationManager.GetSection("report") as ProductsConfiguration;
-                return _instance;
+                return ConfigurationManager.GetSection("report") as ProductsConfiguration;
             }
         }
 
