@@ -529,7 +529,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             model.RemoveEnableAndEditProductDCS(
-                product, 
+                product.RoleId, 
                 0, 
                 product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet, 
                 product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet, 
@@ -539,7 +539,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 "Allbet");
 
             model.RemoveEnableAndEditProductDCS(
-                product,
+                product.RoleId,
                 2,
                 product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
                 product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
@@ -553,7 +553,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
         private static CustomerModel RemoveEnableAndEditProductDCS(
             this CustomerModel model, 
-            ProductStatuses product, 
+            int roleId, 
             int productIndex,
             bool hideUpline,
             bool syncUpline,
@@ -565,23 +565,28 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideUpline || !syncUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
-                model.RemoveProduct(productName);
+                if (roleId != 4 && (hideUpline || !syncUpline) ||
+                    roleId == 4 && hideUpline)
+                {
+                    model.RemoveProduct(productName);
+                }
+
                 model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
                 model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;
 
-                if (product.RoleId == 1)
+                if (roleId == 1)
                 {
                     model.RemoveCrossLevelProduct(productName);
                 }
             }
-            else if ((!hide && !sync) || !syncDownline)
+            else if ((!sync && roleId == 1 && !hideUpline && syncUpline) || (!hide && !sync) || !syncDownline)
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("Enable" + productName);                
                 model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
                 model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;                
 
-                if (product.RoleId == 1)
+                if (roleId == 1)
                 {
                     model.RemoveCrossLevelProduct(productName);
                 }
@@ -828,7 +833,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 else
                 {
                     result = new MemberService().GetData(recommend, custId, null, null, null);
-                    upperInfo = result = new AgentService().GetData(mrecommend, uplineId, null, null, null);
+                    upperInfo = new AgentService().GetData(mrecommend, uplineId, null, null, null);
                 }
 
                 return model.GetProductStatusDetail(roleId, result, upperInfo);
@@ -882,8 +887,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
 
             product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
-            product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllbet");
-            product.SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllbetDownline");
+            product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllBet");
+            product.SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllBetDownline");
             product.DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet");
 
             product.HideVoidbridge = ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0" || result.Rows[0].ToBoolean("HideVoidBridge");
@@ -918,13 +923,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableESports = upperInfo.Rows[0].ToBoolean("DisableESports");
 
                 product.UplineStatuses.DisableAllbet = upperInfo.Rows[0].ToBoolean("DisableAllbet");
-                product.UplineStatuses.HideAllbet = upperInfo.Rows[0].ToBoolean("HideAllbet") ||
-                    !upperInfo.Rows[0].ToBoolean("SyncedAllbetUpline");
-                product.UplineStatuses.SyncAllbet = upperInfo.Rows[0].ToBoolean("SyncedAllbet");
+                product.UplineStatuses.HideAllbet = upperInfo.Rows[0].ToBoolean("HideAllbet");
+                product.UplineStatuses.SyncAllbet = upperInfo.Rows[0].ToBoolean("SyncedAllBet");
 
                 product.UplineStatuses.DisableVoidbridge = upperInfo.Rows[0].ToBoolean("DisableVoidBridge");
-                product.UplineStatuses.HideVoidbridge = upperInfo.Rows[0].ToBoolean("HideVoidBridge") ||
-                    !upperInfo.Rows[0].ToBoolean("SyncedVoidbridgeUpline");
+                product.UplineStatuses.HideVoidbridge = upperInfo.Rows[0].ToBoolean("HideVoidBridge");
                 product.UplineStatuses.SyncVoidbridge = upperInfo.Rows[0].ToBoolean("SyncedVoidBridge");
             }
 

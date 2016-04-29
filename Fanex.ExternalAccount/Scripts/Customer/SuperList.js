@@ -299,8 +299,8 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         Name: 'Edit',
         Width: 30,
         CustomCellRender: function (cell) {
-            var hideAllbetSettingLink = !showAllbet || cell.Value.HideAllBet;
-            var hideVoidbridgeSettingLink = !showVoidbridge || cell.Value.HideVoidBridge;
+            var hideAllbetSettingLink = cell.Value.HideAllBet;
+            var hideVoidbridgeSettingLink = cell.Value.HideVoidBridge;
             
             var showABBetting = cell.Value.SyncedAllBet && !hideAllbetSettingLink && cell.Value.SyncedAllBetDownline;
             var showVBBetting = cell.Value.SyncedVoidBridge && !hideVoidbridgeSettingLink && cell.Value.SyncedVoidBridgeDownline;

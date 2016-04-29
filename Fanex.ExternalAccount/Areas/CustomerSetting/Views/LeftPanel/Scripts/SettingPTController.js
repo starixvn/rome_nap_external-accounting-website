@@ -80,6 +80,14 @@
                     if ($scope.model.setting.syncItems[i].key == 'SyncLiveCasino') {
                         syncLiveCasino = $scope.model.setting.syncItems[i].value;
                     }
+
+                    if ($scope.model.setting.syncItems[i].key == 'HideAllbet') {
+                        isHideAllbet = $scope.model.setting.syncItems[i].value;
+                    }
+
+                    if ($scope.model.setting.syncItems[i].key == 'HideVoidbridge') {
+                        isHideVoidbridge = $scope.model.setting.syncItems[i].value;
+                    }
                 }
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
@@ -104,15 +112,8 @@
                     if ($scope.model.setting.details[i].key == 'Cricket') {
                         isHideCricket = false;
                     }
-                    if ($scope.model.setting.details[i].key == 'Allbet') {
-                        isHideAllbet = false;
-                    }
-                    if ($scope.model.setting.details[i].key == 'Voidbridge') {
-                        isHideVoidbridge = false;
-                    }
                 }
-
-
+                
                 switch (roleId) {
                     case 4:
                         parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge);

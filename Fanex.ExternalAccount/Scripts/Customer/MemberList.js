@@ -10,8 +10,6 @@
     this.HideSportsbook2 = showSportsbook2 == 0 || isHideSportsbook2;
     this.HideCockfighting = showCockfighting == 0 || isHideCockfighting;
     this.HideCricket = showCricket == 0 || isHideCricket;
-    this.HideAllbet = isHideAllbet;
-    this.HideVoidbridge = isHideVoidbridge;
 
     this.ResetFlags();
 
@@ -279,7 +277,7 @@
         }
     }
 
-    if (!this.HideAllbet) {
+    if (!isHideAllbet) {
         itemsMember.allbet = {
             name: "Allbet",
             className: disableAllbet == true ? "iconDisableEdit" : "iconEnableEdit",
@@ -292,7 +290,7 @@
         }
     }
 
-    if (!this.HideVoidbridge) {
+    if (!isHideVoidbridge) {
         itemsMember.voidbridge = {
             name: "Voidbridge",
             className: disableVoidbridge == true ? "iconDisableEdit" : "iconEnableEdit",
@@ -369,6 +367,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     this.HideSportsbook2 = isHideSportsbook2;
     this.HideCockfighting = isHideCockfighting;
     this.HideCricket = isHideCricket;
+
     this.HideAllbet = isHideAllbet;
     this.HideVoidbridge = isHideVoidbridge;
 
@@ -429,8 +428,8 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             var hideCockfighting = showCockfighting == 0 || cell.Value.HideCockFighting || isHideCockfighting;
             var hideCricket = showCricket == 0 || cell.Value.HideCricket || isHideCricket || !cell.Value.IsIMBC;
 
-            var hideAllbetSettingLink = isHideAllbet || !cell.Value.SyncedAllBetUpline;
-            var hideVoidbridgeSettingLink = isHideVoidbridge || !cell.Value.SyncedVoidBridgeUpline;
+            var hideAllbetSettingLink = isHideAllbet || !cell.Value.SyncedAllBetUpline || cell.Value.HideAllBetUpline;
+            var hideVoidbridgeSettingLink = isHideVoidbridge || !cell.Value.SyncedVoidBridgeUpline || cell.Value.HideVoidBridgeUpline;
             
             Fanex.ExtAcc.Customer.HideAllbetMember = hideAllbetSettingLink;
             Fanex.ExtAcc.Customer.HideVoidbridgeMember = hideVoidbridgeSettingLink;
