@@ -178,7 +178,7 @@
 
     if (!this.HideVoidbridge) {
         items.voidbridge = {
-            name: "Voidbridge",
+            name: "Macau Games",
             className: "iconViewEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;

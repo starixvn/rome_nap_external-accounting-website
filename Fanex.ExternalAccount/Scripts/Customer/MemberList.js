@@ -292,7 +292,7 @@
 
     if (!isHideVoidbridge) {
         itemsMember.voidbridge = {
-            name: "Voidbridge",
+            name: "Macau Games",
             className: disableVoidbridge == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;

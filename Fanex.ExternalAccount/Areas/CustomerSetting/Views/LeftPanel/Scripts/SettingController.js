@@ -671,8 +671,8 @@
         $scope.EnableDCS(21, 'Allbet', enable, id);
     };
 
-    $scope.EnableVoidbridge = function (enable, id) {
-        $scope.EnableDCS(22, 'Voidbridge', enable, id);
+    $scope.EnableMacauGames = function (enable, id) {
+        $scope.EnableDCS(22, 'Macau Games', enable, id);
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id) {
@@ -947,7 +947,7 @@
         $scope.RenderSupeOnMemberDCS(21);
     };
 
-    $scope.SuperVoidbridge = function () {
+    $scope.SuperMacauGames = function () {
         $scope.RenderSupeOnMemberDCS(22);
     };
 
@@ -972,7 +972,7 @@
         $scope.RenderMasterOnMemberDCS(21);
     };
 
-    $scope.MasterVoidbridge = function () {
+    $scope.MasterMacauGames = function () {
         $scope.RenderMasterOnMemberDCS(22);
     };
 

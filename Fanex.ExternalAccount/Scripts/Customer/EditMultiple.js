@@ -161,7 +161,7 @@
 
         if (!this.HideVoidbridge) {
             menuItems.voidbridge = {
-                name: "Edit Multiple Voidbridge",
+                name: "Edit Multiple Macau Games",
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(4, 3);
@@ -319,7 +319,7 @@
 
         if (!this.HideVoidbridge) {
             menuItems.voidbridge = {
-                name: "Edit Multiple Voidbridge",
+                name: "Edit Multiple Macau Games",
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(3, 2);
@@ -746,11 +746,11 @@
 
         if (!this.HideVoidbridgeMember) {
             menuItems.voidbridge = {
-                name: "Voidbridge",
+                name: "Macau Games",
                 className: "iconEnableEdit",
                 items: {
                     agentVB: {
-                        name: "Edit Multiple Voidbridge",
+                        name: "Edit Multiple Macau Games",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -758,7 +758,7 @@
                         }
                     },
                     superVB: {
-                        name: "Super Edit Multiple Voidbridge",
+                        name: "Super Edit Multiple Macau Games",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -766,7 +766,7 @@
                         }
                     },
                     masterVB: {
-                        name: "Master Edit Multiple Voidbridge",
+                        name: "Master Edit Multiple Macau Games",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
@@ -1225,7 +1225,7 @@ Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge = function (custid, uplineRoleId,
         document.getElementById('IsReadOnly').value = false;
     }
 
-    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Voidbridge Setting', 900, 750, false, false, 1);
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Macau Games Setting', 900, 750, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
 
@@ -1257,7 +1257,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targe
         document.getElementById('uplineLevel').value = "";
 
         if (document.getElementById('customerIds').value == "") {
-            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Allbet Setting', 900, 600, false, false, 1);
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Macau Games Setting', 900, 600, false, false, 1);
             return;
         }
 
@@ -1269,7 +1269,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targe
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Voidbridge Setting', 900, 750, false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Macau Games Setting', 900, 750, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {

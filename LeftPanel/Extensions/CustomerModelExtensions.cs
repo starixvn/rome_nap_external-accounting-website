@@ -936,16 +936,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
         public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName)
         {
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName, Value = true });
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName + "Betting", Value = true });
-            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName]))
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = true });
+            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
-                model.Setting.Details.Add(new ObjectInfo { Key = productName, Value = "Edit " + productName });
+                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + productName });
                 model.Setting.EnableItems.Add(new ObjectInfo
                 {
-                    Key = "Enable" + productName,
+                    Key = "Enable" + productName.Replace(" ", string.Empty),
                     Value = !isDisabled,
                     Text = productName,
                     Tooltip = "Enable " + productName

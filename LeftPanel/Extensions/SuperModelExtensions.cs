@@ -155,7 +155,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             };
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet");
-            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Voidbridge");
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
             model.AddBettingLimitForSuper();
 
             return model;

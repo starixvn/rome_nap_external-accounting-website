@@ -408,7 +408,7 @@
         $scope.RenderDCS(21);
     };
     
-    $scope.Voidbridge = function () {
+    $scope.MacauGames = function () {
         $scope.RenderDCS(22);
     };
 
