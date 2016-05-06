@@ -17,6 +17,9 @@
             $scope.isReadOnly = settingViewModel.FormType === fanex.goldDeluxeSetting.formType.ReadOnly;
             $scope.isEditMultiple = settingViewModel.CustIds !== undefined && settingViewModel.Usernames !== undefined;
             $scope.isEditDirect = (settingViewModel.UpLineLevel - settingViewModel.Level === 1);
+            $scope.isEditDirect = (settingViewModel.UpLineLevel - settingViewModel.Level === 1);
+            $scope.isUpdateWinLimitPartial = !((settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Super || settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Master) && settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member);
+            $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
 
             $scope.validateAndUpdateSetting = function (updateType) {
                 $scope.isUpdateAllSetting = true;

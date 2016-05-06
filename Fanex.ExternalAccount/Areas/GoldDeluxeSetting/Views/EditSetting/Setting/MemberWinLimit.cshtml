@@ -2,7 +2,7 @@
 <div id="tblMaxWinLimit" class="pt-container col-xs-12" data-ng-controller="CustomerWinLimitController">
     <div class="pt-title">
         <span class="pt-title-text">@GoldDeluxeLang.lblMemberWinLimit</span><span data-ng-click="updateWinLimitSetting()"
-                                                                                  data-ng-if="!$parent.isReadOnly" class="btn-save-partial" title="@GoldDeluxeLang.lblUpdate"></span>
+                                                                                  data-ng-if="!$parent.isReadOnly && $parent.isUpdateWinLimitPartial" class="btn-save-partial" title="@GoldDeluxeLang.lblUpdate"></span>
     </div>
     <table class="win-limit">
         <tbody>
@@ -12,13 +12,13 @@
                 </td>
                 <td class="col-xs-4">
                     <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
-                            data-ng-disabled="$parent.isReadOnly" data-ng-model="maxWinLimitModel.Max"></select>
+                            data-ng-disabled="$parent.isReadOnly || !$parent.isUpdateWinLimitPartial" data-ng-model="maxWinLimitModel.Max"></select>
                     <span>&nbsp;@GoldDeluxeLang.lblOnGivenCredit</span>
                 </td>
                 <td class="col-xs-6">
                     <label class="checkbox-inline">
                         <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset"
-                               data-ng-disabled="!maxWinLimitModel.UplineAutoReset||$parent.isReadOnly">@GoldDeluxeLang.lblDailyAutoResetLimit
+                               data-ng-disabled="!maxWinLimitModel.UplineAutoReset||$parent.isReadOnly || !$parent.isUpdateWinLimitPartial">@GoldDeluxeLang.lblDailyAutoResetLimit
                         </label>
                     </td>
                 </tr>
