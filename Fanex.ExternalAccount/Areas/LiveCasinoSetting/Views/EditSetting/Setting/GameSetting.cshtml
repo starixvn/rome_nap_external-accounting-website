@@ -3,7 +3,7 @@
     data-ng-controller="CustGameSettingController" >
     <div class="pt-title">
         <span class="pt-title-text">@LiveCasinoLang.lblGameSetting</span> <span data-ng-click="updateGameSetting()"
-            data-ng-if="!$parent.isReadOnly" class="btn-save-partial" title="@LiveCasinoLang.lblUpdate"></span>
+            data-ng-if="!$parent.isReadOnly && $parent.isUpdateGameSettingPartial" class="btn-save-partial" title="@LiveCasinoLang.lblUpdate"></span>
     </div>
     <table class="game-setting col-xs-12">
         <thead>
@@ -28,7 +28,7 @@
                         {
                             <label class="checkbox-inline betting-limit-label">
                                 <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
-                                    data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
+                                    data-ng-disabled="$parent.isReadOnly || !$parent.isUpdateGameSettingPartial" data-ng-change="checkShowWarningUncheckedAll()" />
                                 {{betLimitItem.Range}}
                             </label>
                         }
@@ -36,7 +36,7 @@
                         { 
                             <label class="radio-inline betting-limit-label">
                                 <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
-                                    data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
+                                    data-ng-disabled="$parent.isReadOnly || !$parent.isUpdateGameSettingPartial" value="{{betLimitItem.Id}}" />
                                 {{betLimitItem.Range}}
                             </label>
                         }
