@@ -546,7 +546,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.HideVoidbridge,
                 product.SyncVoidbridge,
                 product.SyncVoidbridgeDownlines,
-                "Voidbridge");
+                "MacauGames");
 
             return model;
         }
@@ -566,7 +566,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.RemoveEnableProduct("Enable" + productName);
                 if (roleId != 4 && (hideUpline || !syncUpline) ||
-                    roleId == 4 && hideUpline)
+                    (roleId == 4 && hideUpline))
                 {
                     model.RemoveProduct(productName);
                 }
@@ -676,7 +676,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             if (product.UplineStatuses.DisableVoidbridge)
             {
-                model.DisableProduct("EnableVoidbridge");
+                model.DisableProduct("EnableMacauGames");
             }
 
             return model;
