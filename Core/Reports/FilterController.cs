@@ -103,7 +103,10 @@ namespace Fanex.ExternalAccount.Core.Reports
 
             foreach (var group in groups)
             {
-                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase))
+                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase) ||
+                    groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase) ||
+                    groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase) ||
+                    groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }

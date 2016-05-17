@@ -159,6 +159,16 @@
             };
         }
 
+        if (!this.HideVoidbridge) {
+            menuItems.voidbridge = {
+                name: "Edit Multiple Macau Games",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(4, 3);
+                }
+            };
+        }
+
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
@@ -303,6 +313,16 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 2);
+                }
+            };
+        }
+
+        if (!this.HideVoidbridge) {
+            menuItems.voidbridge = {
+                name: "Edit Multiple Macau Games",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(3, 2);
                 }
             };
         }
@@ -691,7 +711,7 @@
             };
         }
 
-        if (!this.HideAllbet) {
+        if (!this.HideAllbetMember) {
             menuItems.allbet = {
                 name: "Allbet",
                 className: "iconEnableEdit",
@@ -718,6 +738,39 @@
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
                             Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 1);
+                        }
+                    }
+                }
+            };
+        }
+
+        if (!this.HideVoidbridgeMember) {
+            menuItems.voidbridge = {
+                name: "Macau Games",
+                className: "iconEnableEdit",
+                items: {
+                    agentVB: {
+                        name: "Edit Multiple Macau Games",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(2, 1);
+                        }
+                    },
+                    superVB: {
+                        name: "Super Edit Multiple Macau Games",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(4, 1);
+                        }
+                    },
+                    masterVB: {
+                        name: "Master Edit Multiple Macau Games",
+                        callback: function () {
+                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                            Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(3, 1);
                         }
                     }
                 }
@@ -908,7 +961,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targ
     var ret = this.IdsAndNames();
 
     var actionName = '';
-    var levelText = '';
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
 
     if (this.IsMultiple) {
         var goldDeluxeUsernames = '';
@@ -975,7 +1028,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting = function (uplineRoleId, tar
     var ret = this.IdsAndNames();
 
     var actionName = '';
-    var levelText = '';
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
 
     if (this.IsMultiple) {
         var goldDeluxeUsernames = '';
@@ -1042,7 +1095,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCricket = function (uplineRoleId, targetRo
     var ret = this.IdsAndNames();
 
     var actionName = '';
-    var levelText = '';
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
 
     if (this.IsMultiple) {
         var goldDeluxeUsernames = '';
@@ -1109,7 +1162,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
     var ret = this.IdsAndNames();
 
     var actionName = '';
-    var levelText = '';
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
 
     if (this.IsMultiple) {
         var Usernames = '';
@@ -1132,6 +1185,10 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
         document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.AllbetSyncList.join(', ') : Usernames);
         document.getElementById('uplineLevel').value = "";
 
+        if (document.getElementById('customerIds').value == "") {
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Allbet Setting', 900, 600, false, false, 1);
+            return;
+        }
 
         if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
             document.getElementById('uplineLevel').value = "";
@@ -1145,6 +1202,78 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
     }
     else {
         this.ShowEditSingleAllbet(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+    }
+};
+
+Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge = function (custid, uplineRoleId, targetRoleId) {
+    document.getElementById('language').value = "en-US";
+    document.getElementById('productId').value = 22;
+    document.getElementById('customerLevel').value = targetRoleId;
+    document.getElementById('customerId').value = custid;
+    document.getElementById('isMultiple').value = false;
+    document.getElementById('uplineLevel').value = "";
+    if (this.CurrentLevel == this.Super) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else {
+        document.getElementById('uplineLevel').value = uplineRoleId;
+        document.getElementById('IsReadOnly').value = false;
+    }
+
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Macau Games Setting', 900, 750, false, false, 1);
+    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targetRoleId) {
+    var ret = this.IdsAndNames();
+
+    var actionName = '';
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
+
+    if (this.IsMultiple) {
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = this.Names();
+        var custIdsArr = this.Ids()
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 22;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('isMultiple').value = true;
+        document.getElementById('customerIds').value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncIdList.join(', ') : CustIds);
+        document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncList.join(', ') : Usernames);
+        document.getElementById('uplineLevel').value = "";
+
+        if (document.getElementById('customerIds').value == "") {
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Macau Games Setting', 900, 600, false, false, 1);
+            return;
+        }
+
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Macau Games Setting', 900, 750, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    }
+    else {
+        this.ShowEditSingleVoidbridge(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 

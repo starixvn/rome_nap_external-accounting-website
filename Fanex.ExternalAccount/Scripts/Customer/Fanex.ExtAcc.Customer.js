@@ -33,6 +33,10 @@
     HideCockfighting: false,
     HideCricket: false,
     HideAllbet: false,
+    HideVoidbridge: false,
+
+    HideAllbetMember: false,
+    HideVoidbridgeMember: false,
 
     superSyncCasino: false,
     superSyncBingo: false,
@@ -64,8 +68,13 @@
     Usernames: '',
     CustIds: '',
     LiveCasinoStatuses: '',
+
     AllbetSyncList: [],
     AllbetSyncIdList: [],
+
+    VoidbridgeSyncList: [],
+    VoidbridgeSyncIdList: [],
+    
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
     MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
@@ -369,11 +378,11 @@
         if (this.CurrentLevel == this.Super) {
             Fanex.ExtAcc.Customer.GetSuperList(this.custId);
         } else if (this.CurrentLevel == this.Master) {
-            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncBingo, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet);
+            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncBingo, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge);
         } else if (this.CurrentLevel == this.Agent) {
-            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncBingo, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet);
+            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncBingo, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge);
         } else {
-            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncBingo, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet);
+            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncBingo, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge);
         }
     },
 
@@ -446,6 +455,11 @@
                 Fanex.ExtAcc.Customer.AllbetSyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.AllbetSyncList.push($(div).attr('name'));
             }
+
+            if ($(div).attr('sync-voidbridge') == 'true' && !Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.contains($(div).attr('id'))) {
+                Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.push($(div).attr('id'));
+                Fanex.ExtAcc.Customer.VoidbridgeSyncList.push($(div).attr('name'));
+            }
         } else {
             div.className = 'menuInactive';
             $('#editMult').attr('style', 'cursor: default !important');
@@ -455,6 +469,11 @@
             if ($(div).attr('sync-allbet') == 'true') {
                 Fanex.ExtAcc.Customer.AllbetSyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.AllbetSyncList.pop($(div).attr('name'));
+            }
+
+            if ($(div).attr('sync-voidbridge') == 'true') {
+                Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(div).attr('id'));
+                Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(div).attr('name'));
             }
         }
 
@@ -501,6 +520,15 @@
                 else if ($(divs[i]).attr('sync-allbet') == 'true' && divs[i].className == 'menuInactive') {
                     Fanex.ExtAcc.Customer.AllbetSyncIdList.pop($(divs[i]).attr('id'));
                     Fanex.ExtAcc.Customer.AllbetSyncList.pop($(divs[i]).attr('name'));
+                }
+
+                if ($(divs[i]).attr('sync-voidbridge') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.contains($(divs[i]).attr('id'))) {
+                    Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.push($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.VoidbridgeSyncList.push($(divs[i]).attr('name'));
+                }
+                else if ($(divs[i]).attr('sync-voidbridge') == 'true' && divs[i].className == 'menuInactive') {
+                    Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(divs[i]).attr('name'));
                 }
             }
         }

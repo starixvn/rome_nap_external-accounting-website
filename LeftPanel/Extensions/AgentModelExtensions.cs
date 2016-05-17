@@ -7,9 +7,9 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
 
@@ -111,6 +111,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
                             new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
                             new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
+                            new ObjectInfo
+                            {
+                                Key = "HideAllbet",
+                                Value = table3rdDCS.Select("ProductID = 21").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])) : true
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "HideVoidbridge",
+                                Value = table3rdDCS.Select("ProductID = 22").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
+                            }
                         },
                 EditItems = new List<ObjectInfo>
                         {
@@ -140,20 +152,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShowAllBet", Value = true });
-            if (table3rdDCS.Select("ProductID = 21").Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowAllbet"]))
-            {
-                var allbetDataRow = table3rdDCS.Select("ProductID = 21")[0];
-                var isDisabled = Utils.ToBoolean(allbetDataRow["isDisabled"]);
-                model.Setting.Details.Add(new ObjectInfo { Key = "Allbet", Value = "Edit Allbet" });
-                model.Setting.EnableItems.Add(new ObjectInfo
-                {
-                    Key = "EnableAllbet",
-                    Value = !isDisabled,
-                    Text = "Allbet",
-                    Tooltip = "Enable Allbet"
-                });
-            }
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet");
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
 
             return model;
         }

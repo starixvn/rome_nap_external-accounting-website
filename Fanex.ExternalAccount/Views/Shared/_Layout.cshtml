@@ -37,6 +37,7 @@
     var showCockfighting = System.Configuration.ConfigurationManager.AppSettings["IsShowCockfighting"] == "1" ? 1 : 0;
     var showCricket = System.Configuration.ConfigurationManager.AppSettings["IsShowCricket"] == "1" ? 1 : 0;
     var showAllbet = System.Configuration.ConfigurationManager.AppSettings["IsShowAllbet"] == "1" ? 1 : 0;
+    var showVoidbridge = System.Configuration.ConfigurationManager.AppSettings["IsShowVoidbridge"] == "1" ? 1 : 0;
     var hideBingo = Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled ? 0 : 1;
 }
 <!DOCTYPE html>
@@ -226,7 +227,9 @@
         var showCockfighting = @showCockfighting;
         var showCricket = @showCricket;
         var showAllbet = @showAllbet;
+        var showVoidbridge = @showVoidbridge;
         var showAllbetBetting = true;
+        var showVoidbridgeBetting = true;
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

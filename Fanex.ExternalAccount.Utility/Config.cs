@@ -51,27 +51,7 @@ namespace Fanex.ExternalAccount.Utilities
                 return GetValue("LBUrl");
             }
         }
-
-        public static bool IsUM
-        {
-            get
-            {
-                var checkUM = Utils.ToBoolean(GetValue("CheckUM"));
-                if (!checkUM || HttpContext.Current.Request.IsLocal) 
-                { 
-                    return false; 
-                }
-
-                var um = new UMBusiness();
-                string from = string.Empty, to = string.Empty;
-                bool isUM = um.isUnderMaintainence(Sites.AccountSite, Config.LBUrl, ref from, ref to) || Utils.ToBoolean(GetValue("IsUM"));
-                TimeFrom = string.IsNullOrWhiteSpace(from) ? GetValue("TimeFrom") : from; 
-                TimeTo = string.IsNullOrWhiteSpace(to) ? GetValue("TimeTo") : to;
-
-                return isUM;
-            }
-        }
-
+        
         public static string TimeFrom
         {
             get;
@@ -250,12 +230,19 @@ namespace Fanex.ExternalAccount.Utilities
         public static MaintenanceInfo GetMaintenanceInfo()
         {
             var maintenanceInfo = new MaintenanceInfo { IsDownTime = false };
+            var umservice = new ONEbook.UM.Services.Impl.MaintenanceService();
 
-            if (Config.IsUM)
+            if (umservice.IsUnderMaintenance() && !umservice.IsPassUnderMaintenance() && !HttpContext.Current.Request.IsLocal)
             {
+                var timeInfo = umservice.GetUnderMaintenanceTime();
                 maintenanceInfo.IsDownTime = true;
-                maintenanceInfo.TimeFrom = Config.TimeFrom;
-                maintenanceInfo.TimeTo = Config.TimeTo;
+                maintenanceInfo.TimeFrom = Config.TimeFrom = timeInfo.From;
+                maintenanceInfo.TimeTo = Config.TimeTo = timeInfo.To;
+            }
+
+            if ((umservice.IsUnderMaintenance() && umservice.IsPassUnderMaintenance()) || HttpContext.Current.Request.IsLocal)
+            {
+                maintenanceInfo.IsDownTime = false;
             }
 
             return maintenanceInfo;

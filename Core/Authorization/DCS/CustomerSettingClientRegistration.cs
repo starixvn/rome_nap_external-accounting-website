@@ -115,6 +115,8 @@
                     return systemId == 4 ? eFunctions.CricketSetting : eFunctions.CricketBetting;
                 case 21:
                     return systemId == 4 ? eFunctions.AllbetSetting : eFunctions.AllbetBetting;
+                case 22:
+                    return systemId == 4 ? eFunctions.VoidbridgeSetting : eFunctions.VoidbridgeBetting;
                 default:
                     break;
             }

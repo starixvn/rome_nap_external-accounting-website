@@ -7,9 +7,12 @@
                 
         if ($scope.personalInfo.isShowProducts.length > 0) {
             parent.showAllbet = $scope.personalInfo.isShowProducts[0].value;
+            parent.showVoidbridge = $scope.personalInfo.isShowProducts[2].value;
             
-            if ($scope.personalInfo.roleId.value == 4)
+            if ($scope.personalInfo.roleId.value == 4) {
                 parent.showAllbetBetting = $scope.personalInfo.isShowProducts[1].value;
+                parent.showVoidbridgeBetting = $scope.personalInfo.isShowProducts[3].value;
+            }
         }
 
         $scope.personalInfoHeight = $('#customerInfo').height();

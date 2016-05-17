@@ -374,7 +374,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.GetSuperMasterPtsOnMember(product);
-            model.RemoveEnableProducts(product);
+            model.RemoveEnableAndPtforProducts(product);
 
             if (product.RoleId == 4)
             {
@@ -383,8 +383,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 return model;
             }
 
-            model.UplineStatuses(product);
-            model.RemoveProducts(product);            
+            model.DisableUplineStatuses(product);
 
             return model;
         }
@@ -400,9 +399,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
             var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
-            var hideSportsbook2 = ConfigurationManager.AppSettings["IsShowSportsbook2"].Equals("0");
-            var hideCockfighting = ConfigurationManager.AppSettings["IsShowCockfighting"].Equals("0");
-            var hideCricket = ConfigurationManager.AppSettings["IsShowCricket"].Equals("0");
 
             if (hideVS)
             {
@@ -427,12 +423,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveProduct("Bingo");
-            }
-            
-            if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-            {
-                model.RemoveProduct("Bingo");
-            }
+            }            
 
             return model;
         }
@@ -450,169 +441,160 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="product">ProductStatuses item.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel RemoveEnableProducts(this CustomerModel model, ProductStatuses product)
+        private static CustomerModel RemoveEnableAndPtforProducts(this CustomerModel model, ProductStatuses product)
         {
             if (!product.SyncBingo ||
                 !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveEnableProduct("EnableBingo");
+
+                if (!product.UplineStatuses.SyncBingo || !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
+                {
+                    model.RemoveProduct("Bingo")
+                        .RemoveCrossLevelProduct("Bingo");
+                }
             }
 
             if (!product.SyncCasino)
             {
                 model.RemoveEnableProduct("EnableCasino");
+
+                if (!product.UplineStatuses.SyncCasino)
+                {
+                    model.RemoveProduct("Casino")
+                        .RemoveCrossLevelProduct("Casino");
+                }
             }
 
             if (!product.SyncLiveCasino)
             {
                 model.RemoveEnableProduct("EnableLiveCasino");
+
+                if (!product.UplineStatuses.SyncLiveCasino)
+                {
+                    model.RemoveProduct("LiveCasino")
+                        .RemoveCrossLevelProduct("LiveCasino");
+                }
             }
 
             if (product.HideVirtualSports)
             {
                 model.RemoveEnableProduct("EnableVirtualSports");
+
+                if (product.UplineStatuses.HideVirtualSports)
+                {
+                    model.RemoveProduct("VirtualSports")
+                        .RemoveCrossLevelProduct("VirtualSports");
+                }
             }
 
             if (product.HideEsports)
             {
-                model.RemoveEnableProduct("EnableESports");
+                model.RemoveEnableProduct("EnableESports")
+                    .RemoveProduct("ESports")
+                    .RemoveCrossLevelProduct("ESports");
             }
 
             model.RemoveEnableProduct("EnableGoldDeluxe");
 
             if (product.HideGoldDeluxe)
             {                
-                model.RemoveProduct("GoldDeluxe");
+                model.RemoveProduct("GoldDeluxe")
+                    .RemoveCrossLevelProduct("GoldDeluxe");
             }
 
             if (product.HideColossusBets)
             {
-                model.RemoveEnableProduct("EnableColossusBets");
-                model.RemoveProduct("ColossusBets");
+                model.RemoveEnableProduct("EnableColossusBets")
+                    .RemoveProduct("ColossusBets");
             }
 
             if (product.HideSportsbook2)
             {
-                model.RemoveProduct("Sportsbook2");
+                model.RemoveProduct("Sportsbook2")
+                    .RemoveCrossLevelProduct("Sportsbook2");
             }
 
             if (product.HideCockfighting)
             {
-                model.RemoveEnableProduct("EnableCockfighting");
-                model.RemoveProduct("Cockfighting");
+                model.RemoveEnableProduct("EnableCockfighting")
+                    .RemoveProduct("Cockfighting")
+                    .RemoveCrossLevelProduct("Cockfighting");
             }
 
             if (product.HideCricket)
             {
-                model.RemoveProduct("Cricket");
+                model.RemoveProduct("Cricket")
+                    .RemoveCrossLevelProduct("Cricket");
             }
 
-            if ((product.UplineStatuses.HideAllbet || !product.UplineStatuses.SyncAllbet) && product.RoleId < 4)
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId, 
+                0, 
+                product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet, 
+                product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet, 
+                product.HideAllbet, 
+                product.SyncAllbet, 
+                product.SyncAllbetDownlines, 
+                "Allbet");
+
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId,
+                2,
+                product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
+                product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
+                product.HideVoidbridge,
+                product.SyncVoidbridge,
+                product.SyncVoidbridgeDownlines,
+                "MacauGames");
+
+            return model;
+        }
+
+        private static CustomerModel RemoveEnableAndEditProductDCS(
+            this CustomerModel model, 
+            int roleId, 
+            int productIndex,
+            bool hideUpline,
+            bool syncUpline,
+            bool hide,
+            bool sync,
+            bool syncDownline,
+            string productName)
+        {
+            if (hideUpline || !syncUpline)
             {
-                model.RemoveEnableProduct("EnableAllbet");
-                model.RemoveProduct("Allbet");
-                model.PersonalInfo.IsShowProducts.ElementAt(0).Value = false;
+                model.RemoveEnableProduct("Enable" + productName);
+                if (roleId != 4 && (hideUpline || !syncUpline) ||
+                    (roleId == 4 && hideUpline))
+                {
+                    model.RemoveProduct(productName);
+                }
+
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;
+
+                if (roleId == 1)
+                {
+                    model.RemoveCrossLevelProduct(productName);
+                }
             }
-            else if ((!product.HideAllbet && !product.SyncAllbet) || !product.SyncAllbetDownlines)                 
+            else if ((!sync && roleId == 1 && !hideUpline && syncUpline) || (!hide && !sync) || !syncDownline)
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
-                model.RemoveEnableProduct("EnableAllbet");
-                if (product.RoleId == 4)
-                {
-                    model.PersonalInfo.IsShowProducts.ElementAt(1).Value = false;
-                }
+                model.RemoveEnableProduct("Enable" + productName);                
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;                
 
-                if(product.RoleId == 1)
+                if (roleId == 1)
                 {
-                    var index = -1;
-                    for (int i = 0; i < model.Setting.SuperPts.Count; i++)
-                    {
-                        if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Contains("Allbet"))
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    if (index != -1)
-                    {
-                        model.Setting.SuperPts.RemoveAt(index);
-                        model.Setting.MasterPts.RemoveAt(index);
-                    }
+                    model.RemoveCrossLevelProduct(productName);
                 }
             }
 
             return model;
         }
-
-        /// <summary>
-        /// Removes Detail products.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="product">ProductStatuses item.</param>
-        /// <returns>CustomerModel object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel RemoveProducts(this CustomerModel model, ProductStatuses product)
-        {
-            if (product.RoleId != 1 && product.DisableTransfer)
-            {
-                model.RemoveProduct("Transfer");
-            }
-
-            if (!product.UplineStatuses.SyncBingo ||
-                !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-            {
-                model.RemoveProduct("Bingo");
-            }
-
-            if (!product.UplineStatuses.SyncCasino)
-            {
-                model.RemoveProduct("Casino");
-            }
-
-            if (!product.UplineStatuses.SyncLiveCasino)
-            {
-                model.RemoveProduct("LiveCasino");
-            }
-
-            if (product.UplineStatuses.HideVirtualSports)
-            {
-                model.RemoveProduct("VirtualSports");
-            }
-
-            if (product.HideKeno)
-            {
-                model.RemoveProduct("Keno");
-            }
-
-            if (product.HideGoldDeluxe)
-            {
-                model.RemoveProduct("GoldDeluxe");
-            }
-
-            if (product.HideColossusBets)
-            {
-                model.RemoveProduct("ColossusBets");
-            }
-
-            if (product.HideSportsbook2)
-            {
-                model.RemoveProduct("Sportsbook2");
-            }
-
-            if (product.HideCockfighting)
-            {
-                model.RemoveProduct("Cockfighting");
-            }
-
-            if (product.HideCricket)
-            {
-                model.RemoveProduct("Cricket");
-            }
-
-            return model;
-        }
-
+        
         /// <summary>
         /// Gets upper statuses.
         /// </summary>
@@ -620,7 +602,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="product">Product statuses.</param>
         /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static CustomerModel UplineStatuses(this CustomerModel model, ProductStatuses product)
+        private static CustomerModel DisableUplineStatuses(this CustomerModel model, ProductStatuses product)
         {
             if (!product.UplineStatuses.AllowDoubleComm)
             {
@@ -692,6 +674,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.DisableProduct("EnableAllbet");
             }
 
+            if (product.UplineStatuses.DisableVoidbridge)
+            {
+                model.DisableProduct("EnableMacauGames");
+            }
+
             return model;
         }
 
@@ -716,6 +703,26 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (index != -1)
             {
                 model.Setting.Details.RemoveAt(index);
+            }
+
+            return model;
+        }
+
+        private static CustomerModel RemoveCrossLevelProduct(this CustomerModel model, string key)
+        {
+            int index = -1;
+            for (int i = 0; i < model.Setting.SuperPts.Count; i++)
+            {
+                if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1)
+            {
+                model.Setting.MasterPts.RemoveAt(index);
             }
 
             return model;
@@ -826,7 +833,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 else
                 {
                     result = new MemberService().GetData(recommend, custId, null, null, null);
-                    upperInfo = result = new AgentService().GetData(mrecommend, uplineId, null, null, null);
+                    upperInfo = new AgentService().GetData(mrecommend, uplineId, null, null, null);
                 }
 
                 return model.GetProductStatusDetail(roleId, result, upperInfo);
@@ -878,10 +885,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || 
                 ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
+
             product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
-            product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllbet");
-            product.SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllbetDownline");
+            product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllBet");
+            product.SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllBetDownline");
             product.DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet");
+
+            product.HideVoidbridge = ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0" || result.Rows[0].ToBoolean("HideVoidBridge");
+            product.SyncVoidbridge = result.Rows[0].ToBoolean("SyncedVoidBridge");
+            product.SyncVoidbridgeDownlines = result.Rows[0].ToBoolean("SyncedVoidBridgeDownline");
+            product.DisableVoidbridge = result.Rows[0].ToBoolean("DisableVoidBridge");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -907,12 +921,38 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.HideVirtualSports = upperInfo.Rows[0].ToBoolean("hideVirtualSports");
                 product.UplineStatuses.DisableHRFixedOdds = upperInfo.Rows[0].ToBoolean("disableHRFixedOdds");
                 product.UplineStatuses.DisableESports = upperInfo.Rows[0].ToBoolean("DisableESports");
+
                 product.UplineStatuses.DisableAllbet = upperInfo.Rows[0].ToBoolean("DisableAllbet");
                 product.UplineStatuses.HideAllbet = upperInfo.Rows[0].ToBoolean("HideAllbet");
-                product.UplineStatuses.SyncAllbet = upperInfo.Rows[0].ToBoolean("SyncedAllbet");
+                product.UplineStatuses.SyncAllbet = upperInfo.Rows[0].ToBoolean("SyncedAllBet");
+
+                product.UplineStatuses.DisableVoidbridge = upperInfo.Rows[0].ToBoolean("DisableVoidBridge");
+                product.UplineStatuses.HideVoidbridge = upperInfo.Rows[0].ToBoolean("HideVoidBridge");
+                product.UplineStatuses.SyncVoidbridge = upperInfo.Rows[0].ToBoolean("SyncedVoidBridge");
             }
 
             return product;
-        }        
+        }
+
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName)
+        {
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = true });
+            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
+            {
+                var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
+                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
+                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + productName });
+                model.Setting.EnableItems.Add(new ObjectInfo
+                {
+                    Key = "Enable" + productName.Replace(" ", string.Empty),
+                    Value = !isDisabled,
+                    Text = productName,
+                    Tooltip = "Enable " + productName
+                });
+            }
+
+            return model;
+        }
     }
 }
