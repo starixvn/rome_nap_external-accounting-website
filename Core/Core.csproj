@@ -40,7 +40,6 @@
       <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    </Reference>
     <Reference Include="CasinoSetting">
       <HintPath>..\Dependencies\CasinoSetting.dll</HintPath>
     </Reference>
