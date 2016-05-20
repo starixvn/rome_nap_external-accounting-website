@@ -53,6 +53,7 @@ public static class eFunctions
     public const string CustomerList = "CustomerList";
     public const string Keno = "Keno";
     public const string KenoSetting = "KenoSetting";
+    public const string ShowEnableEsports = "ShowEnableEsports";
     public const string EnableESports = "EnableESports";
     public const string KenoBetting = "KenoBetting";
     public const string OpenSuper = "OpenSuper";
