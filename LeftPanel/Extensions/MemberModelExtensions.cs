@@ -177,7 +177,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("Cockfighting", "Cockfighting");
             model.AddDetailProductForCrossLevel("Cricket", "Cricket");
             model.AddDetailProductForCrossLevel("Allbet", "Allbet");
-            model.AddDetailProductForCrossLevel("Voidbridge", "Voidbridge");
+            model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
 
             return model;
         }
