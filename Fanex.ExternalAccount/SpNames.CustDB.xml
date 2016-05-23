@@ -3,7 +3,7 @@
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="E-Sports">
-    <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Keno">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
