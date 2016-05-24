@@ -32,19 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-   <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3-SuperMasterOnMember1\lib\net40\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CasinoLibrary, Version=1.0.2.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CasinoSetting">
       <HintPath>..\Dependencies\CasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="CasinoTempLibrary, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11-GameKindCurrency3\lib\net40\CasinoTempLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary-ThirdParty.1.0.2.11\lib\net40\CasinoTempLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="CasinoUtility">
@@ -74,11 +74,11 @@
       <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3-SuperMasterOnMember1\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.4-DeniedSuperOnMember\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.4\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.LiveCasinoSetting">
