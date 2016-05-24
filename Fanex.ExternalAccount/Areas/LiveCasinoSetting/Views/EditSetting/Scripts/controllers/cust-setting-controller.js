@@ -21,6 +21,9 @@ if (fanex.liveCasinoSetting) {
             $scope.isReadOnly = settingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
             $scope.isEditMultiple = settingContext.Customers && settingContext.Customers.length > 0;
             $scope.isEditDirect = (settingContext.Upline.Level - settingContext.Customer.Level === 1);
+            $scope.isUpdateWinLimitPartial = !((settingContext.Upline.Level === fanex.liveCasinoSetting.customerLevel.Super || settingContext.Upline.Level === fanex.liveCasinoSetting.customerLevel.Master) && settingContext.Customer.Level === fanex.liveCasinoSetting.customerLevel.Member);
+            $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
+
             if ($scope.isEditMultiple
                 && settingContext.Customer.IsSyncLiveCasino
                 && $scope.isEditDirect) {

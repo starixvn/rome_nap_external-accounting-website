@@ -60,7 +60,8 @@
         //var cur = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll($('#maxTransfer').val(), ',', ''));
         //max = isNaN(max) ? 0 : max;
 
-        if (isNaN(cur1) || cur1 < min1 || (max1 != 0 && cur1 > max1)) {
+        var isSuperMasterOnMember = (CustomerModel.uplineRoleId == 4 || CustomerModel.uplineRoleId == 3) && CustomerModel.roleId == 1;
+        if (!isSuperMasterOnMember && (isNaN(cur1) || cur1 < min1 || (max1 != 0 && cur1 > max1))) {
             Validators.show($('#maxTransfer1').get(0), 'Maximum Loss must be between ' + $('#minCredit1').html() + ' and ' + $('#maxCredit1').html(), undefined, undefined, 1500);
             return;
         }

@@ -128,6 +128,10 @@ fanex.goldDeluxeSetting.config([ '$httpProvider', function ($httpProvider) {
     };
 
     $httpProvider.defaults.transformRequest.push(spinnerFunction);
+    var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+    if (antiXSRFToken.length > 0) {
+        $httpProvider.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value
+    }
 }]);
 
 fanex.goldDeluxeSetting.factory('loadingInterceptor', [ '$q', function ($q) {
