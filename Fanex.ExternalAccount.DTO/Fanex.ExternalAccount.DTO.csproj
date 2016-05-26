@@ -65,7 +65,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="GroupCurrency.cs" />
-    <Compile Include="MaintenanceInfo.cs" />
     <Compile Include="ePolicy.cs" />
     <Compile Include="Report\DailyWinLoss.cs" />
     <Compile Include="Report\WinLossDetail.cs" />
