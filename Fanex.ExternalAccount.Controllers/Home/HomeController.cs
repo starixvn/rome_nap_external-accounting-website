@@ -28,13 +28,8 @@ namespace Fanex.ExternalAccount.Controllers.Home
     /// </summary>
     public class HomeController : BaseController
     {
-        private IMaintenanceService _maintenanceService;
-
-        public HomeController()
-        {
-            _maintenanceService = new MaintenanceService();
-        }
-
+        private IMaintenanceService _maintenanceService = new MaintenanceService();
+        
         /// <summary>
         /// Home page.
         /// </summary>
