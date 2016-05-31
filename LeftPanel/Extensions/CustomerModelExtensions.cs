@@ -540,7 +540,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                2,
+                1,
                 product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
                 product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
                 product.HideVoidbridge,
@@ -562,17 +562,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool syncDownline,
             string productName)
         {
+            var showProductIndex = productIndex == 0 ? productIndex : productIndex + 1;
+
             if (hideUpline || !syncUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
-                if (roleId != 4 && (hideUpline || !syncUpline) ||
+                if ((roleId != 4 && (hideUpline || !syncUpline)) ||
                     (roleId == 4 && hideUpline))
                 {
                     model.RemoveProduct(productName);
                 }
 
-                model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
-                model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
 
                 if (roleId == 1)
                 {
@@ -583,8 +585,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("Enable" + productName);                
-                model.PersonalInfo.IsShowProducts.ElementAt(productIndex).Value = false;
-                model.PersonalInfo.IsShowProducts.ElementAt(productIndex + 1).Value = false;                
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;                
 
                 if (roleId == 1)
                 {
@@ -938,7 +940,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = true });
-            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
+            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && 
+                Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);

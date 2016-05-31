@@ -9,42 +9,49 @@
 // <history>
 //   <change who="Andy.Nguyen" date="2012.12.13">Created</change>
 // </history>
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Security;
+using CaptchaMvc.HtmlHelpers;
+using Fanex.CustomerSetting.Module.Core.Web;
+using Fanex.ExternalAccount.Core.Context;
+using Fanex.ExternalAccount.DTO;
+using Fanex.ExternalAccount.DTO.UserControl;
+using Fanex.ExternalAccount.Service.Impl.Login;
+using Fanex.ExternalAccount.Service.Interface.Login;
+using Fanex.ExternalAccount.Utilities;
+using Fanex.ExternalAccount.ViewModel.Account;
+using ONEbook.UM.Models;
+using ONEbook.UM.Services;
+using ONEbook.UM.Services.Impl;
+
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web.Mvc;
-    using System.Web.Security;
-    using CaptchaMvc.HtmlHelpers;
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.Login;
-    using Fanex.ExternalAccount.Service.Interface.Login;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.Account;
-
     /// <summary>
     /// Account controller.
     /// </summary>
     public class AccountController : CaptchaMvc.Controllers.DefaultCaptchaController
     {
-        private ILoginService _userService = null;
+        private ILoginService _userService;
 
-        private ICurrentSession _currentSession = null;
+        private ICurrentSession _currentSession;
 
-        private ICurrentContext _currentContext = null;
+        private ICurrentContext _currentContext;
 
-        private NoCaptchaSectionConfiguration _nocaptcha = null;
+        private IMaintenanceService _maintenanceService;
+
+        private NoCaptchaSectionConfiguration _nocaptcha;
 
         public AccountController()
         {
-            this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
-            this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
-            this._userService = new LoginService();
-            this._nocaptcha = NoCaptchaSectionConfiguration.Instance;
+            _currentContext = new Core.Context.CurrentContext();
+            _currentSession = new Core.Context.CurrentSession();
+            _userService = new LoginService();
+            _maintenanceService = new MaintenanceService();
+            _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
 
         /// <summary>
@@ -54,30 +61,28 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         [HttpGet]
         public ActionResult Login()
         {
-            ViewBag.ShowCaptcha = ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
+            ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
             Response.AppendHeader("Content-Encoding", "gzip");
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
-            var maintenanceInfo = Config.GetMaintenanceInfo();
-
-            if (maintenanceInfo.IsDownTime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
-                return this.RedirectToAction("Offline", "Account");
+                return RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                return this.RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                var group = this._currentSession.IsInternalAdmin ? this._userService.GroupList().First().GroupName : string.Empty;
+                var group = _currentSession.IsInternalAdmin ? _userService.GroupList().First().GroupName : string.Empty;
 
-                return this.Redirect("~/Home/Index/" + group);
+                return Redirect("~/Home/Index/" + group);
             }
 
-            return this.PartialView(new Login());
+            return PartialView(new Login());
         }
 
         /// <summary>
@@ -101,76 +106,76 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 isValidCaptcha = false;
             }
 
-            if ((this._nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
-                this._nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))) ||
-                ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt < 3 ||
-                !((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) ||
+            if ((_nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
+                _nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))) ||
+                ((Core.Context.CurrentSession)_currentSession).LoginAttempt < 3 ||
+                !((Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) ||
                 isValidCaptcha)
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
-                Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
+                Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
                 int custId = 0, onuserId = 0;
                 bool isIntAcc = true;
 
-                var result = this._userService.Login(
+                var result = _userService.Login(
                     model.UserName,
                     model.Password,
-                    new DTO.Request()
+                    new Request()
                     {
                         Browser = Request.Browser.Browser,
-                        CountryCode = this._currentContext.CountryCode,
-                        DomainName = this._currentContext.DomainName,
-                        IP = this._currentContext.Ip4Address,
-                        NetSessionId = this._currentSession.NetSessionId,
+                        CountryCode = _currentContext.CountryCode,
+                        DomainName = _currentContext.DomainName,
+                        IP = _currentContext.Ip4Address,
+                        NetSessionId = _currentSession.NetSessionId,
                         Platform = Request.Browser.Platform
                     },
                     out custId,
                     out onuserId,
                     out isIntAcc);
 
-                if (((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 &&
-                    !((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) &&
+                if (((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 &&
+                    !((Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) &&
                     (result == null || !result.IsSuccess || !isValidCaptcha))
                 {
-                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
-                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
+                    ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
+                    ((Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
                     ViewBag.ShowCaptcha = "none";
-                    return this.PartialView(model);
+                    return PartialView(model);
                 }
 
                 if (result != null && result.IsSuccess)
                 {
-                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
-                    var group = result.ResultData as Fanex.ExternalAccount.DTO.UserControl.Group;
+                    ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
+                    var group = result.ResultData as Group;
 
                     RegisterLoginTicket(model, custId, onuserId, isIntAcc, group);
 
-                    return isIntAcc || this._currentSession.IsITAdmin ? this.RedirectToAction("ExternalGroup", "Account") : this.RedirectToAction("Index", "Home");
+                    return isIntAcc || _currentSession.IsITAdmin ? RedirectToAction("ExternalGroup", "Account") : RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt) ||
-                        ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))
+                    if (string.IsNullOrWhiteSpace(((Core.Context.CurrentSession)_currentSession).UserAttempt) ||
+                        ((Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))
                     {
-                        ++((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt;
+                        ++((Core.Context.CurrentSession)_currentSession).LoginAttempt;
                     }
                     else
                     {
-                        ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
+                        ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
                     }
 
-                    ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
-                    ViewBag.ShowCaptcha = ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
-                    Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
-                    return this.PartialView(model);
+                    ((Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
+                    ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
+                    Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
+                    return PartialView(model);
                 }
             }
             else
             {
-                ViewBag.ShowCaptcha = ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
-                Fanex.ExternalAccount.Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
-                this._currentSession.UserName = string.Empty;
-                return this.PartialView(model);
+                ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
+                Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
+                _currentSession.UserName = string.Empty;
+                return PartialView(model);
             }
         }
 
@@ -182,7 +187,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         public ActionResult CaptchaImage(string prefix, bool noisy = true)
         {
-            return this.Content(new CaptchaResult().GetValiationImage(this.ControllerContext));
+            return Content(new CaptchaResult().GetValiationImage(ControllerContext));
         }
 
         #region Logout
@@ -193,18 +198,18 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         public ActionResult LogOff()
         {
-            int onuserId = this._currentSession.OnUserId;
+            int onuserId = _currentSession.OnUserId;
             if (onuserId > 0)
             {
-                return this.SignOut(onuserId, this._currentSession.UserName);
+                return SignOut(onuserId, _currentSession.UserName);
             }
             else
             {
-                this._currentContext.Context.Session.Abandon();
+                _currentContext.Context.Session.Abandon();
             }
 
             FormsAuthentication.SignOut();
-            return this.RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Account");
         }
 
         /// <summary>
@@ -213,14 +218,13 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>Integer object.</returns>
         public int ReCheckIn()
         {
-            var maintenanceInfo = Config.GetMaintenanceInfo();
-            int onuserId = this._currentSession.OnUserId;
+            int onuserId = _currentSession.OnUserId;
 
-            if (maintenanceInfo.IsDownTime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
-                if (this._currentSession.IsLogin)
+                if (_currentSession.IsLogin)
                 {
-                    this.SignOut(onuserId, this._currentSession.UserName);
+                    SignOut(onuserId, _currentSession.UserName);
                 }
 
                 return (int)StatusKickedOut.Maintenance;
@@ -236,13 +240,13 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             if (onuserId <= 0)
             {
-                this._currentContext.Context.Session.Abandon();
+                _currentContext.Context.Session.Abandon();
                 return (int)StatusKickedOut.KickedOut;
             }
 
             try
             {
-                this._userService.Recheckin(onuserId, out isKickOut);
+                _userService.Recheckin(onuserId, out isKickOut);
             }
             catch (Exception ex)
             {
@@ -256,7 +260,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             else
             {
-                this.SignOut(onuserId, this._currentSession.UserName);
+                SignOut(onuserId, _currentSession.UserName);
                 return (int)StatusKickedOut.KickedOut;
             }
         }
@@ -271,17 +275,16 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         public ActionResult Offline()
         {
-            var maintenanceInfo = Config.GetMaintenanceInfo();
-
-            if (maintenanceInfo.IsDownTime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
-                ViewBag.UmFromTime = maintenanceInfo.TimeFrom;
-                ViewBag.UmToTime = maintenanceInfo.TimeTo;
-                return this.PartialView();
+                UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
+                ViewBag.UmFromTime = underMaintenanceTime.From;
+                ViewBag.UmToTime = underMaintenanceTime.To;
+                return PartialView();
             }
             else
             {
-                return this.RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -291,8 +294,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>Integer number.</returns>
         public int ReCheckInOffline()
         {
-            var maintenanceInfo = Config.GetMaintenanceInfo();
-            if (!maintenanceInfo.IsDownTime)
+            if (!_maintenanceService.IsUnderMaintenance())
             {
                 return (int)StatusKickedOut.Login;
             }
@@ -312,31 +314,29 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             Response.AppendHeader("Content-Encoding", "gzip");
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
-            var maintenanceInfo = Config.GetMaintenanceInfo();
-
-            if (maintenanceInfo.IsDownTime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
-                return this.RedirectToAction("Offline", "Account");
+                return RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                return this.RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                return this.RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
-            if (!this._currentSession.IsInternalAdmin)
+            if (!_currentSession.IsInternalAdmin)
             {
-                return this.RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.GroupList = this._userService.GroupList();
+            ViewBag.GroupList = _userService.GroupList();
 
-            return this.PartialView();
+            return PartialView();
         }
 
         /// <summary>
@@ -345,31 +345,29 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>External groups.</returns>
         public ActionResult ExternalGroupList()
         {
-            var maintenanceInfo = Config.GetMaintenanceInfo();
-
-            if (maintenanceInfo.IsDownTime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
-                return this.RedirectToAction("Offline", "Account");
+                return RedirectToAction("Offline", "Account");
             }
 
-            if (!this._currentSession.IsLogin && !this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                return this.RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
 
-            if (this._currentSession.IsLogin && this._currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                return this.RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
-            var result = this._userService.GroupList();
+            var result = _userService.GroupList();
 
-            return this.Json(result.Select(o => new { GroupId = o.GroupID, GroupName = o.GroupName }).ToArray(), JsonRequestBehavior.AllowGet);
+            return Json(result.Select(o => new { GroupId = o.GroupID, GroupName = o.GroupName }).ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public void ResetLoginAttempt()
         {
-            ((Fanex.ExternalAccount.Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
+            ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
         }
 
         /// <summary>
@@ -382,15 +380,15 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         {
             try
             {
-                this._userService.Logout(onuserId, userName);
-                this._currentContext.Context.Session.Abandon();
+                _userService.Logout(onuserId, userName);
+                _currentContext.Context.Session.Abandon();
 
-                return this.RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
             catch (Exception ex)
             {
                 Logs.Error(ex);
-                return this.RedirectToAction("Error", "Shared");
+                return RedirectToAction("Error", "Shared");
             }
         }
 
@@ -404,15 +402,15 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <param name="group">Group object.</param>
         private void RegisterLoginTicket(Login model, int custId, int onuserId, bool isIntAcc, Group group)
         {
-            this._currentSession.UserName = model.UserName;
-            this._currentSession.UserId = custId;
-            this._currentSession.CustId = custId;
-            this._currentSession.OnUserId = onuserId;
-            this._currentSession.IsInternalAdmin = isIntAcc;
-            this._currentSession.GroupId = group.GroupID;
-            this._currentSession.CurrencyGroup = group.GroupName;
-            this._currentSession.IsITAdmin = group.GroupID == 1;
-            this._currentSession.FromSystem = 3;
+            _currentSession.UserName = model.UserName;
+            _currentSession.UserId = custId;
+            _currentSession.CustId = custId;
+            _currentSession.OnUserId = onuserId;
+            _currentSession.IsInternalAdmin = isIntAcc;
+            _currentSession.GroupId = group.GroupID;
+            _currentSession.CurrencyGroup = group.GroupName;
+            _currentSession.IsITAdmin = group.GroupID == 1;
+            _currentSession.FromSystem = 3;
         }
     }
 }

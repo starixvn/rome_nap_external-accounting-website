@@ -12,9 +12,6 @@ namespace Fanex.ExternalAccount.Utilities
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Web;
-    using Fanex.ExternalAccount.DTO;
-    using Sunplus.UMControllerLibrary;
 
     /// <summary>
     /// TODO: Update summary.
@@ -51,7 +48,7 @@ namespace Fanex.ExternalAccount.Utilities
                 return GetValue("LBUrl");
             }
         }
-        
+
         public static string TimeFrom
         {
             get;
@@ -221,31 +218,6 @@ namespace Fanex.ExternalAccount.Utilities
 
                 return adminIds;
             }
-        }
-
-        /// <summary>
-        /// Gets maintenance information.
-        /// </summary>
-        /// <returns>MaintenanceInfo object.</returns>
-        public static MaintenanceInfo GetMaintenanceInfo()
-        {
-            var maintenanceInfo = new MaintenanceInfo { IsDownTime = false };
-            var umservice = new ONEbook.UM.Services.Impl.MaintenanceService();
-
-            if (umservice.IsUnderMaintenance() && !umservice.IsPassUnderMaintenance() && !HttpContext.Current.Request.IsLocal)
-            {
-                var timeInfo = umservice.GetUnderMaintenanceTime();
-                maintenanceInfo.IsDownTime = true;
-                maintenanceInfo.TimeFrom = Config.TimeFrom = timeInfo.From;
-                maintenanceInfo.TimeTo = Config.TimeTo = timeInfo.To;
-            }
-
-            if ((umservice.IsUnderMaintenance() && umservice.IsPassUnderMaintenance()) || HttpContext.Current.Request.IsLocal)
-            {
-                maintenanceInfo.IsDownTime = false;
-            }
-
-            return maintenanceInfo;
         }
 
         private static string GetValue(string key)
