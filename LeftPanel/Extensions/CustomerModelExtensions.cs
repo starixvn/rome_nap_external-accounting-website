@@ -27,6 +27,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// TODO: Update summary.
@@ -863,6 +864,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 return product;
             }
 
+            var athenticationService = new ExternalAccountAuthenticate();
+
             product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
             product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
             product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
@@ -880,6 +883,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds");
             product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
             product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
+            product.HideEsports = !athenticationService.AllowReadByAuthenticationParam(eFunctions.ShowEnableEsports) || Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
             product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
