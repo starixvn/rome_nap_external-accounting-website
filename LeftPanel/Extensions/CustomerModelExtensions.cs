@@ -27,7 +27,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Core.Context;
 
     /// <summary>
     /// TODO: Update summary.
