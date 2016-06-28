@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MinStringLengthAttribute.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="MinStringLengthAttribute.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

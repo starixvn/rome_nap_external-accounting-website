@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="WorkbookExtension.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="WorkbookExtension.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="MaxStringLengthAttribute.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="MaxStringLengthAttribute.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

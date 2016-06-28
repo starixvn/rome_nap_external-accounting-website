@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="UserController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="UserController.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // <summary>
 // User controller

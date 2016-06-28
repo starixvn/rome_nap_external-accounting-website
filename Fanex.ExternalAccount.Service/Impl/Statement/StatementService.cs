@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="StatementService.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="StatementService.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

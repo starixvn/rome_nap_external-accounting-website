@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="WinLossDetailController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="WinLossDetailController.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // <summary>
 // For current session info

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="LoginService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="LoginService.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IMemberDao.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="IMemberDao.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

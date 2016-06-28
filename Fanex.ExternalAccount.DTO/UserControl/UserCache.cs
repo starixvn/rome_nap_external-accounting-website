@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UserCache.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="UserCache.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

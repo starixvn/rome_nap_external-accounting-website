@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="EASDisplayAttribute.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="EASDisplayAttribute.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

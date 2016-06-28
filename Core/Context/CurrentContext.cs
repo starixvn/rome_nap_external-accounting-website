@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="CurrentContext.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="CurrentContext.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // <summary>
 // Context of current session

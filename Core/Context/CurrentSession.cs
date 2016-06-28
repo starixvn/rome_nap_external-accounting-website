@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="CurrentSession.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="CurrentSession.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // <summary>
 // Session info for current logging in

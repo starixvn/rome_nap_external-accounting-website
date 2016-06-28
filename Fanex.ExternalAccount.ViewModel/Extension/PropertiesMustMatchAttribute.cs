@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="PropertiesMustMatchAttribute.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="PropertiesMustMatchAttribute.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

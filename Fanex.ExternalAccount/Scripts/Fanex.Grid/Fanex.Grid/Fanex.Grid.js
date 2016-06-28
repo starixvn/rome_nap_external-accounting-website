@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="Fanex.Grid.js" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="Fanex.Grid.js" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 

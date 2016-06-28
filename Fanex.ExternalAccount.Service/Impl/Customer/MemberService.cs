@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="MemberService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="MemberService.cs" company="">
+// Copyright (c) . All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>

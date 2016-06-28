@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HSSFSheetExtension.cs" company="Nexcel Solution Co.Ltd">
+// <copyright file="HSSFSheetExtension.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

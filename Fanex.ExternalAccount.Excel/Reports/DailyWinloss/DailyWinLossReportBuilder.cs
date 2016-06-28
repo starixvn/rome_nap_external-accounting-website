@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="DailyWinLossReportBuilder.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="DailyWinLossReportBuilder.cs" company="">
+// Copyright (c) . All rights reserved.
 // Creator: Simon
 // </copyright>
 // --------------------------------------------------------------------------
