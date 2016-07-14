@@ -139,7 +139,8 @@
 
         $.ajax({
             url: toUrl(actionName),
-            data: data,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
             type: 'post',
             dataType: 'json'
         })
