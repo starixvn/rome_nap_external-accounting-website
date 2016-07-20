@@ -95,6 +95,8 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
@@ -115,6 +117,8 @@
                 <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
+                </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -153,6 +157,8 @@
                   <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
                   <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
                 </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
@@ -171,6 +177,8 @@
                 <BetType id="3" name="Over/Under" resourcekey="lblOverUnder">
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
+                </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -193,6 +201,8 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
@@ -209,6 +219,8 @@
                 <BetType id="1" name="Handicap" resourcekey="lblHandicapFC">
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
+                </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -230,6 +242,8 @@
                 <BetType id="2" name="Odd/Even" resourcekey="lblOddEven">
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
+                </BetType>
+				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
