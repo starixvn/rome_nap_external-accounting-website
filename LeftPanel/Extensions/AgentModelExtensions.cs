@@ -129,7 +129,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
                             new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                             new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
-                            new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
+                            new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" },
+                            new ObjectInfo { Key = "EnableAllbet", Text = "Enable Allbet" }
                         },
                 Details = new List<ObjectInfo>
                         {
@@ -152,7 +153,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
-            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet");
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
 
             return model;

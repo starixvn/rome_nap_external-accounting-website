@@ -423,7 +423,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
             {
                 model.RemoveProduct("Bingo");
-            }            
+            }
 
             return model;
         }
@@ -498,7 +498,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.RemoveEnableProduct("EnableGoldDeluxe");
 
             if (product.HideGoldDeluxe)
-            {                
+            {
                 model.RemoveProduct("GoldDeluxe")
                     .RemoveCrossLevelProduct("GoldDeluxe");
             }
@@ -529,13 +529,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             model.RemoveEnableAndEditProductDCS(
-                product.RoleId, 
-                0, 
-                product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet, 
-                product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet, 
-                product.HideAllbet, 
-                product.SyncAllbet, 
-                product.SyncAllbetDownlines, 
+                product.RoleId,
+                0,
+                product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet,
+                product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet,
+                product.HideAllbet,
+                product.SyncAllbet,
+                product.SyncAllbetDownlines,
                 "Allbet");
 
             model.RemoveEnableAndEditProductDCS(
@@ -552,8 +552,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         }
 
         private static CustomerModel RemoveEnableAndEditProductDCS(
-            this CustomerModel model, 
-            int roleId, 
+            this CustomerModel model,
+            int roleId,
             int productIndex,
             bool hideUpline,
             bool syncUpline,
@@ -584,9 +584,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             else if ((!sync && roleId == 1 && !hideUpline && syncUpline) || (!hide && !sync) || !syncDownline)
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
-                model.RemoveEnableProduct("Enable" + productName);                
+                model.RemoveEnableProduct("Enable" + productName);
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;                
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
 
                 if (roleId == 1)
                 {
@@ -596,7 +596,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             return model;
         }
-        
+
         /// <summary>
         /// Gets upper statuses.
         /// </summary>
@@ -887,7 +887,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
             product.HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
-            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") || 
+            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") ||
                 ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
 
@@ -939,23 +939,34 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return product;
         }
 
-        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName)
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, bool checkboxType = true)
         {
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = true });
-            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 && 
+            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 &&
                 Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
                 model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + productName });
-                model.Setting.EnableItems.Add(new ObjectInfo
+                if (checkboxType == true)
                 {
-                    Key = "Enable" + productName.Replace(" ", string.Empty),
-                    Value = !isDisabled,
-                    Text = productName,
-                    Tooltip = "Enable " + productName
-                });
+                    model.Setting.EnableItems.Add(new ObjectInfo
+                    {
+                        Key = "Enable" + productName.Replace(" ", string.Empty),
+                        Value = !isDisabled,
+                        Text = productName,
+                        Tooltip = "Enable " + productName
+                    });
+                }
+                else
+                {
+                    model.Setting.EditItems.Add(new ObjectInfo
+                    {
+                        Key = "Enable" + productName.Replace(" ", string.Empty),
+                        Text = "Enable " + productName
+                    });
+                }
             }
 
             return model;
