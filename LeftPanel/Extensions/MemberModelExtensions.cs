@@ -116,7 +116,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                             new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
                             new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" },
-                            new ObjectInfo { Key = "EnableAllbet", Text = "Enable Allbet" }
                         },
                 Details = new List<ObjectInfo>
                         {
