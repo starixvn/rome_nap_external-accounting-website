@@ -231,6 +231,7 @@
     <Compile Include="Reports\WinLossDetail\ProductCollectionConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\ProductElementConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\ProductsConfiguration.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossDetailHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">

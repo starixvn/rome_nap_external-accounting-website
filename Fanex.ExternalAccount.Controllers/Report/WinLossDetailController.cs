@@ -82,8 +82,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
             this._filterParams = new FilterController().AsCollection();
             var list = base.GetProductList();
-            this._filterParams.ToList().ForEach(o => 
-            { 
+            this._filterParams.ToList().ForEach(o =>
+            {
                 this._products += o.Key + o.Value;
                 list.ForEach(p =>
                 {
@@ -131,11 +131,19 @@ namespace Fanex.ExternalAccount.Controllers.Report
             else
             {
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 5, srecommend = this._srecommend, mrecommend = this._mrecommend, 
-                        recommend = this._recommend, rows = string.Empty, sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 5,
+                        srecommend = this._srecommend,
+                        mrecommend = this._mrecommend,
+                        recommend = this._recommend,
+                        rows = string.Empty,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
         }
@@ -145,7 +153,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public void GetExportToExcelWinLossDetail()
-        {            
+        {
             string subFileName = this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls";
             bool getNew = false;
             this.GetRequestPage();
@@ -165,10 +173,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
                     level = !getNew ? this._viewlevel : 1;
                     var builder = new WinLossDetailReportAgBuilder(
-                        this._cache.Get<List<WinLossDetailAg>>(this._cacheList), 
-                        false, 
-                        !getNew ? this._viewlevel : 1, 
-                        this._fromDate.ToString("MMM, dd yyyy"), 
+                        this._cache.Get<List<WinLossDetailAg>>(this._cacheList),
+                        false,
+                        !getNew ? this._viewlevel : 1,
+                        this._fromDate.ToString("MMM, dd yyyy"),
                         this._toDate.ToString("MMM, dd yyyy"));
                     var excelStream = builder.Build(this._formatedProducts);
                     if (excelStream != null)
@@ -189,10 +197,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
 
                     level = !getNew ? this._viewlevel : 2;
                     var builder = new WinLossDetailReportMAgBuilder(
-                        this._cache.Get<List<WinLossDetailMAg>>(this._cacheList), 
-                        false, 
-                        level, 
-                        this._fromDate.ToString("MMM, dd yyyy"), 
+                        this._cache.Get<List<WinLossDetailMAg>>(this._cacheList),
+                        false,
+                        level,
+                        this._fromDate.ToString("MMM, dd yyyy"),
                         this._toDate.ToString("MMM, dd yyyy"));
                     var excelStream = builder.Build(this._formatedProducts);
                     if (excelStream != null)
@@ -214,10 +222,10 @@ namespace Fanex.ExternalAccount.Controllers.Report
                     level = level == 4 ? level : !getNew ? this._viewlevel : 3;
 
                     var builder = new WinLossDetailReportBuilder(
-                        this._cache.Get<List<WinLossDetail>>(this._cacheList), 
-                        false, 
-                        level, 
-                        this._fromDate.ToString("MMM, dd yyyy"), 
+                        this._cache.Get<List<WinLossDetail>>(this._cacheList),
+                        false,
+                        level,
+                        this._fromDate.ToString("MMM, dd yyyy"),
                         this._toDate.ToString("MMM, dd yyyy"));
                     var excelStream = builder.Build(this._formatedProducts);
                     if (excelStream != null)
@@ -229,7 +237,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 }
             }
         }
-        
+
         /// <summary>
         /// Checks input customer values.
         /// </summary>
@@ -264,9 +272,18 @@ namespace Fanex.ExternalAccount.Controllers.Report
             if (!this.CheckSearchCustomer())
             {
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, rows = string.Empty, sortingorderlist = this._sortingOrderList 
+                    new
+                    {
+                        viewlevel = 4,
+                        supername = this._username,
+                        mastername = string.Empty,
+                        agentname = string.Empty,
+                        rows = string.Empty,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
                     });
             }
 
@@ -277,11 +294,19 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 4, supername = this._username, mastername = string.Empty, agentname = string.Empty, 
-                        rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 4,
+                        supername = this._username,
+                        mastername = string.Empty,
+                        agentname = string.Empty,
+                        rows = this._listWinLossDetail,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
             else if (this._roleId == 3)
@@ -291,17 +316,21 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 3, 
-                        supername = string.Empty, 
-                        mastername = this._username, 
-                        agentname = string.Empty, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        rows = this._listWinLossDetail, 
-                        sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 3,
+                        supername = string.Empty,
+                        mastername = this._username,
+                        agentname = string.Empty,
+                        srecommend = this._srecommend,
+                        mrecommend = this._mrecommend,
+                        rows = this._listWinLossDetail,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
             else if (this._roleId == 2)
@@ -311,18 +340,22 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetailMAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailMAg>>(this._cacheList, this._listWinLossDetailMAg, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 2, 
-                        supername = string.Empty, 
-                        mastername = string.Empty, 
-                        agentname = this._username, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        recommend = this._recommend, 
-                        rows = this._listWinLossDetailMAg, 
-                        sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 2,
+                        supername = string.Empty,
+                        mastername = string.Empty,
+                        agentname = this._username,
+                        srecommend = this._srecommend,
+                        mrecommend = this._mrecommend,
+                        recommend = this._recommend,
+                        rows = this._listWinLossDetailMAg,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
             else
@@ -332,18 +365,22 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetailAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailAg>>(this._cacheList, this._listWinLossDetailAg, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 1, 
-                        supername = string.Empty, 
-                        mastername = string.Empty, 
-                        agentname = string.Empty, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        recommend = this._recommend, 
-                        rows = this._listWinLossDetailAg, 
-                        sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 1,
+                        supername = string.Empty,
+                        mastername = string.Empty,
+                        agentname = string.Empty,
+                        srecommend = this._srecommend,
+                        mrecommend = this._mrecommend,
+                        recommend = this._recommend,
+                        rows = this._listWinLossDetailAg,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
         }
@@ -361,7 +398,12 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
-                    new { viewlevel = 3, srecommend = this._custId, rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList }, 
+                    new { viewlevel = 3, srecommend = this._custId, rows = this._listWinLossDetail, sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
             else if (this._viewlevel == 3)
@@ -370,11 +412,18 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetailMAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailMAg>>(this._cacheList, this._listWinLossDetailMAg, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 2, srecommend = this._srecommend, mrecommend = this._custId, rows = this._listWinLossDetailMAg, 
-                        sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 2,
+                        srecommend = this._srecommend,
+                        mrecommend = this._custId,
+                        rows = this._listWinLossDetailMAg,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
             else
@@ -383,15 +432,19 @@ namespace Fanex.ExternalAccount.Controllers.Report
                 this._totalPages = (this._listWinLossDetailAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailAg>>(this._cacheList, this._listWinLossDetailAg, 120);
                 return this.JsonBase(
-                    new 
-                    { 
-                        viewlevel = 1, 
-                        srecommend = this._srecommend, 
-                        mrecommend = this._mrecommend, 
-                        recommend = this._custId, 
-                        rows = this._listWinLossDetailAg, 
-                        sortingorderlist = this._sortingOrderList
-                    }, 
+                    new
+                    {
+                        viewlevel = 1,
+                        srecommend = this._srecommend,
+                        mrecommend = this._mrecommend,
+                        recommend = this._custId,
+                        rows = this._listWinLossDetailAg,
+                        sortingorderlist = this._sortingOrderList,
+                        tooltips = new
+                        {
+                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                        }
+                    },
                     new Newtonsoft.Json.JsonSerializerSettings());
             }
         }

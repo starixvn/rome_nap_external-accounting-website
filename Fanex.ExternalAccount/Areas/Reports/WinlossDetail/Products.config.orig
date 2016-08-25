@@ -2,7 +2,7 @@
 <report>
   <products>
     <product id="showAll" name="All" />
-<<<<<<< 2fb933fd05d098a8e13f11fa28b402b3cc8ea699
+<<<<<<< cb3d00faab900c0e98cb59dd2e6ec57f5030e6df
     <product id="showSB" name="Sportsbook" productid="1" />
     <product id="showCasino" name="Casino" productid="6" />
     <product id="showRB" name="Racing" productid="2" />
@@ -30,8 +30,8 @@
     <product id="showGD" name="Gold Deluxe" />
     <product id="showCB" name="Colossus Bets" />
     <product id="showCF" name="Cockfighting" hide="true" />
-    <product id="showAB" name="Allbet" showForGroups="ACCINDO,AccDDD,ACCIN,INDOBS,INDO2,INDO56,INDOWIN,INDO56B,ACCUUS,ACCTHAI,ACCTHAI2,ACCTHAI56,ACCTHAI99" />
+    <product id="showAB" name="Allbet" showForGroups="ACCINDO,AccDDD,ACCIN,INDOBS,INDO2,INDO56,INDOWIN,INDO56B,ACCUUS,ACCTHAI,ACCTHAI2,ACCTHAI56,ACCTHAI99" hide="false" />
     <product id="showVB" name="Macau Games" showForGroups="ACCINDO,ACCIN,INDOBS,INDO2,INDO56,INDOWIN,INDO56B,ACCUUS,ACCTHAI,ACCTHAI2,ACCTHAI56,ACCTHAI99" />
->>>>>>> #61857 - Next
+>>>>>>> #63088 - Report Information Tooltip
   </products>
 </report>
