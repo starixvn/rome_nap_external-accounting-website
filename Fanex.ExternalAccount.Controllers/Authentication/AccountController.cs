@@ -65,6 +65,11 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             Response.AppendHeader("Content-Encoding", "gzip");
             Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
+            if (Request.QueryString[Config.InternalAgentUMToken] != null)
+            {
+                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
+            }
+
             if (_maintenanceService.IsUnderMaintenance())
             {
                 return RedirectToAction("Offline", "Account");
@@ -275,6 +280,11 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>ActionResult object.</returns>
         public ActionResult Offline()
         {
+            if (Request.QueryString[Config.InternalAgentUMToken] != null)
+            {
+                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
+            }
+
             if (_maintenanceService.IsUnderMaintenance())
             {
                 UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();

@@ -183,6 +183,14 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static string InternalAgentUMToken
+        {
+            get
+            {
+                return GetValue("int_agent_UMToken");
+            }
+        }
+
         public static string InternalLoginUrl
         {
             get

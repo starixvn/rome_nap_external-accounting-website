@@ -334,7 +334,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             var encryption = new RSACryptoPad.EncryptionThread();
             var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
             param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
-            var url = Config.InternalLoginUrl + "?params=" + param;
+            var url = string.Format("{0}?{1}params={2}", 
+                Config.InternalLoginUrl,
+                Session[Config.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
+                param);
 
             return this.JsonBase(new { errorCode = 0, url = url });
         }
