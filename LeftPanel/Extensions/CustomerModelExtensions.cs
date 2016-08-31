@@ -567,7 +567,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideUpline || !syncUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
-                if ((roleId != 4 && (hideUpline || !syncUpline)) ||
+                if ((roleId != 4) ||
                     (roleId == 4 && hideUpline))
                 {
                     model.RemoveProduct(productName);
@@ -581,7 +581,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     model.RemoveCrossLevelProduct(productName);
                 }
             }
-            else if ((!sync && roleId == 1 && !hideUpline && syncUpline) || (!hide && !sync) || !syncDownline)
+            else if ((!sync && roleId == 1) || (!hide && !sync) || !syncDownline)
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("Enable" + productName);
