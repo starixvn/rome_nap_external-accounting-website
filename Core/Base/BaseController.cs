@@ -32,10 +32,13 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-
-    /// <summary>
-    /// Base controller for controller to inherit.
-    /// </summary>
+    using CustomerSetting.Module.Core.Services.Impl;
+    using CustomerSetting.Module.Core.Criteria;
+    using System.Collections.Generic;
+    using Reports.WinLossDetail;
+    using CustomerSetting.Module.Core.Services.Interface;/// <summary>
+                                                         /// Base controller for controller to inherit.
+                                                         /// </summary>
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
@@ -475,6 +478,99 @@ namespace Fanex.ExternalAccount.Core.Base
                 default:
                     return "Super";
             }
+        }
+
+        protected bool HasSpecialSitePermissionOfAdminOnUserName(string username)
+        {
+            var permisisonService = new ServiceBase();
+            bool isSearchedCustomerBelongSpecialSite = permisisonService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username });
+            if (isSearchedCustomerBelongSpecialSite)
+            {
+                bool isInternalAdmin = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
+                if (isInternalAdmin)
+                {
+                    bool isHasAccessSpecialSitePermission = permisisonService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
+                    if (!isHasAccessSpecialSitePermission)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        protected bool IsSpecialSiteCustomer(string username)
+        {
+            var permissionService = new ServiceBase();
+            return permissionService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username });
+        }
+
+        protected List<KeyValuePair<string, string>> GetProductList()
+        {
+            var list = new List<KeyValuePair<string, string>>();
+            var products = ProductsConfiguration.Instance.ProductCollection;
+            IServiceBase permissionService = new ServiceBase();
+            bool isInternalAdmin = permissionService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
+            bool isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
+            foreach (ProductElementConfiguration product in products)
+            {
+                if (product.IsSpecial)
+                {
+                    if (!this.IsHiddenProduct(product) && (!isInternalAdmin || isAuthorized))
+                    {
+                        list.Add(new KeyValuePair<string, string>(
+                            product.Id,
+                            product.ProductId == 0 ? product.Name : this.GetProductNameFromRemotingRef(product.ProductId)));
+                    }
+                }
+                else
+                {
+                    if (!this.IsHiddenProduct(product))
+                    {
+                        list.Add(new KeyValuePair<string, string>(
+                            product.Id,
+                            product.ProductId == 0 ? product.Name : this.GetProductNameFromRemotingRef(product.ProductId)));
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        protected bool IsHiddenProduct(ProductElementConfiguration product)
+        {
+            if (product.Hide)
+            {
+                return true;
+            }
+
+            if (product.ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            var groups = product.ShowForGroups.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            var requestURL = Request != null ? Request.UrlReferrer.AbsolutePath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries) : new string[0];
+            var groupName = requestURL.Length == 0 || !CurrentSession.IsInternalAdmin ? CurrentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
+
+            foreach (var group in groups)
+            {
+                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase) ||
+                    groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase) ||
+                    groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase) ||
+                    groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        protected string GetProductNameFromRemotingRef(int productId)
+        {
+            return RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
         }
     }
 }

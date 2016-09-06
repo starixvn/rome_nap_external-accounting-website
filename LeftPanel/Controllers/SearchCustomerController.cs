@@ -9,10 +9,8 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using System;
-    using System.Collections;
-    using System.Data;
-    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Criteria;    
+    using CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -27,10 +25,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-
-    /// <summary>
-    /// Controller for left panel menu.    
-    /// </summary>
+    using System;
+    using System.Collections;
+    using System.Data;
+    using System.Web.Mvc;
+/// <summary>
+                                                   /// Controller for left panel menu.    
+                                                   /// </summary>
     public class SearchCustomerController : BaseController
     {
         private readonly ILeftPanelService _service = new LeftPanelService();
@@ -60,6 +61,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
+            if (!base.HasSpecialSitePermissionOfAdminOnUserName(id))
+            {
+                return this.Content("var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
+            }
 
             if (!this.IsBelong(uplineId, 0, id, true))
             {

@@ -75,9 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\dotless.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.404.96, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Client40, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.0-beta4\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
@@ -111,8 +111,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.0.0\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.5-Feature63012-01\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
@@ -136,8 +136,9 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.1\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Data">
-      <HintPath>..\Dependencies\Fanex.Data.dll</HintPath>
+    <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
@@ -162,8 +163,9 @@
     <Reference Include="Fanex.NAP.Core">
       <HintPath>..\Dependencies\Fanex.NAP.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.NAP.Framework">
-      <HintPath>..\Dependencies\Fanex.NAP.Framework.dll</HintPath>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.2\lib\net40\Fanex.PTEngine.dll</HintPath>
@@ -252,8 +254,9 @@
     <Reference Include="NPOI">
       <HintPath>..\Dependencies\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="RemotingRef">
-      <HintPath>..\Dependencies\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.9\lib\net40\RemotingRef.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
@@ -2889,12 +2892,16 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Areas\Reports\WinlossDetail\Products.config" />
+    <Content Include="Areas\Reports\WinlossDetail\Products.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Logs\LogsConfiguration.config" />
     <Content Include="Configurations\appSettings.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\connectionStrings.sit.config" />
+    <Content Include="Configurations\connectionStrings.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -2985,6 +2992,7 @@
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\variables.less" />
     <Content Include="Views\BettypeReference\Themes\style.less" />
     <Content Include="Views\Shared\_LayoutPtInfo.cshtml" />
+    <Content Include="Views\Shared\NoPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

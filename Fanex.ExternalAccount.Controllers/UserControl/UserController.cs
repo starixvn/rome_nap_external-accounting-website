@@ -109,7 +109,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
             return this.PartialViewBase(model);
         }
-        
+
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult Edit(int custId, string firstName, string lastName, int groupId)
         {
@@ -215,7 +215,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         #region Reset password for current logging in user
-                
+
         public ActionResult ResetPwdOwner(int userId, string pwd)
         {
             if (userId != CurrentSession.UserId)
@@ -272,7 +272,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
                 functionList = allowFunctions;
             }
-            
+
             var groupId = groups.Where(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault().GroupID;
 
             ViewBag.UserID = userId;
@@ -331,13 +331,22 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [HttpPost]
         public ActionResult InternalLogin(string username)
         {
-            var encryption = new RSACryptoPad.EncryptionThread();
-            var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
-            param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
-            var url = string.Format("{0}?{1}params={2}", 
-                Config.InternalLoginUrl,
-                Session[Config.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
-                param);
+            var url = string.Empty;
+            if (base.HasSpecialSitePermissionOfAdminOnUserName(username))
+            {
+                bool isSpecialSiteCustomer = base.IsSpecialSiteCustomer(username);
+                var encryption = new RSACryptoPad.EncryptionThread();
+                var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
+                param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
+                url = string.Format("{0}?{1}params={2}",
+                    isSpecialSiteCustomer ? Config.InternalLoginUrl2 : Config.InternalLoginUrl,
+                    Session[Config.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
+                    param);
+            }
+            else
+            {
+                url = Url.Content("~") + "Shared/NoPermission";
+            }
 
             return this.JsonBase(new { errorCode = 0, url = url });
         }
