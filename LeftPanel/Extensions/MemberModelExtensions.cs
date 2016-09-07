@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
+    using RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -138,6 +139,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true);
 
             return model;
         }
@@ -178,6 +180,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("Cricket", "Cricket");
             model.AddDetailProductForCrossLevel("Allbet", "Allbet");
             model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
+            model.AddDetailProductForCrossLevel("NG2", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
             return model;
         }
