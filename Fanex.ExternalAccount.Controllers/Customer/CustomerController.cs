@@ -490,13 +490,13 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 switch (roleId)
                 {
                     case Master:
-                        userInfo = this._superService.GetData(null, srecommend, null, null, null, groupName);
+                        userInfo = this._superService.GetData(CurrentSession.UserId, null, srecommend, null, null, null, groupName);
                         break;
                     case Agent:
-                        userInfo = this._masterService.GetData(srecommend, mrecommend, null, null, null);
+                        userInfo = this._masterService.GetData(CurrentSession.UserId, srecommend, mrecommend, null, null, null);
                         break;
                     case Member:
-                        userInfo = this._agentService.GetData(mrecommend, recommend, null, null, null);
+                        userInfo = this._agentService.GetData(CurrentSession.UserId, mrecommend, recommend, null, null, null);
                         break;
                 }
 
@@ -535,7 +535,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
-                this._superService.GetData(null, custId, enabled, closed, suspended, groupName);
+                this._superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
             var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
                 this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
@@ -556,7 +556,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true) ? new DataTable() :
-                this._masterService.GetData(srecommend, custId, enabled, closed, suspended);
+                this._masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
 
             var superId = Utils.ToInt32(srecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), superId, null, true);
@@ -607,7 +607,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
-                this._agentService.GetData(mrecommend, custId, enabled, closed, suspended);
+                this._agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), masterId, null, true);
@@ -658,7 +658,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !this.IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() :
-                this._memberService.GetData(recommend, custId, enabled, closed, suspended);
+                this._memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
 
             var agentId = Utils.ToInt32(recommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"].ToString(), agentId, null, true);
@@ -1033,7 +1033,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(custId), null, true) ? new DataTable() :
-                            this._superService.GetData(null, id, enabled, closed, suspended, groupName));
+                            this._superService.GetData(CurrentSession.UserId, null, id, enabled, closed, suspended, groupName));
                     }
 
                     break;
@@ -1043,7 +1043,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(srecommend), null, true) ? new DataTable() :
-                            this._masterService.GetData(srecommend, id, enabled, closed, suspended));
+                            this._masterService.GetData(CurrentSession.UserId, srecommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1053,7 +1053,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
-                            this._agentService.GetData(mrecommend, id, enabled, closed, suspended));
+                            this._agentService.GetData(CurrentSession.UserId, mrecommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1063,7 +1063,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     if (this._cache.Get<DataTable>(this._cacheList) == null)
                     {
                         this.SetCacheList(!this.IsBelong(groupName, Utils.ToInt32(recommend), null, true) ? new DataTable() :
-                            this._memberService.GetData(recommend, id, enabled, closed, suspended));
+                            this._memberService.GetData(CurrentSession.UserId, recommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1126,19 +1126,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 switch (roleId)
                 {
                     case 4:
-                        result = !IsBelong(groupName, custId, null, true) ? null : this._superService.GetData(null, custId == 0 ? id : custId, enabled, closed, suspended, groupName);
+                        result = !IsBelong(groupName, custId, null, true) ? null : this._superService.GetData(CurrentSession.UserId, null, custId == 0 ? id : custId, enabled, closed, suspended, groupName);
                         this._cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + username;
                         break;
                     case 3:
-                        result = !IsBelong(groupName, srecommend, null, true) ? null : this._masterService.GetData(srecommend, custId == 0 ? id : custId, enabled, closed, suspended);
+                        result = !IsBelong(groupName, srecommend, null, true) ? null : this._masterService.GetData(CurrentSession.UserId, srecommend, custId == 0 ? id : custId, enabled, closed, suspended);
                         this._cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended + username;
                         break;
                     case 2:
-                        result = !IsBelong(groupName, mrecommend, null, true) ? null : this._agentService.GetData(mrecommend, custId == 0 ? id : custId, enabled, closed, suspended);
+                        result = !IsBelong(groupName, mrecommend, null, true) ? null : this._agentService.GetData(CurrentSession.UserId, mrecommend, custId == 0 ? id : custId, enabled, closed, suspended);
                         this._cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended + username;
                         break;
                     default:
-                        result = !IsBelong(groupName, recommend, null, true) ? null : this._memberService.GetData(recommend, custId == 0 ? id : custId, enabled, closed, suspended);
+                        result = !IsBelong(groupName, recommend, null, true) ? null : this._memberService.GetData(CurrentSession.UserId, recommend, custId == 0 ? id : custId, enabled, closed, suspended);
                         this._cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended + username;
                         break;
                 }

@@ -33,7 +33,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
         /// <param name="closed">Close status.</param>
         /// <param name="suspended">Suspend status.</param>
         /// <returns>DataTable object.</returns>
-        public DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public DataTable GetData(
+            int? userId, 
+            int? recommend = null, 
+            int? custId = null, 
+            bool? enabled = null, 
+            bool? closed = null, 
+            bool? suspended = null)
         {
             var param = new Hashtable();
             param.Add("srecommend", recommend);
@@ -41,6 +47,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             param.Add("enabled", enabled);
             param.Add("closed", closed);
             param.Add("suspended", suspended);
+            param.Add("userid", userId);
 
             return DbHelper.ExecuteDataTable("EAS_CustomerSelBySAg", param);
         }

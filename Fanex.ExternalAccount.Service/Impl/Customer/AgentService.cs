@@ -34,6 +34,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
         /// <param name="suspended">Suspended status.</param>
         /// <returns>DataTable object.</returns>
         public System.Data.DataTable GetData(
+            int? userId,
             int? recommend = null, 
             int? custId = null, 
             bool? enabled = null, 
@@ -42,7 +43,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
         {
             try
             {
-                return this._dao.GetData(recommend, custId, enabled, closed, suspended);
+                return this._dao.GetData(userId, recommend, custId, enabled, closed, suspended);
             }
             catch (Exception ex)
             {

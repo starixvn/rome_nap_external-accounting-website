@@ -74,7 +74,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
             if (model != null)
             {
-                model.GetProductStatuses(uplineId, id);
+                model.GetProductStatuses(CurrentSession.UserId, uplineId, id);
             }
 
             string result = "var model = " + JsonConvert.SerializeObject(
