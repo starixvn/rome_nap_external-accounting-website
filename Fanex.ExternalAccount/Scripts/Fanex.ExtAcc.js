@@ -607,10 +607,10 @@ Fanex.ExtAcc = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+            if (Fanex.ExtAcc.AutoInsertCount < 2) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
+            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -620,10 +620,10 @@ Fanex.ExtAcc = {
                 console.log(data.responseText);
             }
 
-            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+            if (Fanex.ExtAcc.AutoInsertCount < 2) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
+            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -638,10 +638,10 @@ Fanex.ExtAcc = {
             dataType: 'json'
         })
         .success(function (result) {
-            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+            if (Fanex.ExtAcc.AutoInsertCount < 2) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
+            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
@@ -651,10 +651,10 @@ Fanex.ExtAcc = {
                 console.log(data.responseText);
             }
 
-            if (Fanex.ExtAcc.AutoInsertCount < 3) {
+            if (Fanex.ExtAcc.AutoInsertCount < 2) {
                 ++Fanex.ExtAcc.AutoInsertCount;
             }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
+            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
                 Fanex.ExtAcc.AutoInsertCount = 0;
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
