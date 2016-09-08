@@ -186,8 +186,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
 
-                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
-                                Fanex.ExtAcc.AutoInsertBingo(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
+                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());                                
                                 Fanex.ExtAcc.AutoInsertLiveCasino(result.custId, parseInt($('#parentId').val()), 4, $('#selectedGroupName').html());
 
                                 timeout = setInterval(function () {

@@ -628,38 +628,7 @@ Fanex.ExtAcc = {
                 Fanex.ExtAcc.AutoInsertCompleted = true;
             }
         });
-    },
-
-    AutoInsertBingo: function (custId, uplineId, uplineName) {
-        $.ajax({
-            url: resolveClientUrl('Customer/AutoInsertBingoPost'),
-            type: 'post',
-            data: { custId: custId, uplineId: uplineId, uplineName: uplineName },
-            dataType: 'json'
-        })
-        .success(function (result) {
-            if (Fanex.ExtAcc.AutoInsertCount < 3) {
-                ++Fanex.ExtAcc.AutoInsertCount;
-            }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
-                Fanex.ExtAcc.AutoInsertCount = 0;
-                Fanex.ExtAcc.AutoInsertCompleted = true;
-            }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') {
-                console.log(data.responseText);
-            }
-
-            if (Fanex.ExtAcc.AutoInsertCount < 3) {
-                ++Fanex.ExtAcc.AutoInsertCount;
-            }
-            if (Fanex.ExtAcc.AutoInsertCount >= 3) {
-                Fanex.ExtAcc.AutoInsertCount = 0;
-                Fanex.ExtAcc.AutoInsertCompleted = true;
-            }
-        });
-    },
+    },   
 
     AutoInsertLiveCasino: function (custId, parentId, uplineRoleId, groupName) {
         $.ajax({

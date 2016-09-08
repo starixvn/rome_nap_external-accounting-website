@@ -9,15 +9,14 @@
 
 namespace Fanex.ExternalAccount.Core.Base
 {
-    using System;
-    using System.Web.Mvc;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Bingo;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using System;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Base class for customer controller.
@@ -124,69 +123,7 @@ namespace Fanex.ExternalAccount.Core.Base
         }
 
         #endregion
-
-        #region Bingo
-
-        /// <summary>
-        /// Auto insert bingo.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="uplineName">Upper name of customer.</param>
-        /// <returns>ActionResult object.</returns>
-        public ActionResult AutoInsertBingoPost(int custId, int uplineId, string uplineName)
-        {
-            var isSuccess = false;
-            var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-
-            if (custInfo != null && custInfo.UplineBingoSync && !custInfo.BingoSync)
-            {
-                LiveCasinoLibrary.SBAgent.Customer customer = new LiveCasinoLibrary.SBAgent.Customer();
-
-                try
-                {
-                    isSuccess = customer.AutoInsertAccount(
-                        CasinoNo,
-                        custInfo.IBCCustID,
-                        custInfo.UserName,
-                        custInfo.SIBCCustID,
-                        custInfo.MIBCCustID,
-                        custInfo.AIBCCustID,
-                        custInfo.RoleId.ToString(),
-                        custInfo.Currency,
-                        DateTime.Now,
-                        this.CurrentContext.Ip4Address,
-                        uplineId,
-                        CurrentSession.UserName,
-                        BaseController.FromSystem);
-                }
-                catch (Exception e)
-                {
-                    Logs.Error(e);
-                }
-            }
-
-            if (isSuccess)
-            {
-                var err = string.Empty;
-                var result = BingoManager.Instance.UpdateBingoStatus(
-                    custId, 
-                    this.CurrentSession.UserId, 
-                    0, 
-                    true, 
-                    custInfo.BingoDisabled, 
-                    true, 
-                    this.CurrentContext.Ip4Address, 
-                    "En", 
-                    ref err);
-
-                return this.JsonBase(new { ErrorCode = result, ErrorMessage = err });
-            }
-
-            return this.JsonBase(new { ErrorCode = 999, ErrorMessage = string.Empty });
-        }
-
-        #endregion
+       
 
         /// <summary>
         /// Gets customer info.
