@@ -2910,6 +2910,7 @@
     <Content Include="Configurations\connectionStrings.ng2.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\ONEbook.NG2.API.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>

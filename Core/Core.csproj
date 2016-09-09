@@ -90,6 +90,14 @@
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Module.Logs, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Module.NG2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.NG2.1.0.0-NAP-01\lib\net40\Fanex.Module.NG2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.NAP.Core">
       <HintPath>..\Dependencies\Fanex.NAP.Core.dll</HintPath>
     </Reference>
@@ -165,6 +173,10 @@
       <HintPath>..\packages\RemotingRef.1.0.0.9\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ONEbook.NG2.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.0-NAP\lib\net40\ONEbook.NG2.API.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -218,6 +230,7 @@
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Base\ControllerExtentions.cs" />
     <Compile Include="Base\CustomerBase.cs" />
+    <Compile Include="Base\DcsEntity.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Context\CasinoAPILogger.cs" />
     <Compile Include="Context\CurrentContext.cs" />

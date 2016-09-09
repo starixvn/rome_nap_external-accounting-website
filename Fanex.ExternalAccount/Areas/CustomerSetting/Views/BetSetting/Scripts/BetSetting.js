@@ -68,3 +68,12 @@ function LoadVoidbridge() {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);
 };
+
+function LoadNG2() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=23&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html());
+    document.getElementById('ng2').src = url;
+    setTimeout(function () {
+        Fanex.CustomerSetting.Core.UnBlockUI();
+    }, 1000);
+};

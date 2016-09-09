@@ -18,6 +18,7 @@
     var HideCricket = ViewBag.HideCricket || ConfigurationManager.AppSettings["IsShowCricket"] == "0";
     var HideAllbet = ViewBag.HideAllbet || ConfigurationManager.AppSettings["IsShowAllbet"] == "0";
     var HideVoidbridge = ViewBag.HideVoidbridge || ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0";
+    var HideNG2 = ViewBag.HideNG2 || ConfigurationManager.AppSettings["IsShowNG2"] == "0";
     var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2, hideCockfighting = HideCockfighting, hideCricket = HideCricket };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -51,6 +52,11 @@
         @if (!HideVoidbridge)
         {
             <li id="tab16"><a href="#tabs-16">Macau Games</a></li>
+        }
+
+        @if (!HideNG2)
+        {
+            <li id="tab17"><a href="#tabs-17">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a></li>
         }
     </ul>
     <div id="tabs-1" class="divTab">
@@ -124,6 +130,13 @@
     {
         <div id="tabs-16" class="divTab" style="padding: 0px">
             <iframe id="voidbridgeFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
+        </div>
+    }
+
+    @if (!HideNG2)
+    {
+        <div id="tabs-17" class="divTab" style="padding: 0px">
+            <iframe id="ng2Frame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
 </div>
