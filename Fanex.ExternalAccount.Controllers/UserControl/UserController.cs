@@ -341,13 +341,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
-            var service = new ServiceBase();
-            var isSpecialSiteCustomer = service.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria
-            {
-                UserName = username
-            });
-
-            var url = string.Format(
+                url = string.Format(
                 "{0}?{1}params={2}", 
                 isSpecialSiteCustomer ? ConfigurationManager.AppSettings["int_agent_url2"] : Config.InternalLoginUrl,
                 Session[Config.InternalAgentUMToken] == null ? string.Empty : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),

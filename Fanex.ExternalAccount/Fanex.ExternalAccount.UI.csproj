@@ -2903,7 +2903,7 @@
     <Content Include="Configurations\appSettings.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\connectionStrings.sit.config">
+    <Content Include="Configurations\connectionStrings.sit.config" />
     <Content Include="Configurations\appSettings.ng2.config">
       <SubType>Designer</SubType>
     </Content>
