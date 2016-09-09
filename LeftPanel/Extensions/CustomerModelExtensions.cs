@@ -562,16 +562,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool syncDownline,
             string productName)
         {
+            var showProductIndex = productIndex == 0 ? productIndex : productIndex + 1;
+
             if (((roleId == 4 || roleId == 3 || roleId == 2) && hide == true)
                 || (roleId == 1 && hideUpline == true))
             {
                 model.RemoveEnableProduct("Enable" + productName);
                 model.RemoveProduct(productName);
 
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
+
                 return model;
             }
-
-            var showProductIndex = productIndex == 0 ? productIndex : productIndex + 1;
 
             if (hideUpline || !syncUpline)
             {
