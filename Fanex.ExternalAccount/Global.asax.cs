@@ -118,20 +118,20 @@ namespace Fanex.ExternalAccount
         /// Processes application error.
         /// </summary>
         /// <param name="sender">Object is performed.</param>
-        /// <param name="e">Event is sent.</param>
-        protected void Application_Error(object sender, EventArgs e)
-        {
-            var ex = Server.GetLastError();
-            if (ex.GetType() != typeof(System.Web.HttpException))
-            {
-                ex.Write();
+        ///// <param name="e">Event is sent.</param>
+        //protected void Application_Error(object sender, EventArgs e)
+        //{
+        //    var ex = Server.GetLastError();
+        //    if (ex.GetType() != typeof(System.Web.HttpException))
+        //    {
+        //        ex.Write();
 
-                if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
-                {
-                    Response.Redirect("~/Shared/Error");
-                }
-            }
-        }
+        //        if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
+        //        {
+        //            Response.Redirect("~/Shared/Error");
+        //        }
+        //    }
+        //}
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
