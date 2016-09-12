@@ -9,7 +9,7 @@
 
 namespace Fanex.ExternalAccount.Utilities
 {
-    using Fanex.Module.Logs.Services;
+    using Fanex.Logging;
 
     /// <summary>
     /// Logs object.
@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Utilities
     {
         public static void Error(System.Exception ex, bool includeQuery = true)
         {
-            ex.Write();
+            LogService.Error(ex.Message);
         }
     }
 }
