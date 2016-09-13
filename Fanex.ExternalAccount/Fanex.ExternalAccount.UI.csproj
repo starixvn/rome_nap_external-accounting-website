@@ -1690,6 +1690,9 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
+    <Content Include="SpNames.CustDB.sit.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="SpNames.CustDB.xml">
       <SubType>Designer</SubType>
     </Content>

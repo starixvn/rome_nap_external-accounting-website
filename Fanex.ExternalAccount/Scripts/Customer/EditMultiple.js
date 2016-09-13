@@ -169,6 +169,16 @@
             };
         }
 
+        if (!this.HideNG2) {
+            menuItems.ng2 = {
+                name: "Edit Multiple " + ng2Text,
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleNG2(4, 3);
+                }
+            };
+        }
+
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
