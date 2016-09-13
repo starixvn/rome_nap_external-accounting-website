@@ -3004,6 +3004,7 @@
     <Content Include="Web.ng2.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Shared\NoPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
