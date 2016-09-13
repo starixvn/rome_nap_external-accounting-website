@@ -76,7 +76,7 @@ namespace Fanex.ExternalAccount.Core.Base
 
         protected const string UAT = "UAT";
         protected const string PRO = "LIVE";
-                
+
         #endregion Constant
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// Session of current logging in session.
         /// </summary>
         private readonly ICurrentSession _currentSession;
-                
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseController"/> class.
         /// </summary>
@@ -255,7 +255,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="closed">Closed status.</param>
         /// <param name="suspended">Suspended status.</param>
         protected void UpdateCasinoStatus2(int custId, bool closed, bool suspended)
-        {   
+        {
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
@@ -329,7 +329,7 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             var loginService = new LoginService();
             var userInfo = new UserService().GetUserById(CurrentSession.UserId);
-            
+
             if (CurrentSession.GroupId != userInfo.GroupID)
             {
                 CurrentSession.IsInternalAdmin = loginService.CheckExternalGroup(CurrentSession.UserId, 11, "ExternalGroup");
@@ -442,7 +442,7 @@ namespace Fanex.ExternalAccount.Core.Base
             {
                 return table;
             }
-                        
+
             foreach (DataRow row in table.Rows)
             {
                 string ip = row.ToString(fieldName);
@@ -480,11 +480,10 @@ namespace Fanex.ExternalAccount.Core.Base
             }
         }
 
-        protected bool HasSpecialSitePermissionOfAdminOnUserName(string username)
+        protected bool CanInternalLogin(string username, bool isSpecialSiteCustomer)
         {
             var permisisonService = new ServiceBase();
-            bool isSearchedCustomerBelongSpecialSite = permisisonService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username });
-            if (isSearchedCustomerBelongSpecialSite)
+            if (isSpecialSiteCustomer)
             {
                 bool isInternalAdmin = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
                 if (isInternalAdmin)

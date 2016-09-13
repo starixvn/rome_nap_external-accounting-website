@@ -61,7 +61,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
-            if (!base.HasSpecialSitePermissionOfAdminOnUserName(id))
+            bool isSpecialSiteCustomer = base.IsSpecialSiteCustomer(id);
+            if (base.CanInternalLogin(id, isSpecialSiteCustomer))
             {
                 return this.Content("var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
             }
