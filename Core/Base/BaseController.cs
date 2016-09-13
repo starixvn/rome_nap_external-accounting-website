@@ -480,7 +480,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
         }
 
-        protected bool CanInternalLogin(string username, bool isSpecialSiteCustomer)
+        protected bool IsAdminHasPermissionOnCustomer(string username, bool isSpecialSiteCustomer)
         {
             var permisisonService = new ServiceBase();
             if (isSpecialSiteCustomer)

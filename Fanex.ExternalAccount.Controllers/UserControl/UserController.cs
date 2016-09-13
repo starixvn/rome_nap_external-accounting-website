@@ -333,7 +333,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             var url = string.Empty;
             bool isSpecialSiteCustomer = base.IsSpecialSiteCustomer(username);
-            if (base.CanInternalLogin(username, isSpecialSiteCustomer))
+            if (base.IsAdminHasPermissionOnCustomer(username, isSpecialSiteCustomer))
             {
                 var encryption = new RSACryptoPad.EncryptionThread();
                 var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
