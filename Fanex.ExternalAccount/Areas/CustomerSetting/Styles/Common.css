@@ -93,6 +93,33 @@ input[type=text]
 	max-height: 180px;
 	overflow: auto;
 }
+
+.notes {
+    color: #ff5411;
+    font-size: 13px;
+    background-color: #ffedc1;
+    border-radius: 3px;
+    border: 1px solid #d2a243;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+    .notes .title-icon {
+        background-image: url("../Images/warning-icn.png");
+        display: inline-block;
+        width: 22px;
+        height: 18px;
+        vertical-align: middle;
+    }
+
+    .notes .title-text {
+    }
+
+    .notes .note-text {
+        margin: 5px 0;
+        margin-left: 25px;
+    }
+
 .buttonPopup, .ui-button, button[type=button]
 {
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEdJREFUeNpMi0EOgEAMAgn+3q/5Dd9gNlkFl9qDh6YMYbb9OHmNyXk/NEwLhE0lG4u/H8bKcnP1qn28YrWXLm5t/9c9/AowAL0JSAVSVq3tAAAAAElFTkSuQmCC) repeat-x scroll 5px center !important;
