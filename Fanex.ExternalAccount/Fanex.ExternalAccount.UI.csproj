@@ -111,8 +111,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.5-Feature63012-01\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.5\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
