@@ -370,9 +370,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="groupName">Group name.</param>
         /// <param name="username">Username of customer.</param>
         /// <returns>CustomerModel object.</returns>
-        public static CustomerModel GetProductStatuses(this CustomerModel model, string groupName, string username)
+        public static CustomerModel GetProductStatuses(this CustomerModel model, int userId, string groupName, string username)
         {
-            ProductStatuses product = model.Get3rdPartyProducts(groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+            ProductStatuses product = model.Get3rdPartyProducts(userId, groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.GetSuperMasterPtsOnMember(product);
             model.RemoveEnableAndPtforProducts(product);
 
@@ -801,7 +801,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <param name="username">Username to search.</param>
         /// <param name="uplineId">Upper customer id.</param>
         /// <returns>ProductStatuses object.</returns>
-        private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, string groupName, string username, int uplineId = 0)
+        private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, int userId, string groupName, string username, int uplineId = 0)
         {
             IReportService report = new ReportService();
 
@@ -820,22 +820,22 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
                 if (roleId == 4)
                 {
-                    result = new SuperService().GetData(null, custId, null, null, null, groupName);
+                    result = new SuperService().GetData(userId, null, custId, null, null, null, groupName);
                 }
                 else if (roleId == 3)
                 {
-                    result = new MasterService().GetData(srecommend, custId, null, null, null);
-                    upperInfo = new SuperService().GetData(null, uplineId, null, null, null, groupName);
+                    result = new MasterService().GetData(userId, srecommend, custId, null, null, null);
+                    upperInfo = new SuperService().GetData(userId, null, uplineId, null, null, null, groupName);
                 }
                 else if (roleId == 2)
                 {
-                    result = new AgentService().GetData(mrecommend, custId, null, null, null);
-                    upperInfo = new MasterService().GetData(srecommend, uplineId, null, null, null);
+                    result = new AgentService().GetData(userId, mrecommend, custId, null, null, null);
+                    upperInfo = new MasterService().GetData(userId, srecommend, uplineId, null, null, null);
                 }
                 else
                 {
-                    result = new MemberService().GetData(recommend, custId, null, null, null);
-                    upperInfo = new AgentService().GetData(mrecommend, uplineId, null, null, null);
+                    result = new MemberService().GetData(userId, recommend, custId, null, null, null);
+                    upperInfo = new AgentService().GetData(userId, mrecommend, uplineId, null, null, null);
                 }
 
                 return model.GetProductStatusDetail(roleId, result, upperInfo);

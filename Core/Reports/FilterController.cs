@@ -1,15 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="FilterController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// For current session info
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-namespace Fanex.ExternalAccount.Core.Reports
+﻿namespace Fanex.ExternalAccount.Core.Reports
 {
     using System;
     using System.Collections.Generic;
@@ -19,10 +8,11 @@ namespace Fanex.ExternalAccount.Core.Reports
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
     using WinLossDetail;
-
-    /// <summary>
-    /// Report controller.
-    /// </summary>
+    using CustomerSetting.Module.Core.Services.Impl;
+    using CustomerSetting.Module.Core.Services.Interface;
+    using CustomerSetting.Module.Core.Criteria;/// <summary>
+                                               /// Report controller.
+                                               /// </summary>
     public partial class FilterController : BaseController
     {
         /// <summary>
@@ -32,12 +22,21 @@ namespace Fanex.ExternalAccount.Core.Reports
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             var list = new List<KeyValuePair<string, bool>>();
-            var products = ProductsConfiguration.Instance.ProductCollection;
-            foreach (ProductElementConfiguration product in products)
+            //var products = ProductsConfiguration.Instance.ProductCollection;
+            //foreach (ProductElementConfiguration product in products)
+            //{
+            //    if (!this.IsHiddenProduct(product) && !product.Id.Equals("showAll"))
+            //    {
+            //        list.Add(new KeyValuePair<string, bool>(product.Id.ToLower(), CheckRequest.GetBooleanRequest(product.Id, true)));
+            //    }
+            //}
+
+            var products = base.GetProductList();
+            foreach (KeyValuePair<string, string> product in products)
             {
-                if (!this.IsHiddenProduct(product) && !product.Id.Equals("showAll"))
+                if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    list.Add(new KeyValuePair<string, bool>(product.Id.ToLower(), CheckRequest.GetBooleanRequest(product.Id, true)));
+                    list.Add(new KeyValuePair<string, bool>(product.Key.ToLower(), CheckRequest.GetBooleanRequest(product.Key, true)));
                 }
             }
 
@@ -50,17 +49,7 @@ namespace Fanex.ExternalAccount.Core.Reports
         /// <returns>ActionResult object.</returns>
         public ActionResult ProductsList()
         {
-            var list = new List<KeyValuePair<string, string>>();
-            var products = ProductsConfiguration.Instance.ProductCollection;
-            foreach (ProductElementConfiguration product in products)
-            {
-                if (!this.IsHiddenProduct(product))
-                {
-                    list.Add(new KeyValuePair<string, string>(product.Id, product.Name));
-                }
-            }
-
-            return this.JsonBase(list, new Newtonsoft.Json.JsonSerializerSettings());
+            return this.JsonBase(this.GetProductList(), new Newtonsoft.Json.JsonSerializerSettings());
         }
 
         /// <summary>
@@ -78,41 +67,11 @@ namespace Fanex.ExternalAccount.Core.Reports
 
             IReportService reportService = new ReportService();
             var users = reportService.GetSuggestedUserName(
-                CurrentSession.CustId, 
-                CheckRequest.GetStringRequest("username", string.Empty), 
+                CurrentSession.CustId,
+                CheckRequest.GetStringRequest("username", string.Empty),
                 CheckRequest.GetStringRequest("groupname", string.Empty));
-            
+
             return this.JsonBase(users, new Newtonsoft.Json.JsonSerializerSettings());
         }
-
-        public bool IsHiddenProduct(ProductElementConfiguration product)
-        {
-            if (product.Hide)
-            {
-                return true;
-            }
-
-            if (product.ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            var groups = product.ShowForGroups.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            var requestURL = Request != null ? Request.UrlReferrer.AbsolutePath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries) : new string[0];
-            var groupName = requestURL.Length == 0 || !CurrentSession.IsInternalAdmin ? CurrentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
-
-            foreach (var group in groups)
-            {
-                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
-                {
-                    return false;
-                }
-            }
-                        
-            return true;
-        }        
     }
 }

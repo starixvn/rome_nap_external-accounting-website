@@ -40,6 +40,24 @@ namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
             }
         }
 
+        [ConfigurationProperty("productid", IsRequired = false, DefaultValue = 0)]
+        public int ProductId
+        {
+            get
+            {
+                return (int)base["productid"];
+            }
+        }
+
+        [ConfigurationProperty("isspecial", IsRequired = false, DefaultValue = false)]
+        public bool IsSpecial
+        {
+            get
+            {
+                return (bool)base["isspecial"];
+            }
+        }
+
         [ConfigurationProperty("showForGroups", IsRequired = false, DefaultValue = "*")]
         public string ShowForGroups
         {

@@ -34,11 +34,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
         /// <param name="closed">Close status.</param>
         /// <param name="suspended">Suspend status.</param>
         /// <returns>DataTable object.</returns>
-        public System.Data.DataTable GetData(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public System.Data.DataTable GetData(int? userId, int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             try
             {
-                return this._dao.GetData(recommend, custId, enabled, closed, suspended);
+                return this._dao.GetData(userId, recommend, custId, enabled, closed, suspended);
             }
             catch (Exception ex)
             {

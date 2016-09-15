@@ -81,17 +81,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
             this._filterParams = new FilterController().AsCollection();
-
-            var list = new List<KeyValuePair<string, string>>();
-            var products = ProductsConfiguration.Instance.ProductCollection;
-            foreach (ProductElementConfiguration product in products)
-            {
-                if (!product.Hide)
-                {
-                    list.Add(new KeyValuePair<string, string>(product.Id, product.Name));
-                }
-            }
-
+            var list = base.GetProductList();
             this._filterParams.ToList().ForEach(o => 
             { 
                 this._products += o.Key + o.Value;
