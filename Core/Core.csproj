@@ -95,7 +95,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.NG2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.1.0.0-NAP-01\lib\net40\Fanex.Module.NG2.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.NG2.1.0.0-NAP-02\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.NAP.Core">
@@ -170,7 +170,7 @@
       <HintPath>..\Dependencies\NotifyPropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.NG2.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.0-NAP\lib\net40\ONEbook.NG2.API.dll</HintPath>
+      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.0-NAP-04\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
