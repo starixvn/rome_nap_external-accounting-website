@@ -188,7 +188,7 @@ using Newtonsoft.Json.Serialization;
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP);
+                this.AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
@@ -298,7 +298,7 @@ using Newtonsoft.Json.Serialization;
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP);
+                this.AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
@@ -408,7 +408,7 @@ using Newtonsoft.Json.Serialization;
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP);
+                this.AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });

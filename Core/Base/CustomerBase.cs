@@ -130,14 +130,14 @@ namespace Fanex.ExternalAccount.Core.Base
         #endregion
        
 
-        protected Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId)
+        protected Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId, int currencyId)
         {
             var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
 
             if (dcsStatuses.IsSyncedUpline)
             {
                 ING2StatusService service = new NG2StatusService();
-                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId);
+                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId);
             }
 
             return new Result();
