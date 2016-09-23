@@ -461,7 +461,7 @@ using Newtonsoft.Json.Serialization;
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]);
             ViewBag.HideAllbet = Utils.ToBoolean(result.Rows[0]["HideAllBet"]);
             ViewBag.HideVoidbridge = Utils.ToBoolean(result.Rows[0]["HideVoidBridge"]);
-            ViewBag.HideNG2 = !this.GetDcsStatuses(custId, roleId, 23).IsSyncedUpline;
+            ViewBag.HideNG2 = !this.GetDcsStatuses(custId, id, 23).IsSyncedUpline;
 
             return PartialViewBase();
         }
