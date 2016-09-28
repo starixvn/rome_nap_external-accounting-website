@@ -1,5 +1,4 @@
 ﻿/// <reference path="../_references.js" />
-
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
@@ -7,7 +6,6 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 if (typeof Fanex.ExtAcc.Customer == 'undefined') {
     Fanex.ExtAcc.Customer = {};
 }
-
 
 Fanex.ExtAcc.Customer.SuperAddNewMaster = {
     customer: null,
@@ -184,17 +182,17 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                         type: 'post'
                     })
                     .success(function (result) {
-                   
                         if (result.errorCode == 0) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
 
-                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());                                
+                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
                                 Fanex.ExtAcc.AutoInsertLiveCasino(result.custId, parseInt($('#parentId').val()), 4, $('#selectedGroupName').html());
 
-                                timeout = setInterval(function () {                                    
+                                timeout = setInterval(function () {
                                     if (Fanex.ExtAcc.AutoInsertCompleted) {
                                         clearInterval(timeout);
+
                                         Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
                                     }
                                 }, 100);

@@ -675,13 +675,18 @@
         $scope.EnableDCS(22, 'Macau Games', enable, id);
     };
 
-    $scope.EnableDCS = function (productId, productName, enable, id) {
+    $scope.EnableNG2 = function (enable, id) {
+        $scope.EnableDCS(23, 'NG2', enable, id, parent.ng2Text, 350, 250);
+    };
+
+    $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
             '&userid=' + parent.userId + '&product=' + productId + '&productid=' + productName + '&level=' + $scope.model.personalInfo.roleId.value +
             '&enable=' + enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 500, 150, false, function () {
+        var name = productText || productName;
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + name + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', (width ? width : 400), (height ? height : 150), false, function () {
             try {
                 document.getElementById(id).checked = enable;
             } catch (e) {
@@ -951,6 +956,11 @@
         $scope.RenderSupeOnMemberDCS(22);
     };
 
+    $scope.SuperNG2 = function () {
+        $scope.RenderSupeOnMemberDCS(23);
+    };
+
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -974,6 +984,10 @@
 
     $scope.MasterMacauGames = function () {
         $scope.RenderMasterOnMemberDCS(22);
+    };
+
+    $scope.MasterNG2 = function () {
+        $scope.RenderMasterOnMemberDCS(23);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

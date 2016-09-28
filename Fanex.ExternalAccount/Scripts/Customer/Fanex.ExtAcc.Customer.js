@@ -626,6 +626,17 @@
                 Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
                 Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
 
+                var hideSB2 = Fanex.ExtAcc.Customer.HideSportsbook2 = rows[0].HideMuayThai;
+                var hideCK = Fanex.ExtAcc.Customer.HideCricket = rows[0].HideCricket;
+                var hideCF = Fanex.ExtAcc.Customer.HideCockfighting = rows[0].HideCockFighting;
+                var hideCB = Fanex.ExtAcc.Customer.HideColossusBet = rows[0].HideColossusBet;
+                var hideGD = Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
+                var hideKN = Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
+                var hideVS = Fanex.ExtAcc.Customer.HideVirtualSports = rows[0].HideVirtualSports;
+                var hideAB = Fanex.ExtAcc.Customer.HideAllbet = !rows[0].SyncedAllBet;
+                var hideVB = Fanex.ExtAcc.Customer.HideVoidbridge = !rows[0].SyncedVoidBridge;
+                var hideNG2 = Fanex.ExtAcc.Customer.HideNG2 = !rows[0].SyncedNG2;
+
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
                 } else if (result.roleId == 3) {

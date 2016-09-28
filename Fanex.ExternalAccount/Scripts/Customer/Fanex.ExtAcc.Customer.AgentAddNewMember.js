@@ -189,7 +189,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
 
-                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());                               
+                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
                                 Fanex.ExtAcc.AutoInsertLiveCasino(result.custId, parseInt($('#parentId').val()), 2, $('#selectedGroupName').html());
 
                                 timeout = setInterval(function () {
