@@ -550,7 +550,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                1,
+                2,
                 product.RoleId < 4 ? product.UplineStatuses.HideNG2 : product.HideNG2,
                 product.RoleId < 4 ? product.UplineStatuses.SyncNG2 : product.SyncNG2,
                 product.HideNG2,
@@ -572,7 +572,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool syncDownline,
             string productName)
         {
-            var showProductIndex = productIndex == 0 ? productIndex : productIndex + 1;
+            var showProductIndex = productIndex == 0 ? productIndex : productIndex * 2;
 
             if (((roleId == 4 || roleId == 3 || roleId == 2) && hide == true)
                 || (roleId == 1 && hideUpline == true))
