@@ -15,7 +15,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
-
+    using RemotingRef;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -156,6 +156,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
             model.AddBettingLimitForSuper();
 
             return model;

@@ -239,5 +239,23 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         {
             get; set;
         }
+
+        public bool DisableNG2
+        {
+            get;
+            set;
+        }
+
+        public bool HideNG2
+        {
+            get;
+            set;
+        }
+
+        public bool SyncNG2
+        {
+            get;
+            set;
+        }
     }
 }

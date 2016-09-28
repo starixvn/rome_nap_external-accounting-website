@@ -139,7 +139,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
-            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true);
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
 
             return model;
         }
