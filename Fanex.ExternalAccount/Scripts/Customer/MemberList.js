@@ -1,4 +1,4 @@
-﻿Fanex.ExtAcc.Customer.ShowEditMember = function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe, isHideColossusBets, disableColossusBets, isHideSportsbook2, disableSportsbook2, isHideCockfighting, disableCockfighting, isHideCricket, disableCricket, isHideAllbet, disableAllbet, isHideVoidbridge, disableVoidbridge, isHideNG2, disableNG2) {
+﻿Fanex.ExtAcc.Customer.ShowEditMember = function (custId, title, transferCondition, syncCasino, disableCasino, syncBingo, disableBingo, disableP2P, syncLiveCasino, disableLiveCasino, hideVirtualSport, disableVirtualSport, agentSyncCasino, agentSyncBingo, agentSyncLiveCasino, isHideKeno, disableKeno, isHideGoldDeluxe, disableGoldDeluxe, isHideColossusBets, disableColossusBets, isHideSportsbook2, disableSportsbook2, isHideCockfighting, disableCockfighting, isHideCricket, disableCricket, isHideAllbet, disableAllbet, isHideVoidbridge, disableVoidbridge, isHideNG2, disableNG2, syncNG2) {
     this.TransferCondition = transferCondition;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
@@ -306,7 +306,7 @@
     if (!isHideNG2) {
         itemsMember.ng2 = {
             name: ng2Text,
-            className: disableNG2 == true ? "iconDisableEdit" : "iconEnableEdit",
+            className: !syncNG2 ? "iconUnsyncEdit" : (disableNG2 == true ? "iconDisableEdit" : "iconEnableEdit"),
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
@@ -454,7 +454,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             Fanex.ExtAcc.Customer.HideVoidbridgeMember = hideVoidbridgeSettingLink;
             Fanex.ExtAcc.Customer.HideNG2Member = hideNG2SettingLink;
 
-            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + "," + hideColossusBets + ", " + cell.Value.DisableColossusBet + "," + hideSportsbook2 + ", " + cell.Value.DisableMuayThai + "," + hideCockfighting + ", " + cell.Value.DisableCockFighting + "," + hideCricket + ", " + cell.Value.DisableCricket + "," + hideAllbetSettingLink + ", " + cell.Value.DisableAllBet + "," + hideVoidbridgeSettingLink + ", " + cell.Value.DisableVoidBridge + "," + hideNG2SettingLink + "," + cell.Value.DisableNG2 + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.syncBingo + ", " + cell.Value.DisableBingo + ", " + cell.Value.DisableP2P + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncBingo + ", " + agentSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + "," + hideColossusBets + ", " + cell.Value.DisableColossusBet + "," + hideSportsbook2 + ", " + cell.Value.DisableMuayThai + "," + hideCockfighting + ", " + cell.Value.DisableCockFighting + "," + hideCricket + ", " + cell.Value.DisableCricket + "," + hideAllbetSettingLink + ", " + cell.Value.DisableAllBet + "," + hideVoidbridgeSettingLink + ", " + cell.Value.DisableVoidBridge + "," + hideNG2SettingLink + "," + cell.Value.DisableNG2 + "," + cell.Value.SyncedNG2 + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMember"></div>';
         }
