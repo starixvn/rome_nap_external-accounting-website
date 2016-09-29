@@ -305,7 +305,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
 
             var hideAllbetSettingLink = !showAllbet || (cell.Value.HideAllBet || !cell.Value.SyncedAllBetUpline);
             var hideVoidbridgeSettingLink = !showVoidbridge || (cell.Value.HideVoidBridge || !cell.Value.SyncedVoidBridgeUpline);
-            var hideNG2SettingLink = !showNG2 || (!cell.Value.SyncedNG2Upline || !cell.Value.SyncedNG2);
+            var hideNG2SettingLink = !showNG2 || cell.Value.HideNG2 || !cell.Value.SyncedNG2;
             var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.syncBingo + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + ")";
 
             var len = cell.Value.username.length;
