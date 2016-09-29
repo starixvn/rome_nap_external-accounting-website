@@ -124,6 +124,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "HideVoidbridge",
                                 Value = table3rdDCS.Select("ProductID = 22").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "HideNG2",
+                                Value = table3rdDCS.Select("ProductID = 23").Count() > 0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
                             }
                         },
                 EditItems = new List<ObjectInfo>
