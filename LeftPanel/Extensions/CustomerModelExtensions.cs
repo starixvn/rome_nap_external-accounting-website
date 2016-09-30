@@ -983,9 +983,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
-                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
-                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + productName });
+                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);                
                 var name = getFromRemotingRef ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName) : productName;
+                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + name });
                 if (checkboxType == true)
                 {
                     model.Setting.EnableItems.Add(new ObjectInfo
