@@ -803,7 +803,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $('#netTurnover').bind('click', function () {
                     var message = "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
                     if (data.tooltips.showAllbet) {
-                        var messageGroup = message + "<br/>" + "<br/>" + "- For Allbet, Net Turnover is Total Valid Bet Amount which is based on to calculate the commission.";
+                        var messageGroup = message + "<br/>" + "<br/>" + "- For Allbet, Net Turnover is Total Valid Bets that we use to compute commission.";
                         Fanex.ExtAcc.Form.Alert("Net Turnover Information", messageGroup, 430, 220);
                         return false;
                     }
