@@ -676,7 +676,7 @@
     };
 
     $scope.EnableNG2 = function (enable, id) {
-        $scope.EnableDCS(23, 'NG2', enable, id, parent.ng2Text, 350, 250);
+        $scope.EnableDCS(23, 'NG2', enable, id, parent.ng2Text, 400, 300);
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
