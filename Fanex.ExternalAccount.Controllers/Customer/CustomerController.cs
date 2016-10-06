@@ -109,7 +109,7 @@ using Newtonsoft.Json.Serialization;
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
+        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
             {
@@ -125,6 +125,7 @@ using Newtonsoft.Json.Serialization;
                 SiteName = SiteName,
                 SubAccId = 0,
                 UserName = parentUsername.ToUpper()
+
             };
 
             ICustomer customer = new PTEngine.BusinessObjects.Customer();
@@ -133,6 +134,7 @@ using Newtonsoft.Json.Serialization;
             try
             {
                 customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+                customer.CurrencyId = parentCurrencyId;
             }
             catch (Exception ex)
             {
@@ -219,7 +221,7 @@ using Newtonsoft.Json.Serialization;
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
+        public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
             {
@@ -243,6 +245,7 @@ using Newtonsoft.Json.Serialization;
             try
             {
                 customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+                customer.CurrencyId = parentCurrencyId;
             }
             catch (Exception ex)
             {
@@ -329,7 +332,7 @@ using Newtonsoft.Json.Serialization;
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
+        public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
             {
@@ -353,6 +356,7 @@ using Newtonsoft.Json.Serialization;
             try
             {
                 customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+                customer.CurrencyId = parentCurrencyId;
             }
             catch (Exception ex)
             {

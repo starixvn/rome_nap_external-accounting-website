@@ -131,13 +131,13 @@
 
         switch (roleId) {
             case 2:
-                actionName = 'Customer/AgentAddNewMember/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
+                actionName = 'Customer/AgentAddNewMember/?currencyId=' + $scope.model.currencyId + '&custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             case 3:
-                actionName = 'Customer/MasterAddNewAgent/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
+                actionName = 'Customer/MasterAddNewAgent/?currencyId=' + $scope.model.currencyId + '&custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             case 4:
-                actionName = 'Customer/SuperAddNewMaster/?custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
+                actionName = 'Customer/SuperAddNewMaster/?currencyId=' + $scope.model.currencyId + '&custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
                 break;
             default:
                 break;

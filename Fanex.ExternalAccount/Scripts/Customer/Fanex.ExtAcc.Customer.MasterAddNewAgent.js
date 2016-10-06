@@ -25,6 +25,7 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
         data.custId = 0;
         data.parentId = $('#parentId').val();
         data.parentUsername = $('#parentUsername').val();
+        data.parentCurrencyId = $('#parentCurrencyId').val();
 
         $.ajax({
             url: resolveClientUrl('Customer/MasterAddNewAgentGet'),

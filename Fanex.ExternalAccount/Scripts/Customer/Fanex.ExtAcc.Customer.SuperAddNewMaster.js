@@ -25,6 +25,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
         data.custId = 0;
         data.parentId = $('#parentId').val();
         data.parentUsername = $('#parentUsername').val();
+        data.parentCurrencyId = $('#parentCurrencyId').val();
 
         $.ajax({
             url: resolveClientUrl('Customer/SuperAddNewMasterGet'),
