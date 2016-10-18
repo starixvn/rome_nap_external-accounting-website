@@ -9,9 +9,11 @@
 
 namespace Fanex.ExternalAccount.Core.Base
 {
+    using System;
     using System.Collections;
     using System.Data;
     using System.Linq;
+    using System.Web.Mvc;
     using CustomerSetting.Module.Core.Models;
     using Data.DNAide;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;

@@ -69,6 +69,10 @@
       <HintPath>..\packages\Fanex.PTRacing.1.0.0.3\lib\net40\Fanex.PTRacing.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependencies\IBCUtils.dll</HintPath>
     </Reference>
@@ -95,6 +99,14 @@
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.13\lib\net40\RemotingRef.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -11,29 +11,29 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
     using System.Data;
+    using System.Linq;
     using System.Threading;
-using System.Web;
-using System.Web.Mvc;
-using Fanex.Caching;
-using Fanex.Common;
-using Fanex.CustomerSetting.IP.Utils;
-using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Base;
-using Fanex.ExternalAccount.Core.Context;
-using Fanex.ExternalAccount.DTO;
-using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
-using Fanex.ExternalAccount.Service.Impl.Customer;
-using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-using Fanex.ExternalAccount.Service.Impl.Report;
-using Fanex.ExternalAccount.Utilities;
-using Fanex.ExternalAccount.ViewModel.Customer;
-using Fanex.PTEngine.BusinessObjects;
-using IBCUtils;
+    using System.Web;
+    using System.Web.Mvc;
+    using Fanex.Caching;
+    using Fanex.Common;
+    using Fanex.CustomerSetting.IP.Utils;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.ViewModel.Customer;
+    using Fanex.PTEngine.BusinessObjects;
+    using IBCUtils;
     using Module.NG2.Entities;
-using Microsoft.Practices.ObjectBuilder2;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Newtonsoft.Json.Serialization;
 
     /// <summary>
     /// TODO: Update summary.
@@ -568,8 +568,6 @@ using Newtonsoft.Json.Serialization;
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
                 this._superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
             this.SetCacheList(result);
-            var ret = Newtonsoft.Json.JsonConvert.SerializeObject(
-                this.CheckVNIP(result), Formatting.None, new IsoDateTimeConverter() { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
             SetCacheList(result);
 

@@ -9,8 +9,10 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using CustomerSetting.Module.Core.Criteria;    
-    using CustomerSetting.Module.Core.Services.Impl;
+    using System;
+    using System.Collections;
+    using System.Data;
+    using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -25,13 +27,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using System;
-    using System.Collections;
-    using System.Data;
-    using System.Web.Mvc;
-/// <summary>
-                                                   /// Controller for left panel menu.    
-                                                   /// </summary>
+
+    /// <summary>
+    /// Controller for left panel menu.    
+    /// </summary>
     public class SearchCustomerController : BaseController
     {
         private readonly ILeftPanelService _service = new LeftPanelService();

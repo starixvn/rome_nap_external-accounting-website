@@ -7,12 +7,10 @@
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
-    using WinLossDetail;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Services.Interface;
-    using CustomerSetting.Module.Core.Criteria;/// <summary>
-                                               /// Report controller.
-                                               /// </summary>
+    
+    /// <summary>
+    /// Report controller.
+    /// </summary>
     public partial class FilterController : BaseController
     {
         /// <summary>
@@ -22,15 +20,6 @@
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             var list = new List<KeyValuePair<string, bool>>();
-            //var products = ProductsConfiguration.Instance.ProductCollection;
-            //foreach (ProductElementConfiguration product in products)
-            //{
-            //    if (!this.IsHiddenProduct(product) && !product.Id.Equals("showAll"))
-            //    {
-            //        list.Add(new KeyValuePair<string, bool>(product.Id.ToLower(), CheckRequest.GetBooleanRequest(product.Id, true)));
-            //    }
-            //}
-
             var products = base.GetProductList();
             foreach (KeyValuePair<string, string> product in products)
             {
