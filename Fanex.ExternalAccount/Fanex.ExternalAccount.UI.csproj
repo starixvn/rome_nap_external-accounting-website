@@ -83,8 +83,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.2\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.7-NG2-02\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.7-NG2-04\lib\net40\bin\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -263,7 +263,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.12\lib\net40\RemotingRef.dll</HintPath>
+      <HintPath>..\packages\RemotingRef.1.0.0.13\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
@@ -1705,6 +1705,9 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
+    <Content Include="SpNames.CustDB.uat.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="SpNames.CustDB.sit.xml">
       <SubType>Designer</SubType>
     </Content>

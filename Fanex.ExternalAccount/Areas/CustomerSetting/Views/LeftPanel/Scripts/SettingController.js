@@ -668,7 +668,7 @@
     };
 
     $scope.EnableAllbet = function (enable, id) {
-        $scope.EnableDCS(21, 'Allbet', enable, id);
+        $scope.EnableDCS(21, 'Allbet', enable, id, null, 500, 250);
     };
 
     $scope.EnableMacauGames = function (enable, id) {
