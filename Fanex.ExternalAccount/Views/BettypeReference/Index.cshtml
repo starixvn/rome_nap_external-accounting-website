@@ -3,9 +3,11 @@
 @{
     ViewBag.Title = "PT Bettypes Reference";
     Layout = "~/Views/Shared/_LayoutPtInfo.cshtml";
+
+    var exclusiveRefSportIds = ViewData["ExclusiveRefSportIds"] as int[];
 }
 
 @section styles {
     <link href="@Url.Content("~/Views/BettypeReference/Themes/style.less")" rel="Stylesheet" type="text/css" />
 }
-@Html.RenderBetTypeReference(Config.IsTest)
+@Html.RenderBetTypeReference(Config.IsTest, exclusiveRefSportIds)
