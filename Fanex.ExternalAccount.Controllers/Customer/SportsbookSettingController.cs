@@ -1271,12 +1271,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         private bool IsSpecialSiteCustomer()
         {
+            bool hasNG2Permission = IsAuthorized(CurrentSession.UserId, eFunctions.NG2Setting, AuthenticateAction.AuthenticationType.Read, Request);
+            if (!hasNG2Permission)
+            {
+                return false;
+            }
+
             var permisisonService = new ServiceBase();
             bool isInternalAdmin = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria
             {
                 CustID = CurrentSession.CustId
             });
-
+                        
             if (isInternalAdmin)
             {
                 return permisisonService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria
