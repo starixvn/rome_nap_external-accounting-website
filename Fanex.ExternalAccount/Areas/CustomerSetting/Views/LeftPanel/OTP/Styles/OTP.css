@@ -1,0 +1,44 @@
+﻿.title
+{
+    background-color: #E7F7FF;
+}
+
+.username 
+{
+    color: #6dcff6;
+}
+
+.tableInfo
+{
+    border: none;
+    width: 300px !important;
+    margin: 2px;
+}
+
+.OTPGuide
+{
+    padding: 10px 0px 5px 0px;
+    font-size : 13px;
+    margin: 2px;
+}
+
+.displayNone
+{
+    display: none;
+}
+
+.content
+{
+    margin: 12px 2px;
+    border: 1px solid #CCC;
+}
+
+.successMsg
+{
+    margin: 2px;
+}
+
+.errMsg
+{
+    margin: 2px;
+}

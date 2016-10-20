@@ -157,6 +157,7 @@
   <ItemGroup>
     <Compile Include="App_Start\ModuleRegistrator.cs" />
     <Compile Include="Controllers\SearchCustomerController.cs" />
+    <Compile Include="Criteria\RemoveOTPCriteria.cs" />
     <Compile Include="Extensions\MemberModelExtensions.cs" />
     <Compile Include="Extensions\AgentModelExtensions.cs" />
     <Compile Include="Extensions\MasterModelExtensions.cs" />
@@ -188,7 +189,6 @@
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Criteria\" />
     <Folder Include="Entities\" />
   </ItemGroup>
   <ItemGroup>

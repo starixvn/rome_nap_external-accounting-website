@@ -222,6 +222,10 @@
                     <div class="balanceTitle bold">{{loginInfo[7].text}}</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[7].value}}</div>
                 </div>
+                <div class="clearBoth">
+                    <div class="balanceTitle bold">{{loginInfo[8].text}}&nbsp;[<a href="javascript:;" data-ng-click="RemoveOTP({{model != null ? model.personalInfo.custId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Remove</a>]</div>
+                    <div class="floatLeftBalance normal R">{{loginInfo[8].value}}</div>
+                </div>
             </div>
             <div class="auto" id="tab-4" data-ng-controller="OnlineListController" style="height: 178px">
                 <div class="clearBoth">

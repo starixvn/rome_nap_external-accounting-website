@@ -122,5 +122,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public abstract Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
 
         public abstract Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int custId);
+
+        public abstract Result RemoveOTP(int custId);
     }
 }

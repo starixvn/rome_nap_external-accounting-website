@@ -28,6 +28,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
+
     /// <summary>
     /// Controller for left panel menu.    
     /// </summary>
@@ -703,6 +704,31 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             {
                 return this.JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
             }
+        }
+
+        [HttpGet]
+        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        public ActionResult RemoveOTP(int custId, string username)
+        {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
+            return this.PartialViewBase(new { CustId = custId, Username = username }, "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml");
+        }
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Host)]
+        public ActionResult RemoveOTP(int custId)
+        {
+            if (!this.IsBelong(Request["groupName"], custId, null, true))
+            {
+                return this.ActionDenied(this.Request);
+            }
+
+            var result = this._service.RemoveOTP(custId);
+            return this.JsonBase(result);
         }
     }
 }

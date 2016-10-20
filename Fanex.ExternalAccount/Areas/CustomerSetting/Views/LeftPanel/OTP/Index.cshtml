@@ -1,0 +1,36 @@
+﻿@using Fanex.Common;
+@{
+    var removeOTPtitle = "Remove OTP";
+    var removeOTPGuidetitle = "Resetting a user's OTP will remove the registered Sophos key and disable his OTP status.";
+    var removeOTPsuccessfully = "Remove OTP successfully!";
+    int customerId = Request["custId"] != null ? Converter.ToInt(Request["custId"]) : 0;
+    string customerName = Request["username"] != null ? Converter.ToString2(Request["username"]) : string.Empty;
+}
+
+<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/OTP/Styles/OTP.css")" rel="stylesheet" type="text/css" />
+<div class="content">
+    <div id="errMsg" class="successMsg displayNone">
+    </div>
+    <table class="tableInfo">
+        <tr>
+            <td class="title bold C">@removeOTPtitle: <font class="username">@customerName</font></td>
+        </tr>
+        <tr>
+            <td class="C">
+                <input id="btnSubmit" type="button" class="buttonPopup" value="Submit" />
+            </td>
+        </tr>
+    </table>
+    <div class="OTPGuide">
+        @removeOTPGuidetitle
+    </div>
+</div>
+
+@Html.Hidden("removeOTPsuccessfully", removeOTPsuccessfully)
+@Html.Hidden("customerId", customerId)
+
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/OTP/Scripts/OTP.js")" type="text/javascript"></script>

@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
 {
     using System.Collections.Generic;
     using System.Data;
+    using Criteria;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
@@ -63,5 +64,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
         Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
 
         Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
+
+        Result RemoveOTP(RemoveOTPCriteria criteria);
     }
 }
