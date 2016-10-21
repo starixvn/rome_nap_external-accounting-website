@@ -188,7 +188,7 @@
       <HintPath>..\Dependencies\NotifyPropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.NG2.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.1-NAP-06\lib\net40\ONEbook.NG2.API.dll</HintPath>
+      <HintPath>..\packages\ONEbook.NG2.API.1.0.0.1-NAP-07\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
