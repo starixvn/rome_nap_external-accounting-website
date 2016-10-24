@@ -358,7 +358,7 @@
 		<Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
 		<Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />		
 		<Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbExtAccNet" />
-		<Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_uat1" DbName="DBAGE.bodb02.bodbExtAccNet" />
+		<Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
 	</Function>
 	<Function Name="API Logger">
 		<Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" Plain="0" />
