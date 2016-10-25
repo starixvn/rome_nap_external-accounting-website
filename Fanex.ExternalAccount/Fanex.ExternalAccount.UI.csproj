@@ -2951,7 +2951,9 @@
     <Content Include="Configurations\appSettings.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\connectionStrings.sit.config" />
+    <Content Include="Configurations\connectionStrings.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\appSettings.ng2.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2962,8 +2964,12 @@
     <Content Include="Areas\NG2\ONEbook.NG2.API.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.kbt67.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.pro.config" />
-    <Content Include="Areas\NG2\ONEbook.NG2.API.sit.config" />
-    <Content Include="Areas\NG2\ONEbook.NG2.API.uat.config" />
+    <Content Include="Areas\NG2\ONEbook.NG2.API.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.uat.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -3012,13 +3018,14 @@
     <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="deployment.ignore" />
+    <Content Include="deployment.ignore" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperList.xls" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="IbcKeys\ibckey.snk" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />

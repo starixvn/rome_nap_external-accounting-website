@@ -30,4 +30,3 @@ Fanex.ExternalAccount/Fanex.ExternalAccount.UI.Publish.xml
 *.suo
 .vs/*
 packages/*
-*.snk
