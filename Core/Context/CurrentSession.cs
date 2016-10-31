@@ -11,6 +11,7 @@
 // </history>
 namespace Fanex.ExternalAccount.Core.Context
 {
+    using System.Globalization;
     using System.Web.UI;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Utilities;
@@ -198,8 +199,15 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public string Language
         {
-            get;
-            set;
+            get
+            {
+                return CultureInfo.CurrentCulture.Name;
+            }
+
+            set
+            {
+                value = "en-US";
+            }
         }
 
         public int LoginAttempt
