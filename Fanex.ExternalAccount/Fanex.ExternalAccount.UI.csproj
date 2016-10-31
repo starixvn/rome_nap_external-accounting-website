@@ -1732,6 +1732,12 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
+    <Content Include="SpNames.CustDB.production.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SpNames.CustDB.staging.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="SpNames.CustDB.uat.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2970,6 +2976,9 @@
     <Content Include="Areas\NG2\ONEbook.NG2.API.uat.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Configurations\appSettings.staging.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -3065,6 +3074,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Shared\NoPermission.cshtml" />
+    <Content Include="Web.staging.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
