@@ -1,8 +1,9 @@
 ﻿@using Fanex.Common;
+
 @{
-    var removeOTPtitle = "Remove OTP";
-    var removeOTPGuidetitle = "Resetting a user's OTP will remove the registered Sophos key and disable his OTP status.";
-    var removeOTPsuccessfully = "Remove OTP successfully!";
+    var removeOTPtitle = Resources.Lang.removeOTPtitle;
+    var removeOTPGuidetitle = Resources.Lang.removeOTPGuidetitle;
+    var removeOTPsuccessfully = Resources.Lang.removeOTPsuccessfully;
     int customerId = Request["custId"] != null ? Converter.ToInt(Request["custId"]) : 0;
     string customerName = Request["username"] != null ? Converter.ToString2(Request["username"]) : string.Empty;
 }
