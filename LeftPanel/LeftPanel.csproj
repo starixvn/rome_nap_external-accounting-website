@@ -53,8 +53,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.6-ng2-03\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.KenoStatus.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
+      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security">
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Security.dll</HintPath>

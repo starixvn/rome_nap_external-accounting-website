@@ -117,14 +117,13 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.6-ng2-03\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.0.4-MaxKeno2\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.Resources">
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.Resources.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.KenoStatus.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

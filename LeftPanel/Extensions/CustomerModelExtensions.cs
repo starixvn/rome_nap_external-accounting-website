@@ -15,7 +15,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
