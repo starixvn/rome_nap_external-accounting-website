@@ -1,7 +1,15 @@
 ﻿customerOTP = {
     initialize: function () {
         $("#btnSubmit").click(function () {
+            customerOTP.confirmRemoveOTP();
+        });
+    },
+    confirmRemoveOTP: function () {
+        msg = $("#removingOTPConfirm").val();
+        title = "Remove OTP";
+        parent.Fanex.ExtAcc.Form.ConfirmBox(title, msg, 450, 130, false, function () {
             customerOTP.removeOTP();
+            parent.Fanex.ExtAcc.Form.Close();
         });
     },
     removeOTP: function () {

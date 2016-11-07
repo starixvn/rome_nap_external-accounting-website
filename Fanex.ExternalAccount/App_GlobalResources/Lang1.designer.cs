@@ -8641,7 +8641,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove OTP successfully!.
+        ///   Looks up a localized string similar to Removed the registered device successfully..
         /// </summary>
         internal static string removeOTPsuccessfully {
             get {
@@ -8655,6 +8655,15 @@ namespace Resources {
         internal static string removeOTPtitle {
             get {
                 return ResourceManager.GetString("removeOTPtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to remove this user&apos;s registered device?.
+        /// </summary>
+        internal static string removingOTPConfirm {
+            get {
+                return ResourceManager.GetString("removingOTPConfirm", resourceCulture);
             }
         }
         

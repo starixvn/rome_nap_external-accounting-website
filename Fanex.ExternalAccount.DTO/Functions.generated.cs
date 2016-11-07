@@ -68,5 +68,6 @@ public static class eFunctions
     public const string VoidbridgeBetting = "VoidbridgeBetting";
     public const string VoidbridgeSetting = "VoidbridgeSetting";
     public const string RemoveOTP = "RemoveOTP";
+    public const string NG2Betting = "NG2Betting";
     public const string NG2Setting = "NG2Setting";
 }
