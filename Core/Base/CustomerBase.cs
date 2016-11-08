@@ -9,14 +9,21 @@
 
 namespace Fanex.ExternalAccount.Core.Base
 {
+    using System;
+    using System.Collections;
+    using System.Data;
+    using System.Linq;
+    using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Models;
+    using Data.DNAide;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using System;
-    using System.Web.Mvc;
+    using Module.NG2.Entities;
+    using Module.NG2.Services;
 
     /// <summary>
     /// Base class for customer controller.
@@ -124,6 +131,18 @@ namespace Fanex.ExternalAccount.Core.Base
 
         #endregion
        
+        protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId, int currencyId)
+        {
+            var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
+
+            if (dcsStatuses.IsSyncedUpline)
+            {
+                ING2StatusService service = new NG2StatusService();
+                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId, CurrentSession.UserId);
+            }
+
+            return new Module.NG2.Entities.Result();
+        }
 
         /// <summary>
         /// Gets customer info.
@@ -131,7 +150,7 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="custId">Customer Id.</param>
         /// <param name="groupName">Group Name that user belongs to.</param>
         /// <returns>CUSTINFO object.</returns>
-        private CustInfo GetCustomerInfo(int custId, string groupName)
+        protected CustInfo GetCustomerInfo(int custId, string groupName)
         {
             var custInfo = this._report.GetCustomerInfo(groupName, custId, string.Empty, true);
 
@@ -155,6 +174,44 @@ namespace Fanex.ExternalAccount.Core.Base
             };
 
             return info;
+        }
+
+        protected DcsEntity GetDcsStatuses(int custId, int roleId, int productId)
+        {
+            var ds = new DataSet();
+            var param = new Hashtable();
+            param.Add("custid", custId);
+            param.Add("roleid", roleId);
+
+            ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
+
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                var cust = ds.Tables[0];
+                var product = cust.Select("ProductID = " + productId).FirstOrDefault();
+                var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
+                var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
+                var isHidden = product.ToBoolean("IsHidden");
+                var isSynced = product.ToBoolean("IsSync");
+                var isDisabled = product.ToBoolean("IsDisabled");
+                var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
+                var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
+                var hasDownline = product.ToBoolean("HasDownline");
+
+                return new DcsEntity
+                {
+                    IsDisabledUpline = isDisabledUpline,
+                    IsSyncedUpline = isSyncedUpline,
+                    IsHidden = isHidden,
+                    HasDownline = hasDownline,
+                    IsSynced = isSynced,
+                    IsDisabled = isDisabled,
+                    IsDisabledDownline = isDisabledDownline,
+                    IsSyncedDownline = isSyncedDownline
+                };
+            }
+
+            return new DcsEntity();
         }
     }
 }

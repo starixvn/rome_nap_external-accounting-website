@@ -60,6 +60,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 model.BalanceInfo(ds);
                 model.PersonalInfo(ds);
                 model.LoginInfo(ds);
+                model.CurrencyId = tableCustomer.Rows[0].ToInt32("exchangeid");
 
                 if (roleId == this.Super)
                 {

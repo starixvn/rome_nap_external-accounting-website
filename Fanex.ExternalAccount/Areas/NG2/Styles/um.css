@@ -1,0 +1,8 @@
+﻿.warning-icon-title
+{
+    background: url(Images/icon_warning.gif) left center no-repeat transparent;    
+    padding-left: 30px !important;
+}
+.title{
+    color: #ff0000;
+}

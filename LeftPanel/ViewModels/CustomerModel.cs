@@ -39,5 +39,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public OnlineList OnlineList { get; set; }
 
         public bool HasDownline { get; set; }
+
+        public int CurrencyId { get; set; }
     }
 }

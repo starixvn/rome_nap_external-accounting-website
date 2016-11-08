@@ -7,34 +7,34 @@
 //   <change who="Andy.Nguyen" date="2012.12.25">Created</change>
 // </history>
 
-using System;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Fanex.Caching;
-using Fanex.Common;
-using Fanex.CustomerSetting.IP.Utils;
-using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Base;
-using Fanex.ExternalAccount.Core.Context;
-using Fanex.ExternalAccount.DTO;
-using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
-using Fanex.ExternalAccount.Service.Impl.Customer;
-using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-using Fanex.ExternalAccount.Service.Impl.Report;
-using Fanex.ExternalAccount.Utilities;
-using Fanex.ExternalAccount.ViewModel.Customer;
-using Fanex.PTEngine.BusinessObjects;
-using IBCUtils;
-using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
-using Microsoft.Practices.ObjectBuilder2;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-
 namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
+    using System.Data;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
+    using Fanex.Caching;
+    using Fanex.Common;
+    using Fanex.CustomerSetting.IP.Utils;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.ViewModel.Customer;
+    using Fanex.PTEngine.BusinessObjects;
+    using IBCUtils;
+    using Module.NG2.Entities;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Newtonsoft.Json.Serialization;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -65,7 +65,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             bool isSubAccount = false;
             int customerId = -1;
 
-            bool isValidUser = _customerService.IsValidUsername(username.Trim(), CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
+            bool isValidUser = this._customerService.IsValidUsername(username.Trim(), this.CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
 
             if (isValidUser)
             {
@@ -78,9 +78,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 errMsg = ViewLang.notExist;
             }
 
-            return JsonBase(
-                new { errCode, errMsg },
-                new JsonSerializerSettings
+            return this.JsonBase(
+                new { errCode = errCode, errMsg = errMsg },
+                new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
@@ -109,7 +109,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername)
+        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
             {
@@ -125,6 +125,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 SiteName = SiteName,
                 SubAccId = 0,
                 UserName = parentUsername.ToUpper()
+
             };
 
             ICustomer customer = new PTEngine.BusinessObjects.Customer();
@@ -133,15 +134,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             try
             {
                 customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+                customer.CurrencyId = parentCurrencyId;
             }
             catch (Exception ex)
             {
                 Logs.Error(ex);
             }
 
-            return JsonBase(
-                new { context, customer },
-                new JsonSerializerSettings
+            return this.JsonBase(
+                new { context = context, customer = customer },
+                new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
@@ -180,12 +182,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int masterId = -1;
             var result = new PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
 
-            if (string.IsNullOrWhiteSpace(result.ErrorCode))
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(masterId, result, customer);
             }
+            
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                Thread.Sleep(3000);
+                this.AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
+            }
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = masterId });
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
         }
         #endregion Super Add New Master
 
@@ -213,7 +221,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername)
+        public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
             {
@@ -237,15 +245,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             try
             {
                 customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+                customer.CurrencyId = parentCurrencyId;
             }
             catch (Exception ex)
             {
                 Logs.Error(ex);
             }
 
-            return JsonBase(
-                new { context, customer },
-                new JsonSerializerSettings
+            return this.JsonBase(
+                new { context = context, customer = customer },
+                new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
@@ -284,12 +293,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int agentId = -1;
             var result = new PTEngine.Services.CustomerService().AddNewAgent(customer, requestContext, out agentId);
 
-            if (string.IsNullOrWhiteSpace(result.ErrorCode))
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(agentId, result, customer);
             }
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = agentId });
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                Thread.Sleep(3000);
+                this.AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
+            }
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
         }
         #endregion Master Add New Agent
 
@@ -317,7 +332,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername)
+        public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
             {
@@ -341,15 +356,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             try
             {
                 customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+                customer.CurrencyId = parentCurrencyId;
             }
             catch (Exception ex)
             {
                 Logs.Error(ex);
             }
 
-            return JsonBase(
-                new { context, customer },
-                new JsonSerializerSettings
+            return this.JsonBase(
+                new { context = context, customer = customer },
+                new JsonSerializerSettings()
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore
@@ -388,12 +404,18 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int memberId = -1;
             var result = new PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
 
-            if (string.IsNullOrWhiteSpace(result.ErrorCode))
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(memberId, result, customer);
             }
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = memberId });
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                Thread.Sleep(3000);
+                this.AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
+            }
+
+            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
         }
         #endregion Agent Add New Member
 
@@ -443,6 +465,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]);
             ViewBag.HideAllbet = Utils.ToBoolean(result.Rows[0]["HideAllBet"]);
             ViewBag.HideVoidbridge = Utils.ToBoolean(result.Rows[0]["HideVoidBridge"]);
+            ViewBag.HideNG2 = !this.GetDcsStatuses(custId, id, 23).IsSyncedUpline;
 
             return PartialViewBase();
         }
@@ -521,15 +544,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     page = 1,
                     records = result != null ? result.Rows.Count : 0,
                     rows = ret,
-                    roleId,
-                    srecommend,
-                    mrecommend,
-                    recommend,
-                    custId,
-                    syncCasino,
-                    syncBingo,
-                    syncLiveCasino,
-                    allowDoubleComm
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId,
+                    syncCasino = syncCasino,
+                    syncBingo = syncBingo,
+                    syncLiveCasino = syncLiveCasino,
+                    allowDoubleComm = allowDoubleComm
                 });
         }
 
@@ -544,6 +567,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
                 this._superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
+            this.SetCacheList(result);
 
             SetCacheList(result);
 
@@ -600,11 +624,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId,
-                    srecommend,
-                    mrecommend,
-                    recommend,
-                    custId
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId
                 });
         }
 
@@ -653,11 +677,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId,
-                    srecommend,
-                    mrecommend,
-                    recommend,
-                    custId
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId
                 });
         }
 
@@ -706,11 +730,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId,
-                    srecommend,
-                    mrecommend,
-                    recommend,
-                    custId
+                    roleId = roleId,
+                    srecommend = srecommend,
+                    mrecommend = mrecommend,
+                    recommend = recommend,
+                    custId = custId
                 });
         }
 

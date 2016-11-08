@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Linq;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
+    using RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -108,6 +109,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "HideVoidbridge",
                                 Value = table3rdDCS.Select("ProductID = 22").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "HideNG2",
+                                Value = table3rdDCS.Select("ProductID = 23").Count() > 0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
                             }
                         },
                 EditItems = new List<ObjectInfo>
@@ -138,6 +144,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
 
             return model;
         }
@@ -178,6 +185,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("Cricket", "Cricket");
             model.AddDetailProductForCrossLevel("Allbet", "Allbet");
             model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
+            model.AddDetailProductForCrossLevel("NG2", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
 
             return model;
         }

@@ -26,6 +26,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
         data.custId = 0;
         data.parentId = $('#parentId').val();
         data.parentUsername = $('#parentUsername').val();
+        data.parentCurrencyId = $('#parentCurrencyId').val();
 
         $.ajax({
             url: resolveClientUrl('Customer/AgentAddNewMemberGet'),
@@ -189,7 +190,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
 
-                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());                               
+                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
                                 Fanex.ExtAcc.AutoInsertLiveCasino(result.custId, parseInt($('#parentId').val()), 2, $('#selectedGroupName').html());
 
                                 timeout = setInterval(function () {

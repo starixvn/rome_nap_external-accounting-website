@@ -13,6 +13,7 @@
 namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
     using System.IO;
@@ -20,6 +21,9 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Services.Impl;
+    using CustomerSetting.Module.Core.Services.Interface;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -32,13 +36,11 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.PTEngine.BusinessObjects;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Criteria;
-    using System.Collections.Generic;
     using Reports.WinLossDetail;
-    using CustomerSetting.Module.Core.Services.Interface;/// <summary>
-                                                         /// Base controller for controller to inherit.
-                                                         /// </summary>
+
+    /// <summary>
+    /// Base controller for controller to inherit.
+    /// </summary>
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {

@@ -13,14 +13,16 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
@@ -338,9 +340,11 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 var encryption = new RSACryptoPad.EncryptionThread();
                 var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
-                url = string.Format("{0}?{1}params={2}",
-                    isSpecialSiteCustomer ? Config.InternalLoginUrl2 : Config.InternalLoginUrl,
-                    Session[Config.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
+
+                url = string.Format(
+                "{0}?{1}params={2}", 
+                isSpecialSiteCustomer ? ConfigurationManager.AppSettings["int_agent_url2"] : Config.InternalLoginUrl,
+                Session[Config.InternalAgentUMToken] == null ? string.Empty : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
                     param);
             }
             else

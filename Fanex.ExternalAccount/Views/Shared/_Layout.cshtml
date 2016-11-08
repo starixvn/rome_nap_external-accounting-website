@@ -5,7 +5,7 @@
 @using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel.Extensions
 @using Fanex.CustomerSetting.Security.Authenticate
-@using Fanex.CustomerSetting.Module.KenoStatus.Configurations
+@using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
 @{
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
@@ -18,7 +18,9 @@
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
@@ -38,7 +40,9 @@
     var showCricket = System.Configuration.ConfigurationManager.AppSettings["IsShowCricket"] == "1" ? 1 : 0;
     var showAllbet = System.Configuration.ConfigurationManager.AppSettings["IsShowAllbet"] == "1" ? 1 : 0;
     var showVoidbridge = System.Configuration.ConfigurationManager.AppSettings["IsShowMacauGames"] == "1" ? 1 : 0;
+    var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var hideBingo = Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled ? 0 : 1;
+    var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -230,6 +234,9 @@
         var showVoidbridge = @showVoidbridge;
         var showAllbetBetting = true;
         var showVoidbridgeBetting = true;
+        var showNG2 = @showNG2;
+        var showNG2Betting = true;
+        var ng2Text = '@ng2Text';
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

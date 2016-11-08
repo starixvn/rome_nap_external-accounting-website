@@ -34,9 +34,11 @@
     HideCricket: false,
     HideAllbet: false,
     HideVoidbridge: false,
-
+    HideNG2: false,
+    
     HideAllbetMember: false,
     HideVoidbridgeMember: false,
+    HideNG2Member: false,
 
     superSyncCasino: false,
     superSyncBingo: false,
@@ -74,6 +76,9 @@
 
     VoidbridgeSyncList: [],
     VoidbridgeSyncIdList: [],
+
+    NG2SyncList: [],
+    NG2SyncIdList: [],
     
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
@@ -378,11 +383,11 @@
         if (this.CurrentLevel == this.Super) {
             Fanex.ExtAcc.Customer.GetSuperList(this.custId);
         } else if (this.CurrentLevel == this.Master) {
-            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncBingo, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge);
+            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncBingo, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2);
         } else if (this.CurrentLevel == this.Agent) {
-            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncBingo, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge);
+            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncBingo, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2);
         } else {
-            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncBingo, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge);
+            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncBingo, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2);
         }
     },
 
@@ -460,6 +465,11 @@
                 Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.push($(div).attr('name'));
             }
+
+            if ($(div).attr('sync-ng2') == 'true' && !Fanex.ExtAcc.Customer.NG2SyncIdList.contains($(div).attr('id'))) {
+                Fanex.ExtAcc.Customer.NG2SyncIdList.push($(div).attr('id'));
+                Fanex.ExtAcc.Customer.NG2SyncList.push($(div).attr('name'));
+            }
         } else {
             div.className = 'menuInactive';
             $('#editMult').attr('style', 'cursor: default !important');
@@ -474,6 +484,11 @@
             if ($(div).attr('sync-voidbridge') == 'true') {
                 Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(div).attr('name'));
+            }
+
+            if ($(div).attr('sync-ng2') == 'true') {
+                Fanex.ExtAcc.Customer.NG2SyncIdList.pop($(div).attr('id'));
+                Fanex.ExtAcc.Customer.NG2SyncList.pop($(div).attr('name'));
             }
         }
 
@@ -529,6 +544,15 @@
                 else if ($(divs[i]).attr('sync-voidbridge') == 'true' && divs[i].className == 'menuInactive') {
                     Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(divs[i]).attr('id'));
                     Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(divs[i]).attr('name'));
+                }
+
+                if ($(divs[i]).attr('sync-ng2') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.NG2SyncIdList.contains($(divs[i]).attr('id'))) {
+                    Fanex.ExtAcc.Customer.NG2SyncIdList.push($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.NG2SyncList.push($(divs[i]).attr('name'));
+                }
+                else if ($(divs[i]).attr('sync-ng2') == 'true' && divs[i].className == 'menuInactive') {
+                    Fanex.ExtAcc.Customer.NG2SyncIdList.pop($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.NG2SyncList.pop($(divs[i]).attr('name'));
                 }
             }
         }
@@ -602,23 +626,34 @@
                 Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
                 Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
 
+                var hideSB2 = Fanex.ExtAcc.Customer.HideSportsbook2 = rows[0].HideMuayThai;
+                var hideCK = Fanex.ExtAcc.Customer.HideCricket = rows[0].HideCricket;
+                var hideCF = Fanex.ExtAcc.Customer.HideCockfighting = rows[0].HideCockFighting;
+                var hideCB = Fanex.ExtAcc.Customer.HideColossusBet = rows[0].HideColossusBet;
+                var hideGD = Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
+                var hideKN = Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
+                var hideVS = Fanex.ExtAcc.Customer.HideVirtualSports = rows[0].HideVirtualSports;
+                var hideAB = Fanex.ExtAcc.Customer.HideAllbet = !rows[0].SyncedAllBet;
+                var hideVB = Fanex.ExtAcc.Customer.HideVoidbridge = !rows[0].SyncedVoidBridge;
+                var hideNG2 = Fanex.ExtAcc.Customer.HideNG2 = !rows[0].SyncedNG2;
+
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
                 } else if (result.roleId == 3) {
                     Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
                     Fanex.ExtAcc.Customer.superSyncBingo = result.syncBingo;
                     Fanex.ExtAcc.Customer.superSyncLiveCasino = result.syncLiveCasino;
-                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet);
+                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncBingo, Fanex.ExtAcc.Customer.superSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2);
                 } else if (result.roleId == 2) {
                     Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
                     Fanex.ExtAcc.Customer.masterSyncBingo = result.syncBingo;
                     Fanex.ExtAcc.Customer.masterSyncLiveCasino = result.syncLiveCasino;
-                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet);
+                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncBingo, Fanex.ExtAcc.Customer.masterSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2);
                 } else {
                     Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
                     Fanex.ExtAcc.Customer.agentSyncBingo = result.syncBingo;
                     Fanex.ExtAcc.Customer.agentSyncLiveCasino = result.syncLiveCasino;
-                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet);
+                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncBingo, Fanex.ExtAcc.Customer.agentSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2);
                 }
             } else {
                 $('#msgNoinfo').css('display', 'block');

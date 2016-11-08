@@ -33,6 +33,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,7 +86,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.14\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.17\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -111,18 +113,17 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.5\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.6\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting">
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.0.5\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.Resources">
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.Resources.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.KenoStatus">
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.KenoStatus.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,6 +143,10 @@
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.3\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.HttpModule.NG2.UM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.HttpModule.NG2.UM.1.0.0.1\lib\net40\Fanex.HttpModule.NG2.UM.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.4, Culture=neutral, processorArchitecture=MSIL">
@@ -240,6 +245,18 @@
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -254,8 +271,12 @@
     <Reference Include="NPOI">
       <HintPath>..\Dependencies\NPOI.dll</HintPath>
     </Reference>
+    <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.9\lib\net40\RemotingRef.dll</HintPath>
+      <HintPath>..\packages\RemotingRef.1.0.0.13\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
@@ -309,12 +330,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Json">
       <HintPath>..\Dependencies\System.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Json">
       <HintPath>..\Dependencies\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http">
       <HintPath>..\Dependencies\System.Net.Http.dll</HintPath>
     </Reference>
@@ -323,6 +349,14 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
       <HintPath>..\Dependencies\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -1113,6 +1147,9 @@
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\_EditSetting.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Web.config" />
+    <Content Include="Areas\NG2\Styles\Images\icon_warning.gif" />
+    <Content Include="Areas\NG2\Styles\um.css" />
+    <Content Include="Areas\NG2\UM.aspx" />
     <Content Include="Areas\Statement\StatementSection.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
@@ -1429,6 +1466,10 @@
     <Content Include="bundles\images\error.gif" />
     <Content Include="bundles\images\sucess.gif" />
     <Content Include="Configurations\Permissions.txt" />
+    <Content Include="Areas\NG2\UM.aspx.cs">
+      <DependentUpon>UM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1690,6 +1731,18 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
+    <Content Include="SpNames.CustDB.production.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SpNames.CustDB.staging.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SpNames.CustDB.uat.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SpNames.CustDB.sit.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="SpNames.CustDB.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2906,6 +2959,25 @@
     <Content Include="Configurations\connectionStrings.sit.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Configurations\appSettings.ng2.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\connectionStrings.ng2.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\NG2\NumberGame2Section.config" />
+    <Content Include="Areas\NG2\ONEbook.NG2.API.config" />
+    <Content Include="Areas\NG2\ONEbook.NG2.API.kbt67.config" />
+    <Content Include="Areas\NG2\ONEbook.NG2.API.pro.config" />
+    <Content Include="Areas\NG2\ONEbook.NG2.API.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.uat.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\appSettings.staging.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -2954,13 +3026,15 @@
     <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="deployment.ignore" />
+    <Content Include="deployment.ignore" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperList.xls" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="IbcKeys\ibckey.snk" />
+    <Content Include="NumberGame2Section.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
@@ -2996,7 +3070,13 @@
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\variables.less" />
     <Content Include="Views\BettypeReference\Themes\style.less" />
     <Content Include="Views\Shared\_LayoutPtInfo.cshtml" />
+    <Content Include="Web.ng2.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\NoPermission.cshtml" />
+    <Content Include="Web.staging.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
@@ -3086,4 +3166,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
 </Project>

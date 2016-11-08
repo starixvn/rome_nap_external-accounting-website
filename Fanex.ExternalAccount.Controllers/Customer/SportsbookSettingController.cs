@@ -10,7 +10,11 @@
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -27,6 +31,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     /// </summary>
     public class SportsbookSettingController : BaseController
     {
+        private const int NG2Start = 213;
+        private const int NG2End = 220;
+
         private ICommissionService _commissionService = new CommissionService();
 
         #region Bet Setting
@@ -1247,7 +1254,44 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ViewPtInfo()
         {
+            if (!IsSpecialSiteCustomer())
+            {
+                IList<int> exclusiveRefSportIds = new List<int>(8);
+
+                for (int i = NG2Start; i <= NG2End; i++)
+                {
+                    exclusiveRefSportIds.Add(i);
+                }
+
+                ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
+            }
+
             return this.ViewBase("~/Views/BettypeReference/Index.cshtml");
+        }
+
+        private bool IsSpecialSiteCustomer()
+        {
+            bool hasNG2Permission = IsAuthorized(CurrentSession.UserId, eFunctions.NG2Setting, AuthenticateAction.AuthenticationType.Read, Request);
+            if (!hasNG2Permission)
+            {
+                return false;
+            }
+
+            var permisisonService = new ServiceBase();
+            bool isInternalAdmin = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria
+            {
+                CustID = CurrentSession.CustId
+            });
+                        
+            if (isInternalAdmin)
+            {
+                return permisisonService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria
+                {
+                    CustID = CurrentSession.CustId
+                });
+            }
+
+            return true;
         }
     }
 }

@@ -117,6 +117,8 @@
                     return systemId == 4 ? eFunctions.AllbetSetting : eFunctions.AllbetBetting;
                 case 22:
                     return systemId == 4 ? eFunctions.VoidbridgeSetting : eFunctions.VoidbridgeBetting;
+                case 23:
+                    return systemId == 4 ? eFunctions.NG2Setting : eFunctions.NG2Betting;
                 default:
                     break;
             }

@@ -15,7 +15,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Module.KenoStatus.Configurations;
+    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
@@ -27,6 +27,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
+    using RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -548,6 +549,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.SyncVoidbridgeDownlines,
                 "MacauGames");
 
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId,
+                2,
+                product.RoleId < 4 ? product.UplineStatuses.HideNG2 : product.HideNG2,
+                product.RoleId < 4 ? product.UplineStatuses.SyncNG2 : product.SyncNG2,
+                product.HideNG2,
+                product.SyncNG2,
+                true,
+                "NG2");
+
             return model;
         }
 
@@ -562,7 +573,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool syncDownline,
             string productName)
         {
-            var showProductIndex = productIndex == 0 ? productIndex : productIndex + 1;
+            var showProductIndex = productIndex == 0 ? productIndex : productIndex * 2;
 
             if (((roleId == 4 || roleId == 3 || roleId == 2) && hide == true)
                 || (roleId == 1 && hideUpline == true))
@@ -691,6 +702,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableVoidbridge)
             {
                 model.DisableProduct("EnableMacauGames");
+            }
+
+            if (product.UplineStatuses.DisableNG2)
+            {
+                model.DisableProduct("EnableNG2");
             }
 
             return model;
@@ -913,6 +929,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.SyncVoidbridgeDownlines = result.Rows[0].ToBoolean("SyncedVoidBridgeDownline");
             product.DisableVoidbridge = result.Rows[0].ToBoolean("DisableVoidBridge");
 
+            product.HideNG2 = ConfigurationManager.AppSettings["IsShowNG2"] == "0" || result.Rows[0].ToBoolean("HideNG2");
+            product.SyncNG2 = result.Rows[0].ToBoolean("SyncedNG2");
+            product.DisableNG2 = result.Rows[0].ToBoolean("DisableNG2");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -946,12 +966,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableVoidbridge = upperInfo.Rows[0].ToBoolean("DisableVoidBridge");
                 product.UplineStatuses.HideVoidbridge = upperInfo.Rows[0].ToBoolean("HideVoidBridge");
                 product.UplineStatuses.SyncVoidbridge = upperInfo.Rows[0].ToBoolean("SyncedVoidBridge");
+
+                product.UplineStatuses.DisableNG2 = upperInfo.Rows[0].ToBoolean("DisableNG2");
+                product.UplineStatuses.HideNG2 = upperInfo.Rows[0].ToBoolean("HideNG2");
+                product.UplineStatuses.SyncNG2 = upperInfo.Rows[0].ToBoolean("SyncedNG2");
             }
 
             return product;
         }
 
-        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, bool checkboxType = true)
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, bool checkboxType = true, bool getFromRemotingRef = false)
         {
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = true });
@@ -959,16 +983,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
-                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
-                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + productName });
+                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);                
+                var name = getFromRemotingRef ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName) : productName;
+                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + name });
                 if (checkboxType == true)
                 {
                     model.Setting.EnableItems.Add(new ObjectInfo
                     {
                         Key = "Enable" + productName.Replace(" ", string.Empty),
                         Value = !isDisabled,
-                        Text = productName,
-                        Tooltip = "Enable " + productName
+                        Text = name,
+                        Tooltip = "Enable " + name
                     });
                 }
                 else
@@ -976,7 +1001,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     model.Setting.EditItems.Add(new ObjectInfo
                     {
                         Key = "Enable" + productName.Replace(" ", string.Empty),
-                        Text = "Enable " + productName
+                        Text = "Enable " + name
                     });
                 }
             }
