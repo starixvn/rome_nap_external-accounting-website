@@ -189,29 +189,32 @@ namespace Fanex.ExternalAccount.Core.Base
             {
                 var cust = ds.Tables[0];
                 var product = cust.Select("ProductID = " + productId).FirstOrDefault();
-                var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
-                var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
-                var isHidden = product.ToBoolean("IsHidden");
-                var isSynced = product.ToBoolean("IsSync");
-                var isDisabled = product.ToBoolean("IsDisabled");
-                var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
-                var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
-                var hasDownline = product.ToBoolean("HasDownline");
-
-                return new DcsEntity
+                if (product != null)
                 {
-                    IsDisabledUpline = isDisabledUpline,
-                    IsSyncedUpline = isSyncedUpline,
-                    IsHidden = isHidden,
-                    HasDownline = hasDownline,
-                    IsSynced = isSynced,
-                    IsDisabled = isDisabled,
-                    IsDisabledDownline = isDisabledDownline,
-                    IsSyncedDownline = isSyncedDownline
-                };
+                    var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
+                    var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
+                    var isHidden = product.ToBoolean("IsHidden");
+                    var isSynced = product.ToBoolean("IsSync");
+                    var isDisabled = product.ToBoolean("IsDisabled");
+                    var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
+                    var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
+                    var hasDownline = product.ToBoolean("HasDownline");
+
+                    return new DcsEntity
+                    {
+                        IsDisabledUpline = isDisabledUpline,
+                        IsSyncedUpline = isSyncedUpline,
+                        IsHidden = isHidden,
+                        HasDownline = hasDownline,
+                        IsSynced = isSynced,
+                        IsDisabled = isDisabled,
+                        IsDisabledDownline = isDisabledDownline,
+                        IsSyncedDownline = isSyncedDownline
+                    };
+                }                
             }
 
-            return new DcsEntity();
+            return new DcsEntity() { IsHidden = true };
         }
     }
 }
