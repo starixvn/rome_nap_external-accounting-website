@@ -487,9 +487,17 @@ namespace Fanex.ExternalAccount.Core.Base
             var permisisonService = new ServiceBase();
             if (isSpecialSiteCustomer)
             {
-                bool isInternalAdmin = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
+                bool isInternalAdmin = false;
+                bool isAllowAccess = false;
+                permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId }, ref isInternalAdmin, ref isAllowAccess);
                 if (isInternalAdmin)
                 {
+                    if (!isAllowAccess)
+                    {
+                        return false;
+                    }
+
+
                     bool isHasAccessSpecialSitePermission = permisisonService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
                     if (!isHasAccessSpecialSitePermission)
                     {
@@ -512,13 +520,15 @@ namespace Fanex.ExternalAccount.Core.Base
             var list = new List<KeyValuePair<string, string>>();
             var products = ProductsConfiguration.Instance.ProductCollection;
             IServiceBase permissionService = new ServiceBase();
-            bool isInternalAdmin = permissionService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
+            bool isInternalAdmin = false;
+            bool isAllowAcess = false;
+            permissionService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId }, ref isInternalAdmin, ref isAllowAcess);
             bool isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
             foreach (ProductElementConfiguration product in products)
             {
                 if (product.IsSpecial)
                 {
-                    if (!this.IsHiddenProduct(product) && (!isInternalAdmin || isAuthorized))
+                    if (!this.IsHiddenProduct(product) && (!isInternalAdmin || (isInternalAdmin && isAllowAcess && isAuthorized)))
                     {
                         list.Add(new KeyValuePair<string, string>(
                             product.Id,
