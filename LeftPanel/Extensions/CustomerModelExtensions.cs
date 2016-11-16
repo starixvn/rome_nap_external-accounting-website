@@ -584,6 +584,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
 
+                if (roleId == 1)
+                {
+                    model.RemoveCrossLevelProduct(productName);
+                }
+
                 return model;
             }
 
