@@ -105,8 +105,8 @@
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">
-    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
@@ -347,6 +347,9 @@
   </Function>
   <Function Name="Casino Win Limit">
     <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbExtAccNet" />
+  </Function>
+  <Function Name="OTP">
+    <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="NG2">
     <Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOLICY.bodb02.bodbExtAccNet" />
