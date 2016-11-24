@@ -9,10 +9,12 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Web;
+    using Criteria;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.Data;
     using Fanex.Data.DNAide;
@@ -692,6 +694,26 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 objDb.ExecuteNonQuery();
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
+
+        public Result RemoveOTP(RemoveOTPCriteria criteria)
+        {
+            if (criteria == null)
+            {
+                throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
+            }
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result
+                {
+                    ErrorCode = outputParams["errcode"].ToString(),
+                    ErrorMessage = outputParams["errmsg"].ToString()
+                };
             }
         }
     }

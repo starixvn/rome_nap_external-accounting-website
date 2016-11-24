@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     using System.Collections.Generic;
     using System.Data;
     using CasinoLibrary.SBAgent;
+    using Criteria;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
@@ -241,6 +242,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         public override Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
         {
             return this._data.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
+        }
+
+        public override Result RemoveOTP(int custId)
+        {
+            return this._data.RemoveOTP(new RemoveOTPCriteria
+            {
+                Custid = custId,
+                Userid = CurrentSession.Instance.UserId,
+                IP = CurrentContext.Instance.Ip4Address
+            });
         }
     }
 }

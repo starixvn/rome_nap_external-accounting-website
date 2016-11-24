@@ -8632,6 +8632,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Removing a user&apos;s OTP will remove the registered Sophos key and disable his OTP status..
+        /// </summary>
+        internal static string removeOTPGuidetitle {
+            get {
+                return ResourceManager.GetString("removeOTPGuidetitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed the registered device successfully..
+        /// </summary>
+        internal static string removeOTPsuccessfully {
+            get {
+                return ResourceManager.GetString("removeOTPsuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove OTP.
+        /// </summary>
+        internal static string removeOTPtitle {
+            get {
+                return ResourceManager.GetString("removeOTPtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to remove this user&apos;s registered device?.
+        /// </summary>
+        internal static string removingOTPConfirm {
+            get {
+                return ResourceManager.GetString("removingOTPConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report by.
         /// </summary>
         internal static string reportby {

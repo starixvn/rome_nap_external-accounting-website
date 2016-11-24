@@ -348,6 +348,9 @@
   <Function Name="Casino Win Limit">
     <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
+  <Function Name="OTP">
+    <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbExtAccNet" />
+  </Function>
   <Function Name="NG2">
     <Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOLICY.bodb02.bodbExtAccNet" />
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBPOLICY.bodb02.bodbExtAccNet" />

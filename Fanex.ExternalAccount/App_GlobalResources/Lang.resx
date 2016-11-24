@@ -3752,4 +3752,16 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="invalid" xml:space="preserve">
     <value>Invalid {0}</value>
   </data>
+  <data name="removeOTPGuidetitle" xml:space="preserve">
+    <value>Removing a user's OTP will remove the registered Sophos key and disable his OTP status.</value>
+  </data>
+  <data name="removeOTPsuccessfully" xml:space="preserve">
+    <value>Removed the registered device successfully.</value>
+  </data>
+  <data name="removeOTPtitle" xml:space="preserve">
+    <value>Remove OTP</value>
+  </data>
+  <data name="removingOTPConfirm" xml:space="preserve">
+    <value>Do you want to remove this user's registered device?</value>
+  </data>
 </root>

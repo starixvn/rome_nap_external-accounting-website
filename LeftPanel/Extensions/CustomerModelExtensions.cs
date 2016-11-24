@@ -297,6 +297,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
                         Text = "Login Options"
                     });
+
+                model.Login.Add(
+                  new ObjectInfo {
+                      Value = Utils.ToDateTime(tableCustomer.Rows[0]["OTPCreateDate"]).ToStringExt("M/d/yyyy H:mm tt"),
+                      Text = "OTP"
+                  });
+                
                 model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)], Text = "Used Credit" });
             }
 

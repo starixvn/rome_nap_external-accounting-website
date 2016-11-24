@@ -20,4 +20,9 @@
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
     };
+
+    $scope.RemoveOTP = function (custId, username) {
+        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/RemoveOTP?custId=' + custId +  '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
+        parent.Fanex.ExtAcc.LoadMainIFrame(url);
+    };
 };
