@@ -222,7 +222,7 @@
                     <div class="balanceTitle bold">{{loginInfo[7].text}}</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[7].value}}</div>
                 </div>
-                <div class="clearBoth">
+                <div class="clearBoth" data-ng-hide="{{model.personalInfo.roleId.value == 1}}">
                     <div class="balanceTitle bold">{{loginInfo[8].text}}&nbsp;[<a href="javascript:;" data-ng-click="RemoveOTP({{model != null ? model.personalInfo.custId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Remove</a>]</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[8].value}}</div>
                 </div>
