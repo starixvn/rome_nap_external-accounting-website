@@ -334,7 +334,9 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult InternalLogin(string username)
         {
             var url = string.Empty;
-            bool isSpecialSiteCustomer = base.IsSpecialSiteCustomer(username);
+            bool isSpecialSiteCustomer = false;
+            bool isSpecialHeadline = false;
+            base.IsSpecialSiteCustomer(username, ref isSpecialSiteCustomer, ref isSpecialHeadline);
             if (base.IsAdminHasPermissionOnCustomer(username, isSpecialSiteCustomer))
             {
                 var encryption = new RSACryptoPad.EncryptionThread();
