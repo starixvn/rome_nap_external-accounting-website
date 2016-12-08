@@ -181,7 +181,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.3-SoccerParlay09\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.3\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
