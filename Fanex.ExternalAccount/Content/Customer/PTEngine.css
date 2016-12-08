@@ -652,3 +652,7 @@ td, TD
 .hint li:hover {
     color: black !important;
 }
+
+.sport-type-detail-icon {
+    margin: 3px 0px 0px !important;
+}
