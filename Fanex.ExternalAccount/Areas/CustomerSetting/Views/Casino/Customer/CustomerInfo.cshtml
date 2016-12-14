@@ -1,15 +1,12 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
-@using Fanex.CustomerSetting.Module.Casino.Entities
-@using Newtonsoft.Json
-@using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.Casino.Resources
 @{    
     var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
     var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
 }
-<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" />
 <div class="custInfo" data-ng-controller="CustomerController">
     <div class="headerPositionTaking noneBorderLR custInfoHeader">
         @NGCasinoLang.lblCustomerInformation</div>
@@ -61,7 +58,8 @@
         </span>                
     </div>
     <div class="headerPositionTaking noneBorderLR noneBorderBottom">
-        @NGCasinoLang.lblMemberWinLimit</div>
+        <span data-ng-bind="CustomerModel.roleId != 1 ? '@NGCasinoLang.lblMemberWinLimit' : '@NGCasinoLang.lblMemberWinLossLimit'"></span>
+    </div>
     <table cellpadding="0" cellspacing="0" class="tableInfo">
         <tr>
             <td style="width: 30%" class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblMaximumWin</td>
@@ -69,10 +67,6 @@
                 <select  data-ng-disabled = "IsSuperMasterOnMember" id="maxWinLimit" style="width: 80px !important" data-ng-model="CustomerModel.memberWinLimit.maximumWin" data-ng-options="opt.key for opt in CustomerModel.memberWinLimit.maximumWinLimits track by opt.value">
                 </select>&nbsp;@NGCasinoLang.lblOnGivenCredit</div></td>
             <td class="noneBorderRight" rowspan="{{CustomerModel.roleId != 1 ? 3 : 4}}"><div><label><input type="checkbox" data-ng-disabled="(CustomerModel.memberWinLimit.isDailyAutoResetUpline == false && CustomerModel.roleId != 4) || IsSuperMasterOnMember  " data-ng-model="CustomerModel.memberWinLimit.isDailyAutoReset" />@NGCasinoLang.lblDailyAutoResetLimit</label></div></td>
-        </tr>
-        <tr data-ng-hide="CustomerModel.roleId != 1">
-            <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblCurrentWinLimit</td>
-            <td class=""><span id="currentWinLimit" style="color: #0000ff; cursor: pointer" data-ng-click="GetCurrentWinLimit()">@NGCasinoLang.lblClickToViewCurrentWinLimit</span></td>
         </tr>
         <tr>
             <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblMaxLoss</td>
@@ -84,6 +78,10 @@
         <tr>
             <td class="noneBorderLeft tdTitleRight"></td>
             <td><div>(<span id="minCredit1">{{CustomerModel.memberWinLimit.minimumLoss.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit1">{{CustomerModel.memberWinLimit.maximumLossLimit == 0 && CustomerModel.roleId == 4 ? '@NGCasinoLang.noLimited' : CustomerModel.memberWinLimit.maximumLossLimit.formatNumber()}}</span>)</div></td>
+        </tr>
+        <tr data-ng-hide="CustomerModel.roleId != 1">
+            <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblCurrentWinLossAmount</td>
+            <td class=""><div id="currentWinLimit" style="color: #0000ff; cursor: pointer" data-ng-click="GetCurrentWinLimit()">@NGCasinoLang.lblClickToViewCurrentWinLossAmount</div></td>
         </tr>
     </table>
     <div data-ng-hide="true" class="headerPositionTaking noneBorderLR noneBorderBottom">
@@ -107,16 +105,23 @@
             <td class="noneBorderRight">(<span id="minCredit">{{CustomerModel.minTransferCreditLimit.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit">{{CustomerModel.maxTransferCreditLimit == 0 ? '@NGCasinoLang.noLimited' : CustomerModel.maxTransferCreditLimit.formatNumber()}}</span>)</td>                    
         </tr>
     </table>            
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js?v=2")" type="text/javascript"></script>   
-    <script src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData/" + id + "/" + uplineId)" type="text/javascript"></script>
-     <script type="text/javascript">
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js?v=2")"></script>   
+    <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData/" + id + "/" + uplineId)"></script>
+    <script type="text/javascript">
+        var casinoLang = {
+            winning: '@NGCasinoLang.lblWinning',
+            losing: '@NGCasinoLang.lblLosing',
+            of: '@NGCasinoLang.lblOf',
+            unlimited: '@NGCasinoLang.lblUnlimited'
+        };
+
         var custId = '@id';
         var uplineId = '@uplineId';
 
