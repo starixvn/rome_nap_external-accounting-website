@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Data;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
@@ -190,7 +191,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
+                AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
+            }
+
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(masterId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+
+                AutoInsertCasinoPost(masterId, parentId);
+
+                autoInsertLiveCasinoTask.Wait();
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
@@ -301,7 +311,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
+                AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
+            }
+
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(agentId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+
+                AutoInsertCasinoPost(agentId, parentId);
+
+                autoInsertLiveCasinoTask.Wait();
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
@@ -412,10 +431,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
+                AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
             }
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(memberId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+
+                AutoInsertCasinoPost(memberId, parentId);
+
+                autoInsertLiveCasinoTask.Wait();
+            }
+
+            return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
         }
         #endregion Agent Add New Member
 

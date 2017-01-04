@@ -13,8 +13,9 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Collections;
     using System.Data;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
-    using CustomerSetting.Module.Core.Models;
     using Data.DNAide;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
@@ -36,36 +37,39 @@ namespace Fanex.ExternalAccount.Core.Base
 
         #region Live Casino
 
-        /// <summary>
-        /// Auto insert live casino.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Upper id of customer.</param>
-        /// <param name="uplineRoleId">Upper role id of customer.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>ActionResult object.</returns>
-        public ActionResult AutoInsertLiveCasinoPost(int custId, int parentId, int uplineRoleId, string groupName)
+        [NonAction]
+        protected Task<CustomerSetting.Module.Core.Models.Result> AutoInsertLiveCasinoPost(
+            int custId,
+            int parentId,
+            int actorId,
+            string actorUsername,
+            string ip)
         {
-            SettingService livecasinoSettingService = new SettingService();
-            var customerInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(custId);
-            var parentInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(parentId);
-
-            if (!customerInfo.IsSyncLiveCasino && parentInfo.IsSyncLiveCasino)
+            return Task.Factory.StartNew(() =>
             {
-                System.Threading.Thread.Sleep(5000);
-                var results = livecasinoSettingService.AutoInsertAccount(
-                                                                    custId,
-                                                                    this.CurrentSession.UserId,
-                                                                    this.CurrentSession.UserName,
-                                                                    0,
-                                                                    string.Empty,
-                                                                    this.CurrentContext.Ip4Address,
-                                                                    "E");
+                ISettingService livecasinoSettingService = new SettingService();
 
-                return this.JsonBase(new { ErrorCode = results.Code, ErrorMessage = results.Message });
-            }
+                var customerInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(custId);
+                var parentInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(parentId);
 
-            return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+                if (!customerInfo.IsSyncLiveCasino && parentInfo.IsSyncLiveCasino)
+                {
+                    Thread.Sleep(5000);
+
+                    var results = livecasinoSettingService.AutoInsertAccount(
+                        custId,
+                        actorId,
+                        actorUsername,
+                        0,
+                        string.Empty,
+                        ip,
+                        "E");
+
+                    return new CustomerSetting.Module.Core.Models.Result(results.Code, results.Message);
+                }
+
+                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
+            });
         }
 
         #endregion
@@ -77,13 +81,14 @@ namespace Fanex.ExternalAccount.Core.Base
         /// </summary>
         /// <param name="custId">Customer id.</param>
         /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="uplineName">Upper name of customer.</param>
         /// <returns>ActionResult object.</returns>
-        public ActionResult AutoInsertCasinoPost(int custId, int uplineId, string uplineName)
+        [NonAction]
+        protected CustomerSetting.Module.Core.Models.Result AutoInsertCasinoPost(int custId, int uplineId)
         {
             try
             {
                 var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+
                 if (custInfo != null && custInfo.UplineCasinoSync && !custInfo.CasinoSync)
                 {
                     var isSuccess = new CasinoLibrary.SBAgent.Customer().AutoInsertAccount(
@@ -112,25 +117,28 @@ namespace Fanex.ExternalAccount.Core.Base
                         CurrentContext.Ip4Address,
                         uplineId,
                         CurrentSession.UserName,
-                        BaseController.FromSystem);
+                        FromSystem);
+
                     if (isSuccess)
                     {
                         new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E", string.Empty, string.Empty);
-                        this.UpdateCasinoStatus2(custId, custInfo.Closed, custInfo.Suspend);
-                    }                    
+
+                        UpdateCasinoStatus2(custId, custInfo.Closed, custInfo.Suspend);
+                    }
                 }
 
-                return this.JsonBase(new { ErrorCode = 0, ErrorMessage = string.Empty });
+                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
             }
             catch (Exception ex)
             {
                 Logs.Error(ex);
-                return this.JsonBase(new { ErrorCode = 999, ErrorMessage = string.Empty });
-            }            
+            }
+
+            return new CustomerSetting.Module.Core.Models.Result(999, string.Empty);
         }
 
         #endregion
-       
+
         protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId, int currencyId)
         {
             var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
@@ -211,7 +219,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         IsDisabledDownline = isDisabledDownline,
                         IsSyncedDownline = isSyncedDownline
                     };
-                }                
+                }
             }
 
             return new DcsEntity() { IsHidden = true };
