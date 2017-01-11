@@ -35,6 +35,7 @@
     HideAllbet: false,
     HideVoidbridge: false,
     HideNG2: false,
+    HideFishingWorld: false,
     
     HideAllbetMember: false,
     HideVoidbridgeMember: false,
@@ -80,6 +81,8 @@
 
     NG2SyncList: [],
     NG2SyncIdList: [],
+    FishingWorldSyncList: [],
+    FishingWorldSyncIdList: [],
     
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
@@ -471,6 +474,11 @@
                 Fanex.ExtAcc.Customer.NG2SyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.NG2SyncList.push($(div).attr('name'));
             }
+            
+            if ($(div).attr('sync-fishingworld') == 'true' && !Fanex.ExtAcc.Customer.FishingWorldSyncIdList.contains($(div).attr('id'))) {
+                Fanex.ExtAcc.Customer.FishingWorldSyncIdList.push($(div).attr('id'));
+                Fanex.ExtAcc.Customer.FishingWorldSyncList.push($(div).attr('name'));
+            }
         } else {
             div.className = 'menuInactive';
             $('#editMult').attr('style', 'cursor: default !important');
@@ -490,6 +498,11 @@
             if ($(div).attr('sync-ng2') == 'true') {
                 Fanex.ExtAcc.Customer.NG2SyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.NG2SyncList.pop($(div).attr('name'));
+            }
+            
+            if ($(div).attr('sync-fishingworld') == 'true') {
+                Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(div).attr('id'));
+                Fanex.ExtAcc.Customer.FishingWorldSyncList.pop($(div).attr('name'));
             }
         }
 
@@ -545,6 +558,15 @@
                 else if ($(divs[i]).attr('sync-voidbridge') == 'true' && divs[i].className == 'menuInactive') {
                     Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(divs[i]).attr('id'));
                     Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(divs[i]).attr('name'));
+                }
+
+                if ($(divs[i]).attr('sync-fishingworld') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.FishingWorldSyncIdList.contains($(divs[i]).attr('id'))) {
+                    Fanex.ExtAcc.Customer.FishingWorldSyncIdList.push($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.FishingWorldSyncList.push($(divs[i]).attr('name'));
+                }
+                else if ($(divs[i]).attr('sync-fishingworld') == 'true' && divs[i].className == 'menuInactive') {
+                    Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.FishingWorldSyncList.pop($(divs[i]).attr('name'));
                 }
 
                 if ($(divs[i]).attr('sync-ng2') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.NG2SyncIdList.contains($(divs[i]).attr('id'))) {

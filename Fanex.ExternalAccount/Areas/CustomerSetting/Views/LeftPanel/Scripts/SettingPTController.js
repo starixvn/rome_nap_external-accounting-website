@@ -426,6 +426,10 @@
         $scope.RenderDCS(23);
     };
 
+    $scope.FishingWorld = function () {
+        $scope.RenderDCS(24);
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

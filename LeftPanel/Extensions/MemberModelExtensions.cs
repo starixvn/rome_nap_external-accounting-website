@@ -116,10 +116,40 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Value = table3rdDCS.Select("ProductID = 23").Count() > 0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
                             },
                             new ObjectInfo
-                            {
-                                Key = "HideVoidbridge",
-                                Value = table3rdDCS.Select("ProductID = 22").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
+                            {    
+                                Key = "HideFishingWorld",
+                                Value = table3rdDCS.Select("ProductID = 24").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
+                            }
+                        },
+                EditItems = new List<ObjectInfo>
+                        {
+                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
+                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
+                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
+                            new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" },
+                        },
+                Details = new List<ObjectInfo>
+                        {
+                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
+                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
+                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
+                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
+                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
+                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
+                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
+                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
+                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
+                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
+                            new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
+                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
+                            new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
+                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
+                        }
+            };
+
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
                             }
                         },
                 EditItems = new List<ObjectInfo>
@@ -193,6 +223,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("Allbet", "Allbet");
             model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
             model.AddDetailProductForCrossLevel("NG2", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
+            model.AddDetailProductForCrossLevel("FishingWorld", "Fishing World");
 
             return model;
         }

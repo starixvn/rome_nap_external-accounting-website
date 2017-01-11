@@ -1429,8 +1429,8 @@ Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld = function (uplineRoleId, tar
         document.getElementById('productId').value = 24;
         document.getElementById('customerLevel').value = targetRoleId;
         document.getElementById('isMultiple').value = true;
-        document.getElementById('customerIds').value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncIdList.join(', ') : CustIds);
-        document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncList.join(', ') : Usernames);
+        document.getElementById('customerIds').value = (uplineRoleId - this.CurrentLevel != 1 ? this.FishingWorldSyncIdList.join(', ') : CustIds);
+        document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.FishingWorldSyncList.join(', ') : Usernames);
         document.getElementById('uplineLevel').value = "";
 
         if (document.getElementById('customerIds').value == "") {
@@ -1449,7 +1449,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld = function (uplineRoleId, tar
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {
-        this.ShowEditSingleVoidbridge(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+        this.ShowEditSingleFishingWorld(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 

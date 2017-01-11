@@ -566,6 +566,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 true,
                 "NG2");
 
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId,
+                1,
+                product.RoleId < 4 ? product.UplineStatuses.HideFishingWorld : product.HideFishingWorld,
+                product.RoleId < 4 ? product.UplineStatuses.SyncFishingWorld : product.SyncFishingWorld,
+                product.HideFishingWorld,
+                product.SyncFishingWorld,
+                product.SyncFishingWorldDownlines,
+                "FishingWorld");    
+                
             return model;
         }
 
@@ -721,6 +731,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.DisableProduct("EnableNG2");
             }
 
+            if (product.UplineStatuses.DisableFishingWorld)
+            {
+                model.DisableProduct("EnableFishingWorld");
+            }
+            
             return model;
         }
 
@@ -945,6 +960,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.SyncNG2 = result.Rows[0].ToBoolean("SyncedNG2");
             product.DisableNG2 = result.Rows[0].ToBoolean("DisableNG2");
 
+            product.HideFishingWorld = ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0" || result.Rows[0].ToBoolean("HideFishingWorld");
+            product.SyncFishingWorld = result.Rows[0].ToBoolean("SyncedFishingWorld");
+            product.SyncFishingWorldDownlines = result.Rows[0].ToBoolean("SyncedFishingWorldDownline");
+            product.DisableFishingWorld = result.Rows[0].ToBoolean("DisableFishingWorld");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -982,6 +1002,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableNG2 = upperInfo.Rows[0].ToBoolean("DisableNG2");
                 product.UplineStatuses.HideNG2 = upperInfo.Rows[0].ToBoolean("HideNG2");
                 product.UplineStatuses.SyncNG2 = upperInfo.Rows[0].ToBoolean("SyncedNG2");
+                product.UplineStatuses.DisableFishingWorld = upperInfo.Rows[0].ToBoolean("DisableFishingWorld");
+                product.UplineStatuses.HideFishingWorld = upperInfo.Rows[0].ToBoolean("HideFishingWorld");
+                product.UplineStatuses.SyncFishingWorld = upperInfo.Rows[0].ToBoolean("SyncedFishingWorld");
             }
 
             return product;
