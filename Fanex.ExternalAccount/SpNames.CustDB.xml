@@ -170,9 +170,9 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting_xpre" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
@@ -340,7 +340,7 @@
     </Function>
     <Function Name="DCS">
       <Function Name="Enable Status">
-        <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
+        <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_xpre" DbName="DBCUST.CustDB.bodbExtAccNet" />
         <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CustDB.bodbExtAccNet" />
       </Function>
     </Function>
@@ -358,7 +358,7 @@
     <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_xtest" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="API Logger">
     <Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" Plain="0" />
