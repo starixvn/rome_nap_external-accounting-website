@@ -150,36 +150,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
-                            }
-                        },
-                EditItems = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
-                            new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
-                            new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" },
-                        },
-                Details = new List<ObjectInfo>
-                        {
-                            new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                            new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                            new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                            new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
-                            new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                            new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                            new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                            new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                            new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
-                            new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
-                            new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
-                        }
-            };
-
-            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
-            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
             model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
 
