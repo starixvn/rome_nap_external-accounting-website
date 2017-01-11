@@ -9,11 +9,13 @@
             parent.showAllbet = $scope.personalInfo.isShowProducts[0].value;
             parent.showVoidbridge = $scope.personalInfo.isShowProducts[2].value;
             parent.showNG2 = $scope.personalInfo.isShowProducts[4].value;
+            parent.showFishingWorld = $scope.personalInfo.isShowProducts[6].value;
             
             if ($scope.personalInfo.roleId.value == 4) {
                 parent.showAllbetBetting = $scope.personalInfo.isShowProducts[1].value;
                 parent.showVoidbridgeBetting = $scope.personalInfo.isShowProducts[3].value;
                 parent.showNG2Betting = $scope.personalInfo.isShowProducts[5].value;
+                //parent.showFishingWorldBetting = $scope.personalInfo.isShowProducts[7].value;
             }
         }
 
