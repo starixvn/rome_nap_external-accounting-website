@@ -223,7 +223,10 @@ Fanex.ExtAcc.DailyWinLoss = {
     },
     defaultColumns: [
         { HeaderText: 'No.', Name: 'No', Width: 40, HeaderAlign: 'center', CellAlign: 'right' },
-        { HeaderText: 'Username', Name: 'Username', Width: 130, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); } },
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 130, HeaderAlign: 'center',
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
+        },
         { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: '%', Name: 'ComTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -260,6 +263,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             numberOfFrozenColumn: 3,
             showFooter: true,
             gridExpandHeight: 175,
+            autoResizeColumn: true,
             showPager: true,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],

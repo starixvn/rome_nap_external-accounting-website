@@ -154,9 +154,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public void GetExportToExcelWinLossDetail()
         {
+            this.GetRequestPage();
             string subFileName = this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls";
             bool getNew = false;
-            this.GetRequestPage();
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId + this._fromDate.ToString() + this._toDate.ToString() + this._products;
             int level = this._viewlevel;
 

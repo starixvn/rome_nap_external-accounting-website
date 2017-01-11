@@ -348,7 +348,10 @@ Fanex.ExtAcc.WinLossDetail = {
         }
     },
     defaultColumns: [
-        { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 150, Sort: true, HeaderAlign: 'center',
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+        },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -367,7 +370,10 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     MAgColumns: [
-        { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 150,
+            Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+        },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -383,7 +389,10 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     AgColumns: [
-        { HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) } },
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 150,
+            Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+        },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
