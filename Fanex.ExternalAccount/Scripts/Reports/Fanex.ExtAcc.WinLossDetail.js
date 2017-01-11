@@ -332,11 +332,13 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     RenderUsernameColumn: function (cell) {
         if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
-            return '<div style="line-height: 22px; text-align: left; padding-left: 3px">' + cell.Value.Username + '</div>';
+            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
         }
         else {
             var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;"><a style="text-decoration: none;margin:0" href="' + func + '">' + cell.Value.Username + '</a></div>';
+            return html = '<div style="line-height: 22px; text-align: left;">' +
+                                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+                            '</div>';
         }
     },
     CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
@@ -349,7 +351,7 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     defaultColumns: [
         {
-            HeaderText: 'Username', Name: 'Username', Width: 150, Sort: true, HeaderAlign: 'center',
+            HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center',
             CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -371,7 +373,7 @@ Fanex.ExtAcc.WinLossDetail = {
     ],
     MAgColumns: [
         {
-            HeaderText: 'Username', Name: 'Username', Width: 150,
+            HeaderText: 'Username', Name: 'Username', Width: 130,
             Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
@@ -390,7 +392,7 @@ Fanex.ExtAcc.WinLossDetail = {
     ],
     AgColumns: [
         {
-            HeaderText: 'Username', Name: 'Username', Width: 150,
+            HeaderText: 'Username', Name: 'Username', Width: 130,
             Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
         { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },

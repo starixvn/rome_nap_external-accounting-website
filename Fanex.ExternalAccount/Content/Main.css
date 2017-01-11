@@ -1567,3 +1567,11 @@ div#contentSplitter > div#msg
 {
     display: none !important;
 }
+
+.text-truncate
+{
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
