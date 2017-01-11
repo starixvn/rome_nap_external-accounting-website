@@ -306,7 +306,7 @@
       <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
       <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
       <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-      <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel" DbName="DBTXN.bodb02.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerWinLimitSel" SpName="Acc_CustomerWinLimitSel_xtest" DbName="DBTXN.bodb02.bodbExtAccNet" />
     </Function>
     <Function Name="Update Setting">
       <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All" DbName="DBCust.CustDB.bodbExtAccNet" />
