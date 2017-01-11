@@ -138,16 +138,53 @@ function CustomerController($scope, $element) {
             }
         }).success(function (result) {
             if (result.errorCode == 0) {
-                var obj = result.result;
-                var percent = obj.winPercent >= 100 ? '<font style="color: red">' + obj.winPercent.toFixed(2).formatNumber() + '%</font>' : obj.winPercent.toFixed(2).formatNumber() + '%';
-                var info = obj.maxWinLimit == 0 ? 'Unlimited' : percent + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;' + obj.maxWinCredit.toFixed(2).formatNumber();
-                $('#currentWinLimit').attr('style', '');
-                $('#currentWinLimit').unbind('click');
-                $('#currentWinLimit').html(info);
+                var buildWinLossHandler = function (initArray, percent, maxAmount) {
+                    if (maxAmount) {
+                        if (percent >= 100) {
+                            initArray.push('<font style="color: red">');
+                            initArray.push(percent.toFixed(2).formatNumber());
+                            initArray.push('%</font>');
+                        }
+                        else {
+                            initArray.push(percent.toFixed(2).formatNumber());
+                            initArray.push('%');
+                        }
+
+                        initArray.push('&nbsp;&nbsp;');
+                        initArray.push(casinoLang.of);
+                        initArray.push('&nbsp;&nbsp;');
+                        initArray.push(maxAmount.toFixed(2).formatNumber());
+                    }
+                    else {
+                        initArray.push(casinoLang.unlimited);
+                    }
+
+                    return '<p style="margin:3px 0;">' + initArray.join('') + '</p>';
+                };
+
+                var currentWinLoss = result.result;
+
+                var winningHtml = buildWinLossHandler(
+                    [casinoLang.winning, ':&nbsp;&nbsp;'],
+                    currentWinLoss.winPercent,
+                    currentWinLoss.maxWinAmount);
+
+                var losingHtml = buildWinLossHandler(
+                    [casinoLang.losing, ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'],
+                    currentWinLoss.lossPercent,
+                    currentWinLoss.maxLossAmount);
+
+                var $currentWinLimit = $('#currentWinLimit');
+                $currentWinLimit
+                    .attr('style', '')
+                    .unbind('click')
+                    .html(winningHtml + losingHtml);
             }
             else {
-                $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                $('#errMsg').show();
+                var $errMsg = $('#errMsg');
+                $errMsg
+                    .html(result.errorMessage.formatErrorMessage())
+                    .show();
             }
         }).error(function (data) {
             if (typeof console != 'undefined')
