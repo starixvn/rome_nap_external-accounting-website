@@ -1,7 +1,7 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using System.Configuration
+
 @{
     var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
     var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
@@ -33,7 +33,6 @@
             <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
             <li id="tab3" onclick="LoadVirtualSports()"><a href="#tabs-3">Virtual Sports</a></li>
             <li id="tab4" onclick="LoadLiveCasino()"><a href="#tabs-4">Live Casino</a></li>
-            <li id="tab5" onclick="LoadBingo()"><a href="#tabs-5">Bingo</a></li>
             <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
             <li id="tab7" onclick="LoadKeno()"><a href="#tabs-7">Keno</a></li>
             <li id="tab8" onclick="LoadGoldDeluxe()"><a href="#tabs-8">Gold Deluxe</a></li>
@@ -53,10 +52,7 @@
         </div>
         <div id="tabs-4">          
             @RenderSection("LiveCasino", false)
-        </div>                
-        <div id="tabs-5">   
-            @RenderSection("Bingo", false)       
-        </div>                
+        </div>                              
         <div id="tabs-6">          
             @RenderSection("Casino", false)
         </div>
@@ -97,13 +93,12 @@
                 url.indexOf('racingbetting') != -1 ? 1 :
                 url.indexOf('virtualsportsbetting') != -1 ? 2 :
                 url.indexOf('livecasinobetting') != -1 ? 3 :
-                url.indexOf('bingobetting') != -1 ? 4 :
-                url.indexOf('casinobetting') != -1 ? 5 :
-                url.indexOf('kenobetting') != -1 ? 6 : 
-                url.indexOf('golddeluxebetting') != -1 ? 7 : 
-                url.indexOf('allbet') != -1 ? 8 :
-                url.indexOf('voidbridge') != -1 ? 9 :
-                url.indexOf('ng2') != -1 ? 10 : 0;
+                url.indexOf('casinobetting') != -1 ? 4 :
+                url.indexOf('kenobetting') != -1 ? 5 : 
+                url.indexOf('golddeluxebetting') != -1 ? 6 : 
+                url.indexOf('allbet') != -1 ? 7 :
+                url.indexOf('voidbridge') != -1 ? 8 :
+                url.indexOf('ng2') != -1 ? 9 : 0;
 
             $('#tabs').tabs({ selected: index });
 
@@ -114,11 +109,6 @@
                 $('#tabs-6').remove();
             }
 
-            if (!custInfo.syncBingo || parent.hideBingo) {
-                $('#tab5').remove();
-                $('#tabs-5').remove();
-            }
-
             if (!custInfo.syncLiveCasino) {
                 $('#tab4').remove();
                 $('#tabs-4').remove();
@@ -126,7 +116,7 @@
 
             if (custInfo.hideGoldDeluxe)
             {
-              $('#tab8').remove();
+                $('#tab8').remove();
                 $('#tabs-8').remove();
             }
             

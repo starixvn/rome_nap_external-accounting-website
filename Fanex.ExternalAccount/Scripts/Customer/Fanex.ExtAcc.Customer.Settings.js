@@ -21,8 +21,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs').tabs();
 
         $('#tab4').css('display', Fanex.ExtAcc.Customer.SyncCasino ? 'block' : 'none');
-        $('#tab5').css('display', Fanex.ExtAcc.Customer.SyncBingo ? 'block' : 'none');
-        $('#tab6').css('display', Fanex.ExtAcc.Customer.DisableP2P ? 'none' : 'block');
         $('#tab7').css('display', Fanex.ExtAcc.Customer.SyncLiveCasino ? 'block' : 'none');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
@@ -49,9 +47,6 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-3').hide();
         }
 
-        $('#tab6').hide();
-        $('#tabs-6').hide();
-
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
@@ -70,16 +65,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab4').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetCasinoSetting();
-        });
-
-        $('#tab5').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetBingoSetting();
-        });
-
-        $('#tab6').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetPokerSetting();
         });
 
         $('#tab7').bind('click', function () {
@@ -237,29 +222,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
         $('#casinoFrame').attr('src', url);
-    },
-
-    GetBingoSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-        var uplineId = 0;
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            action = 'Master';
-            uplineId = Fanex.ExtAcc.Customer.superId;
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            action = 'Agent';
-            uplineId = Fanex.ExtAcc.Customer.masterId;
-        }
-        else {
-            action = 'Member';
-            uplineId = Fanex.ExtAcc.Customer.agentId;
-        }
-        var url = resolveClientUrl('CustomerSetting/Bingo/BingoSetting/' + action + '?id=' + this.UserId + '&uplineId=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
-        $('#tabs-5').height($('#leftFrame').height() - 10);
-        $('#tabs-5').css('display', 'block');
-        $('#bingoFrame').attr('src', url);
     },
 
     GetKenoSetting: function () {
@@ -428,13 +390,11 @@ Fanex.ExtAcc.Customer.Settings = {
 
     EmptyAllTabs: function () {
         $('#tabs-1').html('');
-        $('#tabs-6').html('');
-//        $('#tabs-7').html('');
+        // $('#tabs-7').html('');
         $('#tabs-8').html('');
 
         $('#tabs-1').css('display', 'none');
-        $('#tabs-6').css('display', 'none');
-//        $('#tabs-7').css('display', 'none');
+        // $('#tabs-7').css('display', 'none');
         $('#tabs-8').css('display', 'none');
     }
 };

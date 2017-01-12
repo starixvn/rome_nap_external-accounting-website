@@ -63,8 +63,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
                 customerDetail.LiveCasinoSync = Utils.ToBoolean(row["synclivecasino"]);
                 customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
-                customerDetail.BingoDisabled = Utils.ToBoolean(row["disablebingo"]);
-                customerDetail.BingoSync = Utils.ToBoolean(row["syncbingo"]);
                 customerDetail.IBCCustID = Utils.ToInt32(row["custid"]);
                 customerDetail.UserPwd = Utils.ToString(row["userpwd"]);
                 customerDetail.UpperCustID = uplineId;
@@ -73,7 +71,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 if (upline != null && upline.ResultSet != null && upline.ResultSet.Tables.Count > 0 && upline.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     var drupline = upline.ResultSet.Tables[0].Rows[0];
-                    customerDetail.UplineBingoSync = Utils.ToBoolean(drupline["syncbingo"]);
                     customerDetail.UplineCasinoSync = Utils.ToBoolean(drupline["synccasino"]);
                 }
 

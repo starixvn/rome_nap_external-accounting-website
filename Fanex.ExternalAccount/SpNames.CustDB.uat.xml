@@ -129,7 +129,6 @@
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
@@ -264,27 +263,6 @@
     <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-  </Function>
-  <Function Name="Bingo Setting">
-    <Setting Key="Acc_CustomerUpdSyncBingo" SpName="Acc_CustomerUpdSyncBingo" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="BG_Acc_MT_GetBingoPT" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustSetting_GetCustSetting" SpName="TP_User_CustSetting_GetCustSetting" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustSetting_GetDefaultMaxTransfer" SpName="TP_User_CustSetting_GetDefaultMaxTransfer" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Admin_GameGroup_SelAll" SpName="TP_Admin_GameGroup_SelAll" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustGameKind_GetCustGameKind" SpName="TP_User_CustGameKind_GetCustGameKind" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustGameType_GetCustGameType_EditMember" SpName="TP_User_CustGameType_GetCustGameType_EditMember" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustGameType_GetCustGameType" SpName="TP_User_CustGameType_GetCustGameType" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustGameKind_GetCustGameKind_EditMember" SpName="TP_User_CustGameKind_GetCustGameKind_EditMember" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Admin_GameType_Sel" SpName="TP_Admin_GameType_Sel" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_UP_Admin_Site_BySiteNo" SpName="UP_Admin_Site_BySiteNo" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustGameType_GetMemberCommReport" SpName="TP_User_CustGameType_GetMemberCommReport" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_User_CustGameType_GetPositionTakingReport" SpName="TP_User_CustGameType_GetPositionTakingReport" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Game_UserBet_WinLossBySAgentID" SpName="TP_Game_UserBet_WinLossBySAgentID" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Game_UserBet_WinLossByMAgentID" SpName="TP_Game_UserBet_WinLossByMAgentID" DbName="CS_LBBackupDB" Plain="1" />
-    <Setting Key="BG_TP_Game_UserBet_WinLossByAgentID" SpName="TP_Game_UserBet_WinLossByAgentID" DbName="CS_LBBackupDB" Plain="1" />
   </Function>
   <Function Name="Casino">
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog" />

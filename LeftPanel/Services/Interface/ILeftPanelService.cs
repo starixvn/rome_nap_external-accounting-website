@@ -45,8 +45,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 
         Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName);
 
-        Result EnableBingo(int id, bool enable, bool sync, bool enableDownline);
-
         Result EnableNumberGame(int id, bool enable, bool enableDownline);
 
         Result EnableLiveCasino(int id, bool enable, bool enableDownline);

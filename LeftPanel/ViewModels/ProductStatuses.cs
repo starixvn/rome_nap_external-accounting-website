@@ -26,12 +26,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             set;
         }
 
-        public bool SyncBingo
-        {
-            get;
-            set;
-        }
-
         public bool SyncCasino
         {
             get;
@@ -81,12 +75,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         }
 
         public bool DisableCasino
-        {
-            get;
-            set;
-        }
-
-        public bool DisableBingo
         {
             get;
             set;

@@ -481,9 +481,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
             ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
-            ViewBag.SyncBingo = (bool)result.Rows[0]["SyncBingo"];
             ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
-            ViewBag.DisableP2P = (bool)result.Rows[0]["DisableP2P"];
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"];
@@ -542,7 +540,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
               Formatting.None,
               new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
-            bool syncCasino = true, syncBingo = true, syncLiveCasino = true, allowDoubleComm = true;
+            bool syncCasino = true, syncLiveCasino = true, allowDoubleComm = true;
 
             if (roleId > 0 && roleId < 4)
             {
@@ -560,7 +558,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                         break;
                 }
 
-                syncBingo = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncBingo");
                 syncCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncCasino");
                 syncLiveCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncLiveCasino");
                 allowDoubleComm = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
@@ -579,7 +576,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     recommend = recommend,
                     custId = custId,
                     syncCasino = syncCasino,
-                    syncBingo = syncBingo,
                     syncLiveCasino = syncLiveCasino,
                     allowDoubleComm = allowDoubleComm
                 });

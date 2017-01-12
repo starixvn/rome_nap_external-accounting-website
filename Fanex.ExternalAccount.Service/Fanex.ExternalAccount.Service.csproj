@@ -116,7 +116,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\Customer\Bingo\BingoManager.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoManager.cs" />
     <Compile Include="Impl\Customer\CommissionService.cs" />
     <Compile Include="Impl\Statement\StatementService.cs" />

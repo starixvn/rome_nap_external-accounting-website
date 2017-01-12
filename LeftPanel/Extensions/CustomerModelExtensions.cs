@@ -428,11 +428,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct("ColossusBets");
             }
 
-            if (!Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-            {
-                model.RemoveProduct("Bingo");
-            }
-
             return model;
         }
 
@@ -451,18 +446,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel RemoveEnableAndPtforProducts(this CustomerModel model, ProductStatuses product)
         {
-            if (!product.SyncBingo ||
-                !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-            {
-                model.RemoveEnableProduct("EnableBingo");
-
-                if (!product.UplineStatuses.SyncBingo || !Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled)
-                {
-                    model.RemoveProduct("Bingo")
-                        .RemoveCrossLevelProduct("Bingo");
-                }
-            }
-
             if (!product.SyncCasino)
             {
                 model.RemoveEnableProduct("EnableCasino");
@@ -679,11 +662,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableHRFixedOdds)
             {
                 model.DisableProduct("EnableHRFixedOdds");
-            }
-
-            if (product.UplineStatuses.DisableBingo)
-            {
-                model.DisableProduct("EnableBingo");
             }
 
             if (product.UplineStatuses.DisableCasino)
@@ -920,7 +898,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             var athenticationService = new ExternalAccountAuthenticate();
 
-            product.SyncBingo = result.Rows[0].ToBoolean("syncBingo");
             product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
             product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
             product.DisableTransfer = roleId == 4 ? false : result.Rows[0].ToBoolean("disableTransfer");
@@ -928,7 +905,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports");
             product.AllowOutright = !result.Rows[0].ToBoolean("disableOutright");
             product.DisableNumberGame = result.Rows[0].ToBoolean("disableNumber");
-            product.DisableBingo = result.Rows[0].ToBoolean("disableBingo");
             product.DisableCasino = result.Rows[0].ToBoolean("disableCasino");
             product.DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino");
             product.Closed = result.Rows[0].ToBoolean("closed");
@@ -968,11 +944,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
-                o.Key.ToString() == "Bingo" || o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
+                o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
-                product.UplineStatuses.SyncBingo = upperInfo.Rows[0].ToBoolean("syncBingo");
                 product.UplineStatuses.SyncCasino = upperInfo.Rows[0].ToBoolean("syncCasino");
                 product.UplineStatuses.SyncLiveCasino = upperInfo.Rows[0].ToBoolean("syncLiveCasino");
                 product.UplineStatuses.DisableTransfer = roleId + 1 == 4 ? false : upperInfo.Rows[0].ToBoolean("disableTransfer");
@@ -980,7 +955,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableVirtualSports = upperInfo.Rows[0].ToBoolean("disableVirtualSports");
                 product.UplineStatuses.AllowOutright = !upperInfo.Rows[0].ToBoolean("disableOutright");
                 product.UplineStatuses.DisableNumberGame = upperInfo.Rows[0].ToBoolean("disableNumber");
-                product.UplineStatuses.DisableBingo = upperInfo.Rows[0].ToBoolean("disableBingo");
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");

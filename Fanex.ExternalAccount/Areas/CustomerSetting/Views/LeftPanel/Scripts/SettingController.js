@@ -60,30 +60,26 @@
             var groupName = parent.$('#selectedGroupName').html();
             var allowAdmins = eval(parent.allowAdminEditSuperStatus);
             for (var i = 0; i < $scope.setting.details.length; i++) {
-                if ($scope.setting.details[i].key == 'Poker' ||
-                    ($scope.setting.details[i].key == 'Transfer' && $scope.model.personalInfo.roleId.value == 1) ||
+                if (($scope.setting.details[i].key == 'Transfer' && $scope.model.personalInfo.roleId.value == 1) ||
                     ($scope.setting.details[i].key == 'BetSetting' && parent.showBetSetting == '0')) {
                     $scope.setting.details[i].isHide = true;
                 }
             }
 
             for (var i = 0; i < $scope.setting.editItems.length; i++) {
-                if ($scope.setting.editItems[i].key == 'EnablePoker' || ($scope.setting.editItems[i].key == 'EnableKeno' && parent.enableKeno == '0')) {
+                if ($scope.setting.editItems[i].key == 'EnableKeno' && parent.enableKeno == '0') {
                     $scope.setting.editItems[i].isHide = true;
                 }
             }
 
             var syncCasino = true;
-            var syncBingo = true;
             var syncLiveCasino = true;
 
             for (var j = 0; j < $scope.setting.syncItems.length; j++) {
                 if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
                     syncCasino = false;
                 }
-                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncBingo') {
-                    syncBingo = false;
-                }
+
                 if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncLiveCasino') {
                     syncLiveCasino = false;
                 }
@@ -98,9 +94,6 @@
 
                 if ($scope.setting.enableItems[i].key == 'EnableCasino')
                     $scope.setting.enableItems[i].isHide = !syncCasino;
-
-                if ($scope.setting.enableItems[i].key == 'EnableBingo')
-                    $scope.setting.enableItems[i].isHide = !syncBingo;
 
                 if ($scope.setting.enableItems[i].key == 'EnableLiveCasino')
                     $scope.setting.enableItems[i].isHide = !syncLiveCasino;
@@ -557,17 +550,6 @@
         }, 1, null);
     };
 
-    $scope.EnableBingo = function (enable, id) {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=bingo&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[1].value;
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Bingo: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
-    };
-
     $scope.EnableNumberGame = function (enable, id) {
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
@@ -799,12 +781,6 @@
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
-    $scope.SuperBingo = function () {
-        $scope.ResetGlobalValueAtSuperOnMember();
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
-    };
-
     $scope.SuperCasino = function () {
         $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
@@ -860,12 +836,6 @@
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
-    };
-
-    $scope.MasterBingo = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterCasino = function () {

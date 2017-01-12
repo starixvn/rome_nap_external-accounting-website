@@ -102,47 +102,6 @@
         }
     }
 
-    if (!hideBingo && agentSyncBingo) {
-        has3rdParty = true;
-        if (syncBingo) {
-            if (disableBingo) {
-                itemsMember.bingo = {
-                    name: "Bingo",
-                    className: "iconDisableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1);
-                    }
-                };
-            } else {
-                itemsMember.bingo = {
-                    name: "Bingo",
-                    className: "iconEnableEdit",
-                    callback: function (key, opt) {
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1);
-                    }
-                };
-            }
-        } else {
-            itemsMember.bingo = {
-                name: "Bingo",
-                className: "iconUnsyncEdit",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 500, false, null, 1);
-                }
-            };
-        }
-    }
-
-    if (!disableP2P) {
-        //itemsMember.poker = { name: "Poker", className: "iconEnableEdit" };
-    }
-
     if (agentSyncLiveCasino) {
         has3rdParty = true;
 
@@ -365,7 +324,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     custId,
     dataSource,
     agentSyncCasino,
-    agentSyncBingo,
     agentSyncLiveCasino,
     isHideKeno,
     isHideVirtualSport,
@@ -385,7 +343,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     this.AllowDoubleComm = allow;
 
     this.agentSyncCasino = agentSyncCasino;
-    this.agentSyncBingo = agentSyncBingo;
     this.agentSyncLiveCasino = agentSyncLiveCasino;
     this.HideKeno = showKenoSetting == 'false' || isHideKeno;
     this.HideVirtualSports = isHideVirtualSport;

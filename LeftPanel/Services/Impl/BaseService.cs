@@ -105,8 +105,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
         public abstract Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName);
 
-        public abstract Result EnableBingo(int id, bool enable, bool sync, bool enableDownline);
-
         public abstract Result EnableNumberGame(int id, bool enable, bool enableDownline);
 
         public abstract Result EnableLiveCasino(int id, bool enable, bool enableDownline);

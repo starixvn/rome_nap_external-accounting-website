@@ -63,14 +63,12 @@
     parent.$('#tab1').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab2').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab4').removeClass('ui-tabs-active ui-state-active');
-    parent.$('#tab5').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab6').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab7').removeClass('ui-tabs-active ui-state-active');
 
     parent.$('#tabs-1').hide();
     parent.$('#tabs-2').hide();
     parent.$('#tabs-4').hide();
-    parent.$('#tabs-5').hide();
     parent.$('#tabs-6').hide();
     parent.$('#tabs-7').hide();
 
@@ -81,7 +79,6 @@
     var siteName = '@siteName';
     var syncCasino = '@ViewBag.SyncCasino';
     var syncLiveCasino = '@ViewBag.SyncLiveCasino';
-    var syncBingo = '@ViewBag.SyncBingo';
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -90,10 +87,6 @@
     $(document).ready(function () {
         if (syncCasino == 'False') {
             parent.$('#tab6').remove();
-        }
-
-        if (syncBingo == 'False') {
-            parent.$('#tab5').remove();
         }
 
         if (syncLiveCasino == 'False') {

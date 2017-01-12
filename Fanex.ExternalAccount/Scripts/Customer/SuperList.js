@@ -87,17 +87,6 @@
         }
     }
 
-    if (!hideBingo) {
-        items.bingo = {
-            name: "Bingo",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bingo Setting <font color="#6dcff6">' + title + '</font>', 1050, 380, false, null, 1);
-            }
-        };
-    }
-
     if (showKenoSetting == 'true') {
         items.keno = {
             name: "Keno",
@@ -316,8 +305,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             var custId = cell.Value.custid;
             var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
             var hideColossusBets = showColossusBets == 0 || cell.Value.HideColossusBet == true;
-
-            Fanex.ExtAcc.Customer.superDisableP2P = cell.Value.DisableP2P;
 
             var hideAllbetSettingLink = !showAllbet || (cell.Value.HideAllBet || !cell.Value.SyncedAllBetUpline);
             var hideVoidbridgeSettingLink = !showVoidbridge || (cell.Value.HideVoidBridge || !cell.Value.SyncedVoidBridgeUpline);

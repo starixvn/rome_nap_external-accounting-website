@@ -6,9 +6,7 @@
 
 @{
     var SyncCasino = ViewBag.SyncCasino;
-    var SyncBingo = ViewBag.SyncBingo && Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled;
     var SyncLiveCasino = ViewBag.SyncLiveCasino;
-    var DisableP2P = ViewBag.DisableP2P;
     var HideVirtualSports = ViewBag.HideVirtualSports;
     var HideKeno = ViewBag.HideKeno || !KenoSection.Instance.ShowSetting;
     var HideGoldDeluxe = ViewBag.HideGoldDeluxe || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
@@ -34,8 +32,6 @@
         <li id="tab2"><a href="#tabs-2">Racing</a></li>
         <li id="tab3"><a href="#tabs-3">Racing's Min PT</a></li>
         <li id="tab4"><a href="#tabs-4">Casino</a></li>
-        <li id="tab5"><a href="#tabs-5">Bingo</a></li>
-        <li id="tab6"><a href="#tabs-6">Poker</a></li>
         <li id="tab7"><a href="#tabs-7">Live Casino</a></li>
         <li id="tab8"><a href="#tabs-8">Virtual Sports</a></li>
         <li id="tab9"><a href="#tabs-9">Keno</a></li>
@@ -74,11 +70,6 @@
     </div>
     <div id="tabs-4" class="divTab" style="padding: 0px">
         <iframe id="casinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-    </div>
-    <div id="tabs-5" class="divTab" style="padding: 0px">
-        <iframe id="bingoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-    </div>
-    <div id="tabs-6" class="divTab">
     </div>
     <div id="tabs-7" class="divTab">
         <iframe id="livecasinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
@@ -175,9 +166,7 @@
     Fanex.ExtAcc.Customer.Member = 1;
     Fanex.ExtAcc.Customer.superId = Fanex.ExtAcc.Customer.masterId = Fanex.ExtAcc.Customer.agentId = '@ViewBag.UplineId';
     Fanex.ExtAcc.Customer.SyncCasino = custStatus.syncCasino;
-    Fanex.ExtAcc.Customer.SyncBingo = custStatus.syncBingo;
     Fanex.ExtAcc.Customer.SyncLiveCasino = custStatus.syncLiveCasino;
-    Fanex.ExtAcc.Customer.DisableP2P = custStatus.disableP2P;
     Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
     Fanex.ExtAcc.Customer.HideKeno = custStatus.hideKeno;
     Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatus.hideGoldDeluxe;

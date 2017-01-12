@@ -356,36 +356,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         }
 
         /// <summary>
-        /// Enables bingo status.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="sync">Synchronized or not.</param>
-        /// <param name="enableDownline">Enables down-line or not.</param>
-        /// <returns>Result object.</returns>
-        public Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
-        {
-            using (ObjectDb objDb = new ObjectDb("Acc_UpdBingoStatus", 600))
-            {
-                Hashtable param = new Hashtable();
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("custid", id);
-                param.Add("disabledbingo", !enable);
-                param.Add("syncbg", sync);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("loginip", CurrentContext.Instance.Ip4Address);
-                param.Add("enabledownline", enableDownline);
-
-                objDb.AssignParamValues(param);
-                objDb.ExecuteNonQuery();
-
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
-            }
-        }
-
-        /// <summary>
         /// Enables number game.
         /// </summary>
         /// <param name="id">Customer id.</param>

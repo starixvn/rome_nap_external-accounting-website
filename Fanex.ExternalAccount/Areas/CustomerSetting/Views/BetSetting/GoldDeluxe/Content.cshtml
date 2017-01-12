@@ -146,7 +146,6 @@
     var siteName = '@siteName';
     var syncCasino = '@ViewBag.SyncCasino';
     var syncLiveCasino = '@ViewBag.SyncLiveCasino';
-    var syncBingo = '@ViewBag.SyncBingo';
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -157,10 +156,6 @@
             $('#tab6').remove();
         }
 
-        if (syncBingo == 'False') {
-            $('#tab5').remove();
-        }
-
         if (syncLiveCasino == 'False') {
             $('#tab4').remove();
         }
@@ -169,7 +164,6 @@
         $('#tab1').removeClass('ui-tabs-active ui-state-active');
         $('#tab2').removeClass('ui-tabs-active ui-state-active');
         $('#tab3').removeClass('ui-tabs-active ui-state-active');
-        $('#tab5').removeClass('ui-tabs-active ui-state-active');
         $('#tab6').removeClass('ui-tabs-active ui-state-active');
     });
 </script>

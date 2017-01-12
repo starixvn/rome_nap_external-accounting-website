@@ -42,7 +42,6 @@
     var showVoidbridge = System.Configuration.ConfigurationManager.AppSettings["IsShowMacauGames"] == "1" ? 1 : 0;
     var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
-    var hideBingo = Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled ? 0 : 1;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
 }
 <!DOCTYPE html>
@@ -227,7 +226,6 @@
         var showKenoSetting = '@showKenoSetting';
         var showGoldDeluxeSetting = '@showGoldDeluxeSetting';
         var showColossusBets = '@showColossusBets';
-        var hideBingo = @hideBingo;
         var showSportsbook2 = @showSportsbook2;
         var showCockfighting = @showCockfighting;
         var showCricket = @showCricket;
