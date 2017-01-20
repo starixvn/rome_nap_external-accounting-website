@@ -16,6 +16,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using CasinoLibrary.Model.UserException;
     using Data.DNAide;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
@@ -128,6 +129,11 @@ namespace Fanex.ExternalAccount.Core.Base
                 }
 
                 return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
+            }
+            catch (ErrorException ex)
+            {
+                Logs.Error(ex);
+                return this.JsonBase(new { ErrorCode = 999, ErrorMessage = ex.Message });
             }
             catch (Exception ex)
             {
