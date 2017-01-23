@@ -940,5 +940,28 @@
         var whiteSpace = /^\S*$/;
         var case5 = str.search(whiteSpace) != -1;
         return (str.search(regex) != -1) && case5;
+    },
+
+    GetUnsyncedProductIds: function (cell) {
+        var row = cell.Value;
+        var unsyncedProductIds = [];
+        var dcsProducts = [
+            { id: 21, name: "AllBet" },
+            { id: 22, name: "VoidBridge" }
+        ];
+
+        for (var i = 0, max = dcsProducts.length; i < max; i++) {
+            var syncedColumnName = "Synced" + dcsProducts[i].name;
+            var syncedDownlineColumnName = syncedColumnName + "Downline";
+
+            var synced = row[syncedColumnName];
+            var syncedDownline = row[syncedDownlineColumnName];
+
+            if (synced === false || syncedDownline === false) {
+                unsyncedProductIds.push(dcsProducts[i].id);
+            }
+        }
+
+        return unsyncedProductIds.join(",");
     }
 };

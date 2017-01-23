@@ -464,7 +464,8 @@ Fanex.ExtAcc.Customer.GetAgentList = function (
             return '<div id="editMult" class="editMult"></div>';
         },
         CustomCellRender: function (cell) {
-            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive"></div>';
+            return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' +
+                cell.Value.custid + '" class="menuInactive" data-unsyncedproducts="' + Fanex.ExtAcc.Customer.GetUnsyncedProductIds(cell) + '"></div>';
         }
     }, {
         HeaderText: 'Username',

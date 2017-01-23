@@ -1000,6 +1000,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2 = function (custid, uplineRoleId
         document.getElementById('IsReadOnly').value = false;
     }
 
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Sportsbook2 Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
@@ -1039,6 +1041,8 @@ Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targ
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
+        Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Sportsbook2 Setting', 900, 600, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
@@ -1066,6 +1070,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleCockfighting = function (custid, uplineRoleI
         document.getElementById('uplineLevel').value = uplineRoleId;
         document.getElementById('IsReadOnly').value = false;
     }
+
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
 
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Cockfighting Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1098,13 +1104,14 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting = function (uplineRoleId, tar
         document.getElementById('customerNames').value = goldDeluxeUsernames;
         document.getElementById('uplineLevel').value = "";
 
-
         if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
             document.getElementById('uplineLevel').value = "";
         }
         else {
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
+
+        Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Cockfighting Setting', 900, 600, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1133,6 +1140,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleCricket = function (custid, uplineRoleId, ta
         document.getElementById('uplineLevel').value = uplineRoleId;
         document.getElementById('IsReadOnly').value = false;
     }
+
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
 
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Cricket Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1173,6 +1182,8 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCricket = function (uplineRoleId, targetRo
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
+        Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Cricket Setting', 900, 600, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
@@ -1201,6 +1212,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleAllbet = function (custid, uplineRoleId, tar
         document.getElementById('IsReadOnly').value = false;
     }
 
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Allbet Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
@@ -1220,19 +1233,21 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
         var customerlength = userNamesArr.length;
         for (var i = 0; i < customerlength; i++) {
             var linkChar = i == customerlength - 1 ? "" : ", ";
-           Usernames += userNamesArr[i] + linkChar;
+            Usernames += userNamesArr[i] + linkChar;
             CustIds += custIdsArr[i] + linkChar;
         }
+
+        var customerIdsElement = document.getElementById('customerIds');
 
         document.getElementById('language').value = "en-US";
         document.getElementById('productId').value = 21;
         document.getElementById('customerLevel').value = targetRoleId;
         document.getElementById('isMultiple').value = true;
-        document.getElementById('customerIds').value = (uplineRoleId - this.CurrentLevel != 1 ? this.AllbetSyncIdList.join(', ') : CustIds);
+        customerIdsElement.value = (uplineRoleId - this.CurrentLevel != 1 ? this.AllbetSyncIdList.join(', ') : CustIds);
         document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.AllbetSyncList.join(', ') : Usernames);
         document.getElementById('uplineLevel').value = "";
 
-        if (document.getElementById('customerIds').value == "") {
+        if (customerIdsElement.value == "") {
             Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Allbet Setting', 900, 600, false, false, 1);
             return;
         }
@@ -1243,6 +1258,9 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
         else {
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
+
+        var isForcingMode = Fanex.ExtAcc.Customer.EditMultipleDCS_CheckUnSyncedProducts(customerIdsElement.value, 21);
+        Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(isForcingMode);
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Allbet Setting', 900, 600, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1272,6 +1290,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge = function (custid, uplineRoleId,
         document.getElementById('IsReadOnly').value = false;
     }
 
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Macau Games Setting', 900, 750, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
@@ -1295,19 +1315,19 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targe
             CustIds += custIdsArr[i] + linkChar;
         }
 
+        var customerIdsElement = document.getElementById('customerIds');
         document.getElementById('language').value = "en-US";
         document.getElementById('productId').value = 22;
         document.getElementById('customerLevel').value = targetRoleId;
         document.getElementById('isMultiple').value = true;
-        document.getElementById('customerIds').value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncIdList.join(', ') : CustIds);
+        customerIdsElement.value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncIdList.join(', ') : CustIds);
         document.getElementById('customerNames').value = (uplineRoleId - this.CurrentLevel != 1 ? this.VoidbridgeSyncList.join(', ') : Usernames);
         document.getElementById('uplineLevel').value = "";
 
-        if (document.getElementById('customerIds').value == "") {
+        if (customerIdsElement.value == "") {
             Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Macau Games Setting', 900, 600, false, false, 1);
             return;
         }
-
 
         if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
             document.getElementById('uplineLevel').value = "";
@@ -1315,6 +1335,9 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targe
         else {
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
+
+        var isForcingMode = Fanex.ExtAcc.Customer.EditMultipleDCS_CheckUnSyncedProducts(customerIdsElement.value, 22);
+        Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(isForcingMode);
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Macau Games Setting', 900, 750, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1331,6 +1354,7 @@ Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld = function (custid, uplineRoleI
     document.getElementById('customerId').value = custid;
     document.getElementById('isMultiple').value = false;
     document.getElementById('uplineLevel').value = "";
+
     if (this.CurrentLevel == this.Super) {
         document.getElementById('uplineLevel').value = "";
         document.getElementById('IsReadOnly').value = false;
@@ -1412,6 +1436,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleNG2 = function (custid, uplineRoleId, target
         document.getElementById('IsReadOnly').value = false;
     }
 
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit ' + ng2Text + ' Setting', 900, 750, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
@@ -1455,6 +1481,8 @@ Fanex.ExtAcc.Customer.ShowEditMultipleNG2 = function (uplineRoleId, targetRoleId
         else {
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
+
+        Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple ' + ng2Text + ' Setting', 900, 750, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1589,4 +1617,43 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
 
         Fanex.ExtAcc.UnBlockUI();
     });
+};
+
+Fanex.ExtAcc.Customer.EditMultipleDCS_CheckUnSyncedProducts = function (customerIds, productId) {
+    var customerIdRow, unsyncedProductsAttribute;
+    var customerIdsArray = customerIds.split(",");
+
+    for (var i = 0, max = customerIdsArray.length; i < max; i++) {
+        customerIdRow = document.getElementById(customerIdsArray[i].replace(/[\s,]+/g, ""));
+
+        if (customerIdRow) {
+            unsyncedProductsAttribute = customerIdRow.attributes.getNamedItem("data-unsyncedproducts")
+
+            if (unsyncedProductsAttribute && Fanex.ExtAcc.Customer.EditMultipleDCS_ItemInString(productId, unsyncedProductsAttribute.value)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+};
+
+Fanex.ExtAcc.Customer.EditMultipleDCS_ItemInString = function (item, stringValue) {
+    var stringArray = stringValue.split(",");
+
+    for (var i = 0, max = stringArray.length; i < max; i++) {
+        if (item === parseInt(stringArray[i])) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField = function (value) {
+    var isForcingModeElement = document.getElementById("isForcingMode");
+
+    if (isForcingModeElement) {
+        isForcingModeElement.value = value;
+    }
 };
