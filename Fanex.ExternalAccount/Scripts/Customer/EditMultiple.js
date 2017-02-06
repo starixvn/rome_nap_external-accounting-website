@@ -1665,7 +1665,6 @@ window.successfulUpdatingCallback = function (isPartialUpdate, isMultipleUpdate)
         parent.Fanex.ExtAcc.Customer.Search(false);
 
         isForcingModeElement.value = "false";
-        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
-
+        $("#targetForm").attr("action", resolveClientUrl("DCS/ViewCustomerSetting")).submit();
     }
 };
