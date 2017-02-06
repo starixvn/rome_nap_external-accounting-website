@@ -957,7 +957,7 @@
             var synced = row[syncedColumnName];
             var syncedDownline = row[syncedDownlineColumnName];
 
-            if (synced === false || (syncedDownline === false || syncedDownline === 0)) {
+            if (synced === false || (syncedDownline === 0 || syncedDownline === false)) {
                 unsyncedProductIds.push(dcsProducts[i].id);
             }
         }
