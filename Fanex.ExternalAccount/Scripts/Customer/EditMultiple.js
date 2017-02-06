@@ -1657,3 +1657,15 @@ Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField = function (value) {
         isForcingModeElement.value = value;
     }
 };
+
+window.successfulUpdatingCallback = function (isPartialUpdate, isMultipleUpdate) {
+    var isForcingModeElement = document.getElementById("isForcingMode");
+
+    if (isForcingModeElement && isForcingModeElement.value === "true") {
+        parent.Fanex.ExtAcc.Customer.Search(false);
+
+        isForcingModeElement.value = "false";
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+
+    }
+};
