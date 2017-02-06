@@ -10,8 +10,10 @@
 
 namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
+    using CasinoLibrary.Model.UserException;
     using CasinoLibrary.SBAgent;
     using Criteria;
     using Fanex.ExternalAccount.Core.Context;
@@ -212,13 +214,26 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             if (custInfo.CasinoSync)
             {
                 var casinoSync = new Customer();
-                casinoSync.UpdateMasterDisableAutoMPT(
-                    id,
-                    allow,
-                    CurrentContext.Instance.Ip4Address,
-                    CurrentSession.Instance.UserId,
-                    CurrentSession.Instance.UserName,
-                    3);
+
+                try
+                {
+                    casinoSync.UpdateMasterDisableAutoMPT(
+                        id,
+                        allow,
+                        CurrentContext.Instance.Ip4Address,
+                        CurrentSession.Instance.UserId,
+                        CurrentSession.Instance.UserName,
+                        3);
+                }
+                catch (ErrorException ex)
+                {
+                    result.ErrorCode = "999";
+                    result.ErrorMessage = ex.Message;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
 
             return result;

@@ -1,4 +1,13 @@
-﻿<div id="msg" style="color:#ff5411">Not casino's customer</div>
+﻿@using CasinoLibrary.Model.UserException
+
+@model Exception
+
+@{
+    string message = Model == null ? 
+        "Internal server error" :
+        (Model is ErrorException ? ((ErrorException)Model).Message : Model.Message);
+}
+<div id="msg" style="color:#ff5411">@message</div>
 <script type="text/javascript">
     //parent.Fanex.ExtAcc.UnBlockUI();
 </script>

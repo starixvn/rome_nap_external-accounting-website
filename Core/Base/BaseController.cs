@@ -21,6 +21,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using CasinoLibrary.Model.UserException;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Services.Interface;
