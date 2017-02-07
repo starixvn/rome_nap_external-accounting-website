@@ -1212,7 +1212,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleAllbet = function (custid, uplineRoleId, tar
         document.getElementById('IsReadOnly').value = false;
     }
 
-    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+    var isForcingMode = Fanex.ExtAcc.Customer.EditDCS_CheckUnSyncedProducts("" + custid, 21);
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(isForcingMode);
 
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Allbet Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1259,7 +1260,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRol
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
-        var isForcingMode = Fanex.ExtAcc.Customer.EditMultipleDCS_CheckUnSyncedProducts(customerIdsElement.value, 21);
+        var isForcingMode = Fanex.ExtAcc.Customer.EditDCS_CheckUnSyncedProducts(customerIdsElement.value, 21);
         Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(isForcingMode);
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Allbet Setting', 900, 600, false, false, 1);
@@ -1290,7 +1291,8 @@ Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge = function (custid, uplineRoleId,
         document.getElementById('IsReadOnly').value = false;
     }
 
-    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
+    var isForcingMode = Fanex.ExtAcc.Customer.EditDCS_CheckUnSyncedProducts("" + custid, 22);
+    Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(isForcingMode);
 
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Macau Games Setting', 900, 750, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
@@ -1336,7 +1338,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targe
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
-        var isForcingMode = Fanex.ExtAcc.Customer.EditMultipleDCS_CheckUnSyncedProducts(customerIdsElement.value, 22);
+        var isForcingMode = Fanex.ExtAcc.Customer.EditDCS_CheckUnSyncedProducts(customerIdsElement.value, 22);
         Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(isForcingMode);
 
         Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Macau Games Setting', 900, 750, false, false, 1);
@@ -1619,7 +1621,7 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
     });
 };
 
-Fanex.ExtAcc.Customer.EditMultipleDCS_CheckUnSyncedProducts = function (customerIds, productId) {
+Fanex.ExtAcc.Customer.EditDCS_CheckUnSyncedProducts = function (customerIds, productId) {
     var customerIdRow, unsyncedProductsAttribute;
     var customerIdsArray = customerIds.split(",");
 
