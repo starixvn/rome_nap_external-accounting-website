@@ -257,5 +257,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
             get;
             set;
         }
+        
+        public bool DisableFishingWorld { get; set; }
+
+        public bool HideFishingWorld { get; set; }
+
+        public bool SyncFishingWorld { get; set; }
+
+        public bool SyncFishingWorldDownlines { get; set; }
     }
 }

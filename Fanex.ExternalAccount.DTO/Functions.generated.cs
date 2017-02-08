@@ -70,4 +70,5 @@ public static class eFunctions
     public const string RemoveOTP = "RemoveOTP";
     public const string NG2Betting = "NG2Betting";
     public const string NG2Setting = "NG2Setting";
+    public const string FishingWorldSetting = "FishingWorldSetting";
 }

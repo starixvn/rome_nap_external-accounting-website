@@ -40,6 +40,7 @@
             <li id="tab9" onclick="LoadAllBet()"><a href="#tabs-9">Allbet</a></li>
             <li id="tab10" onclick="LoadVoidbridge()"><a href="#tabs-10">Macau Games</a></li>
             <li id="tab11" onclick="LoadNG2()"><a href="#tabs-11">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a></li>
+            @*<li id="tab11" onclick="LoadFishingWorld()"><a href="#tabs-11">Fishing World</a></li>*@
         </ul>
         <div id="tabs-1">
             @RenderSection("Sportsbook", false)
@@ -71,7 +72,8 @@
         </div>
         <div id="tabs-10">
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id="voidbridge" width="100%" height="400px" frameborder="0" src=""></iframe></div>
+            <div><iframe id="voidbridge" width="100%" height="400px" frameborder="0" src=""></iframe>
+            </div>
         </div>
         <div id="tabs-11">
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
@@ -145,6 +147,12 @@
                 $('#tab11').remove();
                 $('#tabs-11').remove();
             }
+            
+            //if (!parent.showFishingWorldBetting)
+            //{
+            //    $('#tab11').remove();
+            //    $('#tabs-11').remove();
+            //}
         });
 
         var custId = parseInt('@id');

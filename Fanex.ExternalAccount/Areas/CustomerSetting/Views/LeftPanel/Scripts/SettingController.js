@@ -663,6 +663,10 @@
         }, 1, null);
     };
 
+    $scope.EnableFishingWorld = function (enable, id) {
+        $scope.EnableDCS(24, 'Fishing World', enable, id);
+    };
+
     $scope.EnableCockfighting = function () {
         $scope.EnableDCS(19, 'Cockfighting');
     };

@@ -114,6 +114,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "HideNG2",
                                 Value = table3rdDCS.Select("ProductID = 23").Count() > 0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
+                            },
+                            new ObjectInfo
+                            {    
+                                Key = "HideFishingWorld",
+                                Value = table3rdDCS.Select("ProductID = 24").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
                             }
                         },
                 EditItems = new List<ObjectInfo>
@@ -145,6 +151,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
             model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
+            model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
 
             return model;
         }
@@ -186,6 +193,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("Allbet", "Allbet");
             model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
             model.AddDetailProductForCrossLevel("NG2", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
+            model.AddDetailProductForCrossLevel("FishingWorld", "Fishing World");
 
             return model;
         }
