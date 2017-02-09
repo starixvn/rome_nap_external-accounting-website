@@ -121,13 +121,13 @@
                 
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
                         break;
                     default:
                         break;

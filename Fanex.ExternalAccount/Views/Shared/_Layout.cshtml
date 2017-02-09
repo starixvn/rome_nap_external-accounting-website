@@ -10,8 +10,7 @@
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
     var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] { };
-    var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+    var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||

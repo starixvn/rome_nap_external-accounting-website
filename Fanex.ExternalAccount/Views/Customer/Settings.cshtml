@@ -18,7 +18,7 @@
     var HideVoidbridge = ViewBag.HideVoidbridge || ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0";
     var HideNG2 = ViewBag.HideNG2 || ConfigurationManager.AppSettings["IsShowNG2"] == "0";
     var HideFishingWorld = ViewBag.HideFishingWorld || ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0";
-    var status = new { syncBingo = SyncBingo, syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, disableP2P = DisableP2P, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2, hideCockfighting = HideCockfighting, hideCricket = HideCricket };
+    var status = new { syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2, hideCockfighting = HideCockfighting, hideCricket = HideCricket };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
 <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
