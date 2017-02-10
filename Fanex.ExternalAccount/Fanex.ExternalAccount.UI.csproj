@@ -150,7 +150,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6-noajax1\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
