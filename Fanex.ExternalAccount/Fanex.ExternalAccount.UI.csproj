@@ -149,8 +149,8 @@
       <HintPath>..\packages\Fanex.HttpModule.NG2.UM.1.0.0.1\lib\net40\Fanex.HttpModule.NG2.UM.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.4\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
+    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -500,10 +500,6 @@
     <Content Include="Areas\CustomerSetting\Styles\jquery-ui.css" />
     <Content Include="Areas\CustomerSetting\Styles\Validators.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\AccessDenied\AccessDenied.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Scripts\BingoController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Bingo\Styles\Bingo.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Scripts\CasinoController.js" />
@@ -531,66 +527,6 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Scripts\VirtualSportsController.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Styles\VirtualSports.css" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Common.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\CommonPT.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\AgentBingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\BingoHelper.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\BingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\MasterBingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\MasterEditMemberBingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\MemberBingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\SuperBingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Scripts\Setting\SuperEditMemberBingoSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\Agent.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\Master.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\MasterEditMember.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\Member.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\Super.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Setting\SuperEditMember.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\BingoSetting.css" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\common.css" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\back.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\Banner\bg_head_tb.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\btUpdateL.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\btUpdateR.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\Buttons\bgred1_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\Buttons\bgred_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\Buttons\bg_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\calendar1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\close.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\C_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec1_disable.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec2_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec3_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec4.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\dec4_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\email.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\excel.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\folder.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\help.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\icn_add.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\icn_del.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\icn_edit.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\icn_view.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\loading51.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\L_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\opened_folder.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\ptL.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\ptR.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\ptRp.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\ptR_down.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\refresh_icon.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\R_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\Save.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\sorting_asc.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\sorting_desc.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\Images\undo.png" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\input.css" />
-    <Content Include="Areas\CustomerSetting\Views\Bingo\Styles\table.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Agent\EditAgent.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Agent\ViewAgentBySuper.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Customer\CustomerInfo.cshtml" />

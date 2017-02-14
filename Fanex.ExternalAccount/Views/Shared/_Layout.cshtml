@@ -10,8 +10,7 @@
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
     var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] { };
-    var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.BingoBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
+    var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
@@ -42,7 +41,6 @@
     var showVoidbridge = System.Configuration.ConfigurationManager.AppSettings["IsShowMacauGames"] == "1" ? 1 : 0;
     var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
-    var hideBingo = Sunplus.Bingo.Core.BingoSettings.BingoGame.Enabled ? 0 : 1;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
 }
 <!DOCTYPE html>
@@ -227,7 +225,6 @@
         var showKenoSetting = '@showKenoSetting';
         var showGoldDeluxeSetting = '@showGoldDeluxeSetting';
         var showColossusBets = '@showColossusBets';
-        var hideBingo = @hideBingo;
         var showSportsbook2 = @showSportsbook2;
         var showCockfighting = @showCockfighting;
         var showCricket = @showCricket;

@@ -62,7 +62,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(tableCustomer.Rows[0]["suspended"]), Text = "Suspened" },
                             new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableOutright"]), Text = "Allow Outright" },
                             new ObjectInfo { Key = "EnableCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableCasino"]), Text = "Enable Casino" },
-                            new ObjectInfo { Key = "EnableBingo", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableBingo"]), Text = "Enable Bingo" },
                             new ObjectInfo
                             {
                             Key = "EnableNumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]),
@@ -96,7 +95,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 SyncItems = new List<ObjectInfo>
                         {
                             new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncCasino"]), Text = "Casino Synced" },
-                            new ObjectInfo { Key = "SyncBingo", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncBingo"]), Text = "Bingo Synced" },
                             new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(tableCustomer.Rows[0]["syncLiveCasino"]), Text = "Live Casino Synced" },
                             new ObjectInfo
                             {
@@ -125,7 +123,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 EditItems = new List<ObjectInfo>
                         {
                             new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                            new ObjectInfo { Key = "EnablePoker", Text = "Enable Poker" },
                             new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
                             new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" },
                         },
@@ -135,8 +132,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
                             new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
                             new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                            new ObjectInfo { Key = "Bingo", Value = "Edit Bingo" },
-                            new ObjectInfo { Key = "Poker", Value = "Edit Poker" },
                             new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
                             new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
                             new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
@@ -182,7 +177,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("Racing", "Racing");
 
             model.AddDetailProductForCrossLevel("Casino", "Casino");
-            model.AddDetailProductForCrossLevel("Bingo", "Bingo");
             model.AddDetailProductForCrossLevel("LiveCasino", "Live Casino");
             model.AddDetailProductForCrossLevel("VirtualSports", "Virtual Sports");
             model.AddDetailProductForCrossLevel("Keno", "Keno");
@@ -202,9 +196,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             var items = new List<string>();
             items.Add("Info");
-            items.Add("Poker");
             items.Add("ColossusBets");
-            items.Add("Bingo");
 
             return items;
         }

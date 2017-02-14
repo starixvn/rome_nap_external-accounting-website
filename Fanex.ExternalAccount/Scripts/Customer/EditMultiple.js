@@ -8,7 +8,7 @@
     this.IsMultiple = true;
     var ret = this.IdsAndNames();
     var info = this.CustomerInfo();
-    //        this.HideGoldDeluxe = showGoldDeluxeSetting == 0;
+    // this.HideGoldDeluxe = showGoldDeluxeSetting == 0;
  
     if (this.CurrentLevel == this.Super) {
         menuItems = {
@@ -49,20 +49,6 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
                 }
             };
-        }
-
-        if (!hideBingo && this.superSyncBingo) {
-            menuItems.bingo = {
-                name: "Edit Multiple Bingo",
-                className: "iconEnableEdit",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
-                }
-            };
-        }
-
-        if (!this.superDisableP2P) {
-            //menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
         }
 
         if (this.superSyncLiveCasino) {
@@ -227,20 +213,6 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
                 }
             };
-        }
-
-        if (!hideBingo && this.masterSyncBingo) {
-            menuItems.bingo = {
-                name: "Edit Multiple Bingo",
-                className: "iconEnableEdit",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
-                }
-            };
-        }
-
-        if (!this.masterDisableP2P) {
-            //menuItems.poker = { name: "Edit Multiple Poker", className: "iconEnableEdit" };
         }
 
         if (this.masterSyncLiveCasino) {
@@ -471,39 +443,6 @@
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
                             Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                        }
-                    }
-                }
-            };
-        }
-
-        if (!hideBingo && this.agentSyncBingo) {
-            menuItems.bingo = {
-                name: "Bingo",
-                className: "iconEnableEdit",
-                items: {
-                    agentBG: {
-                        name: "Edit Multiple Bingo",
-                        callback: function (key, opt) {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Bingo Setting' : 'Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
-                        }
-                    },
-                    superBG: {
-                        name: "Super Edit Multiple Bingo",
-                        callback: function (key, opt) {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/SuperEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Super Edit Multiple Bingo Setting' : 'Super Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
-                        }
-                    },
-                    masterBG: {
-                        name: "Master Edit Multiple Bingo",
-                        callback: function (key, opt) {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Bingo/BingoSetting/MasterEditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupName=' + $('#selectedGroupName').html()), Fanex.ExtAcc.Customer.IsMultiple ? 'Master Edit Multiple Bingo Setting' : 'Master Edit Bingo Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1050, 500, false, null, 1);
                         }
                     }
                 }

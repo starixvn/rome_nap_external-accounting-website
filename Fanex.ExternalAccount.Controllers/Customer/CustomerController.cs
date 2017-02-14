@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Data;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Caching;
@@ -190,7 +191,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
+                AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
+            }
+
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(masterId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+
+                AutoInsertCasinoPost(masterId, parentId);
+
+                autoInsertLiveCasinoTask.Wait();
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
@@ -301,7 +311,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
+                AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
+            }
+
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(agentId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+
+                AutoInsertCasinoPost(agentId, parentId);
+
+                autoInsertLiveCasinoTask.Wait();
             }
 
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
@@ -412,10 +431,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
-                this.AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
+                AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
             }
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
+            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
+            {
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(memberId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+
+                AutoInsertCasinoPost(memberId, parentId);
+
+                autoInsertLiveCasinoTask.Wait();
+            }
+
+            return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
         }
         #endregion Agent Add New Member
 
@@ -453,9 +481,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
             ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
-            ViewBag.SyncBingo = (bool)result.Rows[0]["SyncBingo"];
             ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
-            ViewBag.DisableP2P = (bool)result.Rows[0]["DisableP2P"];
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"];
@@ -514,7 +540,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
               Formatting.None,
               new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
 
-            bool syncCasino = true, syncBingo = true, syncLiveCasino = true, allowDoubleComm = true;
+            bool syncCasino = true, syncLiveCasino = true, allowDoubleComm = true;
 
             if (roleId > 0 && roleId < 4)
             {
@@ -532,7 +558,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                         break;
                 }
 
-                syncBingo = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncBingo");
                 syncCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncCasino");
                 syncLiveCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncLiveCasino");
                 allowDoubleComm = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
@@ -551,7 +576,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     recommend = recommend,
                     custId = custId,
                     syncCasino = syncCasino,
-                    syncBingo = syncBingo,
                     syncLiveCasino = syncLiveCasino,
                     allowDoubleComm = allowDoubleComm
                 });

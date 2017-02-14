@@ -111,7 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Base\DAOBase.cs" />
-    <Compile Include="Impl\Customer\Bingo\BingoDao.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoDao.cs" />
     <Compile Include="Impl\Customer\CommissionDao.cs" />
     <Compile Include="Impl\Customer\CustomerDao.cs" />

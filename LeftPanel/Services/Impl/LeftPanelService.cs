@@ -170,11 +170,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return this._data.AllowOutright(custId, allow);
         }
 
-        public override Result EnableBingo(int id, bool enable, bool sync, bool enableDownline)
-        {
-            return this._data.EnableBingo(id, enable, sync, enableDownline);
-        }
-
         public override Result EnableCasino(int id, bool enable, bool enableDownline, bool synce, string custName)
         {
             return this._data.EnableCasino(id, enable, enableDownline, synce, custName);

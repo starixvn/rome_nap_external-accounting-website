@@ -31,11 +31,6 @@ function LoadLiveCasino() {
     document.location.href = toUrl('LiveCasinoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
 
-function LoadBingo() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('BingoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
-};
-
 function LoadCasino() {
     Fanex.CustomerSetting.Core.BlockUI();
     document.location.href = toUrl('CasinoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);

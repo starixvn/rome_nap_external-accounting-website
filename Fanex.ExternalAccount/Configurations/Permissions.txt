@@ -13,8 +13,6 @@ Statement
 Sportsbook
 Racing
 Casino
-Bingo
-Poker
 LiveCasino
 VirtualSports
 CreateNew
@@ -23,7 +21,6 @@ SportsbookBetting
 RacingBetting
 VirtualSportsBetting
 LiveCasinoBetting
-BingoBetting
 --------------
 CloseCustomer
 SuspendCustomer
@@ -31,8 +28,6 @@ AllowOutright
 AllowAutoMPT
 EnableRacing
 EnableCasino
-EnableBingo
-EnablePoker
 EnableNumberGame
 EnableVirtualSports
 EnableLiveCasino

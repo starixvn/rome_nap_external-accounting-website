@@ -28,7 +28,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
-
     /// <summary>
     /// Controller for left panel menu.    
     /// </summary>
@@ -335,33 +334,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
                 return this.JsonBase(this._service.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync, custName));
-            }
-            catch (Exception ex)
-            {
-                return this.JsonBase(new { IsSuccess = ex.Message.Contains("Not casino") ? true : false, ErrorCode = 1, ErrorMessage = ex.Message });
-            }
-        }
-
-        /// <summary>
-        /// Updates bingo status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableBingo, Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult UpdateBingo(int custId, int uplineId, bool enable, bool enableDownline)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            try
-            {
-                var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return this.JsonBase(this._service.EnableBingo(custId, enable, casinoCustomer.BingoSync, enableDownline));
             }
             catch (Exception ex)
             {

@@ -599,68 +599,6 @@ Fanex.ExtAcc = {
         return src;
     },
 
-    AutoInsertCasino: function (custId, uplineId, uplineName) {
-        $.ajax({
-            url: resolveClientUrl('Customer/AutoInsertCasinoPost'),
-            type: 'post',
-            data: { custId: custId, uplineId: uplineId, uplineName: uplineName },
-            dataType: 'json'
-        })
-        .success(function (result) {
-            if (Fanex.ExtAcc.AutoInsertCount < 2) {
-                ++Fanex.ExtAcc.AutoInsertCount;
-            }
-            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
-                Fanex.ExtAcc.AutoInsertCount = 0;
-                Fanex.ExtAcc.AutoInsertCompleted = true;
-            }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') {
-                console.log(data.responseText);
-            }
-
-            if (Fanex.ExtAcc.AutoInsertCount < 2) {
-                ++Fanex.ExtAcc.AutoInsertCount;
-            }
-            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
-                Fanex.ExtAcc.AutoInsertCount = 0;
-                Fanex.ExtAcc.AutoInsertCompleted = true;
-            }
-        });
-    },   
-
-    AutoInsertLiveCasino: function (custId, parentId, uplineRoleId, groupName) {
-        $.ajax({
-            url: resolveClientUrl('Customer/AutoInsertLiveCasinoPost'),
-            type: 'post',
-            data: { custId: custId, parentId: parentId, uplineRoleId: uplineRoleId, groupName: groupName },
-            dataType: 'json'
-        })
-        .success(function (result) {
-            if (Fanex.ExtAcc.AutoInsertCount < 2) {
-                ++Fanex.ExtAcc.AutoInsertCount;
-            }
-            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
-                Fanex.ExtAcc.AutoInsertCount = 0;
-                Fanex.ExtAcc.AutoInsertCompleted = true;
-            }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') {
-                console.log(data.responseText);
-            }
-
-            if (Fanex.ExtAcc.AutoInsertCount < 2) {
-                ++Fanex.ExtAcc.AutoInsertCount;
-            }
-            if (Fanex.ExtAcc.AutoInsertCount >= 2) {
-                Fanex.ExtAcc.AutoInsertCount = 0;
-                Fanex.ExtAcc.AutoInsertCompleted = true;
-            }
-        });
-    },
-
     CheckNumber: function (event, ele, isFloat, agentCredit) {
         var evt = event ? event : window.event; // Fix for IE7
 

@@ -92,24 +92,6 @@ namespace Fanex.ExternalAccount.DTO.Customer.Casino
             set;
         }
 
-        public bool BingoDisabled
-        {
-            get;
-            set;
-        }
-
-        public bool BingoSync
-        {
-            get;
-            set;
-        }
-
-        public bool UplineBingoSync
-        {
-            get;
-            set;
-        }
-
         public int Currency
         {
             get;

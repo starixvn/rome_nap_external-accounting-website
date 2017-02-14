@@ -47,7 +47,6 @@
                 });
 
                 var allowDoubleComm = false;
-                var syncBingo = false;
                 var syncCasino = false;
                 var syncLiveCasino = false;
                 var isHideKeno = true;
@@ -73,10 +72,6 @@
                 for (var i = 0; i < $scope.model.setting.syncItems.length; i++) {
                     if ($scope.model.setting.syncItems[i].key == 'SyncCasino') {
                         syncCasino = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key == 'SyncBingo') {
-                        syncBingo = $scope.model.setting.syncItems[i].value;
                     }
 
                     if ($scope.model.setting.syncItems[i].key == 'SyncLiveCasino') {
@@ -126,13 +121,13 @@
                 
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncBingo, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld);
                         break;
                     default:
                         break;
@@ -268,37 +263,6 @@
 
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
-        }
-    };
-
-    $scope.Bingo = function () {
-        $scope.ResetGlobalValue();
-
-        var personalObject = $scope.model.personalInfo;
-        var roleId = personalObject.roleId.value;
-        var custId = personalObject.custId.value;
-        var uplineId = personalObject.uplineRoleId.value > 4 ? custId : personalObject.uplineId.value;
-        var url = '';
-        switch (roleId) {
-            case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Super?id=' + custId);
-                break;
-            case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Master?id=' + custId);
-                break;
-            case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Agent?id=' + custId);
-                break;
-            case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Bingo/BingoSetting/Member?id=' + custId);
-                break;
-            default:
-                break;
-        }
-
-        if (url !== '' && uplineId > 0) {
-            url += '&uplineid=' + uplineId + '&groupName=' + parent.$('#selectedGroupName').html();
-            parent.Fanex.ExtAcc.LoadMainIFrame(url);
         }
     };
 

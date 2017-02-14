@@ -187,20 +187,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     })
                     .success(function (result) {
                         if (result.errorCode == 0) {
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
-
-                                Fanex.ExtAcc.AutoInsertCasino(result.custId, parseInt($('#parentId').val()), $('#parentUsername').val());
-                                Fanex.ExtAcc.AutoInsertLiveCasino(result.custId, parseInt($('#parentId').val()), 2, $('#selectedGroupName').html());
-
-                                timeout = setInterval(function () {
-                                    if (Fanex.ExtAcc.AutoInsertCompleted) {
-                                        clearInterval(timeout);
-
-                                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/1/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
-                                    }
-                                }, 100);
-                            }, 2000);
+                            Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/1/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
                         }
                         else {
                             Fanex.ExtAcc.UnBlockUI();

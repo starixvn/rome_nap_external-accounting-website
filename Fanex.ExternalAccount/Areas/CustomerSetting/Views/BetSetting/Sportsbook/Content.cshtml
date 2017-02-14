@@ -99,7 +99,6 @@
     var siteName = '@siteName';
     var syncCasino = '@ViewBag.SyncCasino';
     var syncLiveCasino = '@ViewBag.SyncLiveCasino';
-    var syncBingo = '@ViewBag.SyncBingo';
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -108,10 +107,6 @@
     $(document).ready(function () {
         if (syncCasino == 'False') {
             $('#tab6').remove();
-        }
-
-        if (syncBingo == 'False') {
-            $('#tab5').remove();
         }
 
         if (syncLiveCasino == 'False') {
