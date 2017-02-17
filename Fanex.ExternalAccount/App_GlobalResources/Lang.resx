@@ -3764,4 +3764,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="removingOTPConfirm" xml:space="preserve">
     <value>Do you want to remove this user's registered device?</value>
   </data>
+  <data name="notalloweddisabledownline" xml:space="preserve">
+    <value>You are not allowed to disable downline as company policy.</value>
+  </data>
 </root>

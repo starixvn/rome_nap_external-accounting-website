@@ -64,13 +64,21 @@
         </div>
     </div>
 
-    <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow">
+    <div class="warning-result col-xs-12" data-ng-show="!isEditMember || mainResult.Warning.IsShow">
         <div class="sub-message-icon sub-icon-warning">
         </div>
         <div class="message-content message-content-warning">
-            {{mainResult.Warning.Message}}
+            @Resources.Lang.notalloweddisabledownline
         </div>
-    </div>
+        <div class="clear-both"></div>
+        <span data-ng-show="mainResult.Warning.IsShow">
+            <div class="sub-message-icon sub-icon-warning">
+            </div>
+            <div class="message-content message-content-warning">
+                {{mainResult.Warning.Message}}
+            </div>
+        </span>
+</div>
 
     @RenderSection("Customer", true)
 
