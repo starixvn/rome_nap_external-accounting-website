@@ -551,7 +551,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                1,
+                3,
                 product.RoleId < 4 ? product.UplineStatuses.HideFishingWorld : product.HideFishingWorld,
                 product.RoleId < 4 ? product.UplineStatuses.SyncFishingWorld : product.SyncFishingWorld,
                 product.HideFishingWorld,
