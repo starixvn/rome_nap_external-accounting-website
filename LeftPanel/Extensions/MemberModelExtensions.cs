@@ -143,9 +143,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
-            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
-            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
-            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
 
             return model;

@@ -299,11 +299,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     });
 
                 model.Login.Add(
-                  new ObjectInfo {
+                  new ObjectInfo
+                  {
                       Value = Utils.ToDateTime(tableCustomer.Rows[0]["OTPCreateDate"]).ToStringExt("M/d/yyyy H:mm tt"),
                       Text = "OTP"
                   });
-                
+
                 model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)], Text = "Used Credit" });
             }
 
@@ -557,8 +558,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.HideFishingWorld,
                 product.SyncFishingWorld,
                 product.SyncFishingWorldDownlines,
-                "FishingWorld");    
-                
+                "FishingWorld");
+
             return model;
         }
 
@@ -574,6 +575,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             string productName)
         {
             var showProductIndex = productIndex == 0 ? productIndex : productIndex * 2;
+            if (hide)
+            {
+                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
+            }
 
             if (((roleId == 4 || roleId == 3 || roleId == 2) && hide == true)
                 || (roleId == 1 && hideUpline == true))
@@ -582,7 +587,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.RemoveProduct(productName);
 
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
 
                 if (roleId == 1)
                 {
@@ -602,7 +606,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 }
 
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
 
                 if (roleId == 1)
                 {
@@ -614,8 +617,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("Enable" + productName);
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
-
                 if (roleId == 1)
                 {
                     model.RemoveCrossLevelProduct(productName);
@@ -713,7 +714,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.DisableProduct("EnableFishingWorld");
             }
-            
+
             return model;
         }
 
@@ -984,15 +985,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return product;
         }
 
-        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, bool checkboxType = true, bool getFromRemotingRef = false)
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBettingLimitFunction = "", bool checkboxType = true, bool getFromRemotingRef = false)
         {
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = true });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = string.IsNullOrEmpty(editBettingLimitFunction) ? false : IsAuthorized(CurrentSession.Instance.UserId, editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read) });
             if (table3rdDCS.Select("ProductID = " + productId).Length > 0 &&
                 Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
-                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);                
+                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
                 var name = getFromRemotingRef ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName) : productName;
                 model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + name });
                 if (checkboxType == true)

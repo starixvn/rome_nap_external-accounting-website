@@ -39,7 +39,6 @@
             <li id="tab9" onclick="LoadAllBet()"><a href="#tabs-9">Allbet</a></li>
             <li id="tab10" onclick="LoadVoidbridge()"><a href="#tabs-10">Macau Games</a></li>
             <li id="tab11" onclick="LoadNG2()"><a href="#tabs-11">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a></li>
-            @*<li id="tab11" onclick="LoadFishingWorld()"><a href="#tabs-11">Fishing World</a></li>*@
         </ul>
         <div id="tabs-1">
             @RenderSection("Sportsbook", false)
@@ -137,12 +136,6 @@
                 $('#tab11').remove();
                 $('#tabs-11').remove();
             }
-            
-            //if (!parent.showFishingWorldBetting)
-            //{
-            //    $('#tab11').remove();
-            //    $('#tabs-11').remove();
-            //}
         });
 
         var custId = parseInt('@id');

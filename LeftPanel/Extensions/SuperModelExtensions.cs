@@ -87,21 +87,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
                             },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
+                            new ObjectInfo
+                            {
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds"
                             },
                             new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
+                            new ObjectInfo
+                            {
+                                Key = "EnableGoldDeluxe",
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]),
                                 Text = "Enable Gold Deluxe"
                             },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                            new ObjectInfo
+                            {
+                                Key = "EnableColossusBets",
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]),
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
                             }
@@ -159,9 +159,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
             };
 
-            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", false);
-            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games");
-            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", true, true);
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
 
             model.AddBettingLimitForSuper();
@@ -185,7 +185,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ||
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ||
-                CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read) ? true : false;
+                CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read) ||
+                CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ? true : false;
 
             if (showBetSetting)
             {
