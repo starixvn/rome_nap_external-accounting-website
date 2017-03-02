@@ -20,7 +20,7 @@
             $scope.isEditDirect = (settingViewModel.UpLineLevel - settingViewModel.Level === 1);
             $scope.isUpdateWinLimitPartial = !((settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Super || settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Master) && settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member);
             $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
-
+            $scope.isEditMember = settingViewModel.Level != 2 && settingViewModel.Level != 3;
             $scope.validateAndUpdateSetting = function (updateType) {
                 $scope.isUpdateAllSetting = true;
                 var ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();

@@ -7858,6 +7858,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to disable downline as company policy..
+        /// </summary>
+        internal static string notalloweddisabledownline {
+            get {
+                return ResourceManager.GetString("notalloweddisabledownline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user does not exist.
         /// </summary>
         internal static string notExist {

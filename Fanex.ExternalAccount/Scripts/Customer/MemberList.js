@@ -392,7 +392,13 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             return '<div id="editMult" class="editMult"></div>';
         },
         CustomCellRender: function (cell) {
-            return '<div sync-ng2="' + cell.Value.SyncedNG2 + '" sync-voidbridge="' + cell.Value.SyncedVoidBridge + '" sync-allbet="' + cell.Value.SyncedAllBet + '" sync-fishingworld="' + cell.Value.SyncedFishingWorld + '" onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid + '" class="menuInactive" name="' + cell.Value.username + '"></div>';
+            return '<div sync-ng2="' + cell.Value.SyncedNG2 +
+                '" sync-voidbridge="' + cell.Value.SyncedVoidBridge +
+                '" sync-allbet="' + cell.Value.SyncedAllBet +
+                '" sync-fishingworld="' + cell.Value.SyncedFishingWorld +
+                '" onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.custid +
+                '" class="menuInactive" name="' + cell.Value.username +
+                '" data-unsyncedproducts="' + Fanex.ExtAcc.Customer.GetUnsyncedProductIds(cell) + '"></div>';
         }
     }, {
         HeaderText: 'Username',
