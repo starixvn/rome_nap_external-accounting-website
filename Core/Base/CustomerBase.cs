@@ -133,7 +133,7 @@ namespace Fanex.ExternalAccount.Core.Base
             catch (ErrorException ex)
             {
                 Logs.Error(ex);
-                return this.JsonBase(new { ErrorCode = 999, ErrorMessage = ex.Message });
+                return new CustomerSetting.Module.Core.Models.Result(999, ex.Message);
             }
             catch (Exception ex)
             {
