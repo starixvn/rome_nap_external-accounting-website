@@ -238,15 +238,17 @@ function EnableStatusController($scope) {
     }
 
     $scope.ValidateParams = function () {
-        for (var i = 0 ; i < model.entities.length; i++) {
-            var entity = model.entities[i];
-            if (entity.disabled && !entity.disabledDownlines) {
-                model.errorMsg = msgErrorProductIsNotOfferedForThisLine;
-                return false;
-            } else if ((entity.disabled && entity.preVal != entity.enable) ||
-                (entity.disabledDownlines && entity.preValDownlines != entity.enableDownlines)) {
-                model.errorMsg = msgErrorNotAllowedDisableDownline;
-                return false;
+        if (model.requestContext.level >= 2) {
+            for (var i = 0 ; i < model.entities.length; i++) {
+                var entity = model.entities[i];
+                if (entity.disabled && !entity.disabledDownlines) {
+                    model.errorMsg = msgErrorProductIsNotOfferedForThisLine;
+                    return false;
+                } else if ((entity.disabled && entity.preVal != entity.enable) ||
+                    (entity.disabledDownlines && entity.preValDownlines != entity.enableDownlines)) {
+                    model.errorMsg = msgErrorNotAllowedDisableDownline;
+                    return false;
+                }
             }
         }
 
