@@ -646,7 +646,7 @@
     };
 
     $scope.EnableFishingWorld = function (enable, id) {
-        $scope.EnableDCS(24, 'Fishing World', enable, id);
+        $scope.EnableDCS(24, 'FishingWorld', enable, id, null, 400, 200);
     };
 
     $scope.EnableCockfighting = function () {
@@ -666,7 +666,7 @@
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
+        var url_SELECT = productId == 24 ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
             '&userid=' + parent.userId + '&product=' + productId + '&productid=' + productName + '&level=' + $scope.model.personalInfo.roleId.value +
             '&enable=' + enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';

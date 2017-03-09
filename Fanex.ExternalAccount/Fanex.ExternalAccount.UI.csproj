@@ -85,8 +85,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.6\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.18, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.18\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.0.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.0.19\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.BetSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -650,6 +650,9 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\sucess.gif" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\undo.png" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Update.png" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\SPs.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\bet-setting.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\main.controller.js" />
@@ -2885,6 +2888,13 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\NAP\variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Styles\EnableStatus.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Styles\NAP\variables.less" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config" />
+    <None Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Template.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>
