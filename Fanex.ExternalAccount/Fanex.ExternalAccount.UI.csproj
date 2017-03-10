@@ -455,8 +455,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
-    <Content Include="AFFUM\AffiliateUM.html" />
-    <Content Include="AFFUM\imgs\UM.jpg" />
     <Content Include="Areas\Common\Views\Authenticate\AccessDenied.cshtml" />
     <Content Include="Areas\Common\Views\Home\Index.cshtml" />
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
