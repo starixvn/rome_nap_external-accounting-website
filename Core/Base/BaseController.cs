@@ -295,7 +295,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoException)
             {
-                Logs.Error(casinoException);
+                Logs.CasinoException(casinoException);
             }
             catch (Exception ex)
             {
@@ -320,7 +320,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoException)
             {
-                Logs.Error(casinoException);
+                Logs.CasinoException(casinoException);
             }
             catch (Exception ex)
             {

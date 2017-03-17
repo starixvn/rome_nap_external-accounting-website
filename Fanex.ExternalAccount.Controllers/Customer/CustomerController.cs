@@ -1010,8 +1010,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     {
                         result.ErrorCode = "999";
                         result.ErrorMessage = ex.Message;
-
-                        Logs.Error(ex);
+                        Logs.CasinoException(ex);
                     }
                     catch (Exception ex)
                     {

@@ -229,6 +229,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 {
                     result.ErrorCode = "999";
                     result.ErrorMessage = ex.Message;
+                    Logs.CasinoException(ex);
                 }
                 catch (Exception)
                 {
