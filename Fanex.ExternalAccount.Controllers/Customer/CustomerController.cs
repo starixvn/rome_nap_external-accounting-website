@@ -13,7 +13,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Data;
     using System.Linq;
     using System.Threading;
-    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
@@ -1008,8 +1007,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     }
                     catch (ErrorException ex)
                     {
-                        result.ErrorCode = "999";
-                        result.ErrorMessage = ex.Message;
                         Logs.CasinoException(ex);
                     }
                     catch (Exception ex)
