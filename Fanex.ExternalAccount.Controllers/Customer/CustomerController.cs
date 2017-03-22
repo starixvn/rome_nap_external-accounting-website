@@ -1005,9 +1005,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     {
                         cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
                     }
-                    catch (ErrorException ex)
+                    catch (ErrorException casinoEx)
                     {
-                        Logs.CasinoException(ex);
+                        Logs.CasinoError(casinoEx);
                     }
                     catch (Exception ex)
                     {

@@ -225,11 +225,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                         CurrentSession.Instance.UserName,
                         3);
                 }
-                catch (ErrorException ex)
+                catch (ErrorException casinoEx)
                 {
-                    result.ErrorCode = "999";
-                    result.ErrorMessage = ex.Message;
-                    Logs.CasinoException(ex);
+                    Logs.CasinoError(casinoEx);
                 }
                 catch (Exception)
                 {

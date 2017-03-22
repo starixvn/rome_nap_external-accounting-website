@@ -130,10 +130,10 @@ namespace Fanex.ExternalAccount.Core.Base
 
                 return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
             }
-            catch (ErrorException ex)
+            catch (ErrorException casinoEx)
             {
-                Logs.CasinoException(ex);
-                return new CustomerSetting.Module.Core.Models.Result(999, ex.Message);
+                Logs.CasinoError(casinoEx);
+                return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
             }
             catch (Exception ex)
             {

@@ -293,9 +293,9 @@ namespace Fanex.ExternalAccount.Core.Base
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
             }
-            catch (ErrorException casinoException)
+            catch (ErrorException casinoEx)
             {
-                Logs.CasinoException(casinoException);
+                Logs.CasinoError(casinoEx);
             }
             catch (Exception ex)
             {
@@ -318,9 +318,9 @@ namespace Fanex.ExternalAccount.Core.Base
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
             }
-            catch (ErrorException casinoException)
+            catch (ErrorException casinoEx)
             {
-                Logs.CasinoException(casinoException);
+                Logs.CasinoError(casinoEx);
             }
             catch (Exception ex)
             {
