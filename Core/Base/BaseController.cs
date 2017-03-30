@@ -21,6 +21,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using CasinoLibrary.Model.UserException;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Services.Interface;
@@ -292,6 +293,10 @@ namespace Fanex.ExternalAccount.Core.Base
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
             }
+            catch (ErrorException casinoEx)
+            {
+                Logs.CasinoError(casinoEx);
+            }
             catch (Exception ex)
             {
                 Logs.Error(ex);
@@ -312,6 +317,10 @@ namespace Fanex.ExternalAccount.Core.Base
                 {
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                 }
+            }
+            catch (ErrorException casinoEx)
+            {
+                Logs.CasinoError(casinoEx);
             }
             catch (Exception ex)
             {

@@ -13,9 +13,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Data;
     using System.Linq;
     using System.Threading;
-    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using CasinoLibrary.Model.UserException;
     using Fanex.Caching;
     using Fanex.Common;
     using Fanex.CustomerSetting.IP.Utils;
@@ -1004,6 +1004,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     try
                     {
                         cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                    }
+                    catch (ErrorException casinoEx)
+                    {
+                        Logs.CasinoError(casinoEx);
                     }
                     catch (Exception ex)
                     {

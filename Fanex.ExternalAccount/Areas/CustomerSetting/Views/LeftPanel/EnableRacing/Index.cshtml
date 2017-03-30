@@ -2,39 +2,46 @@
 @{
     string hide = ViewBag.roleId == 1 ? "true" : "false";
 }
-<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Styles/EnableRacing.css")" rel="stylesheet" type="text/css" />
-<div id="ng-app" data-ng-app="racingStatusApp" data-ng-controller="RacingStatusController" style="display: none; width: 96%">
-    <div id="errMsg" style="display: none" class="successMsg">
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Styles/EnableRacing.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="ng-app" data-ng-app="racingStatusApp" data-ng-controller="RacingStatusController" style="display: none; width: 96%">
+        <div id="errMsg" style="display: none" class="successMsg">
+        </div>
+        <div style="margin-bottom: 5px" data-ng-repeat="sport in sportTypes">
+            <table class="tableInfo" cellpadding="0" cellspacing="0" border="0" data-ng-hide="sport.isHide">
+                <tr>
+                    <td colspan="2" class="bold racingTitle">{{sport.name}}</td>
+                </tr>
+                <tr data-ng-repeat="item in sport.betTypeGroups" data-ng-hide="item.isHide" data-ng-init="item.disable = false; item.enable = !item.bettingCommSetting.disable; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.bettingCommSetting.disableDownlines; item.preValDownline = item.enableDownline">
+                    <td style="width: 50%">
+                        <input type="checkbox" data-ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.bettingCommSetting.disableUplines" /><span>Enable &nbsp;{{item.name}}</span>
+                    </td>
+                    <td>
+                        <input data-ng-hide="@hide" type="checkbox" data-ng-change="item.bettingCommSetting.disableDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="item.disableDownline" /><span data-ng-hide="@hide">Enable Downlines</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="text-align: right">
+            <input class="buttonPopup" type="button" value="Submit" data-ng-click="Update()" style="margin-right: 0" />
+        </div>
     </div>
-    <div style="margin-bottom: 5px" data-ng-repeat="sport in sportTypes">
-    <table class="tableInfo" cellpadding="0" cellspacing="0" border="0" data-ng-hide="sport.isHide">
-        <tr>
-            <td colspan="2" class="bold racingTitle">{{sport.name}}</td>
-        </tr>
-        <tr data-ng-repeat="item in sport.betTypeGroups" data-ng-hide="item.isHide" data-ng-init="item.disable = false; item.enable = !item.bettingCommSetting.disable; item.preVal = item.enable; item.disableDownline = true; item.enableDownline = !item.bettingCommSetting.disableDownlines; item.preValDownline = item.enableDownline">
-            <td style="width: 50%">
-                <input type="checkbox" data-ng-change="item.bettingCommSetting.disable = !item.enable; item.bettingCommSetting.disableDownlines = !item.enableDownline; CheckStatus({{item.preVal}}, this)" data-ng-model="item.enable" data-ng-disabled="item.bettingCommSetting.disableUplines" /><span>Enable &nbsp;{{item.name}}</span>
-            </td>
-            <td>
-                <input data-ng-hide="@hide" type="checkbox" data-ng-change="item.bettingCommSetting.disableDownlines = !item.enableDownline" data-ng-model="item.enableDownline" data-ng-disabled="item.disableDownline" /><span data-ng-hide="@hide">Enable Downlines</span>
-            </td>
-        </tr>
-    </table>
-    </div>
-    <div style="text-align: right" >
-        <input class="buttonPopup" type="button" value="Submit" data-ng-click="Update()" style="margin-right: 0" />
-    </div>
-</div>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/CustomerSetting/LeftPanel/SearchCustomer/GetRacingData?id=" + ViewBag.id + "&uplineId=" + (ViewBag.roleId == 4 ? 0 : ViewBag.uplineId) + "&roleId=" + ViewBag.roleId)" type="text/javascript"></script>
-<script type="text/javascript">
-    var custId = parseInt('@ViewBag.id');
-    var uplineId = parseInt('@ViewBag.uplineId');
-    var roleId = parseInt('@ViewBag.roleId');
-</script>
-<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Scripts/RacingStatusController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/CustomerSetting/LeftPanel/SearchCustomer/GetRacingData?id=" + ViewBag.id + "&uplineId=" + (ViewBag.roleId == 4 ? 0 : ViewBag.uplineId) + "&roleId=" + ViewBag.roleId)" type="text/javascript"></script>
+    <script type="text/javascript">
+        var custId = parseInt('@ViewBag.id');
+        var uplineId = parseInt('@ViewBag.uplineId');
+        var roleId = parseInt('@ViewBag.roleId');
+    </script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Scripts/RacingStatusController.js")" type="text/javascript"></script>
+</body>
+</html>

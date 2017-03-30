@@ -9,7 +9,9 @@
 
 namespace Fanex.ExternalAccount.Utilities
 {
+    using CasinoLibrary.Model.UserException;
     using Fanex.Logging;
+    using Fanex.Module.Logs.Services;
 
     /// <summary>
     /// Logs object.
@@ -19,6 +21,11 @@ namespace Fanex.ExternalAccount.Utilities
         public static void Error(System.Exception ex, bool includeQuery = true)
         {
             LogService.Error(ex.Message);
+        }
+
+        public static void CasinoError(ErrorException ex, bool includeQuery = true)
+        {
+            ex.WriteCasinoException();
         }
     }
 }
