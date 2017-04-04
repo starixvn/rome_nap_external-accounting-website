@@ -163,6 +163,9 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                     customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
                     customer.fax = customer.fax.escapeHtml().encodeHtml();
 
+                    // HotFix #71569: HR Fixed odds Commission isnot affected when add new Master/Agent
+                    customer.commissionSetting.discountHRFixedOdds = $('#discountHRFixedOdds').val();
+
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();
                         customer.bettingLimit = bettingLimit.Save();
