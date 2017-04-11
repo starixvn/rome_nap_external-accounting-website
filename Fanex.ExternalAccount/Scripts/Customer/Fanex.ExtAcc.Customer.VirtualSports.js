@@ -122,8 +122,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         return result;
     },
 
-    Init: function () {
-        debugger;
+    Init: function () {        
         Fanex.ExtAcc.BlockUI();
         this.InitArrays();
 
