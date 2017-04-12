@@ -188,7 +188,7 @@
       <HintPath>..\Dependencies\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2-beta7\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2-beta8\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
