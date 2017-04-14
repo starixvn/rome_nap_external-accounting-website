@@ -71,17 +71,16 @@ String.prototype.formatErrorMessage = function () {
     var username = '';
 
     if ($.isNumeric(orgMsg.substring(1, orgMsg.length - 1))) {
-        orgMsg = '(' + orgMsg.substring(1, orgMsg.length - 1).formatNumber() + ')';
+        orgMsg = '(' + orgMsg.substring(1, orgMsg.length - 1) + ')';
     }
 
     if (hasUsername) {
         username = preMsg.substring(0, preMsg.indexOf(':'));
     }
 
-    var formatMsg = '<div id="msg" style="color:#ff5411">' + preMsg + '<font color="#000000">' + orgMsg + '</font>' + subMsg + '</div>';
+    var formatMsg = '<div id="msg" style="color:#ff5411">' + preMsg + orgMsg + subMsg + '</div>';
 
     var msg = '';
-
     if (!hasUsername) {
         msg = orgMsg + subMsg.indexOf(':') > 0 ? ('<div style="float: left; color: Blue; font-weight: bold">' + subMsg.substring(0, subMsg.indexOf(':')) + ':</div><br /><div id="msg" style="color:#ff5411">' + subMsg.substring(subMsg.indexOf(':') + 1) + '</div>') : ('<div id="msg" style="color:#ff5411">' + subMsg + '</div>');
     }
