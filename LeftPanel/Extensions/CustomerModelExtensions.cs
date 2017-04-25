@@ -14,6 +14,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Enums;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -325,6 +326,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var closed = tableCustomer.Rows[0].ToBoolean("closed");
             var suspended = tableCustomer.Rows[0].ToBoolean("suspended");
             var status = "This account was ";
+
+            var closedReason = CustomerClosedReason.ByUplineOrAdmin;
+
+            if (closed)
+            {
+                closedReason = (CustomerClosedReason)Utils.ToByte(tableCustomer.Rows[0]["closedreason"]);
+            }
+
             model.PersonalInfo = new PersonalInfo
             {
                 CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
@@ -337,7 +346,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
                 CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
                 Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status + "closed" : suspended ? status + "suspended" : string.Empty },
-                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? "closed" : suspended ? "suspended" : string.Empty },
+                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? (closedReason == CustomerClosedReason.ByUplineOrAdmin ? "closed" : "closed pwd-sc-otp") : suspended ? "suspended" : string.Empty },
                 IsInternal = new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["isinternal"]) }
             };
 

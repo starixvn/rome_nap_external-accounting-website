@@ -389,6 +389,10 @@ input
 {
     background-color: #ccc;
 }
+.closed.pwd-sc-otp
+{
+    background-color: #98afc7;
+}
 .suspended
 {
     background-color: #f8ded7;
