@@ -221,7 +221,8 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     ReloadCheckboxes: function () {
         var chkEnabled = document.getElementById("chkEnabled");
         var chkDownline = document.getElementById("chkDownline");
-        chkDownline.disabled = true;
+        if (!chkEnabled.checked || (chkEnabled.checked && chkDownline.checked))
+            chkDownline.disabled = true;
 
         if (this.newCustomer.statusSetting.disableUplineVirtualSports === true) {
             chkEnabled.disabled = true;

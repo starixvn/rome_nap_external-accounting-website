@@ -3770,4 +3770,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="notAllowDisableDownlines" xml:space="preserve">
     <value>You are not allowed to disable downlines as a company policy.</value>
   </data>
+  <data name="warningUnsyncedAllDownline" xml:space="preserve">
+    <value>The {0} Setting is not fully available. Please go to Edit {0} page to adjust.</value>
+  </data>
 </root>

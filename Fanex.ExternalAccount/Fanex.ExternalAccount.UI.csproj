@@ -110,12 +110,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.1.8\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.3-beta1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.0.5\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.2.0.1\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
@@ -180,15 +179,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.PTEngine.Age.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTRacing, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTRacing.1.0.0.3\lib\net40\Fanex.PTRacing.dll</HintPath>
+    <Reference Include="Fanex.PTRacing, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTRacing.1.0.0.5-beta4\lib\net40\Fanex.PTRacing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference">
       <HintPath>..\Dependencies\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3-EnableStatus4\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
@@ -287,8 +286,8 @@
       <HintPath>..\packages\RabbitMQ.Client.3.5.6\lib\net40\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.13\lib\net40\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
@@ -411,6 +410,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.1-beta018\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="TplCore">
       <HintPath>..\Dependencies\TplCore.dll</HintPath>
     </Reference>
@@ -452,6 +455,7 @@
     <Content Include="Areas\CustomerSetting\Images\b_down.jpg" />
     <Content Include="Areas\CustomerSetting\Images\b_sub.jpg" />
     <Content Include="Areas\CustomerSetting\Images\b_up.jpg" />
+    <Content Include="Areas\CustomerSetting\Images\error-icon.gif" />
     <Content Include="Areas\CustomerSetting\Images\Loading.gif" />
     <Content Include="Areas\CustomerSetting\Images\pointer.png" />
     <Content Include="Areas\CustomerSetting\Images\pointerDown.png" />
@@ -630,6 +634,8 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\SPs.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
+    <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Scripts\EnableThirdPartyProductStatus.js" />
+    <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Styles\EnableThirdPartyProductStatus.css" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\bet-setting.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\main.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\position-taking.controller.js" />
@@ -837,6 +843,7 @@
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_followscroll.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\wz_tooltip.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\AgentMinMaxPT.js" />
+    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\BettingCommSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MasterMinMaxPT.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MinMaxPTRacingSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\RacingHelper.js" />
@@ -2877,6 +2884,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Index.cshtml" />
     <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />

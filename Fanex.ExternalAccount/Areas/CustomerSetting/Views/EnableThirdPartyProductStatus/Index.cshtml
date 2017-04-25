@@ -1,0 +1,102 @@
+﻿@using Fanex.ExternalAccount.DTO.Customer;
+@using Sunplus.Accounting.Core.Common;
+@using Resources;
+@model ThirdPartyProductStatusViewModel
+@{
+    bool isUpdateByBettype = Model.ProductStatusList.Count > 1;
+    bool isSyncAllDownline = Model.ProductStatusList[0].IsSyncedDownline;
+    int productId = Model.ProductStatusList[0].ProductId;
+    bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !isSyncAllDownline;
+    int sportTypePrevious = 0;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Styles/EnableThirdPartyProductStatus.css")" rel="stylesheet" />
+</head>
+<body>
+    <div id="updateStatusDialog">
+        <div id="successMsg" class="hidden successMsg"></div>
+        @if (isWarningSyncedAllDownlineProduct)
+        {
+            <div id="wrnUnsyncedDownlineMsg" class="wrnMsg">@String.Format(Lang.warningUnsyncedAllDownline, Model.ProductStatusList[0].ProductName)</div>
+
+        }
+        <div id="wrnMsg" class="hidden wrnMsg"></div>
+        <div id="errMsg" class="hidden errMsg"></div>
+        <table id="updateStatusTable" class="table-info">
+            <tr>
+                <th colspan="2">
+                    @if (Model.HasCheckAll)
+                    {
+                        var isAllChecked = true;
+                        foreach (var item in Model.ProductStatusList)
+                        {
+                            if (item.IsDisabled)
+                            {
+                                isAllChecked = false;
+                                break;
+                            }
+                        }
+                        <div class="float-left">
+                            <input type="checkbox" id="checkAll" onchange="enableThirdPartyProductStatus.checkAll_OnChange()" @(isAllChecked ? "checked" : string.Empty) />
+                            <label for="checkAll">All</label>
+                        </div>
+                    }
+
+                    @Model.RoleName: @Model.CustName
+                </th>
+            </tr>
+            @for (int i = 0; i < Model.ProductStatusList.Count; i++)
+            {
+                var item = Model.ProductStatusList[i];
+
+                if (Model.GroupBySport && sportTypePrevious != item.SportType)
+                {
+                    <tr class="group-row">
+                        <td colspan="2" class="bold">
+                            @item.SportName
+                        </td>
+                    </tr>
+                    sportTypePrevious = item.SportType;
+                }
+                <tr>
+                    <td @(Model.RoleId == 1 ? "colspan=\"2\"" : " ")>
+                        <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
+                        <label for="checkEnable">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
+                    </td>
+                    @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
+                {
+                        <td>
+                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
+                            <label for="checkEnableDownlines">Enable Downlines</label>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+        <div class="align-right">
+            @if (isWarningSyncedAllDownlineProduct)
+            {
+                <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled />
+            }
+            else
+            {
+                <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled onclick="enableThirdPartyProductStatus.submit(@Html.Raw(Json.Encode(Model)))" />
+            }
+        </div>
+    </div>
+    <script type="text/javascript">
+        var originalModel = @Html.Raw(Json.Encode(Model));
+        var hasDownline = @Html.Raw(Json.Encode(Model.ProductStatusList[0].HasDownline));
+        var errorMsg = {
+            ThereIsNoChange: '@Error.ThereIsNoChange'
+        };
+    </script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Scripts/EnableThirdPartyProductStatus.js")" type="text/javascript"></script>
+</body>
+</html>

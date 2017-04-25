@@ -123,4 +123,7 @@
   <data name="AjaxCallError" xml:space="preserve">
     <value>Sorry, an error occurred while processing your request, please notify the administrators.</value>
   </data>
+  <data name="ThereIsNoChange" xml:space="preserve">
+    <value>There is no change to update.</value>
+  </data>
 </root>

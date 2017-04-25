@@ -7,7 +7,7 @@
              @if (Model.CustomerInformationPartial.RoleId < 4)
              {
             <input ng-class-name="btnSave" check-disable-element ng-model="statusPartial.IsStatusUpdated"
-                ng-click="updated(true, 'StatusPartial')" type="button" />
+                ng-click="!statusPartial.IsStatusUpdated||updated(true, 'StatusPartial')" type="button" />
              }
         </td>
     </tr>

@@ -17,7 +17,8 @@
             token = antiXSRFToken[0].value;
         }
 
-        $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
         })
@@ -544,15 +545,8 @@
             });
     };
 
-    $scope.EnableCasino = function (enable, id) {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=casino&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true&synced=' + $scope.model.setting.syncItems[0].value + '&isCasino=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
+    $scope.EnableCasino = function () {
+        $scope.EnableThirdpartyProduct(6, "Casino", 400, 150);
     };
 
     $scope.EnableNumberGame = function (enable, id) {
@@ -577,15 +571,8 @@
         }, 1, null);
     };
 
-    $scope.EnableVirtualSports = function (enable, id) {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=virtualsports&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Virtual Sports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
+    $scope.EnableVirtualSports = function () {
+        $scope.EnableThirdpartyProduct(5, "Virtual Sports", 400, 150);
     };
 
     $scope.EnableESports = function (enable, id) {
@@ -611,63 +598,35 @@
     };
 
     $scope.EnableRacing = function () {
-        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetEnableRacing?id=' + $scope.model.personalInfo.custId.value +
-            '&uplineId=' + ($scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value) +
-            '&roleId=' + $scope.model.personalInfo.roleId.value + '&groupName=' + parent.$('#selectedGroupName').html());
-        var title = 'Update Racing Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, 400, 350, false, null, 1, 'enableRacing');
+        $scope.EnableThirdpartyProduct(2, "Racing", 400, 350);
     };
 
     $scope.EnableKeno = function () {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-            '&userid=' + parent.userId + '&productid=keno&level=' + $scope.model.personalInfo.roleId.value +
-            '&enable=true&enabledownlines=true&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Enable Keno: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 420, false, null, 1, 'enableGD');
-
+        $scope.EnableThirdpartyProduct(8, "Keno", 400, 400);
     };
 
-    $scope.EnableGoldDeluxe = function (enable, id) {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-            '&userid=' + parent.userId + '&productid=golddeluxe&level=' + $scope.model.personalInfo.roleId.value +
-            '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Gold Deluxe: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
+    $scope.EnableColossusBets = function () {
+        $scope.EnableThirdpartyProduct(15, "Colossus Bet", 400, 150);
     };
 
-    $scope.EnableColossusBets = function (enable, id) {
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-            '&userid=' + parent.userId + '&productid=colossusbet&level=' + $scope.model.personalInfo.roleId.value +
-            '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update Colossus Bets Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
-    };
-
-    $scope.EnableFishingWorld = function (enable, id) {
-        $scope.EnableDCS(24, 'FishingWorld', enable, id, null, 400, 200);
+    $scope.EnableFishingWorld = function () {
+        $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 150);
     };
 
     $scope.EnableCockfighting = function () {
         $scope.EnableDCS(19, 'Cockfighting');
     };
 
-    $scope.EnableAllbet = function (enable, id) {
-        $scope.EnableDCS(21, 'Allbet', enable, id, null, 500, 250);
+    $scope.EnableAllbet = function () {
+        $scope.EnableThirdpartyProduct(21, "Allbet", 400, 150);
     };
 
-    $scope.EnableMacauGames = function (enable, id) {
-        $scope.EnableDCS(22, 'Macau Games', enable, id);
+    $scope.EnableMacauGames = function () {
+        $scope.EnableThirdpartyProduct(22, "Macau Games", 400, 150);
     };
 
-    $scope.EnableNG2 = function (enable, id) {
-        $scope.EnableDCS(23, 'NG2', enable, id, parent.ng2Text, 400, 300);
+    $scope.EnableNG2 = function () {
+        $scope.EnableThirdpartyProduct(23, "NG2", 400, 150);
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
@@ -684,6 +643,13 @@
 
             }
         }, 1, null);
+    };
+
+    $scope.EnableThirdpartyProduct = function (productId, productName, width, height) {
+        var url_SELECT = 'ThirdPartyProductStatus\?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + '&roleid=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
+        var url = parent.resolveClientUrl(url_SELECT + query);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', width, height, false, null, 1, null);
     };
 
     $scope.ViewSubTab = function (id) {
@@ -884,7 +850,7 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
-    
+
     $scope.SuperSBPT = function () {
         parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
         var superId = $scope.model.personalInfo.downlines[0].key;

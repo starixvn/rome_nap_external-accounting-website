@@ -38,7 +38,7 @@
         <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.js")"></script>
         <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BetTypeGroup.js")"></script>
         <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BetType.js")"></script>
-        <script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.BettingCommSetting.js")"></script>
+        <script src="@Url.Content("~/Areas/CustomerSetting/Views/Racebook/Scripts/Setting/BettingCommSetting.js")"></script>
         @Scripts.Render("~/bundles/racingsetting")
         <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
         @RenderSection("scripts", required: false)

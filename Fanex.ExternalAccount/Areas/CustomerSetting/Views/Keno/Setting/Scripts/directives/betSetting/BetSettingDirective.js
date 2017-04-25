@@ -78,35 +78,43 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
 
 
                 $scope.$watch('betSetting.isEnabled', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        if ($scope.originalBetSetting.isEnabled) {
+                    if (newValue) {
+                        if ($scope.originalBetSetting.isDownlinesEnabled) {
+                            $scope.betSetting.isDownlinesEnabled = true;
                             $scope.isDownlinechkDisabled = true;
-                            if ($scope.betSetting.isEnabled != $scope.originalBetSetting.isEnabled) {
-                                if ($scope.originalBetSetting.isDownlinesEnabled) {
-                                    $scope.betSetting.isDownlinesEnabled = !$scope.originalBetSetting.isDownlinesEnabled;
-                                }
-                                $scope.betSetting.isStatusUpdated = true;
-                            } else {
-                                $scope.betSetting.isDownlinesEnabled = $scope.originalBetSetting.isDownlinesEnabled;
-                                $scope.betSetting.isStatusUpdated = false;
-                            }
-                        } else {
-                            $scope.betSetting.isStatusUpdated = $scope.betSetting.isEnabled != $scope.originalBetSetting.isEnabled;
-                            $scope.isDownlinechkDisabled = $scope.betSetting.isEnabled == false;
                         }
-
-                        $scope.$emit('totallyChecking');
+                        else {
+                            $scope.betSetting.isDownlinesEnabled = false;
+                            $scope.isDownlinechkDisabled = false;
+                        }
                     }
+                    else {
+                        $scope.betSetting.isDownlinesEnabled = false;
+                        $scope.isDownlinechkDisabled = true;
+                    }
+
+                    if (newValue == $scope.originalBetSetting.isEnabled) {
+                        $scope.betSetting.isStatusUpdated = false;
+                    }
+                    else {
+                        $scope.betSetting.isStatusUpdated = true;
+                    }
+
+                    $scope.$emit('totallyChecking');
                 }, true);
 
-                $scope.$watch('isDownlinechkDisabled', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        if ($scope.isDownlinechkDisabled) {
-                            $scope.betSetting.isDownlinesEnabled = false;
-                        }
+
+
+                $scope.$watch('betSetting.isDownlinesEnabled', function (newValue, oldValue) {
+                    if (newValue == $scope.originalBetSetting.isDownlinesEnabled) {
+                        $scope.betSetting.isStatusUpdated = false;
+                    } else {
+                        $scope.betSetting.isStatusUpdated = true;
                     }
+
+                    $scope.$emit('totallyChecking');
                 }, true);
             }
         ]
     };
-} ]);
+}]);

@@ -149,7 +149,7 @@
                     <div data-ng-hide="{{enableItem.isHide}}" class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
                     <div data-ng-hide="{{enableItem.isHide}}" class="floatLeft">
                         <input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" 
-                               data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')"/>
+                               data-ng-click="{{enableItem.key}}()"/>
                     </div>
                 </div>    
             </div>

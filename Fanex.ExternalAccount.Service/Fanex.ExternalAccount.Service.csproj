@@ -46,11 +46,20 @@
     <Reference Include="Fanex.Caching">
       <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Common">
-      <HintPath>..\Dependencies\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\Dependencies\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4787.16346, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,8 +78,9 @@
     <Reference Include="IBCDLL">
       <HintPath>..\Dependencies\IBCDLL.dll</HintPath>
     </Reference>
-    <Reference Include="IBCFile">
-      <HintPath>..\Dependencies\IBCFile.dll</HintPath>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IBCMessage">
       <HintPath>..\Dependencies\IBCMessage.dll</HintPath>
@@ -87,8 +97,36 @@
     <Reference Include="Microsoft.ApplicationBlocks.Data">
       <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NetUtility">
       <HintPath>..\Dependencies\NetUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -102,10 +140,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.1-beta018\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Customer\Casino\CasinoManager.cs" />
     <Compile Include="Impl\Customer\CommissionService.cs" />
+    <Compile Include="Impl\Customer\ThirdPartyProductStatusService.cs" />
     <Compile Include="Impl\Statement\StatementService.cs" />
     <Compile Include="Interface\Customer\ICommissionService.cs" />
     <Compile Include="Interface\Customer\IMemberService.cs" />
@@ -114,6 +157,7 @@
     <Compile Include="Interface\Customer\ICustomerService.cs" />
     <Compile Include="Interface\Customer\IDataService.cs" />
     <Compile Include="Interface\Customer\ISuperService.cs" />
+    <Compile Include="Interface\Customer\IThirdPartyProductStatusService.cs" />
     <Compile Include="Interface\Login\ILoginService.cs" />
     <Compile Include="Interface\Report\IReportService.cs" />
     <Compile Include="Interface\Statement\IStatementService.cs" />
