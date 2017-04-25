@@ -122,7 +122,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         return result;
     },
 
-    Init: function () {
+    Init: function () {        
         Fanex.ExtAcc.BlockUI();
         this.InitArrays();
 
@@ -165,7 +165,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
         }
 
         if (customer.ptSetting.sportTypes.length > 0) {
-            this.ptGrid = new Fanex.PTVirtualSports.PTGrid(Fanex.copy(customer.ptSetting));
+            this.ptGrid = new Fanex.PTVirtualSports.PTGrid(/*Fanex.copy*/(customer.ptSetting));
             var ptContainer = document.getElementById('positionTaking');
             this.ptGrid.Render(ptContainer);
         }

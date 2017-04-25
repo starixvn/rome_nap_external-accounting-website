@@ -97,14 +97,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Bingo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Bingo\Fanex.CustomerSetting.Module.Bingo.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Bingo.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Bingo\Fanex.CustomerSetting.Module.Bingo.Resources.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.0.13\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
@@ -195,9 +187,9 @@
     <Reference Include="Fanex.PTSetting.BettypeReference">
       <HintPath>..\Dependencies\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.PTVirtualSports.dll</HintPath>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.2\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
       <HintPath>..\Dependencies\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
@@ -313,28 +305,6 @@
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.0.2\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Core">
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Data">
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Data.Entlib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.Entlib.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Data.LinqToSql">
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Data.LinqToSql.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.DataServices">
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.DataServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Entities">
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Entities.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Services">
-      <HintPath>..\Dependencies\Bingo\Sunplus.Bingo.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Core.LoggingLib">
       <HintPath>..\Dependencies\Bingo\Sunplus.Core.LoggingLib.dll</HintPath>
@@ -1439,6 +1409,8 @@
   <ItemGroup>
     <Content Include="Content\Account\Login.css" />
     <Content Include="Content\Customer\Casino.css" />
+    <Content Include="Content\Customer\copyChecked.png" />
+    <Content Include="Content\Customer\copyUnChecked.png" />
     <Content Include="Content\Customer\LiveCasino.css" />
     <Content Include="Content\Customer\PTEngine.css" />
     <Content Include="Content\Customer\Customer.css" />

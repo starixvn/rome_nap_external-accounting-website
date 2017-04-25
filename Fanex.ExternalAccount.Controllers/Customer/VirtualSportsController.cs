@@ -33,8 +33,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
     {
         private bool _isChanged = false;
         private List<Fanex.ExternalAccount.DTO.Result> _result = new List<Fanex.ExternalAccount.DTO.Result>();
-
-        [HttpPost]
+                
         [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditSingle(PTVirtualSportsModel model)
         {
