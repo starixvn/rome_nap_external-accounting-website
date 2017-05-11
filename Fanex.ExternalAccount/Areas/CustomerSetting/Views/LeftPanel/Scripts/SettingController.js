@@ -934,6 +934,9 @@
         $scope.RenderSupeOnMemberDCS(23);
     };
 
+    $scope.SuperFishingWorld = function () {
+        $scope.RenderSupeOnMemberDCS(24);
+    };
 
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
@@ -962,6 +965,10 @@
 
     $scope.MasterNG2 = function () {
         $scope.RenderMasterOnMemberDCS(23);
+    };
+
+    $scope.MasterFishingWorld = function () {
+        $scope.RenderMasterOnMemberDCS(24);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
