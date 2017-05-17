@@ -105,8 +105,8 @@
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">
-    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo_uat1" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_uat1" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
@@ -125,7 +125,7 @@
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed_uat1" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
