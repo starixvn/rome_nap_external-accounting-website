@@ -597,19 +597,23 @@
         }, 1, null);
     };
 
-    $scope.EnableRacing = function () {
+    $scope.EnableRacing = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(2, "Racing", 400, 350);
     };
 
-    $scope.EnableKeno = function () {
+    $scope.EnableKeno = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(8, "Keno", 400, 400);
     };
 
-    $scope.EnableColossusBets = function () {
+    $scope.EnableColossusBets = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(15, "Colossus Bet", 400, 150);
     };
 
-    $scope.EnableFishingWorld = function () {
+    $scope.EnableFishingWorld = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 150);
     };
 
@@ -617,15 +621,18 @@
         $scope.EnableDCS(19, 'Cockfighting');
     };
 
-    $scope.EnableAllbet = function () {
+    $scope.EnableAllbet = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(21, "Allbet", 400, 150);
     };
 
-    $scope.EnableMacauGames = function () {
+    $scope.EnableMacauGames = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(22, "Macau Games", 400, 150);
     };
 
-    $scope.EnableNG2 = function () {
+    $scope.EnableNG2 = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(23, "NG2", 400, 150);
     };
 
