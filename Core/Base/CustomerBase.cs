@@ -152,7 +152,7 @@ namespace Fanex.ExternalAccount.Core.Base
             if (dcsStatuses.IsSyncedUpline)
             {
                 ING2StatusService service = new NG2StatusService();
-                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId, CurrentSession.UserId);
+                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId);
             }
 
             return new Module.NG2.Entities.Result();
