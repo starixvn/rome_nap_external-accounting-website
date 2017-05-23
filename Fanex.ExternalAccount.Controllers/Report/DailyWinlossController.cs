@@ -58,6 +58,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GetDailyWinLoss()
         {
             this.GetRequestPage();

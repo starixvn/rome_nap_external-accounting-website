@@ -32,6 +32,7 @@
             <input class="buttonPopup" type="button" value="Submit" data-ng-click="Update()" style="margin-right: 0" />
         </div>
     </div>
+    @Html.AntiForgeryToken()
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>

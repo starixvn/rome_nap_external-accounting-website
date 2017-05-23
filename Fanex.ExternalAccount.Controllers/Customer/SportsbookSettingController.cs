@@ -415,6 +415,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditPTSuperGet(int custId, int parentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -466,6 +467,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -521,6 +523,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="newPositionTaking">New position taking.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -579,6 +582,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditPTAgentGet(int custId, int parentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -634,6 +638,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="newPositionTaking">New position taking.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -692,6 +697,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditPTMemberGet(int custId, int parentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -745,6 +751,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -804,6 +811,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="agentId">Agent's id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -858,6 +866,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult SuperEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -916,6 +925,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="agentId">Agent's id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -970,6 +980,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult MasterEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -1068,6 +1079,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -1126,6 +1138,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="parentId">Parent id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -1185,6 +1198,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -1221,6 +1235,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         /// <param name="txtCustomerObject">JSON string.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))

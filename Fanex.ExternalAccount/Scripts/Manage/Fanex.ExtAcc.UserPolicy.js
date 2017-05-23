@@ -219,8 +219,6 @@ Fanex.ExtAcc.UserPolicy = {
             data: data,
             dataType: 'html',
             cache: false,
-            beforeSend: function (xhr) {
-            },
             success: function (result) {
                 var json = $.parseJSON(result);
                 if (!json.isSuccess) {

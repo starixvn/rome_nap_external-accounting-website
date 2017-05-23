@@ -505,8 +505,7 @@ namespace Fanex.ExternalAccount.Core.Base
                     {
                         return false;
                     }
-
-
+                    
                     bool isHasAccessSpecialSitePermission = permisisonService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
                     if (!isHasAccessSpecialSitePermission)
                     {

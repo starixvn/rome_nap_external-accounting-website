@@ -195,6 +195,7 @@
 <div class="floatR">
     <input id="buttonPopup2" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
+    @Html.AntiForgeryToken()
 </div>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>

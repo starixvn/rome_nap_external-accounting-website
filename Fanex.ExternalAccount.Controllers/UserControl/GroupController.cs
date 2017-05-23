@@ -46,6 +46,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AddGroup()
         {
             return this.PartialViewBase();
@@ -56,6 +57,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GroupListPost()
         {
             var result = this._groupService.GetListGroup();
@@ -73,6 +75,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditGroup(int id)
         {
             var model = this._groupService.GetGroupById(id);
@@ -84,6 +87,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GetGroupPolicy(int groupId)
         {
             var model = this._groupService.GetAllGroupPolicy(groupId);
@@ -92,6 +96,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Add(string name, string description)
         {
             var groupId = 0;
@@ -102,6 +107,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
@@ -110,6 +116,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Delete(int groupId)
         {
             var result = this._groupService.DeleteGroup(groupId, CurrentSession.CustId);
@@ -118,6 +125,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
             var result = this._groupService.EditGroup(groupName, description, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
@@ -133,6 +141,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
             var funcs = new FunctionService().GetAllFunctions().ToList();
@@ -203,6 +212,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);

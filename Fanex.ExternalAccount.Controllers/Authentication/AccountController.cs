@@ -17,6 +17,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using CaptchaMvc.HtmlHelpers;
 using Fanex.CustomerSetting.Module.Core.Web;
+using Fanex.CustomerSetting.Security.Authenticate;
 using Fanex.ExternalAccount.Core.Context;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.DTO.UserControl;
@@ -97,6 +98,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>JSON string.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)

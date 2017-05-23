@@ -99,6 +99,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="pageIndex">Current page index.</param>
         /// <returns>JSON object.</returns>
         [HttpPost]
+        [AntiXSRFFilter]
         public ActionResult ViewDownline(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
@@ -121,6 +122,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="newGivenCredit">New given credit.</param>
         /// <returns>JSON object.</returns>
         [HttpPost, ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
@@ -178,6 +180,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="closedOnly">Resets closed account only.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
             if (!this.IsBelong(Request["groupName"], agentId, null, true))
@@ -197,6 +200,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="isCheckedAll">Checks all or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -231,6 +235,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -261,6 +266,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="suspend">Suspended or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -285,6 +291,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="allow">Allow or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateOutright(int custId, bool allow)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -303,6 +310,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="uplineId">Up line id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -323,6 +331,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -349,6 +358,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableVirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateVirtualSports(int custId, bool enable, bool enableDownline)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -367,6 +377,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableESports, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -385,6 +396,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -403,6 +415,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="enableDownline">Enable down-lines or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -485,6 +498,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <returns>ActionResult object.</returns>
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
@@ -552,6 +566,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <returns>ActionResult object.</returns>
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 1)
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
@@ -579,6 +594,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <returns>ActionResult object.</returns>
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.EnableHRFixedOdds, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateHRFixedOdds(int id, bool enable, bool enableDownline)
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
@@ -597,6 +613,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custId">Customer id.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
+        [AntiXSRFFilter]
         public ActionResult GetOnlineList(int custId)
         {
             var model = new OnlineList();
@@ -621,6 +638,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="pageIndex">Page index.</param>
         /// <returns>ActionResult object.</returns>
         [HttpPost]
+        [AntiXSRFFilter]
         public ActionResult GetDownlineList(int custId, int pageIndex)
         {
             var downlines = this._service.GetDownlineList(custId, 100, pageIndex);
@@ -662,6 +680,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         /// <param name="custName">Customer username.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableGoldDeluxe, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateGoldDeluxe(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))
@@ -694,6 +713,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult RemoveOTP(int custId)
         {
             if (!this.IsBelong(Request["groupName"], custId, null, true))

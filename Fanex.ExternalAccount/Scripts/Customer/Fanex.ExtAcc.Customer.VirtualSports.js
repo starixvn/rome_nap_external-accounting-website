@@ -301,9 +301,6 @@ Fanex.ExtAcc.Customer.VirtualSports = {
             data: parameters,
             dataType: 'json',
             cache: false,
-            beforeSend: function () {
-                // show loading
-            },
             success: function (result) {
                 var ArrUserName = new Array();
                 ArrUserName.push(username);
