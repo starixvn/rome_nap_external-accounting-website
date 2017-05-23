@@ -47,7 +47,7 @@ namespace Fanex.ExternalAccount.Core.Context
 
             if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login") && !_response.IsRequestBeingRedirected)
             {
-                this._response.Redirect("~/Account/Login");
+                this._response.RedirectPermanent("~/Account/Login");
             }
 
             if (((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
@@ -56,7 +56,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 this._groups = new LoginService().GroupList().ToList();
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
 
-                _response.Redirect("~/Home/Index" + group);
+                _response.RedirectPermanent("~/Home/Index" + group);
             }
         }
 
@@ -99,14 +99,14 @@ namespace Fanex.ExternalAccount.Core.Context
 
             if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login") && !response.IsRequestBeingRedirected)
             {
-                response.Redirect("~/Account/Login");
+                response.RedirectPermanent("~/Account/Login");
             }
 
             if (((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
                  && !response.IsRequestBeingRedirected)
             {
                 var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
-                response.Redirect("~/Home/Index" + group);
+                response.RedirectPermanent("~/Home/Index" + group);
             }
 
             try
@@ -310,7 +310,7 @@ namespace Fanex.ExternalAccount.Core.Context
 
             if (!response.IsRequestBeingRedirected)
             {
-                response.Redirect("~/Account/Login", true);
+                response.RedirectPermanent("~/Account/Login");
             }
         }
 

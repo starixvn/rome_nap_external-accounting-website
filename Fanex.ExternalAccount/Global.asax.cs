@@ -22,6 +22,7 @@ namespace Fanex.ExternalAccount
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
     using Fanex.Module.Logs.Services;
+    using Service.Impl.Login;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -128,9 +129,30 @@ namespace Fanex.ExternalAccount
 
                 if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
                 {
-                    Response.Redirect("~/Shared/Error");
+                    Response.RedirectPermanent("~/Shared/Error");
                 }
             }
+        }
+
+        protected void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            try
+            {
+                if (CurrentSession.Instance.IsLogin)
+                {
+                    var userService = new LoginService();
+                    var isKickedOut = false;
+                    userService.Recheckin(CurrentSession.Instance.OnUserId, out isKickedOut);
+                    if (isKickedOut)
+                    {
+                        userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
+                        Session.Abandon();
+
+                        Response.RedirectPermanent("~/Account/Login");
+                    }
+                }
+            }
+            catch { }
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
