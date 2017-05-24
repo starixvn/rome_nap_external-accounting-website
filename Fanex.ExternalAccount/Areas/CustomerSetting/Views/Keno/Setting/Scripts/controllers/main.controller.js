@@ -116,6 +116,9 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                 }
                 var url = $scope.getUrlUpdated(kenoSetting.customerInformation.username);
 
+                var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+                $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
+
                 $http.post(url, kenoSetting)
                 .success(function (data, status, headers, config) {
                     if ($scope.multipleEdit.isMultipleEdit && typeof data != "string") {

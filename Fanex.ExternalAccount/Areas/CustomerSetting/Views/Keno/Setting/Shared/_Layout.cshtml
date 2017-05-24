@@ -42,6 +42,7 @@
     </div>  
         @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
         @RenderBody()
+        @Html.AntiForgeryToken()
     </div>
     <div class="tableWidth">
         @if (Model.CustomerInformation.RoleId != 4)

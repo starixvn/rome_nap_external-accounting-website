@@ -21,6 +21,9 @@
 
         parent.Fanex.ExtAcc.BlockUI();
 
+        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+        $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
+
         $http({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
@@ -49,6 +52,9 @@
         if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
             value = value.replace(/,/g, "");
+            var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+            $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
+
             $http({
                 url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post',

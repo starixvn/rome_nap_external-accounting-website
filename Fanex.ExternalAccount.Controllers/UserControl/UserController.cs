@@ -228,7 +228,6 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
         #region Reset password for current logging in user
 
-        [AntiXSRFFilter]
         public ActionResult ResetPwdOwner(int userId, string pwd)
         {
             if (userId != CurrentSession.UserId)

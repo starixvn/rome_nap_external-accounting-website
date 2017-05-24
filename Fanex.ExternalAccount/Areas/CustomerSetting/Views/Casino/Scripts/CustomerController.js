@@ -4,6 +4,15 @@ var IsMember = false;
 var UplineRoleId = 4;
 
 function CustomerController($scope, $element) {
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+            if (antiXSRFToken.length > 0) {
+                xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+            }
+        }
+    });
+
     $scope.CustomerModel = customerModel;
     $scope.Enabled = !customerModel.casinoDisabled;
     $scope.Level = '';

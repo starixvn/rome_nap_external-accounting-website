@@ -9,6 +9,8 @@ KenoModule.factory('kenoRepositories', function ($http, $q, dataService) {
             return deferred.promise;
         },
         save: function (url, kenoSetting) {
+            var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+            $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
             var deferred = $q.defer();
             $http.post(url, kenoSetting)
                 .success(function (data, status, headers, config) { deferred.resolve(data); })
