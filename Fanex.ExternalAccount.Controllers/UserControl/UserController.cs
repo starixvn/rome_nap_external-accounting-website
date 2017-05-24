@@ -241,7 +241,6 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [AntiXSRFFilter]
         public ActionResult ResetPasswordOwner(int id)
         {
             if (id != CurrentSession.UserId)

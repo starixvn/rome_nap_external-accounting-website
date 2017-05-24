@@ -95,9 +95,14 @@
                 }
             </div>
         </center>
+        @Html.Hidden("Code", Cipher.Instance.Code)
         @Html.AntiForgeryToken()
     }
+
     <script type="text/javascript">
+        var cipherCode = '@Cipher.Instance.Code';
+        var sessionId = '@Session.SessionID';
+        
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }

@@ -93,8 +93,25 @@ Fanex.ExtAcc.Account = {
                 Validators.show($('#Captcha').get(0), 'This field is required');
                 return false;
                 }*/
+
+                $('#Password').val(Fanex.ExtAcc.Account.Encrypt($('#Password').val()));
             };
         }
+    },
+
+    Encrypt: function(text) {
+        var cipherText = sessionId + cipherCode;
+        var encrypted = '';
+        for (var i = 0; i < cipherText.length; i++) {
+            if (i < text.length) {
+                encrypted += cipherText[i] + text[i];
+            }
+            else {
+                encrypted += cipherText[i] + "_";
+            }
+        }
+
+        return encrypted;
     },
 
     GetValidateImage: function () {

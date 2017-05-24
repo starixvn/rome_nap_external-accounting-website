@@ -103,6 +103,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
+            var cipher = Cipher.Instance;
+            var password = cipher.Decrypt(model.Password, model.Code);
+
             var isValidCaptcha = false;
             try
             {
@@ -126,7 +129,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
                 var result = _userService.Login(
                     model.UserName,
-                    model.Password,
+                    password,
                     new Request()
                     {
                         Browser = Request.Browser.Browser,
