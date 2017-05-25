@@ -94,11 +94,6 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public string Decrypt(string encrypted, string code)
         {
-            if (code != Code)
-            {
-                throw new InvalidOperationException(nameof(code));
-            }
-
             return RC4(code, HexDecode(encrypted));
         }
     }

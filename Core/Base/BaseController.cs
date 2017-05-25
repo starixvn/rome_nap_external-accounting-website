@@ -141,7 +141,6 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <param name="viewName">URL to view.</param>
         /// <param name="model">Model object.</param>
         /// <returns>ActionResult object.</returns>
-        [OutputCache(Duration = 604800, VaryByParam = "*")]
         protected virtual ActionResult ViewBase(string viewName = null, object model = null)
         {
             if (!Response.IsRequestBeingRedirected)
