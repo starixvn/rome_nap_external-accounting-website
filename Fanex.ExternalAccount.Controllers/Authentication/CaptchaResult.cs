@@ -51,7 +51,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// </summary>
         /// <param name="length">Length of captcha.</param>
         /// <returns>String object.</returns>
-        private string GetCaptchaString(int length)
+        public string GetCaptchaString(int length)
         {
             var varZero = '0';
             var varNine = '9';

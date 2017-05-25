@@ -279,7 +279,7 @@
     <Compile Include="Context\CurrentSession.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Context\Cipher.cs">
+    <Compile Include="Context\Encryptor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Context\ExternalAccountAuthenticate.cs" />
