@@ -50,7 +50,7 @@
                             @Html.LabelFor(m => m.Password, ViewLang.Password, new { @class = "label" })
                         </td>
                         <td>
-                            @Html.PasswordFor(m => m.Password, new { @class = "password bgLoginControl", @maxlength = 50 })
+                            @Html.PasswordFor(m => m.Password, new { @class = "password bgLoginControl", @maxlength = 50, @autocomplete = "off" })
                         </td>
                     </tr>
                     <tr id="captcha" style="display: @showCaptcha">

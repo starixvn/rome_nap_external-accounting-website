@@ -106,6 +106,8 @@ namespace Fanex.ExternalAccount
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
+
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Session_End(object sender, EventArgs e)
