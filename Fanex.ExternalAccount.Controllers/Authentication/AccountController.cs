@@ -75,12 +75,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             {
                 return RedirectToAction("Offline", "Account");
             }
-
-            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
+            
             if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 var group = _currentSession.IsInternalAdmin ? _userService.GroupList().First().GroupName : string.Empty;
