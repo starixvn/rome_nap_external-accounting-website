@@ -110,6 +110,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
@@ -161,6 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -231,6 +233,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
@@ -281,6 +284,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -351,6 +355,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
             var context = new RequestContext
@@ -401,6 +406,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings();
@@ -521,6 +527,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="isExportExcel">Export excel or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult SearchListPost(
             string groupName = "ACCDDD",
             bool? enabled = null,
@@ -582,6 +589,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult SuperListPost(
             string groupName = "ACCDDD",
             int? custId = null,
@@ -614,6 +622,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true) ? new DataTable() :
@@ -667,6 +676,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>        
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
@@ -720,6 +730,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="suspended">Suspended status.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
         {
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() :
@@ -808,6 +819,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="allow">Allow double commission or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
             if (!IsBelong(Request["groupName"], custid, null, true))
@@ -872,6 +884,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="remark">Customer remark.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult EditInfoPost(
             int custId,
             string firstName,
@@ -941,6 +954,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
             if (!IsBelong(Request["groupName"], custId, null, true))
@@ -972,6 +986,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         /// <param name="password">Password characters.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdatePassword(int custId, string password)
         {
             if (!IsBelong(Request["groupName"], custId, null, true))

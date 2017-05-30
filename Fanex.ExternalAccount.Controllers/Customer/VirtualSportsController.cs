@@ -88,6 +88,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.VirtualSports
         [HttpPost]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.VirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateCustomerSetting(PTVirtualSportsUpdateModel model)
         {
             if (!this.IsBelong(Request["groupName"], model.TargetCustId, null, true))

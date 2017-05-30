@@ -333,4 +333,13 @@ String.prototype.encodeHtml = function () {
 
 $(document).ready(function () {
     Fanex.CustomerSetting.Core.Init();
+
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+            if (antiXSRFToken.length > 0) {
+                xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+            }
+        }
+    });
 });

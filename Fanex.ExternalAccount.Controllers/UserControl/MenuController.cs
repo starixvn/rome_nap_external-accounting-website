@@ -41,6 +41,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult MenuListPost()
         {
             var result = this.GetAllMenus();
@@ -49,6 +50,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AddMenu()
         {
             var userCache = new CachingService().GetUserCache(CurrentSession.UserId);
@@ -65,6 +67,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="id">Id of menu.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditMenu(int id)
         {
             var model = this._menuService.GetAllMenus().Where(o => o.MenuID == id).FirstOrDefault();
@@ -92,6 +95,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="displayOrder">Display order.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Add(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
         {
             var menuId = 0;
@@ -125,6 +129,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="displayOrder">Display order.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
         {
             var result = this._menuService.UpdateMenu(
@@ -143,6 +148,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateStatus(int menuId, bool isActive)
         {
             var result = this._menuService.UpdateMenuStatus(
@@ -154,6 +160,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Delete(int menuId)
         {
             var result = this._menuService.DeleteMenu(

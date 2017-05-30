@@ -67,6 +67,7 @@ namespace Fanex.ExternalAccount.Controllers.Statement
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Statement, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GetStatement()
         {
             this.GetRequestPage();

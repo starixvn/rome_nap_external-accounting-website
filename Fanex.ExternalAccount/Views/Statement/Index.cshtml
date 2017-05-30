@@ -59,6 +59,7 @@ else
     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
     <input type="hidden" id="CustId" value="@Request.QueryString["id"]" />
     <input type="hidden" id="username" value="@Request.QueryString["username"]" />
+    @Html.AntiForgeryToken()
 </div>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>

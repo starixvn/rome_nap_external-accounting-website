@@ -104,7 +104,8 @@
             <td class="noneBorderLeft"></td>
             <td class="noneBorderRight">(<span id="minCredit">{{CustomerModel.minTransferCreditLimit.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit">{{CustomerModel.maxTransferCreditLimit == 0 ? '@NGCasinoLang.noLimited' : CustomerModel.maxTransferCreditLimit.formatNumber()}}</span>)</td>                    
         </tr>
-    </table>            
+    </table>
+    @Html.AntiForgeryToken()
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")"></script>

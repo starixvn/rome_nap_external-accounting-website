@@ -35,15 +35,15 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// </summary>
     public class AccountController : CaptchaMvc.Controllers.DefaultCaptchaController
     {
-        private ILoginService _userService;
+        private readonly ILoginService _userService;
 
-        private ICurrentSession _currentSession;
+        private readonly ICurrentSession _currentSession;
 
-        private ICurrentContext _currentContext;
+        private readonly ICurrentContext _currentContext;
 
-        private IMaintenanceService _maintenanceService;
+        private readonly IMaintenanceService _maintenanceService;
 
-        private NoCaptchaSectionConfiguration _nocaptcha;
+        private readonly NoCaptchaSectionConfiguration _nocaptcha;
 
         public AccountController()
         {
@@ -74,12 +74,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             {
                 return RedirectToAction("Offline", "Account");
             }
-
-            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
+            
             if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 var group = _currentSession.IsInternalAdmin ? _userService.GroupList().First().GroupName : string.Empty;
@@ -87,7 +82,10 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return Redirect("~/Home/Index/" + group);
             }
 
-            return PartialView(new Login());
+            var captcha = new CaptchaResult().GetCaptchaString(4);
+            Encryptor.Instance.Code = captcha;
+
+            return PartialView(new Login() { Code = captcha });
         }
 
         /// <summary>
@@ -97,10 +95,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>JSON string.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
+            var cipher = Encryptor.Instance;
+            var password = cipher.Decrypt(model.Password, model.Code);
+
             var isValidCaptcha = false;
             try
             {
@@ -124,7 +126,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
                 var result = _userService.Login(
                     model.UserName,
-                    model.Password,
+                    password,
                     new Request()
                     {
                         Browser = Request.Browser.Browser,
@@ -145,7 +147,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
                     ((Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
                     ViewBag.ShowCaptcha = "none";
-                    return PartialView(model);
+
+                    return RedirectToAction("Login", "Account");
                 }
 
                 if (result != null && result.IsSuccess)
@@ -172,7 +175,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                     ((Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
                     ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
                     Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
-                    return PartialView(model);
+
+                    return RedirectToAction("Login", "Account");
                 }
             }
             else
@@ -180,7 +184,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
                 Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
                 _currentSession.UserName = string.Empty;
-                return PartialView(model);
+
+                return RedirectToAction("Login", "Account");
             }
         }
 

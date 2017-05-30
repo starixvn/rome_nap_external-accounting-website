@@ -9,6 +9,8 @@ ColossusBetModule.factory('colossusBetRepositories', function ($http, $q) {
             return deferred.promise;
         },
         save: function (url, colossusBetSetting) {
+            var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+            $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
             var deferred = $q.defer();
             $http.post(url, colossusBetSetting)
                 .success(function (data, status, headers, config) { deferred.resolve(data); })

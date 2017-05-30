@@ -106,6 +106,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// <param name="viewLevel">Current level of customer.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GetData(int viewLevel = 0)
         {
             this.GetRequestPage();

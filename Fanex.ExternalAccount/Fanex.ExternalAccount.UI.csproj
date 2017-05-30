@@ -97,16 +97,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.0.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.0.13\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.NAP.2.0.1.0\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.7\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.2.0.1\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.1.0.0.7\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.2.0.1\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
@@ -117,13 +117,13 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.0.5\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.2.0.1\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Racing.NAP.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

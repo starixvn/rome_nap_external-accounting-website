@@ -57,6 +57,7 @@ else
     </div>
     <div id='msgNoinfo'>
         There is no data.</div>
+    @Html.AntiForgeryToken()
 </div>
 @if (HttpContext.Current.IsDebuggingEnabled)
 {

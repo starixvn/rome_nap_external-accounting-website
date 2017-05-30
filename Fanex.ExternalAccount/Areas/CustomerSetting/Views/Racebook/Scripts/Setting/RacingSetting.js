@@ -1,4 +1,13 @@
-﻿var customerPTRacingSetting =
+﻿$.ajaxSetup({
+    beforeSend: function (xhr) {
+        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+        if (antiXSRFToken.length > 0) {
+            xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+        }
+    }
+});
+
+var customerPTRacingSetting =
 {
     context: {},
     ptSetting: null,
@@ -132,7 +141,7 @@
             newContext.targetCustId = this.CustInfos.Ids[index];
 
         var ctx = index == null ? currentContext : newContext;
-
+        PTBlockUI();
         $.ajax({
             type: "POST",
             url: "UpdateCustomerSetting",
@@ -143,8 +152,7 @@
                 ', "currentContext":' + JSON.stringify(ctx) +
                 ', "otherSettings":' + JSON.stringify(customerPTRacingSetting.otherSettings) +
                 ', "groupName": "' + parent.$('#selectedGroupName').html() + '"' +
-                '}',
-            beforeSend: function (jqXHR, settings) { PTBlockUI(); },
+                '}',            
             success: function (result) {
                 if (!customerPTRacingSetting.isMultiple) {
                     $('#divShowInfo').show();

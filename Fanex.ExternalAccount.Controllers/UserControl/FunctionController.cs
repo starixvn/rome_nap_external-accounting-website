@@ -54,6 +54,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult FunctionListPost()
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -103,6 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="id">Function id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditFunction(int id)
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -160,6 +162,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AddFunction()
         {
             var funcs = this._funcService.GetAllFunctions();
@@ -189,6 +192,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Edit(int funcId, string name, string desc, int parentId, string parent, int order, string oldGroups, string groups)
         {
             var result = this._funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, oldGroups, groups);
@@ -197,6 +201,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Add(string name, string key, string desc, int parentId, string parent, int order, string groups)
         {
             var funcId = 0;
@@ -207,6 +212,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateStatus(int funcId, bool isTest)
         {
             var result = this._funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
@@ -221,6 +227,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="addNew">Specify is add new function or not.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult PolicyList(int funcId, bool addNew = false)
         {
             var groups = this._funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();

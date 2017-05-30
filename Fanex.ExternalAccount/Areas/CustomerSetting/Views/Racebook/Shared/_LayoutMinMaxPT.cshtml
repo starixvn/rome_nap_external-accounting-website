@@ -23,6 +23,7 @@
                 </div>
             </div>
         </div>
+        @Html.AntiForgeryToken()
         <script type="text/javascript">
             window.custId = '@Request["id"]';
             window.roleId = '@Request["roleId"]';

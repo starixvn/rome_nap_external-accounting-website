@@ -67,6 +67,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="groupId">Group id that user belongs to.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult UserListPost(string userName = null, int? groupId = null)
         {
             var result = this._userService.GetListUsers(userName, groupId);
@@ -89,6 +90,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <param name="id">Customer id.</param>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult EditUser(int id)
         {
             var model = this._userService.GetUserById(id);
@@ -113,6 +115,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Edit(int custId, string firstName, string lastName, int groupId)
         {
             var result = this._userService.EditUser(CurrentSession.UserId, custId, firstName, lastName, CurrentContext.Ip4Address, groupId);
@@ -125,6 +128,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AddUser()
         {
             var model = new User();
@@ -152,6 +156,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// </summary>
         /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult AddExistUser()
         {
             var model = new User();
@@ -175,6 +180,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult Add(string username, string pwd, string firstName, string lastName, int groupId)
         {
             var result = this._userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId, CurrentContext.Ip4Address);
@@ -183,6 +189,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult AddExist(string username, int groupId)
         {
             var result = this._userService.CreateExistUser(CurrentSession.UserId, username, groupId, CurrentContext.Ip4Address);
@@ -191,6 +198,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult UpdateStatus(int userId, bool isActive)
         {
             var result = this._userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
@@ -199,6 +207,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult ResetPwd(int userId, string pwd)
         {
             var result = this._userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
@@ -207,6 +216,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult ResetPassword(int id)
         {
             var model = this._userService.GetUserById(id);
@@ -218,6 +228,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
         #region Reset password for current logging in user
 
+        [AntiXSRFFilter]
         public ActionResult ResetPwdOwner(int userId, string pwd)
         {
             if (userId != CurrentSession.UserId)
@@ -253,6 +264,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public ActionResult GrantPermission(int userId, string username, string groupName)
         {
             var funcs = new FunctionService().GetAllFunctions().ToList();
@@ -319,6 +331,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
             var result = this._userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy, CurrentContext.Ip4Address);

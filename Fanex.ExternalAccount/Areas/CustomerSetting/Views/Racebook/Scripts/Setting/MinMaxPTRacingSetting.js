@@ -1,4 +1,13 @@
-﻿var minMaxPTRacingSetting = {
+﻿$.ajaxSetup({
+    beforeSend: function (xhr) {
+        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+        if (antiXSRFToken.length > 0) {
+            xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+        }
+    }
+});
+
+var minMaxPTRacingSetting = {
     roleId: {
         master: 3,
         agent: 2,

@@ -11,10 +11,15 @@
         if (model.onlineLoaded) return;
 
         parent.Fanex.ExtAcc.BlockUI();
+        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
+        var token = "";
+        if (antiXSRFToken.length > 0) {
+            token = antiXSRFToken[0].value;
+        }
 
         $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
             method: 'post',
-            headers: { "X-Requested-With": "XMLHttpRequest" }
+            headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
         })
         .success(function (result) {
             model.onlineLoaded = true;
