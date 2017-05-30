@@ -17,7 +17,6 @@ using System.Web.Mvc;
 using System.Web.Security;
 using CaptchaMvc.HtmlHelpers;
 using Fanex.CustomerSetting.Module.Core.Web;
-using Fanex.CustomerSetting.Security.Authenticate;
 using Fanex.ExternalAccount.Core.Context;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.DTO.UserControl;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Web.UI;
 
 namespace Fanex.ExternalAccount.Core.Context
@@ -78,7 +79,7 @@ namespace Fanex.ExternalAccount.Core.Context
 
             i = 0;
             j = 0;
-            var ct = string.Empty;
+            var ct = new StringBuilder();
             for (var y = 0; y < d; y++)
             {
                 i = (i + 1) % 256;
@@ -86,10 +87,10 @@ namespace Fanex.ExternalAccount.Core.Context
                 x = s[i];
                 s[i] = s[j];
                 s[j] = x;
-                ct += Convert.ToChar(vs[y] ^ s[(s[i] + s[j]) % 256]);
+                ct.Append(Convert.ToChar(vs[y] ^ s[(s[i] + s[j]) % 256]));
             }
 
-            return ct;
+            return ct.ToString();
         }
 
         public string Decrypt(string encrypted, string code)
