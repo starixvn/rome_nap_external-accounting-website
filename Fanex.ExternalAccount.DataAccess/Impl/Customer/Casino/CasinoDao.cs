@@ -158,13 +158,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
 
             bool status = Utils.ToBoolean(dr.Outputs["status"]);
 
-            if (!status)
-            {
-                return false;
-            }
-
-            Customer cust = new Customer();
-            return cust.UpdateCustEnableCasino(custid, !disabledCS, true, ip, custid, subAccId == 0 ? username : subUsername, 2);
+            return status;
         }
 
         /// <summary>

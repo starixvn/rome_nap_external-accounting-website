@@ -123,8 +123,10 @@ namespace Fanex.ExternalAccount.Core.Base
                     if (isSuccess)
                     {
                         new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E", string.Empty, string.Empty);
-
-                        UpdateCasinoStatus2(custId, custInfo.Closed, custInfo.Suspend);
+                    }
+                    else
+                    {
+                        new CasinoLibrary.SBAgent.Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
 
