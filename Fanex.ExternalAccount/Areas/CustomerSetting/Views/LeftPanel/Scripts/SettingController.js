@@ -597,13 +597,11 @@
         }, 1, null);
     };
 
-    $scope.EnableRacing = function (enable, id) {
-        document.getElementById(id).checked = enable;
+    $scope.EnableRacing = function () {
         $scope.EnableThirdpartyProduct(2, "Racing", 400, 350);
     };
 
-    $scope.EnableKeno = function (enable, id) {
-        document.getElementById(id).checked = enable;
+    $scope.EnableKeno = function () {
         $scope.EnableThirdpartyProduct(8, "Keno", 400, 400);
     };
 
@@ -621,8 +619,7 @@
         $scope.EnableDCS(19, 'Cockfighting');
     };
 
-    $scope.EnableAllbet = function (enable, id) {
-        document.getElementById(id).checked = enable;
+    $scope.EnableAllbet = function () {
         $scope.EnableThirdpartyProduct(21, "Allbet", 400, 150);
     };
 
@@ -654,7 +651,7 @@
 
     $scope.EnableThirdpartyProduct = function (productId, productName, width, height) {
         var url_SELECT = 'ThirdPartyProductStatus\?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + '&roleid=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&custname=' + $scope.model.personalInfo.currentLevel.value + '&roleid=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', width, height, false, null, 1, null);
     };

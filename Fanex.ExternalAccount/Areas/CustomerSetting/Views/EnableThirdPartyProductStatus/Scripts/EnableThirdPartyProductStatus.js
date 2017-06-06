@@ -8,13 +8,13 @@
         checkEnable_Collection.each(function () {
             var $this = $(this);
             if (checkEnableAll_Value) {
-                if (!$this.attr('checked')) {
-                    $this.attr('checked', 'checked');
+                if (!$this.prop('checked')) {
+                    $this.prop('checked', true);
                     $this.trigger('change');
                 }
             } else {
-                if ($this.attr('checked')) {
-                    $this.removeAttr('checked');
+                if ($this.prop('checked')) {
+                    $this.prop('checked', false);
                     $this.trigger('change');
                 }
             }
@@ -31,17 +31,17 @@
         var submitBtn = $('#thirdPartyProductStatusSubmitBtn');
         if (checkEnable_Value) {
             if (checkEnableDownlines_OriginalValue) {
-                checkEnableDownlines_Element.attr('checked', 'checked');
-                checkEnableDownlines_Element.attr('disabled', 'disabled');
+                checkEnableDownlines_Element.prop('checked', true);
+                checkEnableDownlines_Element.prop('disabled', true);
             }
             else {
-                checkEnableDownlines_Element.removeAttr('checked');
-                checkEnableDownlines_Element.removeAttr('disabled');
+                checkEnableDownlines_Element.prop('checked', false);
+                checkEnableDownlines_Element.prop('disabled', false);
             }
         }
         else {
-            checkEnableDownlines_Element.attr('disabled', 'disabled');
-            checkEnableDownlines_Element.removeAttr('checked');
+            checkEnableDownlines_Element.prop('disabled', true);
+            checkEnableDownlines_Element.prop('checked', false);
         }
 
         if (checkEnable_Value == checkEnable_OriginalValue) {
@@ -117,7 +117,7 @@
             var $successDiv = $('#updateStatusDialog>#successMsg');
             $successDiv.text('Status updated successfully');
             $successDiv.removeClass('hidden');
-            $('#thirdPartyProductStatusSubmitBtn').attr('disabled', 'disabled');
+            $('#thirdPartyProductStatusSubmitBtn').prop('disabled', true);
             $('#thirdPartyProductStatusSubmitBtn').unbind();
             setTimeout(function () {
                 parent.Fanex.ExtAcc.Form.Close();
@@ -149,10 +149,10 @@
     function ShowHideSubmitButton() {
         var submitBtn = $('#thirdPartyProductStatusSubmitBtn');
         if ($('input[id^="checkEnable_"],input[id^="checkEnableDownlines_"]').hasClass('is-data-change')) {
-            submitBtn.removeAttr('disabled'); 
+            submitBtn.prop('disabled', false); 
         }
         else {
-            submitBtn.attr('disabled', 'disabled');
+            submitBtn.prop('disabled', true);
         }
     }
 };
