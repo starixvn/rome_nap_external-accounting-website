@@ -48,7 +48,7 @@
                                data-ng-init="CustomerModel.casinoEnabledDownline = !CustomerModel.casinoDisabledDownline && CustomerModel.hasDownline"
                                data-ng-model="CustomerModel.casinoEnabledDownline"
                                data-ng-change="CustomerModel.casinoDisabledDownline = !CustomerModel.casinoEnabledDownline"
-                               data-ng-disabled="!CustomerModel.casinoEnabled || CustomerModel.originalEnableDownline"
+                               data-ng-disabled="!CustomerModel.casinoEnabled || (CustomerModel.casinoEnabled && CustomerModel.originalEnableDownline)"
                                data-ng-hide="!CustomerModel.hasDownline" />
                         <label for="chkEnableDownline" data-ng-hide="!CustomerModel.hasDownline">Enable Downline</label>
                     </div>
@@ -67,7 +67,7 @@
                    data-ng-init="CustomerModel.casinoEnabledDownline = !CustomerModel.casinoDisabledDownline && CustomerModel.hasDownline"
                    data-ng-model="CustomerModel.casinoEnabledDownline"
                    data-ng-change="CustomerModel.casinoDisabledDownline = !CustomerModel.casinoEnabledDownline"
-                   data-ng-disabled="!CustomerModel.casinoEnabled || CustomerModel.originalEnableDownline"
+                   data-ng-disabled="!CustomerModel.casinoEnabled || (CustomerModel.casinoEnabled && CustomerModel.originalEnableDownline)"
                    data-ng-hide="!CustomerModel.hasDownline" />
             <label for="chkEnableDownline" data-ng-hide="!CustomerModel.hasDownline">Enable Downline</label>
     </div>
