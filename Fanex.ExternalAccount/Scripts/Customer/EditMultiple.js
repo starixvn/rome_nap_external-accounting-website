@@ -796,7 +796,7 @@
                 name: "Fishing World",
                 className: "iconEnableEdit",
                 items: {
-                    agentVB: {
+                    agentFW: {
                         name: "Edit Fishing World Games",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
@@ -804,7 +804,7 @@
                             Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(2, 1);
                         }
                     },
-                    superVB: {
+                    superFW: {
                         name: "Super Edit Fishing World Games",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
@@ -812,7 +812,7 @@
                             Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(4, 1);
                         }
                     },
-                    masterVB: {
+                    masterFW: {
                         name: "Master Edit Fishing World Games",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
