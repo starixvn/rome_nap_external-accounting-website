@@ -77,5 +77,14 @@ namespace Resources {
                 return ResourceManager.GetString("AjaxCallError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no change to update..
+        /// </summary>
+        internal static string ThereIsNoChange {
+            get {
+                return ResourceManager.GetString("ThereIsNoChange", resourceCulture);
+            }
+        }
     }
 }

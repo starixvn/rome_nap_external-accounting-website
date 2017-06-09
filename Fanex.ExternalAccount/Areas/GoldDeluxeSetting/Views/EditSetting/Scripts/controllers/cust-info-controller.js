@@ -40,10 +40,6 @@
                   $scope.disableCheckBoxGoldDeluxe = false;
                   $scope.disableCheckBoxDownline = true;
               }
-
-              if ($scope.originalEnableGoldDeluxe && settingViewModel.Level != 1) {
-                  $scope.disableCheckBoxGoldDeluxe = true;
-              }
           }
 
           $scope.updateDownlineStatus();

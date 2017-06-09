@@ -343,4 +343,7 @@
     <Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" Plain="0" />
     <Setting Key="WriteLog_UserLog_ExternalAPI_UpdResponse" SpName="WriteLog_UserLog_ExternalAPI_UpdResponse" DbName="dblog" Plain="0" />
   </Function>
+  <Function Name="Customer - ThirdParty">
+    <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
+  </Function>
 </Functions>

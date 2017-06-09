@@ -3,19 +3,18 @@
 <table class="tableColor tableWidth" ng-controller="betSettingController">
     <thead>
         <tr>
-            <td rowspan="2" class="header col15percent">
-            </td>
+            <td rowspan="2" class="header col15percent"></td>
             <td colspan="3" class="header c b">
                 <span>@LayoutTexts.BetSetting</span>
             </td>
             <td colspan="2" class="header c b">
-                 <input ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
-                    ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
-                    title="@LayoutTexts.lblCopyAllStatus"
-                    type="button" />
+                <input ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
+                       ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
+                       title="@LayoutTexts.lblCopyAllStatus"
+                       type="button" />
                 <span>@LayoutTexts.EnableStatus</span>
-                <input data-ng-hide="customerInformation.roleId == 4" ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
-                    ng-click="updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update"/>
+                <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
+                       ng-click="!$parent.isBetSettingPartial||updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update" />
             </td>
         </tr>
         <tr>
@@ -40,7 +39,6 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="betSetting in betSettingList track by $index" bet-setting-element >
-        </tr>
+        <tr ng-repeat="betSetting in betSettingList track by $index" bet-setting-element></tr>
     </tbody>
 </table>

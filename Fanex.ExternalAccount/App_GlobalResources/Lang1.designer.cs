@@ -10677,6 +10677,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} Setting is not fully available. Please go to Edit {0} page to adjust..
+        /// </summary>
+        internal static string warningUnsyncedAllDownline {
+            get {
+                return ResourceManager.GetString("warningUnsyncedAllDownline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warrior.
         /// </summary>
         internal static string warrior {

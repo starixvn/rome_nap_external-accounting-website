@@ -236,6 +236,14 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static int SystemId
+        {
+            get
+            {
+                return Utils.ToInt32(GetValue("SystemId"));
+            }
+        }
+
         private static string GetValue(string key)
         {
             return ConfigurationManager.AppSettings[key];

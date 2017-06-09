@@ -1,0 +1,139 @@
+﻿.table-info {
+    border: 1px solid #606b7c;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .table-info tr {
+        border: 1px solid #606b7c;
+        height: 26px;
+    }
+
+    .table-info td, .table-info th {
+        border: 1px solid #606b7c;
+        min-width: 160px;
+    }
+
+    .table-info th {
+        background-color: #80a2d6;
+    }
+
+    .table-info .group-row {
+        background-color: #c1d4f2;
+    }
+
+.button-popup, .ui-button, button[type=button] {
+    background: url(../../../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
+    color: #fff !important;
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    border: none !important;
+    border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    text-indent: 0 !important;
+    margin-bottom: 5px;
+}
+
+    .button-popup:hover, .ui-button:hover {
+        background: url(../../../Images/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
+        color: #fff !important;
+        border: none !important;
+        cursor: pointer;
+    }
+
+    .button-popup:disabled,
+    .button-popup[disabled] {
+        opacity: 0.1;
+    }
+
+.align-right {
+    text-align: right;
+}
+
+.wrnMsg {
+    background-color: #ffedc1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-image: url('../../../Images/warning-icn.png');
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle; /*color: #ff5411;*/
+    font-size: 13px;
+    color: orange;
+    clear: both;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    border: 1px solid #bc9443;
+    min-height: 25px;
+    padding-top: 5px;
+    max-height: 180px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.errMsg {
+    background-color: #ffedc1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-image: url('../../../Images/error-icon.gif');
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle; /*color: #ff5411;*/
+    font-size: 13px;
+    color: red;
+    clear: both;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    border: 1px solid #d2a243;
+    min-height: 25px;
+    padding-top: 5px;
+    max-height: 180px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.successMsg {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-image: url("../../../Images/success.gif");
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle; /*color: #ff5411;*/
+    font-size: 13px;
+    color: green;
+    clear: both;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    min-height: 25px;
+    padding-top: 5px;
+    max-height: 180px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.hidden {
+    display: none;
+}
+
+.float-left {
+    float: left;
+    margin-right: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
