@@ -91,7 +91,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.3\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.4\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

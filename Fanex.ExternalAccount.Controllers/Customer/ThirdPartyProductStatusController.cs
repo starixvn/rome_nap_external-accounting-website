@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
@@ -49,7 +50,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 CurrentContext.Ip4Address,
                 productStatusModel);
 
-            if (result[0].ErrorCode.Equals("0"))
+            if (productId == (int)Product.Casino && result[0].ErrorCode.Equals("0"))
             {
                 var customer = new CasinoLibrary.SBAgent.Customer();
                 try
