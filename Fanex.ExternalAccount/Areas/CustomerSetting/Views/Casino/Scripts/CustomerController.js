@@ -23,9 +23,7 @@ function CustomerController($scope, $element) {
     $scope.CustomerModel.maxTransferFormated = !$scope.CustomerModel.casinoSync && $scope.CustomerModel.roleId == 4 ? $scope.CustomerModel.defaultTransferCredit.formatNumber() : $scope.CustomerModel.maxTransferCredit.formatNumber();
     $scope.CustomerModel.memberWinLimit.maximumLossFormated = $scope.CustomerModel.memberWinLimit.maximumLoss.formatNumber();
     $scope.IsSuperMasterOnMember = ($scope.CustomerModel.uplineRoleId == 4 || $scope.CustomerModel.uplineRoleId == 3) && $scope.CustomerModel.roleId == 1;
-    $scope.CustomerModel.casinoEnabled = !customerModel.casinoDisabled && (customerModel.casinoSync || !customerModel.uplineDisabledCasino);
-    $scope.CustomerModel.casinoEnabledDownline = !customerModel.casinoDisabledDownline && customerModel.hasDownline;
-    $scope.CustomerModel.originalEnableDownline = $scope.CustomerModel.casinoEnabledDownline;
+  
     UplineRoleId = $scope.CustomerModel.uplineRoleId;
 
     switch ($scope.CustomerModel.roleId) {

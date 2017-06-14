@@ -221,6 +221,8 @@ Fanex.ExtAcc.Customer.VirtualSports = {
     ReloadCheckboxes: function () {
         var chkEnabled = document.getElementById("chkEnabled");
         var chkDownline = document.getElementById("chkDownline");
+        var originEnabled = $(chkEnabled).prop("checked");
+        var originEnabledDownline = $(chkDownline).prop("checked");
         if (!chkEnabled.checked || (chkEnabled.checked && chkDownline.checked))
             chkDownline.disabled = true;
 
@@ -236,18 +238,23 @@ Fanex.ExtAcc.Customer.VirtualSports = {
 
             var newCustomer = this.newCustomer;
             chkEnabled.onclick = function () {
-                if (this.checked == false) {
-                    chkDownline.checked = false;
-                    chkDownline.disabled = true;
-                }
-                else {
-                    chkDownline.checked = !newCustomer.statusSetting.disableDownlinesVirtualSports;
-                    if (newCustomer.statusSetting.disableVirtualSports == false) {
-                        chkDownline.disabled = true;
+                var checked = $('#chkEnabled').prop("checked");
+                var checkedDownline = $('#chkDownline').prop("checked");
+                var oldvalue = $('#chkEnabled').attr("value") == "true" ? true : false;
+                var oldvaluedownline = $("#chkDownline").attr("value") == "true" ? true : false;
+
+                if (checked != oldvalue) {
+                    if (checked) {
+                        $("#chkDownline").prop("disabled", checkedDownline);
                     }
                     else {
-                        chkDownline.disabled = false;
+                        $("#chkDownline").prop("disabled", true);
+                        $("#chkDownline").prop("checked", false);
                     }
+                }
+                else {
+                    $("#chkDownline").prop("disabled", !oldvalue || oldvaluedownline);
+                    $("#chkDownline").prop("checked", oldvaluedownline);
                 }
             }
         }

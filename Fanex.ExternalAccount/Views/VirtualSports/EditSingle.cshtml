@@ -1,5 +1,6 @@
 ﻿@using Fanex.PTVirtualSports
 @using Fanex.ExternalAccount.Utilities
+@using Sunplus.Accounting.Core.Common;
 @model Fanex.ExternalAccount.ViewModel.Customer.PTVirtualSportsModel
 @{
     Layout = null;
@@ -83,10 +84,10 @@
             </div>
             <div class="customerInfoBlock4" id="divStatus">
                 <div id="divEnabled" style="float: left; padding-right: 5px">
-                    <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports" />
+                    <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports, value:!customer.statusSetting.disableVirtualSports" />
                 </div>
                 <div id="divDownline" class="b">
-                    <input id="chkDownline" type="checkbox" data-bind="checked: !customer.statusSetting.disableDownlinesVirtualSports" />@ViewLang.Downlines
+                    <input id="chkDownline" type="checkbox" data-bind="checked: !customer.statusSetting.disableDownlinesVirtualSports, value: !customer.statusSetting.disableDownlinesVirtualSports" />@ViewLang.Downlines
                 </div>
             </div>
         </div>
@@ -96,10 +97,10 @@
             </div>
             <div class="customerInfoBlockVS">
                 <div id="divEnabled" style="float: left; padding-right: 5px;">
-                    <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports" />
+                    <input id="chkEnabled" type="checkbox" data-bind="checked: !customer.statusSetting.disableVirtualSports, value:!customer.statusSetting.disableVirtualSports" />
                 </div>
                 <div id="divDownline" class="b">
-                    <input id="chkDownline" type="checkbox" data-bind="checked: !customer.statusSetting.disableDownlinesVirtualSports" />@ViewLang.Downlines
+                    <input id="chkDownline" type="checkbox" data-bind="checked: !customer.statusSetting.disableDownlinesVirtualSports, value: !customer.statusSetting.disableDownlinesVirtualSports" />@ViewLang.Downlines
                 </div>
             </div>
         </div>
@@ -129,4 +130,4 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
-<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.VirtualSports.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.VirtualSports.js?v=" + AccCommon.Version())" type="text/javascript"></script>
