@@ -51,7 +51,27 @@
             checkEnable_Element.addClass('is-data-change');
         }
 
+        self.detectAllCheckbox();
         ShowHideSubmitButton();
+    }
+
+    self.detectAllCheckbox = function () {
+        var allChecked = true;
+        var checkEnable_Collection = $('input[id^="checkEnable_"]:enabled', '#updateStatusDialog');
+
+        checkEnable_Collection.each(function (index, checkbox) {
+            if (!checkbox.checked) {
+                allChecked = false;
+            }
+        });
+
+        var checkEnableAll_Element = $('#checkAll');
+        if (allChecked) {            
+            checkEnableAll_Element.prop('checked', 'checked');
+        }
+        else {
+            checkEnableAll_Element.removeAttr('checked');
+        }
     }
 
     self.checkEnableDownlines_OnChange = function (productStatusDataRow) {
@@ -163,3 +183,4 @@
 };
 
 var enableThirdPartyProductStatus = new EnableThirdPartyProductStatus();
+enableThirdPartyProductStatus.detectAllCheckbox();

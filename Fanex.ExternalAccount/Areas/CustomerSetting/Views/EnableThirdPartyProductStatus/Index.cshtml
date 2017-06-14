@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.DTO.Customer;
-@using Sunplus.Accounting.Core.Common;
 @using Resources;
 @model ThirdPartyProductStatusViewModel
 @{
@@ -65,13 +64,13 @@
                 <tr>
                     <td @(Model.RoleId == 1 ? "colspan=\"2\"" : " ")>
                         <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
-                        <label for="checkEnable">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
+                        <label for="checkEnable_@(item.SportType+"_" + item.BetType)">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
                     </td>
                     @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
                 {
                         <td>
                             <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
-                            <label for="checkEnableDownlines">Enable Downlines</label>
+                            <label for="checkEnableDownlines_@(item.SportType + "_" + item.BetType)">Enable Downlines</label>
                         </td>
                     }
                 </tr>

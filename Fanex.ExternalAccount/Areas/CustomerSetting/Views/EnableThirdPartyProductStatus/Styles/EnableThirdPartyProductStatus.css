@@ -137,3 +137,7 @@
 .bold {
     font-weight: bold;
 }
+
+input[type=checkbox], label{
+    cursor: pointer;
+}
