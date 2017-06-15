@@ -123,6 +123,8 @@
                     return systemId == 4 ? eFunctions.NG2Setting : eFunctions.NG2Betting;
                 case 24:
                     return eFunctions.FishingWorldSetting;
+                case 25:
+                    return systemId == 4 ? eFunctions.LotterySetting : eFunctions.LotteryBetting;
                 default:
                     break;
             }

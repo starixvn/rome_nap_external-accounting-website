@@ -19,7 +19,8 @@
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ||
         CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ||
+        CustomerModelExtensions.IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
@@ -41,6 +42,7 @@
     var showVoidbridge = System.Configuration.ConfigurationManager.AppSettings["IsShowMacauGames"] == "1" ? 1 : 0;
     var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
+    var showLottery = System.Configuration.ConfigurationManager.AppSettings["IsShowLottery"] == "1" ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
     
 }

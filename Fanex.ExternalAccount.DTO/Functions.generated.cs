@@ -66,4 +66,6 @@ public static class eFunctions
     public const string NG2Betting = "NG2Betting";
     public const string NG2Setting = "NG2Setting";
     public const string FishingWorldSetting = "FishingWorldSetting";
+    public const string LotteryBetting = "LotteryBetting";
+    public const string LotterySetting = "LotterySetting";
 }

@@ -107,25 +107,31 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo
                             {
                                 Key = "HideAllbet",
-                                Value = table3rdDCS.Select("ProductID = 21").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) ||
+                                Value = table3rdDCS.Select("ProductID = 21").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideVoidbridge",
-                                Value = table3rdDCS.Select("ProductID = 22").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
+                                Value = table3rdDCS.Select("ProductID = 22").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideNG2",
-                                Value = table3rdDCS.Select("ProductID = 23").Count() > 0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
+                                Value = table3rdDCS.Select("ProductID = 23").Any() ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideFishingWorld",
-                                Value = table3rdDCS.Select("ProductID = 24").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
+                                Value = table3rdDCS.Select("ProductID = 24").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "HideLottery",
+                                Value = table3rdDCS.Select("ProductID = 25").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 25").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 25").FirstOrDefault()["IsSync"])) : false
                             }
                         },
                 EditItems = new List<ObjectInfo>
@@ -149,21 +155,22 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
                             new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
                             new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" },
+                            new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
                         }
             };
 
             model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
-            model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
+            model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");            
+            model.AddEnableAndDetailProduct(table3rdDCS, 25, "Lottery", eFunctions.LotteryBetting);
             model.Setting.EnableItems.Add(new ObjectInfo
             {
                 Key = "EnableGoldDeluxe",
                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]),
                 Text = "Gold Deluxe"
             });
-
+	     
             model.AddBettingLimitForSuper();
 
             return model;
@@ -186,7 +193,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ||
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ||
                 CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read) ||
-                CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ? true : false;
+                CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ||
+                CustomerModelExtensions.IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read);
 
             if (showBetSetting)
             {

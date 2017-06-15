@@ -640,6 +640,10 @@
         $scope.EnableThirdpartyProduct(23, "NG2", 400, 150);
     };
 
+    $scope.EnableLottery = function () {
+        $scope.EnableThirdpartyProduct(25, "Lottery", 400, 150);
+    };
+
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
         var url_SELECT = productId == 24 ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
@@ -915,6 +919,10 @@
         $scope.RenderSupeOnMemberDCS(24);
     };
 
+    $scope.SuperLottery = function () {
+        $scope.RenderSupeOnMemberDCS(25);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -946,6 +954,10 @@
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
+    };
+
+    $scope.MasterLottery = function () {
+        $scope.RenderMasterOnMemberDCS(25);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

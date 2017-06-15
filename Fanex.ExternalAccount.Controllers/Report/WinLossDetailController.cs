@@ -34,8 +34,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
     {
         #region Init WinLossDetail
 
-        private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private IReportService _reportService = new ReportService();
+        private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly IReportService _reportService = new ReportService();
         private List<WinLossDetail> _listWinLossDetail = null;
         private List<WinLossDetailMAg> _listWinLossDetailMAg = null;
         private List<WinLossDetailAg> _listWinLossDetailAg = null;
@@ -52,9 +52,9 @@ namespace Fanex.ExternalAccount.Controllers.Report
         private int _recommend = 0;
         private int _memberId = 0;
         private int _custId = 0;
-        private string _searchName = string.Empty;
+        private readonly string _searchName = string.Empty;
         private ICollection<KeyValuePair<string, bool>> _filterParams = null;
-        private int _pageSize = 50;
+        private readonly int _pageSize = 50;
         private int _totalPages = 1;
         private string _products = string.Empty;
         private string _formatedProducts = string.Empty;
@@ -392,7 +392,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
         /// <returns>ActionResult object.</returns>
         private ActionResult GetWinLossDetailDownline()
         {
-            IReportService reportService = new ReportService();
             if (this._viewlevel == 4)
             {
                 this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(this._custId, 0, this._fromDate, this._toDate, this._filterParams);

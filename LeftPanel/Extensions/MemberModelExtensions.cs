@@ -7,7 +7,6 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -28,7 +27,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         /// <returns>CustomerModel object.</returns>
         public static CustomerModel MemberInfo(this CustomerModel model, DataSet ds)
         {
-            var tableCustomer = ds.Tables[0];
             var tableLine = ds.Tables[1];
             model.PersonalInfo.UplineId = new ObjectInfo { Value = Utils.ToInt32(tableLine.Rows[0]["agentID"]), Text = "Agent ID" };
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["memberName"]), Text = "Member" };
@@ -93,25 +91,31 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo
                             {
                                 Key = "HideAllbet",
-                                Value = table3rdDCS.Select("ProductID = 21").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) ||
+                                Value = table3rdDCS.Select("ProductID = 21").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideVoidbridge",
-                                Value = table3rdDCS.Select("ProductID = 22").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
+                                Value = table3rdDCS.Select("ProductID = 22").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideNG2",
-                                Value = table3rdDCS.Select("ProductID = 23").Count() > 0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
+                                Value = table3rdDCS.Select("ProductID = 23").Any() ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideFishingWorld",
-                                Value = table3rdDCS.Select("ProductID = 24").Count() > 0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
+                                Value = table3rdDCS.Select("ProductID = 24").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "HideLottery",
+                                Value = table3rdDCS.Select("ProductID = 25").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 25").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 25").FirstOrDefault()["IsSync"])) : false
                             }
                         },
                 EditItems = new List<ObjectInfo>
@@ -141,6 +145,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
+            model.AddEnableAndDetailProduct(table3rdDCS, 25, "Lottery", eFunctions.LotteryBetting);
 
             model.Setting.EnableItems.Add(new ObjectInfo
             {
@@ -189,6 +194,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
             model.AddDetailProductForCrossLevel("NG2", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
             model.AddDetailProductForCrossLevel("FishingWorld", "Fishing World");
+            model.AddDetailProductForCrossLevel("Lottery", "Lottery");
 
             return model;
         }
@@ -205,7 +211,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         private static CustomerModel AddDetailProductForCrossLevel(this CustomerModel model, string productKey, string productName)
         {
             var product = model.Setting.MasterPts.Where(p => p.Key.ToString().Equals(productKey));
-            if (product.Count() > 0)
+            if (product.Any())
             {
                 product.FirstOrDefault().Value = productName;
             }
