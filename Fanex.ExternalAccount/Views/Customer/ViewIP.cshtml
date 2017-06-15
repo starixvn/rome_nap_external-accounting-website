@@ -1,8 +1,7 @@
 ﻿@using Fanex.ExternalAccount.ViewModel.Customer
-@using Fanex.ExternalAccount.Utilities
 @model IPInfo
 @{
-    var url = "http://redirect.me/?http://legacytools.dnsstuff.com/tools/ipall.ch?tool_id=67&token=&toolhandler_redirect=0&ip=" + Model.IP + "&j=1";
+    var url = string.Format("http://redirect.me/?https://www.infobyip.com/ip-{0}.html", Model.IP);
 }
 <!DOCTYPE html>
 <html lang="en">
