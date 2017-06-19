@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
             int userId,
             int systemId,
             string ip,
+            string username,
             List<ProductStatus> productStatus);
     }
 }
