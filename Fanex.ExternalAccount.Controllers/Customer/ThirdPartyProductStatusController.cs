@@ -4,8 +4,9 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus;
 using Fanex.ExternalAccount.Core.Base;
+using Fanex.ExternalAccount.Service.Impl.Customer;
+using Fanex.ExternalAccount.Service.Interface.Customer;
 using Fanex.ExternalAccount.Utilities;
-using Fanex.Tarus.Business.Implement.Customer;
 using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 
@@ -13,7 +14,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     public class ThirdPartyProductStatusController : BaseController
     {
-        private readonly ThirdPartyProductStatusService thirdPartyProductStatusService;
+        private readonly IThirdPartyProductStatusService thirdPartyProductStatusService;
         private readonly ProductStatusAuthorization authenticationService;
 
         public ThirdPartyProductStatusController()

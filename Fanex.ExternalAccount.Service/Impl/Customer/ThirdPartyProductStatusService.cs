@@ -10,14 +10,11 @@ using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 using ThirdPartyProducts.StatusSetting.Services;
 
-namespace Fanex.Tarus.Business.Implement.Customer
+namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
     public class ThirdPartyProductStatusService : IThirdPartyProductStatusService
     {
         private readonly StatusSettingService statusSettingService = new StatusSettingService();
-
-        private const int KenoProductId = 8;
-        private const int RacingProductId = 2;
 
         public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
         {
@@ -33,8 +30,8 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 CustId = custId,
                 RoleId = roleId,
                 CustName = custName,
-                HasCheckAll = productId == KenoProductId,
-                GroupBySport = productId == RacingProductId,
+                HasCheckAll = productId == (int)Product.Keno,
+                GroupBySport = productId == (int)Product.Racing,
                 ProductStatusList = statusSettingService.GetProductStatus(request)
             };
         }
