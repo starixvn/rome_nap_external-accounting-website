@@ -113,6 +113,11 @@
             }
         }
 
+        if (result.ErrorCode == "999") {
+            isSuccess = false;
+            errorMsg = result.ErrorMessage;
+        }
+
         if (isSuccess) {
             var $successDiv = $('#updateStatusDialog>#successMsg');
             $successDiv.text('Status updated successfully');

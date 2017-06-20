@@ -1,13 +1,14 @@
-﻿using CasinoLibrary.Model.UserException;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using CasinoLibrary.Model.UserException;
+using Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus;
 using Fanex.ExternalAccount.Core.Base;
 using Fanex.ExternalAccount.Utilities;
 using Fanex.Module.Logs;
 using Fanex.Module.Logs.Services;
 using Fanex.Tarus.Business.Implement.Customer;
-using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 
@@ -15,15 +16,23 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     public class ThirdPartyProductStatusController : BaseController
     {
-        private ThirdPartyProductStatusService thirdPartyProductStatusService;
+        private readonly ThirdPartyProductStatusService thirdPartyProductStatusService;
+        private readonly ProductStatusAuthorization authenticationService;
 
         public ThirdPartyProductStatusController()
         {
             thirdPartyProductStatusService = new ThirdPartyProductStatusService();
+            authenticationService = new ProductStatusAuthorization();
         }
 
         public ActionResult Index(int custId, string custName, int roleId, int productId)
         {
+            var isAllowed = authenticationService.HasPermission(CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType.Read, productId);
+            if (!isAllowed)
+            {
+                return View("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
             return View(
                 "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml", 
                 thirdPartyProductStatusService.Select(
@@ -39,6 +48,19 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             int productId,
             string productStatus)
         {
+            var isAllowed = authenticationService.HasPermission(CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType.Host, productId);
+            if (!isAllowed)
+            {
+                var deniedResult = new List<ProductStatusResult>();
+                deniedResult.Add(new ProductStatusResult
+                {
+                    ErrorCode = "999",
+                    ErrorMessage = ViewLang.DontHavePermission
+                });
+
+                return Json(deniedResult);
+            }
+
             JavaScriptSerializer js = new JavaScriptSerializer();
             var productStatusModel = js.Deserialize<List<ProductStatus>>(productStatus);
             var result = thirdPartyProductStatusService.Update(
