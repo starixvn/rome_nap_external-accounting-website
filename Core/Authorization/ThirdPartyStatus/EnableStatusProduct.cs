@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
 {
-    public enum EnableStatusProduct
+    public enum EnableStatusProductFunction
     {
         EnableRacing = 2,
         EnableVirtualSports = 5,
         EnableCasino = 6,
-        EnableKeno = 8,
+        Keno = 8,
         EnableColossusBets = 15,
         EnableAllbet = 21,
         EnableVoidbridge = 22,
