@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Fanex.CustomerSetting.Security.Authenticate;
 using Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus;
 using Fanex.ExternalAccount.Core.Base;
 using Fanex.ExternalAccount.Service.Impl.Customer;
 using Fanex.ExternalAccount.Service.Interface.Customer;
 using Fanex.ExternalAccount.Utilities;
-using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
@@ -25,7 +24,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
         public ActionResult Index(int custId, string custName, int roleId, int productId)
         {
-            var isAllowed = authenticationService.HasPermission(CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType.Read, productId);
+            var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Read, productId);
             if (!isAllowed)
             {
                 return View("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
@@ -46,7 +45,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             int productId,
             string productStatus)
         {
-            var isAllowed = authenticationService.HasPermission(CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType.Host, productId);
+            var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Host, productId);
             if (!isAllowed)
             {
                 var deniedResult = new List<ProductStatusResult>();
