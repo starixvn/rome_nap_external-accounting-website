@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.DCS
 {
+    using System;
     using System.Globalization;
     using System.Text.RegularExpressions;
     using System.Web;
@@ -105,31 +106,7 @@
 
         private string GetProductFunction(int productId, byte systemId = 4)
         {
-            switch (productId)
-            {
-                case 5:
-                    return systemId == 4 ? eFunctions.VirtualSports : eFunctions.VirtualSportsBetting;
-                case 16:
-                    return systemId == 4 ? eFunctions.Sportsbook2Setting : eFunctions.Sportsbook2Betting;
-                case 19:
-                    return systemId == 4 ? eFunctions.CockfightingSetting : eFunctions.CockfightingBetting;
-                case 20:
-                    return systemId == 4 ? eFunctions.CricketSetting : eFunctions.CricketBetting;
-                case 21:
-                    return systemId == 4 ? eFunctions.AllbetSetting : eFunctions.AllbetBetting;
-                case 22:
-                    return systemId == 4 ? eFunctions.VoidbridgeSetting : eFunctions.VoidbridgeBetting;
-                case 23:
-                    return systemId == 4 ? eFunctions.NG2Setting : eFunctions.NG2Betting;
-                case 24:
-                    return eFunctions.FishingWorldSetting;
-                case 25:
-                    return systemId == 4 ? eFunctions.LotterySetting : eFunctions.LotteryBetting;
-                default:
-                    break;
-            }
-
-            return string.Empty;
+            return systemId == 4 ? Enum.GetName(typeof(ProductSettingDcsFunction), productId) : Enum.GetName(typeof(ProductBettingLimitDcsFunction), productId);
         }
     }
 }

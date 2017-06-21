@@ -269,6 +269,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization\DCS\CustomerSettingClientRegistration.cs" />
+    <Compile Include="Authorization\DCS\ProductBettingLimitDcsFunction.cs" />
+    <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authorization\LiveCasino\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\EnableStatusProduct.cs" />
