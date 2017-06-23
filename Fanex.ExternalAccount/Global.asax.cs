@@ -11,6 +11,7 @@ namespace Fanex.ExternalAccount
 {
     using System;
     using System.Collections.Generic;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -21,7 +22,6 @@ namespace Fanex.ExternalAccount
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
-    using Fanex.Module.Logs.Services;
     using Service.Impl.Login;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
@@ -112,9 +112,16 @@ namespace Fanex.ExternalAccount
 
         protected void Session_End(object sender, EventArgs e)
         {
-            var userService = new Fanex.ExternalAccount.Service.Impl.Login.LoginService();
-            userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
-            Session.Abandon();
+            try
+            {
+                var userService = new Fanex.ExternalAccount.Service.Impl.Login.LoginService();
+                userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
+                Session.Abandon();
+            }
+            catch (Exception ex)
+            {
+                Logs.Error(ex);
+            }            
         }
 
         /// <summary>
@@ -125,14 +132,12 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             var ex = Server.GetLastError();
-            ex.Write();
-            if (ex.GetType() != typeof(System.Web.HttpException))
+            Logs.Error(ex);
+            if (ex.GetType() != typeof(HttpException) &&
+                Request.Headers["X-Requested-With"] != "XMLHttpRequest" && 
+                !Response.IsRequestBeingRedirected && !Request.IsLocal)
             {
-
-                if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
-                {
-                    Response.RedirectPermanent("~/Shared/Error");
-                }
+                Response.RedirectPermanent("~/Shared/Error", true);
             }
         }
 
@@ -165,13 +170,13 @@ namespace Fanex.ExternalAccount
         private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
             return urlHelper.Action(
-                "Generate",
-                "DefaultCaptcha",
-                new RouteValueDictionary
-                {
-                    { "area", string.Empty },
-                    { captchaManager.TokenParameterName, keyValuePair.Key }
-                });
+            "Generate",
+            "DefaultCaptcha",
+            new RouteValueDictionary
+            {
+                { "area", string.Empty },
+                { captchaManager.TokenParameterName, keyValuePair.Key }
+            });
         }
     }
 }

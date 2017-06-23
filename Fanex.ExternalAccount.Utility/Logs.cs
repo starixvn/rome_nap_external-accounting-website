@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.Utilities
     {
         public static void Error(System.Exception ex, bool includeQuery = true)
         {
-            LogService.Error(ex.Message);
+            LogService.Error(ex.Message, ex);
         }
 
         public static void CasinoError(ErrorException ex, bool includeQuery = true)

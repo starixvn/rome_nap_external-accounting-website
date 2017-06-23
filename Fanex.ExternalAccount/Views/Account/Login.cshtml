@@ -58,9 +58,16 @@
                         </td>
                         <td>
                              @if (ViewBag.ShowCaptcha == string.Empty)
-                            {    
-                                @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
-                            }
+                             {
+                                 try
+                                 {
+                                    @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
+                                 }
+                                 catch (Exception ex)
+                                 {
+                                     Logs.Error(ex);
+                                 }
+                             }
                         </td>
                     </tr>
                     <tr>

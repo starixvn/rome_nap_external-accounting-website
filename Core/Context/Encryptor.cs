@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
+using Fanex.ExternalAccount.Utilities;
 
 namespace Fanex.ExternalAccount.Core.Context
 {
@@ -21,12 +22,28 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return (string)Session["RandomCaptcha"];
+                try
+                {
+                    return (string)Session["RandomCaptcha"];
+                }
+                catch (Exception ex)
+                {
+                    Logs.Error(ex);
+                }
+
+                return "0000";
             }
 
             set
             {
-                Session["RandomCaptcha"] = value;
+                try
+                {
+                    Session["RandomCaptcha"] = value;
+                }
+                catch (Exception ex)
+                {
+                    Logs.Error(ex);
+                }
             }
         }
         
