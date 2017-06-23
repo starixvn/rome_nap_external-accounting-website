@@ -23,5 +23,7 @@ namespace Fanex.ExternalAccount.ViewModel.Account
         public string Captcha { get; set; }
 
         public string Code { get; set; }
+
+        public string __RequestVerificationToken { get; set; }
     }
 }

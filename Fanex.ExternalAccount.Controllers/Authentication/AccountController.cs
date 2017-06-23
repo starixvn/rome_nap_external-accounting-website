@@ -13,6 +13,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using CaptchaMvc.HtmlHelpers;
@@ -24,6 +25,8 @@ using Fanex.ExternalAccount.Service.Impl.Login;
 using Fanex.ExternalAccount.Service.Interface.Login;
 using Fanex.ExternalAccount.Utilities;
 using Fanex.ExternalAccount.ViewModel.Account;
+using Fanex.Module.Logs;
+using Fanex.Module.Logs.Services;
 using ONEbook.UM.Models;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
@@ -95,11 +98,16 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <returns>JSON string.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         [HttpPost]
         [ActionName("Login")]
         public ActionResult LoginPost(Login model)
         {
+            if (!ValidateAntiXSRF(model.__RequestVerificationToken))
+            {
+                Core.Context.CurrentContext.LoginErrorMessage = "Your request login verification token has expired";
+                return RedirectToAction("Login", "Account");
+            }
+
             var cipher = Encryptor.Instance;
             var password = cipher.Decrypt(model.Password, model.Code);
 
@@ -405,6 +413,40 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 Logs.Error(ex);
                 return RedirectToAction("Error", "Shared");
             }
+        }
+
+        private bool ValidateAntiXSRF(string token)
+        {
+            try
+            {
+                var request = Request;
+
+                var formToken = token;
+                if (string.IsNullOrWhiteSpace(formToken))
+                {
+                    return false;
+                }
+
+                var cookieValue = request.Cookies[AntiForgeryConfig.CookieName];
+                if (cookieValue != null
+                    && !string.IsNullOrWhiteSpace(cookieValue.Value))
+                {
+                    AntiForgery.Validate(cookieValue.Value, formToken);
+                }
+                else
+                {
+                    var exceptionLog = new Exception("Cannot read Request Verification Token from cookie.");
+                    exceptionLog.Write(Formater.LogType.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Write(Formater.LogType.Warning);
+
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>

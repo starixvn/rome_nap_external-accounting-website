@@ -118,10 +118,7 @@ namespace Fanex.ExternalAccount
                 userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
                 Session.Abandon();
             }
-            catch (Exception ex)
-            {
-                Logs.Error(ex);
-            }            
+            catch { }       
         }
 
         /// <summary>
@@ -137,6 +134,8 @@ namespace Fanex.ExternalAccount
                 Request.Headers["X-Requested-With"] != "XMLHttpRequest" && 
                 !Response.IsRequestBeingRedirected && !Request.IsLocal)
             {
+                var customerException = new Exception("System error and redirect to Oops... page", ex);
+                Logs.Error(customerException);
                 Response.RedirectPermanent("~/Shared/Error", true);
             }
         }
