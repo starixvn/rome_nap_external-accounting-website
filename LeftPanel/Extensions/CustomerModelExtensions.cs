@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Enums;
+    using DTO.Customer;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -326,12 +326,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var closed = tableCustomer.Rows[0].ToBoolean("closed");
             var suspended = tableCustomer.Rows[0].ToBoolean("suspended");
             var status = "This account was ";
-
-            var closedReason = CustomerClosedReason.ByUplineOrAdmin;
+            var closedReason = string.Empty;
 
             if (closed)
             {
-                closedReason = (CustomerClosedReason)Utils.ToByte(tableCustomer.Rows[0]["closedreason"]);
+                var customerClosedReason = new CustomerClosedReason(tableCustomer.Rows[0]["closedreason"]);
+                closedReason = customerClosedReason.ClassName;
+                status = customerClosedReason.ClosedReason;
             }
 
             model.PersonalInfo = new PersonalInfo
@@ -345,8 +346,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
                 CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
-                Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status + "closed" : suspended ? status + "suspended" : string.Empty },
-                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? (closedReason == CustomerClosedReason.ByUplineOrAdmin ? "closed" : "closed pwd-sc-otp") : suspended ? "suspended" : string.Empty },
+                Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status : suspended ? status + "suspended" : string.Empty },
+                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty },
                 IsInternal = new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["isinternal"]) }
             };
 

@@ -210,7 +210,7 @@
             }
         }
     }
-    
+
     items.separator4 = "-----";
 
     items.editInfo = {
@@ -326,12 +326,12 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             var hideVoidbridgeSettingLink = cell.Value.HideVoidBridge;
             var hideNG2SettingLink = cell.Value.HideNG2;
             var hideFishingWorldSettingLink = cell.Value.HideFishingWorld;
-            
+
             var showABBetting = cell.Value.SyncedAllBet && !hideAllbetSettingLink && cell.Value.SyncedAllBetDownline;
             var showVBBetting = cell.Value.SyncedVoidBridge && !hideVoidbridgeSettingLink && cell.Value.SyncedVoidBridgeDownline;
             var showNG2Betting = cell.Value.SyncedNG2 && !hideNG2SettingLink;
             //var showFWBetting = cell.Value.SyncedFishingWorld && !hideFishingWorldSettingLink && cell.Value.SyncedFishingWorldDownline;
-            
+
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ", " + (cell.Value.HideCockFighting) + ", " + cell.Value.HideColossusBet + ", " + (cell.Value.HideCricket) + ", " + (hideAllbetSettingLink) + ", " + showABBetting + ", " + (hideVoidbridgeSettingLink) + ", " + showVBBetting + "," + hideNG2SettingLink + "," + showNG2Betting + "," + hideFishingWorldSettingLink + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
@@ -459,7 +459,8 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
     this.DataSource = rows;
 
     for (var i = 0; i < rows.length; i++) {
-        var cssRow = !rows[i].enabled ? 'rowDisabled' : rows[i].closed ? 'rowClosed' : rows[i].suspended ? 'rowSuspended' : '';
+
+        var cssRow = !rows[i].enabled ? 'rowDisabled' : rows[i].closed ? Fanex.ExtAcc.Customer.GetClosedClassName(rows[i]) : rows[i].suspended ? 'rowSuspended' : '';
 
         bodyRows.push({
             Columns: [{

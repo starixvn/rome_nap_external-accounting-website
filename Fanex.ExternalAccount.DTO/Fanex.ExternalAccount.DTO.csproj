@@ -104,6 +104,7 @@
     <Compile Include="Customer\Casino\GameKindDetail.cs" />
     <Compile Include="Customer\Casino\GameTypeDetail.cs" />
     <Compile Include="Customer\Casino\StakeLevelDetail.cs" />
+    <Compile Include="Customer\CustomerClosedReason.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="Statement\Statement.cs" />
