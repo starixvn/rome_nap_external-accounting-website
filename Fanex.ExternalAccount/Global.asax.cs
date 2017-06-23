@@ -125,9 +125,9 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             var ex = Server.GetLastError();
+            ex.Write();
             if (ex.GetType() != typeof(System.Web.HttpException))
             {
-                ex.Write();
 
                 if (Request.Headers["X-Requested-With"] != "XMLHttpRequest" && !Response.IsRequestBeingRedirected && !Request.IsLocal)
                 {
