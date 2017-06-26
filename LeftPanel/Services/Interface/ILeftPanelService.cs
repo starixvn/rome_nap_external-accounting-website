@@ -49,8 +49,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 
         Result EnableLiveCasino(int id, bool enable, bool enableDownline);
 
-        Result EnableVirtualSports(int id, bool enable, bool enableDownline);
-
         Result EnableESports(int id, bool enable, bool enableDownline);
 
         Result AutoMasterPT(int id, bool allow, int uplineId);

@@ -351,25 +351,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         }
 
         /// <summary>
-        /// Updates enable virtual sports status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enable">Allow or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableVirtualSports, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateVirtualSports(int custId, bool enable, bool enableDownline)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableVirtualSports(custId, enable, enableDownline));
-        }
-
-        /// <summary>
         /// Updates enable e-sports status.
         /// </summary>
         /// <param name="custId">Customer id.</param>

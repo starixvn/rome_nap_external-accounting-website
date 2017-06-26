@@ -74,7 +74,7 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tab8').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetVirtualSportSetting();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
         });
 
         $('#tab9').bind('click', function () {
@@ -343,59 +343,12 @@ Fanex.ExtAcc.Customer.Settings = {
         $(frameId).attr('src', resolveClientUrl(url));
     },
 
-    GetVirtualSportSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.BlockUI();
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var uplineId, uplineRoleId, targetCustId, targetRoleId;
-        targetRoleId = this.CurrentLevel;
-        if (targetRoleId == Fanex.ExtAcc.Customer.Master) {
-            uplineId = Fanex.ExtAcc.Customer.superId;
-            uplineRoleId = Fanex.ExtAcc.Customer.Super;
-        }
-        else if (targetRoleId == Fanex.ExtAcc.Customer.Agent) {
-            uplineId = Fanex.ExtAcc.Customer.masterId;
-            uplineRoleId = Fanex.ExtAcc.Customer.Master;
-        }
-        else {
-            uplineId = Fanex.ExtAcc.Customer.agentId;
-            uplineRoleId = Fanex.ExtAcc.Customer.Agent;
-        }
-
-        targetCustId = this.UserId;
-        if (uplineId > 0 && uplineRoleId > 0 && targetCustId > 0 && targetRoleId > 0) {
-            $.ajax({
-                type: 'POST',
-                url: resolveClientUrl('VirtualSports/EditSingle?custId=' + uplineId + '&roleId=' + uplineRoleId + '&targetCustId=' + targetCustId + '&targetRoleId=' + targetRoleId + '&groupName=' + $('#selectedGroupName').html())
-            }).success(function (result) {
-                var container = $('#tabs-8');
-                if (result.errorCode && result.errorCode == "1") {
-                    container.css('display', 'block');
-                    container.html(result.errorMessage.formatErrorMessage());
-                    return;
-                }
-
-                container.css('display', 'block');
-                container.html(result);
-
-            }).error(function (data) {
-                if (typeof console != 'undefined') {
-                    console.log(data.responseText);
-                }
-            }).complete(function (jqXHR, textStatus) {
-                Fanex.ExtAcc.UnBlockUI();
-            });
-        }
-    },
-
     EmptyAllTabs: function () {
         $('#tabs-1').html('');
         // $('#tabs-7').html('');
-        $('#tabs-8').html('');
 
         $('#tabs-1').css('display', 'none');
         // $('#tabs-7').css('display', 'none');
-        $('#tabs-8').css('display', 'none');
     }
 };
 

@@ -190,10 +190,6 @@
     <Reference Include="Fanex.PTSetting.BettypeReference">
       <HintPath>..\Dependencies\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
       <HintPath>..\Dependencies\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
@@ -506,10 +502,6 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Scripts\SportsbookController.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Styles\Sportsbook.css" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Scripts\VirtualSportsController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\VirtualSports\Styles\VirtualSports.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Agent\EditAgent.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Agent\ViewAgentBySuper.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Customer\CustomerInfo.cshtml" />

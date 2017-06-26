@@ -785,9 +785,7 @@
     };
 
     $scope.SuperVirtualSports = function () {
-        $scope.ResetGlobalValueAtSuperOnMember();
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + superId + '&roleId=4&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
+        $scope.RenderSupeOnMemberDCS(5);
     };
 
     $scope.SuperKeno = function () {
@@ -833,10 +831,7 @@
     };
 
     $scope.MasterVirtualSports = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = 1;
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('VirtualSports/EditSingle?custId=' + masterId + '&roleId=3&targetCustId=' + $scope.model.personalInfo.custId.value + '&targetRoleId=1&groupName=' + parent.$('#selectedGroupName').html()), null, null, null, true);
+        $scope.RenderMasterOnMemberDCS(5);
     };
 
     $scope.MasterKeno = function () {
