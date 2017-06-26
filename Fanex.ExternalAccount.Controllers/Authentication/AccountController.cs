@@ -104,7 +104,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         {
             if (!ValidateAntiXSRF(model.__RequestVerificationToken))
             {
-                Core.Context.CurrentContext.LoginErrorMessage = "Your request login verification token has expired";
+                Core.Context.CurrentContext.LoginErrorMessage = "Your login session has expired. Please login again!";
                 return RedirectToAction("Login", "Account");
             }
 

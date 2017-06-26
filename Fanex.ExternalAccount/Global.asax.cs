@@ -22,6 +22,7 @@ namespace Fanex.ExternalAccount
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
+    using Logging;
     using Service.Impl.Login;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
@@ -118,7 +119,10 @@ namespace Fanex.ExternalAccount
                 userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
                 Session.Abandon();
             }
-            catch { }       
+            catch
+            {
+                // Ignore in case of session is not started or is new session.
+            }
         }
 
         /// <summary>
@@ -129,7 +133,7 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             var ex = Server.GetLastError();
-            Logs.Error(ex);
+            LogService.Warn(ex.ToString());
             if (ex.GetType() != typeof(HttpException) &&
                 Request.Headers["X-Requested-With"] != "XMLHttpRequest" && 
                 !Response.IsRequestBeingRedirected && !Request.IsLocal)
@@ -158,7 +162,10 @@ namespace Fanex.ExternalAccount
                     }
                 }
             }
-            catch { }
+            catch
+            {
+                // Ignore in case of session is not started or is new session.
+            }
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
