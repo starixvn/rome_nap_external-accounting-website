@@ -5,8 +5,9 @@
 @{
     bool isUpdateByBettype = Model.ProductStatusList.Count > 1;
     bool isSyncAllDownline = Model.ProductStatusList[0].IsSyncedDownline;
+    bool isSync = Model.ProductStatusList[0].IsSync;
     int productId = Model.ProductStatusList[0].ProductId;
-    bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !isSyncAllDownline;
+    bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !(isSyncAllDownline && isSync);
     int sportTypePrevious = 0;
 }
 <!DOCTYPE html>
@@ -69,7 +70,7 @@
                     @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
                 {
                         <td>
-                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
+                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
                             <label for="checkEnableDownlines">Enable Downlines</label>
                         </td>
                     }
