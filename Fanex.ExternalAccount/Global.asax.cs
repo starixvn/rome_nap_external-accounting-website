@@ -133,7 +133,11 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             var ex = Server.GetLastError();
-            LogService.Warn(ex.ToString());
+            if (!ex.Message.Contains("Server cannot set status after HTTP headers have been sent"))
+            {
+                LogService.Warn(ex.ToString());
+            }
+            
             if (ex.GetType() != typeof(HttpException) &&
                 Request.Headers["X-Requested-With"] != "XMLHttpRequest" && 
                 !Response.IsRequestBeingRedirected && !Request.IsLocal)
