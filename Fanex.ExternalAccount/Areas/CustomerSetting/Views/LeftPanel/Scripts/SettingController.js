@@ -617,6 +617,11 @@
         $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 150);
     };
 
+    $scope.EnableGoldDeluxe = function (enable, id) {
+        document.getElementById(id).checked = enable;
+        $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 400, 150);
+    };
+
     $scope.EnableCockfighting = function () {
         $scope.EnableDCS(19, 'Cockfighting');
     };
