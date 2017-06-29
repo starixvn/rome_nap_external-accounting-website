@@ -144,7 +144,7 @@ namespace Fanex.ExternalAccount
             {
                 var customerException = new Exception("System error and redirect to Oops... page", ex);
                 Logs.Error(customerException);
-                Response.RedirectPermanent("~/Shared/Error", true);
+                // Response.RedirectPermanent("~/Shared/Error", true);
             }
         }
 
