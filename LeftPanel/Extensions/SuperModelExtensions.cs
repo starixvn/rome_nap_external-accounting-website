@@ -82,7 +82,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "EnableNumberGame", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game"
                             },
                             new ObjectInfo { Key = "EnableLiveCasino", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableLiveCasino"]), Text = "Enable Live Casino" },
-                            new ObjectInfo { Key = "EnableVirtualSports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableVirtualSports"]), Text = "Virtual Sports" },
+                            new ObjectInfo { Key = "EnableVirtualSports", Value = GetVirtualSportsStatus(table3rdDCS), Text = "Virtual Sports" },
                             new ObjectInfo
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
@@ -198,6 +198,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             }
 
             return model;
+        }
+
+        private static bool GetVirtualSportsStatus(DataTable table3rdDCS)
+        {
+            DataRow[] drowVirtualSports = table3rdDCS.Select("ProductID = 5");
+
+            return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
         }
     }
 }
