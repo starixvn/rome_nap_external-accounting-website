@@ -8,58 +8,63 @@
         NullValueHandling = NullValueHandling.Ignore
     });
 
-    var userId = ViewBag.UserId;    
+    var userId = ViewBag.UserId;
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <div id="ng-app" data-ng-app="leftPanelApp" class="hidden" style="display: none">
     <div id="leftPanel" class="clearBoth" data-ng-controller="LeftPanelController">
-        <div data-ng-controller="NoInfoController" data-ng-init="model.hide = model != null" data-ng-hide="model.hide" class="red">There is no information.</div>        
+        <div data-ng-controller="NoInfoController" data-ng-init="model.hide = model != null" data-ng-hide="model.hide" class="red">There is no information.</div>
         <div id="usernameInfo" data-ng-controller="LineInfoController" data-ng-hide="{{model==null}}">
             <div class="headerLevel" data-ng-repeat="person in personalInfo.downlines">
                 <div class="title bold">{{person.text}}</div>
-                <div class="floatLeft bold detail" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>                
+                <div class="floatLeft bold detail" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
                 <div class="floatRight home" data-ng-click="Login('{{person.value}}')">&nbsp;&nbsp;</div>
-            </div>            
+            </div>
         </div>
         <div id="customerInfo" data-ng-controller="PersonalInfoController" data-ng-hide="{{model==null}}">
             <div class="bold currentUser headerLevel">
                 <div class="floatLeft bold"><a title="{{personalInfo.status.tooltip}}" class="detail2 {{personalInfo.backgroundColor.value}}" href="javascript:;" data-ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a></div>
                 <div id="personalInfo" class="floatRight userDown" data-ng-click="TooglePersonalInfo()">&nbsp;&nbsp;</div>
-            </div>            
+            </div>
             <div class="clearBoth">
                 <div class="title">
-                    {{personalInfo.name.text}}</div>
+                    {{personalInfo.name.text}}
+                </div>
                 <div class="floatLeft red bold">{{personalInfo.name.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
-                    {{personalInfo.nickname.text}}</div>
+                    {{personalInfo.nickname.text}}
+                </div>
                 <div class="floatLeft red bold">{{personalInfo.nickname.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
-                    {{personalInfo.fax.text}}</div>
+                    {{personalInfo.fax.text}}
+                </div>
                 <div class="floatLeft red bold">{{personalInfo.fax.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
-                    {{personalInfo.phone.text}}</div>
+                    {{personalInfo.phone.text}}
+                </div>
                 <div class="floatLeft red bold">{{personalInfo.phone.value.decodeHtml()}}</div>
             </div>
             <div class="clearBoth">
                 <div class="title">
-                    {{personalInfo.mobile.text}}</div>
+                    {{personalInfo.mobile.text}}
+                </div>
                 <div class="floatLeft red bold">{{personalInfo.mobile.value.decodeHtml()}}</div>
             </div>
         </div>
-		<div class="clearBoth" style="display: inline"></div>
+        <div class="clearBoth" style="display: inline"></div>
         <div id="viewInfo" data-ng-controller="ViewInfoController" data-ng-hide="{{model==null}}">
             <div id="btnCustList" data-ng-hide="{{personalInfo.roleId.value == 1}}" class="floatLeft ui-state-default list {{className}} btnDetail" data-ng-click="GetCustomerList()" style="height: 25px">{{personalInfo.custList.value}}</div>
             <input id="btnStatement" type="button" class="floatLeft ui-state-default list {{className}} btnDetail" data-ng-click="GetStatementList({{personalInfo.custId.value}})" value="Statement" />
             <input id="btnBalance" type="button" data-ng-hide="{{personalInfo.roleId.value != 2}}" class="floatLeft ui-state-default list {{className}} btnDetail" data-ng-click="GetBalance({{personalInfo.custId.value}})" value="Balance" />
-        </div>        
+        </div>
         <div id="balanceInfo" class="clearBoth" style="border:none" data-ng-controller="BalanceDownlineInfoController" data-ng-hide="{{model==null}}">
             <ul class="tabs">
                 <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
@@ -126,7 +131,8 @@
             <div class="auto" id="tabs-2" data-ng-controller="DownlineListController" style="height: 208px">
                 <div id="downlines" style="overflow: auto;" data-ng-hide="true">
                 </div>
-                <div id="page" data-ng-hide="true" class="floatLeft" style="height: 20px">Page
+                <div id="page" data-ng-hide="true" class="floatLeft" style="height: 20px">
+                    Page
                 </div>
                 <div id="pages" data-ng-init="Init()" data-ng-hide="true" style="height: 20px" class="floatLeft page">
                 </div>
@@ -148,10 +154,10 @@
                 <div class="floatLeft" data-ng-repeat="enableItem in setting.enableItems">
                     <div data-ng-hide="{{enableItem.isHide}}" class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
                     <div data-ng-hide="{{enableItem.isHide}}" class="floatLeft">
-                        <input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" 
-                               data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')"/>
+                        <input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value"
+                               data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" />
                     </div>
-                </div>    
+                </div>
             </div>
             <div class="auto" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
                 <div class="subTab-parent">
@@ -180,7 +186,7 @@
                     <div class="detail icn-right" data-ng-repeat="masterPt in setting.masterPts">
                         <a data-ng-hide="masterPt.isHide" data-ng-click="Master{{masterPt.key}}()" href="javascript:;">{{masterPt.value}}</a>
                     </div>
-                </div>    
+                </div>
             </div>
             <div class="auto" style="height: 100%" id="tab-3" data-ng-controller="LoginController" data-ng-init="length = loginInfo.length">
                 <div class="clearBoth">
@@ -200,10 +206,11 @@
                     <div class="floatLeftBalance normal R">{{loginInfo[3].value}}</div>
                 </div>
                 <div class="clearBoth" data-ng-init="tmpId = model == null ? 0 : model.personalInfo.custId.value">
-                    <div class="balanceTitle bold">{{loginInfo[4].text}}&nbsp;[<a href="javascript:;" data-ng-click="ResetPassword({{tmpId}}, '{{model.personalInfo.currentLevel.value}}')">Change</a>]
+                    <div class="balanceTitle bold">
+                        {{loginInfo[4].text}}&nbsp;[<a href="javascript:;" data-ng-click="ResetPassword({{tmpId}}, '{{model.personalInfo.currentLevel.value}}')">Change</a>]
                     </div>
                     <div class="floatLeftBalance normal R">
-                            {{loginInfo[4].value}}
+                        {{loginInfo[4].value}}
                     </div>
                 </div>
                 <div class="clearBoth">
@@ -214,7 +221,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="clearBoth">
+                <div class="clearBoth" data-ng-show="{{model.uplineHasSecurityCode && model.personalInfo.roleId.value > 1}}">
                     <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" data-ng-click="ResetSecurityCode({{model != null ? model.personalInfo.custId.value : 0}}, {{model != null ? model.personalInfo.roleId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Change</a>]</div>
                     <div class="floatLeftBalance normal R">{{loginInfo[6].value}}</div>
                 </div>
@@ -233,9 +240,9 @@
                     <div class="floatLeft bold p32">IP</div>
                     <div class="floatRight bold p58">Last Login</div>
                 </div>
-                <div id="onlines" data-ng-init="Init()" class="clearBoth" data-ng-hide="true">                    
+                <div id="onlines" data-ng-init="Init()" class="clearBoth" data-ng-hide="true">
                 </div>
-                <div id="online" data-ng-hide="true" class="C">This user is not online</div>    
+                <div id="online" data-ng-hide="true" class="C">This user is not online</div>
             </div>
         </div>
     </div>

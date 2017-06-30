@@ -7,7 +7,7 @@ var Validators = {
         // Validate with expr
         // Show message and animate background color
     },
-    show: function (elementInput, message, xPos, pointerXPos, timeout) {
+    show: function (elementInput, message, xPos, pointerXPos, timeout, yPos) {
         // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
         var hideTimeout = timeout ? timeout : 1000;
         var hint = document.getElementById('fHint');
@@ -42,6 +42,11 @@ var Validators = {
             if (typeof xPos == 'undefined') {
                 xPos = 0;
             }
+
+            if (typeof yPos == 'undefined') {
+                yPos = 0;
+            }
+
             if (typeof pointerXPos == 'undefined') {
                 pointerXPos = 10;
             }
@@ -50,8 +55,9 @@ var Validators = {
             hintPointer.style.left = (pointerXPos + 'px');
 
             var pos = Validators.utils.findPosRelativeToViewport(elementInput);
+
             hint.style.left = (pos[0] + xPos) + 'px';
-            hint.style.top = (pos[1] - 40) + 'px';
+            hint.style.top = (pos[1] - 40 + yPos) + 'px';
             elementInput.onchange = function () {
                 hint.style.display = 'none';
             };

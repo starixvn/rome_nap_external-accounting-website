@@ -60,6 +60,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
 
                 model.HasDownline = Utils.ToBoolean(tableCustomer.Rows[0]["HasDownline"]);
+                model.UplineHasSecurityCode = Utils.ToBoolean(tableCustomer.Rows[0]["UplineHasSecurityCode"]);
+
                 model.BalanceInfo(ds);
                 model.PersonalInfo(ds);
                 model.LoginInfo(ds);

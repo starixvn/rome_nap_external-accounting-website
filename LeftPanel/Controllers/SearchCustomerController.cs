@@ -60,10 +60,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
-            bool isSpecialSiteCustomer  = false;
+            bool isSpecialSiteCustomer = false;
             bool isSpecialHeadline = false;
             base.IsSpecialSiteCustomer(id, ref isSpecialSiteCustomer, ref isSpecialHeadline);
-            if (!base.IsAdminHasPermissionOnCustomer(id, isSpecialSiteCustomer|| isSpecialHeadline))
+            if (!base.IsAdminHasPermissionOnCustomer(id, isSpecialSiteCustomer || isSpecialHeadline))
             {
                 return this.Content("var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
             }
@@ -244,7 +244,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             }
 
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !close 
+            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !close
                 && !IsAuthorized(CurrentSession.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host, Request))
             {
                 return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
@@ -567,7 +567,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 1)
+        public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 2)
         {
             if (!this.IsBelong(Request["groupName"], id, null, true))
             {
@@ -581,7 +581,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
                 hashCode = Fanex.Security.Cryptography.ComputeHash("SHA1", code, md5);
             }
 
-            Result result = this._service.ResetSecurityCode(id, hashCode, force);
+            Result result = this._service.ResetSecurityCode(id, hashCode, force || roleId != (int)PTRacing.BusinessObjects.CustomerRole.Super);
             return this.JsonBase(result);
         }
 

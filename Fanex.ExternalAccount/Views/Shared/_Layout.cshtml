@@ -42,6 +42,8 @@
     var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
+
+    var hasUpdateSecurityCodePermission = CustomerModelExtensions.IsAuthorized(userId, eFunctions.UpdateSecurityCode, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +95,8 @@
             <div id="rightMenu" style="position: absolute; right: 0px;">
                 <div class="accMenu" id='accMenu'>
                     <ul id="userMenu" class="sf-menu">
-                        <li id="userNameMenu"><a class="logoutTextTop" href="#" ignorehref="1">@CurrentSession.Instance.UserName</a>
+                        <li id="userNameMenu">
+                            <a class="logoutTextTop" href="#" ignorehref="1">@CurrentSession.Instance.UserName</a>
                             <ul id="dllUsername" class="menuULRight">
                                 <li class="divUL">
                                     <div class="sf-menu divLI" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</div>
@@ -107,9 +110,9 @@
                 </div>
                 <div class="accMenu" id='accMenuGroup'>
                     <ul id="groupsMenu" class="sf-menu">
-                        <li id="groupNameMenu"><a class="groupTextTop" id="selectedGroup" href="#" ignorehref="1">@ViewLang.Group</a>
-                            <ul id="ddlGroupName" class="menuULRight">
-                            </ul>
+                        <li id="groupNameMenu">
+                            <a class="groupTextTop" id="selectedGroup" href="#" ignorehref="1">@ViewLang.Group</a>
+                            <ul id="ddlGroupName" class="menuULRight"></ul>
                         </li>
                     </ul>
                 </div>
@@ -126,14 +129,14 @@
                 <div class="splitter-panel" id="leftSplitter">
                     <div id="search" class="search searchLeftPanel">
                         <div style="float: left">
-                            <input placeholder="username" class="searchButton usernameInput" style="height: 19px;" maxlength="50" id="txtLeftPanelUserName" type="text" autocomplete="off" /></div>                        
+                            <input placeholder="username" class="searchButton usernameInput" style="height: 19px;" maxlength="50" id="txtLeftPanelUserName" type="text" autocomplete="off" />
+                        </div>
                         <div class="btnSearchPanel" id="searchPanel" title="Search"></div>
                     </div>
-                    <div style="height: 1px; background-color: #ccc; margin-top: 3px">                            
-                        </div>
+                    <div style="height: 1px; background-color: #ccc; margin-top: 3px">
+                    </div>
                     <div>
-                        <iframe id="leftFrame" width="100%" frameborder="0" style="overflow: auto">
-                        </iframe>
+                        <iframe id="leftFrame" width="100%" frameborder="0" style="overflow: auto"></iframe>
                     </div>
                 </div>
                 <div id="splitterBar">
@@ -237,6 +240,7 @@
         //var showFishingWorldBetting = true;
         var showNG2Betting = true;
         var ng2Text = '@ng2Text';
+        var hasUpdateSecurityCodePermission = @hasUpdateSecurityCodePermission;
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

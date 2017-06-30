@@ -39,6 +39,11 @@ namespace Fanex.ExternalAccount.Controllers.Shared
             return this.PartialView();
         }
 
+        public ActionResult NotAuthorized()
+        {
+            return this.PartialView();
+        }
+
         /// <summary>
         /// Gets menus.
         /// </summary>
