@@ -972,16 +972,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             product.SyncGoldDeluxeDownlines = result.Rows[0].ToBoolean("SyncedGoldDeluxeDownline");
 
-            /*product.HideLottery = ConfigurationManager.AppSettings["IsShowLottery"] == "0" || result.Rows[0].ToBoolean("HideLottery");
-            product.SyncLottery = result.Rows[0].ToBoolean("SyncedLottery");
-            product.SyncLotteryDownlines = result.Rows[0].ToBoolean("SyncedLotteryDownline");
-            product.DisableLottery = result.Rows[0].ToBoolean("DisableLottery");*/
-
-            // Test
-            product.HideLottery = false;
+            product.HideLottery = ConfigurationManager.AppSettings["IsShowLottery"] == "0" || result.Rows[0].ToBoolean("HideLottery");
             product.SyncLottery = true;
             product.SyncLotteryDownlines = true;
-            product.DisableLottery = false;
+            product.DisableLottery = result.Rows[0].ToBoolean("DisableLottery");
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
@@ -1023,13 +1017,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.HideFishingWorld = upperInfo.Rows[0].ToBoolean("HideFishingWorld");
                 product.UplineStatuses.SyncFishingWorld = upperInfo.Rows[0].ToBoolean("SyncedFishingWorld");
 
-                /*product.UplineStatuses.DisableLottery = upperInfo.Rows[0].ToBoolean("DisableLottery");
+                product.UplineStatuses.DisableLottery = upperInfo.Rows[0].ToBoolean("DisableLottery");
                 product.UplineStatuses.HideLottery = upperInfo.Rows[0].ToBoolean("HideLottery");
-                product.UplineStatuses.SyncLottery = upperInfo.Rows[0].ToBoolean("SyncedLottery");*/
-
-                // Test
-                product.UplineStatuses.DisableLottery = false;
-                product.UplineStatuses.HideLottery = false;
                 product.UplineStatuses.SyncLottery = true;
             }
 

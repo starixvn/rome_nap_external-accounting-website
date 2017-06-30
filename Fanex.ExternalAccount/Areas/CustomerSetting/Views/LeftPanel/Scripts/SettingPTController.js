@@ -388,7 +388,7 @@
     };
 
     $scope.Lottery = function () {
-        $scope.RenderDCS(25);
+        $scope.RenderDCS(28);
     };
 
     $scope.RenderDCS = function (productId) {

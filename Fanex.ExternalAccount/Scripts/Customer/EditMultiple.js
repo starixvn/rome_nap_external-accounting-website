@@ -174,6 +174,16 @@
                 }
             };
         }
+
+        if (!this.HideLottery) {
+            menuItems.lottery = {
+                name: "Edit Multiple Lottery",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleLottery(4, 3);
+                }
+            };
+        }
         
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
@@ -335,6 +345,16 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(3, 2);
+                }
+            };
+        }
+
+        if (!this.HideLottery) {
+            menuItems.lottery = {
+                name: "Edit Multiple Lottery",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleLottery(3, 2);
                 }
             };
         }
@@ -820,7 +840,40 @@
                     }
                 }
             };
-        }
+         }
+
+         if (!this.HideLotteryMember) {
+             menuItems.lottery = {
+                 name: "Lottery",
+                 className: "iconEnableEdit",
+                 items: {
+                     agentLottery: {
+                         name: "Edit Lottery",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleLottery(2, 1);
+                         }
+                     },
+                     superLottery: {
+                         name: "Super Edit Lottery",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleLottery(4, 1);
+                         }
+                     },
+                     masterLottery: {
+                         name: "Master Edit Lottery",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleLottery(3, 1);
+                         }
+                     }
+                 }
+             };
+         }
       
         if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
@@ -1558,6 +1611,75 @@ Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports = function (uplineRoleId, ta
     }
     else {
         this.ShowEditSingleVirtualSports(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+    }
+};
+
+Fanex.ExtAcc.Customer.ShowEditSingleLottery = function (custid, uplineRoleId, targetRoleId) {
+    document.getElementById('language').value = "en-US";
+    document.getElementById('productId').value = 28;
+    document.getElementById('customerLevel').value = targetRoleId;
+    document.getElementById('customerId').value = custid;
+    document.getElementById('isMultiple').value = false;
+    document.getElementById('uplineLevel').value = "";
+
+    if (this.CurrentLevel == this.Super) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else {
+        document.getElementById('uplineLevel').value = uplineRoleId;
+        document.getElementById('IsReadOnly').value = false;
+    }
+
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Lottery Setting', 900, 750, false, false, 1);
+    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleLottery = function (uplineRoleId, targetRoleId) {
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
+
+    if (this.IsMultiple) {
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = this.Names();
+        var custIdsArr = this.Ids()
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 28;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('isMultiple').value = true;
+        document.getElementById('customerIds').value = CustIds;
+        document.getElementById('customerNames').value = Usernames;
+        document.getElementById('uplineLevel').value = "";
+
+        if (document.getElementById('customerIds').value == "") {
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Lottery Setting', 900, 600, false, false, 1);
+            return;
+        }
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Lottery Setting', 900, 750, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    }
+    else {
+        this.ShowEditSingleLottery(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 

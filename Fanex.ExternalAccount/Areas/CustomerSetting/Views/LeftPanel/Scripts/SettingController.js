@@ -640,8 +640,9 @@
         $scope.EnableThirdpartyProduct(23, "NG2", 400, 150);
     };
 
-    $scope.EnableLottery = function () {
-        $scope.EnableThirdpartyProduct(25, "Lottery", 400, 150);
+    $scope.EnableLottery = function (enable, id) {
+        document.getElementById(id).checked = enable;
+        $scope.EnableThirdpartyProduct(28, "Lottery", 400, 150);
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
@@ -920,7 +921,7 @@
     };
 
     $scope.SuperLottery = function () {
-        $scope.RenderSupeOnMemberDCS(25);
+        $scope.RenderSupeOnMemberDCS(28);
     };
 
     $scope.RenderSupeOnMemberDCS = function (productId) {
@@ -957,7 +958,7 @@
     };
 
     $scope.MasterLottery = function () {
-        $scope.RenderMasterOnMemberDCS(25);
+        $scope.RenderMasterOnMemberDCS(28);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

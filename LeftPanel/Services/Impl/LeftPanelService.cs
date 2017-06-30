@@ -54,9 +54,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             if (ds != null && ds.Tables.Count > 0)
             {
                 var tableCustomer = ds.Tables[0];
-                var tableLine = ds.Tables[1];
-                var tableCash = ds.Tables[2];
-                var tableTotalMember = ds.Tables[3];
                 var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
 
                 model.HasDownline = Utils.ToBoolean(tableCustomer.Rows[0]["HasDownline"]);
@@ -111,7 +108,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
         /// <returns>DataTable object.</returns>
         public override DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
         {
-            var dataTable = new DataTable();
             var dr = this._data.GetDownlineList(custid, pageSize, pageIndex);
 
             if (dr != null && dr.ResultSet != null && dr.ResultSet.Tables.Count > 0)
