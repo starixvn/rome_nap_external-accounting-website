@@ -171,8 +171,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.4\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.5-closedaccounts1\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine.Age, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

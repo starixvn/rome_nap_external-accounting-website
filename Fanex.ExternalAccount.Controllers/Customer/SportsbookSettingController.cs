@@ -559,7 +559,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
+                IP = CurrentContext.Ip4Address,
+                SystemId = (byte)Config.SystemId
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
@@ -674,7 +675,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
+                IP = CurrentContext.Ip4Address,
+                SystemId = (byte)Config.SystemId
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
@@ -787,7 +789,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
+                IP = CurrentContext.Ip4Address,
+                SystemId = (byte)Config.SystemId
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
@@ -893,7 +896,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
+                IP = CurrentContext.Ip4Address,
+                SystemId = (byte)Config.SystemId
             };
 
             if (!string.IsNullOrWhiteSpace(para))
@@ -1007,7 +1011,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
+                IP = CurrentContext.Ip4Address,
+                SystemId = (byte)Config.SystemId
             };
 
             if (!string.IsNullOrWhiteSpace(para))
