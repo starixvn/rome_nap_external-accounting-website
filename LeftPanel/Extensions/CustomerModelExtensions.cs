@@ -483,7 +483,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 model.RemoveEnableProduct("EnableVirtualSports");
 
-                if (product.UplineStatuses.HideVirtualSports)
+                bool hideVirtualSports = product.RoleId == 1 ?
+                    product.UplineStatuses.HideVirtualSports :
+                    product.HideVirtualSports;
+
+                if (hideVirtualSports)
                 {
                     model.RemoveProduct("VirtualSports")
                         .RemoveCrossLevelProduct("VirtualSports");
