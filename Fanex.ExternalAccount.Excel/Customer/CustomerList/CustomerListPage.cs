@@ -271,7 +271,27 @@ namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
             }
             else if (custStatus.Equals("closed", StringComparison.OrdinalIgnoreCase))
             {
-                resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+                byte closedReason = Convert.ToByte(items["closedreason"]);
+                int templateRowIndex;
+
+                switch (closedReason)
+                {
+                    case 1:
+                        templateRowIndex = 11;
+                        break;
+                    case 2:
+                        templateRowIndex = 13;
+                        break;
+                    case 3:
+                        templateRowIndex = 15;
+                        break;
+                    case 0:
+                    default:
+                        templateRowIndex = 5;
+                        break;
+                }
+
+                resultSheet.CopyRow(templateSheet, templateRowIndex, rowId, colId, lastColumnIndex);
             }
             else if (custStatus.Equals("disabled", StringComparison.OrdinalIgnoreCase))
             {
