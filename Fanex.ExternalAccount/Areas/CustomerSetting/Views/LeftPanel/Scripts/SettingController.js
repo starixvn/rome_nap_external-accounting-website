@@ -545,7 +545,8 @@
             });
     };
 
-    $scope.EnableCasino = function () {
+    $scope.EnableCasino = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(6, "Casino", 400, 150);
     };
 
@@ -571,7 +572,8 @@
         }, 1, null);
     };
 
-    $scope.EnableVirtualSports = function () {
+    $scope.EnableVirtualSports = function (enable, id) {
+        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(5, "Virtual Sports", 400, 150);
     };
 
