@@ -107,6 +107,8 @@
         {
             switch (productId)
             {
+                case 5:
+                    return eFunctions.VirtualSportsBetting;
                 case 16:
                     return systemId == 4 ? eFunctions.Sportsbook2Setting : eFunctions.Sportsbook2Betting;
                 case 19:
