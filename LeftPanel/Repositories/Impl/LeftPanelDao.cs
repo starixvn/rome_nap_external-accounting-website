@@ -264,6 +264,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
                 param.Add("ip", CurrentContext.Instance.Ip4Address);
+                param.Add("systemid", Config.SystemId);
+                
                 objDb.AssignParamValues(param);
 
                 objDb.ExecuteNonQuery();

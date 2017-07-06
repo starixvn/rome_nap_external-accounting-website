@@ -133,7 +133,7 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             var ex = Server.GetLastError();
-            if (!ex.Message.Contains("Server cannot set status after HTTP headers have been sent"))
+            if (!ex.Message.Contains("Server cannot set"))
             {
                 LogService.Warn(ex.ToString());
             }

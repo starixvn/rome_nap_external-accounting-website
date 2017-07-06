@@ -963,5 +963,19 @@
         }
 
         return unsyncedProductIds.join(",");
+    },
+
+    GetClosedClassName: function (cell) {
+        switch (cell.ClosedReason) {
+            case 1:
+                return "closed-byAdmin";
+            case 2:
+                return "closed-byUpline";
+            case 3:
+                return "closed-wrongOTPSC";
+            case 0:
+            default:
+                return "closed-wrongPwdOthers";
+        }
     }
 };

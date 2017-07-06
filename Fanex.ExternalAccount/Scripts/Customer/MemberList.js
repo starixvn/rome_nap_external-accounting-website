@@ -596,7 +596,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
     this.DataSource = rows;
     var isMyanmarOdds = rows.length > 0 ? rows[0].IsMyanmarOdds : false;
     for (var i = 0; i < rows.length; i++) {
-        var cssRow = !rows[i].enabled ? 'rowDisabled' : rows[i].closed ? 'rowClosed' : rows[i].suspended ? 'rowSuspended' : '';
+        var cssRow = !rows[i].enabled ? 'rowDisabled' : rows[i].closed ? Fanex.ExtAcc.Customer.GetClosedClassName(rows[i]) : rows[i].suspended ? 'rowSuspended' : '';
 
         bodyRows.push({
             Columns: [{

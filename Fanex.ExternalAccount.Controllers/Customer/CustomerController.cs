@@ -179,7 +179,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
-                Language = "En"
+                Language = "En",
+                SystemId = (byte)Config.SystemId
             };
 
             int masterId = -1;
@@ -301,7 +302,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
-                Language = "En"
+                Language = "En",
+                SystemId = (byte)Config.SystemId
             };
 
             int agentId = -1;
@@ -423,7 +425,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
-                Language = "En"
+                Language = "En",
+                SystemId = (byte)Config.SystemId
             };
 
             int memberId = -1;
@@ -600,7 +603,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
                 this._superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
-            this.SetCacheList(result);
+            //this.SetCacheList(result);
 
             SetCacheList(result);
 
