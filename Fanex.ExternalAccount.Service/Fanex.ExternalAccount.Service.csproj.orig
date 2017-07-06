@@ -161,8 +161,8 @@
       <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.6\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
 =======
     <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.5-BetRadarVS04\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
->>>>>>> 78340 - [Betradar VS] Upgrade nuget packages
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.5-BetRadarVS05\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+>>>>>>> 78340 - [Betradar VS] Upgrade nuget package
       <Private>True</Private>
     </Reference>
   </ItemGroup>

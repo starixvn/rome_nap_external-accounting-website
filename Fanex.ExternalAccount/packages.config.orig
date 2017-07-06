@@ -46,6 +46,6 @@
 <<<<<<< HEAD
   <package id="ThirdPartyProducts.StatusSetting" version="1.0.0.6" targetFramework="net40" />
 =======
-  <package id="ThirdPartyProducts.StatusSetting" version="1.0.0.5-BetRadarVS04" targetFramework="net40" />
->>>>>>> 78340 - [Betradar VS] Upgrade nuget packages
+  <package id="ThirdPartyProducts.StatusSetting" version="1.0.0.5-BetRadarVS05" targetFramework="net40" />
+>>>>>>> 78340 - [Betradar VS] Upgrade nuget package
 </packages>
