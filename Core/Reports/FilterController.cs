@@ -25,7 +25,7 @@
             {
                 if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    list.Add(new KeyValuePair<string, bool>(product.Key.ToLower(), CheckRequest.GetBooleanRequest(product.Key, true)));
+                    list.Add(new KeyValuePair<string, bool>(product.Key.ToLower(), CheckRequest.GetBooleanRequest(product.Key, false)));
                 }
             }
 

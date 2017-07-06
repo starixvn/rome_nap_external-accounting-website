@@ -25,10 +25,8 @@
         var checkEnable_Element = $('#checkEnable_' + productStatusDataRow.SportType + '_' + productStatusDataRow.BetType);
         var checkEnableDownlines_Element = $('#checkEnableDownlines_' + productStatusDataRow.SportType + '_' + productStatusDataRow.BetType);
         var checkEnable_Value = checkEnable_Element.is(':checked');
-        var checkEnableDownlines_Value = checkEnableDownlines_Element.is(':checked');
         var checkEnable_OriginalValue = !productStatusDataRow.IsDisabled;
         var checkEnableDownlines_OriginalValue = !productStatusDataRow.IsDisabledDownline;
-        var submitBtn = $('#thirdPartyProductStatusSubmitBtn');
         if (checkEnable_Value) {
             if (checkEnableDownlines_OriginalValue) {
                 checkEnableDownlines_Element.prop('checked', true);
@@ -78,7 +76,6 @@
         var checkEnableDownlines_Element = $('#checkEnableDownlines_' + productStatusDataRow.SportType + '_' + productStatusDataRow.BetType);
         var checkEnableDownlines_Value = checkEnableDownlines_Element.is(':checked');
         var checkEnableDownlines_OriginalValue = !productStatusDataRow.IsDisabledDownline;
-        var submitBtn = $('#thirdPartyProductStatusSubmitBtn');
         if (checkEnableDownlines_Value == checkEnableDownlines_OriginalValue) {
             checkEnableDownlines_Element.removeClass('is-data-change');
         } else {
