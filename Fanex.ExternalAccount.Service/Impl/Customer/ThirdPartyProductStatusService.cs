@@ -18,13 +18,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
 
         public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
         {
-            var request = new GetProductStatusRequest
-            {
-                CustId = custId,
-                ProductId = productId,
-                RoleId = roleId
-            };
-
             return new ThirdPartyProductStatusViewModel()
             {
                 CustId = custId,
@@ -32,7 +25,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
                 CustName = custName,
                 HasCheckAll = productId == (int)Product.Keno,
                 GroupBySport = productId == (int)Product.Racing,
-                ProductStatusList = statusSettingService.GetProductStatus(request)
+                ProductStatusList = statusSettingService.GetProductStatus(custId, productId, roleId)
             };
         }
 
@@ -47,14 +40,14 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             List<ProductStatus> productStatus)
         {
             var result = statusSettingService.UpdateProductStatus(
-            {
-                CustId = custId,
-                SubAccId = subAccId,
-                UplineId = 0,
-                ProductId = productId,
-                UserId = userId,
-                SystemId = systemId,
-                Ip = ip,
+                custId,
+                subAccId,
+                0,
+                productId,
+                userId,
+                systemId,
+                ip,
+                productStatus);                
 
             if (result.Any(r => r.ErrorCode.Equals("0")) && productId == (int)Product.Casino)
             {
