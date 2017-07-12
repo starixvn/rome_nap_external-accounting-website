@@ -105,7 +105,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.APILogger, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Libraries.APILogger.2.0.0.1-beta2\lib\net40\Sunplus.Libraries.APILogger.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Libraries.APILogger.2.0.0.1\lib\net40\Sunplus.Libraries.APILogger.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
