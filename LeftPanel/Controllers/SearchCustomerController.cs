@@ -690,7 +690,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 
             try
             {
-                var customerInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
                 return this.JsonBase(this._service.UpdateGoldDeluxe(custId, enable, enableDownline, custName, CurrentSession.CustId));
             }
             catch (Exception ex)

@@ -32,7 +32,7 @@ namespace Fanex.ExternalAccount.Core.Context
             var custId = HttpContext.Current.Request["id"];
             var urlRef = HttpContext.Current.Request.UrlReferrer;
             custId = string.IsNullOrWhiteSpace(custId) ? HttpContext.Current.Request["custid"] : custId;
-            if (string.IsNullOrWhiteSpace(custId))
+            if (string.IsNullOrWhiteSpace(custId) || custId == "0")
             {
                 var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');
                 foreach (var item in qryCustId)
@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.Core.Context
                     }
                 }
 
-                if (string.IsNullOrWhiteSpace(custId))
+                if (string.IsNullOrWhiteSpace(custId) || custId == "0")
                 {
                     var tracking = new XmlDocument();
                     tracking.LoadXml(strackingValue);
