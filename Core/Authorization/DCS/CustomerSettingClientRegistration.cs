@@ -88,7 +88,7 @@
             {
                 var setting = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting");
                 val = setting != null ? setting.AttemptedValue : string.Empty;
-                var pattern = "(\"productId\":)([^\r\n][0-9]+)";
+                var pattern = "(\"productId\":)([^\r\n][0-9]*)";
                 
                 Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
             
