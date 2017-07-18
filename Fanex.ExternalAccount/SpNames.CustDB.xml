@@ -1,4 +1,4 @@
-<Functions>
+<Functions SiteId="103" SiteName="NAP-Ext">
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
