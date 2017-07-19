@@ -10,6 +10,7 @@
         EnableAllbet = 21,
         EnableVoidbridge = 22,
         EnableNG2 = 23,
-        EnableFishingWorld = 24
+        EnableFishingWorld = 24,
+        EnableGoldDeluxe = 12
     }
 }

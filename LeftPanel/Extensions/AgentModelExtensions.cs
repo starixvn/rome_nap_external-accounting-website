@@ -86,21 +86,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "DoubleComm", Value = Utils.ToBoolean(tableCustomer.Rows[0]["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
                             },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds" 
+                            new ObjectInfo
+                            {
+                                Key = "EnableHRFixedOdds", Value = !tableCustomer.Rows[0].ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds"
                             },
                             new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableGoldDeluxe", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]), 
-                                Text = "Enable Gold Deluxe"
-                            },
-                            new ObjectInfo 
-                            { 
-                                Key = "EnableColossusBets", 
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]), 
+                            new ObjectInfo
+                            {
+                                Key = "EnableColossusBets",
+                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]),
                                 Text = "Colossus Bets",
                                 Tooltip = "Enable Colossus Bets"
                             }
@@ -162,6 +156,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
+
+            model.Setting.EnableItems.Add(new ObjectInfo
+            {
+                Key = "EnableGoldDeluxe",
+                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]),
+                Text = "Gold Deluxe"
+            });
 
             return model;
         }

@@ -497,7 +497,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     .RemoveCrossLevelProduct("ESports");
             }
 
-            model.RemoveEnableProduct("EnableGoldDeluxe");
+            if (product.HideGoldDeluxe || !product.SyncGoldDeluxeDownlines)
+            {
+                model.RemoveEnableProduct("EnableGoldDeluxe");
+            }
 
             if (product.HideGoldDeluxe)
             {
@@ -951,6 +954,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.SyncFishingWorld = result.Rows[0].ToBoolean("SyncedFishingWorld");
             product.SyncFishingWorldDownlines = result.Rows[0].ToBoolean("SyncedFishingWorldDownline");
             product.DisableFishingWorld = result.Rows[0].ToBoolean("DisableFishingWorld");
+
+            product.SyncGoldDeluxeDownlines = result.Rows[0].ToBoolean("SyncedGoldDeluxeDownline");
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
