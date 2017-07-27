@@ -238,24 +238,19 @@
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.IsMultiple = false;
+            var params = {
+                id: Fanex.ExtAcc.Customer.UserId,
+                roleId: 4,
+                username: Fanex.ExtAcc.Customer.TitleEditInfo,
+                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
+            };
 
-            if (parent.hasUpdateSecurityCodePermission) {
-                var params = {
-                    id: Fanex.ExtAcc.Customer.UserId,
-                    roleId: 4,
-                    username: Fanex.ExtAcc.Customer.TitleEditInfo,
-                    groupName: Fanex.ExtAcc.Customer.GroupName().groupName
-                };
-
-                Fanex.ExtAcc.Form.ShowFrame(
-                    resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
-                    'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
-                    650,
-                    500,
-                    false);
-            } else {
-                self.ShowNotAuthorized();
-            }
+            Fanex.ExtAcc.Form.ShowFrame(
+                resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
+                'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                650,
+                500,
+                false);
         }
     };
 

@@ -42,8 +42,7 @@
     var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
-
-    var hasUpdateSecurityCodePermission = CustomerModelExtensions.IsAuthorized(userId, eFunctions.UpdateSecurityCode, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
+    
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -240,7 +239,6 @@
         //var showFishingWorldBetting = true;
         var showNG2Betting = true;
         var ng2Text = '@ng2Text';
-        var hasUpdateSecurityCodePermission = @hasUpdateSecurityCodePermission;
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

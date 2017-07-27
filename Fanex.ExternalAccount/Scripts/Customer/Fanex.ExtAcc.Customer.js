@@ -977,9 +977,5 @@
             default:
                 return "closed-wrongPwdOthers";
         }        
-    },
-    
-    ShowNotAuthorized: function () {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('Shared/NotAuthorized'), 'Error', 320, 150, false);
     }
 };
