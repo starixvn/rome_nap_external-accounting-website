@@ -36,7 +36,7 @@
     HideVoidbridge: false,
     HideNG2: false,
     HideFishingWorld: false,
-    
+
     HideAllbetMember: false,
     HideVoidbridgeMember: false,
     HideNG2Member: false,
@@ -77,7 +77,7 @@
     NG2SyncIdList: [],
     FishingWorldSyncList: [],
     FishingWorldSyncIdList: [],
-    
+
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
     MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
@@ -468,7 +468,7 @@
                 Fanex.ExtAcc.Customer.NG2SyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.NG2SyncList.push($(div).attr('name'));
             }
-            
+
             if ($(div).attr('sync-fishingworld') == 'true' && !Fanex.ExtAcc.Customer.FishingWorldSyncIdList.contains($(div).attr('id'))) {
                 Fanex.ExtAcc.Customer.FishingWorldSyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.FishingWorldSyncList.push($(div).attr('name'));
@@ -493,7 +493,7 @@
                 Fanex.ExtAcc.Customer.NG2SyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.NG2SyncList.pop($(div).attr('name'));
             }
-            
+
             if ($(div).attr('sync-fishingworld') == 'true') {
                 Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.FishingWorldSyncList.pop($(div).attr('name'));
@@ -976,6 +976,10 @@
             case 0:
             default:
                 return "closed-wrongPwdOthers";
-        }
+        }        
+    },
+    
+    ShowNotAuthorized: function () {
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('Shared/NotAuthorized'), 'Error', 320, 150, false);
     }
 };

@@ -1,26 +1,26 @@
 ﻿function Update() {
     if (!Validators.validateInput($('#securityCode').val())) {
-        Validators.show($('#securityCode').get(0), "Sorry, security code can't be empty", undefined, undefined, 3000);
+        Validators.show($('#securityCode').get(0), "Sorry, security code can't be empty", 50, undefined, 3000, 27);
         return;
     }
 
     if (!IsSecurityCode($('#securityCode').val())) {
-        Validators.show($('#securityCode').get(0), "Sorry, security code is incorrect format", undefined, undefined, 3000);
+        Validators.show($('#securityCode').get(0), "Sorry, security code is incorrect format", 50, undefined, 3000, 27);
         return;
     }
 
     if (!Validators.validateInput($('#securityCodeConfirm').val())) {
-        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code can't be empty", undefined, undefined, 3000);
+        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code can't be empty", 50, undefined, 3000, 27);
         return;
     }
 
     if (!IsSecurityCode($('#securityCodeConfirm').val())) {
-        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code is incorrect format", undefined, undefined, 3000);
+        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code is incorrect format", 50, undefined, 3000, 27);
         return;
     }
 
-    if($('#securityCode').val() != $('#securityCodeConfirm').val()){
-        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code doesn't match with security code", undefined, undefined, 3000);
+    if ($('#securityCode').val() != $('#securityCodeConfirm').val()) {
+        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code doesn't match with security code", 50, undefined, 3000, 27);
         return;
     }
 
@@ -82,7 +82,7 @@ function IsSecurityCode(secCode) {
         }
         result = !(isForwardRun || isBackwardRun);
     }
-    return result; 
+    return result;
 };
 
 function Reset() {

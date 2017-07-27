@@ -3032,6 +3032,7 @@
     <Content Include="Web.staging.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Shared\NotAuthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

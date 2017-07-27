@@ -41,5 +41,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public bool HasDownline { get; set; }
 
         public int CurrencyId { get; set; }
+
+        public bool UplineHasSecurityCode { get; set; }
     }
 }

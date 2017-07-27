@@ -190,7 +190,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             {
                 UpdateCasinoStatus(masterId, result, customer);
             }
-            
+
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 Thread.Sleep(3000);
@@ -636,6 +636,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int mrecommend = 0,
             recommend = 0,
             roleId = 0;
+            var hasSecurityCode = false;
 
             if (customerInfo != null)
             {
@@ -644,6 +645,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
                 recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
                 custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                hasSecurityCode = Utils.ToBoolean(customerInfo.Rows[0]["HasSecurityCode"]);
             }
 
             _cacheList = "CacheList" + srecommend + custId + enabled + closed + suspended;
@@ -665,7 +667,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     srecommend = srecommend,
                     mrecommend = mrecommend,
                     recommend = recommend,
-                    custId = custId
+                    custId = custId,
+                    hasSecurityCode = hasSecurityCode
                 });
         }
 
@@ -690,6 +693,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             int srecommend = 0,
             recommend = 0,
             roleId = 0;
+            var hasSecurityCode = false;
 
             if (customerInfo != null)
             {
@@ -698,6 +702,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
                 recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
                 custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                hasSecurityCode = Utils.ToBoolean(customerInfo.Rows[0]["HasSecurityCode"]);
             }
 
             _cacheList = "CacheList" + mrecommend + custId + enabled + closed + suspended;
@@ -719,7 +724,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     srecommend = srecommend,
                     mrecommend = mrecommend,
                     recommend = recommend,
-                    custId = custId
+                    custId = custId,
+                    hasSecurityCode = hasSecurityCode
                 });
         }
 
