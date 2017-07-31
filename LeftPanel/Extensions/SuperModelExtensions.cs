@@ -94,12 +94,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(tableCustomer.Rows[0]["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
                             new ObjectInfo
                             {
-                                Key = "EnableGoldDeluxe",
-                                Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableGoldDeluxe"]),
-                                Text = "Enable Gold Deluxe"
-                            },
-                            new ObjectInfo
-                            {
                                 Key = "EnableColossusBets",
                                 Value = !Utils.ToBoolean(tableCustomer.Rows[0]["DisableColossusBet"]),
                                 Text = "Colossus Bets",
