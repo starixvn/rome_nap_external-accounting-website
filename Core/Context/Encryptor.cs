@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
 using Fanex.ExternalAccount.Utilities;
+using Fanex.Module.Logs.Services;
 
 namespace Fanex.ExternalAccount.Core.Context
 {
@@ -112,7 +113,16 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public string Decrypt(string encrypted, string code)
         {
-            return RC4(code, HexDecode(encrypted));
+            try
+            {
+                return RC4(code, HexDecode(encrypted));
+            }
+            catch (Exception ex)
+            {
+                ex.Write(Module.Logs.Formater.LogType.Warning);
+            }
+
+            return "cannot_decrypt_password";
         }
     }
 }

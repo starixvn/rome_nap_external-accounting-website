@@ -250,7 +250,7 @@
     if (!this.HideSportsbook2) {
         has3rdParty = true;
         itemsMaster.sportsbook2 = {
-            name: "Sportsbook2",
+            name: "Sportsbook 2",
             className: disableSportsbook2 == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;

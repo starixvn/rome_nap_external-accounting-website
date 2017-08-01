@@ -107,7 +107,7 @@
 
         if (!this.HideSportsbook2) {
             menuItems.sportsbook2 = {
-                name: "Edit Multiple Sportsbook2",
+                name: "Edit Multiple Sportsbook 2",
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 3);
@@ -272,7 +272,7 @@
 
         if (!this.HideSportsbook2) {
             menuItems.sportsbook2 = {
-                name: "Edit Multiple Sportsbook2",
+                name: "Edit Multiple Sportsbook 2",
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 2);
@@ -595,7 +595,7 @@
 
         if (!this.HideSportsbook2) {
             menuItems.sportsbook2 = {
-                name: "Sportsbook2",
+                name: "Sportsbook 2",
                 className: "iconEnableEdit",
                 items: {
                     agentSB2: {
@@ -607,7 +607,7 @@
                         }
                     },
                     superSB2: {
-                        name: "Super Edit Multiple Sportsbook2",
+                        name: "Super Edit Multiple Sportsbook 2",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -615,7 +615,7 @@
                         }
                     },
                     masterSB2: {
-                        name: "Master Edit Multiple Sportsbook2",
+                        name: "Master Edit Multiple Sportsbook 2",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
@@ -1002,7 +1002,7 @@ Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2 = function (custid, uplineRoleId
 
     Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
 
-    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Sportsbook2 Setting', 900, 600, false, false, 1);
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Sportsbook 2 Setting', 900, 600, false, false, 1);
     $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
 };
 
@@ -1043,7 +1043,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targ
 
         Fanex.ExtAcc.Customer.SetIsForcingModeHiddenField(false);
 
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Sportsbook2 Setting', 900, 600, false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Sportsbook 2 Setting', 900, 600, false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {

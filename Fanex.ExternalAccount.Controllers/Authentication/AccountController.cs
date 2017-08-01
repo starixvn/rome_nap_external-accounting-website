@@ -110,6 +110,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             var cipher = Encryptor.Instance;
             var password = cipher.Decrypt(model.Password, model.Code);
+            if (password.Equals("cannot_decrypt_password", StringComparison.OrdinalIgnoreCase))
+            {
+                Core.Context.CurrentContext.LoginErrorMessage = "Your login page has not been loaded completely. Please check your network connection and try login again!";
+
+                return RedirectToAction("Login", "Account");
+            }
 
             var isValidCaptcha = false;
             try

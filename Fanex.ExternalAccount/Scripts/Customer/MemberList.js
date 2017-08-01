@@ -199,7 +199,7 @@
 
     if (!this.HideSportsbook2) {
         itemsMember.sportsbook2 = {
-            name: "Sportsbook2",
+            name: "Sportsbook 2",
             className: disableSportsbook2 == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
