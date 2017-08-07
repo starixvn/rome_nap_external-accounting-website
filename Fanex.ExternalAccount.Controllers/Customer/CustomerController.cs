@@ -502,6 +502,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             ViewBag.HideVoidbridge = Utils.ToBoolean(result.Rows[0]["HideVoidBridge"]);
             ViewBag.HideNG2 = !this.GetDcsStatuses(custId, id, 23).IsSyncedUpline;
             ViewBag.HideFishingWorld = Utils.ToBoolean(result.Rows[0]["HideFishingWorld"]);
+            ViewBag.HideLottery = Utils.ToBoolean(result.Rows[0]["HideLottery"]); ;
 
             return PartialViewBase();
         }

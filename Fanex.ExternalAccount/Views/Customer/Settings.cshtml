@@ -18,6 +18,7 @@
     var HideVoidbridge = ViewBag.HideVoidbridge || ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0";
     var HideNG2 = ViewBag.HideNG2 || ConfigurationManager.AppSettings["IsShowNG2"] == "0";
     var HideFishingWorld = ViewBag.HideFishingWorld || ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0";
+    var HideLottery = ViewBag.HideLottery || ConfigurationManager.AppSettings["IsShowLottery"] == "0";
     var status = new { syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2, hideCockfighting = HideCockfighting, hideCricket = HideCricket };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -58,6 +59,10 @@
         @if (!HideFishingWorld)
         {
             <li id="tab18"><a href="#tabs-18">Fishing World</a></li>
+        }
+        @if (!HideLottery)
+        {
+            <li id="tab19"><a href="#tabs-19">Lottery</a></li>
         }
     </ul>
     <div id="tabs-1" class="divTab">
@@ -141,6 +146,13 @@
     {
         <div id="tabs-18" class="divTab" style="padding: 0px">
             <iframe id="fishingWorldFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
+        </div>
+    }
+
+    @if (!HideLottery)
+    {
+        <div id="tabs-19" class="divTab" style="padding: 0px">
+            <iframe id="lotteryFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
 </div>
