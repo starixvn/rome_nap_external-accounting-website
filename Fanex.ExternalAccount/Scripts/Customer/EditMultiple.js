@@ -815,7 +815,7 @@
                 className: "iconEnableEdit",
                 items: {
                     agentFW: {
-                        name: "Edit Fishing World Games",
+                        name: "Edit Multiple Fishing World",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -823,7 +823,7 @@
                         }
                     },
                     superFW: {
-                        name: "Super Edit Fishing World Games",
+                        name: "Super Edit Multiple Fishing World",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -831,7 +831,7 @@
                         }
                     },
                     masterFW: {
-                        name: "Master Edit Fishing World Games",
+                        name: "Master Edit Multiple Fishing World",
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
@@ -848,7 +848,7 @@
                  className: "iconEnableEdit",
                  items: {
                      agentLottery: {
-                         name: "Edit Lottery",
+                         name: "Edit Multiple Lottery",
                          callback: function () {
                              Fanex.ExtAcc.Customer.isSuperEditMember = false;
                              Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -856,7 +856,7 @@
                          }
                      },
                      superLottery: {
-                         name: "Super Edit Lottery",
+                         name: "Super Edit Multiple Lottery",
                          callback: function () {
                              Fanex.ExtAcc.Customer.isSuperEditMember = true;
                              Fanex.ExtAcc.Customer.isMasterEditMember = false;
@@ -864,7 +864,7 @@
                          }
                      },
                      masterLottery: {
-                         name: "Master Edit Lottery",
+                         name: "Master Edit Multiple Lottery",
                          callback: function () {
                              Fanex.ExtAcc.Customer.isSuperEditMember = false;
                              Fanex.ExtAcc.Customer.isMasterEditMember = true;
