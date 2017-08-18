@@ -107,10 +107,6 @@
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="FluentValidation">
       <HintPath>..\Dependencies\FluentValidation.dll</HintPath>
     </Reference>
@@ -257,8 +253,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.6\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.9\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -268,7 +264,6 @@
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
-    <Compile Include="Customer\VirtualSportsController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />

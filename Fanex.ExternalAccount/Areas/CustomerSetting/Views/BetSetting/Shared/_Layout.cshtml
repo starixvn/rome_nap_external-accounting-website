@@ -47,7 +47,8 @@
             @RenderSection("Racing", false)
         </div>
         <div id="tabs-3">
-            @RenderSection("VirtualSports", false)
+            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+            <div><iframe id="virtualsports" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
         <div id="tabs-4">          
             @RenderSection("LiveCasino", false)

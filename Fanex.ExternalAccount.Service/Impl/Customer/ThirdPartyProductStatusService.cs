@@ -1,6 +1,6 @@
-﻿using Fanex.ExternalAccount.DTO.Customer;
+﻿using System.Collections.Generic;
+using Fanex.ExternalAccount.DTO.Customer;
 using Fanex.ExternalAccount.Service.Interface.Customer;
-using System.Collections.Generic;
 using ThirdPartyProducts.StatusSetting.Model;
 using ThirdPartyProducts.StatusSetting.Services;
 
@@ -15,6 +15,13 @@ namespace Fanex.Tarus.Business.Implement.Customer
 
         public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
         {
+            var request = new GetProductStatusRequest
+            {
+                CustId = custId,
+                ProductId = productId,
+                RoleId = roleId
+            };
+
             return new ThirdPartyProductStatusViewModel()
             {
                 CustId = custId,
@@ -22,7 +29,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 CustName = custName,
                 HasCheckAll = productId == KenoProductId,
                 GroupBySport = productId == RacingProductId,
-                ProductStatusList = statusSettingService.GetProductStatus(custId, productId, roleId)
+                ProductStatusList = statusSettingService.GetProductStatus(request)
             };
         }
 
@@ -35,15 +42,19 @@ namespace Fanex.Tarus.Business.Implement.Customer
             string ip,
             List<ProductStatus> productStatus)
         {
-            return statusSettingService.UpdateProductStatus(
-                custId,
-                subAccId,
-                0,
-                productId,
-                userId,
-                systemId,
-                ip,
-                productStatus);
+            var request = new UpdateProductStatusRequest
+            {
+                CustId = custId,
+                SubAccId = subAccId,
+                UplineId = 0,
+                ProductId = productId,
+                UserId = userId,
+                SystemId = systemId,
+                Ip = ip,
+                ProductStatus = productStatus
+            };
+
+            return statusSettingService.UpdateProductStatus(request);
         }
     }
 }

@@ -189,11 +189,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
             return this._data.EnableNumberGame(id, enable, enableDownline);
         }
 
-        public override Result EnableVirtualSports(int id, bool enable, bool enableDownline)
-        {
-            return this._data.EnableVirtualSports(id, enable, enableDownline);
-        }
-
         public override Result EnableESports(int id, bool enable, bool enableDownline)
         {
             return this._data.EnableESports(id, enable, enableDownline);

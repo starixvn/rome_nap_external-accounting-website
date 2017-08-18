@@ -109,8 +109,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 
         public abstract Result EnableLiveCasino(int id, bool enable, bool enableDownline);
 
-        public abstract Result EnableVirtualSports(int id, bool enable, bool enableDownline);
-
         public abstract Result EnableESports(int id, bool enable, bool enableDownline);
 
         public abstract Result AutoMasterPT(int id, bool allow, int uplineId);

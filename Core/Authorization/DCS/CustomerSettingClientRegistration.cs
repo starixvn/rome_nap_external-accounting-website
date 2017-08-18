@@ -88,7 +88,7 @@
             {
                 var setting = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting");
                 val = setting != null ? setting.AttemptedValue : string.Empty;
-                var pattern = "(\"productId\":)([^\r\n][0-9]+)";
+                var pattern = "(\"productId\":)([^\r\n][0-9]*)";
                 
                 Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
             
@@ -107,6 +107,8 @@
         {
             switch (productId)
             {
+                case 5:
+                    return systemId == 4 ? eFunctions.VirtualSports : eFunctions.VirtualSportsBetting;
                 case 16:
                     return systemId == 4 ? eFunctions.Sportsbook2Setting : eFunctions.Sportsbook2Betting;
                 case 19:
