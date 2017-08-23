@@ -609,7 +609,7 @@
 
     $scope.EnableColossusBets = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(15, "Colossus Bet", 400, 150);
+        $scope.EnableThirdpartyProduct(15, "Colossus Bets", 400, 150);
     };
 
     $scope.EnableFishingWorld = function (enable, id) {
