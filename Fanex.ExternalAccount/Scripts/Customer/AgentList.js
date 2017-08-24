@@ -30,7 +30,9 @@
     disableNG2,
     syncNG2,
     isHideFishingWorld,
-    disableFishingWorld) {
+    disableFishingWorld,
+    isHideLottery,
+    disableLottery) {
     this.TransferCondition = transferCondition;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
@@ -350,6 +352,18 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld(custId, 3, 2);
+            }
+        };
+    }
+
+    if (!isHideLottery) {
+        itemsAgent.lottery = {
+            name: "Lottery",
+            className: disableLottery === true ? "iconDisableEdit" : "iconEnableEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleLottery(custId, 3, 2);
             }
         };
     }
