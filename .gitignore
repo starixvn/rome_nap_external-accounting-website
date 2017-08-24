@@ -30,3 +30,4 @@ Fanex.ExternalAccount/Fanex.ExternalAccount.UI.Publish.xml
 *.suo
 .vs/*
 packages/*
+Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user

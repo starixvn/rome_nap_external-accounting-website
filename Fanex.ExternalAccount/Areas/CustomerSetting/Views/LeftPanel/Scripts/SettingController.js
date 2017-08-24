@@ -609,7 +609,7 @@
 
     $scope.EnableColossusBets = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(15, "Colossus Bet", 400, 150);
+        $scope.EnableThirdpartyProduct(15, "Colossus Bets", 400, 150);
     };
 
     $scope.EnableFishingWorld = function (enable, id) {
@@ -638,6 +638,11 @@
     $scope.EnableNG2 = function (enable, id) {
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(23, "NG2", 400, 150);
+    };
+
+    $scope.EnableLottery = function (enable, id) {
+        document.getElementById(id).checked = enable;
+        $scope.EnableThirdpartyProduct(28, "Lottery", 400, 150);
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
@@ -915,6 +920,10 @@
         $scope.RenderSupeOnMemberDCS(24);
     };
 
+    $scope.SuperLottery = function () {
+        $scope.RenderSupeOnMemberDCS(28);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -946,6 +955,10 @@
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
+    };
+
+    $scope.MasterLottery = function () {
+        $scope.RenderMasterOnMemberDCS(28);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

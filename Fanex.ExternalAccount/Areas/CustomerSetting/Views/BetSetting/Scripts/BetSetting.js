@@ -76,3 +76,12 @@ function LoadNG2() {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);
 };
+
+function LoadLottery() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=28&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
+    document.getElementById('lottery').src = url;
+    setTimeout(function () {
+        Fanex.CustomerSetting.Core.UnBlockUI();
+    }, 1000);
+};

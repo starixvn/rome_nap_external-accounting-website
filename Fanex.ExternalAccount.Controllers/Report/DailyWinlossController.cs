@@ -29,8 +29,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
     {
         #region Init DailyWinLoss
 
-        private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private IReportService _reportService = new ReportService();
+        private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly IReportService _reportService = new ReportService();
         private List<DailyWinLoss> _listDailyWinLoss = null;
         private DateTime _winlostDate = DateTime.Today;
         private string _username = string.Empty;
@@ -43,7 +43,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         private int _recommend = 0;
         private int _memberId = 0;
         private int _custId = 0;
-        private string _searchName = string.Empty;
+        private readonly string _searchName = string.Empty;
 
         #endregion Init DailyWinLoss
 

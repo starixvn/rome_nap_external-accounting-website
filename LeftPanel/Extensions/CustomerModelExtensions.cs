@@ -80,13 +80,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 return "masterUsedCredit";
             }
-            else if (roleId == 2)
-            {
-                return "agentUsedCredit";
-            }
             else
             {
-                return "superUsedCredit";
+                return "agentUsedCredit";
             }
         }
 
@@ -172,14 +168,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url)).Count() > 0;
+            hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url));
 
-            if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
+            if (!hasPerm && (foundItems == null || foundItems.Any()))
             {
                 return false;
             }
 
-            if (foundItems.Count() > 0)
+            if (foundItems.Any())
             {
                 var firstItem = foundItems.First();
                 switch (policy)
@@ -577,6 +573,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.SyncFishingWorldDownlines,
                 "FishingWorld");
 
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId,
+                4,
+                product.RoleId < 4 ? product.UplineStatuses.HideLottery : product.HideLottery,
+                product.RoleId < 4 ? product.UplineStatuses.SyncLottery : product.SyncLottery,
+                product.HideLottery,
+                product.SyncLottery,
+                product.SyncLotteryDownlines,
+                "Lottery");
+
             return model;
         }
 
@@ -730,6 +736,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableFishingWorld)
             {
                 model.DisableProduct("EnableFishingWorld");
+            }
+
+            if (product.UplineStatuses.DisableLottery)
+            {
+                model.DisableProduct("EnableLottery");
             }
 
             return model;
@@ -961,6 +972,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             product.SyncGoldDeluxeDownlines = result.Rows[0].ToBoolean("SyncedGoldDeluxeDownline");
 
+            product.HideLottery = ConfigurationManager.AppSettings["IsShowLottery"] == "0" || result.Rows[0].ToBoolean("HideLottery");
+            product.SyncLottery = true;
+            product.SyncLotteryDownlines = true;
+            product.DisableLottery = result.Rows[0].ToBoolean("DisableLottery");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -996,9 +1012,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableNG2 = upperInfo.Rows[0].ToBoolean("DisableNG2");
                 product.UplineStatuses.HideNG2 = upperInfo.Rows[0].ToBoolean("HideNG2");
                 product.UplineStatuses.SyncNG2 = upperInfo.Rows[0].ToBoolean("SyncedNG2");
+
                 product.UplineStatuses.DisableFishingWorld = upperInfo.Rows[0].ToBoolean("DisableFishingWorld");
                 product.UplineStatuses.HideFishingWorld = upperInfo.Rows[0].ToBoolean("HideFishingWorld");
                 product.UplineStatuses.SyncFishingWorld = upperInfo.Rows[0].ToBoolean("SyncedFishingWorld");
+
+                product.UplineStatuses.DisableLottery = upperInfo.Rows[0].ToBoolean("DisableLottery");
+                product.UplineStatuses.HideLottery = upperInfo.Rows[0].ToBoolean("HideLottery");
+                product.UplineStatuses.SyncLottery = true;
             }
 
             return product;

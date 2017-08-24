@@ -194,12 +194,11 @@ namespace Fanex.ExternalAccount.Core.Base
 
         protected DcsEntity GetDcsStatuses(int custId, int roleId, int productId)
         {
-            var ds = new DataSet();
             var param = new Hashtable();
             param.Add("custid", custId);
             param.Add("roleid", roleId);
 
-            ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
+            var ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
 
             if (ds != null && ds.Tables.Count > 0)
             {

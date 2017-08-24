@@ -22,7 +22,8 @@ namespace Fanex.ExternalAccount
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
-    using Logging;
+    using Fanex.Module.Logs;
+    using Fanex.Module.Logs.Services;
     using Service.Impl.Login;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
@@ -135,7 +136,7 @@ namespace Fanex.ExternalAccount
             var ex = Server.GetLastError();
             if (!ex.Message.Contains("Server cannot set"))
             {
-                LogService.Warn(ex.ToString());
+                ex.Write(Formater.LogType.Warning);
             }
             
             if (ex.GetType() != typeof(HttpException) &&
@@ -144,7 +145,6 @@ namespace Fanex.ExternalAccount
             {
                 var customerException = new Exception("System error and redirect to Oops... page", ex);
                 Logs.Error(customerException);
-                // Response.RedirectPermanent("~/Shared/Error", true);
             }
         }
 

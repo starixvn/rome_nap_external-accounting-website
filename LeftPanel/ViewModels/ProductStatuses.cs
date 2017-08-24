@@ -255,5 +255,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public bool SyncFishingWorldDownlines { get; set; }
 
         public bool SyncGoldDeluxeDownlines { get; set; }
+        
+        public bool DisableLottery { get; set; }
+
+        public bool HideLottery { get; set; }
+
+        public bool SyncLottery { get; set; }
+
+        public bool SyncLotteryDownlines { get; set; }
     }
 }

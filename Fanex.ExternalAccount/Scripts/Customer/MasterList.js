@@ -30,7 +30,9 @@
     disableNG2,
     syncNG2,
     isHideFishingWorld,
-    disableFishingWorld) {
+    disableFishingWorld,
+    isHideLottery,
+    disableLottery) {
     this.TransferCondition = transferCondition;
     Fanex.ExtAcc.Customer.UserId = custId;
     this.TitleEditInfo = unescape(title);
@@ -344,6 +346,19 @@
         };
     }
 
+    if (!isHideLottery) {
+        has3rdParty = true;
+        itemsMaster.lottery = {
+            name: "Lottery",
+            className: disableLottery === true ? "iconDisableEdit" : "iconEnableEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                Fanex.ExtAcc.Customer.ShowEditSingleLottery(custId, 4, 3);
+            }
+        };
+    }
+    
     if (has3rdParty)
         itemsMaster.separator2 = "-----";
     itemsMaster.editInfo = {
@@ -431,7 +446,8 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
     isHideAllbet,
     isHideVoidbridge,
     isHideNG2,
-    isHideFishingWorld) {
+    isHideFishingWorld,
+    isHideLottery) {
     Fanex.ExtAcc.BlockUI();
 
     this.superId = srecommend;
@@ -454,6 +470,7 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
     this.HideNG2 = isHideNG2;
     this.HideFishingWorld = isHideFishingWorld;
     this.hasSecurityCode = false;
+    this.HideLottery = isHideLottery;
 
     var url = resolveClientUrl('Customer/MasterListPost');
     var data = this.GetParams();
@@ -493,7 +510,9 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
             var hideVoidbridgeSettingLink = !cell.Value.SyncedVoidBridgeUpline || cell.Value.HideVoidBridgeUpline || !cell.Value.SyncedVoidBridge;
             var hideNG2SettingLink = !cell.Value.SyncedNG2Upline || cell.Value.HideNG2Upline || !cell.Value.SyncedNG2;
             var hideFishingWorldSettingLink = isHideFishingWorld || !cell.Value.SyncedFishingWorldUpline || cell.Value.HideFishingWorldUpline;
-            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.SyncLiveCasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + "," + hideVoidbridgeSettingLink + "," + hideFishingWorldSettingLink + ")";
+            var hideLotterySettingLink = isHideLottery || cell.Value.HideLotteryUpline;
+
+            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.SyncLiveCasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + "," + hideVoidbridgeSettingLink + "," + hideFishingWorldSettingLink + "," + hideLotterySettingLink + ")";
 
             var len = cell.Value.username.length;
             var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
@@ -517,39 +536,9 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
             var hideVoidbridgeSettingLink = !cell.Value.SyncedVoidBridgeUpline || cell.Value.HideVoidBridgeUpline;
             var hideNG2SettingLink = !cell.Value.SyncedNG2Upline || cell.Value.HideNG2Upline;
             var hideFishingWorldSettingLink = isHideFishingWorld || cell.Value.HideFishingWorldUpline || !cell.Value.SyncedFishingWorldUpline;
+            var hideLotterySettingLink = isHideLottery || cell.Value.HideLotteryUpline;
 
-            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid +
-                ", '" + title +
-                "', " + cell.Value.disableTransfer +
-                ", " + cell.Value.synccasino +
-                ", " + cell.Value.disablecasino +
-                ", " + cell.Value.SyncLiveCasino +
-                ", " + cell.Value.DisableLiveCasino +
-                ", " + cell.Value.HideVirtualSports +
-                ", " + cell.Value.DisableVirtualSports +
-                ", " + superSyncCasino +
-                ", " + superSyncLiveCasino +
-                "," + hideKeno +
-                ", " + cell.Value.DisableKeno +
-                "," + hideGoldDeluxe +
-                ", " + cell.Value.DisableGoldDeluxe +
-                "," + hideColossusBets +
-                ", " + cell.Value.DisableColossusBet +
-                "," + hideSportsbook2 +
-                ", " + cell.Value.DisableMuayThai +
-                "," + hideCockfighting +
-                ", " + cell.Value.DisableCockFighting +
-                "," + hideCricket +
-                ", " + cell.Value.DisableCricket +
-                "," + hideAllbetSettingLink +
-                ", " + cell.Value.DisableAllBet +
-                "," + hideVoidbridgeSettingLink +
-                ", " + cell.Value.DisableVoidBridge +
-                "," + hideNG2SettingLink +
-                "," + cell.Value.DisableNG2 +
-                "," + cell.Value.SyncedNG2 +
-                "," + hideFishingWorldSettingLink +
-                "," + cell.Value.DisableFishingWorld + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + "," + hideColossusBets + ", " + cell.Value.DisableColossusBet + "," + hideSportsbook2 + ", " + cell.Value.DisableMuayThai + "," + hideCockfighting + ", " + cell.Value.DisableCockFighting + "," + hideCricket + ", " + cell.Value.DisableCricket + "," + hideAllbetSettingLink + ", " + cell.Value.DisableAllBet + "," + hideVoidbridgeSettingLink + ", " + cell.Value.DisableVoidBridge + "," + hideNG2SettingLink + "," + cell.Value.DisableNG2 + "," + cell.Value.SyncedNG2 + "," + hideFishingWorldSettingLink + "," + cell.Value.DisableFishingWorld + "," + hideLotterySettingLink + "," + cell.Value.DisableLottery + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMaster"></div>';
         }
@@ -704,6 +693,8 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     Fanex.ExtAcc.Customer.HideAllbet = len > 0 ? (parentItem.HideAllBetUpline || !parentItem.SyncedAllBetUpline) : Fanex.ExtAcc.Customer.HideAllbet;
     Fanex.ExtAcc.Customer.HideVoidbridge = len > 0 ? (parentItem.HideVoidBridgeUpline || !parentItem.SyncedVoidBridgeUpline) : Fanex.ExtAcc.Customer.HideVoidbridge;
     Fanex.ExtAcc.Customer.HideNG2 = len > 0 ? (parentItem.HideNG2Upline || !parentItem.SyncedNG2Upline) : Fanex.ExtAcc.Customer.HideNG2;
+    Fanex.ExtAcc.Customer.HideFishingWorld = len > 0 ? (parentItem.HideFishingWorldUpline || !parentItem.SyncedFishingWorldUpline) : Fanex.ExtAcc.Customer.HideFishingWorld;
+    Fanex.ExtAcc.Customer.HideLottery = len > 0 ? (parentItem.HideLotteryUpline) : Fanex.ExtAcc.Customer.HideLottery;
 
     this.DataSource = rows;
     var isMyanmarOdds = rows.length > 0 ? rows[0].IsMyanmarOdds : false;

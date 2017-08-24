@@ -352,7 +352,7 @@ namespace Fanex.ExternalAccount.Core.Base
             var userGroup = groups.Where(o => o.GroupID == CurrentSession.GroupId);
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
             var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase)) :
-                userGroup.Count() > 0 ? userGroup.FirstOrDefault().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase) : false;
+                userGroup.Any() ? userGroup.FirstOrDefault().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase) : false;
 
             return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
         }
@@ -404,16 +404,16 @@ namespace Fanex.ExternalAccount.Core.Base
             if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
                 !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
             {
-                hasPerm = menuList.Where(o => !string.IsNullOrWhiteSpace(o.Url) &&
-                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty))).Count() > 0;
+                hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url) &&
+                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty)));
             }
 
-            if (!hasPerm && (foundItems == null || foundItems.Count() == 0))
+            if (!hasPerm && (foundItems == null || foundItems.Any()))
             {
                 return false;
             }
 
-            if (foundItems.Count() > 0)
+            if (foundItems.Any())
             {
                 var firstItem = foundItems.First();
                 switch (policy)
@@ -535,7 +535,9 @@ namespace Fanex.ExternalAccount.Core.Base
             {
                 if (product.IsSpecial)
                 {
-                    if (!this.IsHiddenProduct(product) && (!isInternalAdmin || (isInternalAdmin && isAllowAcess && isAuthorized)))
+#pragma warning disable S2589 // Boolean expressions should not be gratuitous
+                    if (!IsHiddenProduct(product) && (!isInternalAdmin || (isInternalAdmin && isAllowAcess && isAuthorized)))
+#pragma warning restore S2589 // Boolean expressions should not be gratuitous
                     {
                         list.Add(new KeyValuePair<string, string>(
                             product.Id,

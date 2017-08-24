@@ -11,6 +11,7 @@
         EnableVoidbridge = 22,
         EnableNG2 = 23,
         EnableFishingWorld = 24,
-        EnableGoldDeluxe = 12
+        EnableGoldDeluxe = 12,
+        EnableLottery = 28
     }
 }
