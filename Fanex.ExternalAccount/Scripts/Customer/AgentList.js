@@ -693,6 +693,10 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
     var options = null;
     var bodyRows = [];
 
+    if (rows.length > 0) {
+        this.hasSecurityCode = rows[0].UplineHasSecurityCode || rows[0].HasSecurityCode;
+    }
+
     var len = rows.length;
     var parentItem = rows[0];
     var hideAB = Fanex.ExtAcc.Customer.HideAllbet = len > 0 ? (parentItem.HideAllBetUpline || !parentItem.SyncedAllBetUpline) : Fanex.ExtAcc.Customer.HideAllbet;
