@@ -184,6 +184,16 @@
                 }
             };
         }
+
+        if (!this.HideLucky3) {
+            menuItems.lucky3 = {
+                name: "Edit Multiple Lucky 3",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(4, 3);
+                }
+            };
+        }
         
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
@@ -355,6 +365,16 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleLottery(3, 2);
+                }
+            };
+        }
+
+        if (!this.HideLucky3) {
+            menuItems.lucky3 = {
+                name: "Edit Multiple Lucky 3",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(3, 2);
                 }
             };
         }
@@ -869,6 +889,39 @@
                              Fanex.ExtAcc.Customer.isSuperEditMember = false;
                              Fanex.ExtAcc.Customer.isMasterEditMember = true;
                              Fanex.ExtAcc.Customer.ShowEditMultipleLottery(3, 1);
+                         }
+                     }
+                 }
+             };
+         }
+
+         if (!this.HideLucky3) {
+             menuItems.lucky3 = {
+                 name: "Lucky 3",
+                 className: "iconEnableEdit",
+                 items: {
+                     agentLucky3: {
+                         name: "Edit Multiple Lucky 3",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(2, 1);
+                         }
+                     },
+                     superLucky3: {
+                         name: "Super Edit Multiple Lucky 3",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(4, 1);
+                         }
+                     },
+                     masterLucky3: {
+                         name: "Master Edit Multiple Lucky 3",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(3, 1);
                          }
                      }
                  }
@@ -1680,6 +1733,75 @@ Fanex.ExtAcc.Customer.ShowEditMultipleLottery = function (uplineRoleId, targetRo
     }
     else {
         this.ShowEditSingleLottery(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+    }
+};
+
+Fanex.ExtAcc.Customer.ShowEditSingleLucky3 = function (custid, uplineRoleId, targetRoleId) {
+    document.getElementById('language').value = "en-US";
+    document.getElementById('productId').value = 26;
+    document.getElementById('customerLevel').value = targetRoleId;
+    document.getElementById('customerId').value = custid;
+    document.getElementById('isMultiple').value = false;
+    document.getElementById('uplineLevel').value = "";
+
+    if (this.CurrentLevel == this.Super) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else {
+        document.getElementById('uplineLevel').value = uplineRoleId;
+        document.getElementById('IsReadOnly').value = false;
+    }
+
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Lucky 3 Setting', 900, 750, false, false, 1);
+    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleLucky3 = function (uplineRoleId, targetRoleId) {
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
+
+    if (this.IsMultiple) {
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = this.Names();
+        var custIdsArr = this.Ids()
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 26;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('isMultiple').value = true;
+        document.getElementById('customerIds').value = CustIds;
+        document.getElementById('customerNames').value = Usernames;
+        document.getElementById('uplineLevel').value = "";
+
+        if (document.getElementById('customerIds').value == "") {
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Lucky 3 Setting', 900, 600, false, false, 1);
+            return;
+        }
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Lucky 3 Setting', 900, 750, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    }
+    else {
+        this.ShowEditSingleLucky3(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 

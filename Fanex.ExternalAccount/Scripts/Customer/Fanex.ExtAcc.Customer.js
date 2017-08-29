@@ -36,6 +36,7 @@
     HideVoidbridge: false,
     HideNG2: false,
     HideFishingWorld: false,
+    HideLucky3: false,
 
     HideAllbetMember: false,
     HideVoidbridgeMember: false,
