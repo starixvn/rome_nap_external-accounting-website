@@ -152,7 +152,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
             model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
-            model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky3");
+            model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
 
             model.Setting.EnableItems.Add(new ObjectInfo
             {
