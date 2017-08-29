@@ -12,6 +12,7 @@
         EnableNG2 = 23,
         EnableFishingWorld = 24,
         EnableGoldDeluxe = 12,
-        EnableLottery = 28
+        EnableLottery = 28,
+        EnableLucky3 = 26
     }
 }

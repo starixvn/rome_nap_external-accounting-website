@@ -583,6 +583,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.SyncLotteryDownlines,
                 "Lottery");
 
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId,
+                5,
+                product.RoleId < 4 ? product.UplineStatuses.HideLucky3 : product.HideLucky3,
+                product.RoleId < 4 ? product.UplineStatuses.SyncLucky3 : product.SyncLucky3,
+                product.HideLucky3,
+                product.SyncLucky3,
+                product.SyncLucky3Downlines,
+                "Lucky3");
+
             return model;
         }
 
@@ -741,6 +751,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableLottery)
             {
                 model.DisableProduct("EnableLottery");
+            }
+
+            if (product.UplineStatuses.DisableLucky3)
+            {
+                model.DisableProduct("EnableLucky3");
             }
 
             return model;
@@ -977,6 +992,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.SyncLotteryDownlines = true;
             product.DisableLottery = result.Rows[0].ToBoolean("DisableLottery");
 
+            product.HideLucky3 = ConfigurationManager.AppSettings["IsShowLucky3"] == "0" || result.Rows[0].ToBoolean("HideLucky3");
+            product.SyncLucky3 = true;
+            product.SyncLucky3Downlines = true;
+            product.DisableLucky3 = result.Rows[0].ToBoolean("DisableLucky3");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -1020,6 +1040,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableLottery = upperInfo.Rows[0].ToBoolean("DisableLottery");
                 product.UplineStatuses.HideLottery = upperInfo.Rows[0].ToBoolean("HideLottery");
                 product.UplineStatuses.SyncLottery = true;
+
+                product.UplineStatuses.DisableLucky3 = upperInfo.Rows[0].ToBoolean("DisableLucky3");
+                product.UplineStatuses.HideLucky3 = upperInfo.Rows[0].ToBoolean("HideLucky3");
+                product.UplineStatuses.SyncLucky3 = true;
             }
 
             return product;

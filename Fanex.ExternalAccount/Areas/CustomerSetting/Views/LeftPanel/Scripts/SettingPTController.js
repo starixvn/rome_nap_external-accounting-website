@@ -391,6 +391,10 @@
         $scope.RenderDCS(28);
     };
 
+    $scope.Lucky3 = function () {
+        $scope.RenderDCS(26);
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

@@ -645,6 +645,11 @@
         $scope.EnableThirdpartyProduct(28, "Lottery", 400, 150);
     };
 
+    $scope.EnableLucky3 = function (enable, id) {
+        document.getElementById(id).checked = enable;
+        $scope.EnableThirdpartyProduct(26, "Lucky 3", 400, 150);
+    };
+
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
         var url_SELECT = productId == 24 ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
@@ -924,6 +929,10 @@
         $scope.RenderSupeOnMemberDCS(28);
     };
 
+    $scope.SuperLucky3 = function () {
+        $scope.RenderSupeOnMemberDCS(26);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -959,6 +968,10 @@
 
     $scope.MasterLottery = function () {
         $scope.RenderMasterOnMemberDCS(28);
+    };
+
+    $scope.MasterLucky3 = function () {
+        $scope.RenderMasterOnMemberDCS(26);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
