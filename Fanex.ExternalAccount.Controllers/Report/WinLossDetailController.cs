@@ -58,6 +58,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
         private int _totalPages = 1;
         private string _products = string.Empty;
         private string _formatedProducts = string.Empty;
+        private IList<int> _formatedProductIds = new List<int>();
+        private string _productIds = string.Empty;
 
         #endregion Init WinLossDetail
 
@@ -74,6 +76,8 @@ namespace Fanex.ExternalAccount.Controllers.Report
         {
             this._products = string.Empty;
             this._formatedProducts = string.Empty;
+            this._formatedProductIds = new List<int>();
+            this._productIds = string.Empty;
             this._username = CheckRequest.GetStringRequest("username", string.Empty);
             this._viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             this._custId = CheckRequest.GetIntRequest("custid", 0);
@@ -98,6 +102,25 @@ namespace Fanex.ExternalAccount.Controllers.Report
             {
                 this._formatedProducts = this._formatedProducts.Substring(0, this._formatedProducts.Length - 2);
             }
+
+            var products = ProductsConfiguration.Instance.ProductCollection;
+            foreach (ProductElementConfiguration item in products)
+            {                
+                foreach (var product in _filterParams)
+                {
+                    if (item.ProductId == 0)
+                    {
+                        break;
+                    }
+
+                    if (product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) && product.Value)
+                    {
+                        _formatedProductIds.Add(item.ProductId);
+                    }
+                }
+            }
+
+            _productIds = string.Join(",", _formatedProductIds);
         }
 
         /// <summary>
@@ -291,7 +314,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             if (this._roleId > 3)
             {
                 this._listWinLossDetail = this._reportService.GetWinLossDetail(
-                    this._groupname, this._srecommend, this._fromDate, this._toDate, this._filterParams);
+                    this._groupname, this._srecommend, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
@@ -313,7 +336,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             else if (this._roleId == 3)
             {
                 this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(
-                    this._srecommend, this._mrecommend, this._fromDate, this._toDate, this._filterParams);
+                    this._srecommend, this._mrecommend, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
@@ -337,7 +360,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             else if (this._roleId == 2)
             {
                 this._listWinLossDetailMAg = this._reportService.GetWinLossDetailMAg(
-                    this._mrecommend, this._recommend, this._fromDate, this._toDate, this._filterParams);
+                    this._mrecommend, this._recommend, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetailMAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailMAg>>(this._cacheList, this._listWinLossDetailMAg, 120);
                 return this.JsonBase(
@@ -362,7 +385,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             else
             {
                 this._listWinLossDetailAg = this._reportService.GetWinLossDetailAg(
-                    this._recommend, this._memberId, this._fromDate, this._toDate, this._filterParams);
+                    this._recommend, this._memberId, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetailAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailAg>>(this._cacheList, this._listWinLossDetailAg, 120);
                 return this.JsonBase(
@@ -394,7 +417,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
         {
             if (this._viewlevel == 4)
             {
-                this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(this._custId, 0, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetail = this._reportService.GetWinLossDetailSuper(this._custId, 0, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetail.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetail>>(this._cacheList, this._listWinLossDetail, 120);
                 return this.JsonBase(
@@ -408,7 +431,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
             else if (this._viewlevel == 3)
             {
-                this._listWinLossDetailMAg = this._reportService.GetWinLossDetailMAg(this._custId, 0, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetailMAg = this._reportService.GetWinLossDetailMAg(this._custId, 0, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetailMAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailMAg>>(this._cacheList, this._listWinLossDetailMAg, 120);
                 return this.JsonBase(
@@ -428,7 +451,7 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
             else
             {
-                this._listWinLossDetailAg = this._reportService.GetWinLossDetailAg(this._custId, 0, this._fromDate, this._toDate, this._filterParams);
+                this._listWinLossDetailAg = this._reportService.GetWinLossDetailAg(this._custId, 0, this._fromDate, this._toDate, this._productIds);
                 this._totalPages = (this._listWinLossDetailAg.Count / this._pageSize) + 1;
                 this._cache.Set<List<WinLossDetailAg>>(this._cacheList, this._listWinLossDetailAg, 120);
                 return this.JsonBase(
