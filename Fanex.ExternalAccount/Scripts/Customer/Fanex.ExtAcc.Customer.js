@@ -652,7 +652,7 @@
                 Fanex.ExtAcc.Customer.HideVoidbridge = !rows[0].SyncedVoidBridge;
                 Fanex.ExtAcc.Customer.HideNG2 = !rows[0].SyncedNG2;
                 Fanex.ExtAcc.Customer.HideFishingWorld = !rows[0].SyncedFishingWorld;
-                Fanex.ExtAcc.Customer.HideLottery = !rows[0].HideLottery;
+                Fanex.ExtAcc.Customer.HideLottery = rows[0].HideLottery;
 
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
