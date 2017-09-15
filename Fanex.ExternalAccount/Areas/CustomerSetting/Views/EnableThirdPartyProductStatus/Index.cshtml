@@ -2,11 +2,17 @@
 @using Resources;
 @model ThirdPartyProductStatusViewModel
 @{
+    var firstProduct = Model.ProductStatusList[0];
     bool isUpdateByBettype = Model.ProductStatusList.Count > 1;
-    bool isSyncAllDownline = Model.ProductStatusList[0].IsSyncedDownline;
-    bool isSync = Model.ProductStatusList[0].IsSync;
-    int productId = Model.ProductStatusList[0].ProductId;
-    bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !(isSyncAllDownline && isSync);
+
+    bool isSyncAllDownline = firstProduct.IsSyncedDownline;
+    bool isHasDownlines = firstProduct.HasDownline;
+    bool isSync = firstProduct.IsSync;
+    int productId = firstProduct.ProductId;
+
+    bool isWarningSyncedAllDownlineProduct = productId.Equals(24) && !(isSyncAllDownline && isSync);
+    bool isShowEnableDownlines = Model.RoleId != 1 && isHasDownlines && isSyncAllDownline;
+
     int sportTypePrevious = 0;
 }
 <!DOCTYPE html>
@@ -66,8 +72,8 @@
                         <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
                         <label for="checkEnable_@(item.SportType+"_" + item.BetType)">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
                     </td>
-                    @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
-                {
+                    @if (isShowEnableDownlines)
+                    {
                         <td>
                             <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
                             <label for="checkEnableDownlines_@(item.SportType + "_" + item.BetType)">Enable Downlines</label>

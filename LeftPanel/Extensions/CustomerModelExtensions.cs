@@ -541,7 +541,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.HideAllbet,
                 product.SyncAllbet,
                 product.SyncAllbetDownlines,
-                "Allbet");
+                "Allbet",
+                false);
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
@@ -551,7 +552,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.HideVoidbridge,
                 product.SyncVoidbridge,
                 product.SyncVoidbridgeDownlines,
-                "MacauGames");
+                "MacauGames",
+                false);
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
@@ -605,7 +607,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             bool hide,
             bool sync,
             bool syncDownline,
-            string productName)
+            string productName,
+            bool isCheckSyncDownlineField = true)
         {
             var showProductIndex = productIndex == 0 ? productIndex : productIndex * 2;
             if (hide)
@@ -645,7 +648,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     model.RemoveCrossLevelProduct(productName);
                 }
             }
-            else if ((!sync && roleId == 1) || (!hide && !sync) || !syncDownline)
+            else if ((!sync && roleId == 1) || (!hide && !sync) || (isCheckSyncDownlineField && !syncDownline))
             {
                 // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("Enable" + productName);
