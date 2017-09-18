@@ -215,16 +215,6 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-
-
-        public static string InternalLoginUrl9
-        {
-            get
-            {
-                return GetValue("int_agent_url9");
-            }
-        }
-
         public static bool HideGoldDeluxe
         {
             get { return Utils.ToBoolean(GetValue("HideGoldDeluxe")); }
