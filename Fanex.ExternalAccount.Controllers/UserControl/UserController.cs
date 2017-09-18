@@ -39,8 +39,8 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         private enum AlphaSiteCode
         {
             I1 = 1,
-            I2 = 2,
-            I7 = 7
+            I7 = 7,
+            I9 = 9
         }
 
         /// <summary>
@@ -380,10 +380,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         {
             switch (siteCode)
             {
-                case AlphaSiteCode.I2:
-                    return Config.InternalLoginUrl2;
                 case AlphaSiteCode.I7:
                     return Config.InternalLoginUrl7;
+                case AlphaSiteCode.I9:
+                    return Config.InternalLoginUrl9;
                 default:
                     return Config.InternalLoginUrl;
             }

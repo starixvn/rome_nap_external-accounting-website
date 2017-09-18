@@ -199,13 +199,23 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        public static string InternalLoginUrl2
+        public static string InternalLoginUrl7
         {
             get
             {
-                return GetValue("int_agent_url2");
+                return GetValue("int_agent_url7");
             }
         }
+
+        public static string InternalLoginUrl9
+        {
+            get
+            {
+                return GetValue("int_agent_url9");
+            }
+        }
+
+
 
         public static string InternalLoginUrl7
         {
