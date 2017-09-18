@@ -62,7 +62,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
             ViewBag.UserId = CurrentSession.UserId;
             bool isSpecialSiteCustomer = false;
             bool isSpecialHeadline = false;
-            base.IsSpecialSiteCustomer(id, ref isSpecialSiteCustomer, ref isSpecialHeadline);
+            int siteCode = 1;
+            base.IsSpecialSiteCustomer(id, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode);
             if (!base.IsAdminHasPermissionOnCustomer(id, isSpecialSiteCustomer || isSpecialHeadline))
             {
                 return this.Content("var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");

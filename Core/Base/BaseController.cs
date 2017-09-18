@@ -516,10 +516,10 @@ namespace Fanex.ExternalAccount.Core.Base
             return true;
         }
 
-        protected void IsSpecialSiteCustomer(string username, ref bool isSpecialSite, ref bool isSpecialHeadline)
+        protected void IsSpecialSiteCustomer(string username, ref bool isSpecialSite, ref bool isSpecialHeadline, ref int siteCode)
         {
             var permissionService = new ServiceBase();
-            permissionService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username }, ref isSpecialSite, ref isSpecialHeadline);
+            permissionService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username }, ref isSpecialSite, ref isSpecialHeadline, ref siteCode);
         }
 
         protected List<KeyValuePair<string, string>> GetProductList()

@@ -36,6 +36,12 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     {
         private readonly IUserService _userService = new UserService();
         private readonly CachingService _cache = new CachingService();
+        private enum AlphaSiteCode
+        {
+            I1 = 1,
+            I2 = 2,
+            I7 = 7
+        }
 
         /// <summary>
         /// Gets user list.
@@ -349,7 +355,8 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             var url = string.Empty;
             bool isSpecialSiteCustomer = false;
             bool isSpecialHeadline = false;
-            base.IsSpecialSiteCustomer(username, ref isSpecialSiteCustomer, ref isSpecialHeadline);
+            int siteCode = 1;
+            base.IsSpecialSiteCustomer(username, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode);
             if (base.IsAdminHasPermissionOnCustomer(username, isSpecialSiteCustomer))
             {
                 var encryption = new RSACryptoPad.EncryptionThread();
@@ -357,8 +364,8 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
                 url = string.Format(
-                "{0}?{1}params={2}", 
-                isSpecialSiteCustomer ? ConfigurationManager.AppSettings["int_agent_url2"] : Config.InternalLoginUrl,
+                "{0}?{1}params={2}",
+                GetInternalLoginUrl((AlphaSiteCode)siteCode),
                 Session[Config.InternalAgentUMToken] == null ? string.Empty : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
                     param);
             }
@@ -368,6 +375,18 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             }
 
             return this.JsonBase(new { errorCode = 0, url = url });
+        }
+        private static string GetInternalLoginUrl(AlphaSiteCode siteCode)
+        {
+            switch (siteCode)
+            {
+                case AlphaSiteCode.I2:
+                    return Config.InternalLoginUrl2;
+                case AlphaSiteCode.I7:
+                    return Config.InternalLoginUrl7;
+                default:
+                    return Config.InternalLoginUrl;
+            }
         }
     }
 }
