@@ -217,15 +217,13 @@ namespace Fanex.ExternalAccount.Utilities
 
 
 
-        public static string InternalLoginUrl7
+        public static string InternalLoginUrl9
         {
             get
             {
-                return GetValue("int_agent_url7");
+                return GetValue("int_agent_url9");
             }
         }
-
-
 
         public static bool HideGoldDeluxe
         {
