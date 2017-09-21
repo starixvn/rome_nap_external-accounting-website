@@ -98,7 +98,7 @@
       <HintPath>..\Dependencies\Fanex.CustomerSetting.Module.BetSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.ExtNAP.1.0.0.0\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.ExtNAP.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
@@ -407,21 +407,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-<<<<<<< HEAD
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.6\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
-=======
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.0.5-BetRadarVS05\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
->>>>>>> 78340 - [Betradar VS] Upgrade nuget package
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.2-removeIsSyncedDownlines\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TplCore">
       <HintPath>..\Dependencies\TplCore.dll</HintPath>
-    </Reference>
-    <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UMControllerLibrary.1.0.0.1\lib\net40\UMControllerLibrary.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\Dependencies\WebGrease.dll</HintPath>
