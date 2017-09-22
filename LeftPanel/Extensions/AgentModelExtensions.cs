@@ -129,13 +129,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             {
                                 Key = "HideLottery",
                                 Value = table3rdDCS.Select("ProductID = 28").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsSync"])) : false
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideLucky3",
                                 Value = table3rdDCS.Select("ProductID = 26").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])) : false
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])) : true
                             }
                         },
                 EditItems = new List<ObjectInfo>
