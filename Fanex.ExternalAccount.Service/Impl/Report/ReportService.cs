@@ -218,9 +218,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             int custId, 
             DateTime fromDate,
             DateTime toDate,
-            ICollection<KeyValuePair<string, bool>> filterParams)
+            string productIds)
         {
-            return _reportDAO.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, filterParams, BalanceUpDate);
+            return _reportDAO.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
         }
 
         public List<WinLossDetail> GetWinLossDetailSuper(
@@ -228,9 +228,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             int masterId,
             DateTime fromDate,
             DateTime toDate,
-            ICollection<KeyValuePair<string, bool>> filterParams)
+            string productIds)
         {
-            return _reportDAO.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, filterParams, BalanceUpDate);
+            return _reportDAO.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate);
         }
 
         public List<WinLossDetailMAg> GetWinLossDetailMAg(
@@ -238,19 +238,19 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             int agentId, 
             DateTime fromDate,
             DateTime toDate,
-            ICollection<KeyValuePair<string, bool>> filterParams)
+            string productIds)
         {
-            return _reportDAO.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, filterParams, BalanceUpDate);
+            return _reportDAO.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate);
         }
 
         public List<WinLossDetailAg> GetWinLossDetailAg(
             int custId, 
             int memberId,
             DateTime fromDate,
-            DateTime toDate, 
-            ICollection<KeyValuePair<string, bool>> filterParams)
+            DateTime toDate,
+            string productIds)
         {
-            return _reportDAO.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, filterParams, BalanceUpDate);
+            return _reportDAO.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
         }
 
         public ArrayList GetSortingOrderList(string groupname)

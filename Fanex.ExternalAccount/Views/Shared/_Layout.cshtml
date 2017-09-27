@@ -43,8 +43,9 @@
     var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
     var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
     var showLottery = System.Configuration.ConfigurationManager.AppSettings["IsShowLottery"] == "1" ? 1 : 0;
+    var showLucky3 = System.Configuration.ConfigurationManager.AppSettings["IsShowLucky3"] == "1" ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
-    
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -242,6 +243,7 @@
         var showNG2Betting = true;
         var ng2Text = '@ng2Text';
         var showLottery = @showLottery;
+        var showLucky3 = @showLucky3;
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

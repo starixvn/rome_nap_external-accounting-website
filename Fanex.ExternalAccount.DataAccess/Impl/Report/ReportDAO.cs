@@ -295,7 +295,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         /// <param name="custId">Customer id.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="toDate">To date time.</param>
-        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="productIds">Filter conditions.</param>
         /// <param name="balanceUpDay">Balance up day.</param>
         /// <returns>List object.</returns>
         public List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(
@@ -303,7 +303,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int custId,
             DateTime fromDate,
             DateTime toDate, 
-            ICollection<KeyValuePair<string, bool>> filterParams,
+            string productIds,
             DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
@@ -316,10 +316,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             parameters.Add("fromdate", fromDate);
             parameters.Add("todate", toDate);
             parameters.Add("balanceupday", balanceUpDay);
-            foreach (KeyValuePair<string, bool> element in filterParams)
-            {
-                parameters.Add(element.Key, element.Value);
-            }
+            parameters.Add("productids", productIds);
 
             return this.GetCommonWinLossDetail("EAS_Rpt_WinLossDetail_Com", parameters);
         }
@@ -331,7 +328,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         /// <param name="masterId">Master id.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="toDate">To date time.</param>
-        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="productIds">Filter conditions.</param>
         /// <param name="balanceUpDay">Balance up day.</param>
         /// <returns>List object.</returns>
         public List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
@@ -339,7 +336,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int masterId, 
             DateTime fromDate, 
             DateTime toDate, 
-            ICollection<KeyValuePair<string, bool>> filterParams,
+            string productIds,
             DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
@@ -352,11 +349,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             parameters.Add("fromdate", fromDate);
             parameters.Add("todate", toDate);
             parameters.Add("balanceupday", balanceUpDay);
-
-            foreach (KeyValuePair<string, bool> element in filterParams)
-            {
-                parameters.Add(element.Key, element.Value);
-            }
+            parameters.Add("productids", productIds);
 
             return this.GetCommonWinLossDetail("EAS_Rpt_WinLossDetail_SAg", parameters);
         }
@@ -368,7 +361,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         /// <param name="agentId">Agent's id.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="toDate">To date time.</param>
-        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="productIds">Filter conditions.</param>
         /// <param name="balanceUpDay">Balance up day.</param>
         /// <returns>List object.</returns>
         public List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
@@ -376,7 +369,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int agentId,
             DateTime fromDate,
             DateTime toDate, 
-            ICollection<KeyValuePair<string, bool>> filterParams,
+            string productIds,
             DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
@@ -389,11 +382,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             parameters.Add("fromdate", fromDate);
             parameters.Add("todate", toDate);
             parameters.Add("balanceupday", balanceUpDay);
-
-            foreach (KeyValuePair<string, bool> element in filterParams)
-            {
-                parameters.Add(element.Key, element.Value);
-            }
+            parameters.Add("productids", productIds);
 
             return this.GetCommonWinLossDetailMAg("EAS_Rpt_WinLossDetail_MAg", parameters);
         }
@@ -405,7 +394,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         /// <param name="memberId">Member id.</param>
         /// <param name="fromDate">From date.</param>
         /// <param name="toDate">To date time.</param>
-        /// <param name="filterParams">Filter conditions.</param>
+        /// <param name="productIds">Filter conditions.</param>
         /// <param name="balanceUpDay">Balance up day.</param>
         /// <returns>List object.</returns>
         public List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(
@@ -413,7 +402,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int memberId,
             DateTime fromDate, 
             DateTime toDate, 
-            ICollection<KeyValuePair<string, bool>> filterParams, 
+            string productIds, 
             DateTime balanceUpDay)
         {
             Hashtable parameters = new Hashtable();
@@ -425,12 +414,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
             parameters.Add("fromdate", fromDate);
             parameters.Add("todate", toDate);
-            parameters.Add("balanceupday", balanceUpDay);
-
-            foreach (KeyValuePair<string, bool> element in filterParams)
-            {
-                parameters.Add(element.Key, element.Value);
-            }
+            parameters.Add("balanceupday", balanceUpDay);            
+            parameters.Add("productids", productIds);
 
             return this.GetCommonWinLossDetailAg("EAS_Rpt_WinLossDetail_Ag", parameters);
         }

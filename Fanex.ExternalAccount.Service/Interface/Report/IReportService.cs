@@ -29,13 +29,13 @@ namespace Fanex.ExternalAccount.Service.Interface.Report
 
         List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
 
-        List<WinLossDetail> GetWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams);
+        List<WinLossDetail> GetWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetail> GetWinLossDetailSuper(int custId, int masterId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams);
+        List<WinLossDetail> GetWinLossDetailSuper(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetailMAg> GetWinLossDetailMAg(int custId, int agentId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams);
+        List<WinLossDetailMAg> GetWinLossDetailMAg(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetailAg> GetWinLossDetailAg(int custId, int memberId, DateTime fromDate, DateTime toDate, ICollection<KeyValuePair<string, bool>> filterParams);
+        List<WinLossDetailAg> GetWinLossDetailAg(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds);
 
         ArrayList GetSortingOrderList(string groupname);
     }

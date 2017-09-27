@@ -9,6 +9,7 @@
         VoidbridgeSetting = 22,
         NG2Setting = 23,
         FishingWorldSetting = 24,
-        LotterySetting = 28
+        LotterySetting = 28,
+        Lucky3Setting = 26
     }
 }

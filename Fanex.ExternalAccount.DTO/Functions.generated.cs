@@ -68,4 +68,5 @@ public static class eFunctions
     public const string FishingWorldSetting = "FishingWorldSetting";
     public const string LotteryBetting = "LotteryBetting";
     public const string LotterySetting = "LotterySetting";
+    public const string Lucky3Setting = "Lucky3Setting";
 }
