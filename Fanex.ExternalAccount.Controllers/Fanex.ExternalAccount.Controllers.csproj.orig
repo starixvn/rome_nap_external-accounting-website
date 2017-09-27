@@ -255,11 +255,11 @@
     <Reference Include="System.Xml" />
 <<<<<<< HEAD
     <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.3\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
-=======
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.2-removeIsSyncedDownlines\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
->>>>>>> #72973 - remove IsdownlineSync for enable popup
+=======
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.4-unsynceSetting\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+>>>>>>> #72973 - config internal
       <Private>True</Private>
     </Reference>
   </ItemGroup>
