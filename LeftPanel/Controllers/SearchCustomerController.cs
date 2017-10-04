@@ -60,11 +60,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
-            bool isSpecialSiteCustomer = false;
-            bool isSpecialHeadline = false;
-            int siteCode = 1;
-            base.IsSpecialSiteCustomer(id, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode);
-            if (!base.IsAdminHasPermissionOnCustomer(id, isSpecialSiteCustomer || isSpecialHeadline))
+            var checkCustomerBelongToSpecialSiteResult = base.CheckCustomerBelongToSpecialSite(id);
+            if (!base.IsAdminHasPermissionOnCustomer(id, checkCustomerBelongToSpecialSiteResult.IsSpecialSite || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline))
             {
                 return this.Content("var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
             }

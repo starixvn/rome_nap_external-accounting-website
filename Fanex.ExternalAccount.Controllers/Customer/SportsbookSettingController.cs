@@ -1304,16 +1304,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var permisisonService = new ServiceBase();
-            bool isInternalAdmin = false;
-            bool isAllowAccess = false;
-            permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria
+            var checkCustomerIsInternalAdminResult = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria
             {
                 CustID = CurrentSession.CustId
-            }, ref isInternalAdmin, ref isAllowAccess);
+            });
                         
-            if (isInternalAdmin)
+            if (checkCustomerIsInternalAdminResult.IsInternalAdmin)
             {
-                if (!isAllowAccess)
+                if (!checkCustomerIsInternalAdminResult.IsAllowAccess)
                 {
                     return false;
                 }

@@ -353,11 +353,8 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult InternalLogin(string username)
         {
             var url = string.Empty;
-            bool isSpecialSiteCustomer = false;
-            bool isSpecialHeadline = false;
-            int siteCode = 1;
-            base.IsSpecialSiteCustomer(username, ref isSpecialSiteCustomer, ref isSpecialHeadline, ref siteCode);
-            if (base.IsAdminHasPermissionOnCustomer(username, isSpecialSiteCustomer))
+            var checkCustomerBelongToSpecialSiteResult = base.CheckCustomerBelongToSpecialSite(username);
+            if (base.IsAdminHasPermissionOnCustomer(username, checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
                 var encryption = new RSACryptoPad.EncryptionThread();
                 var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
@@ -365,7 +362,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
                 url = string.Format(
                 "{0}?{1}params={2}",
-                GetInternalLoginUrl((AlphaSiteCode)siteCode),
+                GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode),
                 Session[Config.InternalAgentUMToken] == null ? string.Empty : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
                     param);
             }
