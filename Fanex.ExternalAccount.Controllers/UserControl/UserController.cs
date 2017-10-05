@@ -36,6 +36,12 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     {
         private readonly IUserService _userService = new UserService();
         private readonly CachingService _cache = new CachingService();
+        private enum AlphaSiteCode
+        {
+            I1 = 1,
+            I7 = 7,
+            I9 = 9
+        }
 
         /// <summary>
         /// Gets user list.
@@ -347,18 +353,16 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult InternalLogin(string username)
         {
             var url = string.Empty;
-            bool isSpecialSiteCustomer = false;
-            bool isSpecialHeadline = false;
-            base.IsSpecialSiteCustomer(username, ref isSpecialSiteCustomer, ref isSpecialHeadline);
-            if (base.IsAdminHasPermissionOnCustomer(username, isSpecialSiteCustomer))
+            var checkCustomerBelongToSpecialSiteResult = base.CheckCustomerBelongToSpecialSite(username);
+            if (base.IsAdminHasPermissionOnCustomer(username, checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
                 var encryption = new RSACryptoPad.EncryptionThread();
                 var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
                 url = string.Format(
-                "{0}?{1}params={2}", 
-                isSpecialSiteCustomer ? ConfigurationManager.AppSettings["int_agent_url2"] : Config.InternalLoginUrl,
+                "{0}?{1}params={2}",
+                GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode),
                 Session[Config.InternalAgentUMToken] == null ? string.Empty : string.Format("UMToken={0}&", Session[Config.InternalAgentUMToken]),
                     param);
             }
@@ -368,6 +372,18 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             }
 
             return this.JsonBase(new { errorCode = 0, url = url });
+        }
+        private static string GetInternalLoginUrl(AlphaSiteCode siteCode)
+        {
+            switch (siteCode)
+            {
+                case AlphaSiteCode.I7:
+                    return Config.InternalLoginUrl7;
+                case AlphaSiteCode.I9:
+                    return Config.InternalLoginUrl9;
+                default:
+                    return Config.InternalLoginUrl;
+            }
         }
     }
 }

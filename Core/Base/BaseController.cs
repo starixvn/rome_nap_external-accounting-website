@@ -38,6 +38,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Reports.WinLossDetail;
+    using CustomerSetting.Module.Core.Models;
 
     /// <summary>
     /// Base controller for controller to inherit.
@@ -495,12 +496,10 @@ namespace Fanex.ExternalAccount.Core.Base
             var permisisonService = new ServiceBase();
             if (isSpecialSiteCustomer)
             {
-                bool isInternalAdmin = false;
-                bool isAllowAccess = false;
-                permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId }, ref isInternalAdmin, ref isAllowAccess);
-                if (isInternalAdmin)
+                var checkCustomerIsInternalAdminResult = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
+                if (checkCustomerIsInternalAdminResult.IsInternalAdmin)
                 {
-                    if (!isAllowAccess)
+                    if (!checkCustomerIsInternalAdminResult.IsAllowAccess)
                     {
                         return false;
                     }
@@ -516,10 +515,10 @@ namespace Fanex.ExternalAccount.Core.Base
             return true;
         }
 
-        protected void IsSpecialSiteCustomer(string username, ref bool isSpecialSite, ref bool isSpecialHeadline)
+        protected CheckCustomerBelongToSpecialSiteResult CheckCustomerBelongToSpecialSite(string username)
         {
             var permissionService = new ServiceBase();
-            permissionService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username }, ref isSpecialSite, ref isSpecialHeadline);
+            return permissionService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username });
         }
 
         protected List<KeyValuePair<string, string>> GetProductList()
@@ -527,16 +526,15 @@ namespace Fanex.ExternalAccount.Core.Base
             var list = new List<KeyValuePair<string, string>>();
             var products = ProductsConfiguration.Instance.ProductCollection;
             IServiceBase permissionService = new ServiceBase();
-            bool isInternalAdmin = false;
-            bool isAllowAcess = false;
-            permissionService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId }, ref isInternalAdmin, ref isAllowAcess);
+            var checkCustomerIsInternalAdminResult = permissionService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
             bool isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
             foreach (ProductElementConfiguration product in products)
             {
                 if (product.IsSpecial)
                 {
 #pragma warning disable S2589 // Boolean expressions should not be gratuitous
-                    if (!IsHiddenProduct(product) && (!isInternalAdmin || (isInternalAdmin && isAllowAcess && isAuthorized)))
+                    if (!IsHiddenProduct(product) && 
+                        (!checkCustomerIsInternalAdminResult.IsInternalAdmin || (checkCustomerIsInternalAdminResult.IsInternalAdmin && checkCustomerIsInternalAdminResult.IsAllowAccess && isAuthorized)))
 #pragma warning restore S2589 // Boolean expressions should not be gratuitous
                     {
                         list.Add(new KeyValuePair<string, string>(
