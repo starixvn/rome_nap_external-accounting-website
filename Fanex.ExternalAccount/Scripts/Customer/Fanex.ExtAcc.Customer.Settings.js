@@ -225,7 +225,7 @@ Fanex.ExtAcc.Customer.Settings = {
             return [''];
         };
 
-        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '/' + this.UserId + '/' + Fanex.ExtAcc.Customer.superId + '/' + $('#selectedGroupName').html());
+        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '?id=' + this.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html());
 
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');

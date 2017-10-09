@@ -2,8 +2,8 @@
 @using Fanex.CustomerSetting.Module.Casino.Resources
 @using Sunplus.Accounting.Core.Common;
 @{
-    var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
-    var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
+    var id = Utils.ToInt32(Request.QueryString["id"]);
+    var uplineId = Utils.ToInt32(Request.QueryString["uplineId"]);
 }
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
@@ -133,7 +133,7 @@
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js?v=" + AccCommon.Version())"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js?v=" + AccCommon.Version())"></script>
-    <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData/" + id + "/" + uplineId)"></script>
+    <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData?id=" + id + "&uplineid=" + uplineId)"></script>
     <script type="text/javascript">
         var casinoLang = {
             winning: '@NGCasinoLang.lblWinning',

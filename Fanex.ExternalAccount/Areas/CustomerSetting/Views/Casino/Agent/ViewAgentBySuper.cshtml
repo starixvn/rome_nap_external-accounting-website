@@ -16,7 +16,7 @@
 }
 <div id="ng-app" style="display: none; width: 1024px" data-ng-app="settingApp">
     <div id="info">
-        @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
+        @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.QueryString["id"]), uplineId = Utils.ToInt32(Request.QueryString["uplineId"]) })
     </div>    
     <div>
         <div class="headerPositionTaking" style="border: 1px solid #ccc; border-top: 0">

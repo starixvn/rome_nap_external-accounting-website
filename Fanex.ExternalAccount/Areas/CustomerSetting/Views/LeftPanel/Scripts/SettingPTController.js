@@ -185,23 +185,23 @@
 
         switch (roleId) {
             case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper/' + $scope.model.personalInfo.custId.value + '/0');
+                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=0');
                 break;
             case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
                 break;
             case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Agent/EditAgent/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('CustomerSetting/Casino/Agent/EditAgent?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
                 break;
             case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMember/' + $scope.model.personalInfo.custId.value + '/' + $scope.model.personalInfo.uplineId.value);
+                url = parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
                 break;
             default:
                 break;
         }
 
         if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + '/' + parent.$('#selectedGroupName').html());
+            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupname=' + parent.$('#selectedGroupName').html());
         }
     };
 

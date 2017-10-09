@@ -28,7 +28,7 @@
         <div id="names" style="display: none;" class="names">
         </div>
         <div>
-            @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]), uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]) })
+            @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.QueryString["id"]), uplineId = Utils.ToInt32(Request.QueryString["uplineId"]) })
         </div>
         <div>
             <div style="border-right: none" id="settingContainer" data-ng-controller="EditSuperController">
