@@ -59,6 +59,7 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css' />
     <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
@@ -110,13 +111,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="accMenu" id='accMenuGroup'>
-                    <ul id="groupsMenu" class="sf-menu">
+                <div id='accMenuGroup' style="visibility: visible; padding: 10px; float: right; width: 130px;">
+                    <select id="ddlGroupName" style="width: 130px; height: 400px;display: none;" >
+                    </select>
+                    @*<ul id="groupsMenu" class="sf-menu">
                         <li id="groupNameMenu">
                             <a class="groupTextTop" id="selectedGroup" href="#" ignorehref="1">@ViewLang.Group</a>
                             <ul id="ddlGroupName" class="menuULRight"></ul>
                         </li>
-                    </ul>
+                    </ul>*@
                 </div>
                 <div id="grpText" class="groupMenuTop">
                     @ViewLang.Group
@@ -252,6 +255,7 @@
 
         var titles = ['@ViewLang.EditPersonalInfo', '@ViewLang.editTransferCondition', '@ViewLang.confirmTransCondition', '@ViewLang.choonseDaily', '@ViewLang.chooseOneDay'];
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

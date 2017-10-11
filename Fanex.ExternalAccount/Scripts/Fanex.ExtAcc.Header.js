@@ -46,8 +46,11 @@ Fanex.ExtAcc.Header = {
                         selectedGroupName = selectedGroupName.split('#')[1];
                     }
 
+                    //for (var i = 0; i < items.length; i++) {
+                    //    $("#ddlGroupName").append('<li class="divUL"><div class="sf-menu divLI" groupid="' + items[i].GroupId + '" id="group' + Fanex.ExtAcc.ReplaceAll(items[i].GroupName, ' ', '') + '" ignorehref="1">' + items[i].GroupName + '</div></li>');
+                    //}
                     for (var i = 0; i < items.length; i++) {
-                        $("#ddlGroupName").append('<li class="divUL"><div class="sf-menu divLI" groupid="' + items[i].GroupId + '" id="group' + Fanex.ExtAcc.ReplaceAll(items[i].GroupName, ' ', '') + '" ignorehref="1">' + items[i].GroupName + '</div></li>');
+                        $("#ddlGroupName").append('<option ' + (selectedGroupName == items[i].GroupName ? 'selected' : '') + ' value="' + items[i].GroupId + '" id="group' + Fanex.ExtAcc.ReplaceAll(items[i].GroupName, ' ', '') + '" >' + items[i].GroupName + '</option>');
                     }
 
                     $('#userMenu').superfish();
@@ -57,13 +60,13 @@ Fanex.ExtAcc.Header = {
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('font-weight', 'bold');
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', '')).css('color', '#fff');
                     $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, ' ', '')).css('font-weight', 'bold');
-                    $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, ' ', '')).css('color', '#fff');                    
+                    $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, ' ', '')).css('color', '#fff');
                     $('#selectedGroup').html(Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', ' '));
                     $("#groupsMenu").superfish();
                     $("#groupsMenu").css('visibility', 'visible');
                     var groupId = $('#group' + Fanex.ExtAcc.ReplaceAll(selectedGroupName, '%20', ' ')).attr('groupid');
                     $('#selectedGroupIndex').html(groupId);
-
+                    $("#ddlGroupName").select2();
                     $('#userMenu').bind('mouseover', function () {
                         $('#ddlGroupName').hide();
                         $('#groupNameMenu').removeClass('sfHover');
@@ -82,39 +85,24 @@ Fanex.ExtAcc.Header = {
                         $('#dllUsername').hide();
                     });
 
-                    $("#ddlGroupName").bind('click', function (event) {
-                        if (event.target.id.indexOf('group') == 0) {
-                            $('#ddlGroupName').hide();
-
-                            for (var i = 0; i < Fanex.ExtAcc.Header.GroupLength; i++) {
-                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i].GroupName, ' ', '')).css('font-weight', 'normal');
-                                $('#group' + Fanex.ExtAcc.ReplaceAll(Fanex.ExtAcc.Header.Groups[i].GroupName, ' ', '')).css('color', '#acacac');
-                            }
-
-                            var id = event.target.id;
-                            var groupId = event.target.getAttribute('groupid');
-                            selectedGroupName = event.target.innerHTML;
-                            $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('font-weight', 'bold');
-                            $('#' + Fanex.ExtAcc.ReplaceAll(id, ' ', '')).css('color', '#fff');
-                            $('#selectedGroup').html(selectedGroupName + '<span class="sf-sub-indicator"> »</span>');
-                            $('#selectedGroupIndex').html(groupId);
-                            $('#selectedGroupName').html(selectedGroupName);
-
-                            if ((location.href.indexOf('Home/Index') != -1
-                                || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
-                                || location.href == (location.protocol + '//' + location.host + '/'))
-                                && !document.getElementById('customerListGrid') && !document.getElementById('txtUserName')
-                                && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {
-                                if (window.history.pushState) {
-                                    window.history.pushState("object or string", "Title", location.href.substr(0, location.href.lastIndexOf('/')) + "/" + selectedGroupName);
-                                }
-                                else {
-                                    location.hash = id.split('group')[1];
-                                }
+                    $("#ddlGroupName").on('select2:select', function (event) {
+                        selectedGroupName = event.params.data.text;
+                        $('#selectedGroupIndex').html(event.params.data.id);
+                        $('#selectedGroupName').html(selectedGroupName);
+                        if ((location.href.indexOf('Home/Index') != -1
+                            || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
+                            || location.href == (location.protocol + '//' + location.host + '/'))
+                            && !document.getElementById('customerListGrid') && !document.getElementById('txtUserName')
+                            && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {
+                            if (window.history.pushState) {
+                                window.history.pushState("object or string", "Title", location.href.substr(0, location.href.lastIndexOf('/')) + "/" + selectedGroupName);
                             }
                             else {
-                                location.href = location.protocol + '//' + location.host + resolveClientUrl('') + 'Home/Index/' + selectedGroupName;
+                                location.hash = id.split('group')[1];
                             }
+                        }
+                        else {
+                            location.href = location.protocol + '//' + location.host + resolveClientUrl('') + 'Home/Index/' + selectedGroupName;
                         }
                     });
                 },
