@@ -10,6 +10,7 @@
         NG2Setting = 23,
         FishingWorldSetting = 24,
         LotterySetting = 28,
-        Lucky3Setting = 26
+        Lucky3Setting = 26,
+        BullfightingSetting = 30
     }
 }

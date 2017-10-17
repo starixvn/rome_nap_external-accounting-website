@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// TODO: Update summary.
@@ -38,29 +39,36 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
                 db.AddInParameter("GroupID", System.Data.DbType.Int32, groupId);
                 db.AddInParameter("Username", System.Data.DbType.String, userName);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            result.Add(new User
+                            while (reader.Read())
                             {
-                                CreatedDate = reader.ToString("CreatedDate"),
-                                Creator = reader.ToString("Creator"),
-                                Enabled = reader.ToBool("Enabled"),
-                                GroupID = reader.ToInt("GroupID"),
-                                UserID = reader.ToInt("CustId"),
-                                Username = reader.ToString("Username"),
-                                FirstName = reader.ToString("FirstName"),
-                                LastName = reader.ToString("LastName"),
-                                GroupName = reader.ToString("GroupName")
-                            });
+                                result.Add(new User
+                                {
+                                    CreatedDate = reader.ToString("CreatedDate"),
+                                    Creator = reader.ToString("Creator"),
+                                    Enabled = reader.ToBool("Enabled"),
+                                    GroupID = reader.ToInt("GroupID"),
+                                    UserID = reader.ToInt("CustId"),
+                                    Username = reader.ToString("Username"),
+                                    FirstName = reader.ToString("FirstName"),
+                                    LastName = reader.ToString("LastName"),
+                                    GroupName = reader.ToString("GroupName")
+                                });
+                            }
                         }
                     }
-                }
 
-                return result;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -77,27 +85,34 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
             {
                 db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            result = new User
+                            while (reader.Read())
                             {
-                                Enabled = reader.ToBool("Enabled"),
-                                GroupID = reader.ToInt("GroupID"),
-                                UserID = reader.ToInt("CustId"),
-                                Username = reader.ToString("Username"),
-                                FirstName = reader.ToString("FirstName"),
-                                LastName = reader.ToString("LastName"),
-                                GroupName = reader.ToString("GroupName")
-                            };
+                                result = new User
+                                {
+                                    Enabled = reader.ToBool("Enabled"),
+                                    GroupID = reader.ToInt("GroupID"),
+                                    UserID = reader.ToInt("CustId"),
+                                    Username = reader.ToString("Username"),
+                                    FirstName = reader.ToString("FirstName"),
+                                    LastName = reader.ToString("LastName"),
+                                    GroupName = reader.ToString("GroupName")
+                                };
+                            }
                         }
                     }
-                }
 
-                return result;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -122,9 +137,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return result = this.GetResultParams(db.Database, db.DbCommand);
+                    return result = this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -156,9 +178,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -185,9 +214,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -210,9 +246,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -236,9 +279,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -255,29 +305,36 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            result.Add(new Function
+                            while (reader.Read())
                             {
-                                FuncID = reader.ToInt("FuncID"),
-                                FuncName = reader.ToString("FuncName"),
-                                FuncKey = reader.ToString("FuncKey"),
-                                DisplayOrder = reader.ToInt("DisplayOrder"),
-                                ParentID = reader.ToInt("ParentID"),
-                                ParentName = reader.ToString("ParentName"),
-                                Policy = (EPolicy)Convert.ToInt32(reader["UserPolicy"]),
-                                GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"]),
-                                FuncDesc = reader.ToString("FuncDesc")
-                            });
+                                result.Add(new Function
+                                {
+                                    FuncID = reader.ToInt("FuncID"),
+                                    FuncName = reader.ToString("FuncName"),
+                                    FuncKey = reader.ToString("FuncKey"),
+                                    DisplayOrder = reader.ToInt("DisplayOrder"),
+                                    ParentID = reader.ToInt("ParentID"),
+                                    ParentName = reader.ToString("ParentName"),
+                                    Policy = (EPolicy)Convert.ToInt32(reader["UserPolicy"]),
+                                    GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"]),
+                                    FuncDesc = reader.ToString("FuncDesc")
+                                });
+                            }
                         }
                     }
-                }
 
-                return result;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -302,9 +359,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 

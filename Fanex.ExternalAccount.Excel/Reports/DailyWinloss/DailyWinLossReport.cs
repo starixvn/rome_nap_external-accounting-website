@@ -18,12 +18,12 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
     /// </summary>
     internal class DailyWinLossReport : TemplateReport, IReportBuilder
     {
-        private DailyWinLossReportBuilder _builder;
+        private readonly DailyWinLossReportBuilder _builder;
 
         public DailyWinLossReport(string filePath, DailyWinLossReportBuilder builder)
             : base(filePath)
         {
-            this._builder = builder;
+            _builder = builder;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
         /// <returns>HSSFWorkbook object.</returns>
         public HSSFWorkbook Build()
         {
-            var data = this._builder.Data;
+            var data = _builder.Data;
             if (data == null)
             {
                 return null;
@@ -40,23 +40,23 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 
             ISheet templateSheet = HssfWorkbook.GetSheet("Template");
             ISheet resultSheet = HssfWorkbook.GetSheet("DailyWinLoss");
-            if (this._builder.IsBold)
+            if (_builder.IsBold)
             {
-                this.BoldAllFonts();
+                BoldAllFonts();
             }
 
             int rowId = 0, colId = 0, id = 1;
-            var mainTitle = (_builder.RoleId == 5 ? "Super" : _builder.RoleId == 4 ? "Master" : _builder.RoleId == 3 ? "Agent" : "Member") + 
-                " Daily Win Loss on " + this._builder.WinlostDate;                        
+            var mainTitle = (_builder.RoleId == 5 ? "Super" : _builder.RoleId == 4 ? "Master" : _builder.RoleId == 3 ? "Agent" : "Member") +
+                " Daily Win Loss on " + _builder.WinlostDate;
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
             rowId = 3;
             if (data.Count > 0)
             {
-                this.WriteCells(ref resultSheet, ref templateSheet, rowId, colId, id);
+                WriteCells(ref resultSheet, ref templateSheet, rowId, colId, id);
             }
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
-            return this.HssfWorkbook;
+            return HssfWorkbook;
         }
 
         /// <summary>
@@ -69,19 +69,12 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
         /// <param name="id">Order id of row.</param>
         private void WriteCells(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int id)
         {
-            var values = new List<object> { };
+            List<object> values;
             int totalColumn = 19, lastColumnIndex = colId + totalColumn - 1;
-            var data = this._builder.Data;
+            var data = _builder.Data;
             foreach (var item in data)
             {
-                if (id % 2 == 0)
-                {
-                    resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                }
-                else
-                {
-                    resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                }
+                resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
 
                 values = new List<object>
                     {
@@ -110,7 +103,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
                 rowId++;
             }
 
-            this.WriteTotal(ref resultSheet, ref templateSheet, rowId, colId, lastColumnIndex);
+            WriteTotal(ref resultSheet, ref templateSheet, rowId, colId, lastColumnIndex);
         }
 
         /// <summary>
@@ -123,7 +116,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
         /// <param name="lastColumnIndex">Order id of last column.</param>
         private void WriteTotal(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int lastColumnIndex)
         {
-            var data = this._builder.Data;
+            var data = _builder.Data;
             resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
             var values = new List<object>
                 {

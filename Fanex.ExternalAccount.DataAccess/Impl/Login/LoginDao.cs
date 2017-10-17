@@ -18,6 +18,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.Login;
     using Fanex.ExternalAccount.DTO.UserControl;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// LoginDao object.
@@ -66,12 +67,19 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
                 db.AddOutParameter("ErrMsg", System.Data.DbType.String, 200);
                 db.AddOutParameter("GroupID", System.Data.DbType.Int32, sizeof(int));
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                custId = (int)db.GetParameterValue("Custid");
-                result.ErrorCode = db.GetParameterValue("ErrCode").ToString();
-                result.ErrorMessage = db.GetParameterValue("ErrMsg").ToString();
-                result.ResultData = db.GetParameterValue("GroupID");
+                    custId = (int)db.GetParameterValue("Custid");
+                    result.ErrorCode = db.GetParameterValue("ErrCode").ToString();
+                    result.ErrorMessage = db.GetParameterValue("ErrMsg").ToString();
+                    result.ResultData = db.GetParameterValue("GroupID");
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
 
             return result;
@@ -89,7 +97,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
             {
                 db.AddInParameter("on_userid", System.Data.DbType.Int32, custId);
                 db.AddInParameter("username", System.Data.DbType.String, username);
-                db.ExecuteNonQuery();
+
+                try
+                {
+                    db.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
 
                 return new DTO.Result();
             }
@@ -115,9 +131,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
                 db.AddInParameter("NetSessionID", System.Data.DbType.String, netSessionID);
                 db.AddInParameter("IP", System.Data.DbType.String, ip);
                 db.AddOutParameter("on_userid", System.Data.DbType.Int32, sizeof(int));
-                db.ExecuteNonQuery();
 
-                onuserId = (int)db.GetParameterValue("on_userid");
+                try
+                {
+                    db.ExecuteNonQuery();
+                    onuserId = (int)db.GetParameterValue("on_userid");
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
 
             return result;
@@ -137,10 +160,17 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
             {
                 db.AddInParameter("On_UserID", System.Data.DbType.Int32, custId);
                 db.AddOutParameter("isKickedOut", System.Data.DbType.Boolean, sizeof(bool));
-                db.ExecuteNonQuery();
 
-                isKickOut = (bool)db.GetParameterValue("isKickedOut");
-
+                try
+                {
+                    db.ExecuteNonQuery();
+                    isKickOut = (bool)db.GetParameterValue("isKickedOut");
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
+                
                 return new DTO.Result();
             }
         }
@@ -155,16 +185,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 
             using (var db = new ObjectDb("EAS_GroupInfoSelExternalGroup"))
             {
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    while (reader != null && reader.Read())
+                    using (var reader = db.ExecuteReader())
                     {
-                        list.Add(new Group()
+                        while (reader != null && reader.Read())
                         {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.To<string>("GroupName")
-                        });
+                            list.Add(new Group
+                            {
+                                GroupID = reader.ToInt("GroupID"),
+                                GroupName = reader.To<string>("GroupName")
+                            });
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -188,11 +225,17 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
+                    var result = this.GetResultParams(db.Database, db.DbCommand);
 
-                var result = this.GetResultParams(db.Database, db.DbCommand);
-
-                return result.IsSuccess;
+                    return result.IsSuccess;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 

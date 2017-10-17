@@ -14,13 +14,13 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CustomerService : ServiceBase, ICustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly ICustomerDao _dao = new CustomerDao();
 
@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -86,7 +86,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -107,7 +107,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex, false);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -128,7 +128,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;

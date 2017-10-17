@@ -595,6 +595,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.SyncLucky3Downlines,
                 "Lucky3");
 
+            model.RemoveEnableAndEditProductDCS(
+                product.RoleId,
+                6,
+                product.RoleId < 4 ? product.UplineStatuses.HideBullfighting : product.HideBullfighting,
+                product.RoleId < 4 ? product.UplineStatuses.SyncBullfighting : product.SyncBullfighting,
+                product.HideBullfighting,
+                product.SyncBullfighting,
+                product.SyncBullfightingDownlines,
+                "Bullfighting");
+
             return model;
         }
 
@@ -759,6 +769,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (product.UplineStatuses.DisableLucky3)
             {
                 model.DisableProduct("EnableLucky3");
+            }
+
+            if (product.UplineStatuses.DisableBullfighting)
+            {
+                model.DisableProduct("EnableBullfighting");
             }
 
             return model;
@@ -1000,6 +1015,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.SyncLucky3Downlines = true;
             product.DisableLucky3 = result.Rows[0].ToBoolean("DisableLucky3");
 
+            product.HideBullfighting = ConfigurationManager.AppSettings["IsShowBullfighting"] == "0" || result.Rows[0].ToBoolean("HideBullfighting");
+            product.DisableBullfighting = result.Rows[0].ToBoolean("DisableBullfighting");
+
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
@@ -1049,6 +1067,9 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableLucky3 = upperInfo.Rows[0].ToBoolean("DisableLucky3");
                 product.UplineStatuses.HideLucky3 = upperInfo.Rows[0].ToBoolean("HideLucky3");
                 product.UplineStatuses.SyncLucky3 = true;
+
+                product.UplineStatuses.DisableBullfighting = upperInfo.Rows[0].ToBoolean("DisableBullfighting");
+                product.UplineStatuses.HideBullfighting = upperInfo.Rows[0].ToBoolean("HideBullfighting");
             }
 
             return product;

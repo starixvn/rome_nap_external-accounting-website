@@ -9,10 +9,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Fanex.PTEngine.BusinessObjects;
-    
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>

@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="103" SiteName="NAP - Ext">
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
@@ -62,7 +63,7 @@
     <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
-    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_Mag" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CasinoLibrary.Model.UserException;
 using Fanex.ExternalAccount.DTO.Customer;
 using Fanex.ExternalAccount.Service.Interface.Customer;
-using Fanex.Module.Logs;
-using Fanex.Module.Logs.Services;
+using Fanex.Logging.Extensions.Web;
 using ThirdPartyProducts.StatusSetting.Enums;
 using ThirdPartyProducts.StatusSetting.Model;
 using ThirdPartyProducts.StatusSetting.Services;
@@ -65,11 +65,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
                 }
                 catch (ErrorException casinoEx)
                 {
-                    casinoEx.WriteCasinoException(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Warning);
                 }
                 catch (Exception ex)
                 {
-                    ex.Write(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(ex, TraceEventType.Warning);
                 }
             }
 

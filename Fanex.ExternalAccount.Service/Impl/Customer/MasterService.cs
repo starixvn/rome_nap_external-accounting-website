@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -42,7 +43,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -61,7 +62,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -85,7 +86,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;

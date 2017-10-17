@@ -11,6 +11,7 @@
 // </history>
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web.Helpers;
@@ -25,8 +26,7 @@ using Fanex.ExternalAccount.Service.Impl.Login;
 using Fanex.ExternalAccount.Service.Interface.Login;
 using Fanex.ExternalAccount.Utilities;
 using Fanex.ExternalAccount.ViewModel.Account;
-using Fanex.Module.Logs;
-using Fanex.Module.Logs.Services;
+using Fanex.Logging.Extensions.Web;
 using ONEbook.UM.Models;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
@@ -274,7 +274,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
                 return (int)StatusKickedOut.Error;
             }
 
@@ -416,7 +416,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
                 return RedirectToAction("Error", "Shared");
             }
         }
@@ -442,12 +442,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 else
                 {
                     var exceptionLog = new Exception("Cannot read Request Verification Token from cookie.");
-                    exceptionLog.Write(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(exceptionLog, TraceEventType.Warning);
                 }
             }
             catch (Exception ex)
             {
-                ex.Write(Formater.LogType.Warning);
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
 
                 return false;
             }

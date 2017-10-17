@@ -18,6 +18,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Utilities;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// Function Data object.
@@ -72,16 +73,22 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
-
-                var result = this.GetResultParams(db.Database, db.DbCommand);
-
-                if (result.IsSuccess)
+                try
                 {
-                    functionId = (int)db.GetParameterValue("FuncID");
-                }
+                    db.ExecuteNonQuery();
+                    var result = this.GetResultParams(db.Database, db.DbCommand);
 
-                return result;
+                    if (result.IsSuccess)
+                    {
+                        functionId = (int)db.GetParameterValue("FuncID");
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -127,9 +134,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -143,31 +157,38 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
             using (var db = new ObjectDb("EAS_FunctionSel"))
             {
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            result.Add(new Function
+                            while (reader.Read())
                             {
-                                ModifiedDate = reader.ToString("ModifiedDate"),
-                                DisplayOrder = reader.ToInt32("DisplayOrder"),
-                                FuncDesc = reader.ToString("FuncDesc"),
-                                FuncID = reader.ToInt32("FuncID"),
-                                FuncKey = reader.ToString("FuncKey"),
-                                FuncName = reader.ToString("FuncName"),
-                                IsTest = reader.ToBoolean("IsTest"),
-                                ParentID = reader.ToInt32("ParentID"),
-                                ParentName = reader.ToString("ParentName")
-                            });
+                                result.Add(new Function
+                                {
+                                    ModifiedDate = reader.ToString("ModifiedDate"),
+                                    DisplayOrder = reader.ToInt32("DisplayOrder"),
+                                    FuncDesc = reader.ToString("FuncDesc"),
+                                    FuncID = reader.ToInt32("FuncID"),
+                                    FuncKey = reader.ToString("FuncKey"),
+                                    FuncName = reader.ToString("FuncName"),
+                                    IsTest = reader.ToBoolean("IsTest"),
+                                    ParentID = reader.ToInt32("ParentID"),
+                                    ParentName = reader.ToString("ParentName")
+                                });
+                            }
+
+                            return result;
                         }
 
-                        return result;
+                        return null;
                     }
                 }
-
-                return null;
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -184,24 +205,31 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
             {
                 db.AddInParameter("funcId", System.Data.DbType.Int32, funcId);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        var groups = new List<FunctionPolicy>();
-
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            groups.Add(new FunctionPolicy
-                            {
-                                GroupID = reader.ToInt32("GroupID"),
-                                GroupName = reader.ToString("GroupName"),
-                                HasPermission = Convert.ToBoolean(reader["HasPermission"])
-                            });
-                        }
+                            var groups = new List<FunctionPolicy>();
 
-                        func.AssignGroups = groups;
+                            while (reader.Read())
+                            {
+                                groups.Add(new FunctionPolicy
+                                {
+                                    GroupID = reader.ToInt32("GroupID"),
+                                    GroupName = reader.ToString("GroupName"),
+                                    HasPermission = Convert.ToBoolean(reader["HasPermission"])
+                                });
+                            }
+
+                            func.AssignGroups = groups;
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -227,9 +255,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 

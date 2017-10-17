@@ -23,6 +23,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTEngine.Services;
+    using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -34,7 +35,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         private const int NG2Start = 213;
         private const int NG2End = 220;
 
-        private ICommissionService _commissionService = new CommissionService();
+        private readonly ICommissionService _commissionService = new CommissionService();
 
         #region Bet Setting
 
@@ -70,10 +71,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
 
-            IRequestContext currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext
             {
                 FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(),
+                UserName = CurrentSession.UserName.ToUpperInvariant(),
                 CustId = parentId,
                 TargetCustId = custId,
                 RoleId = (int)CustomerRole.Super,
@@ -92,7 +93,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
@@ -119,10 +120,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
 
-            IRequestContext currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext
             {
                 FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(),
+                UserName = CurrentSession.UserName.ToUpperInvariant(),
                 CustId = parentId,
                 TargetCustId = custId,
                 RoleId = (int)CustomerRole.Master,
@@ -141,7 +142,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
@@ -168,10 +169,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             Fanex.PTEngine.Services.IBettingLimitService bettingLimitService = new Fanex.PTEngine.Services.BettingLimitService();
 
-            IRequestContext currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext
             {
                 FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(),
+                UserName = CurrentSession.UserName.ToUpperInvariant(),
                 CustId = parentId,
                 TargetCustId = custId,
                 RoleId = (int)CustomerRole.Agent,
@@ -190,7 +191,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
@@ -217,7 +218,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
 
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -310,10 +311,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            IRequestContext currentContext = new RequestContext()
+            IRequestContext currentContext = new RequestContext
             {
                 FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(),
+                UserName = CurrentSession.UserName.ToUpperInvariant(),
                 CustId = parentId,
                 TargetCustId = custId,
                 RoleId = Utils.ToInt32(Request["roleId"]),
@@ -332,7 +333,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
@@ -360,7 +361,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             ICommissionSetting commissionSetting = JsonConvert.DeserializeObject<CommissionSetting>(txtCustomerObject, settings);
 
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -430,7 +431,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -442,7 +443,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Super,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -454,12 +455,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex) 
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(
                     new { context = context, customer = customer }, 
-                    new JsonSerializerSettings()
+                    new JsonSerializerSettings
                     {
                         ContractResolver = new CamelCasePropertyNamesContractResolver(),
                         NullValueHandling = NullValueHandling.Ignore,
@@ -482,7 +483,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -495,7 +496,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Master,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -507,12 +508,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -564,15 +565,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-            var result = new Fanex.PTEngine.BusinessObjects.Result();
-            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
-            {
-                result = custSrv.SuperUpdateMultipleMasters(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
-            }
-            else
-            {
-                result = custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
-            }
+
+            var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true") ?
+                custSrv.SuperUpdateMultipleMasters(customer, requestContext, isUpdateAllMember, newPositionTaking, param) :
+                custSrv.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
@@ -598,7 +594,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -611,7 +607,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Agent,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -623,12 +619,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -667,7 +663,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Master,
@@ -680,15 +676,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-            var result = new Fanex.PTEngine.BusinessObjects.Result();
-            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
-            {
-                result = custSrv.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking, param);
-            }
-            else
-            {
-                result = custSrv.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
-            }
+
+            var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true") ?
+                custSrv.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking, param) :
+                custSrv.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
@@ -714,7 +705,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -727,7 +718,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Member,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -739,12 +730,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -781,7 +772,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Agent,
@@ -794,15 +785,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             };
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-            var result = new Fanex.PTEngine.BusinessObjects.Result();
-            if (!string.IsNullOrWhiteSpace(mult) && mult.Equals("true"))
-            {
-                result = custSrv.AgentUpdateMultipleMembers(customer, requestContext, param);
-            }
-            else
-            {
-                result = custSrv.AgentUpdateMember(customer, requestContext);
-            }
+
+            var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true") ?
+                custSrv.AgentUpdateMultipleMembers(customer, requestContext, param) :
+                custSrv.AgentUpdateMember(customer, requestContext);
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
@@ -829,7 +815,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -843,7 +829,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Member,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -855,12 +841,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -888,7 +874,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Super,
@@ -909,15 +895,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-            var result = new Fanex.PTEngine.BusinessObjects.Result();
-            if (param.Count > 0)
-            {
-                result = custSrv.SuperUpdateMultipleMembers(customer, requestContext, param);
-            }
-            else
-            {
-                result = custSrv.SuperUpdateMember(customer, requestContext);
-            }
+
+            var result = param.Count > 0 ?
+                custSrv.SuperUpdateMultipleMembers(customer, requestContext, param) :
+                custSrv.SuperUpdateMember(customer, requestContext);
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
@@ -944,7 +925,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var setting = new Fanex.PTEngine.Services.CustomerService();
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -958,7 +939,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Member,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -970,12 +951,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1003,7 +984,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Master,
@@ -1024,15 +1005,10 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             var custSrv = new Fanex.PTEngine.Services.CustomerService();
-            var result = new Fanex.PTEngine.BusinessObjects.Result();
-            if (param.Count > 0)
-            {
-                result = custSrv.MasterUpdateMultipleMembers(customer, requestContext, param);
-            }
-            else
-            {
-                result = custSrv.MasterUpdateMember(customer, requestContext);
-            }
+
+            var result = param.Count > 0 ?
+                custSrv.MasterUpdateMultipleMembers(customer, requestContext, param) :
+                custSrv.MasterUpdateMember(customer, requestContext);
 
             if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
             {
@@ -1098,7 +1074,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 return this.ActionDenied(this.Request);
             }
 
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -1111,7 +1087,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Master,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -1125,7 +1101,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             customer.BettingLimit = null;
@@ -1135,7 +1111,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1157,7 +1133,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 return this.ActionDenied(this.Request);
             }
 
-            var context = new RequestContext()
+            var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
                 TargetCustId = custId,
@@ -1170,7 +1146,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 TargetRoleId = (int)CustomerRole.Agent,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = CurrentSession.UserName.ToUpper()
+                UserName = CurrentSession.UserName.ToUpperInvariant()
             };
 
             ICustomer customer = new Customer();
@@ -1184,7 +1160,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
             catch (System.Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             customer.BettingLimit = null;
@@ -1194,7 +1170,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 
             return this.JsonBase(
                 new { context = context, customer = customer }, 
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1221,7 +1197,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.NullValueHandling = NullValueHandling.Ignore;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Super,
@@ -1258,7 +1234,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             settings.NullValueHandling = NullValueHandling.Ignore;
 
             Customer customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext()
+            IRequestContext requestContext = new RequestContext
             {
                 CustId = CurrentSession.UserId,
                 RoleId = (int)CustomerRole.Master,

@@ -64,9 +64,10 @@ namespace Fanex.ExternalAccount.Excel.Utility
             }
 
             var newRow = sheet.GetRow(destinateRowNum);
-            newRow = newRow == null ? sheet.CreateRow(destinateRowNum) : newRow;
+            newRow = newRow ?? sheet.CreateRow(destinateRowNum);
             newRow.Height = sourceRow.Height;
-            int firstCellNum = Math.Min(sourceRow.FirstCellNum, firstColumn), lastCellNum = Math.Min(sourceRow.LastCellNum, lastColumn + 1);
+            int firstCellNum = Math.Min(sourceRow.FirstCellNum, firstColumn);
+            int lastCellNum = Math.Min(sourceRow.LastCellNum, lastColumn + 1);
             for (int i = firstCellNum; i < lastCellNum; i++)
             {
                 var oldCell = sourceRow.GetCell(i);
@@ -90,7 +91,8 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
                 if (sourceRange != null)
                 {
-                    int lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow, firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
+                    int lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow;
+                    int firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
                     var newRange = new CellRangeAddress(newCell.RowIndex, lastRow, newCell.ColumnIndex, firstCol);
                     sheet.AddMergedRegion(newRange);
                 }
@@ -130,7 +132,7 @@ namespace Fanex.ExternalAccount.Excel.Utility
                 var row = sheet.GetRow(r);
                 int lastColumn = row.LastCellNum;
                 maxColumn = Math.Max(maxColumn, lastColumn);
-                if (row == null || lastColumn < columnIndex)
+                if (lastColumn < columnIndex)
                 {
                     continue;
                 }

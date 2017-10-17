@@ -70,25 +70,22 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 
             using (var reader = this.ExecDataReader("Age_CustomerSelUserInfo", param))
             {
-                if (reader != null)
+                if (reader != null && reader.Read())
                 {
-                    while (reader.Read())
+                    return new Customer
                     {
-                        return new Customer()
-                        {
-                            CustId = reader.ToInt("custid"),
-                            RoleId = reader.ToInt("roleid"),
-                            Username = reader.ToString("username"),
-                            FirstName = reader.ToString("firstname"),
-                            LastName = reader.ToString("lastname"),
-                            MobilePhone = reader.ToString("mobilephone"),
-                            HomePhone = reader.ToString("phone"),
-                            Email = reader.ToString("email"),
-                            Fax = reader.ToString("fax"),
+                        CustId = reader.ToInt("custid"),
+                        RoleId = reader.ToInt("roleid"),
+                        Username = reader.ToString("username"),
+                        FirstName = reader.ToString("firstname"),
+                        LastName = reader.ToString("lastname"),
+                        MobilePhone = reader.ToString("mobilephone"),
+                        HomePhone = reader.ToString("phone"),
+                        Email = reader.ToString("email"),
+                        Fax = reader.ToString("fax"),
 
-                            Remark = reader.ToString("remark")
-                        };
-                    }
+                        Remark = reader.ToString("remark")
+                    };
                 }
 
                 return null;

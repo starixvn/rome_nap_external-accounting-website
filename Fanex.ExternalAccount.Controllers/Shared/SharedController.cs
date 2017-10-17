@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Controllers.Shared
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
-    using Fanex.Module.Logs.Services;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// Shared controller object.
@@ -32,8 +32,7 @@ namespace Fanex.ExternalAccount.Controllers.Shared
 
         public ActionResult Error()
         {
-            var error = Server.GetLastError();
-            error.Write();
+            ExceptionHandler.Handle(Server.GetLastError());
 
             return this.PartialView();
         }

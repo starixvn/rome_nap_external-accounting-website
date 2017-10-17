@@ -136,7 +136,13 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                                 Key = "HideLucky3",
                                 Value = table3rdDCS.Select("ProductID = 26").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsHidden"]) ||
                                 !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])) : true
-                            }
+                            },
+                            new ObjectInfo
+                            {
+                                Key = "HideBullfighting",
+                                Value = table3rdDCS.Select("ProductID = 30").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 30").FirstOrDefault()["IsHidden"]) ||
+                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 30").FirstOrDefault()["IsSync"])) : true
+                            },
                         },
                 EditItems = new List<ObjectInfo>
                         {
@@ -169,6 +175,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
             model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
+            model.AddEnableAndDetailProduct(table3rdDCS, 30, "Bullfighting", eFunctions.BullfightingBetting);
 
             model.Setting.EnableItems.Add(new ObjectInfo
             {

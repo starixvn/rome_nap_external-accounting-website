@@ -6,11 +6,13 @@
 
 namespace Fanex.ExternalAccount.Core.Context
 {
+    using System;
     using System.Collections;
     using System.Web;
     using System.Xml;
     using Fanex.Data;
     using Fanex.ExternalAccount.Utilities;
+    using Logging.Extensions.Database;
     using Sunplus.Libraries.APILogger;
 
     /// <summary>
@@ -74,7 +76,15 @@ namespace Fanex.ExternalAccount.Core.Context
             using (ObjectDb db = new ObjectDb("WriteLog_UserLog_CasinoAPI", 600))
             {
                 db.AssignParamValues(param);
-                var ds = db.ExecuteNonQuery();
+
+                try
+                {
+                    var ds = db.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
     }

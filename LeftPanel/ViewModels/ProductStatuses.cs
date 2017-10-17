@@ -271,5 +271,25 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
         public bool SyncLucky3Downlines { get; set; }
 
         public bool DisableLucky3 { get; set; }
+
+        public bool DisableBullfighting { get; set; }
+
+        public bool HideBullfighting { get; set; }
+
+        public bool SyncBullfighting
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool SyncBullfightingDownlines
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

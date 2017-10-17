@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.ExternalAccount.Controllers
 @using Fanex.ExternalAccount.Core.Context;
 @using System.Web.Optimization
 @using CaptchaMvc.HtmlHelpers
@@ -65,7 +64,7 @@
                                  }
                                  catch (Exception ex)
                                  {
-                                     Logs.Error(ex);
+                                     Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
                                  }
                              }
                         </td>

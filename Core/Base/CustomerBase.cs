@@ -23,6 +23,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Module.NG2.Services;
 
@@ -133,12 +134,12 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
                 return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return new CustomerSetting.Module.Core.Models.Result(999, string.Empty);

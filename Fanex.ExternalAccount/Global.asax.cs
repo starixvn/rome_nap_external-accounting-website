@@ -11,7 +11,6 @@ namespace Fanex.ExternalAccount
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -22,8 +21,8 @@ namespace Fanex.ExternalAccount
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
-    using Fanex.Module.Logs;
-    using Fanex.Module.Logs.Services;
+    using Logging.Extensions.Database;
+    using Logging.Extensions.Web;
     using Service.Impl.Login;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
@@ -110,6 +109,13 @@ namespace Fanex.ExternalAccount
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
 
             MvcHandler.DisableMvcResponseHeader = true;
+
+            ExceptionHandler
+                .UseConfig(new LoggingConfiguration()
+                .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
+                .GetHttpHeaderInfo()
+                .GetHttpSessionInfo())
+                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
         }
 
         protected void Session_End(object sender, EventArgs e)
@@ -133,19 +139,7 @@ namespace Fanex.ExternalAccount
         /// <param name="e">Event is sent.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            var ex = Server.GetLastError();
-            if (!ex.Message.Contains("Server cannot set"))
-            {
-                ex.Write(Formater.LogType.Warning);
-            }
-            
-            if (ex.GetType() != typeof(HttpException) &&
-                Request.Headers["X-Requested-With"] != "XMLHttpRequest" && 
-                !Response.IsRequestBeingRedirected && !Request.IsLocal)
-            {
-                var customerException = new Exception("System error and redirect to Oops... page", ex);
-                Logs.Error(customerException);
-            }
+            ExceptionHandler.Handle(Server.GetLastError());
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
@@ -187,6 +181,20 @@ namespace Fanex.ExternalAccount
                 { "area", string.Empty },
                 { captchaManager.TokenParameterName, keyValuePair.Key }
             });
+        }
+
+        private static List<string> GetRegexToHideSensitiveInfo()
+        {
+            var result = new List<string>();
+            var sensitiveInfo = new[] { "pass", "pwd", "security" };
+
+            foreach (var info in sensitiveInfo)
+            {
+                result.Add($"(?:{info}=)(?<paramValue>[^&|^\\s]+)");
+                result.Add($"(\"{info}\":)(?<paramValue>[^,|^\r]+)");
+            }
+
+            return result;
         }
     }
 }
