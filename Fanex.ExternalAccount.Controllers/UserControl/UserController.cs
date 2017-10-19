@@ -36,6 +36,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
     {
         private readonly IUserService _userService = new UserService();
         private readonly CachingService _cache = new CachingService();
+
         private enum AlphaSiteCode
         {
             I1 = 1,
@@ -353,8 +354,8 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         public ActionResult InternalLogin(string username)
         {
             var url = string.Empty;
-            var checkCustomerBelongToSpecialSiteResult = base.CheckCustomerBelongToSpecialSite(username);
-            if (base.IsAdminHasPermissionOnCustomer(username, checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
+            var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
+            if (IsAdminHasPermissionOnCustomer(username, checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
                 var encryption = new RSACryptoPad.EncryptionThread();
                 var param = string.Join("&", username, this.CurrentSession.UserId, new LoginService().GetDBTime().Ticks, "NAPEXT");
@@ -373,16 +374,24 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
 
             return this.JsonBase(new { errorCode = 0, url = url });
         }
-        private static string GetInternalLoginUrl(AlphaSiteCode siteCode)
+
+        private string GetInternalLoginUrl(AlphaSiteCode siteCode)
         {
+            var domain = CurrentContext.DomainName
+                .Replace("www.", string.Empty)
+                .Replace("staging.", string.Empty);
+            var domainSpliters = domain.Split(new char[] { '.', ':' });
+            var ip = 0;
+            var isDomainRequest = domainSpliters.Any(i => !int.TryParse(i, out ip));
+            domain = isDomainRequest ? domain : "focapts.com";
             switch (siteCode)
             {
                 case AlphaSiteCode.I7:
-                    return Config.InternalLoginUrl7;
+                    return string.Format(Config.InternalLoginUrl7, domain);
                 case AlphaSiteCode.I9:
-                    return Config.InternalLoginUrl9;
+                    return string.Format(Config.InternalLoginUrl9, domain);
                 default:
-                    return Config.InternalLoginUrl;
+                    return string.Format(Config.InternalLoginUrl, domain);
             }
         }
     }
