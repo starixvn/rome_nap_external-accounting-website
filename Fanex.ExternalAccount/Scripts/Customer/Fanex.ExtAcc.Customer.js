@@ -953,12 +953,8 @@
 
         for (var i = 0, max = dcsProducts.length; i < max; i++) {
             var syncedColumnName = "Synced" + dcsProducts[i].name;
-            var syncedDownlineColumnName = syncedColumnName + "Downline";
-
             var synced = row[syncedColumnName];
-            var syncedDownline = row[syncedDownlineColumnName];
-
-            if (synced === false || (syncedDownline === 0 || syncedDownline === false)) {
+            if (synced === false) {
                 unsyncedProductIds.push(dcsProducts[i].id);
             }
         }
