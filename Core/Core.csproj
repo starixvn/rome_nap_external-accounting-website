@@ -81,7 +81,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.9-HotfixEnableDownline01\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.9\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.6, Culture=neutral, processorArchitecture=MSIL">
