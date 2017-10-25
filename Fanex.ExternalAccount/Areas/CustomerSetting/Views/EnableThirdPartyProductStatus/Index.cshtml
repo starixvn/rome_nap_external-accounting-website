@@ -2,11 +2,13 @@
 @using Resources;
 @model ThirdPartyProductStatusViewModel
 @{
+    var firstProduct = Model.ProductStatusList[0];
     bool isUpdateByBettype = Model.ProductStatusList.Count > 1;
-    bool isSyncAllDownline = Model.ProductStatusList[0].IsSyncedDownline;
-    bool isSync = Model.ProductStatusList[0].IsSync;
-    int productId = Model.ProductStatusList[0].ProductId;
-    bool isWarningSyncedAllDownlineProduct = (productId == 21 || productId == 22 || productId == 24) && !(isSyncAllDownline && isSync);
+    bool isHasDownlines = firstProduct.HasDownline;
+    bool isSync = firstProduct.IsSync;
+    int productId = firstProduct.ProductId;
+
+    bool isShowEnableDownlines = Model.RoleId != 1 && isHasDownlines;
     int sportTypePrevious = 0;
 }
 <!DOCTYPE html>
@@ -18,11 +20,6 @@
 <body>
     <div id="updateStatusDialog">
         <div id="successMsg" class="hidden successMsg"></div>
-        @if (isWarningSyncedAllDownlineProduct)
-        {
-            <div id="wrnUnsyncedDownlineMsg" class="wrnMsg">@String.Format(Lang.warningUnsyncedAllDownline, Model.ProductStatusList[0].ProductName)</div>
-
-        }
         <div id="wrnMsg" class="hidden wrnMsg"></div>
         <div id="errMsg" class="hidden errMsg"></div>
         <table id="updateStatusTable" class="table-info">
@@ -63,13 +60,13 @@
                 }
                 <tr>
                     <td @(Model.RoleId == 1 ? "colspan=\"2\"" : " ")>
-                        <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
+                        <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
                         <label for="checkEnable_@(item.SportType+"_" + item.BetType)">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
                     </td>
-                    @if (Model.RoleId != 1 && Model.ProductStatusList[0].HasDownline)
-                {
+                    @if (isShowEnableDownlines)
+                    {
                         <td>
-                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline || isWarningSyncedAllDownlineProduct ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
+                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
                             <label for="checkEnableDownlines_@(item.SportType + "_" + item.BetType)">Enable Downlines</label>
                         </td>
                     }
@@ -77,14 +74,7 @@
             }
         </table>
         <div class="align-right">
-            @if (isWarningSyncedAllDownlineProduct)
-            {
-                <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled />
-            }
-            else
-            {
-                <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled onclick="enableThirdPartyProductStatus.submit(@Html.Raw(Json.Encode(Model)))" />
-            }
+            <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled onclick="enableThirdPartyProductStatus.submit(@Html.Raw(Json.Encode(Model)))" />
         </div>
     </div>
     <script type="text/javascript">
