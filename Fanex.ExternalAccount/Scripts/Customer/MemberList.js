@@ -481,7 +481,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         CustomCellRender: function (cell) {
             var title = escape(cell.Value.username);
             var hideKeno = showKenoSetting == 'false' || cell.Value.HideKeno == true;
-            var hideGoldDeluxe = showGoldDeluxeSetting == 0 || cell.Value.HideGoldDeluxe || isHideGoldDeluxe;
+            var hideGoldDeluxe = showGoldDeluxeSetting == 0 || !cell.Value.SyncGoldDeluxeUpline;
             var hideColossusBets = showColossusBets == 0 || cell.Value.HideColossusBet || isHideColossusBets;
             var hideSportsbook2 = showSportsbook2 == 0 || cell.Value.HideMuayThai || isHideSportsbook2;
             var hideCockfighting = showCockfighting == 0 || cell.Value.HideCockFighting || isHideCockfighting;
