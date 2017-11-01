@@ -14,8 +14,6 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
     public class ThirdPartyProductStatusService : IThirdPartyProductStatusService
     {
-        private readonly StatusSettingService statusSettingService = new StatusSettingService();
-
         public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
         {
             return new ThirdPartyProductStatusViewModel()
@@ -25,7 +23,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
                 CustName = custName,
                 HasCheckAll = productId == (int)Product.Keno,
                 GroupBySport = productId == (int)Product.Racing,
-                ProductStatusList = statusSettingService.GetProductStatus(new GetProductStatusRequest { CustId = custId, ProductId = productId, RoleId = roleId })
+                ProductStatusList = StatusSettingService.GetProductStatus(new GetProductStatusRequest { CustId = custId, ProductId = productId, RoleId = roleId })
             };
         }
 
@@ -39,7 +37,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             string username,
             List<ProductStatus> productStatus)
         {
-            var result = statusSettingService.UpdateProductStatus(new UpdateProductStatusRequest
+            var result = StatusSettingService.UpdateProductStatus(new UpdateProductStatusRequest
             {
                 CustId = custId,
                 SubAccId = subAccId,
