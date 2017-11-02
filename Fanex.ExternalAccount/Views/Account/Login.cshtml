@@ -11,9 +11,11 @@
 <html lang="en">
 <head>
     <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/Login.css")" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/login.css")" />
         <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
     }
     else
@@ -25,7 +27,43 @@
 <body>
     @using (Html.BeginForm())
     {
-        <center style="margin-top: 100px">
+        <div class="block-login">
+            <div class="row header">
+                <div class="login-logo"></div>
+            </div>
+            <div class="row">
+                <input type="text" id="UserName" class="username form-control" maxlength="50" placeholder="UserName" />
+            </div>
+            <div class="row">
+                <input type="password" id="Password" class="password form-control" maxlength="50" placeholder="Password" autocomplete="off" />
+                
+            </div>
+            <div class="row" id="captcha" style="display: @showCaptcha">
+                @if (ViewBag.ShowCaptcha == string.Empty)
+                {
+                    try
+                    {
+                        @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
+                    }
+                    catch (Exception ex)
+                    {
+                        Logs.Error(ex);
+                    }
+                }
+            </div>
+            <div class="row">
+                <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
+            </div>
+            
+             @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
+             {
+            <div class="row errMsg">
+                @CurrentContext.LoginErrorMessage
+                @{CurrentContext.LoginErrorMessage = string.Empty;}
+            </div>
+            }
+        </div>
+        @*<center style="margin-top: 100px">
             <div class="loginRegion">
                 <table border="0" width="350px" style="height: 260px" cellpadding="0" cellspacing="0">
                     <tr>
@@ -100,7 +138,7 @@
                     </table>
                 }
             </div>
-        </center>
+        </center>*@
         @Html.Hidden("Code", Encryptor.Instance.Code)
         @Html.AntiForgeryToken()
     }
