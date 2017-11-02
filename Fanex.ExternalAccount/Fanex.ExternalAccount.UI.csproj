@@ -1417,7 +1417,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Account\Login.css" />
+    <Content Include="Content\Account\Login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Account\login.min.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
     <Content Include="Content\Customer\Casino.css" />
     <Content Include="Content\Customer\copyChecked.png" />
     <Content Include="Content\Customer\copyUnChecked.png" />
@@ -1545,6 +1550,7 @@
     <Content Include="Content\Images\lastGoal.gif" />
     <Content Include="Content\Images\Loading.gif" />
     <Content Include="Content\Images\loading1.gif" />
+    <Content Include="Content\Images\login-logo.png" />
     <Content Include="Content\Images\Login\warning-icn.png" />
     <Content Include="Content\Images\member.png" />
     <Content Include="Content\Images\message.png" />
@@ -1554,6 +1560,7 @@
     <Content Include="Content\Images\save.png" />
     <Content Include="Content\Images\scoremap.png" />
     <Content Include="Content\Images\showMargin.png" />
+    <Content Include="Content\Images\sprites.png" />
     <Content Include="Content\Images\success.gif" />
     <Content Include="Content\Images\transfer.png" />
     <Content Include="Content\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -2741,6 +2748,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Logs\LogsConfiguration.config" />
+    <Content Include="Content\Account\login.scss" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -2799,6 +2807,8 @@
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="NumberGame2Section.config" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
+    <Content Include="Content\_variables.scss" />
+    <Content Include="Content\_mixins.scss" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />

@@ -14,9 +14,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/login.css")" />
+    {        
         <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/login.css")" />
     }
     else
     {
@@ -28,14 +28,16 @@
     @using (Html.BeginForm())
     {
         <div class="block-login">
-            <div class="row header">
+            <div class="row">
                 <div class="login-logo"></div>
             </div>
             <div class="row">
-                <input type="text" id="UserName" class="username form-control" maxlength="50" placeholder="UserName" />
+                <span class="icon-user"></span>
+                <input type="text" id="UserName" class="form-control" maxlength="50" placeholder="UserName" />
             </div>
             <div class="row">
-                <input type="password" id="Password" class="password form-control" maxlength="50" placeholder="Password" autocomplete="off" />
+                <span class="icon-lock"></span>
+                <input type="password" id="Password" class="form-control" maxlength="50" placeholder="Password" autocomplete="off" />
                 
             </div>
             <div class="row" id="captcha" style="display: @showCaptcha">
