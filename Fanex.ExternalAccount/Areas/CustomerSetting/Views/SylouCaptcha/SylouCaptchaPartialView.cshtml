@@ -13,23 +13,25 @@
         }
     </script>
 }
+
 @if (Model.IsRequired)
 {
     @Html.TextBox(Model.InputElementId, null, new Dictionary<string, object>
-                            {
-                                {"data-val", "true"},
-                                {"data-val-required", Model.RequiredMessage},
-                                {"id", "recaptcha_response_field"},
-                                {"class", "custom-textbox inputCaptcha"}
-                            })
-    
+                        {
+                            {"data-val", "true"},
+                            {"data-val-required", Model.RequiredMessage},
+                            {"id", "recaptcha_response_field"},
+                            {"class", "captcha-text form-control"}
+                        })
+
 }
 else
 {
-    @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "captchaText text bgLoginControl", @maxlength = 5, @width = "80px" })
+    @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "captcha-text form-control", @maxlength = 5 })
 }
 
-<img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="65px" height="34px" onclick="return @functionName" />
+<img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" class="captcha-img" onclick="return @functionName" />
+
 @Html.Hidden(Model.TokenElementId, Model.TokenValue)
 
 <div class="refreshCont" id="@id" href="#@Model.ImageElementId">

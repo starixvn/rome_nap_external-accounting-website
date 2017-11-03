@@ -6,76 +6,88 @@
 <html lang="en">
 <head>
     <title>Select Group</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=9" />
-    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link href="@Url.Content("~/Content/Account/login.css")" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Main.css")" />
-        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/assets/styles/vendors-extensions/bootstrap-ex.css")" rel="stylesheet" />        
+        <link rel="stylesheet" href="@Url.Content("~/assets/styles/pages/common.css")" />
+        <link href="@Url.Content("~/assets/styles/pages/account/external-group.css")" rel="stylesheet" />
     }
     else
     {
-        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/externalgroup/css")" rel="stylesheet" type="text/css" />
+        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/externalgroup/css")" rel="stylesheet" />
     }
 </head>
 <body class="main">
-    <div id="header">
-        <div>
-            <div style="float: left;" class="logo">
-                &nbsp;</div>
-        </div>
-        @if (CurrentSession.Instance.IsLogin)
-        {
-            <div id="rightMenu" style="position: absolute; right: 0px;">
-                <div class="accMenu">
-                    <ul id='accMenu' class="sf-menu">
-                        <li id="userNameMenu"><a class="logoutTextTop" href="#" ignorehref="1">@CurrentSession.Instance.UserName</a>
-                            <ul id="dllUsername" class="menuULRight">
-                                <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</div>
-                                </li>
-                                <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</div>
-                                </li>
+    <header id="header" class="header">
+        <nav class="navbar main-menu navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Account/ExternalGroup"><span class="logo"></span></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                @if (CurrentSession.Instance.IsLogin)
+                {
+                    <ul id="accMenu" class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@CurrentSession.Instance.UserName <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:;" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</a></li>
+                                <li><a href="javascript:;" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</a></li>
                             </ul>
                         </li>
                     </ul>
-                </div>
-            </div>
-        }
-    </div>
-    <div class="selectGroup">
-        @ViewLang.SelectExternalGroup
-    </div>
-    <div class="groupChosen">
-        @{
-            var tmp = ViewBag.GroupList as System.Collections.Generic.List<Fanex.ExternalAccount.DTO.UserControl.Group>;
-            var index = 0;
+                }
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <div class="selectGroup">
+            @ViewLang.SelectExternalGroup
+        </div>
+        <div class="row groupChosen">
+            @{
+                var tmp = ViewBag.GroupList as System.Collections.Generic.List<Fanex.ExternalAccount.DTO.UserControl.Group>;
+                var index = 0;
 
-            foreach (var item in tmp)
-            {
-                var url = Url.Content("~/Home/Index/" + @item.GroupName);
+                foreach (var item in tmp)
+                {
+                    var url = Url.Content("~/Home/Index/" + @item.GroupName);
 
-            <a href="@url" class="currencyGroup">
-                <div style="margin-top: 30px">@item.GroupName</div>
-            </a>
-
-                index++;
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <a href="@url" class="currencyGroup">
+                            @item.GroupName
+                        </a>
+                    </div>
+                    index++;
+                }
             }
-        }
-    </div>
+        </div>
+    </div>    
+
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/assets/js/libs/jquery/jquery-1.11.3.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery-ui.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.core.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.widget.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.dialog.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/assets/js/libs/bootstrap/bootstrap.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Account/Fanex.ExtAcc.Account.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Validators.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/Fanex.ExtAcc.Form.js")" type="text/javascript"></script>
@@ -89,9 +101,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
             Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
-
-            $('#accMenu').superfish();
-            $('#accMenu').css('visibility', 'visible');
 
             $('#dllUsername').bind('click', function (event) {
                 $('#dllUsername').hide();

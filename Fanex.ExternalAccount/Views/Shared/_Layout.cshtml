@@ -63,24 +63,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Pagination.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Grid.css")" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Main.css?v=1")" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/MultiSelect/jquery.multiselect.css")" />
-        <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
-        <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="Stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Pagination.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Grid.css")" rel="stylesheet" />
+        <link rel="stylesheet" href="@Url.Content("~/assets/styles/pages/common.css?v=2")" />
+        <link rel="stylesheet" href="@Url.Content("~/Scripts/MultiSelect/jquery.multiselect.css")" />
+        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" />
+        <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="Stylesheet" />
     }
     else
     {
-        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/css")" rel="stylesheet" type="text/css" />
-        <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
+        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/css")" rel="stylesheet" />
+        <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" />
     }
     @RenderSection("StyleSheet", false)
 </head>

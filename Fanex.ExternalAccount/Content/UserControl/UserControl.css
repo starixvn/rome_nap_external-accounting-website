@@ -114,7 +114,7 @@
 {
 	background-color: #d4e3eb;
 }
-.buttonPopup, .ui-button, button[type=button]
+/*.buttonPopup, .ui-button, button[type=button]
 {
 	background: url(../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
@@ -136,7 +136,7 @@
 	color: #fff !important;
 	border: none !important;
 	cursor: pointer;
-}
+}*/
 .jqx-window-header
 {
 	background: url(../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center;
@@ -514,6 +514,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	-webkit-border-radius: 3px !important;
 	border-color: #bbb !important;
 }
+/*
 .groupChosen
 {
 	margin-left: 230px;
@@ -526,7 +527,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	height: 30px;
 	font-weight: bold;
 	margin-top: 10px;
-}
+}*/
 
 .freegrid .free-top-left table thead th, .freegrid .col_header table thead th
 {

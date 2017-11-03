@@ -5,25 +5,27 @@
 @model Fanex.ExternalAccount.ViewModel.Account.Login
 @{
     ViewBag.Title = ViewLang.LoginTitle;
-    var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none"; 
+    var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none";
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>@ViewBag.Title</title>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @if (HttpContext.Current.IsDebuggingEnabled)
-    {        
-        <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/login.css")" />
+    {
+        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/styles/pages/account/login.css")" />
     }
     else
     {
         <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/login/css")" rel="stylesheet" type="text/css" />
     }
     <link href="@Url.Content("~/Areas/CustomerSetting/Views/SylouCaptcha/Styles/Index.css")"
-                                    rel="stylesheet" type="text/css" /></head>
+          rel="stylesheet" type="text/css" />
+</head>
 <body>
     @using (Html.BeginForm())
     {
@@ -32,15 +34,14 @@
                 <div class="login-logo"></div>
             </div>
             <div class="row">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "UserName" })
                 <span class="icon-user"></span>
-                <input type="text" id="UserName" class="form-control" maxlength="50" placeholder="UserName" />
             </div>
             <div class="row">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @autocomplete = "off", @placeholder = "Password" })
                 <span class="icon-lock"></span>
-                <input type="password" id="Password" class="form-control" maxlength="50" placeholder="Password" autocomplete="off" />
-                
             </div>
-            <div class="row" id="captcha" style="display: @showCaptcha">
+            <div class="row captcha-container" id="captcha" style="display: @showCaptcha">
                 @if (ViewBag.ShowCaptcha == string.Empty)
                 {
                     try
@@ -56,96 +57,20 @@
             <div class="row">
                 <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
             </div>
-            
-             @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
-             {
-            <div class="row errMsg">
-                @CurrentContext.LoginErrorMessage
-                @{CurrentContext.LoginErrorMessage = string.Empty;}
-            </div>
-            }
-        </div>
-        @*<center style="margin-top: 100px">
-            <div class="loginRegion">
-                <table border="0" width="350px" style="height: 260px" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td colspan="2">
-                            <div style="height: 64px">
-                                <div class="loginHeader">
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 20px; width: 80px">
-                            @Html.LabelFor(m => m.UserName, ViewLang.Username, new { @class = "label" })
-                        </td>
-                        <td style="width: 270px">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "username text bgLoginControl", @maxlength = 50 })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 20px;">
-                            @Html.LabelFor(m => m.Password, ViewLang.Password, new { @class = "label" })
-                        </td>
-                        <td>
-                            @Html.PasswordFor(m => m.Password, new { @class = "password bgLoginControl", @maxlength = 50, @autocomplete = "off" })
-                        </td>
-                    </tr>
-                    <tr id="captcha" style="display: @showCaptcha">
-                        <td>
-                        </td>
-                        <td>
-                             @if (ViewBag.ShowCaptcha == string.Empty)
-                             {
-                                 try
-                                 {
-                                    @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
-                                 }
-                                 catch (Exception ex)
-                                 {
-                                     Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
-                                 }
-                             }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <span class="bestView">@ViewLang.BestViewIn
-                                <img class="browser" alt="" src="@Url.Content("~/Images/Login/IE-icn.png")" />
-                                IE8+
-                                <img class="browser" alt="" src="@Url.Content("~/Images/Login/Firefox-icn.png")" />
-                                FF4+</span>
-                        </td>
-                    </tr>
-                </table>
-                @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
-                {
-                    <table style="margin-top: 50px" border="0" width="350px" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td class="errMsg">
-                                @CurrentContext.LoginErrorMessage
-                                @{CurrentContext.LoginErrorMessage = string.Empty;}
-                            </td>
-                        </tr>
-                    </table>
-                }
-            </div>
-        </center>*@
-        @Html.Hidden("Code", Encryptor.Instance.Code)
-        @Html.AntiForgeryToken()
-    }
 
-    <script type="text/javascript">        
+            @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
+            {
+                <div class="row errMsg">
+                    @CurrentContext.LoginErrorMessage
+                    @{CurrentContext.LoginErrorMessage = string.Empty;}
+                </div>
+                        }
+        </div>
+        @Html.Hidden("Code", Encryptor.Instance.Code)
+                        @Html.AntiForgeryToken()
+                        }
+
+    <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }

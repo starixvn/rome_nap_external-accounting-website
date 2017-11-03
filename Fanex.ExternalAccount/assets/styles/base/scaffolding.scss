@@ -1,0 +1,32 @@
+﻿
+
+@import "../abstracts/variables";
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #444;
+    font-size: 13px;
+    font-family: $font-family;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.floatL {
+    float: left;
+}
+
+.floatR {
+    float: right;
+}
+
+.clearBoth {
+    clear: both;
+}
+
+.displayNone {
+    display: none;
+}
+

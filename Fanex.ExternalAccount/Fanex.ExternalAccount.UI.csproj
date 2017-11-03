@@ -1103,6 +1103,76 @@
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
     <Content Include="Areas\Statement\Views\Web.config" />
+    <Content Include="assets\js\libs\bootstrap\affix.js" />
+    <Content Include="assets\js\libs\bootstrap\alert.js" />
+    <Content Include="assets\js\libs\bootstrap\bootstrap.js" />
+    <Content Include="assets\js\libs\bootstrap\button.js" />
+    <Content Include="assets\js\libs\bootstrap\carousel.js" />
+    <Content Include="assets\js\libs\bootstrap\collapse.js" />
+    <Content Include="assets\js\libs\bootstrap\dropdown.js" />
+    <Content Include="assets\js\libs\bootstrap\modal.js" />
+    <Content Include="assets\js\libs\bootstrap\popover.js" />
+    <Content Include="assets\js\libs\bootstrap\scrollspy.js" />
+    <Content Include="assets\js\libs\bootstrap\tab.js" />
+    <Content Include="assets\js\libs\bootstrap\tooltip.js" />
+    <Content Include="assets\js\libs\bootstrap\transition.js" />
+    <Content Include="assets\js\libs\jquery\jquery-1.11.3.js" />
+    <Content Include="assets\styles\base\normalize.css" />
+    <Content Include="assets\styles\base\scaffolding.css">
+      <DependentUpon>scaffolding.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\base\scaffolding.min.css">
+      <DependentUpon>scaffolding.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\base\Validators.css" />
+    <Content Include="assets\styles\images\arrow-icn-right.png" />
+    <Content Include="assets\styles\images\arrow-icn.png" />
+    <Content Include="assets\styles\images\bg-Line-Title.png" />
+    <Content Include="assets\styles\images\bg-pattern.png" />
+    <Content Include="assets\styles\images\bg-Title-Grid.png" />
+    <Content Include="assets\styles\images\btn-bgsubmit-hover.png" />
+    <Content Include="assets\styles\images\btn-bgsubmit-original.png" />
+    <Content Include="assets\styles\images\error.png" />
+    <Content Include="assets\styles\images\important.gif" />
+    <Content Include="assets\styles\images\info.gif" />
+    <Content Include="assets\styles\images\info.png" />
+    <Content Include="assets\styles\images\loading.gif" />
+    <Content Include="assets\styles\images\login-logo.png" />
+    <Content Include="assets\styles\images\logo.png" />
+    <Content Include="assets\styles\images\sprites.png" />
+    <Content Include="assets\styles\images\Success.gif" />
+    <Content Include="assets\styles\images\tick.png" />
+    <Content Include="assets\styles\images\topmenu-bg.png" />
+    <Content Include="assets\styles\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="assets\styles\images\user.png" />
+    <Content Include="assets\styles\images\view.png" />
+    <Content Include="assets\styles\images\warning.png" />
+    <Content Include="assets\styles\images\x5.gif" />
+    <Content Include="assets\styles\pages\account\external-group.css">
+      <DependentUpon>external-group.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\account\external-group.min.css">
+      <DependentUpon>external-group.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\account\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\account\login.min.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\common.css">
+      <DependentUpon>common.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\common.min.css">
+      <DependentUpon>common.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors-extensions\bootstrap-ex.css">
+      <DependentUpon>bootstrap-ex.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors-extensions\bootstrap-ex.min.css">
+      <DependentUpon>bootstrap-ex.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\bootstrap.scss" />
     <Content Include="bootstrap\arrows-ffffff.png" />
     <Content Include="bootstrap\dailywinloss\images\arrow-icn-right.png" />
     <Content Include="bootstrap\dailywinloss\images\arrow-icn.png" />
@@ -1417,12 +1487,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Account\Login.css">
-      <DependentUpon>login.scss</DependentUpon>
-    </Content>
-    <Content Include="Content\Account\login.min.css">
-      <DependentUpon>login.scss</DependentUpon>
-    </Content>
     <Content Include="Content\Customer\Casino.css" />
     <Content Include="Content\Customer\copyChecked.png" />
     <Content Include="Content\Customer\copyUnChecked.png" />
@@ -1995,18 +2059,7 @@
     <Content Include="Images\info.png" />
     <Content Include="Images\LeftMenu.png" />
     <Content Include="Images\Loading.gif" />
-    <Content Include="Images\Login\bg-box.png" />
-    <Content Include="Images\Login\bg-pattern.png" />
     <Content Include="Images\Login\capcha.png" />
-    <Content Include="Images\Login\Firefox-icn.png" />
-    <Content Include="Images\Login\header.png" />
-    <Content Include="Images\Login\IE-icn.png" />
-    <Content Include="Images\Login\LogIn-btn-hover.png" />
-    <Content Include="Images\Login\LogIn-btn.png" />
-    <Content Include="Images\Login\password-icn.png" />
-    <Content Include="Images\Login\people-icn.png" />
-    <Content Include="Images\Login\user-icn.png" />
-    <Content Include="Images\Login\warning-icn.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\member-btn.png" />
     <Content Include="Images\right.png" />
@@ -2637,6 +2690,7 @@
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
     <Folder Include="Areas\LiveCasinoSetting\Scripts\libs\core\language\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
+    <Folder Include="assets\styles\components\" />
     <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -2748,7 +2802,87 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Logs\LogsConfiguration.config" />
-    <Content Include="Content\Account\login.scss" />
+    <Content Include="assets\styles\pages\account\login.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_alerts.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_buttons.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_center-block.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_forms.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_gradients.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_grid.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_image.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_labels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_list-group.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_opacity.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_pagination.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_panels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_resize.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_size.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_table-row.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_alerts.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_badges.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_breadcrumbs.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_button-groups.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_buttons.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_carousel.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_close.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_code.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_component-animations.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_dropdowns.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_forms.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_glyphicons.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_grid.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_input-groups.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_jumbotron.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_labels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_list-group.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_media.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_mixins.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_modals.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_navbar.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_navs.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_normalize.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_pager.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_pagination.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_panels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_popovers.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_print.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_progress-bars.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_responsive-embed.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_responsive-utilities.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_scaffolding.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_tables.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_theme.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_thumbnails.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_tooltip.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_type.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_utilities.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_variables.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_wells.scss" />
+    <Content Include="assets\styles\vendors-extensions\bootstrap-ex.scss" />
+    <Content Include="assets\styles\vendors-extensions\_bootstrap-mixins.scss" />
+    <Content Include="assets\js\libs\bootstrap\readme.md" />
+    <Content Include="assets\styles\pages\account\external-group.scss" />
+    <Content Include="assets\styles\pages\common.scss" />
+    <Content Include="assets\styles\base\scaffolding.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -2807,8 +2941,8 @@
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="NumberGame2Section.config" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
-    <Content Include="Content\_variables.scss" />
-    <Content Include="Content\_mixins.scss" />
+    <Content Include="assets\styles\abstracts\_variables.scss" />
+    <Content Include="assets\styles\abstracts\_mixins.scss" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />

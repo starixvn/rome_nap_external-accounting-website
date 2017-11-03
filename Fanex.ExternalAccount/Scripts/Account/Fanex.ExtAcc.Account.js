@@ -40,14 +40,6 @@ Fanex.ExtAcc.Account = {
     },
 
     Init: function () {
-        $(window).resize(function () {
-            $('.groupChosen').height($(window).height() - 120);
-        });
-
-        $(document).resize(function () {
-            $('.groupChosen').height($(window).height() - 120);
-        });
-
         var interval = setInterval(function () {
             clearInterval(interval);
             Fanex.ExtAcc.Account.ResetLoginAttempt();
@@ -182,6 +174,5 @@ String.prototype.hc = function () {
 };
 
 $(document).ready(function () {
-    $('.groupChosen').height($(window).height() - 120);
     Fanex.ExtAcc.Account.Init();
 });
