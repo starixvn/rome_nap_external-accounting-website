@@ -15,8 +15,8 @@ Fanex.ExtAcc.Header = {
         var links = $('a');
 
         // Menu
-        $("#functionsMenu").superfish({
-        });
+        //$("#functionsMenu").superfish({
+        //});
 
         if (Fanex.ExtAcc.IsITAdmin == 'True' || Fanex.ExtAcc.IsInternalAdmin == 'True') {
             // Group

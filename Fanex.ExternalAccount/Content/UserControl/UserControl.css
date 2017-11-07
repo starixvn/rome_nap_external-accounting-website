@@ -384,7 +384,7 @@ td .edit2 a, td div a
 	margin: 0px 3px 0px 3px;
 	height: 35px;
 }
-.groupMenuTop
+/*.groupMenuTop
 {
 	background: url("../Images/Content/bg-groptittle.png") repeat-x scroll 0 0;
 	color: #ebebeb;
@@ -401,7 +401,7 @@ td .edit2 a, td div a
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-}
+}*/
 .ui-widget-header
 {
 	background: url(../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center !important;
@@ -441,7 +441,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 {
 	top: 106px !important;
 }
-#groupNameMenu, #userNameMenu
+/*#groupNameMenu, #userNameMenu
 {
 	background-color: #262626;
 	height: 33px;
@@ -449,7 +449,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	padding: 0px;
 	vertical-align: middle;
 	font-weight: normal;
-}
+}*/
 
 #selectedGroup a
 {

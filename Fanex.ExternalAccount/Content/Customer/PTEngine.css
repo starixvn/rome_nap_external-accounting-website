@@ -543,7 +543,7 @@
 	-webkit-border-radius: 5px;
 	padding: 5px;
 }
-.collapse
+#arrowUpDown.collapse
 {
 	float: right;
 	vertical-align: top;

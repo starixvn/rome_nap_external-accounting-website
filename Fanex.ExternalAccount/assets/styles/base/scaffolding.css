@@ -3,7 +3,7 @@
   padding: 0;
   color: #444;
   font-size: 13px;
-  font-family: Tahoma, Helvetica, Arial, sans-serif; }
+  font-family: Arial, Tahoma, Helvetica, sans-serif; }
 
 .w100 {
   width: 100%; }
@@ -19,4 +19,8 @@
 
 .displayNone {
   display: none; }
+
+a {
+  color: #2489ce;
+  text-decoration: none; }
 

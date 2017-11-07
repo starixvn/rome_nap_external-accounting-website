@@ -1,0 +1,195 @@
+﻿* {
+  box-sizing: border-box; }
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.header {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  background-color: #393939;
+  height: auto;
+  transition: all .01s ease-out .2s; }
+  .header .logo {
+    width: 100%;
+    padding-left: 16px;
+    line-height: 50px;
+    font-family: Roboto, Arial;
+    font-size: 26px;
+    color: #fff;
+    text-decoration: none; }
+  .header .nav-icon {
+    position: absolute;
+    right: 16px;
+    top: 20px; }
+
+/* Icon menu */
+.nav-icon {
+  width: 23px;
+  height: 28px;
+  cursor: pointer; }
+  .nav-icon span {
+    opacity: 1;
+    position: absolute;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #ccc; }
+  .nav-icon span:nth-child(1) {
+    top: 0px; }
+  .nav-icon span:nth-child(2) {
+    top: 7px; }
+  .nav-icon span:nth-child(3) {
+    top: 14px; }
+  .nav-icon.active span {
+    background-color: #fff; }
+
+.main-menu > .menu, .info > .menu {
+  height: auto;
+  -webkit-transition: all 0.2s ease-in 0.1s;
+  -khtml-transition: all 0.2s ease-in 0.1s;
+  -moz-transition: all 0.2s ease-in 0.1s;
+  -ms-transition: all 0.2s ease-in 0.1s;
+  -o-transition: all 0.2s ease-in 0.1s;
+  transition: all 0.2s ease-in 0.1s; }
+
+.main-menu > .menu > .link, .info > .menu > .link {
+  display: inline-block;
+  padding: 10px 16px;
+  position: relative;
+  outline: none; }
+
+.main-menu > .menu > .link.hasChild:after, .info > .menu > .link.hasChild:after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  border-color: #888 transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px 4px 0 4px;
+  height: 0;
+  width: 0;
+  margin-top: -2px; }
+
+.main-menu .link, .info .link {
+  color: #acacac;
+  width: 100%; }
+  .main-menu .link:hover, .info .link:hover {
+    color: #fff; }
+
+.submenu {
+  display: none; }
+  .submenu > .menu {
+    display: inline-block;
+    width: 100%; }
+  .submenu > .menu > .link {
+    padding: 10px 16px 10px 28px;
+    white-space: nowrap;
+    width: 100%;
+    float: left;
+    box-sizing: border-box; }
+  .submenu > .menu > .link:hover {
+    background-color: #464646; }
+
+.topmemu {
+  display: none; }
+  .topmemu.expand-menu .main-menu > .menu > .link,
+  .topmemu.expand-menu .info > .menu > .link {
+    background-color: #303030;
+    margin-bottom: 2px; }
+
+.main-menu, .info {
+  float: left;
+  width: 100%; }
+
+.info .groupMenuTop {
+  display: none;
+  float: left;
+  color: #ebebeb;
+  font-weight: bold;
+  line-height: 50px; }
+
+.info .group-user {
+  padding: 10px;
+  float: right;
+  width: 100%; }
+
+.info .select2-container .select2-selection--single {
+  height: 32px; }
+
+.info .select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 30px;
+  color: #ACACAC;
+  font-weight: bold; }
+
+.info .select2-container--default .select2-selection--single {
+  background-color: #303030;
+  border-color: #555; }
+
+.info #accMenuGroup:hover .select2-selection__rendered {
+  color: #fff; }
+
+.info .select2-container--default .select2-results > .select2-results__options {
+  max-height: 500px; }
+
+.info .group-user .select2-container {
+  width: 100% !important; }
+
+@media (min-width: 678px) {
+  .header {
+    position: relative;
+    min-height: 50px; }
+    .header .logo {
+      width: 295px;
+      height: 50px;
+      padding-left: 16px;
+      line-height: 50px;
+      position: absolute;
+      left: 0; }
+    .header .topmemu {
+      display: block !important;
+      padding-left: 295px; }
+    .header .nav-icon {
+      display: none; }
+  .topmemu .main-menu {
+    float: left; }
+  .topmemu .info {
+    float: right;
+    margin-right: 16px; }
+  .main-menu, .info {
+    width: auto; }
+    .main-menu > .menu > .link.hasChild:after, .info > .menu > .link.hasChild:after {
+      right: 0; }
+    .main-menu > .menu > .link, .info > .menu > .link {
+      padding: 16px 24px; }
+    .main-menu .submenu, .info .submenu {
+      display: none;
+      background-color: #303030;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      z-index: 10000; }
+    .main-menu .menu:hover .submenu, .info .menu:hover .submenu {
+      display: block;
+      opacity: 1;
+      top: 50px;
+      min-width: 140px;
+      transition: all 0.2s ease-in 0.1s; }
+  .main-menu > .menu {
+    float: left;
+    position: relative; }
+  .info .info-item {
+    float: right;
+    position: relative; }
+  .info .submenu {
+    left: auto;
+    right: 0; }
+  .info .groupMenuTop {
+    display: block; }
+  .info .group-user {
+    width: 130px; } }
+

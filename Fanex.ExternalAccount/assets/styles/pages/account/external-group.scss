@@ -1,74 +1,36 @@
 ﻿@import "../../abstracts/_variables.scss";
 @import "../../abstracts/_mixins.scss";
+@import "../../base/scaffolding.scss";
+@import "../../layout/header.scss";
 
-.header {
 
-    .logo {
-        background: url(../../images/logo.png);
-        width: 244px;
-        height: 26px;
-        display: inline-block;
-    }
+.container-fluid {
+    padding-left: 16px;
+    padding-right: 16px;
+}
 
-    .main-menu {
-        margin-bottom: 0;
-        background-color: #393939;
-        border: none;
-        @include border-radius(0);
+.col {
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    float: left;
+}
 
-       .navbar-brand {
-           padding: 12px 15px 20px;
-       }
-    }
-
-    .navbar-default .navbar-collapse,
-    .navbar-default .navbar-form {
-        border-color: #222;
-    }
-
-    .navbar-default .navbar-toggle {
-        border: none;
-
-        .icon-bar {
-            background-color: #fff;
-        }
-    }
-
-    .navbar-default .navbar-toggle:hover,
-    .navbar-default .navbar-toggle:focus {
-        background: none;
-
-    }
-    
-    .nav .open > a,
-    .nav .open > a:hover,
-    .nav .open > a:focus {
-        background: none;
-        color: #fff;
-    }
-
-    .navbar-nav > li > a {
-         color: #acacac;
-
-         &:hover {
-             background: none;
-             color: #fff;
-         }
-    }
-
-    .dropdown-menu > li > a {
-        padding-top: 8px;
-        padding-bottom: 8px;
-
-        &:hover {
-            background-color: #ebebeb;
-        }
+@media (min-width: 768px) {
+    .col {
+        width: 50%;
     }
 }
 
-@media (max-width: 767px) {
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-        color: #ebebeb;
+@media (min-width: 992px) {
+    .col {
+        width: 25%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col {
+        width: 20%;
     }
 }
 

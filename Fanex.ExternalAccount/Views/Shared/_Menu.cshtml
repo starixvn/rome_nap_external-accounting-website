@@ -1,31 +1,29 @@
 ﻿@{
     var menuDict = ViewBag.MenuDict as Dictionary<string, Fanex.ExternalAccount.ViewModel.Shared.MenuItem>;
 }
-<div style="float: left; margin-left: 50px; margin-top: 10px; background-color: transparent">
-    <div class="menuBar" style="background-color: transparent; position: absolute">
-        <ul class="sf-menu" id="functionsMenu">
-            @foreach (var value in menuDict.Values)
-            {
-                var id = "ddl-" + value.Name.Replace(" ", string.Empty);
-                
-                <li><a href="#" ignorehref="1">@value.Name</a>
-                    <ul id="@id">
-                        @if (value.Children.Count > 0)
-                        {
-                            foreach (var menu in value.Children)
-                            {
-                                var isMenu = menu.Url.Equals("~/Menu/MenuList", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
 
-                            <li><a parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(menu.Url != "" ? @Url.Content(menu.Url) : "")', '@id', null, @isMenu)">
+<ul class="main-menu list" id="functionsMenu">
+    @foreach (var value in menuDict.Values)
+    {
+        var id = "ddl-" + value.Name.Replace(" ", string.Empty);
+
+        <li class="menu">
+            <a href="#" ignorehref="1" class="link hasChild">@value.Name</a>
+            <ul class="submenu list" id="@id">
+                @if (value.Children.Count > 0)
+                {
+                    foreach (var menu in value.Children)
+                    {
+                        var isMenu = menu.Url.Equals("~/Menu/MenuList", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+
+                        <li class="menu">
+                            <a class="link" parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(menu.Url != "" ? @Url.Content(menu.Url) : "")', '@id', null, @isMenu)">
                                 @menu.Name
-                            </a></li>
-                            }
-                        }
-                    </ul>
-                </li>
-            }
-        </ul>
-    </div>
-</div>
-<div style="clear: both">
-</div>
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+</ul>

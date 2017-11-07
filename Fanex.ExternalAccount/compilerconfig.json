@@ -18,5 +18,13 @@
   {
     "outputFile": "assets/styles/base/scaffolding.css",
     "inputFile": "assets/styles/base/scaffolding.scss"
+  },
+  {
+    "outputFile": "assets/styles/layout/header.css",
+    "inputFile": "assets/styles/layout/header.scss"
+  },
+  {
+    "outputFile": "assets/styles/base/roboto-fonts.css",
+    "inputFile": "assets/styles/base/roboto-fonts.scss"
   }
 ]

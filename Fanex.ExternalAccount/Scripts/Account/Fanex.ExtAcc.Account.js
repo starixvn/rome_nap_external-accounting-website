@@ -89,6 +89,43 @@ Fanex.ExtAcc.Account = {
                 $('#Password').val($('#Password').val().ec($('#Code').val()).hc());
             };
         }
+
+        // Collapse/ expand header navigation
+        var iconMenu = $("#navIcon");
+        var topMenu = $(".topmemu");
+        var hasMenu = $(".menu .hasChild");
+       
+        iconMenu.on("click", function () {            
+            if (!iconMenu.hasClass('active')) {
+                topMenu.addClass("expand-menu");
+                iconMenu.addClass("active");
+                topMenu.slideDown("fast");
+                
+            } else { 
+                topMenu.slideUp("fast", function () {
+                    topMenu.removeClass("expand-menu");
+                    iconMenu.removeClass("active");
+                });
+            }
+        });
+
+        hasMenu.on("click", function () {
+            var menu = $(this);
+            var submenu = $(this).siblings('.submenu');
+
+            if (!menu.hasClass('active')) { 
+                $(".submenu").slideUp('fast');
+                hasMenu.removeClass("active");
+
+                menu.addClass("active");
+                submenu.slideDown("fast");
+            } else {
+                submenu.slideUp("fast", function () {
+                    menu.removeClass("active");
+                });
+            }
+        });
+        
     },
 
     GetValidateImage: function () {

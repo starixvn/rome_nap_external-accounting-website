@@ -65,17 +65,17 @@
     {
         <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Pagination.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Grid.css")" rel="stylesheet" />
-        <link rel="stylesheet" href="@Url.Content("~/assets/styles/pages/common.css?v=2")" />
-        <link rel="stylesheet" href="@Url.Content("~/Scripts/MultiSelect/jquery.multiselect.css")" />
-        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid/Fanex.Grid.css")" rel="stylesheet" />      
+        <link rel="stylesheet" href="@Url.Content("~/Scripts/MultiSelect/jquery.multiselect.css")" />        
         <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" />        
         <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="Stylesheet" />
+        <link rel="stylesheet" href="@Url.Content("~/assets/styles/pages/common.css?v=2")" />
+        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" />
     }
     else
     {
@@ -87,49 +87,36 @@
 <body>
     <div id="groupName" style="display: none">@CurrentSession.Instance.CurrencyGroup</div>
     <div id="selectedGroupIndex" style="display: none">@CurrentSession.Instance.GroupId</div>
-    <div id="selectedGroupName" style="display: none">
-    </div>
+    <div id="selectedGroupName" style="display: none"></div>
     <div id="container">
-        <div id="header">
-            <div>
-                <div style="float: left" class="logo">
-                    &nbsp;
-                </div>
-            </div>
-            <div id="rightMenu" style="position: absolute; right: 0px;">
-                <div class="accMenu" id='accMenu'>
-                    <ul id="userMenu" class="sf-menu">
-                        <li id="userNameMenu">
-                            <a class="logoutTextTop" href="#" ignorehref="1">@CurrentSession.Instance.UserName</a>
-                            <ul id="dllUsername" class="menuULRight">
-                                <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</div>
-                                </li>
-                                <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@userId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div id='accMenuGroup' style="visibility: visible; padding: 10px; float: right; width: 130px;">
-                    <select id="ddlGroupName" style="width: 130px; height: 400px;display: none;" >
-                    </select>
-                    @*<ul id="groupsMenu" class="sf-menu">
-                        <li id="groupNameMenu">
-                            <a class="groupTextTop" id="selectedGroup" href="#" ignorehref="1">@ViewLang.Group</a>
-                            <ul id="ddlGroupName" class="menuULRight"></ul>
-                        </li>
-                    </ul>*@
-                </div>
-                <div id="grpText" class="groupMenuTop">
-                    @ViewLang.Group
-                </div>
-            </div>
-            <div style="float: left; background-color: transparent">
+        <header id="header" class="header">
+            <a class="logo">External Accounting</a>
+            <nav class="topmemu">                
+                <ul id="accMenu" class="info list">
+                    <li class="info-item menu" id="userNameMenu">
+                        <a class="link hasChild" href="#">@CurrentSession.Instance.UserName <span class="caret"></span></a>
+                        <ul class="submenu list">
+                            <li class="menu"><a class="link" href="javascript:;" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</a></li>
+                            <li class="menu"><a class="link" href="javascript:;" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</a></li>
+                        </ul>
+                    </li>
+                    <li class="info-item">
+                        <div id="grpText" class="groupMenuTop">
+                            @ViewLang.Group
+                        </div>
+                        <div id='accMenuGroup' class="group-user">
+                            <select id="ddlGroupName" style="width: 130px; height: 400px;display: none;"></select>
+                        </div>
+                    </li>                    
+                </ul>
                 @Html.Action("_Menu", "Shared")
+            </nav>
+            <div id="navIcon" class="nav-icon">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-        </div>
+        </header>
         <div id='mainContent'>
             <div id="mainSplitter">
                 <div class="splitter-panel" id="leftSplitter">
