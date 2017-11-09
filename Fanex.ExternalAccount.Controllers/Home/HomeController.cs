@@ -13,8 +13,8 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Base;
 using Fanex.ExternalAccount.Core.Context;
 using Fanex.ExternalAccount.Service.Impl.Login;
 using Fanex.ExternalAccount.Utilities;
@@ -26,10 +26,12 @@ namespace Fanex.ExternalAccount.Controllers.Home
     /// <summary>
     /// Home controller.
     /// </summary>
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
-        private IMaintenanceService _maintenanceService = new MaintenanceService();
-        
+        private readonly IMaintenanceService _maintenanceService = new MaintenanceService();
+        private readonly ICurrentSession _currentSession = new Core.Context.CurrentSession();
+        private readonly ICurrentContext _currentContext = new Core.Context.CurrentContext();
+
         /// <summary>
         /// Home page.
         /// </summary>
@@ -42,26 +44,26 @@ namespace Fanex.ExternalAccount.Controllers.Home
                 return RedirectToAction("Offline", "Account");
             }
 
-            if (!CurrentSession.IsLogin && !CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            if (CurrentSession.IsLogin && CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
+            if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
-                var group = CurrentSession.IsInternalAdmin ? new LoginService().GroupList().First().GroupName : string.Empty;
+                var group = _currentSession.IsInternalAdmin ? new LoginService().GroupList().First().GroupName : string.Empty;
 
                 return Redirect("~/Home/Index/" + group);
             }
 
-            return ViewBase();
+            return View();
         }
 
         public ActionResult TestLog()
         {
             Logs.Error(new Exception("Testing log"));
 
-            return ViewBase();
+            return View();
         }
     }
 }
