@@ -40,6 +40,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Reports.WinLossDetail;
+    using Context;
 
     /// <summary>
     /// Base controller for controller to inherit.
@@ -339,24 +340,9 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <returns>Boolean object.</returns>
         protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
-            var loginService = new LoginService();
-            var userInfo = new UserService().GetUserById(CurrentSession.UserId);
+            var authorizationService = new ExternalAccountAuthorization();
 
-            if (CurrentSession.GroupId != userInfo.GroupID)
-            {
-                CurrentSession.IsInternalAdmin = loginService.CheckExternalGroup(CurrentSession.UserId, 11, "ExternalGroup");
-                CurrentSession.GroupId = userInfo.GroupID;
-                CurrentSession.CurrencyGroup = userInfo.GroupName;
-                CurrentSession.IsITAdmin = CurrentSession.GroupId == 1;
-            }
-
-            var groups = loginService.GroupList();
-            var userGroup = groups.Where(o => o.GroupID == CurrentSession.GroupId);
-            var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
-            var hasGroup = CurrentSession.IsInternalAdmin ? groups.Any(o => o.GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase)) :
-                userGroup.Any() ? userGroup.FirstOrDefault().GroupName.Equals(groupname, StringComparison.OrdinalIgnoreCase) : false;
-
-            return (result != null && result.Rows.Count > 0 && hasGroup) || (custId == 0 && hasGroup);
+            return authorizationService.IsBelong(groupname, custId, userName, isGetUplineInfo);
         }
 
         /// <summary>

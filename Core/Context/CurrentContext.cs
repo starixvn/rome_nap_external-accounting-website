@@ -11,10 +11,14 @@
 // </history>
 namespace Fanex.ExternalAccount.Core.Context
 {
+    using System;
     using System.Collections.Specialized;
     using System.Globalization;
+    using System.IO;
     using System.Net;
+    using System.Text.RegularExpressions;
     using System.Web;
+    using Common;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
 
@@ -23,6 +27,7 @@ namespace Fanex.ExternalAccount.Core.Context
     /// </summary>
     public class CurrentContext : ICurrentContext
     {
+        private readonly string[] custIdNames = new string[] { "custId", "customerId" };
         private static string loginErrorMessage = string.Empty;
 
         public static string LoginErrorMessage
@@ -125,7 +130,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 return regionInfo == null ? null : regionInfo.EnglishName;
             }
         }
-        
+
         private RegionInfo ResolveCountry()
         {
             try
@@ -136,6 +141,92 @@ namespace Fanex.ExternalAccount.Core.Context
             {
                 return null;
             }
+        }
+
+        public int CustId
+        {
+            get
+            {
+                var custId = GetCustomerIdFromQueryString();
+
+                if (custId <= 0)
+                {
+                    custId = GetCustomerIdFromJson();
+                }
+
+                return custId;
+            }
+        }
+
+        public string GroupName
+        {
+            get
+            {
+                var groupName = HttpContext.Current.Request["groupName"];
+
+                return groupName;
+            }
+        }
+        private int GetCustomerIdFromQueryString()
+        {
+            var custId = 0;
+            var i = 0;
+
+            while (custId <= 0 && i < custIdNames.Length)
+            {
+                custId = Converter.ToInt(HttpContext.Current.Request[custIdNames[i]]);
+                i++;
+            }
+
+            return custId;
+        }
+
+        private int GetCustomerIdFromJson()
+        {
+            var custId = 0;
+            var i = 0;
+
+            while (custId <= 0 && i < custIdNames.Length)
+            {
+                custId = GetCustomerId(custIdNames[i]);
+                i++;
+            }
+
+            return custId;
+        }
+
+        private int GetCustomerId(string parameterName)
+        {
+            var customerId = 0;
+            if (!string.IsNullOrEmpty(parameterName))
+            {
+                var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
+                var pattern = string.Format("(\"{0}\":)(?<paramValue>[^,]+)", parameterName);
+                Match regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
+                if (regexMatch.Success)
+                {
+                    customerId = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
+                }
+            }
+
+            return customerId;
+        }
+
+        private string GetJsonDataInRequestBody(Stream requestStream)
+        {
+            if (requestStream != null)
+            {
+                requestStream.Seek(0, SeekOrigin.Begin);
+                var bodyData = new StreamReader(requestStream).ReadToEnd();
+                requestStream.Seek(0, SeekOrigin.Begin);
+                if (!string.IsNullOrWhiteSpace(bodyData)
+                    && bodyData.Contains("{"))
+                {
+                    return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

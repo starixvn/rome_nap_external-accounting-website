@@ -12,10 +12,11 @@
     public class LiveCasinoAuthorizationService : ILiveCasinoAuthorizationService
     {
         private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
         {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino) && authorization.IsBelong(); ;
         }
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
@@ -25,12 +26,12 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino) && authorization.IsBelong(); ;
         }
 
         public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
         {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino) && authorization.IsBelong();
         }
 
         public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
@@ -40,7 +41,7 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino) && authorization.IsBelong();
         }
     }
 }

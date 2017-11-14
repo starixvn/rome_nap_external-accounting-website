@@ -11,19 +11,21 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
+        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
+
         public override bool VerifyQueryPermission(PermissionContext permissionContext)
         {
-            return this.AllowRead(permissionContext);
+            return this.AllowRead(permissionContext) && authorization.IsBelong();
         }
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext)
         {
-            return this.AllowUpdated(permissionContext);
+            return this.AllowUpdated(permissionContext) && authorization.IsBelong();
         }
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext)
         {
-            return this.AllowUpdated(permissionContext);
+            return this.AllowUpdated(permissionContext) && authorization.IsBelong();
         }
 
         public override SettingContext FetchSettingContext()
@@ -38,7 +40,7 @@
             settingContext.Language = CultureInfo.CurrentCulture.Name;
             settingContext.Domain = HttpContext.Current.Request.Url.Host;
             settingContext.IP = CurrentContext.Instance.Ip4Address;
-            settingContext.System = 
+            settingContext.System =
                 HttpContext.Current.Request.UrlReferrer.PathAndQuery.ToLower().Contains("customersetting/betsetting") ||
                 HttpContext.Current.Request.UrlReferrer.PathAndQuery.ToLower().Contains("sssss=v") ? (byte)5 : settingContext.System;
 
@@ -59,7 +61,7 @@
             ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
             var productName = GetProductName(permissionContext);
 
-            return isSuper && permissionContext.System == 4 ? false : string.IsNullOrWhiteSpace(productName) ? true : 
+            return isSuper && permissionContext.System == 4 ? false : string.IsNullOrWhiteSpace(productName) ? true :
                 _authenticationService.AllowUpdateByAuthenticationParam(productName);
         }
 
@@ -90,17 +92,17 @@
                 var setting = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting");
                 val = setting != null ? setting.AttemptedValue : string.Empty;
                 var pattern = "(\"productId\":)([^\r\n][0-9]*)";
-                
+
                 Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
-            
+
                 if (regexMatch.Success)
                 {
-                    val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);                    
+                    val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
                 }
             }
-                        
+
             var productId = Utils.ToInt32(val);
-            
+
             return GetProductFunction(productId, permissionContext.System);
         }
 

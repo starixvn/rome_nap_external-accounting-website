@@ -12,10 +12,11 @@
     public class GoldDeluxeAuthorizationService : IGoldDeluxeAuthorizationService
     {
         private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, int custId)
         {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe);
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong(); ;
         }
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, int custId)
@@ -27,12 +28,12 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong(); 
         }
 
         public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, IEnumerable<string> usernames)
         {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe);
+            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong();
         }
 
         public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, IEnumerable<string> usernames)
@@ -44,7 +45,7 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong();
         }
 
         private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
