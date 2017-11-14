@@ -165,6 +165,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!IsBelong(Request["groupName"], parentId, null, true))
+            {
+                return ActionDenied(Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 
@@ -288,6 +293,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!IsBelong(Request["groupName"], parentId, null, true))
+            {
+                return ActionDenied(Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 
@@ -411,6 +421,11 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
+            if (!IsBelong(Request["groupName"], parentId, null, true))
+            {
+                return ActionDenied(Request);
+            }
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
 

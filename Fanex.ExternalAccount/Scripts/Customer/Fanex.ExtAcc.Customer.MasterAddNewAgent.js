@@ -175,7 +175,8 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                         var para = {
                             custId: 0,
                             parentId: $('#parentId').val(),
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName : $('#selectedGroupName').html()
                         };
                     }
 
