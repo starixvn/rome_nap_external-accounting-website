@@ -37,7 +37,7 @@
 	margin-left: 5px;
 	font-weight: bold;
 }
-.menuActive
+/*.menuActive
 {
 	background-image: url(../Images/Content/checkbox.png);
 	background-position: 0 0;
@@ -58,8 +58,8 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-}
-.menuDelete
+}*/
+/*.menuDelete
 {
 	background-image: url(../Images/Content/delete-icn.png);
 	background-position: 0 0;
@@ -80,7 +80,7 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-}
+}*/
 .button-add
 {
 	background: url(../Images/Content/addnew-btn.png) no-repeat scroll 5px center;
@@ -158,12 +158,12 @@
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
-.divMargin
+/*.divMargin
 {
 	height: 30px;
 	text-align: right;
 	margin-right: 3px;
-}
+}*/
 .editControl
 {
 	width: 255px;
@@ -190,7 +190,7 @@
 	height: 25px;
 	width: 50px;
 }
-.successMsg
+/*.successMsg
 {
     background-color: #ffedc1;
 	border-radius: 3px;
@@ -202,7 +202,7 @@
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle; /*color: #ff5411;*/
-	font-size: 13px;
+	/*font-size: 13px;
 	clear: both;
 	padding-left: 30px;
 	white-space: pre-line;
@@ -225,7 +225,7 @@
 	line-height: 1.5;
 	text-align: left;
 	vertical-align: middle; /*color: #ff5411;*/
-	font-size: 13px;
+	/*font-size: 13px;
 	clear: both;
 	padding-left: 30px;
 	white-space: pre-line;
@@ -235,22 +235,8 @@
 	padding-top: 5px;
 	max-height: 180px;
 	overflow: auto;
-}
-.edit
-{
-	background-image: url(../Images/Content/permission-icn.png);
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	width: 15px;
-	height: 15px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}
-td .edit2 a, td div a
-{
-	color: #2489CE !important;
-}
+}*/
+
 .checkboxMulti-active
 {
 	background-image: url(../Images/Content/checkbox.png);
@@ -286,7 +272,7 @@ td .edit2 a, td div a
 	width: 100%;
 	text-indent: 5px;
 }
-.permActive
+/*.permActive
 {
 	background-image: url(../Images/Content/checkbox.png);
 	background-position: 0 0;
@@ -309,8 +295,8 @@ td .edit2 a, td div a
 	vertical-align: middle;
 	cursor: pointer;
 	margin-left: 23px;
-}
-#tblInner
+}*/
+/*#tblInner
 {
 	text-indent: 5px;
 	border: 1px solid #D3D3D3;
@@ -336,8 +322,8 @@ td .edit2 a, td div a
 #tblInner tr:hover
 {
 	background-color: #d3d3d3;
-}
-.permItemParent
+}*/
+/*.permItemParent
 {
 	background-image: url(../Images/Content/arrow-down-icn.png);
 	background-repeat: no-repeat;
@@ -354,7 +340,7 @@ td .edit2 a, td div a
 {
 	margin-left: 5px;
 	font-weight: bold;
-}
+}*/
 .group
 {
 	height: 25px;
@@ -367,23 +353,7 @@ td .edit2 a, td div a
 	margin-top: 10px;
 	font-size: 11px;
 }
-.bgTitle
-{
-	background: url("../Images/Content/bg-maintittle.png") repeat-x scroll 0 0;
-	font-family: 'Cabin' , Sans-Serif;
-	min-width: 700px;
-}
-.titleForm
-{
-	font-size: 18px;
-	margin: 3px 3px 1px 3px;
-	height: 35px;
-}
-.titleSearch
-{
-	margin: 0px 3px 0px 3px;
-	height: 35px;
-}
+
 /*.groupMenuTop
 {
 	background: url("../Images/Content/bg-groptittle.png") repeat-x scroll 0 0;
@@ -402,12 +372,12 @@ td .edit2 a, td div a
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }*/
-.ui-widget-header
+/*.ui-widget-header
 {
 	background: url(../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center !important;
 	color: #fff !important;
 	text-indent: 5px;
-}
+}*/
 .ui-jqgrid .ui-jqgrid-htable th div
 {
 	font-weight: bold;
@@ -529,7 +499,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	margin-top: 10px;
 }*/
 
-.freegrid .free-top-left table thead th, .freegrid .col_header table thead th
+/*.freegrid .free-top-left table thead th, .freegrid .col_header table thead th
 {
 	background: #d4e3eb !important;
 	color: #464646 !important;
@@ -537,7 +507,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 .freegrid tr.highlight-row:hover td, .freegrid .mousehoverbeyond td
 {
 	background-color: #ebebeb !important;
-}
+}*/
 input, textarea
 {
 	text-indent: 5px;

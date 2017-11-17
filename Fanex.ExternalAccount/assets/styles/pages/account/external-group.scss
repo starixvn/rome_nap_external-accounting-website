@@ -1,10 +1,14 @@
 ﻿@import "../../abstracts/_variables.scss";
 @import "../../abstracts/_mixins.scss";
 @import "../../base/scaffolding.scss";
+@import "../../components/button.scss";
 @import "../../layout/header.scss";
+@import "../../layout/sidebar.scss";
+
 
 
 .container-fluid {
+    float: left;
     padding-left: 16px;
     padding-right: 16px;
 }
@@ -41,13 +45,13 @@
 	color: $msg-warning-color;
     background-color: $msg-warning-bg;
     border: 1px solid $msg-warning-border;
-    @include border-radius(5px);
+    @include border-radius(2px);
 }
 
 .currencyGroup {	
     display: inline-block;
-	margin-top: 12px;
-    margin-bottom: 12px;
+	margin-top: 8px;
+    margin-bottom: 8px;
 	width: 100%;
     line-height: 80px;
 	cursor: pointer;
@@ -58,7 +62,7 @@
 	font-weight: bold;
 	text-decoration: none;
     background-color: #f2f2f2;
-    @include border-radius(5px);
+    @include border-radius(2px);
 
     &:hover {
         text-decoration: none;

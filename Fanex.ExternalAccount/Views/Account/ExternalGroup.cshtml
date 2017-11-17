@@ -12,7 +12,7 @@
     <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />
+        @*<link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />*@
         <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" />
@@ -25,27 +25,38 @@
 </head>
 <body class="main">
     <header id="header" class="header">
-        <a class="logo">External Accounting</a>
-        <nav class="topmemu">
-            @if (CurrentSession.Instance.IsLogin)
-            {
-                <ul id="accMenu" class="info list">
-                    <li class="info-item menu">
-                        <a href="#" class="link hasChild">@CurrentSession.Instance.UserName</a>
-                        <ul class="submenu list">
-                            <li class="menu"><a class="link" href="javascript:;" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</a></li>
-                            <li class="menu"><a class="link" href="javascript:;" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</a></li>
-                        </ul>
-                    </li>
+        <a class="logo"><img src="~/assets/styles/images/logo.png" alt="External Accounting" /></a>
+
+        @if (CurrentSession.Instance.IsLogin)
+        {
+            <div class="info" id="accMenu">
+                <ul class="list" id="userNameMenu">
+                    <li><span class="icon-reset-password" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')"></span></li>
+                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()"></span></li>
+                    <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                 </ul>
-            }
-        </nav>
-        <div id="navIcon" class="nav-icon">
+            </div>
+        }
+
+        <!-- For mobile -->
+        <div id="iconNav" class="icon-nav">
             <span></span>
             <span></span>
             <span></span>
         </div>
     </header>
+    <div class="sidebar" id="sidebar">
+        <div class="profile">
+            <div class="picture">
+                <span class="text">S</span>
+            </div>
+            <span class="username">sa</span>
+        </div>      
+        <div class="list-action">
+            <button class="btn -reset">Reset Password</button>
+            <button class="btn -logout">Log Out</button>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="selectGroup">
             @ViewLang.SelectExternalGroup
@@ -68,7 +79,7 @@
                 }
             }
         </div>
-    </div>    
+    </div>
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {

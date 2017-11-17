@@ -1,0 +1,92 @@
+﻿.search-form {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0;
+
+    .form-group {
+        float: left;    
+        line-height: 30px; 
+        margin-right: 12px;   
+    }
+
+    .label {
+        float: left;
+        margin-right: 6px;
+    }
+
+    .user-group input {
+        width: 150px;
+        height: 32px;
+        vertical-align: top;
+        padding-left: 3px;
+    }
+
+    .user-group button {
+        background-image: none !important;
+        width: 20px !important;
+        height: 32px;
+        margin-left: -20px !important;
+    }
+
+    .user-group button:hover {
+        background-image: none !important;
+    }
+}
+
+
+.form-add {
+    padding-top: 16px;
+
+    .group {
+        display: table;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .label {
+        text-align: right;
+        line-height: 32px;
+    }
+
+    .form-control {
+        margin-left: 10px;    
+        height: 32px;    
+    }
+
+    .textarea {
+        height: 150px;
+    }
+
+    .width-100 {
+        width: 100px;
+    }
+
+    .width-250 {
+        width: 225px;
+    }
+
+    .form-action {
+        padding-left: 110px;
+    }
+}
+
+.groupCboMenu {
+    input {
+        width: 225px;
+        height: 32px;
+        border-radius: 0 !important;
+        margin-left: 10px;
+        vertical-align: top;
+        text-indent: 5px;        
+    }
+
+    button {
+        width: 20px !important;
+        margin-left: -20px !important;
+        height: 31px;
+
+        &:hover {
+            background-image: none !important;
+        }
+    }
+}

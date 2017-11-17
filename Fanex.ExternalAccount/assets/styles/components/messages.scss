@@ -1,0 +1,29 @@
+﻿@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+%message {
+    @include border-radius(2px);
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 30px;
+    line-height: 1.5;
+    max-height: 180px;
+    clear: both;
+    white-space: pre-line;    
+	overflow: auto;    
+    text-align: left;
+    vertical-align: middle;
+}
+
+.successMsg {
+    @extend %message;
+	background: url("../../images/Success.gif") $msg-success-bg no-repeat 5px 9px;
+	border: 1px solid $msg-success-border;
+    color: $msg-success-color;
+}
+
+.errMsg {
+	@extend %message;
+	background: url("../../images/warning.png") $msg-warning-bg no-repeat 5px 9px;
+	border: 1px solid $msg-warning-border;
+    color: $msg-warning-color;
+}

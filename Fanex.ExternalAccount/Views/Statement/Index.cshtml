@@ -24,12 +24,12 @@ else
     <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/css")" rel="stylesheet" type="text/css" />
 }
 <div>
-    <div class="bgTitle titleForm">
+    <div class="page-title">
         <div class="wlDetail">
             Statement - <span id="StatementUsername">@Request.QueryString["username"]</span>
         </div>
     </div>
-    <div class="bgTitle titleSearch pdr-normal">
+    <div class="search-form pdr-normal">
         <div class="searchBar floatL w100">
             <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
             <div class="wFrom">@ViewLang.From</div>

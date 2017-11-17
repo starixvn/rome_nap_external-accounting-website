@@ -1,0 +1,24 @@
+﻿input[type='text'], input[type='password'], input[type='email'] {    
+    height: 32px;
+    line-height: 32px;
+    border: none;
+    outline: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 120px;
+    border: 1px solid #7b7c7e;    
+    -webkit-appearance: none;
+
+    &::-ms-clear {
+      display: none;
+    }
+
+    &[disabled], .disabled {
+       opacity: .4;
+       cursor: not-allowed;
+    }
+}
+
+textarea {
+    border: 1px solid #7b7c7e;
+}

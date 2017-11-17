@@ -1,0 +1,29 @@
+﻿
+@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.table {
+	border: 1px solid $table-border-color;
+	border-collapse: collapse;
+
+    tr th, tr td {
+        min-height: 28px;
+        border: 1px solid $table-border-color;
+        padding: 4px;
+    }
+
+    tr th {	    
+        background-color: $table-header-bg-color;
+        color: $table-header-color;
+        text-align: center;
+    }
+
+    tr:hover td {
+	    background-color: $table-td-hover-color;
+    }
+
+    .width-60 {
+        width: 60px;
+    }
+}
+

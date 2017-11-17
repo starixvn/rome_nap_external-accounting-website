@@ -3,7 +3,7 @@
         $scope.downlines = $scope.$parent.$parent.model.downlineList;
         $scope.model = $scope.downlines.downlines;
         $scope.pages = $scope.downlines.pages;
-        $scope.maxHeight = '178px';
+        $scope.maxHeight = '240px';
         $('#downlines').css('height', $scope.maxHeight);
         $('#downlines').css('overflow', 'auto');
     }
@@ -13,7 +13,7 @@
     }
 
     $scope.Init = function () {
-        $('#downlines').css('height', ($scope.pages.length > 1 ? '178px' : '208px'));
+        $('#downlines').css('height', ($scope.pages.length > 1 ? '240px' : '240px'));
 
         if ($scope.pages && $scope.pages.length > 1) {
             for (var i = 1; i <= $scope.pages.length; i++) {

@@ -144,9 +144,9 @@ Fanex.ExtAcc = {
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
-        if (typeof id != 'undefined') {
-            $('#' + id).hide();
-        }
+        //if (typeof id != 'undefined') {
+        //    $('#' + id).hide();
+        //}
 
         if (!isMenu) {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
@@ -358,37 +358,36 @@ Fanex.ExtAcc = {
         $.blockUI.defaults.css.backgroundColor = "transparent";
         $.blockUI.defaults.overlayCSS.backgroundColor = "transparent";
 
-        $('body').height($("#footer").position().top);
-        $('#container').height($("#footer").position().top);
-        $('#splitterBar').height($("#footer").position().top - 30);
+        //$('body').height($("#footer").position().top);
+        //$('#container').height($("#footer").position().top);
+        //$('#splitterBar').height($("#footer").position().top - 30);
 
-        $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
+        //$('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
 
-        $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
+        //$('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
-        $('#leftSplitter').height($('#contentSplitter').height());
+        //$('#leftSplitter').height($('#contentSplitter').height());
         $('#leftFrame').height($('#contentSplitter').height() - 40);
         $('#mainFrame').height($('#contentSplitter').height() - 35);
 
-        $('#splitterBar').click(function (event) {
-            Fanex.ExtAcc.ToggleSpliter();
-            Fanex.ExtAcc.Resize();
-        });
+        //$('#splitterBar').click(function (event) {
+        //    Fanex.ExtAcc.ToggleSpliter();
+        //    Fanex.ExtAcc.Resize();
+        //});
 
         $(window).resize(function () {
             Fanex.ExtAcc.Resize();
         });
-
-        if (this.leftMenuWidth === 300) {
-            $('#leftSplitter').show();
-            $('#splitterBar').attr('title', 'Hide left panel');
-            $('#splitterBar div').attr('class', 'expanded');
-        }
-        else {
-            $('#leftSplitter').hide();
-            $('#splitterBar').attr('title', 'Show left panel');
-            $('#splitterBar div').attr('class', 'collapsed');
-        }
+        //if (this.leftMenuWidth === 300) {
+        //    $('#leftSplitter').show();
+        //    $('#splitterBar').attr('title', 'Hide left panel');
+        //    $('#splitterBar div').attr('class', 'expanded');
+        //}
+        //else {
+        //    $('#leftSplitter').hide();
+        //    $('#splitterBar').attr('title', 'Show left panel');
+        //    $('#splitterBar div').attr('class', 'collapsed');
+        //}
 
         this.LoadModule(Fanex.ExtAcc.Form);
         var interval = setInterval(function () {
@@ -457,20 +456,20 @@ Fanex.ExtAcc = {
     },
 
     ToggleSpliter: function () {
-        if (this.leftMenuWidth === 300) {
-            this.leftMenuWidth = 5;
-            $('#leftSplitter').hide();
-            $('#splitterBar').attr('title', 'Show left panel');
-            $('#splitterBar div').attr('class', 'collapsed');
-        }
-        else {
-            this.leftMenuWidth = 300;
-            $('#leftSplitter').show();
-            $('#splitterBar').attr('title', 'Hide left panel');
-            $('#splitterBar div').attr('class', 'expanded');
-        };
+        //if (this.leftMenuWidth === 300) {
+        //    this.leftMenuWidth = 5;
+        //    $('#leftSplitter').hide();
+        //    $('#splitterBar').attr('title', 'Show left panel');
+        //    $('#splitterBar div').attr('class', 'collapsed');
+        //}
+        //else {
+        //    this.leftMenuWidth = 300;
+        //    $('#leftSplitter').show();
+        //    $('#splitterBar').attr('title', 'Hide left panel');
+        //    $('#splitterBar div').attr('class', 'expanded');
+        //};
 
-        $('#leftSplitter').height($('#contentSplitter').height());
+        //$('#leftSplitter').height($('#contentSplitter').height());
         $('#leftFrame').height($('#contentSplitter').height() - 35);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 
@@ -497,12 +496,12 @@ Fanex.ExtAcc = {
     OnResize: function () { },
 
     Resize: function () {
-        $('body').height($("#footer").position().top);
-        $('#container').height($("#footer").position().top);
-        $('#splitterBar').height($("#footer").position().top - 30);
+        //$('body').height($("#footer").position().top);
+        //$('#container').height($("#footer").position().top);
+        //$('#splitterBar').height($("#footer").position().top - 30);
 
-        $('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
-        $('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
+        //$('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
+        //$('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
@@ -515,7 +514,7 @@ Fanex.ExtAcc = {
         catch (err) {
         }
 
-        $('#leftSplitter').height($('#contentSplitter').height() + 5);
+        //$('#leftSplitter').height($('#contentSplitter').height() + 5);
         $('#leftFrame').height($('#contentSplitter').height() - 35);
         $('#mainFrame').height($('#contentSplitter').height() - 30);
 

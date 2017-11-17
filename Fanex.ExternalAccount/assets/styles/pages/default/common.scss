@@ -1,8 +1,19 @@
-﻿
-@import "../abstracts/variables";
-@import "../abstracts/_mixins.scss";
-@import "../base/scaffolding.scss";
-@import "../layout/header.scss";
+﻿@import "../../abstracts/variables";
+@import "../../abstracts/_mixins.scss";
+@import "../../base/scaffolding.scss";
+@import "../../components/button.scss";
+@import "../../components/main-menu.scss";
+@import "../../components/customize-fanex-grid.scss";
+@import "../../components/tables.scss";
+@import "../../components/messages.scss";
+@import "../../components/popup.scss";
+@import "../../components/form.scss";
+@import "../../components/textbox";
+@import "../../layout/header.scss";
+@import "../../layout/sidebar.scss";
+
+
+
 
 .successWarning {
     background-image: url("../images/tick.png");
@@ -42,7 +53,7 @@
 }
 
 /* 4 corners jqGrid */
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+/*.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
     border-bottom-right-radius: 0px !important;
 }
 
@@ -56,38 +67,75 @@
 
 .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
     border-top-left-radius: 0px !important;
-}
+}*/
 /* END: FOR Nexcel JQGRID */
 
 #ui-datepicker-div {
     z-index: 9999 !important;
 }
 
-#footer {
-    right: 0;
-    bottom: 0;
+.main-content {
     position: absolute;
-    height: 0px;
-    width: 0px;
-    overflow: hidden;
-    visibility: hidden;
-    line-height: 0px;
-    margin-bottom: 2px;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
 
-#leftSplitter {
-    float: left;
-    width: 293px;
+/* Left panel */
+.splitter-panel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 398px;
+    padding-top: 20px;  
+    border-right: 1px solid #e0e1e4;  
+}
+
+.group-search {
+    position: relative;
+    padding: 0 20px;
+
+    .search {
+        width: 100%;
+        line-height: 34px;
+        height: 34px;
+        border: 1px solid #7b7c7e;
+        outline: none;
+        @include border-radius(2px);
+    }
+
+    .icon-search {
+        display: inline-block;
+        position: absolute;
+        right: 31px;
+        top: 10px;
+        width: 15px;
+        height: 16px;
+        background: url(../../images/sprites.png) no-repeat; 
+        background-position: -76px -122px;     
+        cursor: pointer;  
+
+        &:before {
+            content: "";
+            position: absolute;
+            left: -7px;
+            top: -8px;
+            height: 30px;
+            width: 30px;
+        }
+    }
+}
+
+.iframe {
+    width: 100%;
+    border: none;
     overflow: auto;
 }
 
-#contentSplitter {
-    float: left;
-    background-color: #fff;
-    height: 100%;
-    overflow: auto;
-}
 
+/* Collapse/ expend left-panel */
 #splitterBar {
     float: left;
     width: 3px;
@@ -98,9 +146,8 @@
     border-right: 1px solid #ccc;
     border-left: 1px solid #ccc;
     cursor: pointer;
-}
 
-    #splitterBar div.expanded {
+    div.expanded {
         width: 4px;
         background-color: #aaa;
         border: 1px solid #ccc;
@@ -113,7 +160,7 @@
         background-repeat: no-repeat;
     }
 
-    #splitterBar div.collapsed {
+    div.collapsed {
         width: 4px;
         background-color: #aaa;
         border: 1px solid #ccc;
@@ -125,13 +172,141 @@
         background-position: -3px 20px;
         background-repeat: no-repeat;
     }
+}
 
-#mainContent {
+
+/* Content */
+.content {
+    position: absolute;
+    left: 398px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 10px;
+    background-color: #f1f1f2;
+    overflow: auto;
+}
+
+/* Title */
+
+.page-title {   
+    border-bottom: 1px solid #e0e1e4;
+    margin: -10px -10px 10px -10px;
+    padding-left: 16px;
+    padding-right: 16px;
+	height: 50px;
+    line-height: 50px;
+    background-color: #fff;
+    font-size: $font-size + 1;
+}
+
+.icon-add {
+    display: inline-block;
+    position: relative;
+    top: 2px;    
+    height: 16px;
+    width: 16px;    
+    background: url(../../images/sprites.png) no-repeat -143px -305px;
+}
+
+
+/* Popup grant permission in group management*/
+.group-name {
+    margin: 10px 0;
+
+    .name {
+        color: #4b91be;
+    }
+}
+
+.permItemParent {
+	background: url(../../images/arrow-down-icn.png) no-repeat left center;
+	margin-left: 10px;
+	text-indent: 10px;
+	font-weight: bold;
+}
+
+.permItemChild {
+	margin-left: 30px;
+}
+
+.permItemParentOnly {
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+
+/* User management */
+.statistic {
+    margin: 6px 0;
+}
+
+/* tables */
+
+td .edit2 a, td div a {
+	color: $link-color !important;
+}
+
+no-info {
+    text-align: center;
+    padding: 12px 0 10px 50px;
+    color: #999;
+    font-weight: bold;
     display: none;
 }
 
-#container {
-    background-color: #fff;
+/* icons in tables */
+
+%icon-in-tables {
+    width: 15px;
+	height: 15px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.edit {
+    @extend %icon-in-tables;
+	background: url(../../images/permission-icn.png) no-repeat;
+}
+
+.menuDelete {
+    @extend %icon-in-tables;
+	background: url(../../images/delete-icn.png) no-repeat;
+}
+
+.menuResetPwd {
+    @extend %icon-in-tables;
+	background: url(../../images/password-icon.png) no-repeat;
+}
+
+// checkbox in permission popups 
+
+.menuActive, .permActive {
+    @extend %icon-in-tables;
+	background: url(../../images/checkbox.png) no-repeat;
+}
+
+.menuInactive, .permInactive {
+    @extend %icon-in-tables;
+	background: url(../../images/checkbox.png) no-repeat -18px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+div#contentSplitter > div#msg {
+    margin: 10px;
 }
 
 .accMenu {
@@ -149,25 +324,16 @@
     margin-top: 10px;
     border: none;
     width: auto !important;
-}
 
-    .accMenu:hover {
+    &:hover {
         background-color: #262626;
         border: none;
     }
+}
 
 .dlLink {
     cursor: pointer;
     color: #0000FF;
-}
-
-a {
-    color: #2489ce;
-    text-decoration: none;
-}
-
-.bold {
-    font-weight: bold;
 }
 
 .pdCommon {
@@ -191,7 +357,7 @@ a {
     width: 147px;
 }
 
-#btnSearch, .btnSearch, #btnSearchLeftPanel {
+/*#btnSearch, .btnSearch, #btnSearchLeftPanel {
     background: url(../images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
     border: 1px solid #5897C3;
     color: #fff;
@@ -217,7 +383,7 @@ a {
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
-    }
+    }*/
 
 #exporttoexcel {
     float: right;
@@ -471,14 +637,7 @@ a {
         font-weight: bold;
     }
 
-.wlDetail {
-    color: #444;
-    margin: 0 0 0 6px;
-    padding-top: 5px;
-    font-size: 18px;
-    min-width: 700px;
-    font-family: 'Cabin',Sans-Serif;
-}
+
 
 .bgWLDaily {
     background: #F6F6F6 url(../images/bg-Line-Title.png) repeat-x 0px 0px;
@@ -518,13 +677,13 @@ a {
         cursor: pointer;
     }
 
-#msgNoinfo {
+/*#msgNoinfo {
     text-align: center;
     padding: 12px 0 10px 50px;
     color: #999;
     font-weight: bold;
     display: none;
-}
+}*/
 
 .UnderMaintenance {
     width: 650px;
@@ -1292,7 +1451,7 @@ li:hover {
     background-image: url(../images/ui-icons_2e83ff_256x240.png);
 }
 
-input[type=text], input[type=password] {
+/*input[type=text], input[type=password] {
     border: 1px solid #bbb;
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -1307,13 +1466,13 @@ textarea {
     -webkit-border-radius: 3px;
     resize: none;
     padding: 0 !important;
-}
+}*/
 
 .ui-autocomplete-input {
     vertical-align: top;
 }
 
-#userGroup input {
+/*#userGroup input {
     width: 150px;
     height: 22px;
     vertical-align: top;
@@ -1329,9 +1488,9 @@ textarea {
 
     #userGroup button:hover {
         background-image: none !important;
-    }
+    }*/
 
-.groupCboMenu input {
+/*.groupCboMenu input {
     width: 255px;
     height: 22px;
     vertical-align: top;
@@ -1347,16 +1506,16 @@ textarea {
 
     .groupCboMenu button:hover {
         background-image: none !important;
-    }
+    }*/
 
 .ui-helper-hidden-accessible {
     display: none;
 }
 
-.ui-dialog .ui-dialog-titlebar {
+/*.ui-dialog .ui-dialog-titlebar {
     padding: 5px 5px !important;
     font-weight: normal !important;
-}
+}*/
 
 .search {
     padding: 2px;
@@ -1429,10 +1588,6 @@ textarea {
     background-position: center right;
     float: right;
     cursor: pointer;
-}
-
-div#contentSplitter > div#msg {
-    margin: 10px;
 }
 
 .hidden {

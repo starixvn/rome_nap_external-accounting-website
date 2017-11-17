@@ -1,0 +1,140 @@
+﻿@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+/* Icons */
+
+%icon-sidebar {
+    position: relative;
+    top: 4px;    
+    display: inline-block;
+    margin-right: 20px;
+    background: url(../../images/sprites.png) no-repeat;
+    display: inline-block;
+}
+
+.icon-Administration {
+    @extend %icon-sidebar;    
+    background-position: -6px -208px;
+    height: 25px;
+    width: 25px;
+}
+
+.icon-Reports {
+    @extend %icon-sidebar;
+    background-position: -76px -208px;
+    height: 22px;
+    width: 22px;
+}
+
+.icon-Customer {
+    @extend %icon-sidebar;
+    background-position: -142px -208px;
+    height: 24px;
+    width: 24px;
+}
+
+
+.sidebar {
+    position: absolute;
+    left: -317px;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    width: 317px;
+    background-color: #26272b;
+    color: #949494;
+    opacity: 0;
+    @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
+    
+    
+
+    .main-menu {
+        display: block;
+        padding-top: 20px;
+    }
+
+    .list-action {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-top: 1px solid #d4d4d5;
+        padding: 15px 22px; 
+    }
+
+    .list-action .btn {
+        display: inline-block;
+        margin-right: 20px;
+        width: 124px;
+    }
+
+    .list-action .btn:last-child {
+        margin-right: 0;
+    }
+
+    &.expand-sidebar {
+        left: 0;
+        opacity: 1;
+         @include transition(left .2s ease-in .1s, opacity .1s ease-out);
+    } 
+}
+
+.sidebar .link:hover {
+    .icon-Administration {
+        background-position: -6px -256px;
+    }
+
+    .icon-Reports {
+        background-position: -76px -255px;
+    }
+
+    .icon-Customer {
+        background-position: -142px -256px;
+    }
+}
+
+.profile {
+    display: table;
+    width: 100%;
+    padding: 24px 20px;
+    background-color: #1e1e22;
+
+    .picture, .username, .group-user {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .picture {
+        width: 32px;
+        height: 32px; 
+    }
+
+    .picture .text { 
+        display: inline-block;  
+        width: 100%;
+        line-height: 32px;   
+        background-color: #ea7313;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        @include border-radius(50%);
+            
+    }
+
+    .username {
+        padding-left: 15px;
+        max-width: 136px;
+        word-wrap: break-word;
+    }
+
+    .group-user {
+        padding: 0;
+        width: 112px;
+    }
+}
+
+@media (min-width: 678px) {  
+    .sidebar {
+        display: none;       
+    }
+}

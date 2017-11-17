@@ -1,0 +1,49 @@
+﻿.btn {
+  height: 32px;
+  line-height: 32px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  -webkit-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px; }
+  .btn.-reset {
+    background-color: #e04d4d;
+    color: #fff; }
+    .btn.-reset:hover {
+      background-color: #dc3737;
+      color: #fff; }
+  .btn.-logout {
+    background-color: #ede2dc;
+    color: #1b1b1b; }
+    .btn.-logout:hover {
+      background-color: #e4d4cb;
+      color: #1b1b1b; }
+  .btn.-normal {
+    background-color: #e1e1e1;
+    color: #212121; }
+    .btn.-normal:hover {
+      background-color: #0286b7;
+      color: #212121; }
+  .btn.-submit {
+    background-color: #6f7d95;
+    color: #fff; }
+    .btn.-submit:hover {
+      background-color: #637187;
+      color: #fff; }
+  .btn.-add, .btn.-green {
+    background-color: #5faa73;
+    color: #fff; }
+    .btn.-add:hover, .btn.-green:hover {
+      background-color: #539c67;
+      color: #fff; }
+  .btn.-list {
+    background-color: #637187;
+    color: #fff; }
+    .btn.-list:hover {
+      background-color: #637187;
+      color: #fff; }
+

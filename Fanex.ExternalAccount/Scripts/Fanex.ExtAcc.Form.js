@@ -24,7 +24,7 @@ Fanex.ExtAcc.Form = {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
 
-        var margin = '30px';
+        var margin = '0';
 
         if (marginRight) {
             margin = marginRight + 'px';
@@ -168,6 +168,7 @@ Fanex.ExtAcc.Form = {
             buttons: [
             {
                 text: isSubmit ? "Submit" : "Yes",
+                'class': "btn -submit",
                 click: function () {
                     if (okClickEvent && typeof okClickEvent === 'function') {
                         okClickEvent();
@@ -179,6 +180,7 @@ Fanex.ExtAcc.Form = {
             },
             {
                 text: isCancel ? "Cancel" : "No",
+                'class': "btn -normal",
                 click: function () {
                     if (cancelClickEvent && typeof cancelClickEvent === 'function') {
                         cancelClickEvent();

@@ -1,0 +1,73 @@
+﻿@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.btn {
+    height: 32px;
+    line-height: 32px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    @include border-radius(2px);
+
+    &.-reset {
+        background-color: $btn-reset-bg;
+        color: $btn-reset-color;
+
+        &:hover {
+            background-color: $btn-reset-bg-hover;
+            color: $btn-reset-color-hover;
+        }
+    }
+
+    &.-logout {
+        background-color: $btn-logout-bg;
+        color: $btn-logout-color;
+
+        &:hover {
+            background-color: $btn-logout-bg-hover;
+            color: $btn-logout-color-hover;
+        }
+    }
+
+    &.-normal {
+        background-color: $btn-normal-bg;
+        color: $btn-normal-color;
+
+        &:hover {
+            background-color: $btn-normal-bg-hover;
+            color: $btn-normal-color-hover;
+        }
+    }
+
+     &.-submit {
+        background-color: $btn-submit-bg;
+        color: $btn-submit-color;
+
+        &:hover {
+            background-color: $btn-submit-bg-hover;
+            color: $btn-submit-color-hover;
+        }
+    }
+
+    &.-add, &.-green {
+        background-color: $btn-add-bg;
+        color: $btn-add-color;
+
+        &:hover {
+            background-color: $btn-add-bg-hover;
+            color: $btn-add-color-hover;
+        }
+    }
+
+    &.-list {
+        background-color: $btn-list-bg-hover;
+        color: $btn-list-color-hover;
+
+        &:hover {
+            background-color: $btn-list-bg-hover;
+            color: $btn-list-color-hover;
+        }
+    }
+}
+
+

@@ -1,0 +1,64 @@
+﻿.freegrid .grid-container.container {
+  padding: 0; }
+
+.freegrid * {
+  -webkit-box-sizing: content-box;
+  -khtml-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  box-sizing: content-box; }
+
+.freegrid .no-data-frozen, .freegrid .no-data-not-frozen {
+  color: #232428;
+  font-weight: normal; }
+
+.freegrid .free-top-left table thead th, .freegrid .col_header table thead th {
+  background: #6f7d95;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400 !important;
+  border: none;
+  text-align: center; }
+
+.freegrid .col_footer table thead th {
+  background: #fff !important;
+  color: #232428;
+  font-weight: bold;
+  white-space: nowrap; }
+
+.freegrid tr.highlight-row:hover td {
+  background-color: #f8eb95; }
+
+.freegrid .mousehoverbeyond td {
+  background-color: #f8eb95 !important; }
+
+.freegrid td.group-odd, .freegrid td.group-odd:hover {
+  background-color: #fff !important; }
+
+.freegrid td.group-even, .freegrid td.group-even:hover {
+  background-color: #eae9ee !important; }
+
+.freegrid td, .freegrid .grid-fixed-table td {
+  font-size: 14px; }
+
+.freegrid .freegrid-even td {
+  background-color: #eae9ee; }
+
+.freegrid .format-negative, .freegrid .format-positive {
+  color: #B50000 !important; }
+
+.freegrid .grid-pager {
+  background: #fff;
+  height: 32px;
+  line-height: 25px; }
+
+.freegrid .grid-pager-content {
+  padding-top: 0; }
+
+.freegrid .row-footer-background {
+  border-top: none; }
+
+.freegrid .column-truncate {
+  display: block; }
+

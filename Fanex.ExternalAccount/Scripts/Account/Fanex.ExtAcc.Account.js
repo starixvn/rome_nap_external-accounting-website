@@ -91,20 +91,21 @@ Fanex.ExtAcc.Account = {
         }
 
         // Collapse/ expand header navigation
-        var iconMenu = $("#navIcon");
-        var topMenu = $(".topmemu");
-        var hasMenu = $(".menu .hasChild");
+        var iconNav = $("#iconNav");
+        var iconUserInfo = $("#iconUserInfo");
+        var sidebar = $("#sidebar");
+        var hasMenu = $("#sidebar .menu .hasChild");
        
-        iconMenu.on("click", function () {            
-            if (!iconMenu.hasClass('active')) {
-                topMenu.addClass("expand-menu");
-                iconMenu.addClass("active");
-                topMenu.slideDown("fast");
+        iconNav.on("click", function () {
+            if (!iconNav.hasClass('active')) {
+                sidebar.addClass("expand-sidebar");
+                iconNav.addClass("active");
+                sidebar.show("fast");
                 
             } else { 
-                topMenu.slideUp("fast", function () {
-                    topMenu.removeClass("expand-menu");
-                    iconMenu.removeClass("active");
+                sidebar.show("fast", function () {
+                    sidebar.removeClass("expand-sidebar");
+                    iconNav.removeClass("active");
                 });
             }
         });

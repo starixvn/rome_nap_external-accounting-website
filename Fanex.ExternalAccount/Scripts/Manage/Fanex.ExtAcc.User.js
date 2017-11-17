@@ -203,7 +203,7 @@ Fanex.ExtAcc.User = {
         $this.Search($this.IsFirstLoad);
 
         $('#jqbuttonAddUser').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, 300, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, 340, false);
         });
 
         $('#jqbuttonAddExistUser').bind('click', function () {
@@ -372,7 +372,7 @@ Fanex.ExtAcc.User = {
     Add: function () {
         if (!Validators.validateInput($('#Username').val())) {
             $('#Username').focus();
-            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 32);
             return false;
         }
 
@@ -432,7 +432,7 @@ Fanex.ExtAcc.User = {
     AddExist: function () {
         if (!Validators.validateInput($('#Username').val())) {
             $('#Username').focus();
-            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 32);
             return false;
         }
 

@@ -12,10 +12,6 @@
     "inputFile": "assets/styles/pages/account/external-group.scss"
   },
   {
-    "outputFile": "assets/styles/pages/common.css",
-    "inputFile": "assets/styles/pages/common.scss"
-  },
-  {
     "outputFile": "assets/styles/base/scaffolding.css",
     "inputFile": "assets/styles/base/scaffolding.scss"
   },
@@ -26,5 +22,33 @@
   {
     "outputFile": "assets/styles/base/roboto-fonts.css",
     "inputFile": "assets/styles/base/roboto-fonts.scss"
+  },
+  {
+    "outputFile": "assets/styles/layout/sidebar.css",
+    "inputFile": "assets/styles/layout/sidebar.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/default/common.css",
+    "inputFile": "assets/styles/pages/default/common.scss"
+  },
+  {
+    "outputFile": "assets/styles/layout/left-panel.css",
+    "inputFile": "assets/styles/layout/left-panel.scss"
+  },
+  {
+    "outputFile": "assets/styles/components/button.css",
+    "inputFile": "assets/styles/components/button.scss"
+  },
+  {
+    "outputFile": "assets/styles/components/main-menu.css",
+    "inputFile": "assets/styles/components/main-menu.scss"
+  },
+  {
+    "outputFile": "assets/styles/components/tabs.css",
+    "inputFile": "assets/styles/components/tabs.scss"
+  },
+  {
+    "outputFile": "assets/styles/components/customize-fanex-grid.css",
+    "inputFile": "assets/styles/components/customize-fanex-grid.scss"
   }
 ]

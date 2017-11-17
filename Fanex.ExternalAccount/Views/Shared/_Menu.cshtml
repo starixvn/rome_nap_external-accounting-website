@@ -8,7 +8,7 @@
         var id = "ddl-" + value.Name.Replace(" ", string.Empty);
 
         <li class="menu">
-            <a href="#" ignorehref="1" class="link hasChild">@value.Name</a>
+            <a href="#" ignorehref="1" class="link hasChild"><span class="icon-@value.Name"></span>@value.Name</a>
             <ul class="submenu list" id="@id">
                 @if (value.Children.Count > 0)
                 {
