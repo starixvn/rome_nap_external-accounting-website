@@ -497,12 +497,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                     .RemoveCrossLevelProduct("ESports");
             }
 
-            if (product.HideGoldDeluxe || !product.SyncGoldDeluxeDownlines)
+            if (product.HideGoldDeluxe)
             {
                 model.RemoveEnableProduct("EnableGoldDeluxe");
             }
 
-            if (product.HideGoldDeluxe)
+            if (product.UplineStatuses.HideGoldDeluxe)
             {
                 model.RemoveProduct("GoldDeluxe")
                     .RemoveCrossLevelProduct("GoldDeluxe");
@@ -1017,6 +1017,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
+                product.UplineStatuses.HideGoldDeluxe = upperInfo.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+
                 product.UplineStatuses.DisableColossusBets = upperInfo.Rows[0].ToBoolean("DisableColossusBet");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
                 product.UplineStatuses.Suspended = upperInfo.Rows[0].ToBoolean("suspended");

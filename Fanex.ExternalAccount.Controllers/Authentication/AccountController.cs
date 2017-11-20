@@ -38,25 +38,16 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     /// </summary>
     public class AccountController : CaptchaMvc.Controllers.DefaultCaptchaController
     {
-        private readonly ILoginService _userService;
+        private readonly ILoginService _userService = new LoginService();
 
-        private readonly ICurrentSession _currentSession;
+        private readonly ICurrentSession _currentSession = new Core.Context.CurrentSession();
 
-        private readonly ICurrentContext _currentContext;
+        private readonly ICurrentContext _currentContext = new Core.Context.CurrentContext();
 
-        private readonly IMaintenanceService _maintenanceService;
+        private readonly IMaintenanceService _maintenanceService = new MaintenanceService();
 
-        private readonly NoCaptchaSectionConfiguration _nocaptcha;
-
-        public AccountController()
-        {
-            _currentContext = new Core.Context.CurrentContext();
-            _currentSession = new Core.Context.CurrentSession();
-            _userService = new LoginService();
-            _maintenanceService = new MaintenanceService();
-            _nocaptcha = NoCaptchaSectionConfiguration.Instance;
-        }
-
+        private readonly NoCaptchaSectionConfiguration _nocaptcha = NoCaptchaSectionConfiguration.Instance;
+        
         /// <summary>
         /// Gets login page.
         /// </summary>
