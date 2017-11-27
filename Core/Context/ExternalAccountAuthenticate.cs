@@ -15,16 +15,15 @@ namespace Fanex.ExternalAccount.Core.Context
     using System.Text;
     using System.Web;
     using System.Web.Mvc;
-    using CustomerSetting.Module.Core.Web;
-    using CustomerSetting.Security.Authenticate;
-    using DTO;
-    using DTO.UserControl;
-    using Service.Impl.Login;
-    using Service.Impl.Report;
-    using Service.Impl.UserControl;
-    using Service.Interface.Login;
-    using Service.Interface.UserControl;
-    using Utilities;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
+    using Fanex.ExternalAccount.Service.Impl.Login;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Impl.UserControl;
+    using Fanex.ExternalAccount.Service.Interface.Login;
+    using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Fanex.ExternalAccount.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -33,9 +32,6 @@ namespace Fanex.ExternalAccount.Core.Context
     {
         private readonly ILoginService _userService = new LoginService();
         private readonly ICachingService _cachingService = new CachingService();
-        private readonly ICurrentSession _currentSession = new CurrentSession();
-        private readonly ICurrentContext _currentContext = new CurrentContext();
-
         private bool _isAjax = true;
         private HttpRequest _request = null;
         private HttpResponse _response = null;
@@ -43,19 +39,22 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public ExternalAccountAuthenticate()
         {
-            this._request = _currentContext.Context.Request;
-            this._response = _currentContext.Context.Response;
+            var currentSession = new CurrentSession();
+            var currentContext = new CurrentContext();
 
-            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login") && !_response.IsRequestBeingRedirected)
+            this._request = currentContext.Context.Request;
+            this._response = currentContext.Context.Response;
+
+            if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login") && !_response.IsRequestBeingRedirected)
             {
                 this._response.RedirectPermanent("~/Account/Login");
             }
 
-            if (((_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
-                (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Equals("/"))) && !_response.IsRequestBeingRedirected)
+            if (((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
+                (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Equals("/"))) && !_response.IsRequestBeingRedirected)
             {
-                this._groups = _userService.GroupList().ToList();
-                var group = _currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
+                this._groups = new LoginService().GroupList().ToList();
+                var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
 
                 _response.RedirectPermanent("~/Home/Index" + group);
             }
@@ -87,7 +86,9 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             base.OnAuthorization(filterContext);
 
-            this._groups = _userService.GroupList().ToList();
+            this._groups = new LoginService().GroupList().ToList();
+            var currentSession = new CurrentSession();
+            var currentContext = new CurrentContext();
             var response = filterContext.HttpContext.Response;
             var request = filterContext.HttpContext.Request;
 
@@ -96,15 +97,15 @@ namespace Fanex.ExternalAccount.Core.Context
                 return;
             }
 
-            if (!_currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login") && !response.IsRequestBeingRedirected)
+            if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login") && !response.IsRequestBeingRedirected)
             {
                 response.RedirectPermanent("~/Account/Login");
             }
 
-            if (((_currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (_currentSession.IsLogin && request.RawUrl.Equals("/")))
+            if (((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
                  && !response.IsRequestBeingRedirected)
             {
-                var group = _currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
+                var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
                 response.RedirectPermanent("~/Home/Index" + group);
             }
 
@@ -118,7 +119,7 @@ namespace Fanex.ExternalAccount.Core.Context
                     return;
                 }
 
-                if (!this.FunctionAuthorization(_currentSession.UserId, this.Function, this._request))
+                if (!this.FunctionAuthorization(currentSession.UserId, this.Function, this._request))
                 {
                     this.CloseConnection(filterContext);
                     return;
@@ -132,12 +133,12 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public bool AllowReadByAuthenticationParam(string action)
         {
-            return this.FunctionAuthorization(_currentSession.UserId, action, this._request, AuthenticateAction.AuthenticationType.Read);
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, action, this._request, AuthenticateAction.AuthenticationType.Read);
         }
 
         public bool AllowUpdateByAuthenticationParam(string action)
         {
-            return this.FunctionAuthorization(_currentSession.UserId, action, this._request, AuthenticateAction.AuthenticationType.Host);
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, action, this._request, AuthenticateAction.AuthenticationType.Host);
         }
 
         /// <summary>
@@ -195,12 +196,12 @@ namespace Fanex.ExternalAccount.Core.Context
 
         public bool AllowRead(string action)
         {
-            return this.FunctionAuthorization(_currentSession.UserId, this.Function, this._request);
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
         public bool AllowUpdate(string action)
         {
-            return this.FunctionAuthorization(_currentSession.UserId, this.Function, this._request);
+            return this.FunctionAuthorization(CurrentSession.Instance.UserId, this.Function, this._request);
         }
 
         /// <summary>
@@ -213,24 +214,26 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <returns>Boolean object.</returns>
         public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
         {
+            var currentSession = CurrentSession.Instance;
             groupName = string.IsNullOrWhiteSpace(groupName) ? string.Empty : groupName;
-            var userInfo = new UserService().GetUserById(_currentSession.UserId);
+            var loginService = new LoginService();
+            var userInfo = new UserService().GetUserById(currentSession.UserId);
 
-            if (_currentSession.GroupId != userInfo.GroupID)
+            if (currentSession.GroupId != userInfo.GroupID)
             {
-                _currentSession.IsInternalAdmin = _userService.CheckExternalGroup(_currentSession.UserId, 11, "ExternalGroup");
-                _currentSession.GroupId = userInfo.GroupID;
-                _currentSession.CurrencyGroup = userInfo.GroupName;
-                _currentSession.IsITAdmin = _currentSession.GroupId == 1;
+                currentSession.IsInternalAdmin = loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
+                currentSession.GroupId = userInfo.GroupID;
+                currentSession.CurrencyGroup = userInfo.GroupName;
+                currentSession.IsITAdmin = currentSession.GroupId == 1;
             }
 
             var allGroups = new GroupService().GetAllGroup();
-            var groups = _userService.GroupList();
+            var groups = loginService.GroupList();
             var result = new ReportService().GetCustomerInfo(groupName, custId, username, getUplineInfo);
-            var hasGroup = _currentSession.IsInternalAdmin ? allGroups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
-                groups.Where(o => o.GroupID == _currentSession.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
+            var hasGroup = currentSession.IsInternalAdmin ? allGroups.Any(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase)) :
+                groups.Where(o => o.GroupID == currentSession.GroupId).First().GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
 
-            return (result != null && result.Rows.Count > 0 && hasGroup) || ((_currentSession.IsInternalAdmin || custId == 0) && hasGroup);
+            return (result != null && result.Rows.Count > 0 && hasGroup) || ((currentSession.IsInternalAdmin || custId == 0) && hasGroup);
         }
 
         /// <summary>
@@ -290,16 +293,19 @@ namespace Fanex.ExternalAccount.Core.Context
         /// <param name="response">Response object.</param>
         private void SignOut(HttpResponseBase response)
         {
-            var onuserId = _currentSession.OnUserId;
+            var currentSession = new CurrentSession();
+            var currentContext = new CurrentContext();
+
+            var onuserId = currentSession.OnUserId;
 
             if (onuserId > 0)
             {
-                this._userService.Logout(onuserId, _currentSession.UserName);
-                _currentContext.Context.Session.Abandon();
+                this._userService.Logout(onuserId, currentSession.UserName);
+                currentContext.Context.Session.Abandon();
             }
             else
             {
-                _currentContext.Context.Session.Abandon();
+                currentContext.Context.Session.Abandon();
             }
 
             if (!response.IsRequestBeingRedirected)
@@ -310,7 +316,7 @@ namespace Fanex.ExternalAccount.Core.Context
 
         private bool IsHomeAuthorized()
         {
-            return this.Function.Equals("Home", StringComparison.OrdinalIgnoreCase) && _currentSession.IsLogin;
+            return this.Function.Equals("Home", StringComparison.OrdinalIgnoreCase) && CurrentSession.Instance.IsLogin;
         }
 
         /// <summary>
