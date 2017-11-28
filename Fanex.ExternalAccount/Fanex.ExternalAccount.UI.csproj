@@ -104,11 +104,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.ExtNAP.2.0.1.3\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.ExtNAP.2.0.1.4-SecurityInOct-01\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.ExtNAP.2.0.1.3\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.ExtNAP.2.0.1.4-SecurityInOct-01\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
