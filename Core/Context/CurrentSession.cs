@@ -12,6 +12,7 @@
 namespace Fanex.ExternalAccount.Core.Context
 {
     using System.Globalization;
+    using System.Web;
     using System.Web.UI;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Utilities;
@@ -19,7 +20,7 @@ namespace Fanex.ExternalAccount.Core.Context
     /// <summary>
     /// Current Session.
     /// </summary>
-    public class CurrentSession : Page, ICurrentSession
+    public class CurrentSession : ICurrentSession
     {
         #region Constants
         
@@ -51,12 +52,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToString(this.Session[EASUsername]);
+                return Utils.ToString(HttpContext.Current.Session[EASUsername]);
             }
 
             set
             {
-                this.Session[EASUsername] = value;
+                HttpContext.Current.Session[EASUsername] = value;
             }
         }
 
@@ -64,12 +65,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(this.Session[EASCustId]);
+                return Utils.ToInt32(HttpContext.Current.Session[EASCustId]);
             }
 
             set
             {
-                this.Session[EASCustId] = value;
+                HttpContext.Current.Session[EASCustId] = value;
             }
         }
 
@@ -77,12 +78,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(this.Session[EASUserId]);
+                return Utils.ToInt32(HttpContext.Current.Session[EASUserId]);
             }
 
             set
             {
-                this.Session[EASUserId] = value;
+                HttpContext.Current.Session[EASUserId] = value;
             }
         }
 
@@ -90,12 +91,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(this.Session[EASOnUserId]);
+                return Utils.ToInt32(HttpContext.Current.Session[EASOnUserId]);
             }
 
             set
             {
-                this.Session[EASOnUserId] = value;
+                HttpContext.Current.Session[EASOnUserId] = value;
             }
         }
 
@@ -108,14 +109,14 @@ namespace Fanex.ExternalAccount.Core.Context
 
             set
             {
-                this.Session["IsLogin"] = value;
+                HttpContext.Current.Session["IsLogin"] = value;
             }
         }
 
         public string NetSessionId
         {
-            get { return this.Session.SessionID; }
-            set { this.Session["SessionID"] = value; }
+            get { return HttpContext.Current.Session.SessionID; }
+            set { HttpContext.Current.Session["SessionID"] = value; }
         }
 
         public string Captcha
@@ -128,7 +129,7 @@ namespace Fanex.ExternalAccount.Core.Context
             set
             {
                 _captcha = value;
-                this.Session[EASCaptcha] = value;
+                HttpContext.Current.Session[EASCaptcha] = value;
             }
         }
 
@@ -136,12 +137,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToString(this.Session[EASCurrencyGroup]);
+                return Utils.ToString(HttpContext.Current.Session[EASCurrencyGroup]);
             }
 
             set
             {
-                this.Session[EASCurrencyGroup] = value;
+                HttpContext.Current.Session[EASCurrencyGroup] = value;
             }
         }
 
@@ -149,12 +150,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToBoolean(this.Session[EASInternalAdmin]);
+                return Utils.ToBoolean(HttpContext.Current.Session[EASInternalAdmin]);
             }
 
             set
             {
-                this.Session[EASInternalAdmin] = value;
+                HttpContext.Current.Session[EASInternalAdmin] = value;
             }
         }
 
@@ -162,12 +163,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToBoolean(this.Session[EASITAdmin]);
+                return Utils.ToBoolean(HttpContext.Current.Session[EASITAdmin]);
             }
 
             set
             {
-                this.Session[EASITAdmin] = value;
+                HttpContext.Current.Session[EASITAdmin] = value;
             }
         }
 
@@ -175,12 +176,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(this.Session[EASGroupId]);
+                return Utils.ToInt32(HttpContext.Current.Session[EASGroupId]);
             }
 
             set
             {
-                this.Session[EASGroupId] = value;
+                HttpContext.Current.Session[EASGroupId] = value;
             }
         }
 
@@ -188,12 +189,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(this.Session[EASFromSystem]);
+                return Utils.ToInt32(HttpContext.Current.Session[EASFromSystem]);
             }
 
             set
             {
-                this.Session[EASFromSystem] = value;
+                HttpContext.Current.Session[EASFromSystem] = value;
             }
         }
 
@@ -214,12 +215,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(this.Session["_loginAttempt"]);
+                return Utils.ToInt32(HttpContext.Current.Session["_loginAttempt"]);
             }
 
             set
             {
-                this.Session["_loginAttempt"] = value;
+                HttpContext.Current.Session["_loginAttempt"] = value;
             }
         }
 
@@ -227,12 +228,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToString(this.Session["_userAttempt"]);
+                return Utils.ToString(HttpContext.Current.Session["_userAttempt"]);
             }
 
             set
             {
-                this.Session["_userAttempt"] = value;
+                HttpContext.Current.Session["_userAttempt"] = value;
             }
         }
     }
