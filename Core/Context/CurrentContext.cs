@@ -12,12 +12,14 @@
 namespace Fanex.ExternalAccount.Core.Context
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Globalization;
     using System.IO;
     using System.Net;
     using System.Text.RegularExpressions;
     using System.Web;
+    using System.Linq;
     using Common;
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
@@ -28,6 +30,7 @@ namespace Fanex.ExternalAccount.Core.Context
     public class CurrentContext : ICurrentContext
     {
         private readonly string[] custIdNames = new string[] { "custId", "customerId" };
+        private readonly string[] custIdsNames = new string[] { "custIds", "customerIds" };
         private static string loginErrorMessage = string.Empty;
 
         public static string LoginErrorMessage
@@ -158,6 +161,16 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
+        public IEnumerable<int> CustIds
+        {
+            get
+            {
+                var custIds = GetCustomerIdsFromQueryString();
+
+                return custIds;
+            }
+        }
+
         public string GroupName
         {
             get
@@ -179,6 +192,21 @@ namespace Fanex.ExternalAccount.Core.Context
             }
 
             return custId;
+        }
+
+        private IEnumerable<int> GetCustomerIdsFromQueryString()
+        {
+            var custIds = string.Empty;
+            var i = 0;
+
+            while (string.IsNullOrEmpty(custIds) && i < custIdsNames.Length)
+            {
+                custIds = HttpContext.Current.Request[custIdsNames[i]];
+                i++;
+            }
+
+            return custIds != null ?
+                custIds.Split(',').Where(id => int.TryParse(id, out i)).Select(id => Converter.ToInt(id)).ToList() : Enumerable.Empty<int>();
         }
 
         private int GetCustomerIdFromJson()
