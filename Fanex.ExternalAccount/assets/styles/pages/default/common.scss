@@ -88,9 +88,13 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 398px;
-    padding-top: 20px;  
-    border-right: 1px solid #e0e1e4;  
+    width: 0;
+
+    @media screen and (min-width: 768px) {
+        width: 398px;
+        padding-top: 20px;  
+        border-right: 1px solid #e0e1e4;  
+    }
 }
 
 .group-search {
@@ -178,13 +182,17 @@
 /* Content */
 .content {
     position: absolute;
-    left: 398px;
+    left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     padding: 10px;
     background-color: #f1f1f2;
     overflow: auto;
+
+    @media screen and (min-width: 768px) {
+        left: 398px; 
+    }
 }
 
 /* Title */
