@@ -42,19 +42,7 @@ namespace Fanex.ExternalAccount.Controllers.Home
             {
                 return RedirectToAction("Offline", "Account");
             }
-
-            if (!CurrentSession.IsLogin && !CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            if (CurrentSession.IsLogin && CurrentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                var group = CurrentSession.IsInternalAdmin ? new LoginService().GroupList().First().GroupName : string.Empty;
-
-                return Redirect("~/Home/Index/" + group);
-            }
-
+            
             return ViewBase();
         }
 

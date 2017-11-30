@@ -104,7 +104,7 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(this.UserName);
+                return HttpContext.Current.User.Identity.IsAuthenticated;
             }
 
             set
@@ -129,7 +129,6 @@ namespace Fanex.ExternalAccount.Core.Context
             set
             {
                 _captcha = value;
-                HttpContext.Current.Session[EASCaptcha] = value;
             }
         }
 

@@ -225,7 +225,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             int onuserId = _currentSession.OnUserId;
             if (onuserId > 0)
             {
-                return SignOut(onuserId, _currentSession.UserName);
+                SignOut(onuserId, _currentSession.UserName);
             }
             else
             {
@@ -233,6 +233,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
 
             FormsAuthentication.SignOut();
+
             return RedirectToAction("Login", "Account");
         }
 
@@ -405,20 +406,17 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         /// <param name="onuserId">On user id.</param>
         /// <param name="userName">Username of customer.</param>
         /// <returns>ActionResult object.</returns>
-        private ActionResult SignOut(int onuserId, string userName)
+        private void SignOut(int onuserId, string userName)
         {
             try
             {
                 _userService.Logout(onuserId, userName);
                 _currentContext.Context.Session.Abandon();
-
-                return RedirectToAction("Login", "Account");
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
-                return RedirectToAction("Error", "Shared");
-            }
+            }            
         }
 
         private bool ValidateAntiXSRF(string token)

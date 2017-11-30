@@ -24,6 +24,7 @@ namespace Fanex.ExternalAccount
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
+    using System.Web.Security;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -156,7 +157,7 @@ namespace Fanex.ExternalAccount
                         userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
                         Session.Abandon();
 
-                        Response.Redirect("~/Account/Login");
+                        FormsAuthentication.SignOut();
                     }
                 }
             }

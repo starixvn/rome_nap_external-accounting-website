@@ -25,6 +25,7 @@ namespace Fanex.ExternalAccount.Core.Context
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Logging.Extensions.Web;
+    using System.Web.Security;
 
     /// <summary>
     /// TODO: Update summary.
@@ -48,16 +49,13 @@ namespace Fanex.ExternalAccount.Core.Context
 
             if (!currentSession.IsLogin && !currentContext.Context.Request.RawUrl.ToLower().Contains("login") && !_response.IsRequestBeingRedirected)
             {
-                this._response.Redirect("~/Account/Login");
+                FormsAuthentication.RedirectToLoginPage();
             }
 
             if (((currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Contains("login")) ||
                 (currentSession.IsLogin && currentContext.Context.Request.RawUrl.ToLower().Equals("/"))) && !_response.IsRequestBeingRedirected)
             {
-                this._groups = new LoginService().GroupList().ToList();
-                var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
-
-                _response.Redirect("~/Home/Index" + group);
+                FormsAuthentication.RedirectFromLoginPage(currentSession.UserName, false);
             }
         }
 
@@ -100,14 +98,13 @@ namespace Fanex.ExternalAccount.Core.Context
 
             if (!currentSession.IsLogin && !request.RawUrl.ToLower().Contains("login") && !response.IsRequestBeingRedirected)
             {
-                response.Redirect("~/Account/Login");
+                FormsAuthentication.RedirectToLoginPage();
             }
 
             if (((currentSession.IsLogin && request.RawUrl.ToLower().Contains("login")) || (currentSession.IsLogin && request.RawUrl.Equals("/")))
                  && !response.IsRequestBeingRedirected)
-            {
-                var group = currentSession.IsInternalAdmin ? "/" + this._groups.ElementAt(0).GroupName : string.Empty;
-                response.Redirect("~/Home/Index" + group);
+            {                
+                FormsAuthentication.RedirectFromLoginPage(currentSession.UserName, false);
             }
         }
 
@@ -288,10 +285,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 currentContext.Context.Session.Abandon();
             }
 
-            if (!response.IsRequestBeingRedirected)
-            {
-                response.Redirect("~/Account/Login");
-            }
+            FormsAuthentication.SignOut();            
         }
 
         private bool IsHomeAuthorized()
