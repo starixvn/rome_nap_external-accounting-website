@@ -1,16 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="BaseController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Base controller for controller to inherit
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.13">Style Cop</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Core.Base
+﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;
@@ -136,24 +124,6 @@ namespace Fanex.ExternalAccount.Core.Base
             {
                 return this._currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
             }
-        }
-
-        /// <summary>
-        /// Returns View associated with model object.
-        /// </summary>
-        /// <param name="viewName">URL to view.</param>
-        /// <param name="model">Model object.</param>
-        /// <returns>ActionResult object.</returns>
-        protected virtual ActionResult ViewBase(string viewName = null, object model = null)
-        {
-            if (!Response.IsRequestBeingRedirected)
-            {
-                Response.AppendHeader("Content-Encoding", "gzip");
-            }
-
-            Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
-
-            return string.IsNullOrWhiteSpace(viewName) ? this.View(model) : this.View(viewName, model);
         }
 
         /// <summary>

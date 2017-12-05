@@ -61,7 +61,7 @@ namespace Fanex.ExternalAccount.Utilities
             set;
         }
 
-        public static bool Recheckin
+        public static bool IsEnabledRecheckin
         {
             get { return Utils.ToBoolean(GetValue("Recheckin")); }
         }

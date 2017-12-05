@@ -147,7 +147,7 @@ namespace Fanex.ExternalAccount
         {
             try
             {
-                if (CurrentSession.Instance.IsLogin && Config.Recheckin)
+                if (CurrentSession.Instance.IsLogin && Config.IsEnabledRecheckin)
                 {
                     var userService = new LoginService();
                     var isKickedOut = false;

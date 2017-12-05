@@ -1,15 +1,9 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="StatusKickedOut.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO
+﻿namespace Fanex.ExternalAccount.DTO
 {
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public enum StatusKickedOut
+    public enum RecheckinStatus
     {
         /// <summary>
         /// Kicked out.

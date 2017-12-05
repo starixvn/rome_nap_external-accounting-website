@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Fanex.ExternalAccount.Core.Context
+{
+    using System;
+    using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Web.UI;
+    using System.Text;
+    using System.Web;
 using Fanex.Logging.Extensions.Web;
 
-namespace Fanex.ExternalAccount.Core.Context
-{
-    public class Encryptor : Page
+    public class Encryptor
     {
         private const string HexDigit = "0123456789abcdef";
+        private const string RandomCaptchaKey = "RandomCaptcha";
+        private const string DefaultCaptcha = "0000";
 
         public static Encryptor Instance
         {
@@ -19,35 +21,19 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
-        public string Code
+        public string RandomCaptcha
         {
             get
             {
-                try
-                {
-                    return (string)Session["RandomCaptcha"];
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.Handle(ex);
-                }
-
-                return "0000";
+                return (HttpContext.Current.Session[RandomCaptchaKey] as string) ?? DefaultCaptcha;
             }
 
             set
             {
-                try
-                {
-                    Session["RandomCaptcha"] = value;
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.Handle(ex);
-                }
+                HttpContext.Current.Session[RandomCaptchaKey] = value;
             }
         }
-        
+
         public static string HexDecode(string data)
         {
             var b16_digits = HexDigit;
@@ -111,18 +97,18 @@ namespace Fanex.ExternalAccount.Core.Context
             return ct.ToString();
         }
 
-        public string Decrypt(string encrypted, string code)
+        public string Decrypt(string encrypted, string key)
         {
             try
             {
-                return RC4(code, HexDecode(encrypted));
+                return RC4(key, HexDecode(encrypted));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex, TraceEventType.Warning);
             }
 
-            return "cannot_decrypt_password";
+            return string.Empty;
         }
     }
 }

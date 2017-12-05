@@ -26,7 +26,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
     /// </summary>
     public class LoginService : ILoginService
     {
-        private readonly ILoginDao _loginDao = null;
+        private readonly ILoginDao _loginDao;
 
         public LoginService(ILoginDao loginDao = null)
         {
@@ -57,28 +57,18 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             onuserId = 0;
             isIntAcc = true;
 
-            try
+            var result = _loginDao.Login(username, password, request.Browser, request.IP, request.DomainName, request.CountryCode, request.Platform, out custId);
+
+            if (result.IsSuccess)
             {
-                var result = _loginDao.Login(username, password, request.Browser, request.IP, request.DomainName, request.CountryCode, request.Platform, out custId);
+                _loginDao.Checkin(custId, request.NetSessionId, request.IP, out onuserId);
 
-                if (result.IsSuccess)
-                {
-                    var result2 = _loginDao.Checkin(custId, request.NetSessionId, request.IP, out onuserId);
-                    isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
+                isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
 
-                    result.ResultData = new GroupService().GetGroupById((int)result.ResultData);
-
-                    return result;
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
+                result.ResultData = new GroupService().GetGroupById((int)result.ResultData);
             }
 
-            return null;
+            return result;
         }
 
         /// <summary>

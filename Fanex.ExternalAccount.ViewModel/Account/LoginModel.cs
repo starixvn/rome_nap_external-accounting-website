@@ -1,66 +1,37 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="LoginModel.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.ViewModel.Account
+﻿namespace Fanex.ExternalAccount.ViewModel.Account
 {
     using System.ComponentModel.DataAnnotations;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.Extension;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class LoginModel
     {
-        [EASDisplay("LoginError", typeof(ViewLang))]
-        public string LoginError
+        public const int ThresholdFailToShowingCaptcha = 3;
+
+        public LoginModel() { }
+
+        public LoginModel(string loginFailedMessage)
         {
-            get
-            {
-                return ViewLang.LoginError;
-            }
+            LoginFailedMessage = loginFailedMessage;
         }
 
-        [EASDisplay("Login", typeof(ViewLang))]
-        public string Login
-        {
-            get
-            {
-                return ViewLang.Login;
-            }
-        }
 
-        [EASDisplay("LoginInfo", typeof(ViewLang))]
-        public string Info
-        {
-            get
-            {
-                return ViewLang.LoginInfo;
-            }
-        }
 
-        [EASDisplay("LoginTitle", typeof(ViewLang))]
-        public string LoginTitle
-        {
-            get
-            {
-                return ViewLang.LoginTitle;
-            }
-        }
+        [Required]
+        public string UserName { get; set; }
 
-        [DataType(DataType.Password)]
-        [EASDisplay("Confirmnewpassword", typeof(ViewLang))]
-        public string ConfirmNewPassword { get; set; }
+        [Required]
+        public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [EASDisplay("Confirmpassword", typeof(ViewLang))]
-        public string ConfirmPassword { get; set; }
+        [Required]
+        public string Captcha { get; set; }
 
-        [DataType(DataType.Password)]
-        [EASDisplay("Newpassword", typeof(ViewLang))]
-        public string NewPassword { get; set; }
+        public string Code { get; set; }
+
+        public string __RequestVerificationToken { get; set; }
+
+        public bool IsVisibleCaptcha => LoginAttempt >= ThresholdFailToShowingCaptcha;
+
+        public int LoginAttempt { get; set; }
+
+        public string LoginFailedMessage { get; set; }
     }
 }

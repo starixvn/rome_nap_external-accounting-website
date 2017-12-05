@@ -1268,7 +1268,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
                 ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
             }
 
-            return this.ViewBase("~/Views/BettypeReference/Index.cshtml");
+            return View("~/Views/BettypeReference/Index.cshtml");
         }
 
         private bool IsSpecialSiteCustomer()

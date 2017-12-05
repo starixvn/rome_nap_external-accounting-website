@@ -98,7 +98,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\Login.cs" />
     <Compile Include="Account\LoginModel.cs" />
     <Compile Include="Account\UserModel.cs" />
     <Compile Include="Customer\CustInfo.cs" />

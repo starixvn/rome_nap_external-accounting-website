@@ -1,11 +1,11 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.ExternalAccount.Core.Context;
+@using Fanex.ExternalAccount.Core.Context
 @using System.Web.Optimization
 @using CaptchaMvc.HtmlHelpers
-@model Fanex.ExternalAccount.ViewModel.Account.Login
+@model Fanex.ExternalAccount.ViewModel.Account.LoginModel
 @{
     ViewBag.Title = ViewLang.LoginTitle;
-    var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none"; 
+    Layout = null;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -52,23 +52,25 @@
                             @Html.PasswordFor(m => m.Password, new { @class = "password bgLoginControl", @maxlength = 50, @autocomplete = "off" })
                         </td>
                     </tr>
-                    <tr id="captcha" style="display: @showCaptcha">
-                        <td>
-                        </td>
-                        <td>
-                             @if (ViewBag.ShowCaptcha == string.Empty)
-                             {
-                                 try
-                                 {
-                                    @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
-                                 }
-                                 catch (Exception ex)
-                                 {
+                    @if (Model.IsVisibleCaptcha)
+                    {
+                        <tr id="captcha">
+                            <td>
+                            </td>
+                            <td>
+                                 @{
+                                     try
+                                     {
+                                        @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
+                                     }
+                                     catch (Exception ex)
+                                     {
                                      Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
+                                     }
                                  }
-                             }
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    }
                     <tr>
                         <td>
                         </td>
@@ -88,20 +90,19 @@
                         </td>
                     </tr>
                 </table>
-                @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
+                @if (!string.IsNullOrWhiteSpace(Model.LoginFailedMessage))
                 {
                     <table style="margin-top: 50px" border="0" width="350px" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="errMsg">
-                                @CurrentContext.LoginErrorMessage
-                                @{CurrentContext.LoginErrorMessage = string.Empty;}
+                                @Model.LoginFailedMessage
                             </td>
                         </tr>
                     </table>
                 }
             </div>
         </center>
-        @Html.Hidden("Code", Encryptor.Instance.Code)
+        @Html.Hidden("Code", Model.Code)
         @Html.AntiForgeryToken()
     }
 

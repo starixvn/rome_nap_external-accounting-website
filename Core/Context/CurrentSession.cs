@@ -1,29 +1,14 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CurrentSession.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Session info for current logging in
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-namespace Fanex.ExternalAccount.Core.Context
+﻿namespace Fanex.ExternalAccount.Core.Context
 {
     using System.Globalization;
     using System.Web;
-    using System.Web.UI;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// Current Session.
-    /// </summary>
     public class CurrentSession : ICurrentSession
     {
         #region Constants
-        
+
         public const string EASUsername = "EASUsername";
         public const string EASCustId = "EASCustId";
         public const string EASUserId = "EASUserId";
@@ -34,9 +19,9 @@ namespace Fanex.ExternalAccount.Core.Context
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
         public const string EASFromSystem = "EASFromSystem";
-
-        private static string _captcha = string.Empty;        
-        private static string _userAttempt = string.Empty;
+        public const string EASIsLogin = "EASIsLogin";
+        public const string EASLoginAttempt = "_loginAttempt";
+        public const string EASUserAttempt = "_userAttempt";
 
         #endregion Constants
 
@@ -104,14 +89,16 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return HttpContext.Current.User.Identity.IsAuthenticated;
+                return Utils.ToBoolean(HttpContext.Current.Session[EASIsLogin]);
             }
 
             set
             {
-                HttpContext.Current.Session["IsLogin"] = value;
+                HttpContext.Current.Session[EASIsLogin] = value;
             }
         }
+
+        public bool IsNotLogin => !IsLogin;
 
         public string NetSessionId
         {
@@ -123,12 +110,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return _captcha;
+                return HttpContext.Current.Session[EASCaptcha] as string;
             }
 
             set
             {
-                _captcha = value;
+                HttpContext.Current.Session[EASCaptcha] = value;
             }
         }
 
@@ -184,7 +171,7 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
-        public int FromSystem 
+        public int FromSystem
         {
             get
             {
@@ -214,12 +201,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToInt32(HttpContext.Current.Session["_loginAttempt"]);
+                return Utils.ToInt32(HttpContext.Current.Session[EASLoginAttempt]);
             }
 
             set
             {
-                HttpContext.Current.Session["_loginAttempt"] = value;
+                HttpContext.Current.Session[EASLoginAttempt] = value;
             }
         }
 
@@ -227,12 +214,12 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                return Utils.ToString(HttpContext.Current.Session["_userAttempt"]);
+                return Utils.ToString(HttpContext.Current.Session[EASUserAttempt]);
             }
 
             set
             {
-                HttpContext.Current.Session["_userAttempt"] = value;
+                HttpContext.Current.Session[EASUserAttempt] = value;
             }
         }
     }

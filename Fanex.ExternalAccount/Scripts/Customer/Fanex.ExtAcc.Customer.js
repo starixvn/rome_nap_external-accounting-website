@@ -103,7 +103,7 @@
             dataType: 'html',
             cache: false,
             success: function (data) {
-                if (data == -1) {
+                if (data == -1 || isNaN(data)) {
                     try {
                         if (typeof Fanex.ExtAcc.Form != 'undefined') {
                             if (document.getElementById('windowPopup')) {
@@ -119,12 +119,12 @@
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
-                                    location.href = resolveClientUrl('Account/Login');
+                                    location.href = resolveClientUrl('Account/LogOff');
                                 }, 1000);
                             }, 1000);
                         }
                     } catch (e) {
-                        top.location.href = resolveClientUrl('Account/Login');
+                        top.location.href = resolveClientUrl('Account/LogOff');
                     }
                 }
                 else if (data == 2) {

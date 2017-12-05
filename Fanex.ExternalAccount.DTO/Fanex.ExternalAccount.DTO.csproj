@@ -110,7 +110,7 @@
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="Statement\Statement.cs" />
-    <Compile Include="StatusKickedOut.cs" />
+    <Compile Include="RecheckinStatus.cs" />
     <Compile Include="Functions.generated.cs">
       <DependentUpon>Functions.tt</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -130,13 +130,7 @@ Fanex.ExtAcc.Account = {
     },
 
     Logout: function () {
-        $.ajax(resolveClientUrl("Account/LogOff"))
-        .done(function (data) {
-            location.href = resolveClientUrl("Account/Login");
-        })
-        .fail(function (data) {
-            if (typeof console != 'undefined') console.log(data);
-        })
+        location.href = resolveClientUrl("Account/LogOff");
     }
 }
 

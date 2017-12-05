@@ -47,7 +47,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml");
+            return View("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml");
         }
 
         /// <summary>

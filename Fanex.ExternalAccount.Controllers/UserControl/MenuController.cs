@@ -37,7 +37,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult MenuList()
         {
-            return this.ViewBase();
+            return View();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
