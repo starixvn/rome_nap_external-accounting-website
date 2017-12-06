@@ -108,9 +108,8 @@
             if (onuserId > 0)
             {
                 try
-                {
-                    var isKickOut = false;
-                    _loginService.Recheckin(onuserId, out isKickOut);
+                {                    
+                    var isKickOut = _loginService.IsKickedOut(onuserId);
                     if (!isKickOut)
                     {
                         return RecheckinStatus.Continue;

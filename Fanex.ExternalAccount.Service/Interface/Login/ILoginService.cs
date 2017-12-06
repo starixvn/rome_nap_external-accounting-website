@@ -26,7 +26,7 @@ namespace Fanex.ExternalAccount.Service.Interface.Login
 
         Result Logout(int custId, string username);
 
-        Result Recheckin(int custId, out bool isKickOut);
+        bool IsKickedOut(int custId);
 
         ICollection<Group> GroupList();
 

@@ -25,7 +25,7 @@ namespace Fanex.ExternalAccount.DataAccess.Interface.Login
 
         Result Checkin(int custId, string netSessionID, string ip, out int onuserId);
 
-        Result Recheckin(int custId, out bool isKickOut);
+        bool IsKickedOut(int custId);
 
         ICollection<Group> GroupList();
 

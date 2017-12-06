@@ -152,10 +152,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
         /// <param name="custId">The customer id .</param>
         /// <param name="isKickOut">If set to <c>true</c> [is kick out].</param>
         /// <returns>DTO.Result object.</returns>
-        public DTO.Result Recheckin(int custId, out bool isKickOut)
+        public bool IsKickedOut(int custId)
         {
-            isKickOut = false;
-
             using (var db = new ObjectDb("EAS_UserRecheckIn"))
             {
                 db.AddInParameter("On_UserID", System.Data.DbType.Int32, custId);
@@ -164,14 +162,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Login
                 try
                 {
                     db.ExecuteNonQuery();
-                    isKickOut = (bool)db.GetParameterValue("isKickedOut");
+                    return (bool)db.GetParameterValue("isKickedOut");
                 }
                 catch (Exception ex)
                 {
                     throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
                 
-                return new DTO.Result();
             }
         }
 

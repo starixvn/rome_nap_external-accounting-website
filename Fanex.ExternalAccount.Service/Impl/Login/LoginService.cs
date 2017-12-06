@@ -101,22 +101,22 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
         /// <param name="custId">Admin user id.</param>
         /// <param name="isKickOut">Is kicked out or not.</param>
         /// <returns>Result object.</returns>
-        public DTO.Result Recheckin(int custId, out bool isKickOut)
+        public bool IsKickedOut(int custId)
         {
-            isKickOut = false;
+            var isKickOut = false;
 
             Check.Argument.IsNotNegative(custId, "custId");
 
             try
             {
-                return _loginDao.Recheckin(custId, out isKickOut);
+                isKickOut = _loginDao.IsKickedOut(custId);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
             }
 
-            return null;
+            return isKickOut;
         }
 
         /// <summary>
@@ -178,8 +178,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
 
             return DateTime.Now;
-        }        
-        
+        }
+
         #endregion ILoginService Members
     }
 }
