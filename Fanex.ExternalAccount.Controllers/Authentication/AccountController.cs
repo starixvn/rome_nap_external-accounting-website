@@ -41,7 +41,8 @@ using Fanex.Logging.Extensions.Web;
         [HttpGet, CheckUMFilter]
         public ActionResult Login()
         {
-            if (_currentSession.IsLogin)
+            if (User.Identity.IsAuthenticated 
+                && _currentSession.IsLogin)
             {
                 return RedirectToHomePage();
             }
@@ -179,7 +180,7 @@ using Fanex.Logging.Extensions.Web;
 
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
-            RegisterLoginTicket(model, custId, onuserId, isIntAcc, result.ResultData as Group);
+            SetUserSession(model, custId, onuserId, isIntAcc, result.ResultData as Group);
 
             return isIntAcc || _currentSession.IsITAdmin
                 ? RedirectToChooseGroupPage()
@@ -206,8 +207,10 @@ using Fanex.Logging.Extensions.Web;
             {
                 return this.IsCaptchaValid(null);
             }
-            catch
+            catch (Exception ex)
             {
+                ex.Write(Formater.LogType.Warning);
+
                 return false;
             }
         }
@@ -367,7 +370,7 @@ using Fanex.Logging.Extensions.Web;
             return true;
         }
 
-        private void RegisterLoginTicket(LoginModel model, int custId, int onuserId, bool isIntAcc, Group group)
+        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isIntAcc, Group group)
         {
             _currentSession.UserName = model.UserName;
             _currentSession.UserId = custId;
