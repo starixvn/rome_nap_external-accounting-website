@@ -119,20 +119,25 @@ using Fanex.Logging.Extensions.Web;
             if (result != null
                 && result.IsSuccess)
             {
-                return LoginSuccess(model, custId, onuserId, isIntAcc, result);
+                return LoginSuccessful(model, custId, onuserId, isIntAcc, result);
             }
 
+            return LoginFailed(model, result);
+        }
+
+        private ActionResult LoginFailed(LoginModel model, Result result)
+        {
             UpdateLoginFailedAttempt(model);
 
             return View(new LoginModel
-                        {
-                            UserName = model.UserName,
-                            LoginAttempt = _currentSession.LoginAttempt,
-                            LoginFailedMessage = 
-                                result != null 
-                                ? result.ErrorMessage 
+            {
+                UserName = model.UserName,
+                LoginAttempt = _currentSession.LoginAttempt,
+                LoginFailedMessage =
+                                result != null
+                                ? result.ErrorMessage
                                 : ViewLang.LoginError
-                        });
+            });
         }
 
         private void UpdateLoginFailedAttempt(LoginModel model)
@@ -169,7 +174,7 @@ using Fanex.Logging.Extensions.Web;
         private string DecryptPassword(string encryptedPassword, string key)
             => Encryptor.Instance.Decrypt(encryptedPassword, key);
 
-        private ActionResult LoginSuccess(
+        private ActionResult LoginSuccessful(
             LoginModel model,
             int custId,
             int onuserId,
@@ -215,10 +220,8 @@ using Fanex.Logging.Extensions.Web;
             }
         }
 
-        public ActionResult CaptchaImage(string prefix, bool noisy = true)
+        public ActionResult CaptchaImage()
             => Content(new CaptchaResult().GetValiationImage(ControllerContext));
-
-        #region Logout
 
         public ActionResult LogOff()
         {
@@ -236,71 +239,7 @@ using Fanex.Logging.Extensions.Web;
             return RedirectToAction("Login");
         }
 
-        public int ReCheckIn() => (int)GetRecheckinStatus();
-
-        private RecheckinStatus GetRecheckinStatus()
-        {
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                return RecheckinStatus.Maintenance;
-            }
-
-            if (!Config.IsEnabledRecheckin)
-            {
-                return RecheckinStatus.Continue;
-            }
-
-            int onuserId = _currentSession.OnUserId;
-            if (onuserId > 0)
-            {
-                try
-                {
-                    var isKickOut = false;
-                    _userService.Recheckin(onuserId, out isKickOut);
-                    if (!isKickOut)
-                    {
-                        return RecheckinStatus.Continue;
-                    }
-                }
-                catch (Exception ex)
-                {
                 ExceptionHandler.Handle(ex);
-                    return RecheckinStatus.Error;
-                }
-            }
-
-            return RecheckinStatus.KickedOut;
-        }
-
-        #endregion Logout
-
-        #region UM Maintenance
-
-        public ActionResult Offline()
-        {
-            if (Request.QueryString[Config.InternalAgentUMToken] != null)
-            {
-                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
-            }
-
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
-                ViewBag.UmFromTime = underMaintenanceTime.From;
-                ViewBag.UmToTime = underMaintenanceTime.To;
-                return PartialView();
-            }
-
-            return RedirectToAction("Login");
-        }
-
-        public int ReCheckInOffline()
-            => _maintenanceService.IsUnderMaintenance()
-                ? (int)RecheckinStatus.Maintenance
-                : (int)RecheckinStatus.Login;
-
-        #endregion UM Maintenance
-
         [HttpGet, CheckUMFilter, Authorize]
         public ActionResult ExternalGroup()
         {
@@ -328,7 +267,7 @@ using Fanex.Logging.Extensions.Web;
                 JsonRequestBehavior.AllowGet);
         }
 
-        public void ResetLoginAttempt()
+        private void ResetLoginAttempt()
         {
             _currentSession.LoginAttempt = 0;
         }

@@ -1,30 +1,35 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SharedController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Shared controller
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.5.23">Format styles</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Controllers.Shared
+﻿namespace Fanex.ExternalAccount.Controllers.Shared
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Core.Context;
+    using DTO;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
+    using ONEbook.UM.Models;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
+    using Service.Impl.Login;
+    using Service.Interface.Login;
+    using Utilities;
 
-    /// <summary>
-    /// Shared controller object.
-    /// </summary>
     public class SharedController : BaseController
     {
+        private readonly ILoginService _loginService;
+        private readonly CurrentSession _currentSession;
+        private readonly IMaintenanceService _maintenanceService;
+
+        public SharedController()
+        {
+            _currentSession = new CurrentSession();
+            _loginService = new LoginService();
+            _maintenanceService = new MaintenanceService();
+        }
+
         public ActionResult _Layout()
         {
             return this.View();
@@ -83,5 +88,65 @@ namespace Fanex.ExternalAccount.Controllers.Shared
 
             return this.PartialViewBase();
         }
+
+        public int ReCheckIn()
+            => (int)GetRecheckinStatus();
+
+        private RecheckinStatus GetRecheckinStatus()
+        {
+            if (_maintenanceService.IsUnderMaintenance())
+            {
+                return RecheckinStatus.Maintenance;
+            }
+
+            if (!Config.IsEnabledRecheckin)
+            {
+                return RecheckinStatus.Continue;
+            }
+
+            int onuserId = _currentSession.OnUserId;
+            if (onuserId > 0)
+            {
+                try
+                {
+                    var isKickOut = false;
+                    _loginService.Recheckin(onuserId, out isKickOut);
+                    if (!isKickOut)
+                    {
+                        return RecheckinStatus.Continue;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logs.Error(ex);
+                    return RecheckinStatus.Error;
+                }
+            }
+
+            return RecheckinStatus.KickedOut;
+        }
+
+        public ActionResult Offline()
+        {
+            if (Request.QueryString[Config.InternalAgentUMToken] != null)
+            {
+                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
+            }
+
+            if (_maintenanceService.IsUnderMaintenance())
+            {
+                UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
+                ViewBag.UmFromTime = underMaintenanceTime.From;
+                ViewBag.UmToTime = underMaintenanceTime.To;
+                return PartialView();
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+
+        public int ReCheckInOffline()
+            => _maintenanceService.IsUnderMaintenance()
+                ? (int)RecheckinStatus.Maintenance
+                : (int)RecheckinStatus.Login;
     }
 }

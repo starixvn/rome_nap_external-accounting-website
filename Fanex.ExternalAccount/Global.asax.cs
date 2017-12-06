@@ -143,32 +143,6 @@ namespace Fanex.ExternalAccount
             ExceptionHandler.Handle(Server.GetLastError());
         }
 
-        protected void Application_AcquireRequestState(object sender, EventArgs e)
-        {
-            try
-            {
-                if (User.Identity.IsAuthenticated
-                    && CurrentSession.Instance.IsLogin 
-                    && Config.IsEnabledRecheckin)
-                {
-                    var userService = new LoginService();
-                    var isKickedOut = false;
-                    userService.Recheckin(CurrentSession.Instance.OnUserId, out isKickedOut);
-                    if (isKickedOut)
-                    {
-                        userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
-                        Session.Abandon();
-
-                        FormsAuthentication.SignOut();
-                    }
-                }
-            }
-            catch
-            {
-                // Ignore in case of session is not started or is new session.
-            }
-        }
-
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
             return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });

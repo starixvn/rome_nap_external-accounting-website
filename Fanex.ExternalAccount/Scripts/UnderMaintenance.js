@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 function ReCheckinOffline() {
     $.ajax({
-        url: resolveClientUrl('Account/ReCheckInOffline'),
+        url: resolveClientUrl('Shared/ReCheckInOffline'),
         type: 'GET',
         dataType: 'html',
         cache: false,

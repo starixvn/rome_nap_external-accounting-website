@@ -98,7 +98,7 @@
             this.RecheckinXHR.abort();
 
         this.RecheckinXHR = $.ajax({
-            url: resolveClientUrl('Account/ReCheckIn'),
+            url: resolveClientUrl('Shared/ReCheckIn'),
             type: 'GET',
             dataType: 'html',
             cache: false,
@@ -128,7 +128,7 @@
                     }
                 }
                 else if (data == 2) {
-                    top.location.href = resolveClientUrl('Account/Offline');
+                    top.location.href = resolveClientUrl('Shared/Offline');
                 }
                 else if (data == 3) {
                     top.location.href = resolveClientUrl('Shared/Error');

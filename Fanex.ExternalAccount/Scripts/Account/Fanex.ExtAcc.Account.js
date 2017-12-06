@@ -12,17 +12,6 @@ Fanex.ExtAcc.Account = {
     currentRetryTimes: 0,
     LoginAttempt: 0,
 
-    ResetLoginAttempt: function () {
-        $.ajax(resolveClientUrl("Account/ResetLoginAttempt"))
-        .done(function (data) {
-            $('#captcha').hide();
-        })
-        .fail(function (data) {
-            if (typeof console != 'undefined')
-                console.log(data);
-        })
-    },
-
     HandleAjaxResult: function (element) {
         $(element).bind('ajaxComplete', function (event, request) {
             switch (request.status) {
@@ -47,11 +36,6 @@ Fanex.ExtAcc.Account = {
         $(document).resize(function () {
             $('.groupChosen').height($(window).height() - 120);
         });
-
-        var interval = setInterval(function () {
-            clearInterval(interval);
-            Fanex.ExtAcc.Account.ResetLoginAttempt();
-        }, 300000);
 
         this.HandleAjaxResult(document);
 

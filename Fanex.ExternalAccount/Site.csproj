@@ -2635,7 +2635,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Offline.cshtml" />
+    <Content Include="Views\Shared\Offline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />

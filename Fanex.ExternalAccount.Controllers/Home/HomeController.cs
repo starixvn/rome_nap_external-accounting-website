@@ -10,7 +10,10 @@ using Fanex.Logging.Extensions.Web;
     public class HomeController : BaseController
     {
         [Authorize]
-        public ActionResult Index() => View();
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         public ActionResult TestLog()
         {
