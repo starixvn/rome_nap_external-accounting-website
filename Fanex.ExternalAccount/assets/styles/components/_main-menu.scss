@@ -34,11 +34,11 @@
     }
 
     .link {
-        color: #949494;
+        color: #fff;
         width: 100%;
 
         &:hover {
-            color: #fff;
+            color: #a7bbe3;
         }
     }
 }
@@ -82,7 +82,7 @@
             top: 0;
             left: 0;
             padding-left: 26px;
-            background-color: #303030;            
+            background-color: #3b475f;            
             opacity: 0;
             z-index: 10000;
 

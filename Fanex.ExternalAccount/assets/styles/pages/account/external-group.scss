@@ -1,11 +1,9 @@
-﻿@import "../../abstracts/_variables.scss";
-@import "../../abstracts/_mixins.scss";
-@import "../../base/scaffolding.scss";
-@import "../../components/button.scss";
-@import "../../layout/header.scss";
-@import "../../layout/sidebar.scss";
-
-
+﻿@import "../../abstracts/variables";
+@import "../../abstracts/mixins";
+@import "../../base/scaffolding";
+@import "../../components/button";
+@import "../../layout/header";
+@import "../../layout/sidebar";
 
 .container-fluid {
     float: left;

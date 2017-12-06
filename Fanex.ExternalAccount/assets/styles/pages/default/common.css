@@ -202,10 +202,10 @@ a {
   border-color: #fff; }
 
 .main-menu .link {
-  color: #949494;
+  color: #fff;
   width: 100%; }
   .main-menu .link:hover {
-    color: #fff; }
+    color: #a7bbe3; }
 
 .submenu > .menu > .link {
   display: block;
@@ -230,7 +230,7 @@ a {
     top: 0;
     left: 0;
     padding-left: 26px;
-    background-color: #303030;
+    background-color: #3b475f;
     opacity: 0;
     z-index: 10000; }
     .main-menu .submenu > .menu > .link {
@@ -514,7 +514,7 @@ textarea {
   float: left;
   width: 100%;
   min-height: 60px;
-  background-color: #1e1e22;
+  background-color: #3b475f;
   height: auto;
   transition: all .01s ease-out .2s; }
   .header .logo {
@@ -587,24 +587,27 @@ textarea {
 
 .group-user .select2-container .select2-selection--single {
   height: 34px;
-  -webkit-border-radius: 0;
-  -khtml-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0; }
+  -webkit-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px; }
+
+.group-user .select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-top-color: #fff; }
 
 .group-user .select2-container--default .select2-selection--single .select2-selection__rendered {
   line-height: 30px;
-  color: #949494;
+  color: #fff;
   font-weight: bold; }
 
 .group-user .select2-container--default .select2-selection--single {
   background-color: transparent;
-  border-color: #4c4d4e; }
+  border-color: #888; }
 
 .group-user #accMenuGroup:hover .select2-selection__rendered {
-  color: #fff; }
+  color: #a7bbe3; }
 
 .group-user .select2-container--default .select2-results > .select2-results__options {
   max-height: 500px; }
@@ -645,7 +648,7 @@ textarea {
   .info .list .circle {
     margin-right: 20px;
     padding: 10px;
-    background-color: #86858a;
+    background-color: #546587;
     color: #fff;
     -webkit-border-radius: 50%;
     -khtml-border-radius: 50%;

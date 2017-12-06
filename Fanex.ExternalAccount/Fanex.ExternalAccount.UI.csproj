@@ -1124,37 +1124,7 @@
     <Content Include="assets\styles\base\roboto-fonts.min.css">
       <DependentUpon>roboto-fonts.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\base\scaffolding.css">
-      <DependentUpon>scaffolding.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\base\scaffolding.min.css">
-      <DependentUpon>scaffolding.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\base\Validators.css" />
-    <Content Include="assets\styles\components\button.css">
-      <DependentUpon>button.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\button.min.css">
-      <DependentUpon>button.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\customize-fanex-grid.css">
-      <DependentUpon>customize-fanex-grid.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\customize-fanex-grid.min.css">
-      <DependentUpon>customize-fanex-grid.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\main-menu.css">
-      <DependentUpon>main-menu.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\main-menu.min.css">
-      <DependentUpon>main-menu.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\tabs.css">
-      <DependentUpon>tabs.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\components\tabs.min.css">
-      <DependentUpon>tabs.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\images\arrow-down-icn.png" />
     <Content Include="assets\styles\images\arrow-icn-right.png" />
     <Content Include="assets\styles\images\arrow-icn.png" />
@@ -1188,24 +1158,6 @@
     <Content Include="assets\styles\images\view.png" />
     <Content Include="assets\styles\images\warning.png" />
     <Content Include="assets\styles\images\x5.gif" />
-    <Content Include="assets\styles\layout\header.css">
-      <DependentUpon>header.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\layout\header.min.css">
-      <DependentUpon>header.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\layout\left-panel.css">
-      <DependentUpon>left-panel.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\layout\left-panel.min.css">
-      <DependentUpon>left-panel.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\layout\sidebar.css">
-      <DependentUpon>sidebar.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\layout\sidebar.min.css">
-      <DependentUpon>sidebar.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\pages\account\external-group.css">
       <DependentUpon>external-group.scss</DependentUpon>
     </Content>
@@ -1223,6 +1175,12 @@
     </Content>
     <Content Include="assets\styles\pages\default\common.min.css">
       <DependentUpon>common.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\default\left-panel.css">
+      <DependentUpon>left-panel.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\default\left-panel.min.css">
+      <DependentUpon>left-panel.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\daily-winloss.css">
       <DependentUpon>daily-winloss.scss</DependentUpon>
@@ -2953,8 +2911,8 @@
     <Content Include="assets\js\libs\bootstrap\readme.md" />
     <Content Include="assets\styles\pages\account\external-group.scss" />
     <Content Include="assets\styles\pages\default\common.scss" />
-    <Content Include="assets\styles\base\scaffolding.scss" />
-    <Content Include="assets\styles\layout\header.scss" />
+    <Content Include="assets\styles\base\_scaffolding.scss" />
+    <Content Include="assets\styles\layout\_header.scss" />
     <Content Include="assets\styles\base\roboto-fonts.scss" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Bold.eot" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Bold.ttf" />
@@ -2977,17 +2935,17 @@
     <Content Include="assets\styles\fonts\roboto\Roboto-Thin.ttf" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Thin.woff" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Thin.woff2" />
-    <Content Include="assets\styles\layout\sidebar.scss" />
-    <Content Include="assets\styles\components\button.scss" />
-    <Content Include="assets\styles\components\main-menu.scss" />
-    <Content Include="assets\styles\layout\left-panel.scss" />
-    <Content Include="assets\styles\components\tabs.scss" />
-    <Content Include="assets\styles\components\customize-fanex-grid.scss" />
-    <Content Include="assets\styles\components\textbox.scss" />
-    <Content Include="assets\styles\components\tables.scss" />
-    <Content Include="assets\styles\components\messages.scss" />
-    <Content Include="assets\styles\components\popup.scss" />
-    <Content Include="assets\styles\components\form.scss" />
+    <Content Include="assets\styles\layout\_sidebar.scss" />
+    <Content Include="assets\styles\components\_button.scss" />
+    <Content Include="assets\styles\components\_main-menu.scss" />
+    <Content Include="assets\styles\pages\default\left-panel.scss" />
+    <Content Include="assets\styles\components\_tabs.scss" />
+    <Content Include="assets\styles\components\_customize-fanex-grid.scss" />
+    <Content Include="assets\styles\components\_textbox.scss" />
+    <Content Include="assets\styles\components\_tables.scss" />
+    <Content Include="assets\styles\components\_messages.scss" />
+    <Content Include="assets\styles\components\_popup.scss" />
+    <Content Include="assets\styles\components\_form.scss" />
     <Content Include="assets\styles\components\_dropdown.scss" />
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="assets\styles\pages\reports\daily-winloss.scss" />

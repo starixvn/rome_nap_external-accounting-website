@@ -1,8 +1,8 @@
-﻿@import "../abstracts/variables";
-@import "../abstracts/mixins";
-@import "../components/button.scss";
-@import "../components/tabs.scss";
-@import "../base/scaffolding.scss";
+﻿@import "../../abstracts/variables";
+@import "../../abstracts/mixins";
+@import "../../components/button";
+@import "../../components/tabs";
+@import "../../base/scaffolding";
 
 body {
     color: #232428;

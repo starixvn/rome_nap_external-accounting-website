@@ -11,7 +11,7 @@
     var userId = ViewBag.UserId;
 }
 @*<link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />*@
-<link href="@Url.Content("~/assets/styles/layout/left-panel.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/default/left-panel.css")" rel="stylesheet" type="text/css" />
 <div id="ng-app" data-ng-app="leftPanelApp" class="hide left-panel-container">
     <div id="leftPanel" class="left-panel-content" data-ng-controller="LeftPanelController">
         <div data-ng-controller="NoInfoController" data-ng-init="model.hide = model != null" data-ng-hide="model.hide" class="red">There is no information.</div>
