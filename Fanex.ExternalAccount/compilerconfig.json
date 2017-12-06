@@ -50,5 +50,17 @@
   {
     "outputFile": "assets/styles/components/customize-fanex-grid.css",
     "inputFile": "assets/styles/components/customize-fanex-grid.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/winloss-detail.css",
+    "inputFile": "assets/styles/pages/reports/winloss-detail.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/daily-winloss.css",
+    "inputFile": "assets/styles/pages/reports/daily-winloss.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/report.css",
+    "inputFile": "assets/styles/pages/reports/report.scss"
   }
 ]

@@ -96,14 +96,14 @@
 }
 .filterBoxWLDetail
 {
-	background: url(../../Images/filterbox-bg.png) repeat-x;
+	background: url(../../images/filterbox-bg.png) repeat-x;
 	height: 114px;
 	margin: 0px 3px 1px 3px;
 	padding-top: 10px;
 }
 .arrow
 {
-	background: url("../../Images/arrow.png") no-repeat left;
+	background: url("../../images/arrow.png") no-repeat left;
 	width: 13px;
 	height: 12px;
 	padding-left: 18px;

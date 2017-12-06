@@ -9,11 +9,15 @@
 @import "../../components/popup.scss";
 @import "../../components/form.scss";
 @import "../../components/textbox";
+@import "../../components/dropdown.scss";
 @import "../../layout/header.scss";
 @import "../../layout/sidebar.scss";
 
 
 
+.ui-button .ui-button-text {
+    line-height: initial;
+}
 
 .successWarning {
     background-image: url("../images/tick.png");
@@ -206,6 +210,20 @@
     line-height: 50px;
     background-color: #fff;
     font-size: $font-size + 1;
+    //position: relative;
+    /*.btnexpand-box {
+        position: absolute;
+        right: 10px;
+        
+        @media all and (max-width: 480px){
+            position: relative;
+            right: unset;
+            left: 0;
+        }
+    }
+    @media all and (max-width: 480px) {
+        margin-top: -50px;
+    }*/
 }
 
 .icon-add {
@@ -1280,7 +1298,7 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
 
 /*Message*/
 #msg_container {
-    font-size: 12px;
+      font-size: 12px;
     min-width: 300px;
     max-width: 600px;
 }
@@ -1480,41 +1498,6 @@ textarea {
     vertical-align: top;
 }
 
-/*#userGroup input {
-    width: 150px;
-    height: 22px;
-    vertical-align: top;
-    padding-left: 3px;
-}
-
-#userGroup button {
-    background-image: none !important;
-    width: 20px !important;
-    margin-left: -22px !important;
-    height: 25px;
-}
-
-    #userGroup button:hover {
-        background-image: none !important;
-    }*/
-
-/*.groupCboMenu input {
-    width: 255px;
-    height: 22px;
-    vertical-align: top;
-    text-indent: 5px;
-}
-
-.groupCboMenu button {
-    background-image: none !important;
-    width: 20px !important;
-    margin-left: -22px !important;
-    height: 25px;
-}
-
-    .groupCboMenu button:hover {
-        background-image: none !important;
-    }*/
 
 .ui-helper-hidden-accessible {
     display: none;

@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Home Page";
 }
-<link href="@Url.Content("~/Content/Reports/WinLossDetail.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/reports/report.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/reports/winloss-detail.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/monthPicker/monPickr-0.0.1.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
 <div>
@@ -12,7 +13,7 @@
             Win Loss Detail
         </div>
     </div>
-    <div class="filterBoxWLDetail" style="margin-right: 3px !important">
+    <div class="filterbox" style="margin-right: 3px !important">
         <div id="GroupFromToDate">
             <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)"/>
             <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
@@ -68,9 +69,9 @@
                 </select>
             </div>
         </div>
-        <div class="clearBoth">
+        <div class="">
             <div style="margin-left: 86px; float: left">
-                <input type="button" value="Submit" id='Submit' class="btnSearch" />
+                <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
             </div>
             <div id="GroupViewHistory" class="pdCommon">
                 <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history">@ViewLang.ViewHistoryReport</span></div>

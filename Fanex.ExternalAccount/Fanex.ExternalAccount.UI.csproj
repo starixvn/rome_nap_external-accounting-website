@@ -1158,6 +1158,7 @@
     <Content Include="assets\styles\images\arrow-down-icn.png" />
     <Content Include="assets\styles\images\arrow-icn-right.png" />
     <Content Include="assets\styles\images\arrow-icn.png" />
+    <Content Include="assets\styles\images\arrow.png" />
     <Content Include="assets\styles\images\bg-Line-Title.png" />
     <Content Include="assets\styles\images\bg-pattern.png" />
     <Content Include="assets\styles\images\bg-Title-Grid.png" />
@@ -1166,6 +1167,8 @@
     <Content Include="assets\styles\images\checkbox.png" />
     <Content Include="assets\styles\images\delete-icn.png" />
     <Content Include="assets\styles\images\error.png" />
+    <Content Include="assets\styles\images\filterbox-bg.png" />
+    <Content Include="assets\styles\images\filterboxdaily-bg.png" />
     <Content Include="assets\styles\images\important.gif" />
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
@@ -1220,6 +1223,24 @@
     </Content>
     <Content Include="assets\styles\pages\default\common.min.css">
       <DependentUpon>common.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\daily-winloss.css">
+      <DependentUpon>daily-winloss.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
+      <DependentUpon>daily-winloss.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\report.css">
+      <DependentUpon>report.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\report.min.css">
+      <DependentUpon>report.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\winloss-detail.css">
+      <DependentUpon>winloss-detail.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\winloss-detail.min.css">
+      <DependentUpon>winloss-detail.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\vendors-extensions\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
@@ -2967,6 +2988,10 @@
     <Content Include="assets\styles\components\messages.scss" />
     <Content Include="assets\styles\components\popup.scss" />
     <Content Include="assets\styles\components\form.scss" />
+    <Content Include="assets\styles\components\_dropdown.scss" />
+    <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
+    <Content Include="assets\styles\pages\reports\daily-winloss.scss" />
+    <Content Include="assets\styles\pages\reports\report.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

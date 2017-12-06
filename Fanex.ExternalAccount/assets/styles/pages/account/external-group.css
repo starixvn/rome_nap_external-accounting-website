@@ -179,7 +179,7 @@ a {
   transition: all .01s ease-out .2s; }
   .header .logo {
     float: left;
-    padding: 7px 14px;
+    padding: 7px 10px;
     display: inline-block; }
   .header .icon-user-info {
     position: absolute;

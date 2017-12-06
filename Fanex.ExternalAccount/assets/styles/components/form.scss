@@ -6,7 +6,10 @@
     .form-group {
         float: left;    
         line-height: 30px; 
-        margin-right: 12px;   
+        margin-right: 12px; 
+        @media all and (max-width: 480px)   {
+            margin-bottom: 8px;
+        }
     }
 
     .label {
@@ -68,25 +71,23 @@
     .form-action {
         padding-left: 110px;
     }
-}
+    .groupCboMenu {
+        input {
+            width: 225px;
+            margin-left: 10px;
+            vertical-align: top;
+            text-indent: 5px;        
+        }
 
-.groupCboMenu {
-    input {
-        width: 225px;
-        height: 32px;
-        border-radius: 0 !important;
-        margin-left: 10px;
-        vertical-align: top;
-        text-indent: 5px;        
-    }
+        button {
+            width: 20px !important;
+            margin-left: -21px !important;
+            height: 30px;
 
-    button {
-        width: 20px !important;
-        margin-left: -20px !important;
-        height: 31px;
-
-        &:hover {
-            background-image: none !important;
+            &:hover {
+                background-image: none !important;
+            }
         }
     }
 }
+

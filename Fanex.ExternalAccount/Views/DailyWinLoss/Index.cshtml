@@ -5,7 +5,8 @@
 }
 @if (HttpContext.Current.IsDebuggingEnabled)
 {
-    <link href="@Url.Content("~/Content/Reports/DailyWinLoss.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/assets/styles/pages/reports/report.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/assets/styles/pages/reports/daily-winloss.css")" rel="stylesheet" type="text/css" />
 }
 else
 {
@@ -17,7 +18,7 @@ else
             Daily Win Loss
         </div>
     </div>
-    <div class="search-form">
+    <div class="search-form filterbox">
         <div class="searchBar floatL">
             <div class="lbl-width-normal">
                 @ViewLang.Username
@@ -31,7 +32,7 @@ else
                 <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate"/>
             </div>
             <div class="float-padding-left-normal">
-                <input type="button" value="Submit" id='Submit' class="btnSearch" />
+                <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
             </div>
         </div>
         <div class="HideMG">

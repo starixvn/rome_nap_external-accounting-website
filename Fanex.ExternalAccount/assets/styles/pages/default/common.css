@@ -307,11 +307,11 @@ a {
   display: block; }
 
 .table {
-  border: 1px solid #e0e1e4;
+  border: 1px solid #d3d3d3;
   border-collapse: collapse; }
   .table tr th, .table tr td {
     min-height: 28px;
-    border: 1px solid #e0e1e4;
+    border: 1px solid #d3d3d3;
     padding: 4px; }
   .table tr th {
     background-color: #6f7d95;
@@ -383,6 +383,9 @@ a {
     float: left;
     line-height: 30px;
     margin-right: 12px; }
+    @media all and (max-width: 480px) {
+      .search-form .form-group {
+        margin-bottom: 8px; } }
   .search-form .label {
     float: left;
     margin-right: 6px; }
@@ -419,21 +422,17 @@ a {
     width: 225px; }
   .form-add .form-action {
     padding-left: 110px; }
-
-.groupCboMenu input {
-  width: 225px;
-  height: 32px;
-  border-radius: 0 !important;
-  margin-left: 10px;
-  vertical-align: top;
-  text-indent: 5px; }
-
-.groupCboMenu button {
-  width: 20px !important;
-  margin-left: -20px !important;
-  height: 31px; }
-  .groupCboMenu button:hover {
-    background-image: none !important; }
+  .form-add .groupCboMenu input {
+    width: 225px;
+    margin-left: 10px;
+    vertical-align: top;
+    text-indent: 5px; }
+  .form-add .groupCboMenu button {
+    width: 20px !important;
+    margin-left: -21px !important;
+    height: 30px; }
+    .form-add .groupCboMenu button:hover {
+      background-image: none !important; }
 
 input[type='text'], input[type='password'], input[type='email'] {
   height: 32px;
@@ -442,7 +441,7 @@ input[type='text'], input[type='password'], input[type='email'] {
   outline: none;
   padding-left: 8px;
   padding-right: 8px;
-  width: 120px;
+  /*width: 120px;*/
   border: 1px solid #7b7c7e;
   -webkit-appearance: none; }
   input[type='text']::-ms-clear, input[type='password']::-ms-clear, input[type='email']::-ms-clear {
@@ -453,6 +452,57 @@ input[type='text'], input[type='password'], input[type='email'] {
 
 textarea {
   border: 1px solid #7b7c7e; }
+
+#userGroup input {
+  border-radius: 0 !important;
+  border: 1px solid #7b7c7e;
+  height: 32px;
+  vertical-align: top;
+  padding-left: 3px; }
+
+#userGroup button {
+  background: #fff;
+  background-image: none !important;
+  border: none;
+  width: 20px !important;
+  margin-left: -22px !important;
+  height: 30px;
+  margin-top: 1px; }
+  #userGroup button:focus, #userGroup button:active {
+    outline: none; }
+  #userGroup button .ui-icon {
+    margin-top: -8px !important; }
+
+#userGroup button:hover {
+  background-image: none !important; }
+
+.groupCboMenu input {
+  border-radius: 0 !important;
+  border: 1px solid #7b7c7e;
+  height: 32px;
+  width: 255px;
+  vertical-align: top;
+  text-indent: 5px; }
+
+.groupCboMenu button {
+  background: #fff !important;
+  background-image: none !important;
+  border: none !important;
+  width: 20px !important;
+  margin-left: -22px !important;
+  height: 30px;
+  margin-top: 1px; }
+  .groupCboMenu button:focus, .groupCboMenu button:active {
+    outline: none; }
+  .groupCboMenu button .ui-icon {
+    margin-top: -8px !important; }
+
+.groupCboMenu button:hover {
+  background-image: none !important; }
+
+.groupCboMenu select {
+  border: 1px solid #7b7c7e;
+  height: 32px; }
 
 .list {
   list-style: none;
@@ -469,7 +519,7 @@ textarea {
   transition: all .01s ease-out .2s; }
   .header .logo {
     float: left;
-    padding: 7px 14px;
+    padding: 7px 10px;
     display: inline-block; }
   .header .icon-user-info {
     position: absolute;
@@ -716,6 +766,9 @@ textarea {
   .sidebar {
     display: none; } }
 
+.ui-button .ui-button-text {
+  line-height: initial; }
+
 .successWarning {
   background-image: url("../images/tick.png");
   padding-left: 5px;
@@ -881,7 +934,20 @@ textarea {
   height: 50px;
   line-height: 50px;
   background-color: #fff;
-  font-size: 15px; }
+  font-size: 15px;
+  /*.btnexpand-box {
+        position: absolute;
+        right: 10px;
+        
+        @media all and (max-width: 480px){
+            position: relative;
+            right: unset;
+            left: 0;
+        }
+    }
+    @media all and (max-width: 480px) {
+        margin-top: -50px;
+    }*/ }
 
 .icon-add {
   display: inline-block;
@@ -1944,40 +2010,6 @@ textarea {
 .ui-autocomplete-input {
   vertical-align: top; }
 
-/*#userGroup input {
-    width: 150px;
-    height: 22px;
-    vertical-align: top;
-    padding-left: 3px;
-}
-
-#userGroup button {
-    background-image: none !important;
-    width: 20px !important;
-    margin-left: -22px !important;
-    height: 25px;
-}
-
-    #userGroup button:hover {
-        background-image: none !important;
-    }*/
-/*.groupCboMenu input {
-    width: 255px;
-    height: 22px;
-    vertical-align: top;
-    text-indent: 5px;
-}
-
-.groupCboMenu button {
-    background-image: none !important;
-    width: 20px !important;
-    margin-left: -22px !important;
-    height: 25px;
-}
-
-    .groupCboMenu button:hover {
-        background-image: none !important;
-    }*/
 .ui-helper-hidden-accessible {
   display: none; }
 
