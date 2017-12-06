@@ -6,6 +6,9 @@
     height: 32px;
     vertical-align: top;
     padding-left: 3px;
+    @media all and (max-width: 480px) {
+        width: 115px;
+    }
 }
 
 #userGroup button {

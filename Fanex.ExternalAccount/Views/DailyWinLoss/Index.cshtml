@@ -5,7 +5,6 @@
 }
 @if (HttpContext.Current.IsDebuggingEnabled)
 {
-    <link href="@Url.Content("~/assets/styles/pages/reports/report.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/assets/styles/pages/reports/daily-winloss.css")" rel="stylesheet" type="text/css" />
 }
 else
@@ -20,7 +19,21 @@ else
     </div>
     <div class="search-form filterbox">
         <div class="searchBar floatL">
-            <div class="lbl-width-normal">
+            <div class="form-group">
+                <label class="label">@ViewLang.Username</label>
+                <input class="" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+            </div>
+            <div class="form-group">
+                <label class="label">@ViewLang.Date</label>
+                <div class="user-group pull-left">
+                    <input id="dtpWinLossDate" type="text" readonly="readonly" />
+                    <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+            </div>
+            @*<div class="lbl-width-normal">
                 @ViewLang.Username
             </div>
             <div class="floatL">
@@ -33,7 +46,7 @@ else
             </div>
             <div class="float-padding-left-normal">
                 <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
-            </div>
+            </div>*@
         </div>
         <div class="HideMG">
             <input type="button" value="Hide Margin" id='btnHideMG' style="display: none" /></div>

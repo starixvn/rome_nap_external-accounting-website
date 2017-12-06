@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Home Page";
 }
-<link href="@Url.Content("~/assets/styles/pages/reports/report.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/reports/winloss-detail.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/monthPicker/monPickr-0.0.1.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
@@ -13,8 +12,86 @@
             Win Loss Detail
         </div>
     </div>
-    <div class="filterbox" style="margin-right: 3px !important">
-        <div id="GroupFromToDate">
+    <div class="search-form filterbox">
+        <div id="GroupFromToDate" class="form-line clearfix">
+            <div class="form-group">
+                <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)" />
+                <input type="hidden" id="MaxDate" value="@DateTime.Now" />
+                <div class="label">@ViewLang.Date</div>
+                <div id="userGroup" class="user-group pull-left">
+                    <select name="DateList" id="DateList">
+                        <option id="0" selected="selected">Today</option>
+                        <option id="1">Yesterday</option>
+                        <option id="2">Current Week</option>
+                        <option id="3">Last Week</option>
+                        <option id="4">Current Month</option>
+                        <option id="5">Last Month</option>
+                        <option id="6">Since Last Month</option>
+                        <option id="7">Date Range</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.From</div>
+                <input id="dtpFromDate" type="text" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <div class="label to-width">@ViewLang.To</div>
+                <input id="dtpToDate" type="text" readonly="readonly" />
+            </div>
+        </div>
+        <div id="GroupMonthDay" style="display: none;" class="form-line clearfix">
+            <div class="form-group">
+                <div class="label">@ViewLang.Month</div>
+                <div class="user-group pull-left dll-month">
+                    <div id="monPickr1">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.From</div>
+                <div class="user-group pull-left">
+                    <div id="fromDay1">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label to-width">@ViewLang.To</div>
+                <div class="user-group pull-left">
+                    <div id="toDay1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-line clearfix">
+            <div class="form-group">
+                <div class="label">@ViewLang.Username</div>
+                <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.Products</div>
+                <div class="user-group pull-left">
+                    <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none"></select>
+                </div>
+            </div>
+        </div>
+        <div class="form-line clearfix last-item">
+            <div class="form-group">
+                <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+            </div>
+            <div class="form-group">
+                <div id="GroupViewHistory" class="">
+                    <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history">@ViewLang.ViewHistoryReport</span></div>
+                </div>
+                <div id="GroupBackToCurrent" class="" style="display: none">
+                    <span id="BackToCurrentReport" class="history arrow">@ViewLang.BackToCurrentReport</span>
+                </div>
+            </div>
+        </div>
+
+
+
+        @*<div id="GroupFromToDate">
             <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)"/>
             <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
             <div class="lbl-width-normal">@ViewLang.Date</div>
@@ -79,7 +156,7 @@
             <div id="GroupBackToCurrent" class="pdCommon" style="display: none">
                 <span id="BackToCurrentReport" class="history arrow">@ViewLang.BackToCurrentReport</span>
             </div>
-        </div>
+        </div>*@
     </div>
     <div id="headlineDaily">
         <div id="InfoDate">

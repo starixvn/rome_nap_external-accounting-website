@@ -1,28 +1,47 @@
-﻿
+﻿@import "report";
 
 
+#GroupProducts {
+    height: 32px;
+    border: 1px solid #7b7c7e;
+    border-radius: 0 !important;
+    input {
+        height: 30px;
+    }
+    .ui-icon {
+        margin-top: -22px !important;
+    }
+}
 
+#GroupMonthDay .form-group .user-group {
+    width: 60px;
+    &.dll-month {
+        width: 160px;
+    }
+}
 
-
+.filterbox .label {
+    width: 60px;
+    @media all and (min-width-device: 768px) {
+        &.to-width {
+            width: 20px; 
+        }
+    }
+    
+}
+.last-item {
+    padding-left: 66px;
+}
 
 #userGroup input
 {
 	width: 147px !important;
 }
-#GroupFromToDate
-{
-	height: 37px;
-}
+
 #GroupMonthDay
 {
 	height: 37px;
 }
-#gUserName
-{
-	clear: both;
-	height: 38px;
-}
-.txt-normal{float: left; font-weight: normal; width: 160px}
 
 .frozen-div
 {
@@ -60,10 +79,7 @@
 	border-top-right-radius: 3px !important;
 }
 
-/*.ui-multiselect span
-{
-	margin-top: -20px !important;
-}*/
+
 
 .ui-multiselect-options
 {
@@ -74,26 +90,8 @@
 {
 	width: 153px;
 }
-.wFrom
-{
-	float: left;
-	margin: 5px 3px 0 20px;
-	width: 52px;
-}
-.toDate
-{
-	float: left;
-	margin: 5px 0 0 65px;
-}
-.float-pdL-small{float: left; padding-left: 11px;}
-#GroupProducts
-{
-	height: 24px;
-}
-/*#GroupProducts input
-{
-	height: 18px !important;
-}*/
+
+
 .history
 {
     margin-left: 1px;
@@ -101,13 +99,6 @@
 	cursor: pointer;
 	font-style: italic;
 }
-/*.filterBoxWLDetail
-{
-	background: url(../../Images/filterbox-bg.png) repeat-x;
-	height: 114px;
-	margin: 0px 3px 1px 3px;
-	padding-top: 10px;
-}*/
 .arrow
 {
 	background: url("../../Images/arrow.png") no-repeat left;

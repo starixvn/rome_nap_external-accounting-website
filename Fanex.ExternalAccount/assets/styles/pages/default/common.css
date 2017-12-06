@@ -59,6 +59,14 @@
 ::-webkit-scrollbar-corner {
   background: transparent; }
 
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
 body {
   margin: 0;
   padding: 0;
@@ -378,22 +386,26 @@ a {
 .search-form {
   display: inline-block;
   width: 100%;
-  padding: 10px 0; }
+  padding: 10px 0;
+  /*.user-group input {
+        width: 150px;
+        height: 32px;
+        vertical-align: top;
+        padding-left: 3px;
+    }*/ }
+  .search-form .form-line {
+    margin-bottom: 12px; }
   .search-form .form-group {
     float: left;
     line-height: 30px;
-    margin-right: 12px; }
+    margin-right: 24px; }
     @media all and (max-width: 480px) {
       .search-form .form-group {
         margin-bottom: 8px; } }
   .search-form .label {
     float: left;
-    margin-right: 6px; }
-  .search-form .user-group input {
-    width: 150px;
-    height: 32px;
-    vertical-align: top;
-    padding-left: 3px; }
+    margin-right: 6px;
+    text-align: left; }
   .search-form .user-group button {
     background-image: none !important;
     width: 20px !important;
@@ -444,6 +456,9 @@ input[type='text'], input[type='password'], input[type='email'] {
   /*width: 120px;*/
   border: 1px solid #7b7c7e;
   -webkit-appearance: none; }
+  @media all and (max-width: 480px) {
+    input[type='text'], input[type='password'], input[type='email'] {
+      width: 110px; } }
   input[type='text']::-ms-clear, input[type='password']::-ms-clear, input[type='email']::-ms-clear {
     display: none; }
   input[type='text'][disabled], input[type='text'] .disabled, input[type='password'][disabled], input[type='password'] .disabled, input[type='email'][disabled], input[type='email'] .disabled {
@@ -459,6 +474,9 @@ textarea {
   height: 32px;
   vertical-align: top;
   padding-left: 3px; }
+  @media all and (max-width: 480px) {
+    #userGroup input {
+      width: 115px; } }
 
 #userGroup button {
   background: #fff;
@@ -503,6 +521,10 @@ textarea {
 .groupCboMenu select {
   border: 1px solid #7b7c7e;
   height: 32px; }
+
+.filterbox {
+  background-color: #E1E1E1;
+  padding: 12px 0; }
 
 .list {
   list-style: none;

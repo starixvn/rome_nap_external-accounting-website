@@ -8,6 +8,9 @@
     /*width: 120px;*/
     border: 1px solid #7b7c7e;    
     -webkit-appearance: none;
+    @media all and (max-width: 480px) {
+        width: 110px;
+    }
 
     &::-ms-clear {
       display: none;

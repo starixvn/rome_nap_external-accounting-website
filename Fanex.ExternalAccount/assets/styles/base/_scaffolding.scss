@@ -76,6 +76,16 @@
     background: transparent;
 }
 
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
 body {
     margin: 0;
     padding: 0;
