@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount
+﻿namespace Fanex.ExternalAccount
 {
     using System;
     using System.Collections.Generic;
@@ -23,8 +14,6 @@ namespace Fanex.ExternalAccount
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
-    using Service.Impl.Login;
-    using System.Web.Security;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -73,25 +62,27 @@ namespace Fanex.ExternalAccount
             routes.MapRoute(
                 name: "Default4",
                 url: "{controller}/{action}/{id}/{custId}/{uplineId}/{username}/{groupname}",
-                defaults: new 
-                { 
-                    controller = "Home", action = "Index", id = UrlParameter.Optional, 
-                    custId = UrlParameter.Optional, uplineId = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional 
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    custId = UrlParameter.Optional,
+                    uplineId = UrlParameter.Optional,
+                    username = UrlParameter.Optional,
+                    groupname = UrlParameter.Optional
                 });
         }
 
-        /// <summary>
-        /// Application is starting.
-        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();            
+            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
-          
+
             var logger = new CasinoAPILogger();
             var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
             string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
@@ -103,7 +94,7 @@ namespace Fanex.ExternalAccount
             BundleTable.Bundles.EnableExternalGroupBundle();
             BundleTable.Bundles.EnableDailyWinLossBundle();
             BundleTable.Bundles.EnableStatementBundle();
-            BundleTable.Bundles.EnableWinLossDetailBundle(); 
+            BundleTable.Bundles.EnableWinLossDetailBundle();
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
@@ -119,25 +110,6 @@ namespace Fanex.ExternalAccount
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
         }
 
-        protected void Session_End(object sender, EventArgs e)
-        {
-            try
-            {
-                var userService = new Fanex.ExternalAccount.Service.Impl.Login.LoginService();
-                userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
-                Session.Abandon();
-            }
-            catch
-            {
-                // Ignore in case of session is not started or is new session.
-            }
-        }
-
-        /// <summary>
-        /// Processes application error.
-        /// </summary>
-        /// <param name="sender">Object is performed.</param>
-        /// <param name="e">Event is sent.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
             ExceptionHandler.Handle(Server.GetLastError());

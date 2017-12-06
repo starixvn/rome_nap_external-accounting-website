@@ -98,7 +98,11 @@
             }
         }
 
-        public bool IsNotLogin => !IsLogin;
+        public bool IsAuthenticated => 
+            HttpContext.Current.User.Identity.IsAuthenticated 
+            && IsLogin;
+
+        public bool HadNoSessionData => !IsLogin;
 
         public string NetSessionId
         {

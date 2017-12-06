@@ -105,7 +105,7 @@
             }
 
             int onuserId = _currentSession.OnUserId;
-            if (onuserId > 0)
+            if (onuserId > 0 && User.Identity.IsAuthenticated)
             {
                 try
                 {                    

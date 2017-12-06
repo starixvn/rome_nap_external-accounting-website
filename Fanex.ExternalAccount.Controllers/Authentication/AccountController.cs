@@ -41,8 +41,7 @@ using Fanex.Logging.Extensions.Web;
         [HttpGet, CheckUMFilter]
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated 
-                && _currentSession.IsLogin)
+            if (_currentSession.IsAuthenticated)
             {
                 return RedirectToHomePage();
             }
@@ -116,13 +115,9 @@ using Fanex.Logging.Extensions.Web;
                 out onuserId,
                 out isIntAcc);
 
-            if (result != null
-                && result.IsSuccess)
-            {
-                return LoginSuccessful(model, custId, onuserId, isIntAcc, result);
-            }
-
-            return LoginFailed(model, result);
+            return result != null && result.IsSuccess
+                ? LoginSuccessful(model, custId, onuserId, isIntAcc, result)
+                : LoginFailed(model, result);
         }
 
         private ActionResult LoginFailed(LoginModel model, Result result)

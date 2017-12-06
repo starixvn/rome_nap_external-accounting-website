@@ -28,7 +28,7 @@
             }
 
             var currentSession = new CurrentSession();
-            if (currentSession.IsNotLogin)
+            if (currentSession.HadNoSessionData)
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
