@@ -89,41 +89,97 @@
 /* Left panel */
 .splitter-panel {
     position: absolute;
-    left: 0;
+    left: -100%;
     top: 0;
     bottom: 0;
-    width: 0;
+    width: 100%;
+    background-color: #404c64;
+    z-index: 1000;
+    opacity: 0;
+    @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-device-width: 768px) {
+        left: 0;
         width: 398px;
         padding-top: 20px;  
         border-right: 1px solid #e0e1e4;  
+        background-color: #fff;
+        opacity: 1;
+    }
+
+    &.expand-leftpanel {        
+        left: 0;
+        opacity: 1;
+        @include transition(left .2s ease-in .1s, opacity .1s ease-out);
     }
 }
 
 .group-search {
     position: relative;
-    padding: 0 20px;
+    padding: 12px;  
+    
+    @media screen and (min-device-width: 768px) {
+        padding: 0 20px;    
+    }  
 
     .search {
+        @include border-radius(2px);
         width: 100%;
         line-height: 34px;
         height: 34px;
-        border: 1px solid #7b7c7e;
+        border: none;
+        background-color: #657082;
         outline: none;
-        @include border-radius(2px);
+        color: #fff;
+        
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          color: #fff;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          color: #fff;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          color: #fff;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+          color: #fff;
+        }
+
+        @media screen and (min-device-width: 768px) {
+             border: 1px solid #7b7c7e; 
+             background-color: #fff;
+             color: $text-color;
+
+            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+              color: $text-color;
+            }
+            &::-moz-placeholder { /* Firefox 19+ */
+              color: $text-color;
+            }
+            &:-ms-input-placeholder { /* IE 10+ */
+              color: $text-color;
+            }
+            &:-moz-placeholder { /* Firefox 18- */
+              color: $text-color;
+            }
+        }          
     }
 
     .icon-search {
         display: inline-block;
         position: absolute;
         right: 31px;
-        top: 10px;
+        top: 22px;        
         width: 15px;
         height: 16px;
         background: url(../../images/sprites.png) no-repeat; 
-        background-position: -76px -122px;     
+        background-position: -76px -162px;     
         cursor: pointer;  
+
+        @media screen and (min-device-width: 768px) { 
+            top: 10px;
+            background-position: -76px -122px;
+        }
 
         &:before {
             content: "";
@@ -133,6 +189,7 @@
             height: 30px;
             width: 30px;
         }
+
     }
 }
 
@@ -194,7 +251,7 @@
     background-color: #f1f1f2;
     overflow: auto;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-device-width: 768px) {
         left: 398px; 
     }
 }

@@ -32,6 +32,10 @@
         right: 16px;
         top: 23px;
     }
+
+    .main-menu {
+        margin-left: 20px;
+    }
 }
 
 /* Icons */
@@ -62,7 +66,7 @@
 }
 
 .icon-reset-password {
-     @extend %icon-header;
+    @extend %icon-header;
     background-position: -7px -305px;
     height: 24px;
     width: 22px;
@@ -102,17 +106,18 @@
     }
 
     &.active span {
-        background-color: #ea7313;
+        background-color: #72b998;
     }
 }
 
-.info, .group-user {
+.info {
     display: none;
 }
 
 .group-user {
     .select2-container {
-        width: 308px !important;
+        width: 210px !important;
+        top: 14px;
     }
 
     .select2-container .select2-selection--single {
@@ -132,7 +137,7 @@
 
     .select2-container--default .select2-selection--single {
         background-color: transparent;
-        border-color: #888;
+        border-color: #6b7587;
     }
 
     #accMenuGroup:hover .select2-selection__rendered {
@@ -156,7 +161,7 @@
     display: none;
 }
 
-@media (min-width: 678px) {    
+@media (min-device-width: 678px) {    
     .header {
         position: relative;
         min-height: 60px;
@@ -164,6 +169,11 @@
         .group-user {
             float: left;
             padding-top: 13px;
+
+            .select2-container {
+                top: 0px;
+                width: 357px !important;
+            }
         }
 
         .main-menu {
@@ -194,9 +204,13 @@
 
         [class^="icon"] {
             position: relative;
-            top: 08px;
+            top: 8px;
             margin-right: 20px;
             
+        }
+
+        .icon-reset-password {
+            top: 12px;
         }
 
         .circle {

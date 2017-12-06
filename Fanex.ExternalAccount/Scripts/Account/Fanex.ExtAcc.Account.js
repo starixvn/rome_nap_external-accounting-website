@@ -95,17 +95,44 @@ Fanex.ExtAcc.Account = {
         var iconUserInfo = $("#iconUserInfo");
         var sidebar = $("#sidebar");
         var hasMenu = $("#sidebar .menu .hasChild");
-       
+        var leftPanel = $("#leftSplitter");
+
         iconNav.on("click", function () {
+            if (iconUserInfo.hasClass('active')) {
+                leftPanel.fadeIn("fast", function () {
+                    leftPanel.removeClass("expand-leftpanel");
+                    iconUserInfo.removeClass("active");
+                });
+            }
+
             if (!iconNav.hasClass('active')) {
-                sidebar.addClass("expand-sidebar");
+                sidebar.addClass("expand-sidebar").show("fast");
                 iconNav.addClass("active");
-                sidebar.show("fast");
                 
             } else { 
                 sidebar.show("fast", function () {
                     sidebar.removeClass("expand-sidebar");
                     iconNav.removeClass("active");
+                });
+            }
+        });
+
+        iconUserInfo.on("click", function () {
+            if (iconNav.hasClass('active')) {
+                sidebar.fadeIn("fast", function () {
+                    sidebar.removeClass("expand-sidebar");
+                    iconNav.removeClass("active");
+                });
+            }
+            
+            if (!iconUserInfo.hasClass('active')) {
+                leftPanel.addClass("expand-leftpanel").show("fast");
+                iconUserInfo.addClass("active");
+
+            } else {
+                leftPanel.show("fast", function () {
+                    leftPanel.removeClass("expand-leftpanel");
+                    iconUserInfo.removeClass("active");
                 });
             }
         });

@@ -36,17 +36,16 @@
 
 .sidebar {
     position: absolute;
-    left: -317px;
-    top: 0;
+    left: -100%;
+    top: 60px;
     bottom: 0;
     z-index: 1000;
-    width: 317px;
-    background-color: #26272b;
+    width: 100%;
+    border-top: 1px solid #6b7587;
+    background-color: #424e66;
     color: #949494;
     opacity: 0;
     @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
-    
-    
 
     .main-menu {
         display: block;
@@ -58,14 +57,14 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        border-top: 1px solid #d4d4d5;
+        border-top: 1px solid #6b7587;
         padding: 15px 22px; 
     }
 
     .list-action .btn {
         display: inline-block;
         margin-right: 20px;
-        width: 124px;
+        width: 45.6%;
     }
 
     .list-action .btn:last-child {
@@ -79,7 +78,8 @@
     } 
 }
 
-.sidebar .link:hover {
+.sidebar .link:hover,
+.sidebar .link.active {
     .icon-Administration {
         background-position: -6px -256px;
     }
@@ -97,7 +97,7 @@
     display: table;
     width: 100%;
     padding: 24px 20px;
-    background-color: #1e1e22;
+    background-color: #3b475f;
 
     .picture, .username, .group-user {
         display: table-cell;
@@ -126,14 +126,9 @@
         max-width: 136px;
         word-wrap: break-word;
     }
-
-    .group-user {
-        padding: 0;
-        width: 112px;
-    }
 }
 
-@media (min-width: 678px) {  
+@media (min-device-width: 678px) {  
     .sidebar {
         display: none;       
     }

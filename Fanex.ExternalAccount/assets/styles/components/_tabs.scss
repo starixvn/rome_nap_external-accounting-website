@@ -37,7 +37,9 @@
     @include transition('width .5s ease, background-color .5s ease');
 }
 
-.nav-tabs > li.ui-tabs-active > a, .nav-tabs > li.ui-tabs-active > a:focus, .nav-tabs > li.ui-tabs-active > a:hover {
+.nav-tabs > li.ui-tabs-active > a,
+.nav-tabs > li.ui-tabs-active > a:focus,
+.nav-tabs > li.ui-tabs-active > a:hover {
     border: none;
     color: $tab-active-color;
     background: transparent;
