@@ -1188,12 +1188,6 @@
     <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
       <DependentUpon>daily-winloss.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\reports\report.css">
-      <DependentUpon>report.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\reports\report.min.css">
-      <DependentUpon>report.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.css">
       <DependentUpon>winloss-detail.scss</DependentUpon>
     </Content>
@@ -2949,7 +2943,9 @@
     <Content Include="assets\styles\components\_dropdown.scss" />
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="assets\styles\pages\reports\daily-winloss.scss" />
-    <Content Include="assets\styles\pages\reports\report.scss" />
+    <Content Include="assets\styles\pages\reports\_report.scss" />
+    <Content Include="assets\styles\components\_filterbox.scss" />
+    <Content Include="assets\styles\pages\customer\customer-list.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

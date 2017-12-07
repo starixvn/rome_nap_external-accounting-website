@@ -4,13 +4,15 @@
 @using Fanex.ExternalAccount.Utilities
 <div id='jqWidget'>
     <div class="page-title">
-        <div style="float: left; margin: 5px; vertical-align: middle;">
+        <div class="pull-left">
             Menu Management</div>
-        <div style="float: right; margin: 2px">
-            <input type="button" id="jqbutton" value="Add New Menu" class="button-add" />
+        <div class="pull-right">
+            <button id="jqbutton" class="btn -add">
+                <span class="icon-add"></span> Add New Menu
+            </button>
         </div>
     </div>
-    <div id="mainGrid" style="margin: 0px 3px 0px 3px">
+    <div id="mainGrid">
         <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
     </div>
