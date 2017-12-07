@@ -34,5 +34,9 @@
   {
     "outputFile": "assets/styles/pages/default/left-panel.css",
     "inputFile": "assets/styles/pages/default/left-panel.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/customer.css",
+    "inputFile": "assets/styles/pages/customer/customer.scss"
   }
 ]

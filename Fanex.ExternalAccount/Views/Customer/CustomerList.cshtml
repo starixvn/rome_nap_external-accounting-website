@@ -1,46 +1,44 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.DTO
 @using Fanex.PTEngine
-<link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/customer/customer.css")" rel="stylesheet" type="text/css" />
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
-<div id="customerList" style="background-color: #fff">
+<div id="customerList">
     <div class="page-title">
         Customer List
     </div>
     <div id="searchBar" class="search-form filterbox">
         <div class="searchBar">
-            <div style="float: left; margin-right: 5px; margin-top: 5px">
-                @ViewLang.Username
-            </div>
-            <div style="float: left">
+            <div class="form-group">
+                <div class="label">@ViewLang.Username</div>
                 <input id="txtUserName" type="text" class="usernameInput" autocomplete="off" />
             </div>
-            <div style="float: left; margin-left: 20px; margin-top: 5px">
-                @ViewLang.Status
+            <div class="form-group">
+                <div class="label">@ViewLang.Status</div>
+                <div id="userGroup" class="user-group pull-left">
+                    <select id="customerStatus" class="usernameInput group">
+                        <option value="-1">@ViewLang.All</option>
+                        <option value="1">@ViewLang.Open</option>
+                        <option value="3">@ViewLang.Suspended</option>
+                        <option value="2">@ViewLang.Closed</option>
+                        <option value="4">@ViewLang.Disabled</option>
+                    </select>
+                </div>
             </div>
-            <div id="userGroup" style="float: left; margin-left: 5px">
-                <select id="customerStatus" class="usernameInput group">
-                    <option value="-1">@ViewLang.All</option>
-                    <option value="1">@ViewLang.Open</option>
-                    <option value="3">@ViewLang.Suspended</option>
-                    <option value="2">@ViewLang.Closed</option>
-                    <option value="4">@ViewLang.Disabled</option>
-                </select>
-            </div>
-            <div style="float: left; margin-left: 10px;">
+            <div class="form-group">
                 <input id="btnSearch" type="button" value="Submit" class="btn -submit" onclick="Fanex.ExtAcc.Customer.Search()" />
             </div>
         </div>
     </div>
     <div class="bgTitle titleSearch">
         <div class="searchBar">
-            <div style="float: left; margin-top: 4px;">@ViewLang.Select:</div>
-            <div style="float: left; margin-top: 4px; margin-left: 5px; cursor: pointer; font-weight: bold;" onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</div>
-            <div style="float: left; margin: 2px 5px 0px 5px; color: #C9C9C9">
+            <div class="pull-left text-select">@ViewLang.Select:</div>
+            <div class="status-select"  onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</div>
+            <div class="character">
                 |
             </div>
-            <div style="float: left; margin-top: 4px; cursor: pointer; font-weight: bold;" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</div>
+            <div class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</div>
         </div>
         <div style="float: right">
             <div id="breadcrumbs">
@@ -50,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div style="margin: 0px 3px 0px 3px" id="customerListGrid">
+    <div id="customerListGrid">
         <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
         <div id="msgNoinfo">

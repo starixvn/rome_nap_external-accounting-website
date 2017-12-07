@@ -386,13 +386,7 @@ a {
 .search-form {
   display: inline-block;
   width: 100%;
-  padding: 10px 0;
-  /*.user-group input {
-        width: 150px;
-        height: 32px;
-        vertical-align: top;
-        padding-left: 3px;
-    }*/ }
+  padding: 10px 0; }
   .search-form .form-line {
     margin-bottom: 12px; }
   .search-form .form-group {
