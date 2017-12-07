@@ -94,11 +94,6 @@
 
         private RecheckinStatus GetRecheckinStatus()
         {
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                return RecheckinStatus.Maintenance;
-            }
-
             if (!Config.IsEnabledRecheckin)
             {
                 return RecheckinStatus.Continue;

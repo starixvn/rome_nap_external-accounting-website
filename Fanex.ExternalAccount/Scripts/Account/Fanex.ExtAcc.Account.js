@@ -53,12 +53,6 @@ Fanex.ExtAcc.Account = {
                     Validators.show($('#Password').get(0), 'Not allow HTML TAG');
                     return false;
                 }
-                /*
-                if ($('#Captcha').val().toString().search(/^[<\s\s*>]/) != -1) {
-                $('#Captcha').focus();
-                Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
-                return false;
-                }*/
 
                 if ($('#UserName').val() == '') {
                     $('#UserName').focus();
@@ -71,12 +65,6 @@ Fanex.ExtAcc.Account = {
                     Validators.show($('#Password').get(0), 'This field is required');
                     return false;
                 }
-                /*
-                if ($('#Captcha').val() == '' || $('#Captcha').val().length < 4) {
-                $('#Captcha').focus();
-                Validators.show($('#Captcha').get(0), 'This field is required');
-                return false;
-                }*/
 
                 $('#Password').val($('#Password').val().ec($('#Code').val()).hc());
             };

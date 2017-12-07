@@ -779,6 +779,16 @@ $(document).ready(function () {
             if (antiXSRFToken.length > 0) {
                 xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
             }
+        },
+        statusCode: {
+            401: function (error, callback) {
+                if (JSON && error.responseText) {
+                    var errorResult = JSON.parse(error.responseText);
+                    if (errorResult.code === 999999) {
+                        top.location.href = resolveClientUrl('Shared/Offline');
+                    }
+                }
+            }
         }
     });
 });

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -14,6 +15,7 @@
     using Fanex.GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
+    using ONEbook.UM.Filters;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -78,6 +80,8 @@
         {
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
+
+            GlobalFilters.Filters.Add(new CheckUMFilter());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
@@ -101,6 +105,7 @@
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
 
             MvcHandler.DisableMvcResponseHeader = true;
+
 
             ExceptionHandler
                 .UseConfig(new LoggingConfiguration()

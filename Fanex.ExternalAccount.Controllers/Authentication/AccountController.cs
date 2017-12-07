@@ -38,7 +38,7 @@ using Fanex.Logging.Extensions.Web;
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
 
-        [HttpGet, CheckUMFilter]
+        [HttpGet]
         public ActionResult Login()
         {
             if (_currentSession.IsAuthenticated)
@@ -57,7 +57,7 @@ using Fanex.Logging.Extensions.Web;
             });
         }
 
-        [HttpPost, CheckUMFilter]
+        [HttpPost]
         public ActionResult Login(LoginModel model)
         {
             if (!ValidateAntiXSRF(model.__RequestVerificationToken))
@@ -97,7 +97,7 @@ using Fanex.Logging.Extensions.Web;
         private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
         {
             int custId = 0, onuserId = 0;
-            bool isIntAcc = true;
+            bool isInternalAdmin = true;
 
             var result = _userService.Login(
                 model.UserName,
@@ -113,20 +113,20 @@ using Fanex.Logging.Extensions.Web;
                 },
                 out custId,
                 out onuserId,
-                out isIntAcc);
+                out isInternalAdmin);
 
             return result != null && result.IsSuccess
-                ? LoginSuccessful(model, custId, onuserId, isIntAcc, result)
-                : LoginFailed(model, result);
+                ? LoginSuccessful(model, custId, onuserId, isInternalAdmin, result)
+                : LoginFailed(model.UserName, result);
         }
 
-        private ActionResult LoginFailed(LoginModel model, Result result)
+        private ActionResult LoginFailed(string failedUsername, Result result)
         {
-            UpdateLoginFailedAttempt(model);
+            UpdateLoginFailedAttempt(failedUsername);
 
             return View(new LoginModel
             {
-                UserName = model.UserName,
+                UserName = failedUsername,
                 LoginAttempt = _currentSession.LoginAttempt,
                 LoginFailedMessage =
                                 result != null
@@ -135,16 +135,16 @@ using Fanex.Logging.Extensions.Web;
             });
         }
 
-        private void UpdateLoginFailedAttempt(LoginModel model)
+        private void UpdateLoginFailedAttempt(string failedUsername)
         {
-            if (_currentSession.UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))
+            if (_currentSession.UserAttempt.Equals(failedUsername, StringComparison.OrdinalIgnoreCase))
             {
                 _currentSession.LoginAttempt++;
             }
             else
             {
                 _currentSession.LoginAttempt = 1;
-                _currentSession.UserAttempt = model.UserName;
+                _currentSession.UserAttempt = failedUsername;
             }
         }
 
@@ -304,13 +304,13 @@ using Fanex.Logging.Extensions.Web;
             return true;
         }
 
-        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isIntAcc, Group group)
+        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, Group group)
         {
             _currentSession.UserName = model.UserName;
             _currentSession.UserId = custId;
             _currentSession.CustId = custId;
             _currentSession.OnUserId = onuserId;
-            _currentSession.IsInternalAdmin = isIntAcc;
+            _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.GroupID == 1;

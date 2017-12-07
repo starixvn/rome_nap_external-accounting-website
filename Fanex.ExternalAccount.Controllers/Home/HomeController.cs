@@ -6,7 +6,6 @@
     using Fanex.ExternalAccount.Utilities;
 using Fanex.Logging.Extensions.Web;
 
-    [CheckUMFilter]
     public class HomeController : BaseController
     {
         [Authorize]
