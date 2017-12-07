@@ -19,7 +19,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Left panel</title>
     @*<link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />*@
-    <link href="@Url.Content("~/assets/styles/pages/default/left-panel.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/styles/pages/default/left-panel.css")" rel="stylesheet"/>
 </head>
 <body>
     <div id="ng-app" data-ng-app="leftPanelApp" class="hide left-panel-container">
@@ -175,13 +176,13 @@
                 </div>
                 <div class="tab-content detail-tab" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
                     <div class="subTab-parent">
-                        <div data-ng-click="ViewSubTab('sub-edit')" id="sub-edit" 
+                        <div data-ng-click="ViewSubTab('sub-edit')" id="sub-edit"
                              class="pull-left subTab subTab-active">Edit</div>
-                        <div data-ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="subTab" 
+                        <div data-ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="subTab"
                              data-ng-hide="model.personalInfo.roleId.value == 4 || model.personalInfo.roleId.value == 1">Min/Max PT</div>
-                        <div data-ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="subTab" 
+                        <div data-ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="subTab"
                              data-ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
-                        <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab" 
+                        <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab"
                              data-ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
                     </div>
                     <ul id="edit" class="list-link">
@@ -260,8 +261,7 @@
                                 <th>Last Login</th>
                             </tr>
                         </thead>
-                        <tbody id="onlines" data-ng-init="Init()" data-ng-hide="true">
-                        </tbody>
+                        <tbody id="onlines" data-ng-init="Init()" data-ng-hide="true"></tbody>
                     </table>
                     <div id="online" data-ng-hide="true" class="no-info">This user is not online</div>
                 </div>

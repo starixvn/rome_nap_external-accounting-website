@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?wrcqvx');
-  src:  url('fonts/AlphaAdmin.eot?wrcqvx#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?wrcqvx') format('truetype'),
-    url('fonts/AlphaAdmin.woff?wrcqvx') format('woff'),
-    url('fonts/AlphaAdmin.svg?wrcqvx#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?eqwt1g');
+  src:  url('fonts/AlphaAdmin.eot?eqwt1g#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?eqwt1g') format('truetype'),
+    url('fonts/AlphaAdmin.woff?eqwt1g') format('woff'),
+    url('fonts/AlphaAdmin.svg?eqwt1g#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-settings:before {
+  content: "\e912";
+}
+.icon-settings-all:before {
+  content: "\e91c";
+}
+.icon-user:before {
+  content: "\e91a";
+}
+.icon-collapse:before {
+  content: "\e918";
+}
+.icon-expand:before {
+  content: "\e919";
+}
+.icon-link:before {
+  content: "\e917";
+}
+.icon-home:before {
+  content: "\e915";
+}
+.icon-magnify:before {
+  content: "\e916";
+}
 .icon-account:before {
   content: "\e900";
 }
@@ -77,9 +101,6 @@
 }
 .icon-reorder-horizontal:before {
   content: "\e911";
-}
-.icon-settings:before {
-  content: "\e912";
 }
 .icon-unfold-less-horizontal:before {
   content: "\e913";

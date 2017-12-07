@@ -166,23 +166,24 @@
         }          
     }
 
-    .icon-search {
+    .icon-magnify {
         display: inline-block;
         position: absolute;
-        right: 31px;
-        top: 22px;        
-        width: 15px;
-        height: 16px;
-        background: url(../../images/sprites.png) no-repeat; 
-        background-position: -76px -162px;     
-        cursor: pointer;  
+        right: 28px;
+        top: 22px;     
+        cursor: pointer;
+        color: #444;  
+        font-size: 20px;
 
-        @media screen and (min-device-width: 768px) { 
-            top: 10px;
-            background-position: -76px -122px;
+        &:hover {
+            color: #5faa73;
         }
 
-        &:before {
+        @media screen and (min-device-width: 768px) { 
+            top: 8px;
+        }
+
+        &:after {
             content: "";
             position: absolute;
             left: -7px;
@@ -1185,11 +1186,11 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
     padding: .5em 5px;
 }
 /*Icon*/
-.icon-user {
+/*.icon-user {
     background: url('images/user.png');
     width: 12px;
     height: 12px;
-}
+}*/
 
 /*New Grid*/
 .pr5 {

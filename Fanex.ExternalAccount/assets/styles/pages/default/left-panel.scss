@@ -15,6 +15,15 @@ body {
 .left-panel-container {
     width: 100%;
     padding: 16px;
+
+    a {
+        color: #60a0ff;
+
+        @media screen and (min-device-width: 767px) {
+            color: $link-color;     
+        }
+    }
+    
 }
 
 .red {
@@ -54,22 +63,16 @@ body {
 }
 
 .icon-home {
-    @extend %icon-left-panel;
-    background-position: -7px -475px;
-    width: 16px;
-    height: 15px;
     cursor: pointer;
+    color: #000;
+    font-size: 20px;
 
     &:hover {
-        background-position: -7px -531px;
+        color: #5faa73;
     }
 
     @media screen and (min-device-width: 768px) {
         background-position: -7px -362px;
-
-        &:hover {
-            background-position: -7px -419px;
-        }
     }
 }
 
@@ -100,18 +103,13 @@ body {
 
     .detail {
         cursor: pointer;
-        color: #60a0ff;
         text-decoration: none;
-
-        @media screen and (min-device-width: 768px) {
-            color: #4b87f7;
-        }
     }
 
     .icon-home {
         position: absolute;
         right: 0;
-        top: 10px;
+        top: 2px;
     }
 }
 
@@ -281,7 +279,7 @@ body {
 .downlineTitle {
     float: left;
     white-space: nowrap;
-    line-height: 24px;
+    line-height: 24px;    
 }
 
 .pagination {
@@ -320,12 +318,12 @@ body {
 /* Setting tab*/
 
 .settingEdit {
-    color: #60a0ff;
     float: left;
     cursor: pointer;
+    color: #60a0ff;
 
-    @media screen and (min-device-width: 768px) {
-        color: #4b87f7;
+    @media screen and (min-device-width: 767px) {
+        color: $link-color;     
     }
 }
 
@@ -376,7 +374,7 @@ body {
         padding: 0;
         padding-left: 16px;
         margin: 0;
-        color: #4872eb;
+        color: #60a0ff;
 
         a, a:hover {
             text-decoration: underline;

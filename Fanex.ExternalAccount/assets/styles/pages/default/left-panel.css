@@ -234,6 +234,11 @@ body {
 .left-panel-container {
   width: 100%;
   padding: 16px; }
+  .left-panel-container a {
+    color: #60a0ff; }
+    @media screen and (min-device-width: 767px) {
+      .left-panel-container a {
+        color: #4872eb; } }
 
 .red {
   color: #ef2547; }
@@ -257,22 +262,19 @@ body {
   font-weight: bold; }
 
 /* Icons */
-.icon-home, .icon-edit-setting, .customer-info .userDown, .customer-info .userUp {
+.icon-edit-setting, .customer-info .userDown, .customer-info .userUp {
   background: url(../../images/sprites.png) no-repeat;
   display: inline-block; }
 
 .icon-home {
-  background-position: -7px -475px;
-  width: 16px;
-  height: 15px;
-  cursor: pointer; }
+  cursor: pointer;
+  color: #000;
+  font-size: 20px; }
   .icon-home:hover {
-    background-position: -7px -531px; }
+    color: #5faa73; }
   @media screen and (min-device-width: 768px) {
     .icon-home {
-      background-position: -7px -362px; }
-      .icon-home:hover {
-        background-position: -7px -419px; } }
+      background-position: -7px -362px; } }
 
 .icon-edit-setting {
   background-position: -143px -419px;
@@ -293,15 +295,11 @@ body {
     width: 88px; }
   .row .detail {
     cursor: pointer;
-    color: #60a0ff;
     text-decoration: none; }
-    @media screen and (min-device-width: 768px) {
-      .row .detail {
-        color: #4b87f7; } }
   .row .icon-home {
     position: absolute;
     right: 0;
-    top: 10px; }
+    top: 2px; }
 
 /* Customer info */
 .customer-info {
@@ -444,12 +442,12 @@ body {
 
 /* Setting tab*/
 .settingEdit {
-  color: #60a0ff;
   float: left;
-  cursor: pointer; }
-  @media screen and (min-device-width: 768px) {
+  cursor: pointer;
+  color: #60a0ff; }
+  @media screen and (min-device-width: 767px) {
     .settingEdit {
-      color: #4b87f7; } }
+      color: #4872eb; } }
 
 /* Detail tab */
 .detail-tab .subTab-parent {
@@ -487,7 +485,7 @@ body {
   padding: 0;
   padding-left: 16px;
   margin: 0;
-  color: #4872eb; }
+  color: #60a0ff; }
   .detail-tab .list-link a, .detail-tab .list-link a:hover {
     text-decoration: underline; }
 
