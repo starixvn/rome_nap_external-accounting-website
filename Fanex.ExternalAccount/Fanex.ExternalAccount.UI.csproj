@@ -1176,6 +1176,12 @@
     <Content Include="assets\styles\pages\account\login.min.css">
       <DependentUpon>login.scss</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\customer.css">
+      <DependentUpon>customer.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\customer.min.css">
+      <DependentUpon>customer.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\default\common.css">
       <DependentUpon>common.scss</DependentUpon>
     </Content>
@@ -1680,8 +1686,6 @@
     <Content Include="Content\LeftMenu\styles.css" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\normalize.css" />
-    <Content Include="Content\Reports\DailyWinLoss.css" />
-    <Content Include="Content\Reports\WinLossDetail.css" />
     <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
@@ -2951,7 +2955,7 @@
     <Content Include="assets\styles\pages\reports\daily-winloss.scss" />
     <Content Include="assets\styles\pages\reports\_report.scss" />
     <Content Include="assets\styles\components\_filterbox.scss" />
-    <Content Include="assets\styles\pages\customer\customer-list.scss" />
+    <Content Include="assets\styles\pages\customer\customer.scss" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.eot" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.ttf" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.woff" />

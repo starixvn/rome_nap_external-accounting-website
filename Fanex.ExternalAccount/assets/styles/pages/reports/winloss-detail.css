@@ -14,7 +14,7 @@
 #GroupMonthDay .form-group .user-group {
   width: 60px; }
   #GroupMonthDay .form-group .user-group.dll-month {
-    width: 160px; }
+    width: 148px; }
 
 .filterbox .label {
   width: 60px; }
@@ -27,9 +27,6 @@
 
 #userGroup input {
   width: 147px !important; }
-
-#GroupMonthDay {
-  height: 37px; }
 
 .frozen-div {
   border-right: 1px solid #999 !important;
@@ -86,6 +83,19 @@
 span.selectedMonth {
   margin-right: 15px; }
 
-.monPickrWrap {
-  position: relative !important; }
+.monPickrWrapParent .monPickrWrap {
+  position: relative !important;
+  border-radius: 0 !important; }
+  .monPickrWrapParent .monPickrWrap .monPickr {
+    height: unset;
+    padding: 6px 2px;
+    border-radius: 0 !important; }
+    .monPickrWrapParent .monPickrWrap .monPickr .next {
+      top: 6px; }
+
+.selectedDayWrapParent .selectedDayWrap {
+  width: 60px;
+  border-radius: 0 !important; }
+  .selectedDayWrapParent .selectedDayWrap .dayPickr {
+    height: unset; }
 

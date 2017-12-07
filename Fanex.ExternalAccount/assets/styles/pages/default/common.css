@@ -400,6 +400,8 @@ a {
     float: left;
     margin-right: 6px;
     text-align: left; }
+    .search-form .label.to-width {
+      width: 20px; }
   .search-form .user-group button {
     background-image: none !important;
     width: 20px !important;
