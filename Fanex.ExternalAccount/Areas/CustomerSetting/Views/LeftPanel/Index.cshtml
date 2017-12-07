@@ -158,7 +158,7 @@
                     <li><a href="#tab-3">Login</a></li>
                     <li data-ng-click="GetOnline({{model.personalInfo.custId.value}})"><a href="#tab-4">Online List</a></li>
                 </ul>
-                <div id="tab-1" class="tab-content">
+                <div id="tab-1" class="tab-content setting-tab">
                     <div class="pull-left width-50per" data-ng-repeat="editItem in setting.editItems">
                         <div data-ng-hide="{{editItem.isHide }}" class="settingEdit"
                              title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()"><span class="icon-edit-setting"></span>{{editItem.text}}</div>
@@ -173,89 +173,97 @@
 
                     </div>
                 </div>
-                <div class="tab-content" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
+                <div class="tab-content detail-tab" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
                     <div class="subTab-parent">
-                        <div data-ng-click="ViewSubTab('sub-edit')" id="sub-edit" class="pull-left subTab subTab-active">Edit</div>
-                        <div data-ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="pull-left subTab" data-ng-hide="model.personalInfo.roleId.value == 4 || model.personalInfo.roleId.value == 1">Min/Max PT</div>
-                        <div data-ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="pull-left subTab" data-ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
-                        <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="pull-left subTab" data-ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
+                        <div data-ng-click="ViewSubTab('sub-edit')" id="sub-edit" 
+                             class="pull-left subTab subTab-active">Edit</div>
+                        <div data-ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="subTab" 
+                             data-ng-hide="model.personalInfo.roleId.value == 4 || model.personalInfo.roleId.value == 1">Min/Max PT</div>
+                        <div data-ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="subTab" 
+                             data-ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
+                        <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab" 
+                             data-ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
                     </div>
-                    <div id="edit">
-                        <div class="detail icn-right" data-ng-repeat="item in setting.details">
+                    <ul id="edit" class="list-link">
+                        <li class="detail" data-ng-repeat="item in setting.details">
                             <a data-ng-hide="item.isHide" data-ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
-                        </div>
-                    </div>
-                    <div id="minMax" style="display: none">
-                        <div class="detail icn-right" data-ng-repeat="minMaxPt in setting.minMaxPts">
+                        </li>
+                    </ul>
+                    <ul id="minMax" class="list-link" style="display: none">
+                        <li class="detail" data-ng-repeat="minMaxPt in setting.minMaxPts">
                             <a data-ng-hide="minMaxPt.isHide" data-ng-click="{{minMaxPt.key}}()" href="javascript:;">{{minMaxPt.value}}</a>
-                        </div>
-                    </div>
-                    <div id="superPT" style="display: none">
-                        <div class="detail icn-right" data-ng-repeat="superPt in setting.superPts">
+                        </li>
+                    </ul>
+                    <ul id="superPT" class="list-link" style="display: none">
+                        <li class="detail" data-ng-repeat="superPt in setting.superPts">
                             <a data-ng-hide="superPt.isHide" data-ng-click="Super{{superPt.key}}()" href="javascript:;">{{superPt.value}}</a>
-                        </div>
-                    </div>
-                    <div id="masterPT" style="display: none">
-                        <div class="detail icn-right" data-ng-repeat="masterPt in setting.masterPts">
+                        </li>
+                    </ul>
+                    <ul id="masterPT" class="list-link" style="display: none">
+                        <li class="detail" data-ng-repeat="masterPt in setting.masterPts">
                             <a data-ng-hide="masterPt.isHide" data-ng-click="Master{{masterPt.key}}()" href="javascript:;">{{masterPt.value}}</a>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="tab-content" id="tab-3" data-ng-controller="LoginController" data-ng-init="length = loginInfo.length">
-                    <div class="clearBoth">
-                        <div class="balanceTitle bold">{{loginInfo[0].text}}</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[0].value}}</div>
+                <div class="tab-content login-tab" id="tab-3" data-ng-controller="LoginController" data-ng-init="length = loginInfo.length">
+                    <div class="row">
+                        <div class="pull-left bold">{{loginInfo[0].text}}</div>
+                        <div class="pull-right">{{loginInfo[0].value}}</div>
                     </div>
-                    <div class="clearBoth">
-                        <div class="balanceTitle bold">{{loginInfo[1].text}}</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[1].value}}</div>
+                    <div class="row">
+                        <div class="pull-left bold">{{loginInfo[1].text}}</div>
+                        <div class="pull-right">{{loginInfo[1].value}}</div>
                     </div>
-                    <div class="clearBoth">
-                        <div class="balanceTitle bold">{{loginInfo[2].text}}</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[2].value}}</div>
+                    <div class="row">
+                        <div class="pull-left bold">{{loginInfo[2].text}}</div>
+                        <div class="pull-right">{{loginInfo[2].value}}</div>
                     </div>
-                    <div class="clearBoth">
-                        <div class="balanceTitle bold" title="{{loginInfo[3].tooltip}}">{{loginInfo[3].text}}</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[3].value}}</div>
+                    <div class="row">
+                        <div class="pull-left bold" title="{{loginInfo[3].tooltip}}">{{loginInfo[3].text}}</div>
+                        <div class="pull-right">{{loginInfo[3].value}}</div>
                     </div>
-                    <div class="clearBoth" data-ng-init="tmpId = model == null ? 0 : model.personalInfo.custId.value">
-                        <div class="balanceTitle bold">
+                    <div class="row" data-ng-init="tmpId = model == null ? 0 : model.personalInfo.custId.value">
+                        <div class="pull-left bold">
                             {{loginInfo[4].text}}&nbsp;[<a href="javascript:;" data-ng-click="ResetPassword({{tmpId}}, '{{model.personalInfo.currentLevel.value}}')">Change</a>]
                         </div>
-                        <div class="floatLeftBalance normal R">
+                        <div class="pull-right">
                             {{loginInfo[4].value}}
                         </div>
                     </div>
-                    <div class="clearBoth">
-                        <div class="balanceTitle bold">{{loginInfo[5].text}}</div>
-                        <div class="floatLeftBalance normal R detail">
+                    <div class="row">
+                        <div class="pull-left bold">{{loginInfo[5].text}}</div>
+                        <div class="pull-right detail">
                             <a href="javascript:;" data-ng-click="ShowIp('{{loginInfo[5].value}}')">
                                 {{loginInfo[5].value}}
                             </a>
                         </div>
                     </div>
-                    <div class="clearBoth" data-ng-show="{{model.uplineHasSecurityCode && model.personalInfo.roleId.value > 1}}">
-                        <div class="balanceTitle bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" data-ng-click="ResetSecurityCode({{model != null ? model.personalInfo.custId.value : 0}}, {{model != null ? model.personalInfo.roleId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Change</a>]</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[6].value}}</div>
+                    <div class="row" data-ng-show="{{model.uplineHasSecurityCode && model.personalInfo.roleId.value > 1}}">
+                        <div class="pull-left bold">{{loginInfo[6].text}}&nbsp;[<a href="javascript:;" data-ng-click="ResetSecurityCode({{model != null ? model.personalInfo.custId.value : 0}}, {{model != null ? model.personalInfo.roleId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Change</a>]</div>
+                        <div class="pull-right">{{loginInfo[6].value}}</div>
                     </div>
-                    <div class="clearBoth" data-ng-hide="{{length == 7}}">
-                        <div class="balanceTitle bold">{{loginInfo[7].text}}</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[7].value}}</div>
+                    <div class="row" data-ng-hide="{{length == 7}}">
+                        <div class="pull-left bold">{{loginInfo[7].text}}</div>
+                        <div class="pull-right">{{loginInfo[7].value}}</div>
                     </div>
-                    <div class="clearBoth" data-ng-hide="{{model.personalInfo.roleId.value == 1}}">
-                        <div class="balanceTitle bold">{{loginInfo[8].text}}&nbsp;[<a href="javascript:;" data-ng-click="RemoveOTP({{model != null ? model.personalInfo.custId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Remove</a>]</div>
-                        <div class="floatLeftBalance normal R">{{loginInfo[8].value}}</div>
+                    <div class="row" data-ng-hide="{{model.personalInfo.roleId.value == 1}}">
+                        <div class="pull-left bold">{{loginInfo[8].text}}&nbsp;[<a href="javascript:;" data-ng-click="RemoveOTP({{model != null ? model.personalInfo.custId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Remove</a>]</div>
+                        <div class="pull-right">{{loginInfo[8].value}}</div>
                     </div>
                 </div>
-                <div class="tab-content" id="tab-4" data-ng-controller="OnlineListController">
-                    <div class="clearBoth">
-                        <div class="floatLeft bold p10">No</div>
-                        <div class="floatLeft bold p32">IP</div>
-                        <div class="floatRight bold p58">Last Login</div>
-                    </div>
-                    <div id="onlines" data-ng-init="Init()" class="clearBoth" data-ng-hide="true">
-                    </div>
-                    <div id="online" data-ng-hide="true" class="C">This user is not online</div>
+                <div class="tab-content online-list-tab" id="tab-4" data-ng-controller="OnlineListController">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="p10">No</th>
+                                <th class="p32">IP</th>
+                                <th>Last Login</th>
+                            </tr>
+                        </thead>
+                        <tbody id="onlines" data-ng-init="Init()" data-ng-hide="true">
+                        </tbody>
+                    </table>
+                    <div id="online" data-ng-hide="true" class="no-info">This user is not online</div>
                 </div>
             </div>
         </div>
@@ -282,19 +290,19 @@
     <script type="text/javascript" src="@Url.Content("~/CustomerSetting/LeftPanel/SearchCustomer/GetData?id=" + Request.QueryString["id"] + "&uplineId=" + Request.QueryString["uplineId"] + "&pageIndex=" + Request.QueryString["pageIndex"])">
     </script>
     <script type="text/javascript">
-    var userId = parseInt('@userId');
+        var userId = parseInt('@userId');
 
-    if (model) {
-        $('#balanceInfo').tabs();
-        $('#settingInfo').tabs();
+        if (model) {
+            $('#balanceInfo').tabs();
+            $('#settingInfo').tabs();
 
-        if (model.personalInfo.roleId.value == 1)
-            $('#tab2').remove();
-    }
-    else {
-        $('#balanceInfo').remove();
-        $('#settingInfo').remove();
-    }
+            if (model.personalInfo.roleId.value == 1)
+                $('#tab2').remove();
+        }
+        else {
+            $('#balanceInfo').remove();
+            $('#settingInfo').remove();
+        }
     </script>
 </body>
 </html>

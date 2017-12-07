@@ -12,13 +12,10 @@ body {
     }
 }
 
-
-
 .left-panel-container {
     width: 100%;
-    padding: 20px;
+    padding: 16px;
 }
-
 
 .red {
     color: #ef2547;
@@ -92,7 +89,7 @@ body {
 
 .row {
     position: relative;
-    display: inline-block;
+    float: left;
     width: 100%;
     line-height: 26px;
     //padding-right: 26px;
@@ -115,10 +112,6 @@ body {
         position: absolute;
         right: 0;
         top: 10px;
-
-        @media screen and (min-device-width: 768px) {
-            right: 20px;
-        }
     }
 }
 
@@ -126,7 +119,7 @@ body {
 .customer-info {
     display: inline-block;
     width: 100%;
-    padding-top: 20px;
+    padding-top: 16px;
 
     .currentUser {
         position: relative;
@@ -200,7 +193,7 @@ body {
    float: left;
    display: inline-block;
    width: 100%;
-   padding: 20px 0 15px;
+   padding: 16px 0 10px;
 
    .btn {
        float: left;
@@ -248,7 +241,7 @@ body {
 }
 
 .tab-content {
-    padding: 10px 0;
+    padding: 6px 0 4px;
     line-height: 26px;
 
     .icon-edit-setting {
@@ -280,6 +273,7 @@ body {
         position: relative;
         left: 3px;            
     }
+    
 }
 
 /* Downline */
@@ -323,12 +317,7 @@ body {
 
 }
 
-.ui-widget-content a {
-    color: #4872eb;
-    text-decoration: none;
-}
-
-/* Setting */
+/* Setting tab*/
 
 .settingEdit {
     color: #60a0ff;
@@ -340,16 +329,121 @@ body {
     }
 }
 
-.ui-helper-reset {
-    line-height: 0.8 !important;
-    padding: 0;
+/* Detail tab */
+
+.detail-tab {
+    .subTab-parent {
+        display: inline-block;
+        width: 100%;        
+
+        .subTab-active {
+            background-color: #5faa72;
+            color: #fff;   
+        }
+    }
+
+    .subTab { 
+        float: left;       
+        position: relative;
+        margin-right: 6px;
+        padding: 0 25px 0 20px;
+        background-color: #5faa72;
+        color: #fff;  
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;           
+        
+        &:last-child {
+            margin-right: 0;
+        }  
+        
+        &:after {
+            content: "";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            width: 0;
+            height: 0;
+            margin-top: -2px;
+            border-style: solid;
+            border-width: 4px 3px 0 3px;
+            border-color: #fff transparent transparent transparent;
+            
+        }   
+    }
+
+    .list-link {
+        padding: 0;
+        padding-left: 16px;
+        margin: 0;
+        color: #4872eb;
+
+        a, a:hover {
+            text-decoration: underline;
+        }
+
+    }
 }
 
 
-.icn-right {
-    background: url(../images/blue-arrow-icn.png) no-repeat;
-    background-position: left center;
-    text-indent: 15px;
+/* Login tab */
+
+.login-tab {
+    .row {
+        border-bottom: 1px solid #d6d6d6;
+        line-height: 35px;
+    }
+}
+
+/* Online list */
+
+.online-list-tab {
+    max-height: 220px;
+    overflow: auto;
+
+    .table {
+        width: 100%;
+        border-spacing: 0;
+
+        th, td {
+            text-align: left;
+        }
+
+        th {
+            border-bottom: 1px solid #d6d6d6;
+        }
+
+        td {
+            border-bottom: 1px solid #d6d6d6;
+        }
+    }
+
+    .p32 {
+        width: 32%;
+    }
+    
+    .p10 {
+        width: 10%;
+    }
+
+    .no-info {
+        padding-top: 10px;
+        text-align: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.ui-helper-reset {
+    line-height: 0.8 !important;
+    padding: 0;
 }
 
 .expanded {
@@ -390,45 +484,9 @@ body {
     width: 10%;
 }
 
-.p32 {
-    width: 32%;
-}
-
-.p58 {
-    width: 56%;
-}
-
-.p10 {
-    width: 10%;
-}
 
 
-.subTab-parent {
-    border: 1px solid #CCC;
-    border-right: none;
-    float: left;
-}
 
-.subTab {
-    border: 1px solid #CCC;
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
-    padding: 0 5px;
-    font-weight: bold;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAANCAIAAAAv2XlzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVChTY/hPImAgUf3/IaDBDRtA9icWP6BpQQsV7J6G68EMQ5yhBNSDNcSHQLASTCkAtHZK/7pU0qAAAAAASUVORK5CYII=) no-repeat;
-    background-position: center right;
-    padding-right: 15px;
-    cursor: pointer;
-    background-color: #FFF;
-}
-
-.subTab-active {
-    color: #2489CE;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAIAAAAyIHCzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA1SURBVChTY/hPCmAgRfF/aqhW6TyH1U4sZgOVQhCmBnTVcKVYNaCoRlOKqYEavsQVrIPHbABfCAHjyFEhUQAAAABJRU5ErkJggg==) no-repeat;
-    background-position: center right;
-    background-color: #FFF;
-}
 
 .disabled {
     background-color: #a0a97a;
@@ -624,12 +682,7 @@ div#settingContainer,div.custInfo
     padding: 0;
     margin: 0;
 }
-td
-{
-    border: 1px solid #ccc;
-    font-size: 11px;
-    text-indent: 3px;
-}
+
 .headerPositionTaking
 {	
 	background-color: #f1f1a6;

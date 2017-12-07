@@ -13,37 +13,33 @@
 
 .col {
     width: 100%;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 0;
+    padding-right: 0;
     float: left;
-}
 
-@media (min-width: 768px) {
-    .col {
+    @media (min-width: 768px) {
         width: 50%;
+        padding-left: 8px;
+        padding-right: 8px;
     }
-}
 
-@media (min-width: 992px) {
-    .col {
+    @media (min-width: 992px) {
         width: 25%;
     }
-}
 
-@media (min-width: 1200px) {
-    .col {
+    @media (min-width: 1200px) {
         width: 20%;
     }
 }
 
 .selectGroup {
 	padding: 10px 20px;
-    margin: 20px 0;
+    margin: 20px 0 10px;
     font-weight: bold;
 	color: $msg-warning-color;
     background-color: $msg-warning-bg;
     border: 1px solid $msg-warning-border;
-    @include border-radius(2px);
+    @include border-radius(2px);    
 }
 
 .currencyGroup {	
@@ -51,7 +47,7 @@
 	margin-top: 8px;
     margin-bottom: 8px;
 	width: 100%;
-    line-height: 80px;
+    line-height: 50px;
 	cursor: pointer;
 	border: 1px solid #c7c7c7;	
     vertical-align: middle;
@@ -65,12 +61,9 @@
     &:hover {
         text-decoration: none;
     }
-}
 
-@media (max-width: 375px) {
-    .currencyGroup {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
+    @media (min-width: 768px) {
+        line-height: 80px;
     }
 }
+

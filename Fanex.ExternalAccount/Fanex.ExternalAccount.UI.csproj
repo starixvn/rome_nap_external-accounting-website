@@ -1125,6 +1125,12 @@
       <DependentUpon>roboto-fonts.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\base\Validators.css" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.css" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.js" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\demo.html" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.svg" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\Read Me.txt" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\style.css" />
     <Content Include="assets\styles\images\arrow-down-icn.png" />
     <Content Include="assets\styles\images\arrow-icn-right.png" />
     <Content Include="assets\styles\images\arrow-icn.png" />
@@ -2946,6 +2952,10 @@
     <Content Include="assets\styles\pages\reports\_report.scss" />
     <Content Include="assets\styles\components\_filterbox.scss" />
     <Content Include="assets\styles\pages\customer\customer-list.scss" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.eot" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.ttf" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.woff" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\selection.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

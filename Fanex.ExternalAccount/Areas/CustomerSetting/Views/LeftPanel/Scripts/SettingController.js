@@ -34,13 +34,13 @@
 
                 for (var i = 0; i < onlines.length; i++) {
                     var online = onlines[i];
-                    var item = '<div style="clear: both"><div class="floatLeft percent10">' + (i + 1) + '</div>' +
-                                    '<div class="floatLeft percent32">' +
+                    var item = '<tr><td class="percent10">' + (i + 1) + '</td>' +
+                                    '<td class="percent32">' +
                                         '<a href="javascript:;" onclick="parent.Fanex.ExtAcc.Customer.ShowIpInfo(\'' + online.iP.text + '\')">' +
                                             online.iP.text +
                                         '</a>' +
-                                    '</div>' +
-                                '<div class="floatRight percent58">' + online.loginTime.text + '</div></div>';
+                                    '</td>' +
+                                '<td>' + online.loginTime.text + '</td></tr>';
                     $('#onlines').append(item);
 
                 }

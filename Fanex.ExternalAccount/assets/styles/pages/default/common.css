@@ -371,7 +371,7 @@ a {
   border-top-left-radius: 0px !important; }
 
 .ui-dialog .ui-dialog-titlebar {
-  background: #1E1E22;
+  background: #3b475f;
   color: #fff;
   text-indent: 5px;
   padding: 5px 5px;
@@ -873,7 +873,7 @@ textarea {
     .splitter-panel {
       left: 0;
       width: 398px;
-      padding-top: 20px;
+      padding-top: 16px;
       border-right: 1px solid #e0e1e4;
       background-color: #fff;
       opacity: 1; } }
@@ -892,7 +892,7 @@ textarea {
   padding: 12px; }
   @media screen and (min-device-width: 768px) {
     .group-search {
-      padding: 0 20px; } }
+      padding: 0 16px; } }
   .group-search .search {
     -webkit-border-radius: 2px;
     -khtml-border-radius: 2px;
