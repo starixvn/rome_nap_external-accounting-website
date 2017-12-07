@@ -12,7 +12,16 @@
     margin-right: 4px;
 }
 
-div#product
+#customerListGrid .content-grid {
+    margin: 8px 0 0 3px;
+}
+#customerList #exporttoexcel {
+    position: relative;
+    top: -15px;
+}
+
+
+#product
 {
     font-size: 11px !important;
 }
