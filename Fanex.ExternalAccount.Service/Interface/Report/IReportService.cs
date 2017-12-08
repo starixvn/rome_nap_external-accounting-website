@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IReportService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Service.Interface.Report
+﻿namespace Fanex.ExternalAccount.Service.Interface.Report
 {
     using System;
     using System.Collections;

@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Request.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO
+﻿namespace Fanex.ExternalAccount.DTO
 {
     /// <summary>
     /// TODO: Update summary.

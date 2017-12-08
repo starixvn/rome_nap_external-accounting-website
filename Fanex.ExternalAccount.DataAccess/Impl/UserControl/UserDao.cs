@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UserDao.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
+﻿namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 {
     using System;
     using System.Collections.Generic;

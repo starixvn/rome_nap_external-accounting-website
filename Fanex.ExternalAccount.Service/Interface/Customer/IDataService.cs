@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IDataService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Service.Interface.Customer
+﻿namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
     using System.Data;
 

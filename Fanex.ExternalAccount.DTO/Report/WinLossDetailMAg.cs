@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="WinLossDetailMAg.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.Report
+﻿namespace Fanex.ExternalAccount.DTO.Report
 {
     using System;
 

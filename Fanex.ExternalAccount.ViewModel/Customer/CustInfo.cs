@@ -1,16 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CustInfo.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Customer Information
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.4.5">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.ViewModel.Customer
+﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     /// <summary>
     /// Customer Information.

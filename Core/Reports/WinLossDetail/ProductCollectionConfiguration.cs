@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ProductCollectionConfiguration.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2015.9.3">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
+﻿namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
 {
     using System.Collections.Generic;
     using System.Configuration;

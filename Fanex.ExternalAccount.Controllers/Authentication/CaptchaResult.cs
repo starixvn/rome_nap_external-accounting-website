@@ -1,16 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CaptchaResult.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Controller for Captcha
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.13">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Controllers.Authentication
+﻿namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
     using System.Drawing;

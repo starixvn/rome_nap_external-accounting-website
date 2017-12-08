@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CustomerListPage.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
+﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
     using System;
     using System.Collections.Generic;

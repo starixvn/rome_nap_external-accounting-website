@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="EASDisplayAttribute.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.ViewModel.Extension
+﻿namespace Fanex.ExternalAccount.ViewModel.Extension
 {
     using System;
     using System.ComponentModel;

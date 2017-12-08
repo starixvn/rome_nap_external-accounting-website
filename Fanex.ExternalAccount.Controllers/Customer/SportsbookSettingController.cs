@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SportsbookSettingController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.13">StyleCop</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
+﻿namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     using System.Collections;
     using System.Collections.Generic;

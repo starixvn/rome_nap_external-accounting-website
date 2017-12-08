@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Stakes.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.5.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.DTO.Customer.Casino
+﻿namespace Fanex.ExternalAccount.DTO.Customer.Casino
 {
     using System.Collections.Generic;
 

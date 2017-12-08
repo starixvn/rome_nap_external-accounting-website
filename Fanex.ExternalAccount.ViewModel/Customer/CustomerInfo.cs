@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CustomerInfo.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.3.21">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.ViewModel.Customer
+﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     using System;
     using System.Collections.Generic;

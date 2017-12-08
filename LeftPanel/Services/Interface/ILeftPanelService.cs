@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ILeftPanelService.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Interface
 {
     using System.Collections.Generic;
     using System.Data;

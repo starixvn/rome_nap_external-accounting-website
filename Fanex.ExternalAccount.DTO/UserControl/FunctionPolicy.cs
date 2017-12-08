@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="FunctionPolicy.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.UserControl
+﻿namespace Fanex.ExternalAccount.DTO.UserControl
 {
     /// <summary>
     /// TODO: Update summary.

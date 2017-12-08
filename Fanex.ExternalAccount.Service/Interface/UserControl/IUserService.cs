@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IUserService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Service.Interface.UserControl
+﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
     using System;
     using System.Collections.Generic;

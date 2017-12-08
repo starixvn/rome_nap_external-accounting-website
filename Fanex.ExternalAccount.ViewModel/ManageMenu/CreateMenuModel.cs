@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CreateMenuModel.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.13">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.ViewModel.ManageMenu
+﻿namespace Fanex.ExternalAccount.ViewModel.ManageMenu
 {
     /// <summary>
     /// Create menu model.

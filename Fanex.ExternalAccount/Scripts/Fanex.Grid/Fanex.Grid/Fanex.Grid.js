@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Fanex.Grid.js" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-
-(function ($) {
+﻿(function ($) {
     //// Grid Scroller
     var matchedBrowser, browserDectect;
 

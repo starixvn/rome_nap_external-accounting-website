@@ -1,15 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="StatementController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// For current session info
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-namespace Fanex.ExternalAccount.Controllers.Statement
+﻿namespace Fanex.ExternalAccount.Controllers.Statement
 {
     using System;
     using System.Collections.Generic;

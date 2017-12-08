@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="DailyWinLossReport.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
+﻿namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.Collections.Generic;
     using System.Linq;

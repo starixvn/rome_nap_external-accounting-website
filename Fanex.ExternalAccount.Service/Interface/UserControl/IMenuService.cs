@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="IMenuService.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Service.Interface.UserControl
+﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
     using System;
     using System.Collections.Generic;

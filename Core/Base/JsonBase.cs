@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="JsonBase.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.2.8">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Core.Base
+﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;

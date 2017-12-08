@@ -1,14 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LeftPanelService.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
-//   <change who="Andy.Nguyen" date="2013.9.26">View used credit and reset member credit</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
 {
     using System;
     using System.Collections.Generic;

@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TemplateSettings.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
+﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
     using System.Web;
 

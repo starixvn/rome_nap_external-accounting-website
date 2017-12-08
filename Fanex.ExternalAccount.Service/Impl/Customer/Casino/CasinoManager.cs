@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CasinoManager.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.4.11">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
+﻿namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 {
     using System;
     using System.Collections.Generic;

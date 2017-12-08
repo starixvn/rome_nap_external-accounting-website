@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ICommissionDao.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;

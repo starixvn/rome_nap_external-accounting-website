@@ -1,9 +1,3 @@
-/*
- * ngDialog - easy modals and popup windows
- * http://github.com/likeastore/ngDialog
- * (c) 2013 MIT License, https://likeastore.com
- */
-
 (function (window, angular, undefined) {
     'use strict';
 

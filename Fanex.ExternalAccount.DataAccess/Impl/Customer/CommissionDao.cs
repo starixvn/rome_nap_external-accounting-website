@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CommissionDao.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
     using System;
     using System.Collections;

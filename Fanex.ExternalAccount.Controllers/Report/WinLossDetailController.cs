@@ -1,12 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="WinLossDetailController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// For current session info
-// </summary>
-// --------------------------------------------------------------------------
-namespace Fanex.ExternalAccount.Controllers.Report
+﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System;
     using System.Collections;

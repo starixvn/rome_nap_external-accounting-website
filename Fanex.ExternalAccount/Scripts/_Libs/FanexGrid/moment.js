@@ -1,10 +1,4 @@
-﻿// moment.js
-// version : 1.7.2
-// author : Tim Wood
-// license : MIT
-// momentjs.com
-
-(function (undefined) {
+﻿(function (undefined) {
 
     /************************************
     Constants

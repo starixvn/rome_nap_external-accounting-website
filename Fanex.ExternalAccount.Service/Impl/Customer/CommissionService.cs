@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CommissionService.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Service.Impl.Customer
+﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;

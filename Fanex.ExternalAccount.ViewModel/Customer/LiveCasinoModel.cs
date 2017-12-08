@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LiveCasinoModel.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.3.21">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.ViewModel.Customer
+﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     using System.Collections.Generic;
 

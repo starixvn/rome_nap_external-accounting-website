@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SearchCustomerController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.07.25">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
     using System;
     using System.Collections;

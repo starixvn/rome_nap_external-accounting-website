@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TemplateSettings.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
+﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
     using System.Web;
 

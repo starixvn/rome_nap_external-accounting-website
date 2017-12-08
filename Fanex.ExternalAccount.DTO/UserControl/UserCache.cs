@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UserCache.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.UserControl
+﻿namespace Fanex.ExternalAccount.DTO.UserControl
 {
     using System.Collections.Generic;
 

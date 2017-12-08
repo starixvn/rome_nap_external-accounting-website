@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ICommissionService.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Service.Interface.Customer
+﻿namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
     using Fanex.PTEngine.BusinessObjects;
 

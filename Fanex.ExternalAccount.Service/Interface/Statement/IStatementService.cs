@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IStatementService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Service.Interface.Statement
+﻿namespace Fanex.ExternalAccount.Service.Interface.Statement
 {
     using System;
     using System.Collections.Generic;

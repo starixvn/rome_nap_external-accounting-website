@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IReportDAO.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DataAccess.Interface.Report
+﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Report
 {
     using System;
     using System.Collections;

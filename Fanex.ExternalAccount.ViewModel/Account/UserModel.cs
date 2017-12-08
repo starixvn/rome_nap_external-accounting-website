@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UserModel.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.ViewModel.Account
+﻿namespace Fanex.ExternalAccount.ViewModel.Account
 {
     using System.ComponentModel.DataAnnotations;
     using Fanex.ExternalAccount.Utilities;

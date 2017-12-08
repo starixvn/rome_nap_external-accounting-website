@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LeftPanelDao.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.7.29">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 {
     using System;
     using System.Collections;

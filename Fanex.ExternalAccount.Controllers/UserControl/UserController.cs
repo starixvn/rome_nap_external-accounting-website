@@ -1,15 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="UserController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// User controller
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-namespace Fanex.ExternalAccount.Controllers.UserControl
+﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System;
     using System.Collections.Generic;

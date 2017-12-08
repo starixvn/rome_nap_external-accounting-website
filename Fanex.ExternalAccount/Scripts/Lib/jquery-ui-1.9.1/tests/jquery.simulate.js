@@ -1,12 +1,3 @@
-/*
- * jquery.simulate - simulate browser mouse and keyboard events
- * http://jqueryui.com
- *
- * Copyright 2012 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- */
-
 ;(function( $ ) {
 
 var rkeyEvent = /^key/,

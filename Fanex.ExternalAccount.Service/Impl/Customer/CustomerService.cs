@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CustomerService.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Service.Impl.Customer
+﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
     using System;
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;

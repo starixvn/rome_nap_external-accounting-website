@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IMasterDao.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
     using System.Data;
     using Fanex.ExternalAccount.DTO;

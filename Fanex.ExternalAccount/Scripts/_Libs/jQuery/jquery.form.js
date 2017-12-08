@@ -1,15 +1,4 @@
-﻿/*!
-* jQuery Form Plugin
-* version: 3.35.0-2013.05.23
-* @requires jQuery v1.5 or later
-* Copyright (c) 2013 M. Alsup
-* Examples and documentation at: http://malsup.com/jquery/form/
-* Project repository: https://github.com/malsup/form
-* Dual licensed under the MIT and GPL licenses.
-* https://github.com/malsup/form#copyright-and-license
-*/
-/*global ActiveXObject */
-; (function ($) {
+﻿; (function ($) {
     "use strict";
 
     /*

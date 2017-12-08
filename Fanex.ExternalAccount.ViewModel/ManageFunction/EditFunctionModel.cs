@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="EditFunctionModel.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.ViewModel.ManageFunction
+﻿namespace Fanex.ExternalAccount.ViewModel.ManageFunction
 {
     /// <summary>
     /// Function model.

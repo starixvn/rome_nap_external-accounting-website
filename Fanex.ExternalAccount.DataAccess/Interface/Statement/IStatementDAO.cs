@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IStatementDAO.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DataAccess.Interface.Statement
+﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Statement
 {
     using System;
     using System.Collections;
