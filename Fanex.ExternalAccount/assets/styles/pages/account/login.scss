@@ -66,28 +66,15 @@ body {
     }  
 }
 
-%icon {
-    background: url(../../images/sprites.png) no-repeat;
-    display: inline-block;
+
+[class^="icon-"] {
+    color: #666;
+    font-size: 16px;
     position: absolute;
     left: 0;
+    top: 11px; 
 }
 
-.icon-user {
-	@extend %icon;
-	background-position: -41px -41px;
-	width: 16px;
-    height: 16px;  
-    top: 11px;  
-}
-
-.icon-lock {
-    @extend %icon;
-	background-position: -8px -38px;
-	width: 16px;
-    height: 19px;
-    top: 11px;
-}
 
 .btnLogin {
     margin-top: 10px;

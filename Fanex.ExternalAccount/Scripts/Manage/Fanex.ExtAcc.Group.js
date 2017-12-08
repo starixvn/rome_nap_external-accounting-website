@@ -160,7 +160,7 @@ Fanex.ExtAcc.Group = {
                             var groupName = cell.Value.GroupName;
                             var onclick = "javascript:Fanex.ExtAcc.Group.ShowPermission(" + groupId + ", '" + groupName + "')";
 
-                            return '<div id="' + groupId + '" class="edit" onclick="' + onclick + '"></div>';
+                            return '<div id="' + groupId + '" class="icon-clipboard-text" onclick="' + onclick + '"></div>';
                         }
                     },
                     { HeaderText: 'Delete', Name: 'Delete', Width: 50, CellAlign: 'center',

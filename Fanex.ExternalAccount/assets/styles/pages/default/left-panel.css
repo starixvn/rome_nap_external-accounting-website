@@ -262,28 +262,23 @@ body {
   font-weight: bold; }
 
 /* Icons */
-.icon-edit-setting, .customer-info .userDown, .customer-info .userUp {
-  background: url(../../images/sprites.png) no-repeat;
-  display: inline-block; }
-
 .icon-home {
   cursor: pointer;
-  color: #000;
+  color: #fff;
   font-size: 20px; }
   .icon-home:hover {
     color: #5faa73; }
   @media screen and (min-device-width: 768px) {
     .icon-home {
-      background-position: -7px -362px; } }
+      color: #000; } }
 
-.icon-edit-setting {
-  background-position: -143px -419px;
-  width: 12px;
-  height: 12px;
-  cursor: pointer; }
+.icon-link {
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff; }
   @media screen and (min-device-width: 768px) {
-    .icon-edit-setting {
-      background-position: -143px -362px; } }
+    .icon-link {
+      color: #000; } }
 
 /* User info */
 .row {
@@ -322,30 +317,16 @@ body {
         color: #000; }
         .customer-info .detail2:hover {
           color: #2489CE; } }
-  .customer-info .userDown, .customer-info .userUp {
+  .customer-info .icon-collapse, .customer-info .icon-expand {
     position: absolute;
     right: 0;
     top: 0;
-    width: 13px;
-    height: 13px;
-    cursor: pointer; }
-    .customer-info .userDown:before, .customer-info .userUp:before {
-      content: "";
-      position: absolute;
-      top: -8px;
-      left: -10px;
-      width: 30px;
-      height: 30px; }
-  .customer-info .userDown {
-    background-position: -76px -531px; }
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px; }
     @media screen and (min-device-width: 768px) {
-      .customer-info .userDown {
-        background-position: -76px -419px; } }
-  .customer-info .userUp {
-    background-position: -76px -475px; }
-    @media screen and (min-device-width: 768px) {
-      .customer-info .userUp {
-        background-position: -76px -362px; } }
+      .customer-info .icon-collapse, .customer-info .icon-expand {
+        color: #000; } }
   .customer-info .user-info {
     padding-top: 10px; }
 
@@ -388,7 +369,7 @@ body {
 .tab-content {
   padding: 6px 0 4px;
   line-height: 26px; }
-  .tab-content .icon-edit-setting {
+  .tab-content .icon-link {
     margin-right: 6px; }
   .tab-content input[type="checkbox"] {
     position: relative;

@@ -219,7 +219,7 @@ a {
   height: 24px;
   width: 22px; }
 
-.icon-logout {
+.icon-logout, .icon-lock-reset {
   font-size: 18px;
   color: #fff; }
 

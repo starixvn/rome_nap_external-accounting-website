@@ -76,22 +76,11 @@
     .form-control:focus + .icon-lock {
       background-position: -8px -70px; }
 
-.icon-user, .icon-lock {
-  background: url(../../images/sprites.png) no-repeat;
-  display: inline-block;
+[class^="icon-"] {
+  color: #666;
+  font-size: 16px;
   position: absolute;
-  left: 0; }
-
-.icon-user {
-  background-position: -41px -41px;
-  width: 16px;
-  height: 16px;
-  top: 11px; }
-
-.icon-lock {
-  background-position: -8px -38px;
-  width: 16px;
-  height: 19px;
+  left: 0;
   top: 11px; }
 
 .btnLogin {

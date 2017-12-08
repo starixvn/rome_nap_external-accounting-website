@@ -64,7 +64,7 @@ body {
 
 .icon-home {
     cursor: pointer;
-    color: #000;
+    color: #fff;
     font-size: 20px;
 
     &:hover {
@@ -72,19 +72,16 @@ body {
     }
 
     @media screen and (min-device-width: 768px) {
-        background-position: -7px -362px;
+        color: #000;
     }
 }
 
-.icon-edit-setting {
-    @extend %icon-left-panel;
-    background-position: -143px -419px;
-    width: 12px;
-    height: 12px;
+.icon-link {
+    font-size: 16px;
     cursor: pointer;
-
+    color: #fff;
     @media screen and (min-device-width: 768px) {
-        background-position: -143px -362px;
+        color: #000;
     }
 }
 
@@ -144,39 +141,16 @@ body {
         }
     }
 
-    .userDown, .userUp  {  
-        @extend %icon-left-panel;      
+    .icon-collapse, .icon-expand  {       
         position: absolute;
         right: 0;
         top: 0;
-        width: 13px;
-        height: 13px;
-        cursor: pointer;          
-        
-        &:before {
-            content: "";
-            position: absolute;
-            top: -8px;
-            left: -10px;
-            width: 30px;
-            height: 30px;
-        }           
-    }
-
-    .userDown {        
-        background-position: -76px -531px;
-
-        @media screen and (min-device-width: 768px) {
-            background-position: -76px -419px;
-        } 
-    }
-
-    .userUp {
-       background-position: -76px -475px; 
-
-       @media screen and (min-device-width: 768px) {
-            background-position: -76px -362px;
-       } 
+        cursor: pointer;   
+        color: #fff;  
+        font-size: 14px;
+         @media screen and (min-device-width: 768px) {
+             color: #000;
+         }           
     }
 
     .user-info {
@@ -242,7 +216,7 @@ body {
     padding: 6px 0 4px;
     line-height: 26px;
 
-    .icon-edit-setting {
+    .icon-link {
         margin-right: 6px;
     }
 
