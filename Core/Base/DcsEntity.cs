@@ -8,8 +8,6 @@
 
         public bool IsHidden { get; set; }
 
-        public bool IsSyncedDownline { get; set; }
-
         public bool IsDisabled { get; set; }
 
         public bool IsDisabledDownline { get; set; }

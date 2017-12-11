@@ -11,7 +11,6 @@ namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections;
-    using System.Data;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -212,7 +211,6 @@ namespace Fanex.ExternalAccount.Core.Base
                     var isSynced = product.ToBoolean("IsSync");
                     var isDisabled = product.ToBoolean("IsDisabled");
                     var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
-                    var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
                     var hasDownline = product.ToBoolean("HasDownline");
 
                     return new DcsEntity
@@ -223,8 +221,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         HasDownline = hasDownline,
                         IsSynced = isSynced,
                         IsDisabled = isDisabled,
-                        IsDisabledDownline = isDisabledDownline,
-                        IsSyncedDownline = isSyncedDownline
+                        IsDisabledDownline = isDisabledDownline
                     };
                 }
             }
