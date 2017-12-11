@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeftPanel", "LeftPanel\Left
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{3521A845-D2BF-4916-B02C-0B0E02F774DB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{B959501C-D1FE-49A2-B679-83D9E0556570}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{192FA518-0B7B-4EB6-96AB-3AEE709F29CC}"
 	ProjectSection(SolutionItems) = preProject
 		SonarQube\Nap.ExternalAccountingCSharp.ruleset = SonarQube\Nap.ExternalAccountingCSharp.ruleset
 		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig

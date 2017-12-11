@@ -307,12 +307,8 @@
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Context\CasinoAPILogger.cs" />
     <Compile Include="Context\CurrentContext.cs" />
-    <Compile Include="Context\CurrentSession.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Context\Encryptor.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Context\CurrentSession.cs" />
+    <Compile Include="Context\Encryptor.cs" />
     <Compile Include="Context\ExternalAccountAuthenticate.cs" />
     <Compile Include="Context\ExternalAccountAuthorization.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
