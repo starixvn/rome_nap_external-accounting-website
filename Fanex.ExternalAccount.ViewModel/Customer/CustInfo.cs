@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
-    /// <summary>
-    /// Customer Information.
-    /// </summary>
     public class CustInfo
     {
         public int CustId

@@ -2,9 +2,6 @@
 {
     using System;
 
-    /// <summary>
-    /// TODO: Summary description.
-    /// </summary>
     public class WinLossDetail
     {
         public int CustId { get; set; }

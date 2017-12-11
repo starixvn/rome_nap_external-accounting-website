@@ -6,9 +6,6 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
 
-    /// <summary>
-    /// Live casino authentication.
-    /// </summary>
     public class LiveCasinoAuthorizationService : ILiveCasinoAuthorizationService
     {
         private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();

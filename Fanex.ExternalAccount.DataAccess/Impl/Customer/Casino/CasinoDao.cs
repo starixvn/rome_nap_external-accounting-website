@@ -8,17 +8,8 @@
     using Fanex.ExternalAccount.DTO.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CasinoDao
     {
-        /// <summary>
-        /// Gets customer information.
-        /// </summary>
-        /// <param name="ibcCustId">Customer id.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <returns>CasinoCustomer object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
         {
@@ -65,7 +56,6 @@
                     customerDetail.UplineCasinoSync = Utils.ToBoolean(drupline["synccasino"]);
                 }
 
-                // Get max transfer information
                 CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
                 DataTable dt = null;
 
@@ -96,11 +86,6 @@
             return customerDetail;
         }
 
-        /// <summary>
-        /// Gets casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <returns>Boolean object.</returns>
         public bool GetCasinoStatus(int custid)
         {
             Hashtable param = new Hashtable();
@@ -110,19 +95,6 @@
             return Utils.ToBoolean(dr.Outputs["status"]);
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <param name="username">Username of customer.</param>
-        /// <param name="subUsername">Sub-username of customer.</param>
-        /// <returns>Boolean object.</returns>
         public bool UpdateCSStatus(
             int custid, 
             bool syncCS, 
@@ -152,19 +124,6 @@
             return status;
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="isUpdDownline">Update down-line status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <param name="errMsg">Error message.</param>        
-        /// <returns>Boolean object.</returns>
         public bool DoUpdateCSStatusWithoutSync(
             int custid, 
             bool syncCS, 

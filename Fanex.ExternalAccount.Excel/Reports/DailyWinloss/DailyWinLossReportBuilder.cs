@@ -6,9 +6,6 @@
     using Fanex.ExternalAccount.DTO.Report;
     using NPOI.HSSF.UserModel;
 
-    /// <summary>
-    /// Daily win loss report builder.
-    /// </summary>
     public class DailyWinLossReportBuilder
     {
         public DailyWinLossReportBuilder(List<DailyWinLoss> dailyWinLoss, bool isBold, int roleId, string winlostDate)
@@ -27,10 +24,6 @@
 
         public string WinlostDate { get; private set; }
 
-        /// <summary>
-        /// Builds report.
-        /// </summary>
-        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
             TemplateReport report = null;

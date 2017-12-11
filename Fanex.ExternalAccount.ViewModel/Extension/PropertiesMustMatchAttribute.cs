@@ -6,9 +6,6 @@
     using System.Globalization;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public sealed class PropertiesMustMatchAttribute : ValidationAttribute
     {
@@ -36,11 +33,8 @@
 
         public override string FormatErrorMessage(string name)
         {
-            // temp hard code here
             return string.Format(CultureInfo.CurrentUICulture, this.ErrorMessageString, ViewLang.Newpassword, ViewLang.Confirmpassword);
 
-            // return String.Format(CultureInfo.CurrentUICulture, ErrorMessageString,
-            //    OriginalProperty, ConfirmProperty);
         }
 
         public override bool IsValid(object value)

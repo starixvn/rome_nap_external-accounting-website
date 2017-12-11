@@ -4,16 +4,8 @@
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class CellExtension
     {
-        /// <summary>
-        /// Sets cell value.
-        /// </summary>
-        /// <param name="cell">Cell info.</param>
-        /// <param name="value">Value for cell.</param>
         public static void SetCellValue(this ICell cell, object value)
         {
             if (value == null)
@@ -116,14 +108,8 @@
             cell.SetCellValue((long)value);
         }
 
-        /// <summary>
-        /// Copies a cell to another cell.
-        /// </summary>
-        /// <param name="cell">Source cell.</param>
-        /// <param name="sourceCell">Destination cell.</param>
         public static void CopyFrom(this ICell cell, ICell sourceCell)
         {
-            // copy Merged
             CellRangeAddress sourceRange = null;
             for (var i = 0; i < sourceCell.Sheet.NumMergedRegions; i++)
             {
@@ -143,7 +129,6 @@
                 cell.Sheet.AddMergedRegion(sourceRange.Clone());
             }
 
-            // copy Style
             cell.CellStyle = sourceCell.CellStyle;
         }
     }

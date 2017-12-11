@@ -5,9 +5,6 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface ILeftPanelService
     {
         CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1);

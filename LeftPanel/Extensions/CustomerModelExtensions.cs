@@ -21,16 +21,8 @@
     using Fanex.ExternalAccount.Utilities;
     using RemotingRef;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class CustomerModelExtensions
     {
-        /// <summary>
-        /// Gets outstanding column.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>String object.</returns>
         public static string GetOutstandingColumn(int roleId)
         {
             var levelName = string.Empty;
@@ -56,11 +48,6 @@
             return roleId != 1 ? levelName + "PositionTaking" : "outstanding";
         }
 
-        /// <summary>
-        /// Gets used column of customer.
-        /// </summary>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>String object.</returns>
         public static string GetUsedCreditColumn(int roleId)
         {
             if (roleId == 4)
@@ -77,11 +64,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets yester day cash column.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>String object.</returns>
         public static string GetYesterdayCashColumn(int roleId)
         {
             if (roleId == 4)
@@ -102,20 +84,11 @@
             }
         }
 
-        /// <summary>
-        /// Gets yester cash column of customer.
-        /// </summary>
-        /// <returns>String object.</returns>
         public static string GetYesterdayCustomerCash()
         {
             return "yesterday_customerCash";
         }
 
-        /// <summary>
-        /// Gets cash column.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>String object.</returns>
         public static string GetCashColumn(int roleId)
         {
             if (roleId == 4)
@@ -136,22 +109,11 @@
             }
         }
 
-        /// <summary>
-        /// Gets customer cash column.
-        /// </summary>
-        /// <returns>String object.</returns>
         public static string GetCustomerCash()
         {
             return "customerCash";
         }
 
-        /// <summary>
-        /// Checks authorize on function of an admin.
-        /// </summary>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="functionKey">Function key.</param>
-        /// <param name="policy">Policy permission.</param>
-        /// <returns>Boolean object.</returns>
         public static bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy)
         {
             var userCache = new CachingService().GetUserCache(userId);
@@ -192,13 +154,6 @@
             return false;
         }
 
-        /// <summary>
-        /// Gets down-line list.
-        /// </summary>
-        /// <param name="model">CustomerModel object data.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <param name="pageIndex">Page index.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel GetDownlineList(this CustomerModel model, DataSet ds, int pageIndex)
         {
             var totalPages = 0;
@@ -233,12 +188,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets online list.
-        /// </summary>
-        /// <param name="model">CustomerModel object data.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel GetOnlineList(this CustomerModel model, DataSet ds)
         {
             var onlines = new LeftPanelDao().GetOnlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value));
@@ -255,12 +204,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets login info.
-        /// </summary>
-        /// <param name="model">CustomerModel object data.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel LoginInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -299,12 +242,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets personal info.
-        /// </summary>
-        /// <param name="model">CustomerModel object data.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel PersonalInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -341,12 +278,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets balance info.
-        /// </summary>
-        /// <param name="model">CustomerModel object data.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel BalanceInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -369,13 +300,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Checks product statues.
-        /// </summary>
-        /// <param name="model">Customer model item.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="username">Username of customer.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel GetProductStatuses(this CustomerModel model, int userId, string groupName, string username)
         {
             ProductStatuses product = model.Get3rdPartyProducts(userId, groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
@@ -394,11 +318,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Remove config to show or hide.
-        /// </summary>
-        /// <param name="model">Customer model.</param>
-        /// <returns>Customer model item.</returns>
         public static CustomerModel CheckConfig(this CustomerModel model)
         {
             var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
@@ -435,12 +354,6 @@
                 IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)) ? string.Empty : ip;
         }
 
-        /// <summary>
-        /// Removes Enable products.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="product">ProductStatuses item.</param>
-        /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel RemoveEnableAndPtforProducts(this CustomerModel model, ProductStatuses product)
         {
@@ -651,7 +564,6 @@
             }
             else if ((!sync && roleId == 1) || (!hide && !sync) || (isCheckSyncDownlineField && !syncDownline))
             {
-                // Show but not sync or not sync all downlines => don't show enable, show edit setting link only
                 model.RemoveEnableProduct("Enable" + productName);
                 model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
                 if (roleId == 1)
@@ -663,12 +575,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets upper statuses.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="product">Product statuses.</param>
-        /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel DisableUplineStatuses(this CustomerModel model, ProductStatuses product)
         {
@@ -770,12 +676,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Removes disabled and unsynchronized products.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="key">Key to specify item.</param>
-        /// <returns>CustomerModel object.</returns>
         private static CustomerModel RemoveProduct(this CustomerModel model, string key)
         {
             int index = -1;
@@ -816,12 +716,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Removes unsynchronized products on setting tab.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="key">Key to specify item.</param>
-        /// <returns>CustomerModel object.</returns>
         private static CustomerModel RemoveEnableProduct(this CustomerModel model, string key)
         {
             int index = -1;
@@ -851,12 +745,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Disables product that is not enabled at upper customer.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="key">Key to specify product.</param>
-        /// <returns>CustomerModel object.</returns>
         private static CustomerModel DisableProduct(this CustomerModel model, string key)
         {
             int index = -1;
@@ -879,14 +767,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets third party product statuses.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="groupName">Group name to get.</param>
-        /// <param name="username">Username to search.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <returns>ProductStatuses object.</returns>
         private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, int userId, string groupName, string username, int uplineId = 0)
         {
             IReportService report = new ReportService();
@@ -930,14 +810,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets detail statuses.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="roleId">Role id of customer to search.</param>
-        /// <param name="result">Current customer info.</param>
-        /// <param name="upperInfo">Upper customer info.</param>
-        /// <returns>ProductStatuses object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
         {

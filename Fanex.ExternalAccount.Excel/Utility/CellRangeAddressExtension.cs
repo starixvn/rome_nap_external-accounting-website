@@ -2,9 +2,6 @@
 {
     using NPOI.SS.Util;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class CellRangeAddressExtension
     {
         public static CellRangeAddress Clone(this CellRangeAddress range)

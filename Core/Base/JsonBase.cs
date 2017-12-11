@@ -9,9 +9,6 @@
     using System.Web.Mvc;
     using Newtonsoft.Json;
         
-    /// <summary>
-    /// JSON class for render JSON to output stream.
-    /// </summary>
     public class JsonBase : ActionResult
     {
         public JsonBase()
@@ -29,24 +26,14 @@
             this.Settings = settings;
         }
 
-        /// <summary>Gets or sets the serializer settings.</summary>
-        /// <value>System.Object object.</value>
         public JsonSerializerSettings Settings { get; set; }
 
-        /// <summary>Gets or sets the encoding of the response.</summary>
-        /// <value>System.Object object.</value>
         public Encoding ContentEncoding { get; set; }
 
-        /// <summary>Gets or sets the content type for the response.</summary>
-        /// <value>System.Object object.</value>
         public string ContentType { get; set; }
 
-        /// <summary>Gets or sets the body of the response.</summary>
-        /// <value>System.Object object.</value>
         public object ResponseBody { get; set; }
 
-        /// <summary>Gets the formatting types depending on whether we are in debug mode.</summary>
-        /// <value>System.Object object.</value>
         private Formatting Formatting
         {
             get
@@ -55,10 +42,6 @@
             }
         }
 
-        /// <summary>
-        /// Serializes the response and writes it out to the response object.
-        /// </summary>
-        /// <param name="context">The execution context.</param>
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)
@@ -68,7 +51,6 @@
 
             var response = context.HttpContext.Response;
 
-            // set content type
             if (!response.IsRequestBeingRedirected)
             {
                 if (!string.IsNullOrEmpty(this.ContentType))
@@ -81,7 +63,6 @@
                 }
             }
 
-            // set content encoding
             if (this.ContentEncoding != null)
             {
                 response.ContentEncoding = this.ContentEncoding;

@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Personal information object.
-    /// </summary>
     public class PersonalInfo : DownlineList
     {
         public PersonalInfo()

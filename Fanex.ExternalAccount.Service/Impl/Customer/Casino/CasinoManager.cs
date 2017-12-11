@@ -9,9 +9,6 @@
     using Fanex.ExternalAccount.DTO.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
     
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>    
     public class CasinoManager
     {
         private const int Super = 4;
@@ -30,20 +27,11 @@
             }
         }
 
-        /// <summary>
-        /// Gets language of field name.
-        /// </summary>
-        /// <param name="original">Field name.</param>
-        /// <returns>String object.</returns>
         public static string Lang(string original)
         {
             return original + "_En";
         }
 
-        /// <summary>
-        /// Gets game kind detail.
-        /// </summary>
-        /// <returns>GameKindDetail object.</returns>
         public List<GameKindDetail> GetGameKinds()
         {
             var gameKinds = new List<GameKindDetail>();
@@ -62,29 +50,11 @@
             return gameKinds;
         }
 
-        /// <summary>
-        /// Gets casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <returns>Boolean object.</returns>
         public bool GetCasinoStatus(int custid)
         {
             return this._casino.GetCasinoStatus(custid);
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <param name="username">Username of customer.</param>
-        /// <param name="subUsername">Sub-username of customer.</param>
-        /// <returns>Boolean object.</returns>
         public bool UpdateCSStatus(
             int custid,
             bool syncCS,
@@ -99,20 +69,6 @@
             return this._casino.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang, username, subUsername);
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="isUpdDownline">Update down-line status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <param name="username">Username of customer.</param>
-        /// <param name="subUsername">Sub-username of customer.</param>
-        /// <returns>Boolean object.</returns>
         public bool UpdateCSStatus(
             int custid, 
             bool syncCS, 
@@ -129,21 +85,6 @@
             return this.UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username, subUsername, out errMsg);
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="isUpdDownline">Update down-line status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <param name="username">Username of customer.</param>
-        /// <param name="subUsername">Sub-username of customer.</param>
-        /// <param name="errMsg">Error message.</param>
-        /// <returns>Boolean object.</returns>
         public bool UpdateCSStatus(
             int custid, 
             bool syncCS, 
@@ -167,18 +108,6 @@
             return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId, subAccId == 0 ? username : subUsername, 3);
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="isUpdDownline">Update down-line status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <returns>Boolean object.</returns>
         public bool UpdateCSStatusWithoutSync(
             int custid, 
             bool syncCS, 
@@ -193,22 +122,11 @@
             return this.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
         }
 
-        /// <summary>
-        /// Gets customer information.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
         {
             return this._casino.GetCustInfoIBC(custid, uplineId);
         }
 
-        /// <summary>
-        /// Gets game kind details.
-        /// </summary>
-        /// <param name="casinoNo">Casino number.</param>
-        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds(string casinoNo)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -227,11 +145,6 @@
             return gameKinds;
         }
 
-        /// <summary>
-        /// Gets game kind details.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds(int custId)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -273,11 +186,6 @@
             return gameKinds;
         }
 
-        /// <summary>
-        /// Get game kind details.
-        /// </summary>
-        /// <param name="memberId">Member id.</param>
-        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds_EditMember(int memberId)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -302,12 +210,6 @@
             return gameKinds;
         }
 
-        /// <summary>
-        /// Gets game type detail.
-        /// </summary>
-        /// <param name="memberId">Member id.</param>
-        /// <param name="gameKindID">Game kind id.</param>
-        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameTypes_EditMember(int memberId, int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -333,11 +235,6 @@
             return gameTypes;
         }
 
-        /// <summary>
-        /// Gets game type.
-        /// </summary>
-        /// <param name="gameKindID">Game kind id.</param>
-        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameType(int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -362,12 +259,6 @@
             return gameTypes;
         }
 
-        /// <summary>
-        /// Gets game type detail.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="gameKindID">Game kind id.</param>
-        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameType(int custId, int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -409,11 +300,6 @@
             return gameTypes;
         }
 
-        /// <summary>
-        /// Gets game kind member by master.
-        /// </summary>
-        /// <param name="memberid">Member id.</param>
-        /// <returns>List game kind detail.</returns>
         public List<GameKindDetail> GetGameKinds_MasterEditMember(int memberid)
         {
             var gameKinds = new List<GameKindDetail>();
@@ -442,12 +328,6 @@
             return gameKinds;
         }
 
-        /// <summary>
-        /// Gets game type detail by master.
-        /// </summary>
-        /// <param name="memberid">Member id.</param>
-        /// <param name="gameKindID">Game kind id.</param>
-        /// <returns>List game type detail.</returns>
         public List<GameTypeDetail> GetGameTypes_MasterEditMember(int memberid, int gameKindID)
         {
             var gameTypes = new List<GameTypeDetail>();
@@ -476,12 +356,6 @@
             return gameTypes;
         }
 
-        /// <summary>
-        /// Gets customer stake level.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="gameTypeID">Game type id.</param>
-        /// <returns>List stake level detail.</returns>
         public List<StakeLevelDetail> GetCustStakeLevels(int custId, int gameTypeID)
         {
             var stakeLevels = new List<StakeLevelDetail>();
@@ -499,12 +373,6 @@
             return stakeLevels;
         }
 
-        /// <summary>
-        /// Gets game type by stake level.
-        /// </summary>
-        /// <param name="gameTypeID">Game type id.</param>
-        /// <param name="currencyId">Currency id.</param>
-        /// <returns>List stake level detail.</returns>
         public List<StakeLevelDetail> GetGameTypeStakeLevels(int gameTypeID, int currencyId)
         {
             var stakeLevels = new List<StakeLevelDetail>();
@@ -522,11 +390,6 @@
             return stakeLevels;
         }
 
-        /// <summary>
-        /// Gets casino setting.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>CasinoCustomer object.</returns>
         public CasinoCustomer GetCustSettingCS(int custId)
         {
             var cust = new Customer();
@@ -548,7 +411,6 @@
                 custSetting.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
                 custSetting.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
 
-                // Get max transfer information
                 if (custSetting.UpperCustID != 0)
                 {
                     var dt2 = cust.GetDefaultMaxTransfer(custSetting.UpperCustID, 0, false);
@@ -564,10 +426,6 @@
             return custSetting;
         }
 
-        /// <summary>
-        /// Gets customer setting.
-        /// </summary>
-        /// <param name="custIBC">Customer id.</param>
         public void GetCustSettingCS(ref CasinoCustomer custIBC)
         {
             var cust = new Customer();
@@ -591,7 +449,6 @@
                 custIBC.UpperCustID = Utils.ToInt32(row["UpperCustId"]);
                 custIBC.IsAutoReset = Utils.ToBoolean(row["IsAutoReset"]);
 
-                // Get max transfer information
                 if (custIBC.UpperCustID != 0)
                 {
                     var dt2 = cust.GetDefaultMaxTransfer(custIBC.UpperCustID, 0, false);
@@ -605,19 +462,6 @@
             }
         }
                        
-        /// <summary>
-        /// Inserts casino setting.
-        /// </summary>
-        /// <param name="customerInfo">Customer information object.</param>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <param name="modifiedDate">Modify date.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="modifiedId">Modify id.</param>
-        /// <param name="modifiedBy">Modify name.</param>
-        /// <param name="fromSystem">From system.</param>
-        /// <param name="enableBonus">Enable bonus.</param>
-        /// <param name="enableJackpot">Enable Jack Pot.</param>
-        /// <returns>Boolean object.</returns>
         private bool InsertSetting(
             CasinoCustomer customerInfo, 
             int roleId,
@@ -666,19 +510,6 @@
                     customerInfo.IsDisableAutoMPT);
         }
 
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="syncCS">Synchronize casino status.</param>
-        /// <param name="disabledCS">Disabled casino status.</param>
-        /// <param name="isUpdDownline">Update down-line status.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="lang">Language to get information.</param>
-        /// <param name="errMsg">Error message.</param>        
-        /// <returns>Boolean object.</returns>
         private bool DoUpdateCSStatusWithoutSync(
             int custid, 
             bool syncCS, 
@@ -693,11 +524,6 @@
             return this._casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, out errMsg);
         }        
         
-        /// <summary>
-        /// Gets selected stake levels.
-        /// </summary>
-        /// <param name="stakes">List stake level detail.</param>
-        /// <returns>String object.</returns>
         private string SelectedStakeLevels(List<StakeLevelDetail> stakes)
         {
             var selectedLevels = string.Empty;
@@ -710,10 +536,6 @@
             return selectedLevels.EndsWith(",") ? selectedLevels.Substring(0, selectedLevels.Length - 1) : selectedLevels;
         }
 
-        /// <summary>
-        /// Gets game kind data table structure.
-        /// </summary>
-        /// <returns>DataTable object.</returns>
         private DataTable GameKindsDataTableMember()
         {
             var dt = new DataTable();
@@ -736,10 +558,6 @@
             return dt;
         }
 
-        /// <summary>
-        /// Gets game type data table structure.
-        /// </summary>
-        /// <returns>DataTable object.</returns>
         private DataTable GameTypesDataTableMember()
         {
             var dt = new DataTable();
@@ -762,10 +580,6 @@
             return dt;
         }
 
-        /// <summary>
-        /// Gets game kind data table structure.
-        /// </summary>
-        /// <returns>DataTable object.</returns>
         private DataTable GameKindsDataTable()
         {
             var dt = new DataTable();
@@ -796,10 +610,6 @@
             return dt;
         }
 
-        /// <summary>
-        /// Gets game type data table structure.
-        /// </summary>
-        /// <returns>DataTable object.</returns>
         private DataTable GameTypesDataTable()
         {
             var dt = new DataTable();
@@ -831,10 +641,6 @@
             return dt;
         }
 
-        /// <summary>
-        /// Gets game kind data table structure.
-        /// </summary>
-        /// <returns>DataTable object.</returns>
         private DataTable GameTypesStakesDataTable()
         {
             var dt = new DataTable();

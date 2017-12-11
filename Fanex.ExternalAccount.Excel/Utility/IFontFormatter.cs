@@ -7,9 +7,6 @@
         void Format(IFont font);
     }
 
-    /// <summary>
-    /// Font formatter.
-    /// </summary>
     public class RtfFontFormatter : IFontFormatter
     {
         private string _fontName;

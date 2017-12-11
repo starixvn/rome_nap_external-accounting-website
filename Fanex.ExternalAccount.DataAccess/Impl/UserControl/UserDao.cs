@@ -11,19 +11,10 @@
     using Fanex.ExternalAccount.DTO.UserControl;
     using Logging.Extensions.Database;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class UserDao : DAOBase, IUserDao
     {
         #region IUserDao Members
 
-        /// <summary>
-        /// Gets the list users.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<User> GetListUsers(string userName, int? groupId)
         {
             var result = new List<User>();
@@ -66,11 +57,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets the user by id.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <returns>DTO.User object.</returns>
         public User GetUserById(int userId)
         {
             var result = new User();
@@ -110,14 +96,6 @@
             }
         }
 
-        /// <summary>
-        /// Resets the password.
-        /// </summary>
-        /// <param name="adminId">The admin id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result ResetPassword(int adminId, int userId, string password, string ip)
         {
             var result = new DTO.Result();
@@ -144,17 +122,6 @@
             }
         }
 
-        /// <summary>
-        /// Creates the user.
-        /// </summary>
-        /// <param name="adminId">The admin id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastName">The last name.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result CreateUser(int adminId, string userName, string password, string firstName, string lastName, int groupId, string ip)
         {
             var custId = 0;
@@ -185,16 +152,6 @@
             }
         }
 
-        /// <summary>
-        /// Edits the user.
-        /// </summary>
-        /// <param name="adminId">The admin id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastName">The last name.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_UserInfoUpdAll"))
@@ -221,14 +178,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates the status.
-        /// </summary>
-        /// <param name="adminId">The admin id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="active">If set to <c>true</c> [active].</param>
-        /// <param name="ip">The IP address.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result UpdateStatus(int adminId, int userId, bool active, string ip)
         {
             using (var db = new ObjectDb("EAS_UserInfoUpdStatus"))
@@ -253,14 +202,6 @@
             }
         }
 
-        /// <summary>
-        /// Creates the exist user.
-        /// </summary>
-        /// <param name="adminId">The admin id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result CreateExistUser(int adminId, string userName, int groupId, string ip)
         {
             using (var db = new ObjectDb("EAS_UserInfoAddExistingUser"))
@@ -286,11 +227,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets the user function.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetUserFunction(int userId)
         {
             using (var db = new ObjectDb("EAS_UserPolicySel"))
@@ -332,15 +268,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates the user policy.
-        /// </summary>
-        /// <param name="adminId">The admin id.</param>
-        /// <param name="userId">The user id.</param>
-        /// <param name="oldPolicy">The old policy.</param>
-        /// <param name="policy">The policy.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
         {
             using (var db = new ObjectDb("EAS_UserPolicyUpd"))

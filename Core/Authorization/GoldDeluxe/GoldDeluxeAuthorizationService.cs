@@ -6,9 +6,6 @@
     using Fanex.GoldDeluxe.CoreSetting.Enumerations;
     using Fanex.GoldDeluxe.CoreSetting.Services;
 
-    /// <summary>
-    /// Gold Deluxe authentication.
-    /// </summary>
     public class GoldDeluxeAuthorizationService : IGoldDeluxeAuthorizationService
     {
         private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();

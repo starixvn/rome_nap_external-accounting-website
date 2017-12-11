@@ -14,9 +14,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// Report controller.
-    /// </summary>
     public class DailyWinlossController : BaseController
     {
         #region Init DailyWinLoss
@@ -44,10 +41,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets daily win loss page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GetDailyWinLoss()
@@ -77,9 +70,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
         }
 
-        /// <summary>
-        /// Exports excel.
-        /// </summary>
         public void GetExportToExcel()
         {
             this.GetRequestPage();
@@ -114,10 +104,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
             this._winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
         }
 
-        /// <summary>
-        /// Checks input customer values.
-        /// </summary>
-        /// <returns>Boolean object.</returns>
         private bool CheckSearchCustomer()
         {
             if (!string.IsNullOrWhiteSpace(this._username))
@@ -138,10 +124,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
             return true;
         }
 
-        /// <summary>
-        /// Search daily win loss.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         private ActionResult GetDailyWinLossSearch()
         {
             if (!this.CheckSearchCustomer())
@@ -194,10 +176,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
             }
         }
 
-        /// <summary>
-        /// Gets daily win loss of down-line.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         private ActionResult GetDailyWinLossDownline()
         {
             if (this._viewlevel == 4)

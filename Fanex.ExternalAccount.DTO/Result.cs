@@ -2,9 +2,6 @@
 {
     using System;
 
-    /// <summary>
-    /// Result class.
-    /// </summary>
     public class Result
     {
         public Result(object errCode = null, object errMsg = null, object resultData = null)

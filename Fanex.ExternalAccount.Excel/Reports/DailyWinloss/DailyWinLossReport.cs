@@ -6,9 +6,6 @@
     using NPOI.SS.UserModel;
     using Utility;
 
-    /// <summary>
-    /// Daily win loss report.
-    /// </summary>
     internal class DailyWinLossReport : TemplateReport, IReportBuilder
     {
         private readonly DailyWinLossReportBuilder _builder;
@@ -19,10 +16,6 @@
             _builder = builder;
         }
 
-        /// <summary>
-        /// Builds workbook.
-        /// </summary>
-        /// <returns>HSSFWorkbook object.</returns>
         public HSSFWorkbook Build()
         {
             var data = _builder.Data;
@@ -52,14 +45,6 @@
             return HssfWorkbook;
         }
 
-        /// <summary>
-        /// Writes cells of workbook.
-        /// </summary>
-        /// <param name="resultSheet">ISheet of result data.</param>
-        /// <param name="templateSheet">ISheet of template data.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id of workbook.</param>
-        /// <param name="id">Order id of row.</param>
         private void WriteCells(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int id)
         {
             List<object> values;
@@ -99,14 +84,6 @@
             WriteTotal(ref resultSheet, ref templateSheet, rowId, colId, lastColumnIndex);
         }
 
-        /// <summary>
-        /// Writes total cells of workbook.
-        /// </summary>
-        /// <param name="resultSheet">ISheet of result data.</param>
-        /// <param name="templateSheet">ISheet of template data.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id of workbook.</param>
-        /// <param name="lastColumnIndex">Order id of last column.</param>
         private void WriteTotal(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int lastColumnIndex)
         {
             var data = _builder.Data;

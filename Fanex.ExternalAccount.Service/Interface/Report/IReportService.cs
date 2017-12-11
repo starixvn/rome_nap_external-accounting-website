@@ -6,9 +6,6 @@
     using System.Data;
     using Fanex.ExternalAccount.DTO.Report;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface IReportService
     {
         DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);

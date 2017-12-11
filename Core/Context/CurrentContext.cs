@@ -13,9 +13,6 @@
     using Fanex.CustomerSetting.IP.Utils;
     using Fanex.CustomerSetting.Module.Core.Web;
 
-    /// <summary>
-    /// Current context of session.
-    /// </summary>
     public class CurrentContext : ICurrentContext
     {
         private readonly string[] custIdNames = new string[] { "custId", "customerId" };

@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class Function
     {
         public int FuncID { get; set; }

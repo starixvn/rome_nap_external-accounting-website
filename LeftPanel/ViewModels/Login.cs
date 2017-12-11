@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// Login object.
-    /// </summary>
     public class Login : OnlineInfo
     {
         public ObjectInfo Site { get; set; }

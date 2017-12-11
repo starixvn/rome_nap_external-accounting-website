@@ -18,17 +18,8 @@
     using Fanex.ExternalAccount.Utilities;
     using Logging.Extensions.Database;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class LeftPanelDao : ILeftPanelDao
     {
-        /// <summary>
-        /// Gets customer info.
-        /// </summary>
-        /// <param name="username">Customer username.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>DataSet object.</returns>
         public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
             var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
@@ -47,13 +38,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Update given credit.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="newGivenCredit">New given credit.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdCredit"))
@@ -81,13 +65,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets down-line list.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="pageSize">Page size.</param>
-        /// <param name="pageIndex">Page index.</param>
-        /// <returns>DBResult object.</returns>
         public DbResult GetDownlineList(int custid, int pageSize, int pageIndex)
         {
             DbResult rs = null;
@@ -96,7 +73,7 @@
             param.Add("custid", custid);
             param.Add("pagesize", pageSize);
             param.Add("pageindex", pageIndex);
-            param.Add("totalpages", 0); // 0: Paging
+            param.Add("totalpages", 0);   
 
             rs = DbHelper.ExecuteDbResult("Acc_CustomerSelList", param);
 
@@ -113,12 +90,6 @@
             return rs.ResultSet.Tables[0].Rows;
         }
 
-        /// <summary>
-        /// Gets master or agent used credit.
-        /// </summary>
-        /// <param name="custId">Customer id (master or agent).</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>List object.</returns>
         public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
         {
             IList<MasterAgentUsedCreditItem> items = null;
@@ -135,11 +106,6 @@
             return items;
         }
 
-        /// <summary>
-        /// Gets member used credit.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>List object.</returns>
         public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
         {
             IList<MemberUsedCreditItem> items = new List<MemberUsedCreditItem>();
@@ -174,13 +140,6 @@
             return items;
         }
 
-        /// <summary>
-        /// Resets member used credit.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="agentId">Upper customer id.</param>
-        /// <param name="closedOnly">Indicates whether or not reset closed member only.</param>
-        /// <returns>List object.</returns>
         public Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
@@ -210,14 +169,6 @@
             }
         }        
 
-        /// <summary>
-        /// Clears balance.
-        /// </summary>
-        /// <param name="custId">From customer id.</param>
-        /// <param name="custIds">To customer ids.</param>
-        /// <param name="isCheckedAll">Boolean status.</param>
-        /// <param name="ip">IP address.</param>
-        /// <returns>Result object.</returns>
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerInsClearBalance"))
@@ -272,14 +223,6 @@
             }
         }
 
-        /// <summary>
-        /// Closes a customer.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="close">Close or not.</param>
-        /// <param name="clearCredit">Clear credit or not.</param>
-        /// <param name="custName">Customer username.</param>
-        /// <returns>Result object.</returns>
         public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdClosed", 600))
@@ -314,12 +257,6 @@
             }
         }
 
-        /// <summary>
-        /// Suspends a customer.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="suspend">Suspended or not.</param>
-        /// <returns>Result object.</returns>
         public Result SuspendCustomer(int custId, bool suspend)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdSuspended"))
@@ -348,12 +285,6 @@
             }
         }
 
-        /// <summary>
-        /// Allows outright for customer.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="allow">Allow or not.</param>
-        /// <returns>Result object.</returns>
         public Result AllowOutright(int custId, bool allow)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
@@ -382,15 +313,6 @@
             }
         }
                 
-        /// <summary>
-        /// Enable casino status.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-line or not.</param>
-        /// <param name="sync">Synchronize or not.</param>
-        /// <param name="custName">Customer username.</param>
-        /// <returns>Result object.</returns>
         public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName)
         {
             var result = CasinoManager.Instance.UpdateCSStatus(
@@ -408,13 +330,6 @@
             return new Result(result ? 0 : 1, result ? string.Empty : "Update casino status failed");
         }
 
-        /// <summary>
-        /// Enables number game.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enables or not.</param>
-        /// <param name="enableDownline">Enables down-line or not.</param>
-        /// <returns>Result object.</returns>
         public Result EnableNumberGame(int id, bool enable, bool enableDownline)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
@@ -444,13 +359,6 @@
             }
         }
 
-        /// <summary>
-        /// Enables Live casino.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enables or not.</param>
-        /// <param name="enableDownline">Enables down-line or not.</param>
-        /// <returns>Result object.</returns>
         public Result EnableLiveCasino(int id, bool enable, bool enableDownline)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
@@ -480,13 +388,6 @@
             }
         }
 
-        /// <summary>
-        /// Enables e-sports.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enables or not.</param>
-        /// <param name="enableDownline">Enables down-line or not.</param>
-        /// <returns>Result object.</returns>
         public Result EnableESports(int id, bool enable, bool enableDownline)
         {
             Hashtable param = new Hashtable();
@@ -516,12 +417,6 @@
             }
         }
 
-        /// <summary>
-        /// Allows master auto PT.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="allow">Allow or not.</param>
-        /// <returns>Result object.</returns>
         public Result AutoMasterPT(int id, bool allow)
         {
             var param = new Hashtable();
@@ -550,13 +445,6 @@
             }
         }
 
-        /// <summary>
-        /// Resets security code.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="code">Security code.</param>
-        /// <param name="force">Force change or not.</param>
-        /// <returns>Result object.</returns>
         public Result ResetSecurityCode(int id, string code, bool force)
         {
             Hashtable outputParams = new Hashtable();
@@ -586,13 +474,6 @@
             }
         }
 
-        /// <summary>
-        /// Enables HR Fixed Odds.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-line or not.</param>
-        /// <returns>Result object.</returns>
         public Result EnableHRFixedOdds(int id, bool enable, bool enableDownline)
         {
             Hashtable param = new Hashtable();
@@ -624,11 +505,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets master used credit.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>List object.</returns>
         private IList<MasterAgentUsedCreditItem> MasterUsedCreditItems(int custId)
         {
             IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
@@ -661,11 +537,6 @@
             return items;
         }
 
-        /// <summary>
-        /// Gets agent used credit.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>List object.</returns>
         private IList<MasterAgentUsedCreditItem> AgentUsedCreditItems(int custId)
         {
             IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
@@ -698,12 +569,6 @@
             return items;
         }
 
-        /// <summary>
-        /// Clears customer credit.
-        /// </summary>
-        /// <param name="userId">Customer id.</param>
-        /// <param name="username">Customer username.</param>
-        /// <returns>Result object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         private Result ClearCredit(int userId, string username = null)
         {
@@ -732,14 +597,6 @@
             }
         }
 
-        /// <summary>
-        /// Update Gold Deluxe status.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-line or not.</param>
-        /// <param name="custName">Customer username.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
         {
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 600))

@@ -3,9 +3,6 @@
     using System.Web.Mvc;
     using Newtonsoft.Json;
 
-    /// <summary>
-    /// Extension for controller.
-    /// </summary>
     public static class ControllerExtentions
     {
         public static JsonBase JsonExt(this Controller controller, object data, JsonSerializerSettings settings = null)

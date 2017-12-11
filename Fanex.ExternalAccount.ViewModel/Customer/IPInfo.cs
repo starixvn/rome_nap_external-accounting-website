@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
-    /// <summary>
-    /// IP information.
-    /// </summary>
     public class IPInfo
     {
         public string IP { get; set; }

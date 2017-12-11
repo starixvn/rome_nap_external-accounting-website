@@ -9,19 +9,8 @@
     using Logging.Extensions.Database;
     using Sunplus.Libraries.APILogger;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CasinoAPILogger : IAPILogger
     {
-        /// <summary>
-        /// Write log.
-        /// </summary>
-        /// <param name="actionId">Action ID.</param>
-        /// <param name="functionName">Function Name.</param>
-        /// <param name="strackingValue">Tracking Value.</param>
-        /// <param name="returnValue">Return Value.</param>
-        /// <param name="returnCode">Error Code.</param>
         public void Write(int actionId, string functionName, string strackingValue, string returnValue, int returnCode)
         {
             var param = new Hashtable();

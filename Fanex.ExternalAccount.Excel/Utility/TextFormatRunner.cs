@@ -3,9 +3,6 @@
     using System.Diagnostics;
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Text format checker.
-    /// </summary>
     public static class TextFormatRunner
     {
         public static IRichTextString Run(RtfTextRender renderer, ITextFormat value)

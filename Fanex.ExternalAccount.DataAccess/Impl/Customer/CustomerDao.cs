@@ -11,24 +11,12 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CustomerDao : DAOBase, ICustomerDao
     {
         #region ICustomerDao Members
 
         #region Search&Copy
 
-        /// <summary>
-        /// Checks belonging username.
-        /// </summary>
-        /// <param name="userName">Username to check.</param>
-        /// <param name="uplineId">Id of upper user.</param>
-        /// <param name="custId">Id of customer.</param>
-        /// <param name="isSubAcc">Output to identify whether or not this customer is a sub-account.</param>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>Boolean object.</returns>
         public bool IsValidUsername(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
         {
             custId = 0;
@@ -49,11 +37,6 @@
         }
         #endregion
 
-        /// <summary>
-        /// Gets user information.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>Customer object.</returns>
         public Customer UserInfo(int custId)
         {
             var param = new Hashtable();
@@ -83,22 +66,6 @@
             }
         }
 
-        /// <summary>
-        /// Edits user information.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="firstName">First name.</param>
-        /// <param name="lastName">Last name.</param>
-        /// <param name="homePhone">Home phone.</param>
-        /// <param name="mobilePhone">Mobile phone.</param>
-        /// <param name="email">Email address.</param>
-        /// <param name="fax">Fax number.</param>
-        /// <param name="remark">Customer remark.</param>
-        /// <param name="ip">IP information.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="language">Language to get data.</param>
-        /// <returns>Result object.</returns>
         public Result EditUserInfo(
             int custId,
             string firstName,
@@ -135,13 +102,6 @@
             return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
 
-        /// <summary>
-        /// Resets password.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="password">Password characters.</param>
-        /// <param name="request">Request object.</param>
-        /// <returns>Result object.</returns>
         public Result ResetPassword(int custId, string password, DTO.Request request)
         {
             var param = new Hashtable();
@@ -160,13 +120,6 @@
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
         }
 
-        /// <summary>
-        /// Config double commission.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="allow">Allow double commission or not.</param>
-        /// <param name="request">Request object.</param>
-        /// <returns>Result object.</returns>
         public Result ConfigDoubleComm(int custId, bool allow, DTO.Request request)
         {
             var param = new Hashtable();

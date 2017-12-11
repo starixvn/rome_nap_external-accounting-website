@@ -9,9 +9,6 @@
     using NPOI.SS.UserModel;
     using Utility;
 
-    /// <summary>
-    /// Customer list.
-    /// </summary>
     internal class CustomerListPage : TemplateReport, IReportBuilder
     {
         private static CustomerListPageBuilder _builder;
@@ -22,10 +19,6 @@
             _builder = builder;
         }
 
-        /// <summary>
-        /// Build workbook.
-        /// </summary>
-        /// <returns>HSSFWorkbook object.</returns>
         public HSSFWorkbook Build()
         {
             var data = _builder.Data;
@@ -50,7 +43,6 @@
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
-            // content
             rowId = 3;
             int id = 1;
 
@@ -78,17 +70,6 @@
             return this.HssfWorkbook;
         }
 
-        /// <summary>
-        /// Gets member list.
-        /// </summary>
-        /// <param name="templateSheet">Template sheet.</param>
-        /// <param name="resultSheet">Result sheet.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id.</param>
-        /// <param name="id">Customer id.</param>
-        /// <param name="dtr">Data rows.</param>
-        /// <param name="values">Object values.</param>
-        /// <param name="lastColumnIndex">Last column index.</param>
         private static void GetMemberList(
             ISheet templateSheet, 
             ISheet resultSheet, 
@@ -140,17 +121,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets other list.
-        /// </summary>
-        /// <param name="templateSheet">Template sheet.</param>
-        /// <param name="resultSheet">Result sheet.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id.</param>
-        /// <param name="id">Customer id.</param>
-        /// <param name="dtr">Data rows.</param>
-        /// <param name="values">Object values.</param>
-        /// <param name="lastColumnIndex">Last column index.</param>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static void GetOtherList(
             ISheet templateSheet, 
@@ -232,17 +202,6 @@
             }
         }
 
-        /// <summary>
-        /// Sets background row.
-        /// </summary>
-        /// <param name="templateSheet">Template sheet.</param>
-        /// <param name="resultSheet">Result sheet.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id.</param>
-        /// <param name="lastColumnIndex">Last column index.</param>
-        /// <param name="custStatus">Customer status.</param>
-        /// <param name="items">Data rows.</param>
-        /// <returns>String object.</returns>
         private static string SetBackgroundRow(
             ISheet templateSheet, 
             ISheet resultSheet, 

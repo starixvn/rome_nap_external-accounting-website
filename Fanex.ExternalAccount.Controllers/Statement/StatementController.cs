@@ -16,9 +16,6 @@
     using Fanex.ExternalAccount.Service.Interface.Statement;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// Statement controller.
-    /// </summary>
     public class StatementController : BaseController
     {
         #region Init Statement
@@ -51,10 +48,6 @@
             this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
         }
 
-        /// <summary>
-        /// Gets statement page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Statement, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GetStatement()
@@ -70,15 +63,11 @@
             }
         }
 
-        /// <summary>
-        /// Exports excel.
-        /// </summary>
         public void GetExportToExcel()
         {
             this.GetRequestPage();
             if (this._custId > 0 && this.IsBelong(this._groupname, this._custId, null, true))
             {
-                // Expired Cache
                 if (!Config.IsCache || this._cache.Get<List<Statement>>(this._cacheList) == null)
                 {
                     this.GetStatement();

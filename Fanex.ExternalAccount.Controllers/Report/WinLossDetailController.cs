@@ -19,9 +19,6 @@
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// Report controller.
-    /// </summary>
     public class WinLossDetailController : BaseController
     {
         #region Init WinLossDetail
@@ -61,9 +58,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets request parameters.
-        /// </summary>
         public void GetRequestPage()
         {
             this._products = string.Empty;
@@ -115,11 +109,6 @@
             _productIds = string.Join(",", _formatedProductIds);
         }
 
-        /// <summary>
-        /// Gets report data.
-        /// </summary>
-        /// <param name="viewLevel">Current level of customer.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GetData(int viewLevel = 0)
@@ -164,9 +153,6 @@
             }
         }
 
-        /// <summary>
-        /// Exports excel.
-        /// </summary>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public void GetExportToExcelWinLossDetail()
         {
@@ -180,7 +166,6 @@
             {
                 if (this._viewlevel == 1)
                 {
-                    // Expired Cache
                     if (!Config.IsCache || this._cache.Get<List<WinLossDetailAg>>(this._cacheList) == null)
                     {
                         getNew = true;
@@ -204,7 +189,6 @@
                 }
                 else if (this._viewlevel == 2)
                 {
-                    // Expired Cache
                     if (!Config.IsCache || this._cache.Get<List<WinLossDetailMAg>>(this._cacheList) == null)
                     {
                         getNew = true;
@@ -228,7 +212,6 @@
                 }
                 else
                 {
-                    // Expired Cache
                     if (!Config.IsCache || this._cache.Get<List<WinLossDetail>>(this._cacheList) == null)
                     {
                         getNew = true;
@@ -254,10 +237,6 @@
             }
         }
 
-        /// <summary>
-        /// Checks input customer values.
-        /// </summary>
-        /// <returns>Boolean object.</returns>
         private bool CheckSearchCustomer()
         {
             if (!string.IsNullOrWhiteSpace(this._username))
@@ -278,10 +257,6 @@
             return true;
         }
 
-        /// <summary>
-        /// Search data.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private ActionResult GetWinLossDetailSearch()
         {
@@ -401,10 +376,6 @@
             }
         }
 
-        /// <summary>
-        /// Search down-line data.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         private ActionResult GetWinLossDetailDownline()
         {
             if (this._viewlevel == 4)

@@ -6,19 +6,8 @@
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class HSSFSheetExtension
     {
-        /// <summary>
-        /// Copies rows.
-        /// </summary>
-        /// <param name="sheet">Worksheet object.</param>
-        /// <param name="sourceSheet">Worksheet source.</param>
-        /// <param name="sourceRowNum">Row number.</param>
-        /// <param name="destinateRowNum">Destination row number.</param>
-        /// <param name="total">Total rows.</param>
         public static void CopyRows(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum, int total)
         {
             if (total <= 0)
@@ -32,15 +21,6 @@
             }
         }
 
-        /// <summary>
-        /// Copies rows.
-        /// </summary>
-        /// <param name="sheet">Worksheet object.</param>
-        /// <param name="sourceSheet">Worksheet source.</param>
-        /// <param name="sourceRowNum">Row number.</param>
-        /// <param name="destinateRowNum">Destination row number.</param>
-        /// <param name="firstColumn">First column index.</param>
-        /// <param name="lastColumn">Last column index.</param>
         public static void CopyRow(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum, int firstColumn, int lastColumn)
         {
             if (sheet.LastRowNum < destinateRowNum)
@@ -112,11 +92,6 @@
             }
         }
 
-        /// <summary>
-        /// Remove column from worksheet.
-        /// </summary>
-        /// <param name="sheet">Worksheet object.</param>
-        /// <param name="columnIndex">Column index.</param>
         public static void RemoveColumn(this ISheet sheet, int columnIndex)
         {
             int maxColumn = 0;
@@ -155,14 +130,6 @@
             return sheet.AddMergedRegion(rangeAddress);
         }
 
-        /// <summary>
-        /// Removes merge regions.
-        /// </summary>
-        /// <param name="sheet">Worksheet object.</param>
-        /// <param name="firstRow">First row index.</param>
-        /// <param name="firstCol">First column index.</param>
-        /// <param name="lastRow">Last row index.</param>
-        /// <param name="lastCol">Last column index.</param>
         public static void RemoveMergedRegions(this ISheet sheet, int firstRow, int firstCol, int lastRow, int lastCol)
         {
             for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
@@ -176,15 +143,6 @@
             }
         }
 
-        /// <summary>
-        /// Creates a cell value.
-        /// </summary>
-        /// <param name="sheet">Worksheet object.</param>
-        /// <param name="rowId">Row id of worksheet.</param>
-        /// <param name="colId">Column id of worksheet.</param>
-        /// <param name="rowSpan">Row span of column.</param>
-        /// <param name="colSpan">Column span of row.</param>
-        /// <returns>ICell object.</returns>
         public static ICell CreateCell(this ISheet sheet, int rowId, int colId, int rowSpan, int colSpan)
         {
             Debug.Assert(rowSpan >= 0, "rowSpan must be more than or equal 0");
@@ -207,13 +165,6 @@
             return cell;
         }
 
-        /// <summary>
-        /// Creates a cell values.
-        /// </summary>
-        /// <param name="sheet">Worksheet object.</param>
-        /// <param name="rowId">Row id of worksheet.</param>
-        /// <param name="colId">Column id of worksheet.</param>
-        /// <returns>ICell object.</returns>
         public static ICell CreateCell(this ISheet sheet, int rowId, int colId)
         {
             IRow row = sheet.GetRow(rowId);
@@ -231,11 +182,6 @@
             return cell;
         }
 
-        /// <summary>
-        /// Clones a cell.
-        /// </summary>
-        /// <param name="newCell">New cell value.</param>
-        /// <param name="oldCell">Old cell value.</param>
         private static void CloneCell(ICell newCell, ICell oldCell)
         {
             if (oldCell.CellComment != null)
@@ -279,14 +225,6 @@
             }
         }
 
-        /// <summary>
-        /// Sets column width.
-        /// </summary>
-        /// <param name="sheet">ISheet object.</param>
-        /// <param name="columnIndex">Column index.</param>
-        /// <param name="lastColumn">Last column index.</param>
-        /// <param name="row">IRow object.</param>
-        /// <param name="adjustColumn">Is adjusted column constant.</param>
         private static void SetColumnWidth(ref ISheet sheet, ref int columnIndex, ref int lastColumn, ref IRow row, ref bool adjustColumn)
         {
             for (int x = columnIndex; x < lastColumn; x++)
@@ -322,12 +260,6 @@
             }
         }
 
-        /// <summary>
-        /// Merges columns.
-        /// </summary>
-        /// <param name="sheet">ISheet object.</param>
-        /// <param name="columnIndex">Column index.</param>
-        /// <param name="rowIndex">Row index.</param>
         private static void MergeColumn(ref ISheet sheet, ref int columnIndex, ref int rowIndex)
         {
             for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)

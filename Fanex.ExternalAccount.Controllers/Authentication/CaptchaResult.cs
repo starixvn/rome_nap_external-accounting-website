@@ -6,16 +6,8 @@
     using System.Web.Mvc;
     using Fanex.ExternalAccount.Core.Context;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CaptchaResult
     {
-        /// <summary>
-        /// Execute result.
-        /// </summary>
-        /// <param name="context">ControllerContext object.</param>
-        /// <returns>String object.</returns>
         public string GetValiationImage(ControllerContext context)
         {
             var bmp = new Bitmap(100, 30);
@@ -34,11 +26,6 @@
             return img;
         }
 
-        /// <summary>
-        /// Gets captcha string.
-        /// </summary>
-        /// <param name="length">Length of captcha.</param>
-        /// <returns>String object.</returns>
         public string GetCaptchaString(int length)
         {
             var varZero = '0';

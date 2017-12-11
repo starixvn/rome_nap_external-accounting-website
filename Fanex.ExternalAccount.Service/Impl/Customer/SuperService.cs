@@ -6,25 +6,12 @@
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class SuperService : CustomerService, ISuperService
     {
         private readonly ISuperDao _dao = new SuperDao();
 
         #region IDataService Members
 
-        /// <summary>
-        /// Gets super list.
-        /// </summary>
-        /// <param name="recommend">Super agent id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>DataTable object.</returns>
         public System.Data.DataTable GetData(
             int? userId,
             int? recommend = null, 

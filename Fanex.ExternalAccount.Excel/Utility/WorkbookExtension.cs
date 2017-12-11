@@ -2,9 +2,6 @@
 {
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class WorkbookExtension
     {
         public static ISheet CloneSheet(this IWorkbook workbook, string sourceSheetName, string newSheetName)

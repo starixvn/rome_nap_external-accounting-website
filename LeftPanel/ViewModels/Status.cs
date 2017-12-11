@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// Status object.
-    /// </summary>
     public class Status
     {
         public int TotalActive { get; set; }

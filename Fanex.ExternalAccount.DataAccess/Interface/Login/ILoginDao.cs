@@ -5,9 +5,6 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
 
-    /// <summary>
-    /// ILoginDao interface.
-    /// </summary>
     public interface ILoginDao
     {
         Result Login(string username, string password, string browser, string ip, string domain, string countryCode, string platForm, out int custId);

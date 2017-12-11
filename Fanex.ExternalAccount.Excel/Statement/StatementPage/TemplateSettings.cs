@@ -2,9 +2,6 @@
 {
     using System.Web;
 
-    /// <summary>
-    /// Template setting of statement.
-    /// </summary>
     internal class TemplateSettings
     {
         private string _dir;

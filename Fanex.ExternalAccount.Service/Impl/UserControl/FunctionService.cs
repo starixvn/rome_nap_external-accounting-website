@@ -9,9 +9,6 @@
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// Function service object.
-    /// </summary>
     public class FunctionService : IFunctionService
     {
         private readonly IFunctionDao _funcDao = null;
@@ -23,20 +20,6 @@
 
         #region IFunctionService Members
 
-        /// <summary>
-        /// Creates new function.
-        /// </summary>
-        /// <param name="name">Function name.</param>
-        /// <param name="key">Function key.</param>
-        /// <param name="description">Function description.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentName">Parent name.</param>
-        /// <param name="displayOrder">Display order.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="assignedGroupIDs">Assigned group ids.</param>
-        /// <param name="functionId">Function id.</param>
-        /// <returns>Result object.</returns>
         public Result CreateFunction(
             string name, 
             string key, 
@@ -63,20 +46,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Updates function.
-        /// </summary>
-        /// <param name="id">Function id.</param>
-        /// <param name="name">Function name.</param>
-        /// <param name="description">Function description.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentName">Parent name.</param>
-        /// <param name="displayOrder">Display order.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="oldAssignedGroupIDs">Old assigned group ids.</param>
-        /// <param name="assignedGroupIDs">Assigned group ids.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateFunction(
             int id, 
             string name,
@@ -101,10 +70,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets all functions.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetAllFunctions()
         {
             try
@@ -119,11 +84,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets function policy.
-        /// </summary>
-        /// <param name="funcId">Function id.</param>
-        /// <returns>Function object.</returns>
         public Function GetFunctionPolicy(int funcId)
         {
             try
@@ -138,14 +98,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Updates function status.
-        /// </summary>
-        /// <param name="id">Function id.</param>
-        /// <param name="isTest">Is test function or not.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateStatus(int id, bool isTest, int custId, string ip)
         {
             try

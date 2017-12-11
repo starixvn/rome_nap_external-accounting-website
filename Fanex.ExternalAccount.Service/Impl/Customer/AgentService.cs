@@ -7,24 +7,12 @@
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class AgentService : CustomerService, IAgentService
     {
         private readonly IAgentDao _dao = new AgentDao();
 
         #region IDataService Agents
 
-        /// <summary>
-        /// Gets data for customer.
-        /// </summary>
-        /// <param name="recommend">Agent id of customer.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <returns>DataTable object.</returns>
         public System.Data.DataTable GetData(
             int? userId,
             int? recommend = null, 
@@ -45,11 +33,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets transfer option.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>Transfer object.</returns>
         public Transfer GetTransferOption(int custId)
         {
             try

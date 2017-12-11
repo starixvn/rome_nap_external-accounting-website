@@ -18,9 +18,6 @@
     using Module.NG2.Entities;
     using Module.NG2.Services;
 
-    /// <summary>
-    /// Base class for customer controller.
-    /// </summary>
     public class CustomerBase : BaseController
     {
         private const string CasinoNo = "01";
@@ -68,12 +65,6 @@
 
         #region Casino
 
-        /// <summary>
-        /// Auto insert casino.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <returns>ActionResult object.</returns>
         [NonAction]
         protected CustomerSetting.Module.Core.Models.Result AutoInsertCasinoPost(int custId, int uplineId)
         {
@@ -151,12 +142,6 @@
             return new Module.NG2.Entities.Result();
         }
 
-        /// <summary>
-        /// Gets customer info.
-        /// </summary>
-        /// <param name="custId">Customer Id.</param>
-        /// <param name="groupName">Group Name that user belongs to.</param>
-        /// <returns>CUSTINFO object.</returns>
         protected CustInfo GetCustomerInfo(int custId, string groupName)
         {
             var custInfo = this._report.GetCustomerInfo(groupName, custId, string.Empty, true);

@@ -8,15 +8,8 @@
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
     
-    /// <summary>
-    /// Report controller.
-    /// </summary>
     public partial class FilterController : BaseController
     {
-        /// <summary>
-        /// Gets list of request from filter condition.
-        /// </summary>
-        /// <returns>ICollection object.</returns>
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             var list = new List<KeyValuePair<string, bool>>();
@@ -32,19 +25,11 @@
             return list;
         }
 
-        /// <summary>
-        /// Gets product list.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         public ActionResult ProductsList()
         {
             return this.JsonBase(this.GetProductList(), new Newtonsoft.Json.JsonSerializerSettings());
         }
 
-        /// <summary>
-        /// Gets suggested usernames.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         public ActionResult GetSuggestedUserName()
         {
             string groupName = CheckRequest.GetStringRequest("groupname", string.Empty);

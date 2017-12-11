@@ -4,9 +4,6 @@
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class MinStringLengthAttribute : ValidationAttribute
     {

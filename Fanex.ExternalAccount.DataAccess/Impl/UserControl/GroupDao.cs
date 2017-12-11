@@ -10,17 +10,10 @@
     using Fanex.ExternalAccount.DTO.UserControl;
     using Logging.Extensions.Database;
 
-    /// <summary>
-    /// Group Data object.
-    /// </summary>
     public class GroupDao : DAOBase, IGroupDao
     {
         #region IGroupDao Members
 
-        /// <summary>
-        /// Gets the list group.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Group> GetListGroup()
         {
             var result = new List<Group>();
@@ -54,10 +47,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets all group.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Group> GetAllGroup()
         {
             var result = new List<Group>();
@@ -87,11 +76,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets all group policy.
-        /// </summary>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetAllGroupPolicy(int groupId)
         {
             var result = new List<Function>();
@@ -129,11 +113,6 @@
             return result;
         }
 
-        /// <summary>
-        /// Gets the group by id.
-        /// </summary>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>Group object.</returns>
         public Group GetGroupById(int groupId)
         {
             using (var db = new ObjectDb("EAS_GroupInfoSelByGroupID"))
@@ -164,15 +143,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Creates the group.
-        /// </summary>
-        /// <param name="groupName">Name of the group.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>Result object.</returns>
         public Result CreateGroup(string groupName, string description, int custId, string ip, out int groupId)
         {
             groupId = 0;
@@ -206,15 +176,6 @@
             }
         }
 
-        /// <summary>
-        /// Edits the group.
-        /// </summary>
-        /// <param name="groupName">Name of the group.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>Result object.</returns>
         public Result EditGroup(string groupName, string description, int custId, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_GroupInfoUpd"))
@@ -240,15 +201,6 @@
             }
         }
 
-        /// <summary>
-        /// Edits the group policy.
-        /// </summary>
-        /// <param name="oldGroupPolicy">The old group policy.</param>
-        /// <param name="groupPolicy">The group policy.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="groupId">The group id.</param>
-        /// <returns>Result object.</returns>
         public Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_GroupPolicyUpd"))
@@ -274,12 +226,6 @@
             }
         }
 
-        /// <summary>
-        /// Deletes the group.
-        /// </summary>
-        /// <param name="groupID">The group ID.</param>
-        /// <param name="userId">The user ID.</param>
-        /// <returns>Result object.</returns>
         public Result DeleteGroup(int groupID, int userId)
         {
             using (var db = new ObjectDb("EAS_GroupInfoDel"))

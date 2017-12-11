@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class ProductStatuses
     {
         public ProductStatuses UplineStatuses

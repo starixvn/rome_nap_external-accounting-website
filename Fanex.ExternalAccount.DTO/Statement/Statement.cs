@@ -2,9 +2,6 @@
 {
     using System;
 
-    /// <summary>
-    /// TODO: Summary description.
-    /// </summary>
     public class Statement
     {
         public string AccDate { get; set; }

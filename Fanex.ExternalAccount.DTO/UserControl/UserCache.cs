@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class UserCache
     {
         public List<Menu> MenuList { get; set; }

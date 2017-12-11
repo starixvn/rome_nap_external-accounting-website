@@ -8,9 +8,6 @@
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Statement;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class StatementService : IStatementService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.STATEMENT.BALANCEUPDAY";

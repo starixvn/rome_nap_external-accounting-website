@@ -4,9 +4,6 @@
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Module.Core.Web.App_Start;
     
-    /// <summary>
-    /// Registers area for left panel.
-    /// </summary>
     public class ModuleRegistrator : AppAreaRegistrator 
     {
         protected string ControllerName
@@ -26,10 +23,6 @@
             }
         }
 
-        /// <summary>
-        /// Overrides register area method.
-        /// </summary>
-        /// <param name="context">Context of request.</param>
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(

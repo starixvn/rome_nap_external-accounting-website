@@ -2,9 +2,6 @@
 {
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Defines text block.
-    /// </summary>
     public class TextBlock
     {
         private string _text;

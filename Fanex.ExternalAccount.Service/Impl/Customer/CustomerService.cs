@@ -8,9 +8,6 @@
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerDao _dao = new CustomerDao();
@@ -22,11 +19,6 @@
             return this._dao.IsValidUsername(userName, uplineId, out custId, out isSubAcc, out roleId);
         }
 
-        /// <summary>
-        /// Gets user info.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>Customer object.</returns>
         public Customer UserInfo(int custId)
         {
             try
@@ -41,22 +33,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Edits user info.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="firstName">First name.</param>
-        /// <param name="lastName">Last name.</param>
-        /// <param name="homePhone">Home phone.</param>
-        /// <param name="mobilePhone">Mobile phone.</param>
-        /// <param name="email">Email address.</param>
-        /// <param name="fax">Fax number.</param>
-        /// <param name="remark">Customer remark.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="language">Language to get data.</param>
-        /// <returns>Result object.</returns>
         public Result EditUserInfo(
             int custId, 
             string firstName, 
@@ -83,13 +59,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Resets password.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="password">Password characters.</param>
-        /// <param name="request">Request object.</param>
-        /// <returns>Result object.</returns>
         public Result ResetPassword(int custId, string password, Request request)
         {
             try
@@ -104,13 +73,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Config double commission.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="allow">Allow double commission or not.</param>
-        /// <param name="request">Request object.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result ConfigDoubleComm(int custId, bool allow, Request request)
         {
             try

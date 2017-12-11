@@ -12,9 +12,6 @@
     using Fanex.ExternalAccount.Utilities;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
@@ -42,10 +39,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets balance up day.
-        /// </summary>
-        /// <returns>DataTable object.</returns>
         public static DataTable GetBalanceUpDay()
         {
             DataTable oldBalanceUpDay = ReportService._cache.Get<DataTable>(BalanceUpDayKey);
@@ -67,7 +60,6 @@
                 
                 if (balanceUpDay != null)
                 {
-                    // Store in cache
                     ReportService._cache.Set<DataTable>(ReportService.BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
                 }
                                 
@@ -77,14 +69,6 @@
             return oldBalanceUpDay;
         }
 
-        /// <summary>
-        /// Gets customer info.
-        /// </summary>
-        /// <param name="groupname">Group name.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="userName">Customer username.</param>
-        /// <param name="isGetUplineInfo">Is get upper info.</param>
-        /// <returns>DataTable object.</returns>
         public System.Data.DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
             if (!string.IsNullOrEmpty(userName) || custId != 0)
@@ -109,13 +93,6 @@
 
         #region IReportService DailyWinLoss
 
-        /// <summary>
-        /// Gets daily win loss report.
-        /// </summary>
-        /// <param name="winlostDate">Win loss date.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>List object.</returns>
         public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
         {
             List<DailyWinLoss> winloss = null;
@@ -132,13 +109,6 @@
             return winloss;
         }
 
-        /// <summary>
-        /// Gets daily win loss super.
-        /// </summary>
-        /// <param name="winlostDate">Win loss date.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="masterId">Master id.</param>
-        /// <returns>List object.</returns>
         public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId)
         {
             List<DailyWinLoss> winloss = null;
@@ -154,13 +124,6 @@
             return winloss;
         }
 
-        /// <summary>
-        /// Gets daily win loss master.
-        /// </summary>
-        /// <param name="winlostDate">Win loss date.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="agentId">Agent's id.</param>
-        /// <returns>List object.</returns>
         public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId)
         {
             List<DailyWinLoss> winloss = null;
@@ -176,13 +139,6 @@
             return winloss;
         }
 
-        /// <summary>
-        /// Gets daily win loss agent.
-        /// </summary>
-        /// <param name="winlostDate">Win loss date.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="memberId">Member id.</param>
-        /// <returns>List object.</returns>
         public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
         {
             List<DailyWinLoss> winloss = null;

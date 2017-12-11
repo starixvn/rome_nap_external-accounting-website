@@ -2,9 +2,6 @@
 {
     using System.Web;
 
-    /// <summary>
-    /// Template setting of report.
-    /// </summary>
     internal class TemplateSettings
     {
         private string _dir;
@@ -14,11 +11,6 @@
             this._dir = HttpContext.Current.Server.MapPath("~/") + "ExcelTemplates\\Reports";
         }
 
-        /// <summary>
-        /// Gets path of report.
-        /// </summary>
-        /// <param name="roleId">Role id of customer.</param>
-        /// <returns>URL of report.</returns>
         public string WinLossDetailPath(int roleId)
         {
             if (roleId == 1)

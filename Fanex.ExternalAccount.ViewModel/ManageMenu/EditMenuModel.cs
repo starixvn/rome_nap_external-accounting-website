@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.ManageMenu
 {
-    /// <summary>
-    /// Edit menu model.
-    /// </summary>
     public class EditMenuModel
     {
         public int Id { get; set; }

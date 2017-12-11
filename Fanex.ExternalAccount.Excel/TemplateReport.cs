@@ -5,9 +5,6 @@
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Template report object.
-    /// </summary>
     public abstract class TemplateReport : IDisposable
     {
         private HSSFWorkbook _hssfWorkbook;
@@ -22,7 +19,6 @@
 
         ~TemplateReport()
         {
-            // Finalizer calls Dispose(false)
             this.Dispose(false);
         }
 
@@ -63,10 +59,6 @@
             }
         }
 
-        /// <summary>
-        /// Dispose an object.
-        /// </summary>
-        /// <param name="disposing">Identifies to dispose or not.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing && this._hssfWorkbook != null)

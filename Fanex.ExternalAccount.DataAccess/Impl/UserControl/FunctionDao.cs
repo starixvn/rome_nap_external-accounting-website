@@ -11,27 +11,10 @@
     using Fanex.ExternalAccount.Utilities;
     using Logging.Extensions.Database;
 
-    /// <summary>
-    /// Function Data object.
-    /// </summary>
     public class FunctionDao : DAOBase, IFunctionDao
     {
         #region IFunctionDao Members
 
-        /// <summary>
-        /// Creates the function.
-        /// </summary>
-        /// <param name="name">The function name.</param>
-        /// <param name="key">The function key.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="parentId">The parent id.</param>
-        /// <param name="parentName">Name of the parent.</param>
-        /// <param name="displayOrder">The display order.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP information.</param>
-        /// <param name="assignedGroupIDs">The assigned group ids.</param>
-        /// <param name="functionId">The function id.</param>
-        /// <returns>Result object.</returns>
         public Result CreateFunction(
             string name, 
             string key, 
@@ -83,20 +66,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates the function.
-        /// </summary>
-        /// <param name="id">The function id.</param>
-        /// <param name="name">The function name.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="parentId">The parent id.</param>
-        /// <param name="parentName">Name of the parent.</param>
-        /// <param name="displayOrder">The display order.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP information.</param>
-        /// <param name="oldAssignedGroupIDs">The old assigned group Ids.</param>
-        /// <param name="assignedGroupIDs">The assigned group Ids.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateFunction(
             int id, 
             string name, 
@@ -138,10 +107,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets all functions.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetAllFunctions()
         {
             var result = new List<Function>();
@@ -183,11 +148,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets the function policy.
-        /// </summary>
-        /// <param name="funcId">The function id.</param>
-        /// <returns>Function object.</returns>
         public Function GetFunctionPolicy(int funcId)
         {
             var func = this.GetAllFunctions().Where(o => o.FuncID == funcId).FirstOrDefault();
@@ -227,14 +187,6 @@
             return func;
         }
 
-        /// <summary>
-        /// Updates the status.
-        /// </summary>
-        /// <param name="id">The function id.</param>
-        /// <param name="isTest">If set to <c>true</c> [is test].</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP information.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateStatus(int id, bool isTest, int custId, string ip)
         {
             using (var db = new ObjectDb("EAS_FuncUpdStatus"))

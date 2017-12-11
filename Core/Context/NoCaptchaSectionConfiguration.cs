@@ -2,9 +2,6 @@
 {
     using System.Configuration;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class NoCaptchaSectionConfiguration : ConfigurationSection
     {
         private static NoCaptchaSectionConfiguration _instance;

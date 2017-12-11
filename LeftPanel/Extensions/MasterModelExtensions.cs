@@ -8,17 +8,8 @@
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class MasterModelExtensions
     {
-        /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel MasterInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -53,13 +44,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="tableCustomer">Customer data.</param>
-        /// <param name="tableCash">Cash info table.</param>
-        /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel MasterSettings(this CustomerModel model, DataTable table3rdDCS, DataTable tableCustomer, DataTable tableCash = null)
         {

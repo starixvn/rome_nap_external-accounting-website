@@ -3,9 +3,6 @@
     using System.Data;
     using Fanex.ExternalAccount.DTO.Customer;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface IAgentDao
     {
         DataTable GetData(int? userId, int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null);

@@ -12,17 +12,10 @@
     using Fanex.ExternalAccount.Utilities;
     using Logging.Extensions.Database;
 
-    /// <summary>
-    /// MenuDao object.
-    /// </summary>
     public class MenuDao : DAOBase, IMenuDao
     {
         #region IMenuDao Members
 
-        /// <summary>
-        /// Gets all menus.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Menu> GetAllMenus()
         {
             var result = new List<Menu>();
@@ -66,11 +59,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets the menu by user id.
-        /// </summary>
-        /// <param name="userId">The user id.</param>
-        /// <returns>UserCache object.</returns>
         public UserCache GetMenuByUserId(int userId)
         {
             var menus = new List<Menu>();
@@ -131,21 +119,6 @@
             }
         }
 
-        /// <summary>
-        /// Creates the menu.
-        /// </summary>
-        /// <param name="name">The menu name.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="url">The URL info.</param>
-        /// <param name="functionId">The function id.</param>
-        /// <param name="parentId">The parent id.</param>
-        /// <param name="parentName">Name of the parent.</param>
-        /// <param name="displayOrder">The display order.</param>
-        /// <param name="isActive">If set to <c>true</c> [is active].</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="menuId">The menu id.</param>
-        /// <returns>Result object.</returns>
         public Result CreateMenu(
             string name, 
             string description,
@@ -196,20 +169,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates the menu.
-        /// </summary>
-        /// <param name="id">The menu id.</param>
-        /// <param name="name">The menu name.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="url">The URL info.</param>
-        /// <param name="functionId">The function id.</param>
-        /// <param name="parentId">The parent id.</param>
-        /// <param name="parentName">Name of the parent.</param>
-        /// <param name="displayOrder">The display order.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateMenu(
             int id,
             string name,
@@ -251,13 +210,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates the menu status.
-        /// </summary>
-        /// <param name="id">The menu id.</param>
-        /// <param name="isActive">If set to <c>true</c> [is active].</param>
-        /// <param name="custId">The customer id.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateMenuStatus(int id, bool isActive, int custId)
         {
             using (var db = new ObjectDb("EAS_MenuUpdStatus"))
@@ -281,12 +233,6 @@
             }
         }
 
-        /// <summary>
-        /// Deletes the menu.
-        /// </summary>
-        /// <param name="id">The menu id.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <returns>Result object.</returns>
         public Result DeleteMenu(int id, int custId)
         {
             using (var db = new ObjectDb("EAS_MenuDel"))

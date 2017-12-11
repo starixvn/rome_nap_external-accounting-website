@@ -13,9 +13,6 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class GroupController : BaseController
     {
         private IGroupService _groupService = null;
@@ -40,10 +37,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets group list data.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GroupListPost()
@@ -121,12 +114,6 @@
             return this.JsonBase(result);
         }
 
-        /// <summary>
-        /// Grants permission for group.
-        /// </summary>
-        /// <param name="groupId">Id of group.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
@@ -167,7 +154,6 @@
 
             if (!isEditExtGroup) 
             {
-                // Continue to check new external groups created after launching
                 isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && 
                     !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase);
             }

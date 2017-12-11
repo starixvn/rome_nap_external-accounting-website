@@ -2,9 +2,6 @@
 {
     using Fanex.PTEngine.BusinessObjects;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface ICommissionService
     {
         ICommissionSetting GetCommission(IRequestContext requestContext);

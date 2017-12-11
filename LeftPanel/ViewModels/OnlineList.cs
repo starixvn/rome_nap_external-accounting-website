@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Online list object.
-    /// </summary>
     public class OnlineList
     {
         public OnlineList()

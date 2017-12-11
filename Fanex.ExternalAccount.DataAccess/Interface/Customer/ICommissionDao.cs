@@ -4,9 +4,6 @@
     using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.PTEngine.BusinessObjects;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface ICommissionDao
     {
         ICommissionSetting Age_CustomerSelUserComm(IRequestContext requestContext);

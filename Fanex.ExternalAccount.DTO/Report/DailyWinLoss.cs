@@ -2,9 +2,6 @@
 {
     using System;
 
-    /// <summary>
-    /// Description for DailyWinLoss.
-    /// </summary>
     public class DailyWinLoss
     {
         public int No { get; set; }

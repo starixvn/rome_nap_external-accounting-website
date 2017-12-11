@@ -7,9 +7,6 @@
     using NPOI.SS.UserModel;
     using Utility;
 
-    /// <summary>
-    /// Win loss detail report for super.
-    /// </summary>
     internal class WinLossDetailReportMAg : TemplateReport, IReportBuilder
     {
         private WinLossDetailReportMAgBuilder _builder;
@@ -20,10 +17,6 @@
             this._builder = builder;
         }
 
-        /// <summary>
-        /// Builds report.
-        /// </summary>
-        /// <returns>Workbook object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
@@ -36,7 +29,6 @@
             ISheet templateSheet = HssfWorkbook.GetSheet("TemplateMAg");
             ISheet resultSheet = HssfWorkbook.GetSheet("WinLossDetailMAg");
 
-            // apply Bold on all fonts
             if (this._builder.IsBold)
             {
                 this.BoldAllFonts();
@@ -45,7 +37,6 @@
             int rowId = 0;
             int colId = 0;
 
-            // Header
             string mainTitle = string.Empty;
             if (this._builder.FromDate.Equals(this._builder.ToDate))
             {
@@ -60,7 +51,6 @@
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
-            // content
             rowId = 3;
             int id = 1;
 
@@ -104,7 +94,6 @@
                     rowId++;
                 }
 
-                // total
                 resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
 
                 values = new List<object> 

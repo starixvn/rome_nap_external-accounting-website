@@ -4,9 +4,6 @@
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Text renderer.
-    /// </summary>
     public class RtfTextRender
     {
         private IFont _font;
@@ -27,10 +24,6 @@
             this._blocks.Clear();
         }
 
-        /// <summary>
-        /// Render text string.
-        /// </summary>
-        /// <returns>IRichTextString object.</returns>
         public IRichTextString Render()
         {
             string s = string.Empty;

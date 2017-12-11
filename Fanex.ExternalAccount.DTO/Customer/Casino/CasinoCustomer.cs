@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Customer.Casino
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CasinoCustomer
     {
         public bool UplineDisabledCasino

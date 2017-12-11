@@ -18,9 +18,6 @@
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class UserController : BaseController
     {
         private readonly IUserService _userService = new UserService();
@@ -33,10 +30,6 @@
             I9 = 9
         }
 
-        /// <summary>
-        /// Gets user list.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UserList()
         {
@@ -56,12 +49,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets user list data.
-        /// </summary>
-        /// <param name="userName">Username of customer.</param>
-        /// <param name="groupId">Group id that user belongs to.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult UserListPost(string userName = null, int? groupId = null)
@@ -80,11 +67,6 @@
             return this.JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result }, new Newtonsoft.Json.JsonSerializerSettings());
         }
 
-        /// <summary>
-        /// Get edit user page.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditUser(int id)
@@ -119,10 +101,6 @@
             return this.JsonBase(result);
         }
 
-        /// <summary>
-        /// Gets add new user page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AddUser()
@@ -147,10 +125,6 @@
             return this.PartialViewBase(model);
         }
 
-        /// <summary>
-        /// Gets add existing user page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AddExistUser()
@@ -251,13 +225,6 @@
 
         #endregion
 
-        /// <summary>
-        /// Gets grant permission page.
-        /// </summary>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="username">Admin username.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>ActionResult object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]

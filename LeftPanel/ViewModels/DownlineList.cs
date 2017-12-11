@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Down-line list object.
-    /// </summary>
     public class DownlineList : BasicInfo
     {
         public DownlineList()

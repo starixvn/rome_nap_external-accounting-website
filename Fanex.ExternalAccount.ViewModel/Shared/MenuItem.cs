@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Menu Item object.
-    /// </summary>
     public class MenuItem
     {
         public string Name { get; set; }

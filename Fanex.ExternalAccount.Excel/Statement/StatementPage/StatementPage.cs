@@ -8,9 +8,6 @@
     using NPOI.SS.UserModel;
     using Utility;
 
-    /// <summary>
-    /// Statement report builder.
-    /// </summary>
     internal class StatementPage : TemplateReport, IReportBuilder
     {
         private StatementPageBuilder _builder;
@@ -21,10 +18,6 @@
             this._builder = builder;
         }
 
-        /// <summary>
-        /// Builds excel.
-        /// </summary>
-        /// <returns>Workbook object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
@@ -37,7 +30,6 @@
             ISheet templateSheet = HssfWorkbook.GetSheet("Template");
             ISheet resultSheet = HssfWorkbook.GetSheet("Statement");
 
-            // apply Bold on all fonts
             if (this._builder.IsBold)
             {
                 this.BoldAllFonts();
@@ -46,12 +38,10 @@
             int rowId = 0;
             int colId = 0;
 
-            // Header
             string mainTitle = " Statement - " + this._builder.Username + " - From " + this._builder.FromDate + " To " + this._builder.ToDate;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
-            // content
             rowId = 2;
             int id = 0;
 

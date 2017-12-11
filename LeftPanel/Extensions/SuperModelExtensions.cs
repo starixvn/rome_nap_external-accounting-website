@@ -9,17 +9,8 @@
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class SuperModelExtensions
     {
-        /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
@@ -54,12 +45,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="tableCustomer">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer, DataTable table3rdDCS)
         {
@@ -184,11 +169,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Adds betting limit link for special admin.
-        /// </summary>
-        /// <param name="model">CustomerModel object.</param>
-        /// <returns>CustomerModel context.</returns>
         private static CustomerModel AddBettingLimitForSuper(this CustomerModel model)
         {
             var userId = CurrentSession.Instance.UserId;

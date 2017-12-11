@@ -28,9 +28,6 @@
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CustomerController : CustomerBase
     {
         private readonly SuperService _superService = new SuperService();
@@ -43,12 +40,6 @@
 
         #region Super Add New Master
 
-        /// <summary>
-        /// Checks username.
-        /// </summary>
-        /// <param name="username">Customer username.</param>
-        /// <param name="parentRoleId">Parent role id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult CheckUsername(string username, int parentRoleId)
         {
@@ -80,10 +71,6 @@
                 });
         }
 
-        /// <summary>
-        /// Gets add new super page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -92,13 +79,6 @@
             return PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets super add new data.
-        /// </summary>
-        /// <param name="custId">Master id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentUsername">Parent username.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -143,13 +123,6 @@
                 });
         }
 
-        /// <summary>
-        /// Add new master.
-        /// </summary>
-        /// <param name="custId">Master id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">Customer object model.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -208,10 +181,6 @@
 
         #region Master Add New Agent
 
-        /// <summary>
-        /// Gets agent page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -220,13 +189,6 @@
             return PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets agent data.
-        /// </summary>
-        /// <param name="custId">Agent's id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentUsername">Parent username.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -271,13 +233,6 @@
                 });
         }
 
-        /// <summary>
-        /// Add new agent.
-        /// </summary>
-        /// <param name="custId">Agent's id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">Customer object model.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -336,10 +291,6 @@
 
         #region Agent Add New Member
 
-        /// <summary>
-        /// Get member page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -348,13 +299,6 @@
             return PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets member data.
-        /// </summary>
-        /// <param name="custId">Member id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentUsername">Parent username.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -399,13 +343,6 @@
                 });
         }
 
-        /// <summary>
-        /// Add new member.
-        /// </summary>
-        /// <param name="custId">Member id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">Customer object model.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -462,25 +399,12 @@
         }
         #endregion Agent Add New Member
 
-        /// <summary>
-        /// Gets customer list page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult CustomerList()
         {
             return PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets setting page.
-        /// </summary>
-        /// <param name="id">Customer level id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Parent id.</param>
-        /// <param name="userName">Customer username.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>ActionResult object.</returns>
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
             DataTable result;
@@ -515,10 +439,6 @@
             return PartialViewBase();
         }
 
-        /// <summary>
-        /// Sets cache list.
-        /// </summary>
-        /// <param name="result">Customer data.</param>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public void SetCacheList(DataTable result)
         {
@@ -528,16 +448,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets customer list when searching.
-        /// </summary>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <param name="username">Customer username.</param>
-        /// <param name="isExportExcel">Export excel or not.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SearchListPost(
@@ -610,7 +520,6 @@
             _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
                 this._superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
-
             SetCacheList(result);
 
             SetEditAllBetVisibility(result);
@@ -621,15 +530,6 @@
             return JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
         }
 
-        /// <summary>
-        /// Gets customer list.
-        /// </summary>
-        /// <param name="srecommend">Parent id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
@@ -678,15 +578,6 @@
                 });
         }
 
-        /// <summary>
-        /// Gets customer list.
-        /// </summary>
-        /// <param name="mrecommend">Parent id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <returns>ActionResult object.</returns>        
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
@@ -735,15 +626,6 @@
                 });
         }
 
-        /// <summary>
-        /// Gets customer list.
-        /// </summary>
-        /// <param name="recommend">Parent id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
@@ -789,11 +671,6 @@
                 });
         }
 
-        /// <summary>
-        /// Views IP information.
-        /// </summary>
-        /// <param name="ip">IP address.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
@@ -827,12 +704,6 @@
             return PartialViewBase(ipinfo);
         }
 
-        /// <summary>
-        /// Config double commission.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="allow">Allow double commission or not.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
@@ -861,11 +732,6 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
 
-        /// <summary>
-        /// Gets edit information page.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditInfo(int custId)
         {
@@ -886,18 +752,6 @@
             return PartialViewBase(model);
         }
 
-        /// <summary>
-        /// Edits user information.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="firstName">First name.</param>
-        /// <param name="lastName">Last name.</param>
-        /// <param name="homePhone">Home phone.</param>
-        /// <param name="mobilePhone">Mobile phone.</param>
-        /// <param name="email">Email address.</param>
-        /// <param name="fax">Fax number.</param>
-        /// <param name="remark">Customer remark.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult EditInfoPost(
@@ -994,12 +848,6 @@
             return PartialViewBase(user);
         }
 
-        /// <summary>
-        /// Update password.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="password">Password characters.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdatePassword(int custId, string password)
@@ -1049,19 +897,6 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
 
-        /// <summary>
-        /// Exports excel.
-        /// </summary>
-        /// <param name="currentLevel">Current level.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="srecommend">Super agent id.</param>
-        /// <param name="mrecommend">Master agent id.</param>
-        /// <param name="recommend">Agent's id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
         public void GetExportToExcel(
             int? currentLevel = null,
@@ -1099,19 +934,6 @@
             }
         }
 
-        /// <summary>
-        /// Set cache data for exports excel.
-        /// </summary>
-        /// <param name="currentLevel">Current level.</param>
-        /// <param name="fileName">File name.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="srecommend">Super agent id.</param>
-        /// <param name="mrecommend">Master agent id.</param>
-        /// <param name="recommend">Agent's id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
         private void SetCache(
             int? currentLevel,
             ref string fileName,
@@ -1171,20 +993,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets data customer.
-        /// </summary>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="enabled">Enabled status.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
-        /// <param name="username">Customer username.</param>
-        /// <param name="result">Result object.</param>
-        /// <param name="srecommend">Super agent id.</param>
-        /// <param name="mrecommend">Master agent id.</param>
-        /// <param name="recommend">Agent's id.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="roleId">Customer role id.</param>
         private void GetDataResult(
             string groupName,
             bool? enabled,

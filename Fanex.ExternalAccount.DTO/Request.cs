@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class Request
     {
         public string NetSessionId { get; set; }

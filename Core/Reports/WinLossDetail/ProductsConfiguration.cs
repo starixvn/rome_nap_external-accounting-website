@@ -2,9 +2,6 @@
 {
     using System.Configuration;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class ProductsConfiguration : ConfigurationSection
     {
         public static ProductsConfiguration Instance

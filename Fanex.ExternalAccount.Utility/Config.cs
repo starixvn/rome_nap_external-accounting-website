@@ -4,9 +4,6 @@
     using System.Collections.Generic;
     using System.Configuration;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class Config
     {
         public static DateTime WinlostDate

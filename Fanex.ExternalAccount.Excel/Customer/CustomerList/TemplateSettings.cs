@@ -2,9 +2,6 @@
 {
     using System.Web;
 
-    /// <summary>
-    /// Template URL for exporting excel.
-    /// </summary>
     internal class TemplateSettings
     {
         private string _dir;

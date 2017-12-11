@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// Basic information object.
-    /// </summary>
     public class BasicInfo
     {
         public ObjectInfo CustId { get; set; }

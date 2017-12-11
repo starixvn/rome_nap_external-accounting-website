@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Setting object.
-    /// </summary>
     public class Setting
     {
         public Setting()

@@ -9,9 +9,6 @@
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// Menu service class.
-    /// </summary>
     public class MenuService : IMenuService
     {
         private readonly IMenuDao _menuDao = null;
@@ -23,10 +20,6 @@
 
         #region IMenuService Members
 
-        /// <summary>
-        /// Gets all menus.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Menu> GetAllMenus()
         {
             try
@@ -48,21 +41,6 @@
             return userCache.MenuList;
         }
 
-        /// <summary>
-        /// Creates new menu.
-        /// </summary>
-        /// <param name="name">The menu name.</param>
-        /// <param name="description">Menu Description.</param>
-        /// <param name="url">The menu URL.</param>
-        /// <param name="functionId">Function id.</param>
-        /// <param name="parentId">Parent function id.</param>
-        /// <param name="parentName">Parent function name.</param>
-        /// <param name="displayOrder">Display order.</param>
-        /// <param name="isActive">Is menu active or not.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="menuId">The menu id.</param>
-        /// <returns>Result object.</returns>
         public Result CreateMenu(
             string name, 
             string description, 
@@ -97,20 +75,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Update menu info.
-        /// </summary>
-        /// <param name="id">The menu id.</param>
-        /// <param name="name">The menu name.</param>
-        /// <param name="description">Menu Description.</param>
-        /// <param name="url">The menu URL.</param>
-        /// <param name="functionId">Function id.</param>
-        /// <param name="parentId">Parent function id.</param>
-        /// <param name="parentName">Parent function name.</param>
-        /// <param name="displayOrder">Display order.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateMenu(
             int id, 
             string name,
@@ -142,13 +106,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Updates menu status.
-        /// </summary>
-        /// <param name="id">The menu id.</param>
-        /// <param name="isActive">Is menu active or not.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <returns>Result object.</returns>
         public Result UpdateMenuStatus(int id, bool isActive, int custId)
         {
             try
@@ -170,12 +127,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Deletes menu item.
-        /// </summary>
-        /// <param name="id">The menu id.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <returns>Result object.</returns>
         public Result DeleteMenu(int id, int custId)
         {
             try

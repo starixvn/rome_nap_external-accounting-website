@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Customer.Casino
 {
-    /// <summary>
-    /// GameKindDetail class.
-    /// </summary>
     public class GameKindDetail
     {
         public GameKindDetail()

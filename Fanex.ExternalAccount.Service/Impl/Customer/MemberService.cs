@@ -6,25 +6,12 @@
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MemberService : CustomerService, IMemberService
     {
         private readonly IMemberDao _dao = new MemberDao();
 
         #region IDataService Members
 
-        /// <summary>
-        /// Base function for all levels.
-        /// </summary>
-        /// <param name="recommend">Id of current level.</param>
-        /// <param name="custId">Id of selected user.</param>
-        /// <param name="enabled">Enable status.</param>
-        /// <param name="closed">Close status.</param>
-        /// <param name="suspended">Suspend status.</param>
-        /// <param name="groupName">Group name of currency.</param>
-        /// <returns>DataTable object.</returns>
         public System.Data.DataTable GetData(
             int? userId,
             int? recommend = null, 

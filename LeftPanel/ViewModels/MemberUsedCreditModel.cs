@@ -3,9 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MemberUsedCreditModel
     {
         public IList<MemberUsedCreditItem> MemberUsedCreditItems

@@ -8,17 +8,8 @@
     using Fanex.ExternalAccount.Utilities;
     using RemotingRef;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class MemberModelExtensions
     {
-        /// <summary>
-        /// Gets customer model for super level.
-        /// </summary>
-        /// <param name="model">Model object.</param>
-        /// <param name="ds">DataSet object that contains user information.</param>
-        /// <returns>CustomerModel object.</returns>
         public static CustomerModel MemberInfo(this CustomerModel model, DataSet ds)
         {
             var tableLine = ds.Tables[1];
@@ -35,12 +26,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Customer settings.
-        /// </summary>
-        /// <param name="model">CustomerModel object extension.</param>
-        /// <param name="ds">Customer data.</param>
-        /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel MemberSettings(this CustomerModel model, DataSet ds)
         {
@@ -165,12 +150,6 @@
             return model;
         }
 
-        /// <summary>
-        /// Gets PT products on member level.
-        /// </summary>
-        /// <param name="model">CustomerModel item.</param>
-        /// <param name="product">ProductStatuses item.</param>
-        /// <returns>CustomerModel object.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
         {

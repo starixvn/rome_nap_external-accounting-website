@@ -8,22 +8,10 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MasterDao : CustomerDao, IMasterDao
     {
         #region IData Masters
 
-        /// <summary>
-        /// Base function for all levels.
-        /// </summary>
-        /// <param name="recommend">Id of current level.</param>
-        /// <param name="custId">Id of selected user.</param>
-        /// <param name="enabled">Enable status.</param>
-        /// <param name="closed">Close status.</param>
-        /// <param name="suspended">Suspend status.</param>
-        /// <returns>DataTable object.</returns>
         public DataTable GetData(
             int? userId, 
             int? recommend = null, 
@@ -43,11 +31,6 @@
             return DbHelper.ExecuteDataTable("EAS_CustomerSelBySAg", param);
         }
 
-        /// <summary>
-        /// Gets transfer options.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>Transfer object.</returns>
         public Transfer GetTransferOption(int custId)
         {
             var param = new Hashtable();
@@ -74,16 +57,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Edits transfer options.
-        /// </summary>
-        /// <param name="transferOption">Transfer options.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="subAccId">Sub-account id.</param>
-        /// <param name="language">Language to get data.</param>
-        /// <returns>Result object.</returns>
         public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
         {
             var param = new Hashtable();

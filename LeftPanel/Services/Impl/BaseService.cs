@@ -7,9 +7,6 @@
     using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public abstract class BaseService : ILeftPanelService
     {
         public int Agent
@@ -44,38 +41,12 @@
             }
         }
 
-        /// <summary>
-        /// Gets customer information.
-        /// </summary>
-        /// <param name="username">Username of customer.</param>
-        /// <param name="groupName">Group name of customer.</param>
-        /// <param name="pageIndex">Current page index.</param>
-        /// <returns>CustomerModel object.</returns>
         public abstract CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1);
 
-        /// <summary>
-        /// Gets down-lines of customer.
-        /// </summary>
-        /// <param name="custid">Id of customer.</param>
-        /// <param name="pageSize">Page size.</param>
-        /// <param name="pageIndex">Current page index.</param>
-        /// <returns>DataTable object.</returns>
         public abstract DataTable GetDownlineList(int custid, int pageSize, int pageIndex);
 
-        /// <summary>
-        /// Gets online list user.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <returns>DataRowCollection object.</returns>
         public abstract DataRowCollection GetOnlineList(int custid);
 
-        /// <summary>
-        /// Updates given credit for customer.
-        /// </summary>
-        /// <param name="id">Id of customer.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="newGivenCredit">New given credit.</param>
-        /// <returns>Result object.</returns>
         public abstract Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
         public abstract IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);

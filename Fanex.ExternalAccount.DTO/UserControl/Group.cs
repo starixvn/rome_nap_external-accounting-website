@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.UserControl
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class Group
     {
         public int GroupID { get; set; }

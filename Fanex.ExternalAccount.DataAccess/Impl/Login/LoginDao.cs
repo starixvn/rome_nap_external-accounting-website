@@ -11,25 +11,10 @@
     using Fanex.ExternalAccount.DTO.UserControl;
     using Logging.Extensions.Database;
 
-    /// <summary>
-    /// LoginDao object.
-    /// </summary>
     public class LoginDao : DAOBase, ILoginDao
     {
         #region ILoginDao Members
 
-        /// <summary>
-        /// Logins the specified username.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="browser">The browser.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="domain">The domain.</param>
-        /// <param name="countryCode">The country code.</param>
-        /// <param name="platForm">The platform.</param>
-        /// <param name="custId">The customer id.</param>
-        /// <returns>Result object.</returns>
         public Fanex.ExternalAccount.DTO.Result Login(
             string username, 
             string password, 
@@ -76,12 +61,6 @@
             return result;
         }
 
-        /// <summary>
-        /// Logouts the specified customer id.
-        /// </summary>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="username">The username.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result Logout(int custId, string username)
         {
             using (var db = new ObjectDb("EAS_UserLogout"))
@@ -102,14 +81,6 @@
             }
         }
 
-        /// <summary>
-        /// Check-in the specified customer id.
-        /// </summary>
-        /// <param name="custId">The customer id.</param>
-        /// <param name="netSessionID">The net session ID.</param>
-        /// <param name="ip">The IP address.</param>
-        /// <param name="onuserId">The on user id.</param>
-        /// <returns>DTO.Result object.</returns>
         public DTO.Result Checkin(int custId, string netSessionID, string ip, out int onuserId)
         {
             var result = new DTO.Result();
@@ -137,12 +108,6 @@
             return result;
         }
 
-        /// <summary>
-        /// Recheck-in the specified customer id .
-        /// </summary>
-        /// <param name="custId">The customer id .</param>
-        /// <param name="isKickOut">If set to <c>true</c> [is kick out].</param>
-        /// <returns>DTO.Result object.</returns>
         public bool IsKickedOut(int custId)
         {
             using (var db = new ObjectDb("EAS_UserRecheckIn"))
@@ -163,10 +128,6 @@
             }
         }
 
-        /// <summary>
-        /// Groups the list.
-        /// </summary>
-        /// <returns>ICollection object.</returns>
         public ICollection<Group> GroupList()
         {
             var list = new List<Group>();
@@ -196,13 +157,6 @@
             return list;
         }
 
-        /// <summary>
-        /// Checks the external group.
-        /// </summary>
-        /// <param name="custId">The customer id .</param>
-        /// <param name="funcId">The function id.</param>
-        /// <param name="funcKey">The function key.</param>
-        /// <returns>Boolean object.</returns>
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             using (var db = new ObjectDb("EAS_UserCheckPermission"))
@@ -227,10 +181,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets DB time.
-        /// </summary>
-        /// <returns>DateTime object.</returns>
         public DateTime GetDBTime()
         {
             DbResult dr = null;

@@ -9,9 +9,6 @@
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class GroupService : IGroupService
     {
         private IGroupDao _groupDao = null;
@@ -23,10 +20,6 @@
 
         #region IGroupService Members
 
-        /// <summary>
-        /// Gets groups.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Group> GetListGroup()
         {
             try
@@ -41,10 +34,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets groups.
-        /// </summary>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Group> GetAllGroup()
         {
             try
@@ -59,11 +48,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets policy of group.
-        /// </summary>
-        /// <param name="groupId">Group's id.</param>
-        /// <returns>IEnumerable object.</returns>
         public IEnumerable<Function> GetAllGroupPolicy(int groupId)
         {
             try
@@ -78,11 +62,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets group by id.
-        /// </summary>
-        /// <param name="groupId">Group's id.</param>
-        /// <returns>Group object.</returns>
         public Group GetGroupById(int groupId)
         {
             Check.Argument.IsNotNegativeOrZero(groupId, "groupId");
@@ -99,15 +78,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Creates new group.
-        /// </summary>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="description">Group description.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="groupId">Id of group.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result CreateGroup(string groupName, string description, int custId, string ip, out int groupId)
         {
             groupId = 0;
@@ -124,15 +94,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Updates group.
-        /// </summary>
-        /// <param name="groupName">Group name.</param>
-        /// <param name="description">Group description.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="groupId">Id of group.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result EditGroup(string groupName, string description, int custId, string ip, int groupId)
         {
             try
@@ -147,15 +108,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Edits group policy.
-        /// </summary>
-        /// <param name="oldGroupPolicy">Old group policy.</param>
-        /// <param name="groupPolicy">New group policy.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="ip">IP address.</param>
-        /// <param name="groupId">Id of group.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId)
         {
             try
@@ -170,12 +122,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Deletes group.
-        /// </summary>
-        /// <param name="groupID">Id of group.</param>
-        /// <param name="userId">Admin user id.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result DeleteGroup(int groupID, int userId)
         {
             try

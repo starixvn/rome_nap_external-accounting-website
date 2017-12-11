@@ -5,9 +5,6 @@
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Fanex.PTEngine.BusinessObjects;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CommissionService : CustomerService, ICommissionService
     {
         private readonly ICommissionDao _dao = new CommissionDao();

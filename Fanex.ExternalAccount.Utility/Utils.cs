@@ -5,39 +5,19 @@
     using System.Web;
     using System.Web.Optimization;
 
-    /// <summary>
-    /// Utilities class for converting value types.
-    /// </summary>
     public static class Utils
     {
         public enum TruncateOptions
         {
-            /// <summary>
-            /// None option.
-            /// </summary>
             None = 0x0,
 
-            /// <summary>
-            /// Finish word option.
-            /// </summary>
             FinishWord = 0x1,
 
-            /// <summary>
-            /// Allow last word to goes over max length.
-            /// </summary>
             AllowLastWordToGoOverMaxLength = 0x2,
 
-            /// <summary>
-            /// Include ellipsis.
-            /// </summary>
             IncludeEllipsis = 0x4
         }
 
-        /// <summary>
-        /// Formats date time.
-        /// </summary>
-        /// <param name="dt">Value to format.</param>
-        /// <returns>String object.</returns>
         public static string FormatDateOptionalTime(object dt)
         {
             if (Convert.IsDBNull(dt) || dt == null)
@@ -68,11 +48,6 @@
             return isChecked ? "active" : "inactive";
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static byte ToByte(object value)
         {
             byte val = 0;
@@ -87,12 +62,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static byte ToByte(this IDataReader obj, string fieldName)
         {
             byte val = 0;
@@ -107,12 +76,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static byte ToByte(this DataRow obj, string fieldName)
         {
             byte val = 0;
@@ -127,11 +90,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static short ToInt16(object value)
         {
             short val = 0;
@@ -146,12 +104,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static short ToInt16(this IDataReader obj, string fieldName)
         {
             short val = 0;
@@ -166,12 +118,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static short ToInt16(this DataRow obj, string fieldName)
         {
             short val = 0;
@@ -186,11 +132,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static decimal ToDecimal(object value)
         {
             var val = 0.0m;
@@ -205,12 +146,6 @@
             return val.Format(2) == -0.00m ? 0.0m : val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static decimal ToDecimal(this IDataReader obj, string fieldName)
         {
             var val = 0.0m;
@@ -225,12 +160,6 @@
             return val.Format(2) == -0.00m ? 0.0m : val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static decimal ToDecimal(this DataRow obj, string fieldName)
         {
             var val = 0.0m;
@@ -245,11 +174,6 @@
             return val.Format(2) == -0.00m ? 0.0m : val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static bool ToBoolean(object value)
         {
             var val = false;
@@ -269,12 +193,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static bool ToBoolean(this IDataReader obj, string fieldName)
         {
             var val = false;
@@ -289,12 +207,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static bool ToBoolean(this DataRow obj, string fieldName)
         {
             var val = false;
@@ -314,11 +226,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static string ToString(object value)
         {
             if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
@@ -329,12 +236,6 @@
             return Convert.ToString(value);
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static string ToString(this IDataReader obj, string fieldName)
         {
             if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
@@ -345,12 +246,6 @@
             return Convert.ToString(obj[fieldName]);
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static string ToString(this DataRow obj, string fieldName)
         {
             if (obj[fieldName] == null || obj[fieldName] == DBNull.Value || obj[fieldName].ToString() == string.Empty)
@@ -361,11 +256,6 @@
             return Convert.ToString(obj[fieldName]);
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static double ToDouble(object value)
         {
             var val = 0.0d;
@@ -380,12 +270,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static double ToDouble(this IDataReader obj, string fieldName)
         {
             var val = 0.0d;
@@ -400,12 +284,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static double ToDouble(this DataRow obj, string fieldName)
         {
             var val = 0.0d;
@@ -420,11 +298,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static DateTime ToDateTime(object value)
         {
             var val = DateTime.MinValue;
@@ -439,12 +312,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static DateTime ToDateTime(this IDataReader obj, string fieldName)
         {
             var val = DateTime.MinValue;
@@ -459,12 +326,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static DateTime ToDateTime(this DataRow obj, string fieldName)
         {
             var val = DateTime.MinValue;
@@ -479,11 +340,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static int ToInt32(object value)
         {
             var val = 0;
@@ -505,12 +361,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static int ToInt32(this IDataReader obj, string fieldName)
         {
             var val = 0;
@@ -532,12 +382,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static int ToInt32(this DataRow obj, string fieldName)
         {
             var val = 0;
@@ -559,11 +403,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>DataType structure or object.</returns>
         public static long ToInt64(object value)
         {
             var val = 0L;
@@ -585,12 +424,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static long ToInt64(this IDataReader obj, string fieldName)
         {
             var val = 0L;
@@ -612,12 +445,6 @@
             return val;
         }
 
-        /// <summary>
-        /// Convert value.
-        /// </summary>
-        /// <param name="obj">Object to convert.</param>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>DataType structure or object.</returns>
         public static long ToInt64(this DataRow obj, string fieldName)
         {
             var val = 0L;
@@ -729,13 +556,6 @@
             return HttpUtility.HtmlEncode(obj);
         }
 
-        /// <summary>
-        /// Truncates a string to a certain length.
-        /// </summary>
-        /// <param name="valueToTruncate">Value to truncate.</param>
-        /// <param name="maxLength">Maximum length that the string should allow.</param>
-        /// <param name="options">Option flags to determine how to truncate the string.</param>
-        /// <returns>Truncated string.</returns>
         public static string TruncateString(string valueToTruncate, int maxLength, TruncateOptions options)
         {
             if (valueToTruncate == null || maxLength <= 0)
@@ -786,13 +606,8 @@
             return retValue;
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableLoginBundle(this BundleCollection bundles)
         {
-            // For css and js login using
             var bootstrapCssLogin = new Bundle("~/bootstrap/login/css", new CssMinify());
             var bootstrapJsLogin = new Bundle("~/bootstrap/login/js", new JsMinify());
 
@@ -806,13 +621,8 @@
             bundles.Add(bootstrapJsLogin);
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableCommonBundle(this BundleCollection bundles)
         {
-            // For css and js common using
             var bootstrapCss = new Bundle("~/bootstrap/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/js", new JsMinify());
 
@@ -826,13 +636,8 @@
             bundles.Add(bootstrapJs);
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableExternalGroupBundle(this BundleCollection bundles)
         {
-            // For css and js external group selection using
             var bootstrapCss = new Bundle("~/bootstrap/externalgroup/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/externalgroup/js", new JsMinify());
 
@@ -846,13 +651,8 @@
             bundles.Add(bootstrapJs);
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableDailyWinLossBundle(this BundleCollection bundles)
         {
-            // For css and js report using
             var bootstrapCss = new Bundle("~/bootstrap/dailywinloss/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/dailywinloss/js", new JsMinify());
 
@@ -866,13 +666,8 @@
             bundles.Add(bootstrapJs);
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableWinLossDetailBundle(this BundleCollection bundles)
         {
-            // For css and js report using
             var bootstrapCss = new Bundle("~/bootstrap/winlossdetail/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/winlossdetail/js", new JsMinify());
 
@@ -886,13 +681,8 @@
             bundles.Add(bootstrapJs);
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableStatementBundle(this BundleCollection bundles)
         {
-            // For css and js external group selection using
             var bootstrapCss = new Bundle("~/bootstrap/Statement/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/Statement/js", new JsMinify());
 
@@ -906,13 +696,8 @@
             bundles.Add(bootstrapJs);
         }
 
-        /// <summary>
-        /// Enable bundle.
-        /// </summary>
-        /// <param name="bundles">Bundle collections.</param>
         public static void EnableCustomerBundle(this BundleCollection bundles)
         {
-            // For css and js external group selection using
             var bootstrapCss = new Bundle("~/bootstrap/customer/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/customer/js", new JsMinify());
 

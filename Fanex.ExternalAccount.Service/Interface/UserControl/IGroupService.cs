@@ -7,9 +7,6 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface IGroupService
     {
         IEnumerable<Group> GetListGroup();

@@ -8,9 +8,6 @@
     using Fanex.ExternalAccount.DTO;
     using Microsoft.Practices.EnterpriseLibrary.Data;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class DAOBase
     {
         private const int DEFAULTTIMEOUT = 600;

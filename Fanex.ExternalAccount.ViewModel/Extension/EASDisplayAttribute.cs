@@ -4,9 +4,6 @@
     using System.ComponentModel;
     using System.Reflection;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class EASDisplayAttribute : DisplayNameAttribute
     {
         private readonly PropertyInfo _nameProperty;

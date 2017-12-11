@@ -5,23 +5,10 @@
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MemberDao : CustomerDao, IMemberDao
     {
         #region IData Members
 
-        /// <summary>
-        /// Base function for Member level.
-        /// </summary>
-        /// <param name="recommend">Id of current level.</param>
-        /// <param name="custId">Id of selected user.</param>
-        /// <param name="enabled">Enable status.</param>
-        /// <param name="closed">Close status.</param>
-        /// <param name="suspended">Suspend status.</param>
-        /// <param name="groupName">Group name of currency.</param>
-        /// <returns>DataTable object.</returns>
         public DataTable GetData(
             int? userId,
             int? recommend = null, 

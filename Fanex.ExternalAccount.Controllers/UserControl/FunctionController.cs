@@ -12,17 +12,10 @@
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class FunctionController : BaseController
     {
         private readonly IFunctionService _funcService = new FunctionService();
 
-        /// <summary>
-        /// Get function list page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
@@ -38,10 +31,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets data of function list page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult FunctionListPost()
@@ -52,7 +41,6 @@
 
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {
-                // Is Internal admin logged in
                 funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu &&
                     o.FuncKey != eFunctions.ManageFunction);
 
@@ -60,7 +48,6 @@
             }
             else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
             {
-                // Is External admin logged in
                 funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu &&
                     o.FuncKey != eFunctions.ManageFunction &&
                     o.FuncKey != eFunctions.ManageGroup &&
@@ -87,11 +74,6 @@
             return this.JsonBase(new { total = 1, page = 1, records = funcsOrder.Count(), rows = funcsOrder }, new Newtonsoft.Json.JsonSerializerSettings());
         }
 
-        /// <summary>
-        /// Edits function.
-        /// </summary>
-        /// <param name="id">Function id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditFunction(int id)
@@ -146,10 +128,6 @@
             return this.PartialViewBase(model);
         }
 
-        /// <summary>
-        /// Add new function.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AddFunction()
@@ -161,12 +139,10 @@
 
             if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
             {
-                // Is Internal admin logged in
                 parent = parent.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
             else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
             {
-                // Is External admin logged in
                 parent = parent.Where(o => o.FuncKey != eFunctions.Administration &&
                     o.FuncKey != eFunctions.SystemConfiguration &&
                     o.FuncKey != eFunctions.ExternalGroup);
@@ -209,12 +185,6 @@
             return this.JsonBase(result);
         }
 
-        /// <summary>
-        /// Gets policy list of a function.
-        /// </summary>
-        /// <param name="funcId">Function id.</param>
-        /// <param name="addNew">Specify is add new function or not.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult PolicyList(int funcId, bool addNew = false)

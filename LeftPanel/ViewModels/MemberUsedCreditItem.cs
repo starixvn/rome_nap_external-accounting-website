@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MemberUsedCreditItem
     {
         public string Username

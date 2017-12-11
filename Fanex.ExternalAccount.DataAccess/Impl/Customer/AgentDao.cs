@@ -7,22 +7,10 @@
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.DTO.Customer;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class AgentDao : CustomerDao, IAgentDao
     {
         #region IData Agents
 
-        /// <summary>
-        /// Base function for Agent level.
-        /// </summary>
-        /// <param name="recommend">Id of current level.</param>
-        /// <param name="custId">Id of selected user.</param>
-        /// <param name="enabled">Enable status.</param>
-        /// <param name="closed">Close status.</param>
-        /// <param name="suspended">Suspend status.</param>
-        /// <returns>DataTable object.</returns>
         public DataTable GetData(
             int? userId, 
             int? recommend = null, 
@@ -42,11 +30,6 @@
             return DbHelper.ExecuteDataTable("EAS_CustomerSelByMAg", param);
         }
 
-        /// <summary>
-        /// Gets transfer options.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>Transfer object.</returns>
         public Transfer GetTransferOption(int custId)
         {
             var param = new Hashtable();

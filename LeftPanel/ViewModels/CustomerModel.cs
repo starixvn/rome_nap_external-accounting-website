@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// TODO: Model for left panel.
-    /// </summary>
     public class CustomerModel
     {
         public CustomerModel()

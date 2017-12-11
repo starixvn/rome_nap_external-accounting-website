@@ -5,9 +5,6 @@
     using System.Linq;
     using System.Text;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class PTModel
     {
         public decimal AutoPresetPT { get; set; }

@@ -3,9 +3,6 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public interface ICustomerDao
     {
         bool IsValidUsername(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId);

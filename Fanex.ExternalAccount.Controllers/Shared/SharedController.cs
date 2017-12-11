@@ -47,13 +47,8 @@
             return this.PartialView();
         }
 
-        /// <summary>
-        /// Gets menus.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         public ActionResult _Menu()
         {
-            // load menus
             var menuService = new MenuService();
             var menuList = menuService.GetMenusByUserId(CurrentSession.UserId);
             var rootMenuList = menuList.Where(x => x.ParentID == 0);

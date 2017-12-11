@@ -18,9 +18,6 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class SportsbookSettingController : BaseController
     {
         private const int NG2Start = 213;
@@ -41,12 +38,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditBetSettingMasterGet(int custId, int parentId)
@@ -90,12 +81,6 @@
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditBetSettingAgentGet(int custId, int parentId)
@@ -139,12 +124,6 @@
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditBetSettingMemberGet(int custId, int parentId)
@@ -188,13 +167,6 @@
             return this.JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult EditBetSettingPost(int custId, int parentId, string txtCustomerObject)
@@ -283,12 +255,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditCommissionGet(int custId, int parentId)
@@ -330,14 +296,6 @@
             return this.JsonBase(new { commission = commissionSetting, context = currentContext }, settings);
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="currentLevel">Current level.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult EditCommissionPost(int custId, int parentId, int currentLevel, string txtCustomerObject)
@@ -385,7 +343,7 @@
         #region PT Setting
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditPT(/*int custId, int parentId*/)
+        public ActionResult EditPT(   )
         {
             if (!this.IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
             {
@@ -406,12 +364,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditPTSuperGet(int custId, int parentId)
@@ -458,12 +410,6 @@
                     });
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditPTMasterGet(int custId, int parentId)
@@ -511,15 +457,6 @@
                 });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <param name="isUpdateAllMember">Is update all member.</param>
-        /// <param name="newPositionTaking">New position taking.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
@@ -569,12 +506,6 @@
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditPTAgentGet(int custId, int parentId)
@@ -622,15 +553,6 @@
                 });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <param name="isUpdateAllMember">Is update all member.</param>
-        /// <param name="newPositionTaking">New position taking.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject, bool isUpdateAllMember, decimal newPositionTaking)
@@ -680,12 +602,6 @@
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditPTMemberGet(int custId, int parentId)
@@ -733,13 +649,6 @@
                 });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
@@ -789,13 +698,6 @@
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="agentId">Agent's id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
@@ -844,13 +746,6 @@
                 });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult SuperEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
@@ -899,13 +794,6 @@
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="agentId">Agent's id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
@@ -954,13 +842,6 @@
                 });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult MasterEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
@@ -1050,12 +931,6 @@
             return this.PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
@@ -1109,12 +984,6 @@
                 });
         }
 
-        /// <summary>
-        /// Gets settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
@@ -1168,13 +1037,6 @@
                 });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
@@ -1205,13 +1067,6 @@
             return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage });
         }
 
-        /// <summary>
-        /// Updates settings data.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="txtCustomerObject">JSON string.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)

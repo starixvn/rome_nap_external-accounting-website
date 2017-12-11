@@ -11,9 +11,6 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MenuController : BaseController
     {
         private readonly IMenuService _menuService = null;
@@ -50,11 +47,6 @@
             return this.PartialViewBase(new Menu());
         }
 
-        /// <summary>
-        /// Gets edit menu page.
-        /// </summary>
-        /// <param name="id">Id of menu.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditMenu(int id)
@@ -72,17 +64,6 @@
             return this.PartialViewBase(model);
         }
 
-        /// <summary>
-        /// Add new menu.
-        /// </summary>
-        /// <param name="name">Menu name.</param>
-        /// <param name="description">Menu description.</param>
-        /// <param name="url">Menu's URL.</param>
-        /// <param name="functionId">Function id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentName">Parent name.</param>
-        /// <param name="displayOrder">Display order.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult Add(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
@@ -105,18 +86,6 @@
             return this.JsonBase(result);
         }
 
-        /// <summary>
-        /// Edits menu item.
-        /// </summary>
-        /// <param name="menuId">Id of menu.</param>
-        /// <param name="name">Menu name.</param>
-        /// <param name="description">Menu description.</param>
-        /// <param name="url">Menu's URL.</param>
-        /// <param name="functionId">Function id.</param>
-        /// <param name="parentId">Parent id.</param>
-        /// <param name="parentName">Parent name.</param>
-        /// <param name="displayOrder">Display order.</param>
-        /// <returns>ActionResult object.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
@@ -159,10 +128,6 @@
             return this.JsonBase(result);
         }
 
-        /// <summary>
-        /// Gets all menus.
-        /// </summary>
-        /// <returns>List of menus.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetAllMenus()
         {
@@ -182,10 +147,6 @@
             return list;
         }
 
-        /// <summary>
-        /// Gets list of menus.
-        /// </summary>
-        /// <returns>List of menus.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetMenus()
         {
@@ -200,10 +161,6 @@
             return list;
         }
 
-        /// <summary>
-        /// Gets list of functions.
-        /// </summary>
-        /// <returns>List of functions.</returns>
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Function> GetFunctions()
         {

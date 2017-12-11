@@ -4,9 +4,6 @@
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Extension;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class UserModel
     {
         [Required]

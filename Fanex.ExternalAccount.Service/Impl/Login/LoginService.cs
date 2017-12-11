@@ -12,9 +12,6 @@
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// Login service.
-    /// </summary>
     public class LoginService : ILoginService
     {
         private readonly ILoginDao _loginDao;
@@ -26,16 +23,6 @@
 
         #region ILoginService Members
 
-        /// <summary>
-        /// Processes login.
-        /// </summary>
-        /// <param name="username">Admin username.</param>
-        /// <param name="password">Admin password.</param>
-        /// <param name="request">Request object.</param>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="onuserId">Admin on user id.</param>
-        /// <param name="isIntAcc">Is Internal account or not.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result Login(string username, string password, Request request, out int custId, out int onuserId, out bool isIntAcc)
         {
             Check.Argument.IsNotNull(username, "username");
@@ -62,12 +49,6 @@
             return result;
         }
 
-        /// <summary>
-        /// Logout session.
-        /// </summary>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="username">Admin username.</param>
-        /// <returns>Result object.</returns>
         public DTO.Result Logout(int custId, string username)
         {
             Check.Argument.IsNotNegative(custId, "custId");
@@ -86,12 +67,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Recheck in info.
-        /// </summary>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="isKickOut">Is kicked out or not.</param>
-        /// <returns>Result object.</returns>
         public bool IsKickedOut(int custId)
         {
             var isKickOut = false;
@@ -110,10 +85,6 @@
             return isKickOut;
         }
 
-        /// <summary>
-        /// Gets all groups.
-        /// </summary>
-        /// <returns>ICollection object.</returns>
         public ICollection<Group> GroupList()
         {
             try
@@ -128,13 +99,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Checks whether an admin is external group or not.
-        /// </summary>
-        /// <param name="custId">Admin user id.</param>
-        /// <param name="funcId">Function id.</param>
-        /// <param name="funcKey">Function key.</param>
-        /// <returns>Boolean object.</returns>
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             try
@@ -153,10 +117,6 @@
             return true;
         }
 
-        /// <summary>
-        /// Gets DB date time.
-        /// </summary>
-        /// <returns>DateTime object.</returns>
         public DateTime GetDBTime()
         {
             try

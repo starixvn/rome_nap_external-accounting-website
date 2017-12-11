@@ -6,9 +6,6 @@
     using Fanex.ExternalAccount.DTO.Customer;
     using NPOI.HSSF.UserModel;
 
-    /// <summary>
-    /// Customer list builder.
-    /// </summary>
     public class CustomerListPageBuilder
     {
         public CustomerListPageBuilder(DataTable customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false)
@@ -30,10 +27,6 @@
 
         public bool IsMyanmarOdds { get; private set; }
 
-        /// <summary>
-        /// Builds customer list stream.
-        /// </summary>
-        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
             TemplateReport report = null;

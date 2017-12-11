@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Balance information object.
-    /// </summary>
     public class BalanceInfo
     {
         public BalanceInfo()

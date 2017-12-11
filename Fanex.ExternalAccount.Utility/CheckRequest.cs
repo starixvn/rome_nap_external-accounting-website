@@ -4,9 +4,6 @@
     using System.Globalization;
     using System.Web;
 
-    /// <summary>
-    /// Utilities class.
-    /// </summary>
     public abstract class CheckRequest
     {
         private DateTime _minReportDate = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
@@ -24,12 +21,6 @@
             set { _maxReportDate = value; }
         }
 
-        /// <summary>
-        /// Gets integer request.
-        /// </summary>
-        /// <param name="name">Query string name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>Integer object.</returns>
         public static int GetIntRequest(string name, int defaultValue)
         {
             HttpRequest request = HttpContext.Current.Request;
@@ -49,12 +40,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets integer request.
-        /// </summary>
-        /// <param name="name">Query string name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>DateTime object.</returns>
         public static DateTime GetDateTimeRequest(string name, DateTime defaultValue)
         {
             HttpRequest request = HttpContext.Current.Request;
@@ -74,12 +59,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets integer request.
-        /// </summary>
-        /// <param name="name">Query string name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>Boolean object.</returns>
         public static bool GetBooleanRequest(string name, bool defaultValue)
         {
             HttpRequest request = HttpContext.Current.Request;
@@ -93,12 +72,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets integer request.
-        /// </summary>
-        /// <param name="name">Query string name.</param>
-        /// <param name="defaultValue">Default value.</param>
-        /// <returns>String object.</returns>
         public static string GetStringRequest(string name, string defaultValue)
         {
             HttpRequest request = HttpContext.Current.Request;

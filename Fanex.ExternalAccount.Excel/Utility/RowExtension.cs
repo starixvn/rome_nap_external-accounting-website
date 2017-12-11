@@ -3,9 +3,6 @@
     using System.Collections.Generic;
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class RowExtension
     {
         public static ICell CreateCell(this IRow row, int colId, ICellStyle cellStyle)
@@ -15,12 +12,6 @@
             return cell;
         }
 
-        /// <summary>
-        /// Writes cell values.
-        /// </summary>
-        /// <param name="row">Row to write values.</param>
-        /// <param name="colId">Column id.</param>
-        /// <param name="values">Values to write.</param>
         public static void WriteCells(this IRow row, int colId, params object[] values)
         {
             int id = colId;

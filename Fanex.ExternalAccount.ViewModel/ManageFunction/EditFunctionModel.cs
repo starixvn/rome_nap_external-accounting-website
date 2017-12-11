@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.ManageFunction
 {
-    /// <summary>
-    /// Function model.
-    /// </summary>
     public class EditFunctionModel
     {
         public int Id { get; set; }

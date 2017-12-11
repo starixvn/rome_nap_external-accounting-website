@@ -30,42 +30,21 @@
     using Reports.WinLossDetail;
     using Context;
 
-    /// <summary>
-    /// Base controller for controller to inherit.
-    /// </summary>
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
         #region Constant
 
-        /// <summary>
-        /// Constant object.
-        /// </summary>
         public const int Super = 4;
 
-        /// <summary>
-        /// Constant object.
-        /// </summary>
         public const int Master = 3;
 
-        /// <summary>
-        /// Constant object.
-        /// </summary>
         public const int Agent = 2;
 
-        /// <summary>
-        /// Constant object.
-        /// </summary>
         public const int Member = 1;
 
-        /// <summary>
-        /// Constant object.
-        /// </summary>
         protected const string SiteName = "ExtAcc";
 
-        /// <summary>
-        /// Constant object.
-        /// </summary>
         protected const int FromSystem = 3;
 
         protected const string UAT = "UAT";
@@ -73,19 +52,10 @@
 
         #endregion Constant
 
-        /// <summary>
-        /// Context of current logging in session.
-        /// </summary>
         private readonly ICurrentContext _currentContext;
 
-        /// <summary>
-        /// Session of current logging in session.
-        /// </summary>
         private readonly ICurrentSession _currentSession;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseController"/> class.
-        /// </summary>
         protected BaseController()
         {
             this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
@@ -102,10 +72,6 @@
             get { return this.Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase); }
         }
 
-        /// <summary>
-        /// Gets current context of this session.
-        /// </summary>
-        /// <value>ICurrentContext object.</value>
         protected virtual ICurrentContext CurrentContext
         {
             get
@@ -114,10 +80,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets current session of this session.
-        /// </summary>
-        /// <value>ICurrentSession object.</value>
         protected virtual ICurrentSession CurrentSession
         {
             get
@@ -126,12 +88,6 @@
             }
         }
 
-        /// <summary>
-        /// JSON base method to render JSON to output stream.
-        /// </summary>
-        /// <param name="data">Data need to render JSON object.</param>
-        /// <param name="settings">Allow Get method by default.</param>
-        /// <returns>ActionResult object.</returns>
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         {
             if (settings == null)
@@ -144,33 +100,16 @@
             return this.JsonExt(data, settings);
         }
 
-        /// <summary>
-        /// JSON base method to render JSON to output stream.
-        /// </summary>
-        /// <param name="data">Data need to render JSON object.</param>
-        /// <param name="settings">Allow Get method by default.</param>
-        /// <returns>ActionResult object.</returns>
         protected virtual ActionResult JsonBase2(object data, JsonRequestBehavior settings = JsonRequestBehavior.AllowGet)
         {
             return this.Json(data, settings);
         }
 
-        /// <summary>
-        /// Returns Partial View associated with model object.
-        /// </summary>
-        /// <param name="objModel">Model object.</param>
-        /// <param name="viewName">URL to view.</param>
-        /// <returns>PartialViewResult object.</returns>
         protected virtual ActionResult PartialViewBase(object objModel = null, string viewName = null)
         {
             return string.IsNullOrWhiteSpace(viewName) ? this.PartialView(objModel) : this.PartialView(viewName, objModel);
         }
 
-        /// <summary>
-        /// Exports excel function.
-        /// </summary>
-        /// <param name="excelStream">Excel stream.</param>
-        /// <param name="fileName">Name of excel file.</param>
         protected virtual void ExportToExcel(MemoryStream excelStream, string fileName)
         {
             if (!Response.IsRequestBeingRedirected)
@@ -184,13 +123,6 @@
             Response.End();
         }
 
-        /// <summary>
-        /// Updates Casino statues.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="result">Result object.</param>
-        /// <param name="customer">Customer object.</param>
-        /// <param name="isMult">Is update multiple or not.</param>
         protected void UpdateCasinoStatus(int custId, Fanex.PTEngine.BusinessObjects.Result result, Customer customer, bool isMult = false)
         {
             try
@@ -198,7 +130,6 @@
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
                 if (casinoCustomer.CasinoSync && (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0))
                 {
-                    // Update Casino status for closed and suspended
                     var cust = new CasinoLibrary.SBAgent.Customer();
 
                     if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
@@ -223,12 +154,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates casino statuses.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="closed">Closed status.</param>
-        /// <param name="suspended">Suspended status.</param>
         protected void UpdateCasinoStatus2(int custId, bool closed, bool suspended)
         {
             var cust = new CasinoLibrary.SBAgent.Customer();
@@ -250,11 +175,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates casino statuses.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="closed">Closed status.</param>
         protected void UpdateCasinoClosed(int custId, bool closed)
         {
             var cust = new CasinoLibrary.SBAgent.Customer();
@@ -275,11 +195,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates casino statuses.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="suspended">Suspended status.</param>
         protected void UpdateCasinoSuspended(int custId, bool suspended)
         {
             var cust = new CasinoLibrary.SBAgent.Customer();
@@ -300,14 +215,6 @@
             }
         }
 
-        /// <summary>
-        /// Checks belonging.
-        /// </summary>
-        /// <param name="groupname">Group name.</param>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="userName">Username of admin.</param>
-        /// <param name="isGetUplineInfo">Gets up-line info or not.</param>
-        /// <returns>Boolean object.</returns>
         protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
             var authorizationService = new ExternalAccountAuthorization();
@@ -315,11 +222,6 @@
             return authorizationService.IsBelong(groupname, custId, userName, isGetUplineInfo);
         }
 
-        /// <summary>
-        /// Returns denied action.
-        /// </summary>
-        /// <param name="request">Request context.</param>
-        /// <returns>ActionResult object.</returns>
         protected ActionResult ActionDenied(HttpRequestBase request)
         {
             if (request.IsAjaxRequest())
@@ -344,14 +246,6 @@
             }
         }
 
-        /// <summary>
-        /// Checks authorize on function of an admin.
-        /// </summary>
-        /// <param name="userId">Admin user id.</param>
-        /// <param name="functionKey">Function key.</param>
-        /// <param name="policy">Policy permission.</param>
-        /// <param name="request">HttpRequestBase object.</param>
-        /// <returns>Boolean object.</returns>
         protected bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy, HttpRequestBase request)
         {
             var userCache = new CachingService().GetUserCache(userId);
@@ -397,12 +291,6 @@
             return false;
         }
 
-        /// <summary>
-        /// Checks and remove IPVN if admin does not have ViewVNIP permission.
-        /// </summary>
-        /// <param name="table">DataTable customer.</param>
-        /// <param name="ipFieldName">Field name contains IP address.</param>
-        /// <returns>DataTable object.</returns>
         protected DataTable CheckVNIP(DataTable table, string ipFieldName = null)
         {
             string fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
@@ -428,11 +316,6 @@
             return table;
         }
 
-        /// <summary>
-        /// Gets level name of request.
-        /// </summary>
-        /// <param name="viewlevel">Level id of user.</param>
-        /// <returns>Level name of user.</returns>
         protected virtual string LevelName(int viewlevel)
         {
             switch (viewlevel)
@@ -489,10 +372,10 @@
             {
                 if (product.IsSpecial)
                 {
-#pragma warning disable S2589 // Boolean expressions should not be gratuitous
+#pragma warning disable S2589       
                     if (!IsHiddenProduct(product) && 
                         (!checkCustomerIsInternalAdminResult.IsInternalAdmin || (checkCustomerIsInternalAdminResult.IsInternalAdmin && checkCustomerIsInternalAdminResult.IsAllowAccess && isAuthorized)))
-#pragma warning restore S2589 // Boolean expressions should not be gratuitous
+#pragma warning restore S2589       
                     {
                         list.Add(new KeyValuePair<string, string>(
                             product.Id,

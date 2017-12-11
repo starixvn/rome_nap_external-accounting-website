@@ -16,9 +16,6 @@
     using Fanex.ExternalAccount.Utilities;
     using Logging.Extensions.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class LeftPanelService : BaseService
     {
         private static int _totalPages = 1;
@@ -30,13 +27,6 @@
             set { LeftPanelService._totalPages = value; }
         }
 
-        /// <summary>
-        /// Gets all customer information on left panel.
-        /// </summary>
-        /// <param name="username">Username of customer.</param>
-        /// <param name="groupName">Group name of customer.</param>
-        /// <param name="pageIndex">Page index.</param>
-        /// <returns>CustomerModel object.</returns>
         public override CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
         {
             var ds = this._data.GetCustomerInfo(username, groupName);
@@ -78,25 +68,11 @@
             return null;
         }
 
-        /// <summary>
-        /// Updates given credit.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="newGivenCredit">New given credit.</param>
-        /// <returns>Result object.</returns>
         public override Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             return this._data.UpdateGivenCredit(id, uplineId, newGivenCredit);
         }
 
-        /// <summary>
-        /// Gets down-line customers.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <param name="pageSize">Page size.</param>
-        /// <param name="pageIndex">Page index.</param>
-        /// <returns>DataTable object.</returns>
         public override DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
         {
             var dr = this._data.GetDownlineList(custid, pageSize, pageIndex);
@@ -111,11 +87,6 @@
             return null;
         }
 
-        /// <summary>
-        /// Gets online list customer.
-        /// </summary>
-        /// <param name="custid">Customer id.</param>
-        /// <returns>DataRowCollection object.</returns>
         public override DataRowCollection GetOnlineList(int custid)
         {
             return this._data.GetOnlineList(custid);
@@ -181,13 +152,6 @@
             return this._data.EnableESports(id, enable, enableDownline);
         }
 
-        /// <summary>
-        /// Auto update master and sync to casino database.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="allow">Allow PT or not.</param>
-        /// <param name="uplineId">Up line id.</param>
-        /// <returns>Result of actions.</returns>
         public override Result AutoMasterPT(int id, bool allow, int uplineId)
         {
             var result = this._data.AutoMasterPT(id, allow);
