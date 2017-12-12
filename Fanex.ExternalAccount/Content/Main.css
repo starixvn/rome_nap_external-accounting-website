@@ -16,6 +16,7 @@ html, body {
 .successWarning {
     background-image: url("../Images/tick.png");
     padding-left: 5px;
+    -ms-background-repeat: no-repeat;
     background-repeat: no-repeat;
     letter-spacing: 10px;
     font-size: 12px;
@@ -71,19 +72,21 @@ html, body {
 
 /* 4 corners jqGrid */
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-    border-bottom-right-radius: 0px !important;
+    -ms-border-bottom-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
 
 .ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
-    border-bottom-left-radius: 0px !important;
+    -ms-border-bottom-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 
 .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
-    border-top-right-radius: 0px !important;
+    border-top-right-radius: 0 !important;
 }
 
 .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
-    border-top-left-radius: 0px !important;
+    border-top-left-radius: 0 !important;
 }
 /* END: FOR Nexcel JQGRID */
 
@@ -112,11 +115,11 @@ html, body {
     right: 0;
     bottom: 0;
     position: absolute;
-    height: 0px;
-    width: 0px;
+    height: 0;
+    width: 0;
     overflow: hidden;
     visibility: hidden;
-    line-height: 0px;
+    line-height: 0;
     margin-bottom: 2px;
 }
 
@@ -167,7 +170,9 @@ html, body {
         position: relative;
         height: 50px;
         background-image: url(../Images/arrow-icn-right.png);
+        -ms-background-position: -3px 20px;
         background-position: -3px 20px;
+        -ms-background-repeat: no-repeat;
         background-repeat: no-repeat;
     }
 
@@ -180,19 +185,19 @@ html, body {
 }
 
 .accMenu {
-    margin-right: 5px;
-    cursor: pointer;
-    float: right;
-    text-align: right;
     background-color: transparent;
     border: none;
+    border: none;
     color: #acacac;
+    cursor: pointer;
+    float: right;
     font-weight: bold;
     line-height: 50px;
+    margin-right: 5px;
+    margin-top: 10px;
+    text-align: right;
     vertical-align: middle;
     visibility: hidden;
-    margin-top: 10px;
-    border: none;
     width: auto !important;
 }
 
@@ -217,7 +222,7 @@ a {
 
 .pdCommon {
     float: left;
-    padding: 5px 5px 0px 20px;
+    padding: 5px 5px 0 20px;
 }
 
 .groupBack {
@@ -227,7 +232,7 @@ a {
 
 #mainGrid {
     visibility: hidden;
-    margin: 1px 3px 0px 3px;
+    margin: 1px 3px 0 3px;
 }
 
 .usernameInput {
@@ -526,20 +531,20 @@ a {
 }
 
 .bgWLDaily {
-    background: #F6F6F6 url(../Images/bg-Line-Title.png) repeat-x 0px 0px;
+    background: #F6F6F6 url(../Images/bg-Line-Title.png) repeat-x 0 0;
     height: 33px;
     min-width: 700px;
 }
 
 #headlineDaily {
     visibility: hidden;
-    background: #c7c7c7 url(../Images/bg-Title-Grid.png) repeat-x 0px 0px;
+    background: #c7c7c7 url(../Images/bg-Title-Grid.png) repeat-x 0 0;
     height: 31px;
     border-left: 1px solid #c7c7c7;
     border-right: 1px solid #c7c7c7;
     clear: both;
     min-width: 700px;
-    margin: 1px 3px 0px 3px;
+    margin: 1px 3px 0 3px;
 }
 
 #InfoDate {
@@ -550,14 +555,14 @@ a {
 }
 
 .btnShowMG {
-    background: url(../Images/show-btn.png) no-repeat 0px 0px;
+    background: url(../Images/show-btn.png) no-repeat 0 0;
     padding: 30px 0 0 97px;
     float: right;
     cursor: pointer;
 }
 
     .btnShowMG:hover {
-        background: url(../Images/show-btn.png) no-repeat 0px 0px;
+        background: url(../Images/show-btn.png) no-repeat 0 0;
         padding: 30px 0 0 97px;
         float: right;
         cursor: pointer;
@@ -776,7 +781,7 @@ a {
 }
 
 .ui-li-nolink {
-    padding: 0.2em 75px 0.2em 0px;
+    padding: 0.2em 75px 0.2em 0;
     font-weight: bold;
     font-size: 10pt;
 }
@@ -968,11 +973,11 @@ a {
 }
 
 .ui-btn-up-c {
-    text-shadow: 0 0px 0px #f6f6f6;
+    text-shadow: 0 0 0 #f6f6f6;
 }
 
 .ui-btn-hover-c, .ui-btn-down-c {
-    text-shadow: 0 0px 0px #ffffff;
+    text-shadow: 0 0 0 #ffffff;
 }
 
 label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
@@ -1010,7 +1015,7 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
     font-size: 12px;
     width: 100%;
     text-align: left;
-    text-shadow: 0 0px 0px #000;
+    text-shadow: 0 0 0 #000;
 }
 
     .grid th {
@@ -1079,7 +1084,7 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
     font-size: 12px;
     width: 100%;
     text-align: left;
-    text-shadow: 0 0px 0px #000;
+    text-shadow: 0 0 0 #000;
 }
 
     .gridBS th {
@@ -1238,17 +1243,17 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
 }
 
 input[type=checkbox] {
-    border: 0px;
+    border: 0;
     vertical-align: middle;
     width: 20px;
 }
 
 .jqx-menu ul {
-    border: 0px none;
+    border: 0 none;
 }
 
 ul, li {
-    border: 0px none;
+    border: 0 none;
 }
 
 .jqx-menu-item:hover {
@@ -1299,15 +1304,15 @@ li:hover {
 }
 
 #gview_jqgrid .ui-state-hover, #gview_jqgrid .ui-widget-content .ui-state-hover, #gview_jqgrid .ui-widget-header .ui-state-hover, #gview_jqgrid .ui-state-focus, #gview_jqgrid .ui-widget-content .ui-state-focus, #gview_jqgrid .ui-widget-header .ui-state-focus {
-    border: 0px;
+    border: 0;
     border-right: 1px solid #d3d3d3 !important;
 }
 
 .ui-autocomplete .ui-state-focus {
     background-color: #999 !important;
     background-image: none !important;
-    padding: 0px 0px 0px 4px !important;
-    margin: 0px !important;
+    padding: 0 0 0 4px !important;
+    margin: 0 !important;
     height: 20px;
 }
 
@@ -1504,14 +1509,15 @@ div#contentSplitter > div#msg {
     border: none;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #ACACAC;
-    font-weight: bold;
-}
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #ACACAC;
+        font-weight: bold;
+    }
 
 #accMenuGroup:hover .select2-selection__rendered {
     color: #ffffff;
 }
+
 .select2-container--default .select2-results > .select2-results__options {
     max-height: 500px;
 }

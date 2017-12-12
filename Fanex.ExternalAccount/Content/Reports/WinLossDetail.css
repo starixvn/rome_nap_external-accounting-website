@@ -1,123 +1,129 @@
-﻿#userGroup input
-{
-	width: 147px !important;
-}
-#GroupFromToDate
-{
-	height: 37px;
-}
-#GroupMonthDay
-{
-	height: 37px;
-}
-#gUserName
-{
-	clear: both;
-	height: 38px;
-}
-.txt-normal{float: left; font-weight: normal; width: 160px}
-
-.frozen-div
-{
-	border-right: 1px solid #999 !important;
-	width: 336px;
-}
-.fixedColumnFooter
-{
-	width: 335px !important;
+﻿#userGroup input {
+    width: 147px !important;
 }
 
-.ui-multiselect
-{
-	height: 23px;
-	border: 1px solid #bbb;
-	border-bottom-left-radius: 3px !important;
-	border-bottom-right-radius: 3px !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
-}
-.ui-multiselect .ui-state-default
-{
-	color: #444;
-	border-bottom-left-radius: 3px !important;
-	border-bottom-right-radius: 3px !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
-}
-.ui-multiselect .ui-state-hover
-{
-	border: 1px solid #999;
-	border-bottom-left-radius: 3px !important;
-	border-bottom-right-radius: 3px !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
+#GroupFromToDate {
+    height: 37px;
 }
 
-.ui-multiselect span
-{
-	margin-top: -20px !important;
+#GroupMonthDay {
+    height: 37px;
 }
 
-.ui-multiselect-options
-{
-	margin-top: 45px !important;
+#gUserName {
+    clear: both;
+    height: 38px;
 }
 
-#DateList
-{
-	width: 153px;
+.txt-normal {
+    float: left;
+    font-weight: normal;
+    width: 160px;
 }
-.wFrom
-{
-	float: left;
-	margin: 5px 3px 0 20px;
-	width: 52px;
+
+.frozen-div {
+    border-right: 1px solid #999 !important;
+    width: 336px;
 }
-.toDate
-{
-	float: left;
-	margin: 5px 0 0 65px;
+
+.fixedColumnFooter {
+    width: 335px !important;
 }
-.float-pdL-small{float: left; padding-left: 11px;}
-#GroupProducts
-{
-	height: 24px;
+
+.ui-multiselect {
+    height: 23px;
+    border: 1px solid #bbb;
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
 }
-#GroupProducts input
-{
-	height: 18px !important;
+
+    .ui-multiselect .ui-state-default {
+        color: #444;
+        border-bottom-left-radius: 3px !important;
+        border-bottom-right-radius: 3px !important;
+        border-top-left-radius: 3px !important;
+        border-top-right-radius: 3px !important;
+    }
+
+    .ui-multiselect .ui-state-hover {
+        border: 1px solid #999;
+        border-bottom-left-radius: 3px !important;
+        border-bottom-right-radius: 3px !important;
+        border-top-left-radius: 3px !important;
+        border-top-right-radius: 3px !important;
+    }
+
+    .ui-multiselect span {
+        margin-top: -20px !important;
+    }
+
+.ui-multiselect-options {
+    margin-top: 45px !important;
 }
-.history
-{
+
+#DateList {
+    width: 153px;
+}
+
+.wFrom {
+    float: left;
+    margin: 5px 3px 0 20px;
+    width: 52px;
+}
+
+.toDate {
+    float: left;
+    margin: 5px 0 0 65px;
+}
+
+.float-pdL-small {
+    float: left;
+    padding-left: 11px;
+}
+
+#GroupProducts {
+    height: 24px;
+}
+
+    #GroupProducts input {
+        height: 18px !important;
+    }
+
+.history {
     margin-left: 1px;
-	color: #2489ce;
-	cursor: pointer;
-	font-style: italic;
+    color: #2489ce;
+    cursor: pointer;
+    font-style: italic;
 }
-.filterBoxWLDetail
-{
-	background: url(../../Images/filterbox-bg.png) repeat-x;
-	height: 114px;
-	margin: 0px 3px 1px 3px;
-	padding-top: 10px;
+
+.filterBoxWLDetail {
+    background: url(../../Images/filterbox-bg.png) repeat-x;
+    height: 114px;
+    margin: 0 3px 1px 3px;
+    padding-top: 10px;
 }
-.arrow
-{
-	background: url("../../Images/arrow.png") no-repeat left;
-	width: 13px;
-	height: 12px;
-	padding-left: 18px;
+
+.arrow {
+    background: url("../../Images/arrow.png") no-repeat left;
+    width: 13px;
+    height: 12px;
+    padding-left: 18px;
 }
-.iconscontainer
-{
-	background-repeat: no-repeat;
-	background-position: 80% 50%;
-	background-image: url(/Images/sort.png);
+
+.iconscontainer {
+    -ms-background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    -ms-background-position: 80% 50%;
+    background-position: 80% 50%;
+    background-image: url(/Images/sort.png);
 }
-span.selectedMonth
-{
-	margin-right: 15px;
+
+span.selectedMonth {
+    margin-right: 15px;
 }
-.monPickrWrap{
+
+.monPickrWrap {
     position: relative !important;
 }

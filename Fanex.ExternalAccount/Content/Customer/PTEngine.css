@@ -1,64 +1,62 @@
 ﻿/* START: Base on MemberInfo.css */
-.PTHeader
-{
+.PTHeader {
 	width: 841px;
 	border-top: 1px solid #CCC !important;
 }
-.clear
-{
+
+.clear {
 	width: 841px;
 }
 
-.widthPTC
-{
+.widthPTC {
 	width: 835px;
 }
-.blockBtn
-{
+
+.blockBtn {
 	width: 843px;
 	text-align: right;
 	margin-bottom: 3px;
 }
-.widthPT
-{
+
+.widthPT {
 	width: 840px;
 }
-.clearBlock
-{
+
+.clearBlock {
 	clear: both;
 	border-top: 1px solid #CCC;
 }
-.minWidthCustomer
-{
+
+.minWidthCustomer {
 	width: 845px;
 	margin: 2px 0 0 2px;
 }
-.float_l
-{
+
+.float_l {
 	float: left;
 }
-.pt3
-{
+
+.pt3 {
 	padding-top: 5px;
 }
-.pb3
-{
+
+.pb3 {
 	padding-bottom: 5px;
 }
-.pt7
-{
+
+.pt7 {
 	padding-top: 7px;
 }
-.hide
-{
+
+.hide {
 	display: none;
 }
-.nowrap
-{
+
+.nowrap {
 	white-space: nowrap;
 }
-.customerInfo
-{
+
+.customerInfo {
 	background-color: #FFF;
 	border-top: 1px solid #CCC;
 	border-left: 1px solid #CCC;
@@ -67,32 +65,32 @@
 	min-width: 841px;
 	padding: 0;
 }
-.textBoxInfo
-{
+
+.textBoxInfo {
 	height: 18px;
 	margin: 0;
 	padding: 0;
 	width: 120px;
 	vertical-align: top;
 }
-.textBoxCredit
-{
+
+.textBoxCredit {
 	text-align: right;
 }
-.textBoxComm
-{
+
+.textBoxComm {
 	width: 60px;
 	margin: 0;
 	padding: 0;
 	height: 18px;
 	text-align: right;
 }
-.bdt0
-{
-	border-top: 0px none !important;
+
+.bdt0 {
+	border-top: 0 none !important;
 }
-.customerInfoBlock1
-{
+
+.customerInfoBlock1 {
 	font-size: 11px !important;
 	background: #FFF;
 	border-top: 1px solid #CCC;
@@ -105,8 +103,8 @@
 	vertical-align: middle;
 	width: 180px;
 }
-.customerInfoBlock2
-{
+
+.customerInfoBlock2 {
 	font-size: 11px !important;
 	background: #FFF;
 	border-left: 1px solid #CCC;
@@ -120,12 +118,12 @@
 	vertical-align: middle;
 	width: 335px;
 }
-.commissionBlock1, .commissionBlock2, .commissionHeader, .BettingLimitTextBox4, .BettingLimitTextBox5
-{
-    font-size: 11px !important;
+
+.commissionBlock1, .commissionBlock2, .commissionHeader, .BettingLimitTextBox4, .BettingLimitTextBox5 {
+	font-size: 11px !important;
 }
-.customerInfoBlock2NoBorderLeft
-{
+
+.customerInfoBlock2NoBorderLeft {
 	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -137,8 +135,8 @@
 	vertical-align: middle;
 	width: 336px;
 }
-.customerInfoBlock3
-{
+
+.customerInfoBlock3 {
 	font-size: 11px !important;
 	background: #FFF;
 	border-left: 1px solid #CCC;
@@ -152,8 +150,8 @@
 	vertical-align: middle;
 	width: 110px;
 }
-.customerInfoBlock4
-{
+
+.customerInfoBlock4 {
 	font-size: 11px !important;
 	background: #FFF;
 	border-left: 1px solid #CCC;
@@ -166,11 +164,11 @@
 	vertical-align: middle;
 	width: 200px;
 }
-.customerInfoBlockVS
-{
+
+.customerInfoBlockVS {
 	font-size: 11px !important;
 	background: #FFF;
-	border-left: 0px;
+	border-left: 0;
 	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
@@ -178,8 +176,8 @@
 	vertical-align: middle;
 	width: 418px;
 }
-.customerInfoBlock5
-{
+
+.customerInfoBlock5 {
 	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	border-left: 1px solid #CCC;
@@ -190,8 +188,8 @@
 	vertical-align: middle;
 	width: 418px;
 }
-.customerInfoBlock6
-{
+
+.customerInfoBlock6 {
 	font-size: 11px !important;
 	font-weight: bold;
 	text-align: center;
@@ -199,8 +197,8 @@
 	width: 837px;
 	padding: 2px;
 }
-.customerInfoBlock7
-{
+
+.customerInfoBlock7 {
 	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -210,8 +208,8 @@
 	text-align: right;
 	width: 418px;
 }
-.customerInfoBlock4NoBorderLeft
-{
+
+.customerInfoBlock4NoBorderLeft {
 	font-size: 11px !important;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -223,8 +221,7 @@
 	width: 201px;
 }
 
-.customerInfoViewBlock1
-{
+.customerInfoViewBlock1 {
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -236,8 +233,8 @@
 	vertical-align: middle;
 	width: 143px;
 }
-.customerInfoViewBlock2
-{
+
+.customerInfoViewBlock2 {
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -249,8 +246,8 @@
 	vertical-align: middle;
 	width: 269px;
 }
-.customerInfoViewBlock2NoBorderLeft
-{
+
+.customerInfoViewBlock2NoBorderLeft {
 	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
@@ -261,21 +258,21 @@
 	vertical-align: middle;
 	width: 270px;
 }
-.commission
-{
+
+.commission {
 	background-color: #FFF;
 	border: 1px solid #CCC;
 	float: left;
 	min-width: 841px;
 }
-.commissionHeader
-{
+
+.commissionHeader {
 	color: Black;
 	font-weight: bold;
 }
-.commissionBlock1
-{
-	border-top: 0px solid #CCC;
+
+.commissionBlock1 {
+	border-top: 0 solid #CCC;
 	float: left;
 	line-height: 24px;
 	text-align: center;
@@ -284,10 +281,10 @@
 	padding-right: 5px;
 	text-align: right;
 }
-.commissionBlock2
-{
+
+.commissionBlock2 {
 	border-left: 1px solid #CCC;
-	border-top: 0px solid #CCC;
+	border-top: 0 solid #CCC;
 	float: left;
 	line-height: 24px;
 	text-align: center;
@@ -295,8 +292,8 @@
 	width: 285px;
 	padding: 1px 1px 1px;
 }
-.commissionViewBlock1
-{
+
+.commissionViewBlock1 {
 	border-top: 1px solid #CCC;
 	float: left;
 	height: 22px;
@@ -306,8 +303,8 @@
 	padding: 1px 1px 1px;
 	text-align: right;
 }
-.commissionViewBlock2
-{
+
+.commissionViewBlock2 {
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	float: left;
@@ -317,29 +314,29 @@
 	width: 200px;
 	padding: 1px 1px 1px;
 }
-.commissionGroup
-{
+
+.commissionGroup {
 	float: left;
 	margin-left: 2px;
 	padding: 2px 2px 2px 8px;
 	white-space: nowrap;
 }
-.groupCom
-{
+
+.groupCom {
 	text-align: right;
 	width: 130px !important;
 	padding-right: 5px;
 	font-size: 11px !important;
 	float: left !important;
 }
-.widthGroup
-{
+
+.widthGroup {
 	width: 70px !important;
 	font-size: 11px !important;
 	float: left !important;
 }
-.headerTab
-{
+
+.headerTab {
 	background-color: #f1f1a6;
 	border-bottom: 1px solid #CCC;
 	clear: both;
@@ -350,8 +347,8 @@
 	text-align: center;
 	text-indent: 5px;
 }
-.transferCondition
-{
+
+.transferCondition {
 	background-color: #FFF;
 	border-bottom: 1px solid #CCC;
 	border-left: 1px solid #CCC;
@@ -359,18 +356,18 @@
 	float: left;
 	min-width: 841px;
 }
-.transferCondition div label
-{
-	font-size: 11px !important;
-	padding-left: 30px;
-	line-height: 25px;
-}
-#rdWeekly, #rdDaily
-{
+
+	.transferCondition div label {
+		font-size: 11px !important;
+		padding-left: 30px;
+		line-height: 25px;
+	}
+
+#rdWeekly, #rdDaily {
 	margin-right: 3px;
 }
-.headerPositionTaking
-{
+
+.headerPositionTaking {
 	border: 1px solid #CCC;
 	background-color: #f1f1a6;
 	clear: both;
@@ -382,22 +379,22 @@
 	text-indent: 5px;
 	border-top: 0;
 }
-.positionTaking
-{
+
+.positionTaking {
 	border-left: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
 	padding: 3px;
 	border-top: 0;
 }
-.line
-{
+
+.line {
 	background-color: #CCC;
 	height: 1px;
 	margin: 2px 0;
 }
-.headerBetSetting
-{
+
+.headerBetSetting {
 	background-color: #F1F1A6;
 	border-top: 1px solid #CCC;
 	border-left: 1px solid #CCC;
@@ -411,15 +408,15 @@
 	text-indent: 5px;
 	width: 841px;
 }
-.PTSport
-{
+
+.PTSport {
 	background-color: #D4E3EB;
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
-.PTSportLabel2
-{
+
+.PTSportLabel2 {
 	width: 90px;
 	height: 20px;
 	line-height: 20px;
@@ -430,8 +427,8 @@
 	text-indent: 1px !important;
 	font-size: 11px !important;
 }
-.PTSportLabel
-{
+
+.PTSportLabel {
 	width: 122px;
 	height: 20px;
 	line-height: 20px;
@@ -443,72 +440,71 @@
 	font-size: 11px !important;
 }
 
-.PTSportEditCopied
-{
+.PTSportEditCopied {
 }
-.PTGroup
-{
+
+.PTGroup {
 	background-color: #F7F0E4;
 }
-.PTGroup2
-{
+
+.PTGroup2 {
 	background-color: #FAF9EE;
 }
-.BetTypeCheckbox, .BetTypeHeaderActive
-{
+
+.BetTypeCheckbox, .BetTypeHeaderActive {
 	border-left: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
-.BetTypeInactive
-{
+
+.BetTypeInactive {
 	background-color: #DDDDDD;
 }
-.BettingLimit, .BettingLimit4
-{
+
+.BettingLimit, .BettingLimit4 {
 	background-color: #F7F0E4;
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 }
-.BettingLimitTextBox
-{
+
+.BettingLimitTextBox {
 	vertical-align: top;
 	width: 110px;
 }
-.BettingLimitTextBox4
-{
+
+.BettingLimitTextBox4 {
 	width: 186px;
 	vertical-align: top;
 }
-.BettingLimitTextBox9
-{
+
+.BettingLimitTextBox9 {
 	width: 90px;
 	vertical-align: top;
 }
-.BettingLimitTextBox5
-{
+
+.BettingLimitTextBox5 {
 	width: 137px;
 	vertical-align: top;
 }
-.BettingLimitItem2
-{
+
+.BettingLimitItem2 {
 	background-color: #FFF;
 	border-top: 1px solid #CCC;
 }
-.GroupSetLabel
-{
+
+.GroupSetLabel {
 	min-width: 46px;
 }
-.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1
-{
+
+.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2, .BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5, .BettingLimitLabel, .BettingLimitLabel1 {
 	font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-color: #E7F7FF;
-	border-left: 1px solid #CCC!important;
-	border-top: 1px solid #CCC!important;
+	border-left: 1px solid #CCC !important;
+	border-top: 1px solid #CCC !important;
 	font-size: 11px !important;
 	text-indent: 1px !important;
 }
-.BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
-{
+
+.BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive {
 	font-family: Tahoma,Arial,helvetica,sans-serif;
 	background-position: 100px 2px;
 	border-left: 1px solid #CCC;
@@ -516,23 +512,22 @@
 	font-size: 11px !important;
 	text-indent: 1px !important;
 }
-.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem, .BettingLimitItem4, .BettingLimitItem5
-{
+
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem, .BettingLimitItem4, .BettingLimitItem5 {
 	/*height: 24px;*/
 	background-color: #FFF;
 	border-left: 1px solid #CCC !important;
 	border-top: 1px solid #CCC !important;
 }
-.BettingLimitItem92
-{
-    background-color: #FFF;
+
+.BettingLimitItem92 {
+	background-color: #FFF;
 	border-left: none;
 	border-top: 1px solid #CCC;
 	padding-left: 3px;
 }
 /* START: Base on MemberInfo.css */
-.names
-{
+.names {
 	font-weight: bold;
 	text-align: justify;
 	vertical-align: middle;
@@ -543,8 +538,8 @@
 	-webkit-border-radius: 5px;
 	padding: 5px;
 }
-.collapse
-{
+
+.collapse {
 	float: right;
 	vertical-align: top;
 	cursor: pointer;
@@ -557,8 +552,8 @@
 	border-right: none;
 	border-top: none;
 }
-.expand
-{
+
+.expand {
 	float: right;
 	vertical-align: top;
 	cursor: pointer;
@@ -571,27 +566,26 @@
 	border-right: none;
 	border-top: none;
 }
-input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, div.BettingLimitItem92
-{
+
+input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, div.BettingLimitItem92 {
 	font-size: 11px !important;
 	font-family: Tahoma,Arial,helvetica,sans-serif;
 }
 
-.BtnPTDown, .BtnPTUp, .BtnPTSub, .BtnPTAdd
-{
+.BtnPTDown, .BtnPTUp, .BtnPTSub, .BtnPTAdd {
 	vertical-align: top;
 	margin-top: 2px;
 }
-.PTSelect
-{
+
+.PTSelect {
 	height: 18px;
 }
-#idConfirm_popupBody, #idConfirm_popupFooter
-{
+
+#idConfirm_popupBody, #idConfirm_popupFooter {
 	background-color: #fff !important;
 }
-#idConfirm_yesButton, #idConfirm_noButton
-{
+
+#idConfirm_yesButton, #idConfirm_noButton {
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEdJREFUeNpMi0EOgEAMAgn+3q/5Dd9gNlkFl9qDh6YMYbb9OHmNyXk/NEwLhE0lG4u/H8bKcnP1qn28YrWXLm5t/9c9/AowAL0JSAVSVq3tAAAAAElFTkSuQmCC) repeat-x scroll 5px center;
 	border: 1px solid #5897C3;
 	color: #fff;
@@ -606,53 +600,57 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 	padding-bottom: 2px;
 	text-indent: 0 !important;
 }
-#idConfirm_yesButton:hover, #idConfirm_noButton:hover
-{
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADpJREFUeNpidu3ZxcTIwMDEyMgIxUhsJgjNBBJjAtEQMSaYOJhmgtDI8jBz4Pph5gHFGIAkIyNAgAEA2vwCK9PMD8cAAAAASUVORK5CYII=) repeat-x scroll 5px center;
-	border: 1px solid #5897C3;
-	color: #fff;
-	cursor: pointer;
-	width: 80px;
-	height: 30px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-}
-#idConfirm_popupFooter
-{
+
+	#idConfirm_yesButton:hover, #idConfirm_noButton:hover {
+		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADpJREFUeNpidu3ZxcTIwMDEyMgIxUhsJgjNBBJjAtEQMSaYOJhmgtDI8jBz4Pph5gHFGIAkIyNAgAEA2vwCK9PMD8cAAAAASUVORK5CYII=) repeat-x scroll 5px center;
+		border: 1px solid #5897C3;
+		color: #fff;
+		cursor: pointer;
+		width: 80px;
+		height: 30px;
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+	}
+
+#idConfirm_popupFooter {
 	text-align: right !important;
 }
-#idConfirm_popupTitle
-{
+
+#idConfirm_popupTitle {
 	height: 22px !important;
 }
-.BettingLimitLabel, .BettingLimitLabel1
-{
+
+.BettingLimitLabel, .BettingLimitLabel1 {
 	background-color: #fff !important;
 }
-td, TD
-{
-    white-space: normal; 
-    overflow: auto;
+
+td, TD {
+	white-space: normal;
+	overflow: auto;
 }
+
 .PTBoxRightBorder .BetTypeHeader, .PTBoxRightBorder .BetTypeSelect, .PTBoxRightBorder .BetTypeLabel {
-    border-right: 1px solid #CCC;
+	border-right: 1px solid #CCC;
 }
+
 .BetTypeBottomBorder {
-    border-bottom: 1px solid #CCC;
-    height: 22px;
+	border-bottom: 1px solid #CCC;
+	height: 22px;
 }
+
 .PTGroupSet2 {
-    background-color: #FAF9EE !important;
-    clear: both;
-    margin: 0;
-    overflow: auto;
-    padding: 0;
+	background-color: #FAF9EE !important;
+	clear: both;
+	margin: 0;
+	overflow: auto;
+	padding: 0;
 }
+
 .hint li:hover {
-    color: black !important;
+	color: black !important;
 }
 
 .sport-type-detail-icon {
-    margin: 3px 0px 0px !important;
+	margin: 3px 0 0 !important;
 }
