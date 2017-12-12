@@ -369,7 +369,7 @@
                 "~/bootstrap/dailywinloss/css",
                 "~/bootstrap/dailywinloss/js",
                 Config.CssDailyWinLoss,
-                Config.CssDailyWinLoss);
+                Config.JsDailyWinLoss);
 
         public static void EnableWinLossDetailBundle(this BundleCollection bundles)
             => EnableBundle(
