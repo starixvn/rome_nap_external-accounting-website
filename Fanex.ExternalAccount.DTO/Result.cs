@@ -6,9 +6,9 @@
     {
         public Result(object errCode = null, object errMsg = null, object resultData = null)
         {
-            this.ErrorCode = errCode != null ? errCode.ToString() : string.Empty;
-            this.ErrorMessage = errMsg != null ? errMsg.ToString() : string.Empty;
-            this.ResultData = resultData;
+            ErrorCode = (errCode ?? string.Empty).ToString();
+            ErrorMessage = (errMsg ?? string.Empty).ToString();
+            ResultData = resultData;
         }
 
         public string ErrorCode { get; set; }
@@ -17,12 +17,6 @@
 
         public object ResultData { get; set; }
 
-        public bool IsSuccess
-        {
-            get
-            {
-                return string.IsNullOrWhiteSpace(this.ErrorCode) || Convert.ToInt32(this.ErrorCode) <= 0;
-            }
-        }
+        public bool IsSuccess => string.IsNullOrWhiteSpace(ErrorCode) || Convert.ToInt32(ErrorCode) <= 0;
     }
 }

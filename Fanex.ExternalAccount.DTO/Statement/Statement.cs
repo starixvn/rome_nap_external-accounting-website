@@ -1,7 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Statement
 {
-    using System;
-
     public class Statement
     {
         public string AccDate { get; set; }

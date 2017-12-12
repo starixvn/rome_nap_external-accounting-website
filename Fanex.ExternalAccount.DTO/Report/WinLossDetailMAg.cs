@@ -1,7 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Report
 {
-    using System;
-
     public class WinLossDetailMAg
     {
         public int CustId { get; set; }
