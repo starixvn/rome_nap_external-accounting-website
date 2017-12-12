@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using ThirdPartyProducts.StatusSetting.Model;
-
-namespace Fanex.ExternalAccount.DTO.Customer
+﻿namespace Fanex.ExternalAccount.DTO.Customer
 {
+    using System.Collections.Generic;
+    using ThirdPartyProducts.StatusSetting.Model;
+
     public class ThirdPartyProductStatusViewModel
     {
         public int CustId { get; set; }
@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.DTO.Customer
         {
             get
             {
-                switch (this.RoleId)
+                switch (RoleId)
                 {
                     case 1:
                         return "Member";

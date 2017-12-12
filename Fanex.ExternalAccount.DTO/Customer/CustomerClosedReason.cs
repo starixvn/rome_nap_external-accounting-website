@@ -1,13 +1,13 @@
-﻿using System;
-
-namespace Fanex.ExternalAccount.DTO.Customer
+﻿namespace Fanex.ExternalAccount.DTO.Customer
 {
+    using System;
+
     public sealed class CustomerClosedReason
     {
-        private const byte WrongPasswordOthers = 0; // gray: #ccc7ba
-        private const byte ByAdmin = 1; // purple: #b3a2c7
-        private const byte ByUpline = 2; // orange: #f79646
-        private const byte WrongOTPSC = 3; // blue: #86c5e4
+        const byte WrongPasswordOthers = 0; // gray: #ccc7ba
+        const byte ByAdmin = 1; // purple: #b3a2c7
+        const byte ByUpline = 2; // orange: #f79646
+        const byte WrongOTPSC = 3; // blue: #86c5e4
 
         public CustomerClosedReason(object closedReason)
         {
@@ -26,7 +26,7 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public string ClosedReason { get; private set; }
 
-        private void AssignParameters(byte closedReason)
+        void AssignParameters(byte closedReason)
         {
             ClassName = "closed-";
 

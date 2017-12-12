@@ -1,10 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     public class Commission
     {
         public double Groupa { get; set; }

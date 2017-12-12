@@ -4,34 +4,14 @@
 
     public class CasinoObject
     {
-        public CasinoCustomer CustomerInfo
-        {
-            get;
-            set;
-        }
+        public CasinoCustomer CustomerInfo { get; set; }
 
-        public CasinoCustomer CasinoInfo
-        {
-            get;
-            set;
-        }
+        public CasinoCustomer CasinoInfo { get; set; }
 
-        public List<Stakes> CasinoGame
-        {
-            get;
-            set;
-        }
+        public List<Stakes> CasinoGame { get; set; }
 
-        public List<Stakes> MiniGame
-        {
-            get;
-            set;
-        }
+        public List<Stakes> MiniGame { get; set; }
 
-        public List<GameKindDetail> Pts
-        {
-            get;
-            set;
-        }
+        public List<GameKindDetail> Pts { get; set; }
     }
 }

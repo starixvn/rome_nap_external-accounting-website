@@ -4,28 +4,12 @@
 
     public class Stakes
     {
-        public int GameTypeID
-        {
-            get;
-            set;
-        }
+        public int GameTypeID { get; set; }
 
-        public string GameTypeName
-        {
-            get;
-            set;
-        }
+        public string GameTypeName { get; set; }
 
-        public List<StakeLevelDetail> StakeLevels
-        {
-            get;
-            set;
-        }
+        public List<StakeLevelDetail> StakeLevels { get; set; }
 
-        public GameTypeDetail Pt
-        {
-            get;
-            set;
-        }
+        public GameTypeDetail Pt { get; set; }
     }
 }
