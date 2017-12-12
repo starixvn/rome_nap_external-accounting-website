@@ -9,19 +9,13 @@
 
     public class ExternalAccountAuthenticate : AuthorizeAttribute, IAuthenticate
     {
-        private bool _isAjaxRequest = true;
-
         private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
 
         public AuthenticateAction.AuthenticationType Policy { get; set; }
 
         public string Function { get; set; }
 
-        public bool IsAjaxRequest
-        {
-            get { return _isAjaxRequest; }
-            set { _isAjaxRequest = value; }
-        }
+        public bool IsAjaxRequest { get; set; } = true;
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
