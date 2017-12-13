@@ -9,10 +9,8 @@
         private static readonly CasinoManager instance = new CasinoManager();
         private readonly CasinoDao _casinoDao = new CasinoDao();
 
-        public static CasinoManager Instance => instance ?? new CasinoManager();
-
-        public static string Lang(string original) => original + "_En";
-
+        public static CasinoManager Instance => instance;
+        
         public bool GetCasinoStatus(int custid) => _casinoDao.GetCasinoStatus(custid);
 
         public bool UpdateCSStatus(
@@ -22,7 +20,8 @@
             int userId,
             string ip,
             int subAccId,
-            string lang) => _casinoDao.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang);
+            string lang)
+            => _casinoDao.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang);
 
         public bool UpdateCSStatus(
             int custid,
@@ -57,14 +56,9 @@
             var status = DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
                 lang, out errMsg);
 
-            if (!status)
-            {
-                return false;
-            }
-
             var cust = new Customer();
-            return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId,
-                subAccId == 0 ? username : subUsername, 3);
+            return status ? cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId,
+                subAccId == 0 ? username : subUsername, 3) : status;
         }
 
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId) => _casinoDao.GetCustInfoIBC(custid, uplineId);
@@ -78,8 +72,8 @@
             string ip,
             int subAccId,
             string lang,
-            out string errMsg) => _casinoDao.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId,
-            ip, subAccId,
+            out string errMsg)
+            => _casinoDao.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
             lang, out errMsg);
     }
 }

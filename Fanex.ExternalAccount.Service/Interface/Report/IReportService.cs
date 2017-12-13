@@ -8,6 +8,10 @@
 
     public interface IReportService
     {
+        DateTime BalanceUpDate();
+
+        DateTime MoveBetsDate();
+
         DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);

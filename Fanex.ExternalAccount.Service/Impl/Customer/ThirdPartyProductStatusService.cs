@@ -1,31 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using CasinoLibrary.Model.UserException;
-using Fanex.ExternalAccount.DTO.Customer;
-using Fanex.ExternalAccount.Service.Interface.Customer;
-using Fanex.Logging.Extensions.Web;
-using ThirdPartyProducts.StatusSetting.Enums;
-using ThirdPartyProducts.StatusSetting.Model;
-using ThirdPartyProducts.StatusSetting.Services;
-
-namespace Fanex.ExternalAccount.Service.Impl.Customer
+﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using CasinoLibrary.Model.UserException;
+    using DTO.Customer;
+    using Interface.Customer;
+    using Module.Logs;
+    using Module.Logs.Services;
+    using ThirdPartyProducts.StatusSetting.Enums;
+    using ThirdPartyProducts.StatusSetting.Model;
+    using ThirdPartyProducts.StatusSetting.Services;
+    using Customer = CasinoLibrary.SBAgent.Customer;
+
     public class ThirdPartyProductStatusService : IThirdPartyProductStatusService
     {
         public ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId)
-        {
-            return new ThirdPartyProductStatusViewModel()
+            => new ThirdPartyProductStatusViewModel
             {
                 CustId = custId,
                 RoleId = roleId,
                 CustName = custName,
                 HasCheckAll = productId == (int)Product.Keno,
                 GroupBySport = productId == (int)Product.Racing,
-                ProductStatusList = StatusSettingService.GetProductStatus(new GetProductStatusRequest { CustId = custId, ProductId = productId, RoleId = roleId })
+                ProductStatusList =
+                    StatusSettingService.GetProductStatus(new GetProductStatusRequest
+                    {
+                        CustId = custId,
+                        ProductId = productId,
+                        RoleId = roleId
+                    })
             };
-        }
 
         public List<ProductStatusResult> Update(
             int custId,
@@ -47,11 +52,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
                 SystemId = systemId,
                 Ip = ip,
                 ProductStatus = productStatus
-            });                
+            });
 
             if (result.Any(r => r.ErrorCode.Equals("0")) && productId == (int)Product.Casino)
             {
-                var customer = new CasinoLibrary.SBAgent.Customer();
+                var customer = new Customer();
                 try
                 {
                     customer.UpdateCustEnableCasino(
@@ -65,11 +70,11 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
                 }
                 catch (ErrorException casinoEx)
                 {
-                    ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Warning);
+                    casinoEx.WriteCasinoException(Formater.LogType.Warning);
                 }
                 catch (Exception ex)
                 {
-                    ExceptionHandler.Handle(ex, TraceEventType.Warning);
+                    ex.Write(Formater.LogType.Warning);
                 }
             }
 

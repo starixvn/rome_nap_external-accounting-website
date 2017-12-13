@@ -298,7 +298,7 @@
                 CurrentContext.Ip4Address);
             if (result.IsSuccess)
             {
-                CachingService.RemoveUserCache(CurrentSession.UserId);
+                _cache.RemoveUserCache(CurrentSession.UserId);
             }
 
             return JsonBase(result);

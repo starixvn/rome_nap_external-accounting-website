@@ -1,11 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
+    using DTO;
+    using DTO.UserControl;
 
     public interface IMenuService
     {
@@ -14,28 +11,28 @@
         IEnumerable<Menu> GetMenusByUserId(int userId);
 
         Result CreateMenu(
-            string name, 
-            string description, 
-            string url, 
+            string name,
+            string description,
+            string path,
             int functionId,
-            int parentId, 
+            int parentId,
             string parentName,
-            int displayOrder, 
+            int displayOrder,
             bool isActive,
             int custId,
             string ip,
             out int menuId);
 
         Result UpdateMenu(
-            int id, 
+            int id,
             string name,
-            string description, 
-            string url,
+            string description,
+            string path,
             int functionId,
-            int parentId, 
-            string parentName, 
+            int parentId,
+            string parentName,
             int displayOrder,
-            int custId, 
+            int custId,
             string ip);
 
         Result UpdateMenuStatus(int id, bool isActive, int custId);

@@ -4,49 +4,34 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.SqlClient;
-    using Base;
-    using Caching;
-    using DataAccess.Impl.Report;
-    using DataAccess.Interface.Report;
-    using DTO.Report;
-    using Interface.Report;
-    using Utilities;
+    using Fanex.Caching;
+    using Fanex.ExternalAccount.DataAccess.Impl.Report;
+    using Fanex.ExternalAccount.DataAccess.Interface.Report;
+    using Fanex.ExternalAccount.DTO.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
+    using Fanex.ExternalAccount.Utilities;
 
-    public class ReportService : ServiceBase, IReportService
+    public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
-        private static readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private static readonly ICache Cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly IReportDao _reportDao;
 
-        public ReportService(IReportDao reportDAO = null)
+        public ReportService(IReportDao reportRespository = null)
         {
-            _reportDao = reportDAO ?? new ReportDAO();
+            _reportDao = reportRespository ?? new ReportDAO();
         }
 
-        public static DateTime BalanceUpDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
+        public DateTime BalanceUpDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
 
-        public static DateTime MoveBetsDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
+        public DateTime MoveBetsDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
 
         public DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
-        {
-            if (!string.IsNullOrEmpty(userName) || custId != 0)
-            {
-                try
-                {
-                    return _reportDao.EAS_CustomerSelUserInfo(groupname, custId, userName, isGetUplineInfo);
-                }
-                catch (Exception ex)
-                {
-                    ProcessException(ex);
-                }
-            }
+            => _reportDao.EAS_CustomerSelUserInfo(groupname, custId, userName, isGetUplineInfo);
 
-            return null;
-        }
+        public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)
+            => _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
 
-        public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName) =>
-            _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
 
         public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
             => CheckConstraintMoveBetsDay(winlostDate)
@@ -68,77 +53,57 @@
                 ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
                 : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId);
 
-
         public List<WinLossDetail> GetWinLossDetail(
             string groupname,
             int custId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds) =>
-            _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate());
 
         public List<WinLossDetail> GetWinLossDetailSuper(
             int custId,
             int masterId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds) =>
-            _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate());
 
         public List<WinLossDetailMAg> GetWinLossDetailMAg(
             int custId,
             int agentId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds) =>
-            _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate());
 
         public List<WinLossDetailAg> GetWinLossDetailAg(
             int custId,
             int memberId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds) =>
-            _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate());
 
-        public ArrayList GetSortingOrderList(string groupname) =>
-            _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
+        public ArrayList GetSortingOrderList(string groupname)
+            => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
 
-        public static DataTable GetBalanceUpDay()
+        public DataTable GetBalanceUpDay()
         {
-            var oldBalanceUpDay = _cache.Get<DataTable>(BalanceUpDayKey);
-
-            if (oldBalanceUpDay == null)
+            var balanceUpDay = Cache.Get<DataTable>(BalanceUpDayKey);
+            if (balanceUpDay == null)
             {
-                var reportDao = new ReportDAO();
-
-                DataTable balanceUpDay = null;
-
-                try
-                {
-                    balanceUpDay = reportDao.Age_SelBalanceUpDay();
-                }
-                catch (SqlException ex)
-                {
-                    Logs.Error(ex);
-                }
-                catch (Exception ex)
-                {
-                    Logs.Error(ex);
-                }
-
+                balanceUpDay = _reportDao.Age_SelBalanceUpDay();
                 if (balanceUpDay != null)
                 {
-                    _cache.Set(BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
+                    Cache.Set(BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
                 }
-
-                return balanceUpDay;
             }
 
-            return oldBalanceUpDay;
+            return balanceUpDay;
         }
 
-        private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
-            => DateTime.Compare(fromDate, MoveBetsDate) > 0;
+        private bool CheckConstraintMoveBetsDay(DateTime fromDate)
+            => DateTime.Compare(fromDate, MoveBetsDate()) > 0;
     }
 }

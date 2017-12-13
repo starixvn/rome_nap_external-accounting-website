@@ -2,28 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
-    using Base;
     using DataAccess.Impl.Statement;
     using DataAccess.Interface.Statement;
     using DTO.Statement;
+    using Interface.Report;
     using Interface.Statement;
     using Report;
 
-    public class StatementService : ServiceBase, IStatementService
+    public class StatementService : IStatementService
     {
-        private readonly IStatementDao _statementDAO;
+        private readonly IStatementDao StatementRepository;
+        private readonly IReportService _reportService;
 
-        public StatementService(IStatementDao statementDAO = null)
+        public StatementService(IStatementDao statementRepository = null, IReportService reportService = null)
         {
-            _statementDAO = statementDAO ?? new StatementDAO();
+            StatementRepository = statementRepository ?? new StatementDAO();
+            _reportService = reportService ?? new ReportService();
         }
 
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
         {
-            var includeAccBal = fromDate != ReportService.BalanceUpDate;
+            var includeAccBal = fromDate != _reportService.BalanceUpDate();
 
-            return _statementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate,
-                ReportService.MoveBetsDate, includeAccBal);
+            return StatementRepository.Acc_AllStatement_Full(custId, fromDate, toDate, _reportService.BalanceUpDate(),
+                _reportService.MoveBetsDate(), includeAccBal);
         }
     }
 }

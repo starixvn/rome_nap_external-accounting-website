@@ -8,6 +8,8 @@
 
     public interface IReportDao
     {
+        DataTable Age_SelBalanceUpDay();
+
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> EAS_CustomerSelUserSearch(int custId, string username, string groupname);

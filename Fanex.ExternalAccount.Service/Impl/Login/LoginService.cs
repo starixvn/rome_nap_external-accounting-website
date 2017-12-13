@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Base;
     using Common.Helper;
     using DataAccess.Impl.Login;
     using DataAccess.Interface.Login;
@@ -12,7 +11,7 @@
     using Interface.Login;
     using UserControl;
 
-    public class LoginService : ServiceBase, ILoginService
+    public class LoginService : ILoginService
     {
         private readonly ILoginDao _loginDao;
 
@@ -43,7 +42,7 @@
 
                 isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
 
-                result.ResultData = new GroupService().GetGroupById((int) result.ResultData);
+                result.ResultData = new GroupService().GetGroupById((int)result.ResultData);
             }
 
             return result;
@@ -55,80 +54,22 @@
             Check.Argument.IsNotNull(username, "username");
             Check.Argument.IsNotEmpty(username, "username");
 
-            try
-            {
-                return _loginDao.Logout(custId, username);
-            }
-            catch (Exception ex)
-            {
-                ProcessException(ex);
-            }
-
-            return null;
+            return _loginDao.Logout(custId, username);
         }
 
-        public bool IsKickedOut(int custId)
-        {
-            var isKickOut = false;
+        public bool IsKickedOut(int custId) => _loginDao.IsKickedOut(custId);
 
-            Check.Argument.IsNotNegative(custId, "custId");
-
-            try
-            {
-                isKickOut = _loginDao.IsKickedOut(custId);
-            }
-            catch (Exception ex)
-            {
-                ProcessException(ex);
-            }
-
-            return isKickOut;
-        }
-
-        public ICollection<Group> GroupList()
-        {
-            try
-            {
-                return _loginDao.GroupList().OrderBy(o => o.GroupName).ToList();
-            }
-            catch (Exception ex)
-            {
-                ProcessException(ex);
-            }
-
-            return null;
-        }
+        public ICollection<Group> GroupList() => _loginDao.GroupList().OrderBy(o => o.GroupName).ToList();
 
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
-            try
-            {
-                Check.Argument.IsNotNegative(custId, "custId");
-                Check.Argument.IsNotNull(funcKey, "funcKey");
-                Check.Argument.IsNotEmpty(funcKey, "funcKey");
+            Check.Argument.IsNotNegative(custId, "custId");
+            Check.Argument.IsNotNull(funcKey, "funcKey");
+            Check.Argument.IsNotEmpty(funcKey, "funcKey");
 
-                return _loginDao.CheckExternalGroup(custId, funcId, funcKey);
-            }
-            catch (Exception ex)
-            {
-                ProcessException(ex);
-            }
-
-            return true;
+            return _loginDao.CheckExternalGroup(custId, funcId, funcKey);
         }
 
-        public DateTime GetDBTime()
-        {
-            try
-            {
-                return _loginDao.GetDbTime();
-            }
-            catch (Exception ex)
-            {
-                ProcessException(ex);
-            }
-
-            return DateTime.Now;
-        }
+        public DateTime GetDBTime() => _loginDao.GetDbTime();
     }
 }
