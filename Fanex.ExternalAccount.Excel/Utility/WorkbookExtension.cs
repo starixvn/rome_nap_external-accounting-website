@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Excel.Utility
-{
-    using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 
+namespace Fanex.ExternalAccount.Excel.Utility
+{
     public static class WorkbookExtension
     {
         public static ISheet CloneSheet(this IWorkbook workbook, string sourceSheetName, string newSheetName)

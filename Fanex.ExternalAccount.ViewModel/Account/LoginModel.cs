@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.ViewModel.Account
-{
-    using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace Fanex.ExternalAccount.ViewModel.Account
+{
     public class LoginModel
     {
         public const int ThresholdFailToShowingCaptcha = 3;

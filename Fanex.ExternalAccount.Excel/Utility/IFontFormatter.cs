@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Excel.Utility
-{
-    using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 
+namespace Fanex.ExternalAccount.Excel.Utility
+{
     public interface IFontFormatter
     {
         void Format(IFont font);

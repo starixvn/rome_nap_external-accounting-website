@@ -1,8 +1,8 @@
-﻿namespace Fanex.ExternalAccount.Excel.Utility
-{
-    using System.Diagnostics;
-    using NPOI.SS.UserModel;
+﻿using System.Diagnostics;
+using NPOI.SS.UserModel;
 
+namespace Fanex.ExternalAccount.Excel.Utility
+{
     public static class TextFormatRunner
     {
         public static IRichTextString Run(RtfTextRender renderer, ITextFormat value)

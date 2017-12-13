@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
-{
-    using NAP.Framework.Data;
+﻿using Fanex.NAP.Framework.Data;
 
+namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
+{
     public class RemoveOTPCriteria : CriteriaBase
     {
         public int Custid { get; set; }

@@ -26,9 +26,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Read, productId);
             if (!isAllowed)
-            {
                 return View("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
-            }
 
             return View(
                 "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml", 

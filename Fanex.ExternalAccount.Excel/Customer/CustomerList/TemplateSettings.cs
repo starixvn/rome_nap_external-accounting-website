@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
-{
-    using System.Web;
+﻿using System.Web;
 
+namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
+{
     internal class TemplateSettings
     {
         private string _dir;

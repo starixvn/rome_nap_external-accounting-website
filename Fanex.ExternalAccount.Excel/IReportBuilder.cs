@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Excel
-{
-    using NPOI.HSSF.UserModel;
+﻿using NPOI.HSSF.UserModel;
 
+namespace Fanex.ExternalAccount.Excel
+{
     public interface IReportBuilder
     {
         HSSFWorkbook Build();

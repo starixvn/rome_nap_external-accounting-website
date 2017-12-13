@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+{
     public class PersonalInfo : DownlineList
     {
         public PersonalInfo()

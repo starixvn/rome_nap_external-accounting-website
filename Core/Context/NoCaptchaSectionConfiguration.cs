@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.Core.Context
-{
-    using System.Configuration;
+﻿using System.Configuration;
 
+namespace Fanex.ExternalAccount.Core.Context
+{
     public class NoCaptchaSectionConfiguration : ConfigurationSection
     {
         private static NoCaptchaSectionConfiguration _instance;

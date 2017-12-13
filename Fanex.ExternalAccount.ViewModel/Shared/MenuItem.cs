@@ -1,7 +1,7 @@
-﻿namespace Fanex.ExternalAccount.ViewModel.Shared
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Fanex.ExternalAccount.ViewModel.Shared
+{
     public class MenuItem
     {
         public string Name { get; set; }
