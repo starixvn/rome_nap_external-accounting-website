@@ -220,6 +220,7 @@
     <Compile Include="Services\Impl\BaseService.cs" />
     <Compile Include="Services\Impl\LeftPanelService.cs" />
     <Compile Include="Services\Interface\ILeftPanelService.cs" />
+    <Compile Include="Shared\Role.cs" />
     <Compile Include="ViewModels\BalanceInfo.cs" />
     <Compile Include="ViewModels\BasicInfo.cs" />
     <Compile Include="ViewModels\CustomerModel.cs" />
@@ -237,9 +238,7 @@
     <Compile Include="ViewModels\Status.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="LeftPanel.ruleset" />

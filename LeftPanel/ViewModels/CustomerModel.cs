@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
+    using System.Collections.Generic;
+
     public class CustomerModel
     {
         public CustomerModel()

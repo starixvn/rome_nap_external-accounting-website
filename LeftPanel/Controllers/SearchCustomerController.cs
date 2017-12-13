@@ -39,7 +39,7 @@
             ViewBag.UserId = CurrentSession.UserId;
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(id);
             if (!IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite
-                || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline))
+                                                || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline))
             {
                 return Content(
                     "var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
@@ -226,22 +226,18 @@
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateOutright(int custId, bool allow)
-        {
-            return !IsBelong(Request["groupName"], custId, null, true)
+        public ActionResult UpdateOutright(int custId, bool allow) =>
+            !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
                 : JsonBase(_service.AllowOutright(custId, allow));
-        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)
-        {
-            return !IsBelong(Request["groupName"], custId, null, true)
+        public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId) =>
+            !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
                 : JsonBase(_service.AutoMasterPt(custId, allow, uplineId));
-        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino,
             Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -273,32 +269,26 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EnableESports,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
-        {
-            return !IsBelong(Request["groupName"], custId, null, true)
+        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline) =>
+            !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
                 : JsonBase(_service.EnableESports(custId, enable, enableDownline));
-        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
-        {
-            return !IsBelong(Request["groupName"], custId, null, true)
+        public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline) =>
+            !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
                 : JsonBase(_service.EnableNumberGame(custId, enable, enableDownline));
-        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
-        {
-            return !IsBelong(Request["groupName"], custId, null, true)
+        public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline) =>
+            !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
                 : JsonBase(_service.EnableLiveCasino(custId, enable, enableDownline));
-        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -389,7 +379,7 @@
             var oldSetting = bettingLimitService.GetCustomer(requestContext);
             var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage }, settings);
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage}, settings);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
@@ -425,7 +415,7 @@
                 hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
             }
 
-            var result = _service.ResetSecurityCode(id, hashCode, force || roleId != (int)CustomerRole.Super);
+            var result = _service.ResetSecurityCode(id, hashCode, force || roleId != (int) CustomerRole.Super);
             return JsonBase(result);
         }
 
@@ -454,7 +444,7 @@
             {
                 model.Onlines.Add(new OnlineInfo
                 {
-                    IP = new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
+                    IP = new ObjectInfo {Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip"))},
                     LoginTime = new ObjectInfo
                     {
                         Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt")
@@ -492,12 +482,12 @@
             {
                 for (var i = 1; i <= totalPages; i++)
                 {
-                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                    model.Pages.Add(new ObjectInfo {Value = i, Text = i.ToString()});
                 }
             }
             else
             {
-                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
+                model.Pages.Add(new ObjectInfo {Value = 1, Text = "1"});
             }
 
             return JsonBase(model);
@@ -521,20 +511,18 @@
             }
             catch (Exception ex)
             {
-                return JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
+                return JsonBase(new {IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message});
             }
         }
 
         [HttpGet]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult RemoveOTP(int custId, string username)
-        {
-            return !IsBelong(Request["groupName"], custId, null, true)
+        public ActionResult RemoveOTP(int custId, string username) =>
+            !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
                 : PartialViewBase(new {CustId = custId, Username = username},
                     "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml");
-        }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,

@@ -5,18 +5,17 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Web;
+    using Core.Context;
     using Criteria;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.Data;
-    using Fanex.Data.DNAide;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Utilities;
-    using Logging.Extensions.Database;
+    using CustomerSetting.Security.Authenticate;
+    using Data;
+    using Data.DNAide;
+    using DTO;
+    using Interface;
+    using Service.Impl.Customer.Casino;
+    using Service.Impl.Report;
+    using Utilities;
+    using ViewModels;
 
     public class LeftPanelDao : ILeftPanelDao
     {
@@ -26,13 +25,9 @@
 
             if (customerInfo != null && customerInfo.Rows.Count != 0)
             {
-                var ds = new DataSet();
-                var param = new Hashtable();
-                param.Add("username", username);
+                var param = new Hashtable {{"username", username}};
 
-                ds = DbHelper.ExecuteDataSet("Acc_CustomerSelAllInfo", param);
-
-                return ds;
+                return DbHelper.ExecuteDataSet("Acc_CustomerSelAllInfo", param);
             }
 
             return null;
@@ -40,100 +35,78 @@
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdCredit"))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdCredit"))
             {
-                var param = new Hashtable();
-                param.Add("userid", uplineId);
-                param.Add("custid", id);
-                param.Add("newcredit", newGivenCredit);
-                param.Add("ip", CurrentContext.Instance.Ip4Address);
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-
-                db.AssignParamValues(param);
-
-                try
+                var param = new Hashtable
                 {
-                    db.ExecuteNonQuery();
+                    {"userid", uplineId},
+                    {"custid", id},
+                    {"newcredit", newGivenCredit},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty}
+                };
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                objDb.AssignParamValues(param);
+
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
 
         public DbResult GetDownlineList(int custid, int pageSize, int pageIndex)
         {
-            DbResult rs = null;
-            var param = new Hashtable();
+            var param = new Hashtable
+            {
+                {"custid", custid},
+                {"pagesize", pageSize},
+                {"pageindex", pageIndex},
+                {"totalpages", 0}
+            };
 
-            param.Add("custid", custid);
-            param.Add("pagesize", pageSize);
-            param.Add("pageindex", pageIndex);
-            param.Add("totalpages", 0);   
-
-            rs = DbHelper.ExecuteDbResult("Acc_CustomerSelList", param);
-
-            return rs;
+            return DbHelper.ExecuteDbResult("Acc_CustomerSelList", param);
         }
 
         public DataRowCollection GetOnlineList(int custid)
         {
-            DbResult rs = null;
-            var param = new Hashtable();
-            param.Add("custid", custid);
-            rs = DbHelper.ExecuteDbResult("Acc_CustomerSelOnline", param);
+            var param = new Hashtable {{"custid", custid}};
+            var rs = DbHelper.ExecuteDbResult("Acc_CustomerSelOnline", param);
 
             return rs.ResultSet.Tables[0].Rows;
         }
 
         public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
         {
-            IList<MasterAgentUsedCreditItem> items = null;
-
             if (roleId == 4)
             {
-                items = this.MasterUsedCreditItems(custId);
-            }
-            else if (roleId == 3)
-            {
-                items = this.AgentUsedCreditItems(custId);
+                return MasterUsedCreditItems(custId);
             }
 
-            return items;
+            return roleId == 3 ? AgentUsedCreditItems(custId) : null;
         }
 
         public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
         {
             IList<MemberUsedCreditItem> items = new List<MemberUsedCreditItem>();
 
-            using (ObjectDb db = new ObjectDb("Acc_CustomerSelUsedCredit_Ag"))
+            using (var db = new ObjectDb("Acc_CustomerSelUsedCredit_Ag"))
             {
                 db.AddInParameter("agentid", DbType.Int32, custId);
 
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (IDataReader reader = db.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        items.Add(new MemberUsedCreditItem
                         {
-                            items.Add(new MemberUsedCreditItem
-                            {
-                                Username = reader.ToString("username"),
-                                FirstName = reader.ToString("firstname"),
-                                LastName = reader.ToString("lastname"),
-                                Amount = reader.ToDecimal("credit"),
-                                IsClosed = reader.ToBoolean("closed")
-                            });
-                        }
+                            Username = reader.ToString("username"),
+                            FirstName = reader.ToString("firstname"),
+                            LastName = reader.ToString("lastname"),
+                            Amount = reader.ToDecimal("credit"),
+                            IsClosed = reader.ToBoolean("closed")
+                        });
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -142,189 +115,153 @@
 
         public Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
             {
-                var param = new Hashtable();
-                param.Add("userid", custId);
-                param.Add("agentid", agentId);
-                param.Add("closedonly", closedOnly);
-                param.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                param.Add("system", "EXTERNAL");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-
-                db.AssignParamValues(param);
-
-                try
+                var param = new Hashtable
                 {
-                    db.ExecuteNonQuery();
-                    var errorCode = Utils.ToInt32(db.GetParameterValue("errcode"));
+                    {"userid", custId},
+                    {"agentid", agentId},
+                    {"closedonly", closedOnly},
+                    {"ip", HttpContext.Current.Request.UserHostAddress},
+                    {"system", "EXTERNAL"},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty}
+                };
 
-                    return new Result(errorCode, db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                objDb.AssignParamValues(param);
+
+                objDb.ExecuteNonQuery();
+
+                var errorCode = Utils.ToInt32(objDb.GetParameterValue("errcode"));
+
+                return new Result(errorCode, objDb.GetParameterValue("errmsg"));
             }
-        }        
+        }
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerInsClearBalance"))
+            using (var db = new ObjectDb("Acc_CustomerInsClearBalance"))
             {
-                var param = new Hashtable();
-                param.Add("fromcustid", custId);
-                param.Add("tocustids", custIds);
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("cusstatus", !isCheckedAll ? string.Empty : "All");
-                param.Add("ip", ip);
-                param.Add("system", "EXTERNAL");
+                var param = new Hashtable
+                {
+                    {"fromcustid", custId},
+                    {"tocustids", custIds},
+                    {"userid", CurrentSession.Instance.UserId},
+                    {"language", "E"},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"cusstatus", !isCheckedAll ? string.Empty : "All"},
+                    {"ip", ip},
+                    {"system", "EXTERNAL"}
+                };
 
                 db.AssignParamValues(param);
+                db.ExecuteNonQuery();
 
-                try
+                return new Result
                 {
-                    db.ExecuteNonQuery();
-
-                    return new Result
-                    {
-                        ErrorCode = Utils.ToString(db.GetParameterValue("errcode")),
-                        ErrorMessage = Utils.ToString(db.GetParameterValue("errmsg"))
-                    };
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                    ErrorCode = Utils.ToString(db.GetParameterValue("errcode")),
+                    ErrorMessage = Utils.ToString(db.GetParameterValue("errmsg"))
+                };
             }
         }
 
         public DataTable CustomerSelectClearBalance(int custId)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerSelClearBalance"))
+            using (var db = new ObjectDb("Acc_CustomerSelClearBalance"))
             {
-                var param = new Hashtable();
-                param.Add("custid", custId);
+                var param = new Hashtable {{"custid", custId}};
+                var result = db.ExecuteDataSet(param);
 
-                try
-                {
-                    var result = db.ExecuteDataSet(param);
-
-                    return result != null && result.Tables != null ? result.Tables[0] : null;
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return result?.Tables?[0];
             }
         }
 
         public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdClosed", 600))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdClosed", 600))
             {
-                Hashtable param = new Hashtable();
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("custid", custId);
-                param.Add("closed", close);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", CurrentContext.Instance.Ip4Address);
-                param.Add("systemid", Config.SystemId);
-                
-                db.AssignParamValues(param);
-
-                try
+                var param = new Hashtable
                 {
-                    db.ExecuteNonQuery();
+                    {"userid", CurrentSession.Instance.UserId},
+                    {"custid", custId},
+                    {"closed", close},
+                    {"language", "E"},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"systemid", Config.SystemId}
+                };
 
-                    if (Utils.ToInt32(db.GetParameterValue("errcode")) <= 0 && clearCredit)
-                    {
-                        return this.ClearCredit(CurrentSession.Instance.UserId, custName);
-                    }
+                objDb.AssignParamValues(param);
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
+                objDb.ExecuteNonQuery();
+
+                if (Utils.ToInt32(objDb.GetParameterValue("errcode")) <= 0 && clearCredit)
                 {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                    return ClearCredit(CurrentSession.Instance.UserId, custName);
                 }
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
 
         public Result SuspendCustomer(int custId, bool suspend)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdSuspended"))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdSuspended"))
             {
-                var param = new Hashtable();
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("custid", custId);
-                param.Add("suspended", suspend);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", CurrentContext.Instance.Ip4Address);
-
-                db.AssignParamValues(param);
-
-                try
+                var param = new Hashtable
                 {
-                    db.ExecuteNonQuery();
+                    {"userid", CurrentSession.Instance.UserId},
+                    {"custid", custId},
+                    {"suspended", suspend},
+                    {"language", "E"},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"ip", CurrentContext.Instance.Ip4Address}
+                };
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
 
         public Result AllowOutright(int custId, bool allow)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
             {
-                var param = new Hashtable();
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("custid", custId);
-                param.Add("disableoutright", !allow);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", CurrentContext.Instance.Ip4Address);
-
-                db.AssignParamValues(param);
-
-                try
+                var param = new Hashtable
                 {
-                    db.ExecuteNonQuery();
+                    {"userid", CurrentSession.Instance.UserId},
+                    {"custid", custId},
+                    {"disableoutright", !allow},
+                    {"language", "E"},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"ip", CurrentContext.Instance.Ip4Address}
+                };
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
-                
+
         public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName)
         {
             var result = CasinoManager.Instance.UpdateCSStatus(
-                id, 
-                sync, 
-                !enable, 
+                id,
+                sync,
+                !enable,
                 enableDownline,
-                CurrentSession.Instance.UserId, 
-                CurrentContext.Instance.Ip4Address, 
-                0, 
-                "En", 
-                CurrentSession.Instance.UserName, 
+                CurrentSession.Instance.UserId,
+                CurrentContext.Instance.Ip4Address,
+                0,
+                "En",
+                CurrentSession.Instance.UserName,
                 string.Empty);
 
             return new Result(result ? 0 : 1, result ? string.Empty : "Update casino status failed");
@@ -332,296 +269,161 @@
 
         public Result EnableNumberGame(int id, bool enable, bool enableDownline)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
             {
-                var param = new Hashtable();
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("custid", id);
-                param.Add("disablenumber", !enable);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", CurrentContext.Instance.Ip4Address);
-                param.Add("disabledownline", !enableDownline);
-
-                db.AssignParamValues(param);
-
-                try
+                var param = new Hashtable
                 {
-                    db.ExecuteNonQuery();
+                    {"userid", CurrentSession.Instance.UserId},
+                    {"custid", id},
+                    {"disablenumber", !enable},
+                    {"language", "E"},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"disabledownline", !enableDownline}
+                };
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
 
         public Result EnableLiveCasino(int id, bool enable, bool enableDownline)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
+            using (var db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
             {
-                Hashtable param = new Hashtable();
-                param.Add("userid", CurrentSession.Instance.UserId);
-                param.Add("custid", id);
-                param.Add("disabledlivecs", !enable);
-                param.Add("language", "E");
-                param.Add("ip", CurrentContext.Instance.Ip4Address);
-                param.Add("enabledownlineslivecs", enableDownline);
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
+                var param = new Hashtable
+                {
+                    {"userid", CurrentSession.Instance.UserId},
+                    {"custid", id},
+                    {"disabledlivecs", !enable},
+                    {"language", "E"},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"enabledownlineslivecs", enableDownline},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty}
+                };
 
                 db.AssignParamValues(param);
+                db.ExecuteNonQuery();
 
-                try
-                {
-                    db.ExecuteNonQuery();
-
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
             }
         }
 
         public Result EnableESports(int id, bool enable, bool enableDownline)
         {
-            Hashtable param = new Hashtable();
-            param.Add("userid", CurrentSession.Instance.UserId);
-            param.Add("custid", id);
-            param.Add("disable", !enable);
-            param.Add("language", "E");
-            param.Add("ip", CurrentContext.Instance.Ip4Address);
-            param.Add("disabledownlines", !enableDownline);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
+            var param = new Hashtable
+            {
+                {"userid", CurrentSession.Instance.UserId},
+                {"custid", id},
+                {"disable", !enable},
+                {"language", "E"},
+                {"ip", CurrentContext.Instance.Ip4Address},
+                {"disabledownlines", !enableDownline},
+                {"errcode", 0},
+                {"errmsg", string.Empty}
+            };
 
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableESports", 120))
+            using (var db = new ObjectDb("Acc_CustomerUpdDisableESports", 120))
             {
                 db.AssignParamValues(param);
+                db.ExecuteNonQuery();
 
-                try
-                {
-                    db.ExecuteNonQuery();
-
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
             }
         }
 
         public Result AutoMasterPT(int id, bool allow)
         {
-            var param = new Hashtable();
-            param.Add("userid", CurrentSession.Instance.UserId);
-            param.Add("custid", id);
-            param.Add("disableautompt", !allow);
-            param.Add("language", "E");
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
-            param.Add("ip", CurrentContext.Instance.Ip4Address);
-
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdMaster_DisableAutoMPT"))
+            var param = new Hashtable
             {
-                db.AssignParamValues(param);
+                {"userid", CurrentSession.Instance.UserId},
+                {"custid", id},
+                {"disableautompt", !allow},
+                {"language", "E"},
+                {"errcode", 0},
+                {"errmsg", string.Empty},
+                {"ip", CurrentContext.Instance.Ip4Address}
+            };
 
-                try
-                {
-                    db.ExecuteNonQuery();
+            using (var objDb = new ObjectDb("Acc_CustomerUpdMaster_DisableAutoMPT"))
+            {
+                objDb.AssignParamValues(param);
+                objDb.ExecuteNonQuery();
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
 
         public Result ResetSecurityCode(int id, string code, bool force)
         {
-            Hashtable outputParams = new Hashtable();
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdSecurityCode"))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdSecurityCode"))
             {
-                db.AddInParameter("Custid", System.Data.DbType.Int32, id);
-                db.AddInParameter("Userid", System.Data.DbType.Int32, CurrentSession.Instance.UserId);
-                db.AddInParameter("IsForcedChangeSecurityCode", System.Data.DbType.Boolean, force);
-                db.AddInParameter("Securitycode", System.Data.DbType.String, code);
-                db.AddInParameter("Language", System.Data.DbType.String, "En");
-                db.AddInParameter("IP", System.Data.DbType.String, CurrentContext.Instance.Ip4Address);
-                db.AddInParameter("system", System.Data.DbType.String, "EXTERNAL");
-                db.AddOutParameter("ErrCode", System.Data.DbType.Int32, 8);
-                db.AddOutParameter("ErrMsg", System.Data.DbType.String, 1000);
+                objDb.AddInParameter("Custid", DbType.Int32, id);
+                objDb.AddInParameter("Userid", DbType.Int32, CurrentSession.Instance.UserId);
+                objDb.AddInParameter("IsForcedChangeSecurityCode", DbType.Boolean, force);
+                objDb.AddInParameter("Securitycode", DbType.String, code);
+                objDb.AddInParameter("Language", DbType.String, "En");
+                objDb.AddInParameter("IP", DbType.String, CurrentContext.Instance.Ip4Address);
+                objDb.AddInParameter("system", DbType.String, "EXTERNAL");
+                objDb.AddOutParameter("ErrCode", DbType.Int32, 8);
+                objDb.AddOutParameter("ErrMsg", DbType.String, 1000);
+                objDb.ExecuteNonQuery();
 
-                try
-                {
-                    db.ExecuteNonQuery();
-                    outputParams = db.GetOuputParams();
+                var outputParams = objDb.GetOuputParams();
 
-                    return new Result(outputParams["ErrCode"], outputParams["ErrMsg"]);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return new Result(outputParams["ErrCode"], outputParams["ErrMsg"]);
             }
         }
 
         public Result EnableHRFixedOdds(int id, bool enable, bool enableDownline)
         {
-            Hashtable param = new Hashtable();
-            param.Add("userid", CurrentSession.Instance.UserId);
-            param.Add("custid", id);
-            param.Add("disablehrfixedodds", !enable);
-            param.Add("enabledownlineshrfixedodds", enableDownline);
-            param.Add("language", "E");
-            param.Add("ip", CurrentContext.Instance.Ip4Address);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
+            var param = new Hashtable
+            {
+                {"userid", CurrentSession.Instance.UserId},
+                {"custid", id},
+                {"disablehrfixedodds", !enable},
+                {"enabledownlineshrfixedodds", enableDownline},
+                {"language", "E"},
+                {"ip", CurrentContext.Instance.Ip4Address},
+                {"errcode", 0},
+                {"errmsg", string.Empty}
+            };
 
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableHRFixedOdds", 120))
+            using (var db = new ObjectDb("Acc_CustomerUpdDisableHRFixedOdds", 120))
             {
                 db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+                var errorCode = Utils.ToString(db.GetParameterValue("errcode"));
+                var errorMessage = Utils.ToString(db.GetParameterValue("errmsg"));
 
-                try
-                {
-                    db.ExecuteNonQuery();
-                    var errorCode = Utils.ToString(db.GetParameterValue("errcode"));
-                    var errorMessage = Utils.ToString(db.GetParameterValue("errmsg"));
-
-                    return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
-            }
-        }
-
-        private IList<MasterAgentUsedCreditItem> MasterUsedCreditItems(int custId)
-        {
-            IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
-
-            using (ObjectDb db = new ObjectDb("Acc_CustomerSelUsedCredit_SAg"))
-            {
-                db.AddInParameter("superid", DbType.Int32, custId);
-
-                try
-                {
-                    using (IDataReader reader = db.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            items.Add(new MasterAgentUsedCreditItem
-                            {
-                                Username = reader.ToString("mastername"),
-                                GivenCredit = reader.ToDecimal("givencredit"),
-                                UsedCredit = reader.ToDecimal("usedcredit")
-                            });
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
-            }
-
-            return items;
-        }
-
-        private IList<MasterAgentUsedCreditItem> AgentUsedCreditItems(int custId)
-        {
-            IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
-
-            using (ObjectDb db = new ObjectDb("Acc_CustomerSelUsedCredit_MAg"))
-            {
-                db.AddInParameter("masterid", DbType.Int32, custId);
-
-                try
-                {
-                    using (IDataReader reader = db.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            items.Add(new MasterAgentUsedCreditItem
-                            {
-                                Username = reader.ToString("agentname"),
-                                GivenCredit = reader.ToDecimal("givencredit"),
-                                UsedCredit = reader.ToDecimal("usedcredit")
-                            });
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
-            }
-
-            return items;
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
-        private Result ClearCredit(int userId, string username = null)
-        {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
-            {
-                var hash = new Hashtable();
-                hash.Add("username", username);
-                hash.Add("userid", userId);
-                hash.Add("returnerrcode", 1);
-                hash.Add("errcode", 0);
-                hash.Add("errmsg", string.Empty);
-                hash.Add("ip", CurrentContext.Instance.Ip4Address);
-                hash.Add("system", "EXTERNAL");
-                db.AssignParamValues(hash);
-
-                try
-                {
-                    db.ExecuteNonQuery();
-
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return new Result {ErrorCode = errorCode, ErrorMessage = errorMessage};
             }
         }
 
         public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
         {
-            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 600))
+            using (var objDb = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 600))
             {
-                var hash = new Hashtable();
-                hash.Add("custid", id);
-                hash.Add("userid", userId);
-                hash.Add("disable", !enable);
-                hash.Add("language", "E");
-                hash.Add("ip", CurrentContext.Instance.Ip4Address);
-                hash.Add("enabledownlines", enableDownline);
-                hash.Add("errcode", 0);
-                hash.Add("errmsg", string.Empty);
-                db.AssignParamValues(hash);
-
-                try
+                var hash = new Hashtable
                 {
-                    db.ExecuteNonQuery();
+                    {"custid", id},
+                    {"userid", userId},
+                    {"disable", !enable},
+                    {"language", "E"},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"enabledownlines", enableDownline},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty}
+                };
+                objDb.AssignParamValues(hash);
 
-                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
 
@@ -634,21 +436,88 @@
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                try
-                {
-                    db.ExecuteNonQuery(criteria.GetSpParams());
-                    var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
 
-                    return new Result
-                    {
-                        ErrorCode = outputParams["errcode"].ToString(),
-                        ErrorMessage = outputParams["errmsg"].ToString()
-                    };
-                }
-                catch (Exception ex)
+                return new Result
                 {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                    ErrorCode = outputParams["errcode"].ToString(),
+                    ErrorMessage = outputParams["errmsg"].ToString()
+                };
+            }
+        }
+
+        private IList<MasterAgentUsedCreditItem> MasterUsedCreditItems(int custId)
+        {
+            IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
+
+            using (var db = new ObjectDb("Acc_CustomerSelUsedCredit_SAg"))
+            {
+                db.AddInParameter("superid", DbType.Int32, custId);
+
+                using (var reader = db.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        items.Add(new MasterAgentUsedCreditItem
+                        {
+                            Username = reader.ToString("mastername"),
+                            GivenCredit = reader.ToDecimal("givencredit"),
+                            UsedCredit = reader.ToDecimal("usedcredit")
+                        });
+                    }
                 }
+            }
+
+            return items;
+        }
+
+        private IList<MasterAgentUsedCreditItem> AgentUsedCreditItems(int custId)
+        {
+            IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
+
+            using (var db = new ObjectDb("Acc_CustomerSelUsedCredit_MAg"))
+            {
+                db.AddInParameter("masterid", DbType.Int32, custId);
+
+                using (var reader = db.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        items.Add(new MasterAgentUsedCreditItem
+                        {
+                            Username = reader.ToString("agentname"),
+                            GivenCredit = reader.ToDecimal("givencredit"),
+                            UsedCredit = reader.ToDecimal("usedcredit")
+                        });
+                    }
+                }
+            }
+
+            return items;
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        private Result ClearCredit(int userId, string username = null)
+        {
+            using (var objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
+            {
+                var hash = new Hashtable
+                {
+                    {"username", username},
+                    {"userid", userId},
+                    {"returnerrcode", 1},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"system", "EXTERNAL"}
+                };
+                objDb.AssignParamValues(hash);
+
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
     }

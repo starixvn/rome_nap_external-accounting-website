@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Core.Context;
     using CustomerSetting.IP.Utils;
@@ -22,6 +21,8 @@
 
     public static class CustomerModelExtensions
     {
+        private const string DateStringFormat = "M/d/yyyy H:mm tt";
+
         public static string GetOutstandingColumn(int roleId)
         {
             var levelName = string.Empty;
@@ -142,51 +143,13 @@
 
         public static CustomerModel LoginInfo(this CustomerModel model, DataSet ds)
         {
-            var tableCustomer = ds.Tables[0];
-            var tableCash = ds.Tables[2];
-            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
-            model.Login = new List<ObjectInfo>
-            {
-                new ObjectInfo
-                {
-                    Value = roleId != 1
-                        ? Utils.ToString(tableCustomer.Rows[0]["site"])
-                        : Utils.ToString(tableCustomer.Rows[0]["membersite"]),
-                    Text = "Site"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToStringExt("M/d/yyyy H:mm tt"),
-                    Text = "Created Date"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToStringExt("M/d/yyyy H:mm tt"),
-                    Text = "Last Login"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt("M/d/yyyy H:mm tt"),
-                    Text = "Last Txn",
-                    Tooltip = "Last Transaction"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToStringExt("M/d/yyyy H:mm tt"),
-                    Text = "Password"
-                },
-                new ObjectInfo
-                {
-                    Value = CheckVNIP(tableCustomer.Rows[0].ToString("lastloginip")),
-                    Text = "Last Login IP"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"])
-                        .ToStringExt("M/d/yyyy H:mm tt"),
-                    Text = "Security Code"
-                }
-            };
+            var customerRow = ds.Tables[0].Rows[0];
+
+            var roleId = Utils.ToInt32(customerRow["roleid"]);
+
+            var cashRow = ds.Tables[2].Rows[0];
+
+            SetLoginInfo(model, roleId, customerRow, cashRow);
 
             if (roleId == 1)
             {
@@ -196,7 +159,7 @@
             model.Login.Add(
                 new ObjectInfo
                 {
-                    Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"])
+                    Value = Utils.ToBoolean(customerRow["NicknameLoginOnly"])
                         ? "Nickname Only"
                         : "Username/Nickname",
                     Text = "Login Options"
@@ -205,17 +168,68 @@
             model.Login.Add(
                 new ObjectInfo
                 {
-                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["OTPCreateDate"]).ToStringExt("M/d/yyyy H:mm tt"),
+                    Value = Utils.ToDateTime(customerRow["OTPCreateDate"]).ToStringExt(DateStringFormat),
                     Text = "OTP"
                 });
 
-            model.BalanceInfo.Balances.Add(new ObjectInfo
-            {
-                Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)],
-                Text = "Used Credit"
-            });
+            SetBalanceInfo(model, cashRow, roleId);
 
             return model;
+        }
+
+        private static void SetBalanceInfo(CustomerModel model, DataRow cashRow, int roleId)
+        {
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
+                Value = cashRow[GetUsedCreditColumn(roleId)],
+                Text = "Used Credit"
+            });
+        }
+
+        private static void SetLoginInfo(CustomerModel model, int roleId, DataRow customerRow, DataRow cashRow)
+        {
+            model.Login = new List<ObjectInfo>
+            {
+                new ObjectInfo
+                {
+                    Value = roleId != 1
+                        ? Utils.ToString(customerRow["site"])
+                        : Utils.ToString(customerRow["membersite"]),
+                    Text = "Site"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(customerRow["createdate"]).ToStringExt(DateStringFormat),
+                    Text = "Created Date"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(customerRow["lastlogged"]).ToStringExt(DateStringFormat),
+                    Text = "Last Login"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(cashRow["lastTxn"]).ToStringExt(DateStringFormat),
+                    Text = "Last Txn",
+                    Tooltip = "Last Transaction"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(customerRow["pwdexpiry"]).ToStringExt(DateStringFormat),
+                    Text = "Password"
+                },
+                new ObjectInfo
+                {
+                    Value = CheckVNIP(customerRow.ToString("lastloginip")),
+                    Text = "Last Login IP"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(customerRow["LastChangedSecurityCodeDate"])
+                        .ToStringExt(DateStringFormat),
+                    Text = "Security Code"
+                }
+            };
         }
 
         public static CustomerModel PersonalInfo(this CustomerModel model, DataSet ds)
@@ -325,6 +339,7 @@
         {
             var product = model.Get3rdPartyProducts(userId, groupName, username,
                 (int?)model.PersonalInfo.UplineId?.Value ?? 0);
+
             model.GetSuperMasterPtsOnMember(product);
             model.RemoveEnableAndPtforProducts(product);
 
@@ -371,8 +386,8 @@
         }
 
         public static string CheckVNIP(string ip) =>
-            string.IsNullOrWhiteSpace(ip) || (IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId,
-                eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read))
+            string.IsNullOrWhiteSpace(ip) || IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId,
+                eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)
                 ? string.Empty
                 : ip;
 
@@ -541,8 +556,8 @@
                 model.PersonalInfo.IsShowProducts[showProductIndex + 1].Value = false;
             }
 
-            if (((roleId == 4 || roleId == 3 || roleId == 2) && hide)
-                || (roleId == 1 && hideUpline))
+            if ((roleId == 4 || roleId == 3 || roleId == 2) && hide
+                || roleId == 1 && hideUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
                 model.RemoveProduct(productName);
@@ -561,7 +576,7 @@
             {
                 model.RemoveEnableProduct("Enable" + productName);
                 if (roleId != 4
-                    || (roleId == 4 && hideUpline))
+                    || roleId == 4 && hideUpline)
                 {
                     model.RemoveProduct(productName);
                 }
@@ -575,7 +590,7 @@
             }
             else
             {
-                if ((!sync && roleId == 1) || (!hide && !sync) || (isCheckSyncDownlineField && !syncDownline))
+                if (!sync && roleId == 1 || !hide && !sync || isCheckSyncDownlineField && !syncDownline)
                 {
                     model.RemoveEnableProduct("Enable" + productName);
                     model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
@@ -828,8 +843,6 @@
             return null;
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
         private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result,
             DataTable upperInfo)
         {
@@ -912,15 +925,10 @@
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
             model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o =>
-                string.Equals(o.Key.ToString(), "PT", StringComparison.OrdinalIgnoreCase)
-                                                                                                || o.Key.ToString()
-                                                                                                == "Casino"
-                                                                                                || o.Key.ToString()
-                                                                                                == "LiveCasino"
-                                                                                                || o.Key.ToString()
-                                                                                                == "VirtualSports"
-                                                                                                || o.Key.ToString()
-                                                                                                == "Racing").ToList();
+                string.Equals(o.Key.ToString(), "PT", StringComparison.OrdinalIgnoreCase) ||
+                o.Key.ToString() == "Casino" || o.Key.ToString() == "LiveCasino" ||
+                o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
+
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
@@ -1005,17 +1013,19 @@
                     Value = "Edit " + name
                 });
 
-                model.Setting.EnableItems.Add(checkboxType ? new ObjectInfo
-                {
-                    Key = "Enable" + productName.Replace(" ", string.Empty),
-                    Value = !isDisabled,
-                    Text = name,
-                    Tooltip = "Enable " + name
-                } : new ObjectInfo
-                {
-                    Key = "Enable" + productName.Replace(" ", string.Empty),
-                    Text = "Enable " + name
-                });
+                model.Setting.EnableItems.Add(checkboxType
+                    ? new ObjectInfo
+                    {
+                        Key = "Enable" + productName.Replace(" ", string.Empty),
+                        Value = !isDisabled,
+                        Text = name,
+                        Tooltip = "Enable " + name
+                    }
+                    : new ObjectInfo
+                    {
+                        Key = "Enable" + productName.Replace(" ", string.Empty),
+                        Text = "Enable " + name
+                    });
             }
 
             return model;
