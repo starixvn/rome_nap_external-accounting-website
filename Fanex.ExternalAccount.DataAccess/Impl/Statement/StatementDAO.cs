@@ -10,7 +10,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
     using Interface.Statement;
     using Utilities;
 
-    public class StatementDAO : DAOBase, IStatementDAO
+    public class StatementDAO : DAOBase, IStatementDao
     {
         public List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate,
             DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal)

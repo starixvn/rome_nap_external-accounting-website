@@ -144,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Impl\Base\DAOBase.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoDao.cs" />
     <Compile Include="Impl\Customer\CommissionDao.cs" />
@@ -167,8 +166,8 @@
     <Compile Include="Interface\Customer\IMemberDao.cs" />
     <Compile Include="Interface\Customer\ISuperDao.cs" />
     <Compile Include="Interface\Login\ILoginDao.cs" />
-    <Compile Include="Interface\Report\IReportDAO.cs" />
-    <Compile Include="Interface\Statement\IStatementDAO.cs" />
+    <Compile Include="Interface\Report\IReportDao.cs" />
+    <Compile Include="Interface\Statement\IStatementDao.cs" />
     <Compile Include="Interface\UserControl\IFunctionDao.cs" />
     <Compile Include="Interface\UserControl\IGroupDao.cs" />
     <Compile Include="Interface\UserControl\IMenuDao.cs" />

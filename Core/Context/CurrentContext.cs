@@ -2,135 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Text.RegularExpressions;
     using System.Web;
-    using System.Linq;
     using Common;
-    using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Module.Core.Web;
+    using CustomerSetting.IP.Utils;
+    using CustomerSetting.Module.Core.Web;
 
     public class CurrentContext : ICurrentContext
     {
-        private readonly string[] custIdNames = new string[] { "custId", "customerId" };
-        private readonly string[] custIdsNames = new string[] { "custIds", "customerIds" };
-        private static string loginErrorMessage = string.Empty;
+        private readonly string[] custIdNames = {"custId", "customerId"};
+        private readonly string[] custIdsNames = {"custIds", "customerIds"};
 
-        public static string LoginErrorMessage
-        {
-            get { return CurrentContext.loginErrorMessage; }
-            set { CurrentContext.loginErrorMessage = value; }
-        }
+        public static string LoginErrorMessage { get; set; } = string.Empty;
 
-        public static ICurrentContext Instance
-        {
-            get
-            {
-                return new CurrentContext();
-            }
-        }
-
-        public System.Web.HttpContext Context
-        {
-            get { return HttpContext.Current; }
-        }
-
-        public string Ip4Address
-        {
-            get
-            {
-                string ip = string.Empty;
-
-                foreach (IPAddress ipa in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))
-                {
-                    if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
-                    {
-                        ip = ipa.ToString();
-                        break;
-                    }
-                }
-
-                if (!ip.Equals(string.Empty))
-                {
-                    return ip;
-                }
-
-                foreach (IPAddress ipa in Dns.GetHostAddresses(Dns.GetHostName()))
-                {
-                    if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
-                    {
-                        ip = ipa.ToString();
-                        break;
-                    }
-                }
-
-                return ip.Trim();
-            }
-        }
-
-        public string Ip6Address
-        {
-            get
-            {
-                string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-                if (!string.IsNullOrEmpty(ip))
-                {
-                    string[] range = ip.Split(',');
-                    string trueIP = range[0].Trim();
-                }
-                else
-                {
-                    ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                }
-
-                return ip;
-            }
-        }
-
-        public string DomainName
-        {
-            get { return HttpContext.Current.Request.ServerVariables["SERVER_NAME"]; }
-        }
-
-        public string FullDomainName
-        {
-            get
-            {
-                NameValueCollection variables = HttpContext.Current.Request.ServerVariables;
-
-                string protocol = (variables["SERVER_PORT_SECURE"] == "1") ? "https://" : "http://";
-                string domain = variables["SERVER_NAME"];
-                string port = variables["SERVER_PORT"];
-
-                return protocol + domain + ":" + port;
-            }
-        }
-
-        public string CountryCode
-        {
-            get
-            {
-                RegionInfo regionInfo = this.ResolveCountry();
-
-                return regionInfo == null ? null : regionInfo.EnglishName;
-            }
-        }
-
-        private RegionInfo ResolveCountry()
-        {
-            try
-            {
-                return new RegionInfo(IpUtils.LocationFromIP(this.Ip4Address).countrySHORT);
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        public static ICurrentContext Instance => new CurrentContext();
 
         public int CustId
         {
@@ -147,25 +36,101 @@
             }
         }
 
-        public IEnumerable<int> CustIds
+        public IEnumerable<int> CustIds => GetCustomerIdsFromQueryString();
+
+        public static string GroupName => HttpContext.Current.Request["groupName"];
+
+        public HttpContext Context => HttpContext.Current;
+
+        public string Ip4Address
         {
             get
             {
-                var custIds = GetCustomerIdsFromQueryString();
+                var ip = string.Empty;
 
-                return custIds;
+                if (HttpContext.Current.Request != null)
+                {
+                    foreach (var ipa in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))
+                    {
+                        if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
+                        {
+                            ip = ipa.ToString();
+                            break;
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(ip))
+                {
+                    return ip;
+                }
+
+                foreach (var ipa in Dns.GetHostAddresses(Dns.GetHostName()))
+                {
+                    if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
+                    {
+                        ip = ipa.ToString();
+                        break;
+                    }
+                }
+
+                return ip.Trim();
             }
         }
 
-        public string GroupName
+        public string Ip6Address
         {
             get
             {
-                var groupName = HttpContext.Current.Request["groupName"];
+                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
 
-                return groupName;
+                if (string.IsNullOrWhiteSpace(ip))
+                {
+                    ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                }
+
+                return ip;
             }
         }
+
+        public string DomainName => HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
+
+        public string FullDomainName
+        {
+            get
+            {
+                var variables = HttpContext.Current.Request.ServerVariables;
+
+                var protocol = variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://";
+                var domain = variables["SERVER_NAME"];
+                var port = variables["SERVER_PORT"];
+
+                return protocol + domain + ":" + port;
+            }
+        }
+
+        public string CountryCode
+        {
+            get
+            {
+                var regionInfo = ResolveCountry();
+
+                return regionInfo?.EnglishName;
+            }
+        }
+
+        private RegionInfo ResolveCountry()
+        {
+            try
+            {
+                return new RegionInfo(IpUtils.LocationFromIP(Ip4Address).countrySHORT);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         private int GetCustomerIdFromQueryString()
         {
             var custId = 0;
@@ -191,8 +156,8 @@
                 i++;
             }
 
-            return custIds != null ?
-                custIds.Split(',').Where(id => int.TryParse(id, out i)).Select(id => Converter.ToInt(id)).ToList() : Enumerable.Empty<int>();
+            return custIds?.Split(',').Where(id => int.TryParse(id, out i)).Select(id => Converter.ToInt(id))
+                       .ToList() ?? Enumerable.Empty<int>();
         }
 
         private int GetCustomerIdFromJson()
@@ -209,35 +174,39 @@
             return custId;
         }
 
-        private int GetCustomerId(string parameterName)
+        private static int GetCustomerId(string parameterName)
         {
             var customerId = 0;
-            if (!string.IsNullOrEmpty(parameterName))
+            if (string.IsNullOrEmpty(parameterName))
             {
-                var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
-                var pattern = string.Format("(\"{0}\":)(?<paramValue>[^,]+)", parameterName);
-                Match regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
-                if (regexMatch.Success)
-                {
-                    customerId = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
-                }
+                return customerId;
+            }
+
+            var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
+            var pattern = $"(\"{parameterName}\":)(?<paramValue>[^,]+)";
+            var regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
+            if (regexMatch.Success)
+            {
+                customerId = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
             }
 
             return customerId;
         }
 
-        private string GetJsonDataInRequestBody(Stream requestStream)
+        private static string GetJsonDataInRequestBody(Stream requestStream)
         {
-            if (requestStream != null)
+            if (requestStream == null)
             {
-                requestStream.Seek(0, SeekOrigin.Begin);
-                var bodyData = new StreamReader(requestStream).ReadToEnd();
-                requestStream.Seek(0, SeekOrigin.Begin);
-                if (!string.IsNullOrWhiteSpace(bodyData)
-                    && bodyData.Contains("{"))
-                {
-                    return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
-                }
+                return string.Empty;
+            }
+
+            requestStream.Seek(0, SeekOrigin.Begin);
+            var bodyData = new StreamReader(requestStream).ReadToEnd();
+            requestStream.Seek(0, SeekOrigin.Begin);
+            if (!string.IsNullOrWhiteSpace(bodyData)
+                && bodyData.Contains("{"))
+            {
+                return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
             }
 
             return string.Empty;

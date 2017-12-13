@@ -11,18 +11,14 @@ using System.Diagnostics.CodeAnalysis;
             "~M:Fanex.ExternalAccount.Controllers.UserControl.UserController.GetInternalLoginUrl(Fanex.ExternalAccount.Controllers.UserControl.UserController.AlphaSiteCode)~System.String")]
 
 [assembly:
-    SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>",
+    SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Controllers.UserControl.MenuController.Add(System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Int32)~System.Web.Mvc.ActionResult")]
+[assembly: SuppressMessage(
+       "Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>",
         Scope = "member",
-        Target =
-            "~M:Fanex.ExternalAccount.Controllers.UserControl.MenuController.Add(System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Int32)~System.Web.Mvc.ActionResult")]
-[assembly:
-    SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>",
-        Scope = "member",
-        Target =
-            "~M:Fanex.ExternalAccount.Controllers.UserControl.MenuController.Edit(System.Int32,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Int32)~System.Web.Mvc.ActionResult")]
+        Target = "~M:Fanex.ExternalAccount.Controllers.UserControl.MenuController.Edit(System.Int32,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Int32)~System.Web.Mvc.ActionResult")]
 
-[assembly:
-    SuppressMessage("Sonar Vulnerability", "S1313:IP addresses should not be hardcoded", Justification = "<Pending>",
-        Scope = "member",
-        Target =
-            "~M:Fanex.ExternalAccount.Controllers.Customer.CustomerController.ViewIP(System.String)~System.Web.Mvc.ActionResult")]
+[assembly: SuppressMessage(
+    "Sonar Vulnerability", "S1313:IP addresses should not be hardcoded", 
+    Justification = "<Pending>",
+    Scope = "member",
+    Target = "~M:Fanex.ExternalAccount.Controllers.Customer.CustomerController.ViewIP(System.String)~System.Web.Mvc.ActionResult")]

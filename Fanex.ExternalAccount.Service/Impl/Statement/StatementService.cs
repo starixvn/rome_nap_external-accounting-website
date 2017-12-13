@@ -2,31 +2,28 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.ExternalAccount.DataAccess.Impl.Statement;
-    using Fanex.ExternalAccount.DataAccess.Interface.Statement;
-    using Fanex.ExternalAccount.DTO.Statement;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Interface.Statement;
+    using Base;
+    using DataAccess.Impl.Statement;
+    using DataAccess.Interface.Statement;
+    using DTO.Statement;
+    using Interface.Statement;
+    using Report;
 
-    public class StatementService : IStatementService
+    public class StatementService : ServiceBase, IStatementService
     {
-        private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.STATEMENT.BALANCEUPDAY";
-        private readonly IStatementDAO _statementDAO = null;
+        private readonly IStatementDao _statementDAO;
 
-        public StatementService(IStatementDAO statementDAO = null)
+        public StatementService(IStatementDao statementDAO = null)
         {
-            this._statementDAO = statementDAO ?? new StatementDAO();
+            _statementDAO = statementDAO ?? new StatementDAO();
         }
-        
+
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
         {
-            bool includeAccBal = false;
-            if (fromDate != ReportService.BalanceUpDate)
-            {
-                includeAccBal = true;
-            }
+            var includeAccBal = fromDate != ReportService.BalanceUpDate;
 
-            return _statementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate, ReportService.MoveBetsDate, includeAccBal);
+            return _statementDAO.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate,
+                ReportService.MoveBetsDate, includeAccBal);
         }
     }
 }

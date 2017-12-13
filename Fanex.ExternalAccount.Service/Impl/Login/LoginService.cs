@@ -3,27 +3,26 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common.Helper;
-    using Fanex.ExternalAccount.DataAccess.Impl.Login;
-    using Fanex.ExternalAccount.DataAccess.Interface.Login;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.Login;
-    using Logging.Extensions.Web;
+    using Base;
+    using Common.Helper;
+    using DataAccess.Impl.Login;
+    using DataAccess.Interface.Login;
+    using DTO;
+    using DTO.UserControl;
+    using Interface.Login;
+    using UserControl;
 
-    public class LoginService : ILoginService
+    public class LoginService : ServiceBase, ILoginService
     {
         private readonly ILoginDao _loginDao;
 
         public LoginService(ILoginDao loginDao = null)
         {
-            this._loginDao = loginDao ?? new LoginDao();
+            _loginDao = loginDao ?? new LoginDao();
         }
 
-        #region ILoginService Members
-
-        public DTO.Result Login(string username, string password, Request request, out int custId, out int onuserId, out bool isIntAcc)
+        public Result Login(string username, string password, Request request, out int custId, out int onuserId,
+            out bool isIntAcc)
         {
             Check.Argument.IsNotNull(username, "username");
             Check.Argument.IsNotEmpty(username, "username");
@@ -35,7 +34,8 @@
             onuserId = 0;
             isIntAcc = true;
 
-            var result = _loginDao.Login(username, password, request.Browser, request.IP, request.DomainName, request.CountryCode, request.Platform, out custId);
+            var result = _loginDao.Login(username, password, request.Browser, request.IP, request.DomainName,
+                request.CountryCode, request.Platform, out custId);
 
             if (result.IsSuccess)
             {
@@ -43,13 +43,13 @@
 
                 isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
 
-                result.ResultData = new GroupService().GetGroupById((int)result.ResultData);
+                result.ResultData = new GroupService().GetGroupById((int) result.ResultData);
             }
 
             return result;
         }
 
-        public DTO.Result Logout(int custId, string username)
+        public Result Logout(int custId, string username)
         {
             Check.Argument.IsNotNegative(custId, "custId");
             Check.Argument.IsNotNull(username, "username");
@@ -61,7 +61,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
@@ -79,7 +79,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return isKickOut;
@@ -93,7 +93,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
@@ -111,7 +111,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return true;
@@ -121,16 +121,14 @@
         {
             try
             {
-                return this._loginDao.GetDBTime();
+                return _loginDao.GetDbTime();
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return DateTime.Now;
         }
-
-        #endregion ILoginService Members
     }
 }

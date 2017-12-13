@@ -11,7 +11,7 @@
 
         Result Logout(int custId, string username);
 
-        Result Checkin(int custId, string netSessionID, string ip, out int onuserId);
+        Result Checkin(int custId, string netSessionId, string ip, out int onuserId);
 
         bool IsKickedOut(int custId);
 
@@ -19,6 +19,6 @@
 
         bool CheckExternalGroup(int custId, int? funcId, string funcKey);
 
-        DateTime GetDBTime();
+        DateTime GetDbTime();
     }
 }

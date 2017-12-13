@@ -16,6 +16,7 @@
             var param = new Hashtable();
             var custId = HttpContext.Current.Request["id"];
             var urlRef = HttpContext.Current.Request.UrlReferrer;
+
             custId = string.IsNullOrWhiteSpace(custId) ? HttpContext.Current.Request["custid"] : custId;
             if (string.IsNullOrWhiteSpace(custId) || custId == "0")
             {

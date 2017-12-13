@@ -172,7 +172,7 @@
             }
         }
 
-        public DateTime GetDBTime()
+        public DateTime GetDbTime()
         {
             DbResult dr = null;
             DateTime loginTime;

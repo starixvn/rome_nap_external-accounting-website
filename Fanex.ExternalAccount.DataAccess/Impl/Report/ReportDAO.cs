@@ -11,7 +11,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using DTO.Report;
     using Interface.Report;
 
-    public class ReportDAO : DAOBase, IReportDAO
+    public class ReportDAO : DAOBase, IReportDao
     {
         public DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
         {

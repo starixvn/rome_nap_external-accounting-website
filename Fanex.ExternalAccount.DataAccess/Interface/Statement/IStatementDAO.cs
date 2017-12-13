@@ -6,7 +6,7 @@
     using System.Data;
     using Fanex.ExternalAccount.DTO.Statement;
 
-    public interface IStatementDAO
+    public interface IStatementDao
     {
         List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate, DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal);
     }
