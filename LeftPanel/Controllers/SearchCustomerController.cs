@@ -24,7 +24,7 @@
         private readonly ILeftPanelService _service = new LeftPanelService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        public ActionResult Index()
         {
             ViewBag.UserId = CurrentSession.UserId;
 
@@ -211,24 +211,19 @@
         [AntiXSRFFilter]
         public ActionResult UpdateOutright(int custId, bool allow)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.AllowOutright(custId, allow));
+            return !IsBelong(Request["groupName"], custId, null, true)
+                ? ActionDenied(Request)
+                : JsonBase(_service.AllowOutright(custId, allow));
         }
 
+            return this.JsonBase(this._service.AllowOutright(custId, allow));
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.AutoMasterPT(custId, allow, uplineId));
+            return !IsBelong(Request["groupName"], custId, null, true)
+                ? ActionDenied(Request)
+                : JsonBase(_service.AutoMasterPt(custId, allow, uplineId));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -255,36 +250,27 @@
         [AntiXSRFFilter]
         public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableESports(custId, enable, enableDownline));
+            return !IsBelong(Request["groupName"], custId, null, true)
+                ? ActionDenied(Request)
+                : JsonBase(_service.EnableESports(custId, enable, enableDownline));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableNumberGame(custId, enable, enableDownline));
+            return !IsBelong(Request["groupName"], custId, null, true)
+                ? ActionDenied(Request)
+                : JsonBase(_service.EnableNumberGame(custId, enable, enableDownline));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableLiveCasino(custId, enable, enableDownline));
+            return !IsBelong(Request["groupName"], custId, null, true)
+                ? ActionDenied(Request)
+                : JsonBase(_service.EnableLiveCasino(custId, enable, enableDownline));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -323,6 +309,7 @@
                 FormId = Fanex.PTRacing.BusinessObjects.FormType.EditPT,
                 IP = CurrentContext.Ip4Address
             });
+
             var result = "var model = " + JsonConvert.SerializeObject(
                 model,
                 Formatting.None,
@@ -345,9 +332,11 @@
                 return this.ActionDenied(this.Request);
             }
 
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
 
             var newSetting = JsonConvert.DeserializeObject<Fanex.PTRacing.BusinessObjects.Customer>(txtCustomerObject, settings);
 
@@ -371,7 +360,7 @@
             var oldSetting = bettingLimitService.GetCustomer(requestContext);
             var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
+            return JsonBase(new { result.ErrorCode, result.ErrorMessage }, settings);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -385,7 +374,7 @@
             ViewBag.custId = id;
             ViewBag.roleId = roleId;
             ViewBag.Username = username;
-            return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml");
+            return PartialViewBase(viewName: "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml");
         }
 
         [HttpPost]
@@ -405,7 +394,7 @@
                 hashCode = Fanex.Security.Cryptography.ComputeHash("SHA1", code, md5);
             }
 
-            Result result = this._service.ResetSecurityCode(id, hashCode, force || roleId != (int)PTRacing.BusinessObjects.CustomerRole.Super);
+            var result = _service.ResetSecurityCode(id, hashCode, force || roleId != (int)CustomerRole.Super);
             return this.JsonBase(result);
         }
 
@@ -451,26 +440,31 @@
             var model = new DownlineList();
             var totalPages = LeftPanelService.TotalPages;
 
-            if (downlines != null && downlines.Rows.Count > 0)
+            if (downlines?.Rows.Count <= 0)
             {
-                foreach (DataRow item in downlines.Rows)
+                return JsonBase(model);
+            }
+
+            if (downlines?.Rows != null)
+            {
+                foreach (DataRow item in downlines?.Rows)
                 {
                     model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
                 }
+            }
 
-                model.CurrentPage = pageIndex;
+            model.CurrentPage = pageIndex;
 
-                if (totalPages > 1)
+            if (totalPages > 1)
+            {
+                for (var i = 1; i <= totalPages; i++)
                 {
-                    for (int i = 1; i <= totalPages; i++)
-                    {
-                        model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
-                    }
+                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
                 }
-                else
-                {
-                    model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
-                }
+            }
+            else
+            {
+                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
             }
 
             return this.JsonBase(model);
@@ -491,7 +485,7 @@
             }
             catch (Exception ex)
             {
-                return this.JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
+                return JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
             }
         }
 
@@ -499,12 +493,9 @@
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult RemoveOTP(int custId, string username)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.PartialViewBase(new { CustId = custId, Username = username }, "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml");
+            return !IsBelong(Request["groupName"], custId, null, true)
+                ? ActionDenied(Request)
+                : PartialViewBase(new {CustId = custId, Username = username},
         }
 
         [HttpPost]

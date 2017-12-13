@@ -129,26 +129,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\LoginModel.cs" />
-    <Compile Include="Account\UserModel.cs" />
     <Compile Include="Customer\CustInfo.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
+    <Compile Include="Customer\CustomerModel.cs" />
     <Compile Include="Customer\IPInfo.cs" />
     <Compile Include="Customer\LiveCasinoModel.cs" />
     <Compile Include="Customer\PTModel.cs" />
     <Compile Include="Customer\PTVirtualSportsModel.cs" />
-    <Compile Include="Customer\PTVirtualSportsUpdateModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
-    <Compile Include="Extension\MaxStringLengthAttribute.cs" />
-    <Compile Include="Extension\MinStringLengthAttribute.cs" />
-    <Compile Include="Extension\PropertiesMustMatchAttribute.cs" />
-    <Compile Include="ManageFunction\CreateFunctionModel.cs" />
-    <Compile Include="ManageFunction\EditFunctionModel.cs" />
-    <Compile Include="ManageGroup\CreateGroupPolicyModel.cs" />
-    <Compile Include="ManageGroup\EditGroupModel.cs" />
-    <Compile Include="ManageGroup\CreateGroupModel.cs" />
-    <Compile Include="ManageMenu\CreateMenuModel.cs" />
-    <Compile Include="ManageMenu\EditMenuModel.cs" />
-    <Compile Include="ManageMenu\EditMenuStatusModel.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Shared\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
