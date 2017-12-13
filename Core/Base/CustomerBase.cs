@@ -8,15 +8,16 @@
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Data.DNAide;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Interface.Report;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.Customer;
-    using Fanex.LiveCasino.CoreSetting.Services;
-    using Logging.Extensions.Web;
+    using LiveCasino.CoreSetting.Services;
     using Module.NG2.Entities;
     using Module.NG2.Services;
+    using Service.Impl.Customer.Casino;
+    using Service.Impl.Report;
+    using Service.Interface.Report;
+    using Utilities;
+    using ViewModel.Customer;
+    using Customer = CasinoLibrary.SBAgent.Customer;
+    using Result = CustomerSetting.Module.Core.Models.Result;
 
     public class CustomerBase : BaseController
     {
@@ -24,10 +25,8 @@
 
         private readonly IReportService _report = new ReportService();
 
-        #region Live Casino
-
         [NonAction]
-        protected Task<CustomerSetting.Module.Core.Models.Result> AutoInsertLiveCasinoPost(
+        protected Task<Result> AutoInsertLiveCasinoPost(
             int custId,
             int parentId,
             int actorId,
@@ -54,19 +53,15 @@
                         ip,
                         "E");
 
-                    return new CustomerSetting.Module.Core.Models.Result(results.Code, results.Message);
+                    return new Result(results.Code, results.Message);
                 }
 
-                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
+                return new Result(0, string.Empty);
             });
         }
 
-        #endregion
-
-        #region Casino
-
         [NonAction]
-        protected CustomerSetting.Module.Core.Models.Result AutoInsertCasinoPost(int custId, int uplineId)
+        protected Result AutoInsertCasinoPost(int custId, int uplineId)
         {
             try
             {
@@ -74,7 +69,7 @@
 
                 if (custInfo?.UplineCasinoSync == true && !custInfo.CasinoSync)
                 {
-                    var isSuccess = new CasinoLibrary.SBAgent.Customer().AutoInsertAccount(
+                    var isSuccess = new Customer().AutoInsertAccount(
                         CasinoNo,
                         custInfo.IBCCustID,
                         custInfo.UserName,
@@ -104,39 +99,41 @@
 
                     if (isSuccess)
                     {
-                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E", string.Empty, string.Empty);
+                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId,
+                            CurrentContext.Ip4Address, 0, "E");
                     }
                     else
                     {
-                        new CasinoLibrary.SBAgent.Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        new Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address,
+                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
 
-                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
+                return new Result(0, string.Empty);
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
-                return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
+                Logs.CasinoError(casinoEx);
+                return new Result(999, casinoEx.Message);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logs.Error(ex);
             }
 
-            return new CustomerSetting.Module.Core.Models.Result(999, string.Empty);
+            return new Result(999, string.Empty);
         }
 
-        #endregion
-
-        protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId, int currencyId)
+        protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
+            int uplineId, SiteId siteId, int currencyId)
         {
-            var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
+            var dcsStatuses = GetDcsStatuses(custId, (int) roleId, 23);
 
             if (dcsStatuses.IsSyncedUpline)
             {
                 ING2StatusService service = new NG2StatusService();
-                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId);
+                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline,
+                    siteId, currencyId, CurrentSession.UserId, (byte) Config.SystemId);
             }
 
             return new Module.NG2.Entities.Result();
@@ -144,7 +141,7 @@
 
         protected CustInfo GetCustomerInfo(int custId, string groupName)
         {
-            var custInfo = this._report.GetCustomerInfo(groupName, custId, string.Empty, true);
+            var custInfo = _report.GetCustomerInfo(groupName, custId, string.Empty, true);
 
             if (custInfo == null || custInfo.Rows.Count == 0)
             {
@@ -152,31 +149,27 @@
             }
 
             var item = custInfo.Rows[0];
-            var info = new CustInfo
+            return new CustInfo
             {
-                AgentId = (int)item["recommend"],
-                MasterId = (int)item["mrecommend"],
-                SuperId = (int)item["srecommend"],
+                AgentId = (int) item["recommend"],
+                MasterId = (int) item["mrecommend"],
+                SuperId = (int) item["srecommend"],
                 AgentName = item["agentname"] is DBNull ? string.Empty : item["agentname"].ToString(),
                 MasterName = item["mastername"] is DBNull ? string.Empty : item["mastername"].ToString(),
                 SuperName = item["supername"] is DBNull ? string.Empty : item["supername"].ToString(),
-                CustId = (int)item["custid"],
-                Username = (string)item["username"],
+                CustId = (int) item["custid"],
+                Username = (string) item["username"],
                 RoleId = Utils.ToInt32(item["roleid"])
             };
-
-            return info;
         }
 
         protected DcsEntity GetDcsStatuses(int custId, int roleId, int productId)
         {
-            var param = new Hashtable();
-            param.Add("custid", custId);
-            param.Add("roleid", roleId);
+            var param = new Hashtable {{"custid", custId}, {"roleid", roleId}};
 
             var ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
 
-            if (ds != null && ds.Tables.Count > 0)
+            if (ds?.Tables.Count > 0)
             {
                 var cust = ds.Tables[0];
                 var product = cust.Select("ProductID = " + productId).FirstOrDefault();
@@ -203,7 +196,7 @@
                 }
             }
 
-            return new DcsEntity() { IsHidden = true };
+            return new DcsEntity {IsHidden = true};
         }
     }
 }

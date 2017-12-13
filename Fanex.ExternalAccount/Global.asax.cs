@@ -19,12 +19,7 @@
     using ONEbook.UM.Filters;
     using Sunplus.Libraries.APILogger;
     using Utilities;
-    /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
-     visit http://go.microsoft.com/?LinkId=9394801*/
 
-    /// <summary>
-    ///     TODO: Global application.
-    /// </summary>
     public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -32,26 +27,22 @@
             filters.Add(new HandleErrorAttribute());
         }
 
-        /// <summary>
-        ///     Registers routes.
-        /// </summary>
-        /// <param name="routes">Routes collection.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.IgnoreRoute("{*allaspx}", new {allaspx = @".*\.aspx(/.*)?"});
-            routes.IgnoreRoute("{*allashx}", new {allashx = @".*\.ashx(/.*)?"});
-            routes.IgnoreRoute("{*favicon}", new {favicon = "(.*/)?favicon.ico(/.*)?"});
+            routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
+            routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
+            routes.IgnoreRoute("{*favicon}", new { favicon = "(.*/)?favicon.ico(/.*)?" });
 
             routes.MapHttpRoute(
                 "DefaultApi",
                 "api/{controller}/{id}",
-                new {id = RouteParameter.Optional});
+                new { id = RouteParameter.Optional });
 
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional});
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional });
 
             routes.MapRoute(
                 "Default2",
@@ -115,7 +106,7 @@
             BundleTable.Bundles.EnableStatementBundle();
             BundleTable.Bundles.EnableWinLossDetailBundle();
 
-            var defaultCaptchaManager = (DefaultCaptchaManager) CaptchaUtils.CaptchaManager;
+            var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory =
                 (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
@@ -136,7 +127,7 @@
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
-            urlHelper.Action("Refresh", "DefaultCaptcha", new {area = string.Empty});
+            urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
 
         private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper,
             KeyValuePair<string, ICaptchaValue> keyValuePair) => urlHelper.Action(

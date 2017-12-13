@@ -30,7 +30,7 @@
     using ViewModel.Customer;
     using Customer = PTEngine.BusinessObjects.Customer;
 
-    public class CustomerController : CustomerBase
+    public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
         private readonly AgentService _agentService = new AgentService();
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);

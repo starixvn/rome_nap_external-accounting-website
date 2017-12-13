@@ -107,9 +107,7 @@
             int userId,
             string ip,
             int subAccId,
-            string lang,
-            string username,
-            string subUsername)
+            string lang)
         {
             var param = new Hashtable
             {

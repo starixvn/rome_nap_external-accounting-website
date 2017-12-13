@@ -421,8 +421,8 @@
             var hashCode = Encryption.CfsEnCode(code);
             if (roleId != Member)
             {
-                var md5 = Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)");
-                hashCode = Cryptography.ComputeHash("SHA1", code, md5);
+                var md5 = Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
+                hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
             }
 
             var result = _service.ResetSecurityCode(id, hashCode, force || roleId != (int)CustomerRole.Super);
