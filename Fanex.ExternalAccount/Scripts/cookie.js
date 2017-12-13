@@ -2,10 +2,10 @@
  * @author 	Maxime Haineault (max@centdessin.com)
  * @version	0.3
  * @desc 	JavaScript cookie manipulation class
- * 
+ *
  */
 
-Cookie = {	
+Cookie = {
 
 	/** Get a cookie's value
 	 *
@@ -17,9 +17,9 @@ Cookie = {
 		tmp =  document.cookie.match((new RegExp(key +'=[a-zA-Z0-9.()=|%/]+($|;)','g')));
 		if(!tmp || !tmp[0]) return null;
 		else return unescape(tmp[0].substring(key.length+1,tmp[0].length).replace(';','')) || null;
-		
-	},	
-	
+
+	},
+
 	/** Set a cookie
 	 *
 	 *  @param integer	key		The token that will be used to retrieve the cookie
@@ -28,19 +28,19 @@ Cookie = {
 	 *  @param string	path	Path in which the cookie is effective, default is "/" (optional)
 	 *  @param string	domain	Domain where the cookie is effective, default is window.location.hostname (optional)
 	 *  @param boolean 	secure	Use SSL or not, default false (optional)
-	 * 
+	 *
 	 *  @return setted cookie
 	 */
 	set: function(key, value, ttl, path, domain, secure) {
 		cookie = [key+'='+    escape(value),
 		 		  'path=' + ((!path || path == '') ? '/' : path),
 		 		  'domain='+  ((!domain) ? '' : domain)];
-		
+
 		if (ttl)         cookie.push('expires='+ Cookie.hoursToExpireDate(ttl));
 		if (secure)      cookie.push('secure');
 		return document.cookie = cookie.join('; ');
 	},
-	
+
 	/** Unset a cookie
 	 *
 	 *  @param integer	key		The token that will be used to retrieve the cookie
@@ -64,7 +64,7 @@ Cookie = {
 		else {
 			now = new Date();
 			now.setTime(now.getTime() + (parseInt(ttl) * 60 * 60 * 1000));
-			return now.toGMTString();			
+			return now.toGMTString();
 		}
 	},
 
@@ -80,9 +80,9 @@ Cookie = {
 		}
 		return false;
 	},
-	
+
 	/** If Firebug JavaScript console is present, it will dump cookie string to console.
-	 * 
+	 *
 	 *  @return void
 	 */
 	dump: function() {
