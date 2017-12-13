@@ -184,6 +184,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoManager.cs" />
     <Compile Include="Impl\Customer\CommissionService.cs" />
     <Compile Include="Impl\Customer\ThirdPartyProductStatusService.cs" />

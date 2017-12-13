@@ -1,47 +1,47 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using Fanex.Common;
-    using Fanex.Common.Extensions;
-    using Fanex.Data;
-    using Fanex.Data.DNAide;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Interface.Login;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Logging.Extensions.Database;
+    using System.Data;
+    using Base;
+    using Common;
+    using Common.Extensions;
+    using Data;
+    using Data.DNAide;
+    using DTO;
+    using DTO.UserControl;
+    using Interface.Login;
 
     public class LoginDao : DAOBase, ILoginDao
     {
-        #region ILoginDao Members
-
-        public Fanex.ExternalAccount.DTO.Result Login(
-            string username, 
-            string password, 
-            string browser, 
-            string ip, 
+        public Result Login(
+            string username,
+            string password,
+            string browser,
+            string ip,
             string domain,
-            string countryCode, 
-            string platForm, 
+            string countryCode,
+            string platForm,
             out int custId)
         {
-            var result = new DTO.Result();
+            var result = new Result();
 
             custId = 0;
 
             using (var db = new ObjectDb("EAS_UserLogin"))
             {
-                db.AddInParameter("Username", System.Data.DbType.String, username);
-                db.AddInParameter("userpwd", System.Data.DbType.String, Cryptography.CfsEnCode(password));
-                db.AddInParameter("BrowserName", System.Data.DbType.String, browser);
-                db.AddInParameter("LoginIP", System.Data.DbType.String, ip);
-                db.AddInParameter("LoginDomain", System.Data.DbType.String, domain);
-                db.AddInParameter("CountryCode", System.Data.DbType.String, countryCode);
-                db.AddInParameter("Platform", System.Data.DbType.String, platForm);
-                db.AddOutParameter("Custid", System.Data.DbType.Int32, sizeof(int));
-                db.AddOutParameter("ErrCode", System.Data.DbType.Int32, sizeof(int));
-                db.AddOutParameter("ErrMsg", System.Data.DbType.String, 200);
-                db.AddOutParameter("GroupID", System.Data.DbType.Int32, sizeof(int));
+                db.AddInParameter("Username", DbType.String, username);
+                db.AddInParameter("userpwd", DbType.String, Cryptography.CfsEnCode(password));
+                db.AddInParameter("BrowserName", DbType.String, browser);
+                db.AddInParameter("LoginIP", DbType.String, ip);
+                db.AddInParameter("LoginDomain", DbType.String, domain);
+                db.AddInParameter("CountryCode", DbType.String, countryCode);
+                db.AddInParameter("Platform", DbType.String, platForm);
+                db.AddOutParameter("Custid", DbType.Int32, sizeof(int));
+                db.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
+                db.AddOutParameter("ErrMsg", DbType.String, 200);
+                db.AddOutParameter("GroupID", DbType.Int32, sizeof(int));
 
                 try
                 {
@@ -61,13 +61,12 @@
             return result;
         }
 
-        public DTO.Result Logout(int custId, string username)
+        public Result Logout(int custId, string username)
         {
             using (var db = new ObjectDb("EAS_UserLogout"))
             {
-                db.AddInParameter("on_userid", System.Data.DbType.Int32, custId);
-                db.AddInParameter("username", System.Data.DbType.String, username);
-
+                db.AddInParameter("on_userid", DbType.Int32, custId);
+                db.AddInParameter("username", DbType.String, username);
                 try
                 {
                     db.ExecuteNonQuery();
@@ -77,13 +76,13 @@
                     throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
 
-                return new DTO.Result();
+                return new Result();
             }
         }
 
-        public DTO.Result Checkin(int custId, string netSessionID, string ip, out int onuserId)
+        public Result Checkin(int custId, string netSessionID, string ip, out int onuserId)
         {
-            var result = new DTO.Result();
+            var result = new Result();
 
             onuserId = 0;
 
@@ -112,19 +111,11 @@
         {
             using (var db = new ObjectDb("EAS_UserRecheckIn"))
             {
-                db.AddInParameter("On_UserID", System.Data.DbType.Int32, custId);
-                db.AddOutParameter("isKickedOut", System.Data.DbType.Boolean, sizeof(bool));
+                db.AddInParameter("On_UserID", DbType.Int32, custId);
+                db.AddOutParameter("isKickedOut", DbType.Boolean, sizeof(bool));
+                db.ExecuteNonQuery();
 
-                try
-                {
-                    db.ExecuteNonQuery();
-                    return (bool)db.GetParameterValue("isKickedOut");
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
-                
+                return (bool) db.GetParameterValue("isKickedOut");
             }
         }
 
@@ -138,7 +129,7 @@
                 {
                     using (var reader = db.ExecuteReader())
                     {
-                        while (reader != null && reader.Read())
+                    while (reader?.Read() == true)
                         {
                             list.Add(new Group
                             {
@@ -161,11 +152,11 @@
         {
             using (var db = new ObjectDb("EAS_UserCheckPermission"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("FuncID", System.Data.DbType.Int32, funcId);
-                db.AddInParameter("FuncKey", System.Data.DbType.String, funcKey);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("FuncID", DbType.Int32, funcId);
+                db.AddInParameter("FuncKey", DbType.String, funcKey);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
                 try
                 {
@@ -185,16 +176,14 @@
         {
             DbResult dr = null;
             DateTime loginTime;
-            var p = new System.Collections.Hashtable();
+            var p = new Hashtable();
 
             p.Add("logintime", null);
 
-            dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Age_LoginAdminVerifyTicket", p);
-            loginTime = Fanex.Common.Converter.ToDateTime(dr.Outputs["logintime"]);
+            dr = DbHelper.ExecuteDbResult("Age_LoginAdminVerifyTicket", p);
+            loginTime = Converter.ToDateTime(dr.Outputs["logintime"]);
 
             return loginTime;
         }
-
-        #endregion ILoginDao Members
     }
 }

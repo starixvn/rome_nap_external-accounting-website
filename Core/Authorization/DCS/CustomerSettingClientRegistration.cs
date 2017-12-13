@@ -47,27 +47,30 @@
             return settingContext;
         }
 
-        private bool AllowRead(PermissionContext permissionContext)
+        private static bool AllowRead(PermissionContext permissionContext)
         {
-            ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+            var authenticationService = new ExternalAccountAuthenticateAttribute();
             var productName = GetProductName(permissionContext);
 
-            return string.IsNullOrWhiteSpace(productName) ? true : _authenticationService.AllowReadByAuthenticationParam(productName);
+            return string.IsNullOrWhiteSpace(productName)
+                   || authenticationService.AllowReadByAuthenticationParam(productName);
         }
 
-        private bool AllowUpdated(PermissionContext permissionContext)
+        private static bool AllowUpdated(PermissionContext permissionContext)
         {
-            bool isSuper = this.CheckIsSuperLevel(permissionContext);
-            ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+            var isSuper = CheckIsSuperLevel(permissionContext);
+            var authenticationService = new ExternalAccountAuthenticateAttribute();
             var productName = GetProductName(permissionContext);
 
-            return isSuper && permissionContext.System == 4 ? false : string.IsNullOrWhiteSpace(productName) ? true :
-                _authenticationService.AllowUpdateByAuthenticationParam(productName);
+            return (!isSuper || permissionContext.System != 4)
+                   && (string.IsNullOrWhiteSpace(productName)
+                       || authenticationService.AllowUpdateByAuthenticationParam(productName));
         }
 
-        private bool CheckIsSuperLevel(PermissionContext permissionContext)
+        private static bool CheckIsSuperLevel(PermissionContext permissionContext)
         {
-            var trackingValue = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting").AttemptedValue;
+            var trackingValue = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting")
+                .AttemptedValue;
             if (!string.IsNullOrWhiteSpace(trackingValue))
             {
                 var pattern = "(\"customerLevel\":{\"value\")([^\r\n][0-9]+)";
@@ -75,7 +78,8 @@
 
                 if (regexMatch.Success)
                 {
-                    string customerLevelFounded = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
+                    var customerLevelFounded = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+",
+                        string.Empty, RegexOptions.Compiled);
                     return customerLevelFounded.Equals("4");
                 }
             }
@@ -83,21 +87,22 @@
             return false;
         }
 
-        private string GetProductName(PermissionContext permissionContext)
+        private static string GetProductName(PermissionContext permissionContext)
         {
             var queryString = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("productId");
-            var val = queryString != null ? queryString.AttemptedValue : null;
+            var val = queryString?.AttemptedValue;
             if (string.IsNullOrWhiteSpace(val))
             {
                 var setting = permissionContext.AuthorizationContext.Controller.ValueProvider.GetValue("setting");
                 val = setting != null ? setting.AttemptedValue : string.Empty;
-                var pattern = "(\"productId\":)([^\r\n][0-9]*)";
+                const string pattern = "(\"productId\":)([^\r\n][0-9]*)";
 
-                Match regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
+                var regexMatch = Regex.Match(val, pattern, RegexOptions.IgnoreCase);
 
                 if (regexMatch.Success)
                 {
-                    val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
+                    val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty,
+                        RegexOptions.Compiled);
                 }
             }
 

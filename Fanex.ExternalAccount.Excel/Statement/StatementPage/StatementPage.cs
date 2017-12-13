@@ -3,91 +3,86 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.ExternalAccount.Utilities;
+    using System.Globalization;
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
+    using Utilities;
     using Utility;
 
     internal class StatementPage : TemplateReport, IReportBuilder
     {
-        private StatementPageBuilder _builder;
+        private readonly StatementPageBuilder _builder;
 
         public StatementPage(string filePath, StatementPageBuilder builder)
             : base(filePath)
         {
-            this._builder = builder;
+            _builder = builder;
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
-            var data = this._builder.Data;
+            var data = _builder.Data;
             if (data == null)
             {
                 return null;
             }
 
-            ISheet templateSheet = HssfWorkbook.GetSheet("Template");
-            ISheet resultSheet = HssfWorkbook.GetSheet("Statement");
+            var templateSheet = HssfWorkbook.GetSheet("Template");
+            var resultSheet = HssfWorkbook.GetSheet("Statement");
 
-            if (this._builder.IsBold)
+            if (_builder.IsBold)
             {
-                this.BoldAllFonts();
+                BoldAllFonts();
             }
 
-            int rowId = 0;
-            int colId = 0;
+            var rowId = 0;
+            const int colId = 0;
 
-            string mainTitle = " Statement - " + this._builder.Username + " - From " + this._builder.FromDate + " To " + this._builder.ToDate;
+            var mainTitle = " Statement - " + _builder.Username + " - From " + _builder.FromDate + " To " +
+                            _builder.ToDate;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
             rowId = 2;
-            int id = 0;
+            var id = 0;
 
             if (data.Count > 0)
             {
-                var values = new List<object> { };
-                int totalColumn = 4;
-                int lastColumnIndex = colId + totalColumn - 1;
+                const int totalColumn = 4;
+                var lastColumnIndex = colId + totalColumn - 1;
                 double accumulatedTotal = 0;
-                bool isText = false;
-                string ballanceResult = "OK";
+                var ballanceResult = "OK";
 
                 foreach (var item in data)
                 {
-                    isText = false;
+                    var isText = false;
 
-                    if (id % 2 == 0)
-                    {
-                        resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                    }
-                    else
-                    {
-                        resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                    }
+                    resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
 
-                    if (item.TransType.ToUpper() == "BAL" && item.TransDesc.ToUpper() != "ACCUMULATED BALANCE") 
+                    if (string.Equals(item.TransType, "BAL", StringComparison.CurrentCultureIgnoreCase)
+                        && item.TransDesc.ToUpper(CultureInfo.InvariantCulture) != "ACCUMULATED BALANCE")
                     {
                         isText = true;
                         if (Math.Abs(accumulatedTotal - item.TotalAmt) < 0.00001 || id == 0)
                         {
                             ballanceResult = "OK";
                         }
-                        else 
+                        else
                         {
-                            accumulatedTotal = accumulatedTotal - item.TotalAmt;
+                            accumulatedTotal -= item.TotalAmt;
                             ballanceResult = "NOT EQUAL \nDiff: " + Utils.ToDecimal(accumulatedTotal);
                         }
                     }
-                    else 
+                    else
                     {
                         accumulatedTotal = item.TotalAmt + accumulatedTotal;
                     }
 
+                    List<object> values;
                     if (isText)
                     {
-                        values = new List<object>   
+                        values = new List<object>
                         {
                             item.AccDate.Replace("<br/>", "\n"),
                             item.TransType + "\n- " + item.TransDesc,
@@ -103,7 +98,7 @@
                             item.AccDate.Replace("<br/>", "\n"),
                             item.TransType + "\n- " + item.TransDesc,
                             item.TotalAmt,
-                            accumulatedTotal,
+                            accumulatedTotal
                         };
                     }
 
@@ -115,7 +110,7 @@
             }
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
-            return this.HssfWorkbook;
+            return HssfWorkbook;
         }
     }
 }

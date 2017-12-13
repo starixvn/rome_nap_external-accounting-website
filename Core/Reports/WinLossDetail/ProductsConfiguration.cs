@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-
-namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
+﻿namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
 {
+    using System.Configuration;
+
     public class ProductsConfiguration : ConfigurationSection
     {
         public static ProductsConfiguration Instance

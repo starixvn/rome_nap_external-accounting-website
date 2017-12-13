@@ -13,6 +13,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     public class ThirdPartyProductStatusController : BaseController
     {
+        private const string AccessDeniedView = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml";
+        private const string EnableThirdPartyProductStatusView = "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml";
         private readonly IThirdPartyProductStatusService thirdPartyProductStatusService;
         private readonly ProductStatusAuthorization authenticationService;
 
@@ -26,10 +28,12 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
         {
             var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Read, productId);
             if (!isAllowed)
-                return View("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            {
+                return View(AccessDeniedView);
+            }
 
             return View(
-                "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml", 
+                EnableThirdPartyProductStatusView,
                 thirdPartyProductStatusService.Select(
                     custId, 
                     custName,
@@ -46,12 +50,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Host, productId);
             if (!isAllowed)
             {
-                var deniedResult = new List<ProductStatusResult>();
-                deniedResult.Add(new ProductStatusResult
+                var deniedResult = new List<ProductStatusResult>
                 {
-                    ErrorCode = "999",
-                    ErrorMessage = ViewLang.DontHavePermission
-                });
+                    new ProductStatusResult
+                    {
+                        ErrorCode = "999",
+                        ErrorMessage = ViewLang.DontHavePermission
+                    }
+                };
 
                 return Json(deniedResult);
             }

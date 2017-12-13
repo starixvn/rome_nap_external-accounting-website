@@ -1,11 +1,10 @@
-﻿
+﻿using System.Diagnostics.CodeAnalysis;
+
 // This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Bug", "S3010:Static fields should not be updated in constructors", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPage.#ctor(System.String,Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPageBuilder)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1168:Empty arrays and collections should be returned instead of null", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPage.Build~NPOI.HSSF.UserModel.HSSFWorkbook")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1172:Unused method parameters should be removed", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Excel.Customer.CustomerListPage.CustomerListPage.SetBackgroundRow(NPOI.SS.UserModel.ISheet,NPOI.SS.UserModel.ISheet,System.Int32,System.Int32,System.Int32,System.String,System.Data.DataRow)~System.String")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Bug", "S2583:Conditionally executed blocks should be reachable", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Excel.Utility.HSSFSheetExtension.SetColumnWidth(NPOI.SS.UserModel.ISheet@,System.Int32@,System.Int32@,NPOI.SS.UserModel.IRow@,System.Boolean@)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Bug", "S1244:Floating point numbers should not be tested for equality", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReport.WriteTotal(NPOI.SS.UserModel.ISheet@,NPOI.SS.UserModel.ISheet@,System.Int32,System.Int32,System.Int32)")]
+[assembly: SuppressMessage("Sonar Code Smell", "S1694:An abstract class should have both abstract and concrete methods", Justification = "<Pending>", Scope = "type", Target = "~T:Fanex.ExternalAccount.Excel.TemplateReport")]
+
+[assembly: SuppressMessage("Potential Code Quality Issues", "RECS0018:Comparison of floating point numbers with equality operator", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReport.WriteTotal(NPOI.SS.UserModel.ISheet@,NPOI.SS.UserModel.ISheet@,System.Int32,System.Int32,System.Int32)")]

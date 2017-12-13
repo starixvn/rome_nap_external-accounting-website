@@ -6,35 +6,37 @@ using System.Diagnostics;
     using System.Web.Helpers;
     using System.Web.Mvc;
     using System.Web.Security;
+    using CaptchaMvc.Controllers;
     using CaptchaMvc.HtmlHelpers;
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
+    using Core.Context;
+    using CustomerSetting.Module.Core.Web;
+    using DTO;
+    using DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.Login;
     using Fanex.ExternalAccount.Service.Interface.Login;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Account;
 using Fanex.Logging.Extensions.Web;
     using ONEbook.UM.Filters;
-    using ONEbook.UM.Models;
-    using ONEbook.UM.Services;
-    using ONEbook.UM.Services.Impl;
+    using Service.Impl.Login;
+    using Service.Interface.Login;
+    using Utilities;
+    using ViewModel.Account;
+    using CurrentContext = Core.Context.CurrentContext;
+    using CurrentSession = Core.Context.CurrentSession;
 
-    public class AccountController : CaptchaMvc.Controllers.DefaultCaptchaController
+    public class AccountController : DefaultCaptchaController
     {
-        private readonly ILoginService _userService;
-        private readonly Core.Context.CurrentSession _currentSession;
         private readonly ICurrentContext _currentContext;
-        private readonly IMaintenanceService _maintenanceService;
+        private readonly CurrentSession _currentSession;
         private readonly NoCaptchaSectionConfiguration _nocaptcha;
+        private readonly ILoginService _userService;
 
         public AccountController()
         {
-            _currentContext = new Core.Context.CurrentContext();
-            _currentSession = new Core.Context.CurrentSession();
+            _currentContext = new CurrentContext();
+            _currentSession = new CurrentSession();
             _userService = new LoginService();
-            _maintenanceService = new MaintenanceService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
 
@@ -48,7 +50,7 @@ using Fanex.Logging.Extensions.Web;
 
             SetUMTokenForInternalAlphaLogin();
 
-            Encryptor.Instance.RandomCaptcha = new CaptchaResult().GetCaptchaString(4);
+            Encryptor.Instance.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
 
             return View(new LoginModel
             {
@@ -81,28 +83,28 @@ using Fanex.Logging.Extensions.Web;
             return VerifyLoginCredential(model, rawPassword);
         }
 
-        private ActionResult CreateWrongValidationCaptchaView(LoginModel model)
-            => View(
-                new LoginModel
-                {
-                    UserName = model.UserName,
-                    LoginAttempt = _currentSession.LoginAttempt,
-                    LoginFailedMessage = ViewLang.WrongValidationCode
-                });
+        private ActionResult CreateWrongValidationCaptchaView(LoginModel model) => View(
+            new LoginModel
+            {
+                UserName = model.UserName,
+                LoginAttempt = _currentSession.LoginAttempt,
+                LoginFailedMessage = ViewLang.WrongValidationCode
+            });
 
-        private bool IsRequiredCaptcha(string username)
-            => _currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
-                && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase);
+        private bool IsRequiredCaptcha(string username) =>
+            _currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
+            && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase);
 
         private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
         {
-            int custId = 0, onuserId = 0;
-            bool isInternalAdmin = true;
+            var custId = 0;
+            var onuserId = 0;
+            var isInternalAdmin = true;
 
             var result = _userService.Login(
                 model.UserName,
                 rawPassword,
-                new Request()
+                new Request
                 {
                     Browser = Request.Browser.Browser,
                     CountryCode = _currentContext.CountryCode,
@@ -115,7 +117,7 @@ using Fanex.Logging.Extensions.Web;
                 out onuserId,
                 out isInternalAdmin);
 
-            return result != null && result.IsSuccess
+            return result?.IsSuccess == true
                 ? LoginSuccessful(model, custId, onuserId, isInternalAdmin, result)
                 : LoginFailed(model.UserName, result);
         }
@@ -129,9 +131,9 @@ using Fanex.Logging.Extensions.Web;
                 UserName = failedUsername,
                 LoginAttempt = _currentSession.LoginAttempt,
                 LoginFailedMessage =
-                                result != null
-                                ? result.ErrorMessage
-                                : ViewLang.LoginError
+                    result != null
+                        ? result.ErrorMessage
+                        : ViewLang.LoginError
             });
         }
 
@@ -150,7 +152,7 @@ using Fanex.Logging.Extensions.Web;
 
         private bool IsDisabledCaptcha(LoginModel model)
         {
-            var isDisableCaptcha =  
+            var isDisableCaptcha =
                 _nocaptcha.AllowIPs
                     .Split(',')
                     .Contains(_currentContext.Ip4Address)
@@ -158,7 +160,7 @@ using Fanex.Logging.Extensions.Web;
                     .Split(',')
                     .Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase));
 
-            if(isDisableCaptcha)
+            if (isDisableCaptcha)
             {
                 ResetLoginAttempt();
             }
@@ -166,8 +168,8 @@ using Fanex.Logging.Extensions.Web;
             return isDisableCaptcha;
         }
 
-        private string DecryptPassword(string encryptedPassword, string key)
-            => Encryptor.Instance.Decrypt(encryptedPassword, key);
+        private static string DecryptPassword(string encryptedPassword, string key) =>
+            Encryptor.Decrypt(encryptedPassword, key);
 
         private ActionResult LoginSuccessful(
             LoginModel model,
@@ -187,8 +189,7 @@ using Fanex.Logging.Extensions.Web;
                 : RedirectToHomePage();
         }
 
-        private RedirectResult RedirectToChooseGroupPage()
-            => Redirect("~/Account/ExternalGroup");
+        private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
         private void SetUMTokenForInternalAlphaLogin()
         {
@@ -198,8 +199,7 @@ using Fanex.Logging.Extensions.Web;
             }
         }
 
-        private RedirectResult RedirectToHomePage()
-            => Redirect("~/Home/Index/");
+        private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
 
         private bool IsValidCaptcha()
         {
@@ -215,12 +215,11 @@ using Fanex.Logging.Extensions.Web;
             }
         }
 
-        public ActionResult CaptchaImage()
-            => Content(new CaptchaResult().GetValiationImage(ControllerContext));
+        public ActionResult CaptchaImage() => Content(CaptchaUtil.GetValiationImage(ControllerContext));
 
         public ActionResult LogOff()
         {
-            int onuserId = _currentSession.OnUserId;
+            var onuserId = _currentSession.OnUserId;
             if (onuserId > 0)
             {
                 SignOut(onuserId, _currentSession.UserName);
@@ -234,8 +233,9 @@ using Fanex.Logging.Extensions.Web;
             return RedirectToAction("Login");
         }
 
-                ExceptionHandler.Handle(ex);
-        [HttpGet, CheckUMFilter, Authorize]
+        [HttpGet]
+        [CheckUMFilter]
+        [Authorize]
         public ActionResult ExternalGroup()
         {
             if (!_currentSession.IsInternalAdmin)
@@ -248,7 +248,8 @@ using Fanex.Logging.Extensions.Web;
             return View();
         }
 
-        [CheckUMFilter, Authorize]
+        [CheckUMFilter]
+        [Authorize]
         public ActionResult ExternalGroupList()
         {
             var result = _userService.GroupList();
@@ -257,7 +258,7 @@ using Fanex.Logging.Extensions.Web;
                 result.Select(o => new
                 {
                     GroupId = o.GroupID,
-                    GroupName = o.GroupName
+                    o.GroupName
                 }).ToArray(),
                 JsonRequestBehavior.AllowGet);
         }
@@ -268,7 +269,9 @@ using Fanex.Logging.Extensions.Web;
         }
 
         private void SignOut(int onuserId, string userName)
-            => _userService.Logout(onuserId, userName);
+        {
+            _userService.Logout(onuserId, userName);
+        }
 
         private bool ValidateAntiXSRF(string token)
         {
@@ -283,8 +286,7 @@ using Fanex.Logging.Extensions.Web;
                 }
 
                 var cookieValue = request.Cookies[AntiForgeryConfig.CookieName];
-                if (cookieValue != null
-                    && !string.IsNullOrWhiteSpace(cookieValue.Value))
+                if (!string.IsNullOrWhiteSpace(cookieValue?.Value))
                 {
                     AntiForgery.Validate(cookieValue.Value, formToken);
                 }

@@ -2,33 +2,31 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
-    using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
-    using Logging.Extensions.Web;
+    using Base;
+    using DataAccess.Impl.UserControl;
+    using DataAccess.Interface.UserControl;
+    using DTO;
+    using DTO.UserControl;
+    using Interface.UserControl;
 
-    public class MenuService : IMenuService
+    public class MenuService : ServiceBase, IMenuService
     {
-        private readonly IMenuDao _menuDao = null;
+        private readonly IMenuDao _menuDao;
 
         public MenuService(IMenuDao menuDao = null)
         {
-            this._menuDao = menuDao ?? new MenuDao();
+            _menuDao = menuDao ?? new MenuDao();
         }
-
-        #region IMenuService Members
 
         public IEnumerable<Menu> GetAllMenus()
         {
             try
             {
-                return this._menuDao.GetAllMenus();
+                return _menuDao.GetAllMenus();
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
@@ -42,15 +40,15 @@
         }
 
         public Result CreateMenu(
-            string name, 
-            string description, 
-            string url, 
-            int functionId, 
+            string name,
+            string description,
+            string url,
+            int functionId,
             int parentId,
             string parentName,
             int displayOrder,
-            bool isActive, 
-            int custId, 
+            bool isActive,
+            int custId,
             string ip,
             out int menuId)
         {
@@ -58,30 +56,31 @@
 
             try
             {
-                var result = this._menuDao.CreateMenu(name, description, url, functionId, parentId, parentName, displayOrder, isActive, custId, ip, out menuId);
+                var result = _menuDao.CreateMenu(name, description, url, functionId, parentId, parentName, displayOrder,
+                    isActive, custId, ip, out menuId);
 
                 if (result.IsSuccess)
                 {
-                    this.OnMenuUpdated();
+                    OnMenuUpdated();
                 }
 
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
         }
 
         public Result UpdateMenu(
-            int id, 
+            int id,
             string name,
-            string description, 
+            string description,
             string url,
             int functionId,
-            int parentId, 
+            int parentId,
             string parentName,
             int displayOrder,
             int custId,
@@ -89,18 +88,19 @@
         {
             try
             {
-                var result = this._menuDao.UpdateMenu(id, name, description, url, functionId, parentId, parentName, displayOrder, custId, ip);
+                var result = _menuDao.UpdateMenu(id, name, description, url, functionId, parentId, parentName,
+                    displayOrder, custId, ip);
 
                 if (result.IsSuccess)
                 {
-                    this.OnMenuUpdated();
+                    OnMenuUpdated();
                 }
 
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
@@ -110,18 +110,18 @@
         {
             try
             {
-                var result = this._menuDao.UpdateMenuStatus(id, isActive, custId);
+                var result = _menuDao.UpdateMenuStatus(id, isActive, custId);
 
                 if (result.IsSuccess)
                 {
-                    this.OnMenuUpdated();
+                    OnMenuUpdated();
                 }
 
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
@@ -131,29 +131,23 @@
         {
             try
             {
-                var result = this._menuDao.DeleteMenu(id, custId);
+                var result = _menuDao.DeleteMenu(id, custId);
 
                 if (result.IsSuccess)
                 {
-                    this.OnMenuUpdated();
+                    OnMenuUpdated();
                 }
 
                 return result;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ProcessException(ex);
             }
 
             return null;
         }
 
-        #endregion IMenuService Members
-
-        private void OnMenuUpdated()
-        {
-            var cachingService = new CachingService();
-            cachingService.ClearUserCache();
-        }
+        private static void OnMenuUpdated() => CachingService.ClearUserCache();
     }
 }

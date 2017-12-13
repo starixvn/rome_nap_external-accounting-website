@@ -284,7 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AccountController.cs" />
-    <Compile Include="Authentication\CaptchaResult.cs" />
+    <Compile Include="Authentication\CaptchaUtil.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />

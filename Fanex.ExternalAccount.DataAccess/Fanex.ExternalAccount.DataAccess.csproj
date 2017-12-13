@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Impl\Base\DAOBase.cs" />
     <Compile Include="Impl\Customer\Casino\CasinoDao.cs" />
     <Compile Include="Impl\Customer\CommissionDao.cs" />

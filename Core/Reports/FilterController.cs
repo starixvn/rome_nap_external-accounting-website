@@ -2,41 +2,40 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Interface.Report;
-    using Fanex.ExternalAccount.Utilities;
-    
-    public partial class FilterController : BaseController
+    using Base;
+    using Newtonsoft.Json;
+    using Service.Impl.Report;
+    using Service.Interface.Report;
+    using Utilities;
+
+    public class FilterController : BaseController
     {
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             var list = new List<KeyValuePair<string, bool>>();
-            var products = base.GetProductList();
-            foreach (KeyValuePair<string, string> product in products)
+            foreach (var product in GetProductList())
             {
                 if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    list.Add(new KeyValuePair<string, bool>(product.Key.ToLower(), CheckRequest.GetBooleanRequest(product.Key, false)));
+                    list.Add(new KeyValuePair<string, bool>(product.Key.ToLower(CultureInfo.InvariantCulture),
+                        CheckRequest.GetBooleanRequest(product.Key, false)));
                 }
             }
 
             return list;
         }
 
-        public ActionResult ProductsList()
-        {
-            return this.JsonBase(this.GetProductList(), new Newtonsoft.Json.JsonSerializerSettings());
-        }
+        public ActionResult ProductsList() => JsonBase(GetProductList(), new JsonSerializerSettings());
 
         public ActionResult GetSuggestedUserName()
         {
-            string groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
+            var groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
 
-            if (string.IsNullOrEmpty(groupName) || !this.IsBelong(groupName, 0, null, true))
+            if (string.IsNullOrEmpty(groupName) || !IsBelong(groupName, 0, null, true))
             {
-                return this.JsonBase(new { username = string.Empty });
+                return JsonBase(new {username = string.Empty});
             }
 
             IReportService reportService = new ReportService();
@@ -45,7 +44,7 @@
                 CheckRequest.GetStringRequest("username", string.Empty),
                 CheckRequest.GetStringRequest("groupname", string.Empty));
 
-            return this.JsonBase(users, new Newtonsoft.Json.JsonSerializerSettings());
+            return JsonBase(users, new JsonSerializerSettings());
         }
     }
 }

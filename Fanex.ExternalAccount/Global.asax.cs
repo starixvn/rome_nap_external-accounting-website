@@ -9,21 +9,23 @@
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
-    using Fanex.CustomerSetting.Client40;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.GoldDeluxe.CoreSetting.Mappings;
+    using CasinoLibrary.SBAgent;
+    using Core.Context;
+    using CustomerSetting.Client40;
+    using Data.Configuration;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
+    using GoldDeluxe.CoreSetting.Mappings;
     using ONEbook.UM.Filters;
-
+    using Sunplus.Libraries.APILogger;
+    using Utilities;
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
 
     /// <summary>
-    /// TODO: Global application.
+    ///     TODO: Global application.
     /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -31,40 +33,53 @@
         }
 
         /// <summary>
-        /// Registers routes.
+        ///     Registers routes.
         /// </summary>
         /// <param name="routes">Routes collection.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
-            routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
-            routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
+            routes.IgnoreRoute("{*allaspx}", new {allaspx = @".*\.aspx(/.*)?"});
+            routes.IgnoreRoute("{*allashx}", new {allashx = @".*\.ashx(/.*)?"});
+            routes.IgnoreRoute("{*favicon}", new {favicon = "(.*/)?favicon.ico(/.*)?"});
 
             routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new {id = RouteParameter.Optional});
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+                "Default",
+                "{controller}/{action}/{id}",
+                new {controller = "Home", action = "Index", id = UrlParameter.Optional});
 
             routes.MapRoute(
-                name: "Default2",
-                url: "{controller}/{action}/{id}/{groupname}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, groupname = UrlParameter.Optional });
+                "Default2",
+                "{controller}/{action}/{id}/{groupname}",
+                new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    groupname = UrlParameter.Optional
+                });
 
             routes.MapRoute(
-                name: "Default3",
-                url: "{controller}/{action}/{id}/{username}/{groupname}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional });
+                "Default3",
+                "{controller}/{action}/{id}/{username}/{groupname}",
+                new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    username = UrlParameter.Optional,
+                    groupname = UrlParameter.Optional
+                });
 
             routes.MapRoute(
-                name: "Default4",
-                url: "{controller}/{action}/{id}/{custId}/{uplineId}/{username}/{groupname}",
-                defaults: new
+                "Default4",
+                "{controller}/{action}/{id}/{custId}/{uplineId}/{username}/{groupname}",
+                new
                 {
                     controller = "Home",
                     action = "Index",
@@ -84,14 +99,14 @@
             GlobalFilters.Filters.Add(new CheckUMFilter());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
 
             var logger = new CasinoAPILogger();
-            var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
-            string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
-            manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
-            manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
+            var manager = new APILogManager(logger);
+            const string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
+            manager.Register(typeof(Customer), pattern);
+            manager.Register(typeof(BasicInfo), pattern);
 
             BundleTable.Bundles.EnableCommonBundle();
             BundleTable.Bundles.EnableLoginBundle();
@@ -100,12 +115,12 @@
             BundleTable.Bundles.EnableStatementBundle();
             BundleTable.Bundles.EnableWinLossDetailBundle();
 
-            var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
-            defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
+            var defaultCaptchaManager = (DefaultCaptchaManager) CaptchaUtils.CaptchaManager;
+            defaultCaptchaManager.ImageUrlFactory =
+                (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
 
             MvcHandler.DisableMvcResponseHeader = true;
-
 
             ExceptionHandler
                 .UseConfig(new LoggingConfiguration()
@@ -120,20 +135,17 @@
             ExceptionHandler.Handle(Server.GetLastError());
         }
 
-        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
-        {
-            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
-        }
+        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
+            urlHelper.Action("Refresh", "DefaultCaptcha", new {area = string.Empty});
 
-        private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
-        {
-            return urlHelper.Action(
+        private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper,
+            KeyValuePair<string, ICaptchaValue> keyValuePair) => urlHelper.Action(
             "Generate",
             "DefaultCaptcha",
             new RouteValueDictionary
             {
-                { "area", string.Empty },
-                { captchaManager.TokenParameterName, keyValuePair.Key }
+                {"area", string.Empty},
+                {captchaManager.TokenParameterName, keyValuePair.Key}
             });
         }
 
@@ -149,6 +161,5 @@
             }
 
             return result;
-        }
     }
 }

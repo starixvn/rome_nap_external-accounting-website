@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
 
     public static class HSSFSheetExtension
     {
-        public static void CopyRows(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum, int total)
+        public static void CopyRows(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum,
+            int total)
         {
             if (total <= 0)
             {
@@ -21,7 +21,8 @@
             }
         }
 
-        public static void CopyRow(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum, int firstColumn, int lastColumn)
+        public static void CopyRow(this ISheet sheet, ISheet sourceSheet, int sourceRowNum, int destinateRowNum,
+            int firstColumn, int lastColumn)
         {
             if (sheet.LastRowNum < destinateRowNum)
             {
@@ -40,9 +41,9 @@
             var newRow = sheet.GetRow(destinateRowNum);
             newRow = newRow ?? sheet.CreateRow(destinateRowNum);
             newRow.Height = sourceRow.Height;
-            int firstCellNum = Math.Min(sourceRow.FirstCellNum, firstColumn);
-            int lastCellNum = Math.Min(sourceRow.LastCellNum, lastColumn + 1);
-            for (int i = firstCellNum; i < lastCellNum; i++)
+            var firstCellNum = Math.Min(sourceRow.FirstCellNum, firstColumn);
+            var lastCellNum = Math.Min(sourceRow.LastCellNum, lastColumn + 1);
+            for (var i = firstCellNum; i < lastCellNum; i++)
             {
                 var oldCell = sourceRow.GetCell(i);
                 if (oldCell == null)
@@ -55,7 +56,7 @@
                 CellRangeAddress sourceRange = null;
                 for (var j = 0; j < sourceSheet.NumMergedRegions; j++)
                 {
-                    CellRangeAddress range = sourceSheet.GetMergedRegion(j);
+                    var range = sourceSheet.GetMergedRegion(j);
                     if (range.FirstColumn == oldCell.ColumnIndex && range.FirstRow == oldCell.RowIndex)
                     {
                         sourceRange = range;
@@ -65,8 +66,8 @@
 
                 if (sourceRange != null)
                 {
-                    int lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow;
-                    int firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
+                    var lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow;
+                    var firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
                     var newRange = new CellRangeAddress(newCell.RowIndex, lastRow, newCell.ColumnIndex, firstCol);
                     sheet.AddMergedRegion(newRange);
                 }
@@ -86,7 +87,7 @@
         public static void RemoveColumns(this ISheet sheet, List<int> columns)
         {
             columns.Sort();
-            for (int i = columns.Count - 1; i >= 0; i--)
+            for (var i = columns.Count - 1; i >= 0; i--)
             {
                 RemoveColumn(sheet, columns[i]);
             }
@@ -94,9 +95,9 @@
 
         public static void RemoveColumn(this ISheet sheet, int columnIndex)
         {
-            int maxColumn = 0;
-            bool adjustColumn = true;
-            for (int r = sheet.FirstRowNum; r <= sheet.LastRowNum; r++)
+            var maxColumn = 0;
+            var adjustColumn = true;
+            for (var r = sheet.FirstRowNum; r <= sheet.LastRowNum; r++)
             {
                 var row = sheet.GetRow(r);
                 int lastColumn = row.LastCellNum;
@@ -114,73 +115,8 @@
             }
         }
 
-        public static void CloneCell(this ISheet sheet, ICell newCell, ICell oldCell)
-        {
-            CloneCell(newCell, oldCell);
-        }
-
-        public static ICell GetCell(this ISheet sheet, int rowIndex, int colIndex)
-        {
-            return sheet.GetRow(rowIndex).GetCell(colIndex);
-        }
-
-        public static int MergeCells(this ISheet sheet, int firstRow, int firstCol, int lastRow, int lastCol)
-        {
-            var rangeAddress = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
-            return sheet.AddMergedRegion(rangeAddress);
-        }
-
-        public static void RemoveMergedRegions(this ISheet sheet, int firstRow, int firstCol, int lastRow, int lastCol)
-        {
-            for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
-            {
-                var mergedRegion = sheet.GetMergedRegion(i);
-                if (mergedRegion.FirstRow >= firstRow && mergedRegion.LastRow <= lastRow &&
-                    mergedRegion.FirstColumn >= firstCol && mergedRegion.LastColumn <= lastCol)
-                {
-                    sheet.RemoveMergedRegion(i);
-                }
-            }
-        }
-
-        public static ICell CreateCell(this ISheet sheet, int rowId, int colId, int rowSpan, int colSpan)
-        {
-            Debug.Assert(rowSpan >= 0, "rowSpan must be more than or equal 0");
-            Debug.Assert(colSpan >= 0, "colSpan must be more than or equal 0");
-
-            ICell cell = sheet.CreateCell(rowId, colId);
-            if (rowSpan == 0 && colSpan == 0)
-            {
-                return cell;
-            }
-
-            MergeCells(sheet, rowId, colId, rowId + rowSpan, colId + colSpan);
-            return cell;
-        }
-
-        public static ICell CreateCell(this ISheet sheet, int rowId, int colId, int rowSpan, int colSpan, ICellStyle cellStyle)
-        {
-            ICell cell = sheet.CreateCell(rowId, colId, rowSpan, colSpan);
-            cell.CellStyle = cellStyle;
-            return cell;
-        }
-
-        public static ICell CreateCell(this ISheet sheet, int rowId, int colId)
-        {
-            IRow row = sheet.GetRow(rowId);
-            if (row == null)
-            {
-                row = sheet.CreateRow(rowId);
-            }
-
-            ICell cell = row.GetCell(colId);
-            if (cell == null)
-            {
-                cell = row.CreateCell(colId);
-            }
-
-            return cell;
-        }
+        public static ICell GetCell(this ISheet sheet, int rowIndex, int colIndex) =>
+            sheet.GetRow(rowIndex).GetCell(colIndex);
 
         private static void CloneCell(ICell newCell, ICell oldCell)
         {
@@ -218,16 +154,16 @@
                 case CellType.Error:
                     newCell.SetCellValue(oldCell.ErrorCellValue);
                     break;
-
-                case CellType.Formula:
+                default:
                     newCell.CellFormula = oldCell.CellFormula;
                     break;
             }
         }
 
-        private static void SetColumnWidth(ref ISheet sheet, ref int columnIndex, ref int lastColumn, ref IRow row, ref bool adjustColumn)
+        private static void SetColumnWidth(ref ISheet sheet, ref int columnIndex, ref int lastColumn, ref IRow row,
+            ref bool adjustColumn)
         {
-            for (int x = columnIndex; x < lastColumn; x++)
+            for (var x = columnIndex; x < lastColumn; x++)
             {
                 var oldCell = row.GetCell(x);
                 if (oldCell != null)
@@ -262,7 +198,7 @@
 
         private static void MergeColumn(ref ISheet sheet, ref int columnIndex, ref int rowIndex)
         {
-            for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
+            for (var i = sheet.NumMergedRegions - 1; i >= 0; i--)
             {
                 var mergedRegion = sheet.GetMergedRegion(i);
                 if (rowIndex == mergedRegion.FirstRow)
@@ -273,12 +209,15 @@
                     }
                     else if (mergedRegion.FirstColumn > columnIndex)
                     {
-                        mergedRegion.FirstColumn = mergedRegion.FirstColumn - 1;
-                        mergedRegion.LastColumn = mergedRegion.LastColumn - 1;
+                        mergedRegion.FirstColumn--;
+                        mergedRegion.LastColumn--;
                     }
-                    else if (columnIndex <= mergedRegion.LastColumn)
+                    else
                     {
-                        mergedRegion.LastColumn = mergedRegion.LastColumn - 1;
+                        if (columnIndex <= mergedRegion.LastColumn)
+                        {
+                            mergedRegion.LastColumn--;
+                        }
                     }
                 }
             }

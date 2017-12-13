@@ -1,25 +1,24 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
+    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using Core.Context;
+    using CustomerSetting.IP.Utils;
+    using CustomerSetting.Module.Keno.KenoSetting.Configurations;
+    using CustomerSetting.Security.Authenticate;
+    using DTO;
     using DTO.Customer;
-    using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl;
-    using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.Report;
-    using Fanex.ExternalAccount.Utilities;
     using RemotingRef;
+    using Service.Impl.Customer;
+    using Service.Impl.Report;
+    using Service.Impl.UserControl;
+    using Service.Interface.Report;
+    using Utilities;
+    using ViewModels;
 
     public static class CustomerModelExtensions
     {
@@ -40,9 +39,6 @@
                 case 2:
                     levelName = "agent";
                     break;
-
-                default:
-                    break;
             }
 
             return roleId != 1 ? levelName + "PositionTaking" : "outstanding";
@@ -54,14 +50,12 @@
             {
                 return "superUsedCredit";
             }
-            else if (roleId == 3)
+
+            if (roleId == 3)
             {
                 return "masterUsedCredit";
             }
-            else
-            {
-                return "agentUsedCredit";
-            }
+            return "agentUsedCredit";
         }
 
         public static string GetYesterdayCashColumn(int roleId)
@@ -70,24 +64,18 @@
             {
                 return "yesterday_superCash";
             }
-            else if (roleId == 3)
+            if (roleId == 3)
             {
                 return "yesterday_masterCash";
             }
-            else if (roleId == 2)
+            if (roleId == 2)
             {
                 return "yesterday_agentCash";
             }
-            else
-            {
-                return "yesterday_cash";
-            }
+            return "yesterday_cash";
         }
 
-        public static string GetYesterdayCustomerCash()
-        {
-            return "yesterday_customerCash";
-        }
+        public static string GetYesterdayCustomerCash() => "yesterday_customerCash";
 
         public static string GetCashColumn(int roleId)
         {
@@ -95,33 +83,29 @@
             {
                 return "superCash";
             }
-            else if (roleId == 3)
+
+            if (roleId == 3)
             {
                 return "masterCash";
             }
-            else if (roleId == 2)
+
+            if (roleId == 2)
             {
                 return "agentCash";
             }
-            else
-            {
-                return "cash";
-            }
+
+            return "cash";
         }
 
-        public static string GetCustomerCash()
-        {
-            return "customerCash";
-        }
+        public static string GetCustomerCash() => "customerCash";
 
         public static bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy)
         {
             var userCache = new CachingService().GetUserCache(userId);
             var menuList = userCache.MenuList;
             var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
-            var hasPerm = true;
 
-            hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url));
+            var hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url));
 
             if (!hasPerm && (foundItems == null || foundItems.Any()))
             {
@@ -134,13 +118,15 @@
                 switch (policy)
                 {
                     case AuthenticateAction.AuthenticationType.Read:
-                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
-                            firstItem.Policy == EPolicy.Create)
+                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update
+                            || firstItem.Policy == EPolicy.Delete
+                            || firstItem.Policy == EPolicy.Create)
                         {
                             return true;
                         }
 
                         break;
+
                     case AuthenticateAction.AuthenticationType.Host:
                         if (firstItem.Policy == EPolicy.Read)
                         {
@@ -154,90 +140,80 @@
             return false;
         }
 
-        public static CustomerModel GetDownlineList(this CustomerModel model, DataSet ds, int pageIndex)
-        {
-            var totalPages = 0;
-            var downlineList = new LeftPanelDao().GetDownlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value), 100, pageIndex);
-            var downlines = downlineList.ResultSet.Tables[0];
-
-            LeftPanelService.TotalPages = totalPages = Utils.ToInt32(downlineList.Outputs["totalpages"]);
-            model.DownlineList = new DownlineList();
-
-            if (downlines != null && downlines.Rows.Count > 0)
-            {
-                foreach (DataRow item in downlines.Rows)
-                {
-                    model.DownlineList.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
-                }
-
-                model.DownlineList.CurrentPage = pageIndex;
-
-                if (totalPages > 1)
-                {
-                    for (int i = 1; i <= totalPages; i++)
-                    {
-                        model.DownlineList.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
-                    }
-                }
-                else
-                {
-                    model.DownlineList.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
-                }
-            }
-
-            return model;
-        }
-
-        public static CustomerModel GetOnlineList(this CustomerModel model, DataSet ds)
-        {
-            var onlines = new LeftPanelDao().GetOnlineList(Utils.ToInt32(model.PersonalInfo.CustId.Value));
-
-            foreach (DataRow row in onlines)
-            {
-                model.OnlineList.Onlines.Add(new OnlineInfo
-                {
-                    IP = new ObjectInfo { Text = CheckVNIP(row.ToString("ip")) },
-                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt") }
-                });
-            }
-
-            return model;
-        }
-
         public static CustomerModel LoginInfo(this CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
             var tableCash = ds.Tables[2];
             var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
             model.Login = new List<ObjectInfo>
-                {
-                    new ObjectInfo { Value = roleId != 1 ? Utils.ToString(tableCustomer.Rows[0]["site"]) : Utils.ToString(tableCustomer.Rows[0]["membersite"]), Text = "Site" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Created Date" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Login" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Last Txn", Tooltip = "Last Transaction" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Password" },
-                    new ObjectInfo { Value = CheckVNIP(tableCustomer.Rows[0].ToString("lastloginip")), Text = "Last Login IP" },
-                    new ObjectInfo { Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"]).ToStringExt("M/d/yyyy H:mm tt"), Text = "Security Code" },
-                };
-
-            if (roleId != 1)
             {
-                model.Login.Add(
-                    new ObjectInfo
-                    {
-                        Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
-                        Text = "Login Options"
-                    });
+                new ObjectInfo
+                {
+                    Value = roleId != 1
+                        ? Utils.ToString(tableCustomer.Rows[0]["site"])
+                        : Utils.ToString(tableCustomer.Rows[0]["membersite"]),
+                    Text = "Site"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["createdate"]).ToStringExt("M/d/yyyy H:mm tt"),
+                    Text = "Created Date"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["lastlogged"]).ToStringExt("M/d/yyyy H:mm tt"),
+                    Text = "Last Login"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt("M/d/yyyy H:mm tt"),
+                    Text = "Last Txn",
+                    Tooltip = "Last Transaction"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["pwdexpiry"]).ToStringExt("M/d/yyyy H:mm tt"),
+                    Text = "Password"
+                },
+                new ObjectInfo
+                {
+                    Value = CheckVNIP(tableCustomer.Rows[0].ToString("lastloginip")),
+                    Text = "Last Login IP"
+                },
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["LastChangedSecurityCodeDate"])
+                        .ToStringExt("M/d/yyyy H:mm tt"),
+                    Text = "Security Code"
+                }
+            };
 
-                model.Login.Add(
-                  new ObjectInfo
-                  {
-                      Value = Utils.ToDateTime(tableCustomer.Rows[0]["OTPCreateDate"]).ToStringExt("M/d/yyyy H:mm tt"),
-                      Text = "OTP"
-                  });
-
-                model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)], Text = "Used Credit" });
+            if (roleId == 1)
+            {
+                return model;
             }
+
+            model.Login.Add(
+                new ObjectInfo
+                {
+                    Value = Utils.ToBoolean(tableCustomer.Rows[0]["NicknameLoginOnly"])
+                        ? "Nickname Only"
+                        : "Username/Nickname",
+                    Text = "Login Options"
+                });
+
+            model.Login.Add(
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(tableCustomer.Rows[0]["OTPCreateDate"]).ToStringExt("M/d/yyyy H:mm tt"),
+                    Text = "OTP"
+                });
+
+            model.BalanceInfo.Balances.Add(new ObjectInfo
+            {
+                Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)],
+                Text = "Used Credit"
+            });
 
             return model;
         }
@@ -264,14 +240,39 @@
                 CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
                 Fax = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["fax"]), Text = "Fax" },
                 Mobile = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["mobilephone"]), Text = "Mobile" },
-                Name = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["firstname"]) + " " + Utils.ToString(tableCustomer.Rows[0]["lastname"]), Text = "Name" },
-                Nickname = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["username2"]), Text = "Nickname" },
+                Name = new ObjectInfo
+                {
+                    Value = Utils.ToString(tableCustomer.Rows[0]["firstname"]) + " " +
+                            Utils.ToString(tableCustomer.Rows[0]["lastname"]),
+                    Text = "Name"
+                },
+                Nickname = new ObjectInfo
+                {
+                    Value = Utils.ToString(tableCustomer.Rows[0]["username2"]),
+                    Text = "Nickname"
+                },
                 Phone = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["phone"]), Text = "Phone" },
                 RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
-                CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
-                Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status : suspended ? status + "suspended" : string.Empty },
-                BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty },
+                CustList = new ObjectInfo
+                {
+                    Key = "CustList",
+                    Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List"
+                },
+                Status = new ObjectInfo
+                {
+                    Tooltip = !enabled
+                        ? status + "disabled"
+                        : closed
+                            ? status
+                            : suspended
+                                ? status + "suspended"
+                                : string.Empty
+                },
+                BackgroundColor = new ObjectInfo
+                {
+                    Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty
+                },
                 IsInternal = new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["isinternal"]) }
             };
 
@@ -283,26 +284,47 @@
             var tableCustomer = ds.Tables[0];
             var tableCash = ds.Tables[2];
             var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
-            model.BalanceInfo = new BalanceInfo()
+
+            model.BalanceInfo = new BalanceInfo
             {
-                CurrencyId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["exchangeid"]), Text = "Currency Id" },
-                Currency = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["currency"]), Text = "Currency" },
-                Balances = new List<ObjectInfo>()
+                CurrencyId = new ObjectInfo
+                {
+                    Value = Utils.ToInt32(tableCustomer.Rows[0]["exchangeid"]),
+                    Text = "Currency Id"
+                },
+                Currency =
+                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["currency"]), Text = "Currency" },
+                Balances = new List<ObjectInfo>
+                {
+                    new ObjectInfo
                     {
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][GetCashColumn(roleId)]), Text = "Total Cash" },
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0][GetOutstandingColumn(roleId)]), Text = "Outstanding" },
-                        new ObjectInfo { Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit" },
-                    }
+                        Value = Utils.ToDecimal(tableCash.Rows[0][GetCashColumn(roleId)]),
+                        Text = "Total Cash"
+                    },
+                    new ObjectInfo
+                    {
+                        Value = Utils.ToDecimal(tableCash.Rows[0][GetYesterdayCashColumn(roleId)]),
+                        Text = "Yesterday Cash"
+                    },
+                    new ObjectInfo
+                    {
+                        Value = Utils.ToDecimal(tableCash.Rows[0][GetOutstandingColumn(roleId)]),
+                        Text = "Outstanding"
+                    },
+                    new ObjectInfo {Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit"}
+                },
+                IsUpdateCredit = IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit,
+                    AuthenticateAction.AuthenticationType.Host)
             };
-            model.BalanceInfo.IsUpdateCredit = IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
 
             return model;
         }
 
-        public static CustomerModel GetProductStatuses(this CustomerModel model, int userId, string groupName, string username)
+        public static CustomerModel GetProductStatuses(this CustomerModel model, int userId, string groupName,
+            string username)
         {
-            ProductStatuses product = model.Get3rdPartyProducts(userId, groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+            var product = model.Get3rdPartyProducts(userId, groupName, username,
+                (int?)model.PersonalInfo.UplineId?.Value ?? 0);
             model.GetSuperMasterPtsOnMember(product);
             model.RemoveEnableAndPtforProducts(product);
 
@@ -320,12 +342,12 @@
 
         public static CustomerModel CheckConfig(this CustomerModel model)
         {
-            var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
+            var hideVs = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
             var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
 
-            if (hideVS)
+            if (hideVs)
             {
                 model.RemoveProduct("VirtualSports");
             }
@@ -348,13 +370,12 @@
             return model;
         }
 
-        public static string CheckVNIP(string ip)
-        {
-            return string.IsNullOrWhiteSpace(ip) || (
-                IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read)) ? string.Empty : ip;
-        }
+        public static string CheckVNIP(string ip) =>
+            string.IsNullOrWhiteSpace(ip) || (IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.Instance.UserId,
+                eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read))
+                ? string.Empty
+                : ip;
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel RemoveEnableAndPtforProducts(this CustomerModel model, ProductStatuses product)
         {
             if (!product.SyncCasino)
@@ -383,9 +404,9 @@
             {
                 model.RemoveEnableProduct("EnableVirtualSports");
 
-                bool hideVirtualSports = product.RoleId == 1 ?
-                    product.UplineStatuses.HideVirtualSports :
-                    product.HideVirtualSports;
+                var hideVirtualSports = product.RoleId == 1
+                    ? product.UplineStatuses.HideVirtualSports
+                    : product.HideVirtualSports;
 
                 if (hideVirtualSports)
                 {
@@ -499,16 +520,6 @@
                 product.SyncLucky3Downlines,
                 "Lucky3");
 
-            model.RemoveEnableAndEditProductDCS(
-                product.RoleId,
-                6,
-                product.RoleId < 4 ? product.UplineStatuses.HideBullfighting : product.HideBullfighting,
-                product.RoleId < 4 ? product.UplineStatuses.SyncBullfighting : product.SyncBullfighting,
-                product.HideBullfighting,
-                product.SyncBullfighting,
-                product.SyncBullfightingDownlines,
-                "Bullfighting");
-
             return model;
         }
 
@@ -527,16 +538,16 @@
             var showProductIndex = productIndex == 0 ? productIndex : productIndex * 2;
             if (hide)
             {
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex + 1).Value = false;
+                model.PersonalInfo.IsShowProducts[showProductIndex + 1].Value = false;
             }
 
-            if (((roleId == 4 || roleId == 3 || roleId == 2) && hide == true)
-                || (roleId == 1 && hideUpline == true))
+            if (((roleId == 4 || roleId == 3 || roleId == 2) && hide)
+                || (roleId == 1 && hideUpline))
             {
                 model.RemoveEnableProduct("Enable" + productName);
                 model.RemoveProduct(productName);
 
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
+                model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
 
                 if (roleId == 1)
                 {
@@ -549,33 +560,35 @@
             if (hideUpline || !syncUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
-                if ((roleId != 4) ||
-                    (roleId == 4 && hideUpline))
+                if (roleId != 4
+                    || (roleId == 4 && hideUpline))
                 {
                     model.RemoveProduct(productName);
                 }
 
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
+                model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
 
                 if (roleId == 1)
                 {
                     model.RemoveCrossLevelProduct(productName);
                 }
             }
-            else if ((!sync && roleId == 1) || (!hide && !sync) || (isCheckSyncDownlineField && !syncDownline))
+            else
             {
-                model.RemoveEnableProduct("Enable" + productName);
-                model.PersonalInfo.IsShowProducts.ElementAt(showProductIndex).Value = false;
-                if (roleId == 1)
+                if ((!sync && roleId == 1) || (!hide && !sync) || (isCheckSyncDownlineField && !syncDownline))
                 {
-                    model.RemoveCrossLevelProduct(productName);
+                    model.RemoveEnableProduct("Enable" + productName);
+                    model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
+                    if (roleId == 1)
+                    {
+                        model.RemoveCrossLevelProduct(productName);
+                    }
                 }
             }
 
             return model;
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static CustomerModel DisableUplineStatuses(this CustomerModel model, ProductStatuses product)
         {
             if (!product.UplineStatuses.AllowDoubleComm)
@@ -668,20 +681,15 @@
                 model.DisableProduct("EnableLucky3");
             }
 
-            if (product.UplineStatuses.DisableBullfighting)
-            {
-                model.DisableProduct("EnableBullfighting");
-            }
-
             return model;
         }
 
         private static CustomerModel RemoveProduct(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.Details.Count; i++)
+            var index = -1;
+            for (var i = 0; i < model.Setting.Details.Count; i++)
             {
-                if (model.Setting.Details.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.Details[i].Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     break;
@@ -698,10 +706,10 @@
 
         private static CustomerModel RemoveCrossLevelProduct(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.SuperPts.Count; i++)
+            var index = -1;
+            for (var i = 0; i < model.Setting.SuperPts.Count; i++)
             {
-                if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.SuperPts[i].Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     break;
@@ -718,10 +726,11 @@
 
         private static CustomerModel RemoveEnableProduct(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
+            var index = -1;
+            for (var i = 0; i < model.Setting.EnableItems.Count; i++)
             {
-                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.EnableItems[i].Key.ToString()
+                    .Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     model.Setting.EnableItems.RemoveAt(index);
@@ -731,9 +740,10 @@
 
             if (index == -1)
             {
-                for (int i = 0; i < model.Setting.EditItems.Count; i++)
+                for (var i = 0; i < model.Setting.EditItems.Count; i++)
                 {
-                    if (model.Setting.EditItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                    if (model.Setting.EditItems[i].Key.ToString()
+                        .Equals(key, StringComparison.OrdinalIgnoreCase))
                     {
                         index = i;
                         model.Setting.EditItems.RemoveAt(index);
@@ -747,10 +757,11 @@
 
         private static CustomerModel DisableProduct(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
+            var index = -1;
+            for (var i = 0; i < model.Setting.EnableItems.Count; i++)
             {
-                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, System.StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.EnableItems[i].Key.ToString()
+                    .Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     break;
@@ -759,49 +770,56 @@
 
             if (index != -1)
             {
-                model.Setting.EnableItems.ElementAt(index).Disabled = true;
-                model.Setting.EnableItems.ElementAt(index).Tooltip = key.Equals("Closed", System.StringComparison.OrdinalIgnoreCase) ?
-                    "Upline has been closed" : key.Equals("Suspended", System.StringComparison.OrdinalIgnoreCase) ? "Upline has been suspended" : "Upline has been disabled";
+                model.Setting.EnableItems[index].Disabled = true;
+                model.Setting.EnableItems[index].Tooltip =
+                    key.Equals("Closed", StringComparison.OrdinalIgnoreCase)
+                        ? "Upline has been closed"
+                        : key.Equals("Suspended", StringComparison.OrdinalIgnoreCase)
+                            ? "Upline has been suspended"
+                            : "Upline has been disabled";
             }
 
             return model;
         }
 
-        private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, int userId, string groupName, string username, int uplineId = 0)
+        private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, int userId, string groupName,
+            string username, int uplineId = 0)
         {
             IReportService report = new ReportService();
 
-            DataTable customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
-            DataTable upperInfo = uplineId != 0 ? report.GetCustomerInfo(groupName, uplineId, null, true) : null;
-            DataTable result = null;
-            int srecommend = 0, mrecommend = 0, recommend = 0, custId = 0, roleId = 0;
+            var customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
+            var upperInfo = uplineId != 0 ? report.GetCustomerInfo(groupName, uplineId, null, true) : null;
 
             if (customerInfo != null)
             {
-                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                var roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                var srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                var mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                var recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                var custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
 
-                if (roleId == 4)
+                DataTable result;
+
+                switch (roleId)
                 {
-                    result = new SuperService().GetData(userId, null, custId, null, null, null, groupName);
-                }
-                else if (roleId == 3)
-                {
-                    result = new MasterService().GetData(userId, srecommend, custId, null, null, null);
-                    upperInfo = new SuperService().GetData(userId, null, uplineId, null, null, null, groupName);
-                }
-                else if (roleId == 2)
-                {
-                    result = new AgentService().GetData(userId, mrecommend, custId, null, null, null);
-                    upperInfo = new MasterService().GetData(userId, srecommend, uplineId, null, null, null);
-                }
-                else
-                {
-                    result = new MemberService().GetData(userId, recommend, custId, null, null, null);
-                    upperInfo = new AgentService().GetData(userId, mrecommend, uplineId, null, null, null);
+                    case 4:
+                        result = new SuperService().GetData(userId, null, custId, null, null, null, groupName);
+                        break;
+
+                    case 3:
+                        result = new MasterService().GetData(userId, srecommend, custId);
+                        upperInfo = new SuperService().GetData(userId, null, uplineId, null, null, null, groupName);
+                        break;
+
+                    case 2:
+                        result = new AgentService().GetData(userId, mrecommend, custId);
+                        upperInfo = new MasterService().GetData(userId, srecommend, uplineId);
+                        break;
+
+                    default:
+                        result = new MemberService().GetData(userId, recommend, custId);
+                        upperInfo = new AgentService().GetData(userId, mrecommend, uplineId);
+                        break;
                 }
 
                 return model.GetProductStatusDetail(roleId, result, upperInfo);
@@ -810,87 +828,106 @@
             return null;
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result,
+            DataTable upperInfo)
         {
-            ProductStatuses product = new ProductStatuses();
-            product.UplineStatuses = new ProductStatuses();
-            product.RoleId = roleId;
             if (result.Rows.Count == 0)
             {
-                return product;
+                return new ProductStatuses
+                {
+                    UplineStatuses = new ProductStatuses(),
+                    RoleId = roleId
+                };
             }
 
-            var athenticationService = new ExternalAccountAuthenticate();
+            var athenticationService = new ExternalAccountAuthenticateAttribute();
 
-            product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
-            product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
-            product.DisableTransfer = roleId == 4 ? false : result.Rows[0].ToBoolean("disableTransfer");
-            product.AllowDoubleComm = result.Rows[0].ToBoolean("doubleCommLosing");
-            product.DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports");
-            product.AllowOutright = !result.Rows[0].ToBoolean("disableOutright");
-            product.DisableNumberGame = result.Rows[0].ToBoolean("disableNumber");
-            product.DisableCasino = result.Rows[0].ToBoolean("disableCasino");
-            product.DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino");
-            product.Closed = result.Rows[0].ToBoolean("closed");
-            product.Suspended = result.Rows[0].ToBoolean("suspended");
-            product.HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports");
-            product.DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds");
-            product.HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
-            product.DisableKeno = result.Rows[0].ToBoolean("DisableKeno");
-            product.HideEsports = !athenticationService.AllowReadByAuthenticationParam(eFunctions.ShowEnableEsports) || Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
-            product.DisableESports = result.Rows[0].ToBoolean("DisableESports");
-            product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
-            product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
-            product.HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
-            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") ||
-                ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
-            product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
-
-            product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
-            product.SyncAllbet = result.Rows[0].ToBoolean("SyncedAllBet");
-            product.SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllBetDownline");
-            product.DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet");
-
-            product.HideVoidbridge = ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0" || result.Rows[0].ToBoolean("HideVoidBridge");
-            product.SyncVoidbridge = result.Rows[0].ToBoolean("SyncedVoidBridge");
-            product.SyncVoidbridgeDownlines = result.Rows[0].ToBoolean("SyncedVoidBridgeDownline");
-            product.DisableVoidbridge = result.Rows[0].ToBoolean("DisableVoidBridge");
-
-            product.HideNG2 = ConfigurationManager.AppSettings["IsShowNG2"] == "0" || result.Rows[0].ToBoolean("HideNG2");
-            product.SyncNG2 = result.Rows[0].ToBoolean("SyncedNG2");
-            product.DisableNG2 = result.Rows[0].ToBoolean("DisableNG2");
-
-            product.HideFishingWorld = ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0" || result.Rows[0].ToBoolean("HideFishingWorld");
-            product.SyncFishingWorld = result.Rows[0].ToBoolean("SyncedFishingWorld");
-            product.SyncFishingWorldDownlines = result.Rows[0].ToBoolean("SyncedFishingWorldDownline");
-            product.DisableFishingWorld = result.Rows[0].ToBoolean("DisableFishingWorld");
-
-            product.SyncGoldDeluxeDownlines = result.Rows[0].ToBoolean("SyncedGoldDeluxeDownline");
-
-            product.HideLottery = ConfigurationManager.AppSettings["IsShowLottery"] == "0" || result.Rows[0].ToBoolean("HideLottery");
-            product.SyncLottery = true;
-            product.SyncLotteryDownlines = true;
-            product.DisableLottery = result.Rows[0].ToBoolean("DisableLottery");
-
-            product.HideLucky3 = ConfigurationManager.AppSettings["IsShowLucky3"] == "0" || result.Rows[0].ToBoolean("HideLucky3");
-            product.SyncLucky3 = true;
-            product.SyncLucky3Downlines = true;
-            product.DisableLucky3 = result.Rows[0].ToBoolean("DisableLucky3");
-
-            product.HideBullfighting = ConfigurationManager.AppSettings["IsShowBullfighting"] == "0" || result.Rows[0].ToBoolean("HideBullfighting");
-            product.DisableBullfighting = result.Rows[0].ToBoolean("DisableBullfighting");
+            var product = new ProductStatuses
+            {
+                UplineStatuses = new ProductStatuses(),
+                RoleId = roleId,
+                SyncCasino = result.Rows[0].ToBoolean("syncCasino"),
+                SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino"),
+                DisableTransfer = roleId != 4 && result.Rows[0].ToBoolean("disableTransfer"),
+                AllowDoubleComm = result.Rows[0].ToBoolean("doubleCommLosing"),
+                DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports"),
+                AllowOutright = !result.Rows[0].ToBoolean("disableOutright"),
+                DisableNumberGame = result.Rows[0].ToBoolean("disableNumber"),
+                DisableCasino = result.Rows[0].ToBoolean("disableCasino"),
+                DisableLiveCasino = result.Rows[0].ToBoolean("disableLiveCasino"),
+                Closed = result.Rows[0].ToBoolean("closed"),
+                Suspended = result.Rows[0].ToBoolean("suspended"),
+                HideVirtualSports = result.Rows[0].ToBoolean("hideVirtualSports"),
+                DisableHRFixedOdds = result.Rows[0].ToBoolean("disableHRFixedOdds"),
+                HideKeno = result.Rows[0].ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting,
+                DisableKeno = result.Rows[0].ToBoolean("DisableKeno"),
+                HideEsports = !athenticationService.AllowReadByAuthenticationParam(eFunctions.ShowEnableEsports)
+                              || Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]),
+                DisableESports = result.Rows[0].ToBoolean("DisableESports"),
+                HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe")
+                                 || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0",
+                HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai")
+                                  || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0",
+                HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting")
+                                   || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0",
+                HideCricket = result.Rows[0].ToBoolean("HideCricket")
+                              || ConfigurationManager.AppSettings["IsShowCricket"] == "0"
+                              || !result.Rows[0].ToBoolean("IsIMBC"),
+                HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0"
+                                   || result.Rows[0].ToBoolean("HideColossusBet"),
+                HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0"
+                             || result.Rows[0].ToBoolean("HideAllbet"),
+                SyncAllbet = result.Rows[0].ToBoolean("SyncedAllBet"),
+                SyncAllbetDownlines = result.Rows[0].ToBoolean("SyncedAllBetDownline"),
+                DisableAllbet = result.Rows[0].ToBoolean("DisableAllbet"),
+                HideVoidbridge = ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0"
+                                 || result.Rows[0].ToBoolean("HideVoidBridge"),
+                SyncVoidbridge = result.Rows[0].ToBoolean("SyncedVoidBridge"),
+                SyncVoidbridgeDownlines = result.Rows[0].ToBoolean("SyncedVoidBridgeDownline"),
+                DisableVoidbridge = result.Rows[0].ToBoolean("DisableVoidBridge"),
+                HideNG2 = ConfigurationManager.AppSettings["IsShowNG2"] == "0"
+                          || result.Rows[0].ToBoolean("HideNG2"),
+                SyncNG2 = result.Rows[0].ToBoolean("SyncedNG2"),
+                DisableNG2 = result.Rows[0].ToBoolean("DisableNG2"),
+                HideFishingWorld = ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0"
+                                   || result.Rows[0].ToBoolean("HideFishingWorld"),
+                SyncFishingWorld = result.Rows[0].ToBoolean("SyncedFishingWorld"),
+                SyncFishingWorldDownlines = result.Rows[0].ToBoolean("SyncedFishingWorldDownline"),
+                DisableFishingWorld = result.Rows[0].ToBoolean("DisableFishingWorld"),
+                SyncGoldDeluxeDownlines = result.Rows[0].ToBoolean("SyncedGoldDeluxeDownline"),
+                HideLottery = ConfigurationManager.AppSettings["IsShowLottery"] == "0"
+                              || result.Rows[0].ToBoolean("HideLottery"),
+                SyncLottery = true,
+                SyncLotteryDownlines = true,
+                DisableLottery = result.Rows[0].ToBoolean("DisableLottery"),
+                HideLucky3 = ConfigurationManager.AppSettings["IsShowLucky3"] == "0"
+                             || result.Rows[0].ToBoolean("HideLucky3"),
+                SyncLucky3 = true,
+                SyncLucky3Downlines = true,
+                DisableLucky3 = result.Rows[0].ToBoolean("DisableLucky3")
+            };
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
-                o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
+            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o =>
+                string.Equals(o.Key.ToString(), "PT", StringComparison.OrdinalIgnoreCase)
+                                                                                                || o.Key.ToString()
+                                                                                                == "Casino"
+                                                                                                || o.Key.ToString()
+                                                                                                == "LiveCasino"
+                                                                                                || o.Key.ToString()
+                                                                                                == "VirtualSports"
+                                                                                                || o.Key.ToString()
+                                                                                                == "Racing").ToList();
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
                 product.UplineStatuses.SyncCasino = upperInfo.Rows[0].ToBoolean("syncCasino");
                 product.UplineStatuses.SyncLiveCasino = upperInfo.Rows[0].ToBoolean("syncLiveCasino");
-                product.UplineStatuses.DisableTransfer = roleId + 1 == 4 ? false : upperInfo.Rows[0].ToBoolean("disableTransfer");
+                product.UplineStatuses.DisableTransfer =
+                    roleId + 1 != 4 && upperInfo.Rows[0].ToBoolean("disableTransfer");
                 product.UplineStatuses.AllowDoubleComm = upperInfo.Rows[0].ToBoolean("doubleCommLosing");
                 product.UplineStatuses.DisableVirtualSports = upperInfo.Rows[0].ToBoolean("disableVirtualSports");
                 product.UplineStatuses.AllowOutright = !upperInfo.Rows[0].ToBoolean("disableOutright");
@@ -898,7 +935,9 @@
                 product.UplineStatuses.DisableCasino = upperInfo.Rows[0].ToBoolean("disableCasino");
                 product.UplineStatuses.DisableLiveCasino = upperInfo.Rows[0].ToBoolean("disableLiveCasino");
                 product.UplineStatuses.DisableGoldDeluxe = upperInfo.Rows[0].ToBoolean("DisableGoldDeluxe");
-                product.UplineStatuses.HideGoldDeluxe = upperInfo.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+                product.UplineStatuses.HideGoldDeluxe = upperInfo.Rows[0].ToBoolean("HideGoldDeluxe")
+                                                        || ConfigurationManager.AppSettings[
+                                                            "IsShowGoldDeluxeSettingForCredit"] == "0";
 
                 product.UplineStatuses.DisableColossusBets = upperInfo.Rows[0].ToBoolean("DisableColossusBet");
                 product.UplineStatuses.Closed = upperInfo.Rows[0].ToBoolean("closed");
@@ -930,43 +969,53 @@
                 product.UplineStatuses.DisableLucky3 = upperInfo.Rows[0].ToBoolean("DisableLucky3");
                 product.UplineStatuses.HideLucky3 = upperInfo.Rows[0].ToBoolean("HideLucky3");
                 product.UplineStatuses.SyncLucky3 = true;
-
-                product.UplineStatuses.DisableBullfighting = upperInfo.Rows[0].ToBoolean("DisableBullfighting");
-                product.UplineStatuses.HideBullfighting = upperInfo.Rows[0].ToBoolean("HideBullfighting");
             }
 
             return product;
         }
 
-        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBettingLimitFunction = "", bool checkboxType = true, bool getFromRemotingRef = false)
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3RdDcs,
+            int productId, string productName, string editBettingLimitFunction = "", bool checkboxType = true,
+            bool getFromRemotingRef = false)
         {
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = string.IsNullOrEmpty(editBettingLimitFunction) ? false : IsAuthorized(CurrentSession.Instance.UserId, editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read) });
-            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 &&
-                Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo
             {
-                var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
+                Key = "isShow" + productName.Replace(" ", string.Empty),
+                Value = true
+            });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo
+            {
+                Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting",
+                Value = !string.IsNullOrEmpty(editBettingLimitFunction) && IsAuthorized(CurrentSession.Instance.UserId,
+                            editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read)
+            });
+
+            if (table3RdDcs.Select("ProductID = " + productId).Length > 0
+                && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
+            {
+                var productDataRow = table3RdDcs.Select("ProductID = " + productId)[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
-                var name = getFromRemotingRef ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName) : productName;
-                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + name });
-                if (checkboxType == true)
+                var name = getFromRemotingRef
+                    ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
+                    : productName;
+
+                model.Setting.Details.Add(new ObjectInfo
                 {
-                    model.Setting.EnableItems.Add(new ObjectInfo
-                    {
-                        Key = "Enable" + productName.Replace(" ", string.Empty),
-                        Value = !isDisabled,
-                        Text = name,
-                        Tooltip = "Enable " + name
-                    });
-                }
-                else
+                    Key = productName.Replace(" ", string.Empty),
+                    Value = "Edit " + name
+                });
+
+                model.Setting.EnableItems.Add(checkboxType ? new ObjectInfo
                 {
-                    model.Setting.EditItems.Add(new ObjectInfo
-                    {
-                        Key = "Enable" + productName.Replace(" ", string.Empty),
-                        Text = "Enable " + name
-                    });
-                }
+                    Key = "Enable" + productName.Replace(" ", string.Empty),
+                    Value = !isDisabled,
+                    Text = name,
+                    Tooltip = "Enable " + name
+                } : new ObjectInfo
+                {
+                    Key = "Enable" + productName.Replace(" ", string.Empty),
+                    Text = "Enable " + name
+                });
             }
 
             return model;

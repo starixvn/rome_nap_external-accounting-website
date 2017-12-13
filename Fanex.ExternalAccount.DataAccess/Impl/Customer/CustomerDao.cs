@@ -44,7 +44,7 @@
 
             using (var reader = this.ExecDataReader("Age_CustomerSelUserInfo", param))
             {
-                if (reader != null && reader.Read())
+                if (reader?.Read() == true)
                 {
                     return new Customer
                     {

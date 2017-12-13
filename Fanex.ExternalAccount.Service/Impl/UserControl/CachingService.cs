@@ -28,12 +28,12 @@
             return result;
         }
 
-        public void RemoveUserCache(int userId)
+        public static void RemoveUserCache(int userId)
         {
             UserCache.Remove(userId.ToString());
         }
 
-        internal void ClearUserCache()
+        internal static void ClearUserCache()
         {
             UserCache.Clear();
         }

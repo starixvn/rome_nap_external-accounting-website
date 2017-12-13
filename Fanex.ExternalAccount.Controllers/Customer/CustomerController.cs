@@ -2,54 +2,56 @@
 {
     using System;
     using System.Data;
+    using System.Globalization;
     using System.Linq;
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
+    using Caching;
     using CasinoLibrary.Model.UserException;
-    using Fanex.Caching;
-    using Fanex.Common;
-    using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.Customer;
-    using Fanex.PTEngine.BusinessObjects;
+    using Common;
+    using Core.Base;
+    using Core.Context;
+    using CustomerSetting.IP.Utils;
+    using CustomerSetting.Security.Authenticate;
+    using DTO;
+    using Excel.Customer.CustomerListPage;
     using IBCUtils;
     using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
+    using PTEngine.BusinessObjects;
+    using Service.Impl.Customer;
+    using Service.Impl.Customer.Casino;
+    using Service.Impl.Report;
+    using Utilities;
+    using ViewModel.Customer;
+    using Customer = PTEngine.BusinessObjects.Customer;
 
     public class CustomerController : CustomerBase
     {
-        private readonly SuperService _superService = new SuperService();
-        private readonly MasterService _masterService = new MasterService();
         private readonly AgentService _agentService = new AgentService();
-        private readonly MemberService _memberService = new MemberService();
-        private readonly CustomerService _customerService = new CustomerService();
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly CustomerService _customerService = new CustomerService();
+        private readonly MasterService _masterService = new MasterService();
+        private readonly MemberService _memberService = new MemberService();
+        private readonly SuperService _superService = new SuperService();
         private string _cacheList = string.Empty;
 
-        #region Super Add New Master
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult CheckUsername(string username, int parentRoleId)
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult CheckUsername(string username)
         {
-            int errCode = 0;
-            string errMsg = string.Empty;
-            int roleId = 0;
-            bool isSubAccount = false;
+            var errCode = 0;
+            string errMsg;
+            var roleId = 0;
+            var isSubAccount = false;
             int customerId;
 
-            bool isValidUser = this._customerService.IsValidUsername(username.Trim(), this.CurrentSession.CustId, out customerId, out isSubAccount, out roleId);
+            var isValidUser = _customerService.IsValidUsername(username.Trim(), CurrentSession.CustId, out customerId,
+                out isSubAccount, out roleId);
 
             if (isValidUser)
             {
@@ -62,8 +64,8 @@
                 errMsg = ViewLang.notExist;
             }
 
-            return this.JsonBase(
-                new { errCode = errCode, errMsg = errMsg },
+            return JsonBase(
+                new {errCode, errMsg},
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -71,17 +73,24 @@
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult SuperAddNewMaster()
-        {
-            return PartialViewBase();
-        }
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult SuperAddNewMaster() => PartialViewBase();
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
@@ -94,14 +103,14 @@
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
-                RoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Master,
+                RoleId = (int) CustomerRole.Super,
+                TargetRoleId = (int) CustomerRole.Master,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = parentUsername.ToUpperInvariant()
+                UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            ICustomer customer = new PTEngine.BusinessObjects.Customer();
+            ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
             try
@@ -114,8 +123,8 @@
                 ExceptionHandler.Handle(ex);
             }
 
-            return this.JsonBase(
-                new { context = context, customer = customer },
+            return JsonBase(
+                new {context, customer},
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -123,9 +132,14 @@
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
@@ -134,22 +148,22 @@
                 return ActionDenied(Request);
             }
 
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
 
-            PTEngine.BusinessObjects.Customer customer = JsonConvert.DeserializeObject<PTEngine.BusinessObjects.Customer>(txtCustomerObject, settings);
+            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
+
+            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext
             {
                 CustId = parentId,
                 TargetCustId = 0,
-                RoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Master,
+                RoleId = (int) CustomerRole.Super,
+                TargetRoleId = (int) CustomerRole.Master,
                 FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
-                SystemId = (byte)Config.SystemId
+                SystemId = (byte) Config.SystemId
             };
 
             int masterId;
@@ -158,40 +172,39 @@
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(masterId, result, customer);
-            }
-
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
                 Thread.Sleep(3000);
-                AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP, customer.CurrencyId);
-            }
+                AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
+                    customer.CurrencyId);
 
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(masterId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(masterId, parentId, CurrentSession.UserId,
+                    CurrentSession.UserName, requestContext.IP);
 
                 AutoInsertCasinoPost(masterId, parentId);
 
                 autoInsertLiveCasinoTask.Wait();
             }
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = masterId });
-        }
-        #endregion Super Add New Master
-
-        #region Master Add New Agent
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult MasterAddNewAgent()
-        {
-            return PartialViewBase();
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, CustId = masterId});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult MasterAddNewAgent() => PartialViewBase();
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
@@ -204,14 +217,14 @@
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
-                RoleId = (int)CustomerRole.Master,
-                TargetRoleId = (int)CustomerRole.Agent,
+                RoleId = (int) CustomerRole.Master,
+                TargetRoleId = (int) CustomerRole.Agent,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = parentUsername.ToUpperInvariant()
+                UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            ICustomer customer = new PTEngine.BusinessObjects.Customer();
+            ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
             try
@@ -224,8 +237,8 @@
                 ExceptionHandler.Handle(ex);
             }
 
-            return this.JsonBase(
-                new { context = context, customer = customer },
+            return JsonBase(
+                new {context, customer},
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -233,9 +246,14 @@
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
@@ -244,22 +262,22 @@
                 return ActionDenied(Request);
             }
 
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
 
-            PTEngine.BusinessObjects.Customer customer = JsonConvert.DeserializeObject<PTEngine.BusinessObjects.Customer>(txtCustomerObject, settings);
-            IRequestContext requestContext = new RequestContext
+            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
+
+            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            var requestContext = new RequestContext
             {
                 CustId = parentId,
                 TargetCustId = 0,
-                RoleId = (int)CustomerRole.Master,
-                TargetRoleId = (int)CustomerRole.Agent,
+                RoleId = (int) CustomerRole.Master,
+                TargetRoleId = (int) CustomerRole.Agent,
                 FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
-                SystemId = (byte)Config.SystemId
+                SystemId = (byte) Config.SystemId
             };
 
             int agentId;
@@ -268,40 +286,39 @@
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(agentId, result, customer);
-            }
-
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
                 Thread.Sleep(3000);
-                AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP, customer.CurrencyId);
-            }
+                AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP,
+                    customer.CurrencyId);
 
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(agentId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(agentId, parentId, CurrentSession.UserId,
+                    CurrentSession.UserName, requestContext.IP);
 
                 AutoInsertCasinoPost(agentId, parentId);
 
                 autoInsertLiveCasinoTask.Wait();
             }
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = agentId });
-        }
-        #endregion Master Add New Agent
-
-        #region Agent Add New Member
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult AgentAddNewMember()
-        {
-            return PartialViewBase();
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, CustId = agentId});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult AgentAddNewMember() => PartialViewBase();
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
         {
@@ -314,14 +331,14 @@
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
                 LangKey = "E",
-                RoleId = (int)CustomerRole.Agent,
-                TargetRoleId = (int)CustomerRole.Member,
+                RoleId = (int) CustomerRole.Agent,
+                TargetRoleId = (int) CustomerRole.Member,
                 SiteName = SiteName,
                 SubAccId = 0,
-                UserName = parentUsername.ToUpperInvariant()
+                UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            ICustomer customer = new PTEngine.BusinessObjects.Customer();
+            ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
             try
@@ -334,8 +351,8 @@
                 ExceptionHandler.Handle(ex);
             }
 
-            return this.JsonBase(
-                new { context = context, customer = customer },
+            return JsonBase(
+                new {context, customer},
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
@@ -343,9 +360,14 @@
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Sportsbook,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
@@ -354,56 +376,48 @@
                 return ActionDenied(Request);
             }
 
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
 
-            PTEngine.BusinessObjects.Customer customer = JsonConvert.DeserializeObject<PTEngine.BusinessObjects.Customer>(txtCustomerObject, settings);
+            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
+
+            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             IRequestContext requestContext = new RequestContext
             {
                 CustId = parentId,
                 TargetCustId = 0,
-                RoleId = (int)CustomerRole.Agent,
-                TargetRoleId = (int)CustomerRole.Member,
+                RoleId = (int) CustomerRole.Agent,
+                TargetRoleId = (int) CustomerRole.Member,
                 FormId = FormType.Add,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
-                SystemId = (byte)Config.SystemId
+                SystemId = (byte) Config.SystemId
             };
 
-            int memberId;
+            var memberId = -1;
             var result = new PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(memberId, result, customer);
-            }
-
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
                 Thread.Sleep(3000);
-                AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP, customer.CurrencyId);
-            }
+                AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,
+                    customer.CurrencyId);
 
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(memberId, parentId, CurrentSession.UserId, CurrentSession.UserName, requestContext.IP);
+                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(memberId, parentId, CurrentSession.UserId,
+                    CurrentSession.UserName, requestContext.IP);
 
                 AutoInsertCasinoPost(memberId, parentId);
 
                 autoInsertLiveCasinoTask.Wait();
             }
 
-            return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage, CustId = memberId });
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, CustId = memberId});
         }
-        #endregion Agent Add New Member
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult CustomerList()
-        {
-            return PartialViewBase();
-        }
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        public ActionResult CustomerList() => PartialViewBase();
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
@@ -414,101 +428,115 @@
             var roleId = 0;
             var userId = 0;
 
-            GetDataResult(groupName, null, null, null, userName, out result, out srecommend, out mrecommend, out recommend, out userId, out roleId);
+            GetDataResult(groupName, null, null, null, userName, out result, out srecommend, out mrecommend,
+                out recommend, out userId, out roleId);
 
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
-            ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
-            ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
-            ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
-            ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"];
-            ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"];
+            ViewBag.SyncCasino = (bool) result.Rows[0]["SyncCasino"];
+            ViewBag.SyncLiveCasino = (bool) result.Rows[0]["SyncLiveCasino"];
+            ViewBag.HideVirtualSports = (bool) result.Rows[0]["HideVirtualSports"];
+            ViewBag.HideKeno = (bool) result.Rows[0]["HideKeno"];
+            ViewBag.HideGoldDeluxe = (bool) result.Rows[0]["HideGoldDeluxe"];
+            ViewBag.HideColossusBets = (bool) result.Rows[0]["HideColossusBet"];
             ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
             ViewBag.HideCockfighting = Converter.ToBool(result.Rows[0]["HideCockfighting"]);
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]);
             ViewBag.HideAllbet = Utils.ToBoolean(result.Rows[0]["HideAllBet"]);
             ViewBag.HideVoidbridge = Utils.ToBoolean(result.Rows[0]["HideVoidBridge"]);
-            ViewBag.HideNG2 = !this.GetDcsStatuses(custId, id, 23).IsSyncedUpline;
+            ViewBag.HideNG2 = !GetDcsStatuses(custId, id, 23).IsSyncedUpline;
             ViewBag.HideFishingWorld = Utils.ToBoolean(result.Rows[0]["HideFishingWorld"]);
             ViewBag.HideLottery = Utils.ToBoolean(result.Rows[0]["HideLottery"]);
             ViewBag.HideLucky3 = Utils.ToBoolean(result.Rows[0]["HideLucky3"]);
-            ViewBag.HideBullfighting = Utils.ToBoolean(result.Rows[0]["HideBullfighting"]);
 
             return PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public void SetCacheList(DataTable result)
         {
             if (result != null)
             {
-                _cache.Set(_cacheList, result, 120);
+                _cache.Set(_cacheList, result);
             }
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SearchListPost(
             string groupName = "ACCDDD",
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
-            string username = null,
-            bool? isExportExcel = null)
+            string username = null)
         {
             DataTable result;
-            int srecommend, mrecommend, recommend, custId, roleId;
-            GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend, out recommend, out custId, out roleId);
+            int srecommend;
+            int mrecommend;
+            int recommend;
+            int custId;
+            int roleId;
+            GetDataResult(groupName, enabled, closed, suspended, username, out result, out srecommend, out mrecommend,
+                out recommend, out custId, out roleId);
+
             SetEditAllBetVisibility(result);
 
             var ret = JsonConvert.SerializeObject(
-              result == null ? new DataTable() : CheckVNIP(result),
-              Formatting.None,
-              new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+                result == null ? new DataTable() : CheckVNIP(result),
+                Formatting.None,
+                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
 
-            bool syncCasino = true, syncLiveCasino = true, allowDoubleComm = true;
-
+            var syncCasino = true;
+            var syncLiveCasino = true;
+            var allowDoubleComm = true;
             if (roleId > 0 && roleId < 4)
             {
-                DataTable userInfo = new DataTable();
+                DataTable userInfo = null;
                 switch (roleId)
                 {
                     case Master:
-                        userInfo = this._superService.GetData(CurrentSession.UserId, null, srecommend, null, null, null, groupName);
+                        userInfo = _superService.GetData(CurrentSession.UserId, null, srecommend, null, null, null,
+                            groupName);
                         break;
+
                     case Agent:
-                        userInfo = this._masterService.GetData(CurrentSession.UserId, srecommend, mrecommend, null, null, null);
+                        userInfo = _masterService.GetData(CurrentSession.UserId, srecommend, mrecommend);
                         break;
+
                     case Member:
-                        userInfo = this._agentService.GetData(CurrentSession.UserId, mrecommend, recommend, null, null, null);
+                        userInfo = _agentService.GetData(CurrentSession.UserId, mrecommend, recommend);
                         break;
                 }
 
-                syncCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncCasino");
-                syncLiveCasino = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean("syncLiveCasino");
-                allowDoubleComm = userInfo.Rows.Count == 0 ? false : userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
+                syncCasino = userInfo.Rows.Count != 0 && userInfo.Rows[0].ToBoolean("syncCasino");
+                syncLiveCasino = userInfo.Rows.Count != 0 && userInfo.Rows[0].ToBoolean("syncLiveCasino");
+                allowDoubleComm = userInfo.Rows.Count != 0
+                                  && userInfo.Rows[0].ToBoolean(roleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
             }
 
-            return JsonBase(new
-            {
-                total = 1,
-                page = 1,
-                records = result != null ? result.Rows.Count : 0,
-                rows = ret,
-                roleId = roleId,
-                srecommend = srecommend,
-                mrecommend = mrecommend,
-                recommend = recommend,
-                custId = custId,
-                syncCasino = syncCasino,
-                syncLiveCasino = syncLiveCasino,
-                allowDoubleComm = allowDoubleComm
-            });
+            return JsonBase(
+                new
+                {
+                    total = 1,
+                    page = 1,
+                    records = result?.Rows.Count ?? 0,
+                    rows = ret,
+                    roleId,
+                    srecommend,
+                    mrecommend,
+                    recommend,
+                    custId,
+                    syncCasino,
+                    syncLiveCasino,
+                    allowDoubleComm
+                });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SuperListPost(
             string groupName = "ACCDDD",
@@ -518,30 +546,37 @@
             bool? suspended = null)
         {
             _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true) ? new DataTable() :
-                this._superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
+            var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true)
+                ? new DataTable()
+                : _superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
             SetCacheList(result);
 
             SetEditAllBetVisibility(result);
 
             var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None, new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+                CheckVNIP(result), Formatting.None,
+                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
 
-            return JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
+            return JsonBase(new {total = 1, page = 1, records = result.Rows.Count, rows = ret});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null,
+            bool? closed = null, bool? suspended = null)
         {
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true) ? new DataTable() :
-                this._masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
+            var result = !IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true)
+                ? new DataTable()
+                : _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
 
             var superId = Utils.ToInt32(srecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], superId, null, true);
-            int mrecommend = 0,
-            recommend = 0,
-            roleId = 0;
+            var mrecommend = 0;
+            var
+                recommend = 0;
+            var
+                roleId = 0;
             var hasSecurityCode = false;
 
             if (customerInfo != null)
@@ -560,7 +595,8 @@
             SetEditAllBetVisibility(result);
 
             var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None, new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+                CheckVNIP(result), Formatting.None,
+                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
 
             return JsonBase(
                 new
@@ -569,27 +605,32 @@
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId = roleId,
-                    srecommend = srecommend,
-                    mrecommend = mrecommend,
-                    recommend = recommend,
-                    custId = custId,
-                    hasSecurityCode = hasSecurityCode
+                    roleId,
+                    srecommend,
+                    mrecommend,
+                    recommend,
+                    custId,
+                    hasSecurityCode
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null,
+            bool? closed = null, bool? suspended = null)
         {
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
-                this._agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
+            var result = !IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true)
+                ? new DataTable()
+                : _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], masterId, null, true);
-            int srecommend = 0,
-            recommend = 0,
-            roleId = 0;
+            var srecommend = 0;
+            var
+                recommend = 0;
+            var
+                roleId = 0;
             var hasSecurityCode = false;
 
             if (customerInfo != null)
@@ -608,7 +649,8 @@
             SetEditAllBetVisibility(result);
 
             var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None, new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+                CheckVNIP(result), Formatting.None,
+                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
 
             return JsonBase(
                 new
@@ -617,28 +659,32 @@
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId = roleId,
-                    srecommend = srecommend,
-                    mrecommend = mrecommend,
-                    recommend = recommend,
-                    custId = custId,
-                    hasSecurityCode = hasSecurityCode
+                    roleId,
+                    srecommend,
+                    mrecommend,
+                    recommend,
+                    custId,
+                    hasSecurityCode
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null)
+        public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null,
+            bool? closed = null, bool? suspended = null)
         {
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true) ? new DataTable() :
-                this._memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
+            var result = !IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true)
+                ? new DataTable()
+                : _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
 
             var agentId = Utils.ToInt32(recommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], agentId, null, true);
-            int mrecommend = 0,
-            srecommend = 0,
-            roleId = 0;
-
+            var mrecommend = 0;
+            var
+                srecommend = 0;
+            var
+                roleId = 0;
             if (customerInfo != null)
             {
                 roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
@@ -654,7 +700,8 @@
             SetEditAllBetVisibility(result);
 
             var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None, new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt" });
+                CheckVNIP(result), Formatting.None,
+                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
 
             return JsonBase(
                 new
@@ -663,20 +710,22 @@
                     page = 1,
                     records = result.Rows.Count,
                     rows = ret,
-                    roleId = roleId,
-                    srecommend = srecommend,
-                    mrecommend = mrecommend,
-                    recommend = recommend,
-                    custId = custId
+                    roleId,
+                    srecommend,
+                    mrecommend,
+                    recommend,
+                    custId
                 });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
-            if (IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read, Request))
+            if (IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP,
+                    AuthenticateAction.AuthenticationType.Read, Request))
             {
-                return PartialViewBase(null, "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             if (ip.Equals("::1", StringComparison.OrdinalIgnoreCase))
@@ -704,7 +753,8 @@
             return PartialViewBase(ipinfo);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
@@ -729,10 +779,11 @@
                     UserId = CurrentSession.UserId
                 });
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, result.IsSuccess});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditInfo(int custId)
         {
             if (!IsBelong(Request["groupName"], custId, null, true))
@@ -752,7 +803,8 @@
             return PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult EditInfoPost(
             int custId,
@@ -770,23 +822,24 @@
             }
 
             var result = _customerService.EditUserInfo(
-                    custId,
-                    firstName,
-                    lastName,
-                    homePhone,
-                    mobilePhone,
-                    email,
-                    fax,
-                    remark,
-                    CurrentContext.Ip4Address,
-                    CurrentSession.CustId,
-                    0,
-                    "E");
+                custId,
+                firstName,
+                lastName,
+                homePhone,
+                mobilePhone,
+                email,
+                fax,
+                remark,
+                CurrentContext.Ip4Address,
+                CurrentSession.CustId,
+                0,
+                "E");
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, result.IsSuccess});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id)
         {
             if (!IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
@@ -798,7 +851,8 @@
             return PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult TransferCondition()
         {
             if (!IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
@@ -809,7 +863,8 @@
             return PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
             if (!IsBelong(Request["groupName"], custId, null, true))
@@ -822,7 +877,8 @@
             return PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
@@ -831,12 +887,14 @@
                 return ActionDenied(Request);
             }
 
-            var result = _masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId, CurrentContext.Ip4Address, 0, "E");
+            var result = _masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId,
+                CurrentContext.Ip4Address, 0, "E");
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, result.IsSuccess});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ResetPassword(int custId)
         {
             if (!IsBelong(Request["groupName"], custId, null, true))
@@ -848,7 +906,8 @@
             return PartialViewBase(user);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdatePassword(int custId, string password)
         {
@@ -878,26 +937,28 @@
                 var casino = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
                 if (casino.CasinoSync)
                 {
-                    CasinoLibrary.SBAgent.Customer cust = new CasinoLibrary.SBAgent.Customer();
+                    var cust = new CasinoLibrary.SBAgent.Customer();
                     try
                     {
-                        cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, 3);
+                        cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address,
+                            CurrentSession.UserId, CurrentSession.UserName, 3);
                     }
                     catch (ErrorException casinoEx)
                     {
-                        ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                        Logs.CasinoError(casinoEx);
                     }
                     catch (Exception ex)
                     {
-                        ExceptionHandler.Handle(ex);
+                        Logs.Error(ex);
                     }
                 }
             }
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
+            return JsonBase(new {result.ErrorCode, result.ErrorMessage, result.IsSuccess});
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public void GetExportToExcel(
             int? currentLevel = null,
             string groupName = "ACCDDD",
@@ -909,14 +970,21 @@
             bool? closed = null,
             bool? suspended = null)
         {
-            string fileName = "CustomerList";
+            var fileName = "CustomerList";
 
-            SetCache(currentLevel, ref fileName, groupName, srecommend, mrecommend, recommend, custId, enabled, closed, suspended);
+            SetCache(currentLevel, ref fileName, groupName, srecommend, mrecommend, recommend, custId, enabled, closed,
+                suspended);
 
-            string status = string.Empty;
+            var status = string.Empty;
             if (enabled != null || closed != null || suspended != null)
             {
-                status = enabled == false ? "Disabled" : closed == true ? "Closed" : suspended == true ? "Suspended" : "Open";
+                status = enabled == false
+                    ? "Disabled"
+                    : closed == true
+                        ? "Closed"
+                        : suspended == true
+                            ? "Suspended"
+                            : "Open";
             }
 
             var result = _cache.Get<DataTable>(_cacheList);
@@ -925,7 +993,8 @@
                 false,
                 status,
                 Convert.ToInt32(currentLevel),
-                result != null && result.Rows.Count > 0 && (result.Rows[0].ToBoolean("ismyanmarodds") || currentLevel == 4));
+                result?.Rows.Count > 0
+                && (result.Rows[0].ToBoolean("ismyanmarodds") || currentLevel == 4));
             var excelStream = builder.Build();
             if (excelStream != null)
             {
@@ -946,8 +1015,8 @@
             bool? closed = null,
             bool? suspended = null)
         {
-            string username = Request["username"];
-            int? id = string.IsNullOrWhiteSpace(username) ? null : custId;
+            var username = Request["username"];
+            var id = string.IsNullOrWhiteSpace(username) ? null : custId;
             switch (currentLevel)
             {
                 case 4:
@@ -955,38 +1024,47 @@
                     _cacheList = "CacheList" + groupName + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(custId), null, true) ? new DataTable() :
-                            this._superService.GetData(CurrentSession.UserId, null, id, enabled, closed, suspended, groupName));
+                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(custId), null, true)
+                            ? new DataTable()
+                            : _superService.GetData(CurrentSession.UserId, null, id, enabled, closed, suspended,
+                                groupName));
                     }
 
                     break;
+
                 case 3:
                     fileName = "MasterList";
                     _cacheList = "CacheList" + groupName + srecommend + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(srecommend), null, true) ? new DataTable() :
-                            this._masterService.GetData(CurrentSession.UserId, srecommend, id, enabled, closed, suspended));
+                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(srecommend), null, true)
+                            ? new DataTable()
+                            : _masterService.GetData(CurrentSession.UserId, srecommend, id, enabled, closed,
+                                suspended));
                     }
 
                     break;
+
                 case 2:
                     fileName = "AgentList";
                     _cacheList = "CacheList" + groupName + mrecommend + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(mrecommend), null, true) ? new DataTable() :
-                            this._agentService.GetData(CurrentSession.UserId, mrecommend, id, enabled, closed, suspended));
+                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(mrecommend), null, true)
+                            ? new DataTable()
+                            : _agentService.GetData(CurrentSession.UserId, mrecommend, id, enabled, closed, suspended));
                     }
 
                     break;
+
                 default:
                     fileName = "MemberList";
                     _cacheList = "CacheList" + groupName + recommend + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(recommend), null, true) ? new DataTable() :
-                            this._memberService.GetData(CurrentSession.UserId, recommend, id, enabled, closed, suspended));
+                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(recommend), null, true)
+                            ? new DataTable()
+                            : _memberService.GetData(CurrentSession.UserId, recommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1021,13 +1099,16 @@
                 mrecommend = Utils.ToInt32(Request["mrecommend"]);
                 recommend = Utils.ToInt32(Request["recommend"]);
             }
-            else if (customerInfo != null)
+            else
             {
-                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                if (customerInfo != null)
+                {
+                    roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
+                    srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
+                    mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
+                    recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
+                    custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
+                }
             }
 
             if (customerInfo != null || !string.IsNullOrWhiteSpace(Request["roleId"]))
@@ -1035,20 +1116,38 @@
                 switch (roleId)
                 {
                     case 4:
-                        result = !IsBelong(groupName, custId, null, true) ? null : _superService.GetData(CurrentSession.UserId, null, custId == 0 ? id : custId, enabled, closed, suspended, groupName);
+                        result = !IsBelong(groupName, custId, null, true)
+                            ? null
+                            : _superService.GetData(CurrentSession.UserId, null, custId == 0 ? id : custId, enabled,
+                                closed, suspended, groupName);
                         _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + username;
                         break;
+
                     case 3:
-                        result = !IsBelong(groupName, srecommend, null, true) ? null : _masterService.GetData(CurrentSession.UserId, srecommend, custId == 0 ? id : custId, enabled, closed, suspended);
-                        _cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended + username;
+                        result = !IsBelong(groupName, srecommend, null, true)
+                            ? null
+                            : _masterService.GetData(CurrentSession.UserId, srecommend, custId == 0 ? id : custId,
+                                enabled, closed, suspended);
+                        _cacheList = "CacheList" + groupName + srecommend + custId + enabled + closed + suspended +
+                                     username;
                         break;
+
                     case 2:
-                        result = !IsBelong(groupName, mrecommend, null, true) ? null : _agentService.GetData(CurrentSession.UserId, mrecommend, custId == 0 ? id : custId, enabled, closed, suspended);
-                        _cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended + username;
+                        result = !IsBelong(groupName, mrecommend, null, true)
+                            ? null
+                            : _agentService.GetData(CurrentSession.UserId, mrecommend, custId == 0 ? id : custId,
+                                enabled, closed, suspended);
+                        _cacheList = "CacheList" + groupName + mrecommend + custId + enabled + closed + suspended +
+                                     username;
                         break;
+
                     default:
-                        result = !IsBelong(groupName, recommend, null, true) ? null : _memberService.GetData(CurrentSession.UserId, recommend, custId == 0 ? id : custId, enabled, closed, suspended);
-                        _cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended + username;
+                        result = !IsBelong(groupName, recommend, null, true)
+                            ? null
+                            : _memberService.GetData(CurrentSession.UserId, recommend, custId == 0 ? id : custId,
+                                enabled, closed, suspended);
+                        _cacheList = "CacheList" + groupName + recommend + custId + enabled + closed + suspended +
+                                     username;
                         break;
                 }
             }
@@ -1058,7 +1157,8 @@
 
         private void SetEditAllBetVisibility(DataTable dataTable)
         {
-            dataTable.AsEnumerable().ToList().ForEach(n => n["DisableAllBet"] = n.Field<bool>("DisableAllBet") && n.Field<bool>("DisableAllBetVIP"));
+            dataTable.AsEnumerable().ToList().ForEach(n =>
+                n["DisableAllBet"] = n.Field<bool>("DisableAllBet") && n.Field<bool>("DisableAllBetVIP"));
         }
     }
 }

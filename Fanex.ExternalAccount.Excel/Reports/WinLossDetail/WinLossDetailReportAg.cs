@@ -4,72 +4,57 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
     using Utility;
 
     internal class WinLossDetailReportAg : TemplateReport, IReportBuilder
     {
-        private WinLossDetailReportAgBuilder _builder;
+        private readonly WinLossDetailReportAgBuilder _builder;
 
         public WinLossDetailReportAg(string filePath, WinLossDetailReportAgBuilder builder, string products = null)
             : base(filePath, products)
         {
-            this._builder = builder;
+            _builder = builder;
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
-            var data = this._builder.Data;
+            var data = _builder.Data;
             if (data == null)
             {
                 return null;
             }
 
-            ISheet templateSheet = HssfWorkbook.GetSheet("TemplateAg");
-            ISheet resultSheet = HssfWorkbook.GetSheet("WinLossDetailAg");
+            var templateSheet = HssfWorkbook.GetSheet("TemplateAg");
+            var resultSheet = HssfWorkbook.GetSheet("WinLossDetailAg");
 
-            if (this._builder.IsBold)
+            if (_builder.IsBold)
             {
-                this.BoldAllFonts();
+                BoldAllFonts();
             }
 
-            int rowId = 0;
-            int colId = 0;
+            var rowId = 0;
+            const int colId = 0;
 
-            string mainTitle = string.Empty;
-            if (this._builder.FromDate.Equals(this._builder.ToDate))
-            {
-                mainTitle = "Member Win Loss Detail on " + this._builder.FromDate;
-            }
-            else
-            {
-                mainTitle = "Member Win Loss Detail From " + this._builder.FromDate + " To " + this._builder.ToDate;
-            }
+            var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
+                ? "Member Win Loss Detail on " + _builder.FromDate
+                : "Member Win Loss Detail From " + _builder.FromDate + " To " + _builder.ToDate;
 
-            mainTitle += " - " + this.Products;
+            mainTitle += " - " + Products;
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
             rowId = 3;
-            int id = 1;
+            var id = 1;
 
             if (data.Count > 0)
             {
-                var values = new List<object> { };
-                int totalColumn = 11;
-                int lastColumnIndex = colId + totalColumn - 1;
+                const int totalColumn = 11;
+                const int lastColumnIndex = colId + totalColumn - 1;
 
+                List<object> values;
                 foreach (var item in data)
                 {
-                    if (id % 2 == 0)
-                    {
-                        resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                    }
-                    else
-                    {
-                        resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                    }
+                    resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
 
                     values = new List<object>
                     {
@@ -112,8 +97,8 @@
                 resultSheet.GetRow(rowId).WriteCells(colId, values);
             }
 
-            this.HssfWorkbook.RemoveSheetAt(this.HssfWorkbook.GetSheetIndex(templateSheet));
-            return this.HssfWorkbook;
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
+            return HssfWorkbook;
         }
     }
 }

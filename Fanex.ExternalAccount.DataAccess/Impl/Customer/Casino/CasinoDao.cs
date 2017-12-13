@@ -1,30 +1,34 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
 {
+    using System;
     using System.Collections;
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using CasinoLibrary.SBAgent;
-    using Fanex.Data.DNAide;
-    using Fanex.ExternalAccount.DTO.Customer.Casino;
-    using Fanex.ExternalAccount.Utilities;
+    using Data.DNAide;
+    using DTO.Customer.Casino;
+    using Utilities;
 
     public class CasinoDao
     {
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
         public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
         {
-            Hashtable param = new Hashtable();
-            param.Add("custid", ibcCustId);
-            var uplineParam = new Hashtable();
-            uplineParam.Add("custid", uplineId);
-            DbResult dr = DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", param, 300);
-            var upline = uplineId != 0 ? DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", uplineParam, 300) : new DbResult(new Hashtable(), new DataSet());
-            DataRow row = null;
-            CasinoCustomer customerDetail = new CasinoCustomer();
-            customerDetail.UplineDisabledCasino = uplineId != 0 ? (bool)upline.ResultSet.Tables[0].Rows[0]["disablecasino"] : false;
+            var param = new Hashtable {{"custid", ibcCustId}};
+            var uplineParam = new Hashtable {{"custid", uplineId}};
+            var dr = DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", param, 300);
+            var upline = uplineId != 0
+                ? DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", uplineParam, 300)
+                : new DbResult(new Hashtable(), new DataSet());
+            var customerDetail = new CasinoCustomer
+            {
+                UplineDisabledCasino = uplineId != 0 && (bool) upline.ResultSet.Tables[0].Rows[0]["disablecasino"]
+            };
+
             if (dr.ResultSet.Tables[0].Rows.Count > 0)
             {
-                row = dr.ResultSet.Tables[0].Rows[0];
+                var row = dr.ResultSet.Tables[0].Rows[0];
                 customerDetail.UserName = Utils.ToString(row["username"]);
                 customerDetail.UserName2 = Utils.ToString(row["username2"]);
                 customerDetail.FirstName = Utils.ToString(row["firstname"]);
@@ -50,18 +54,19 @@
                 customerDetail.UpperCustID = uplineId;
                 customerDetail.IsEnablePT = true;
 
-                if (upline != null && upline.ResultSet != null && upline.ResultSet.Tables.Count > 0 && upline.ResultSet.Tables[0].Rows.Count > 0)
+                if (upline?.ResultSet != null && upline.ResultSet.Tables.Count > 0
+                    && upline.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     var drupline = upline.ResultSet.Tables[0].Rows[0];
                     customerDetail.UplineCasinoSync = Utils.ToBoolean(drupline["synccasino"]);
                 }
 
-                CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
-                DataTable dt = null;
+                var customer = new Customer();
 
                 try
                 {
-                    dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, uplineId == 0);
+                    var dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency,
+                        uplineId == 0);
 
                     if (customerDetail.RoleId != 4 && dt != null && dt.Rows.Count > 0)
                     {
@@ -76,8 +81,9 @@
                         customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["SuperMaxTransfer"]);
                     }
                 }
-                catch 
+                catch (Exception exception)
                 {
+                    // TODO: Writelog
                 }
 
                 customerDetail.NoIBCData = false;
@@ -88,65 +94,64 @@
 
         public bool GetCasinoStatus(int custid)
         {
-            Hashtable param = new Hashtable();
-            param.Add("custid", custid);
+            var param = new Hashtable {{"custid", custid}};
 
-            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Age_GetCSStatus", param, 300);
+            var dr = DbHelper.ExecuteDbResult("Age_GetCSStatus", param, 300);
             return Utils.ToBoolean(dr.Outputs["status"]);
         }
 
         public bool UpdateCSStatus(
-            int custid, 
-            bool syncCS, 
-            bool disabledCS, 
-            int userId, 
-            string ip, 
-            int subAccId, 
-            string lang, 
-            string username, 
+            int custid,
+            bool syncCS,
+            bool disabledCS,
+            int userId,
+            string ip,
+            int subAccId,
+            string lang,
+            string username,
             string subUsername)
         {
-            Hashtable param = new Hashtable();
-            param.Add("custid", custid);
-            param.Add("disabledcs", disabledCS);
-            param.Add("synccs", syncCS);
-            param.Add("enabledownline", false);
+            var param = new Hashtable
+            {
+                {"custid", custid},
+                {"disabledcs", disabledCS},
+                {"synccs", syncCS},
+                {"enabledownline", false},
+                {"userid", userId},
+                {"subaccid", subAccId},
+                {"loginip", ip},
+                {"language", lang}
+            };
 
-            param.Add("userid", userId);
-            param.Add("subaccid", subAccId);
-            param.Add("loginip", ip);
-            param.Add("language", lang);
+            var dr = DbHelper.ExecuteDbResult("Acc_UpdCSStatus", param, 300);
 
-            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Acc_UpdCSStatus", param, 300);
-
-            bool status = Utils.ToBoolean(dr.Outputs["status"]);
-
-            return status;
+            return Utils.ToBoolean(dr.Outputs["status"]);
         }
 
         public bool DoUpdateCSStatusWithoutSync(
-            int custid, 
-            bool syncCS, 
-            bool disabledCS, 
-            bool isUpdDownline, 
-            int userId, 
-            string ip, 
-            int subAccId, 
-            string lang, 
+            int custid,
+            bool syncCS,
+            bool disabledCS,
+            bool isUpdDownline,
+            int userId,
+            string ip,
+            int subAccId,
+            string lang,
             out string errMsg)
         {
-            Hashtable param = new Hashtable();
-            param.Add("custid", custid);
-            param.Add("disabledcs", disabledCS);
-            param.Add("synccs", syncCS);
-            param.Add("enabledownline", isUpdDownline);
+            var param = new Hashtable
+            {
+                {"custid", custid},
+                {"disabledcs", disabledCS},
+                {"synccs", syncCS},
+                {"enabledownline", isUpdDownline},
+                {"userid", userId},
+                {"subaccid", subAccId},
+                {"loginip", ip},
+                {"language", lang}
+            };
 
-            param.Add("userid", userId);
-            param.Add("subaccid", subAccId);
-            param.Add("loginip", ip);
-            param.Add("language", lang);
-
-            DbResult dr = Fanex.Data.DNAide.DbHelper.ExecuteDbResult("Acc_UpdCSStatus", param, 300);
+            var dr = DbHelper.ExecuteDbResult("Acc_UpdCSStatus", param, 300);
 
             errMsg = dr.Outputs["errmsg"].ToString();
             return Utils.ToBoolean(dr.Outputs["status"]);

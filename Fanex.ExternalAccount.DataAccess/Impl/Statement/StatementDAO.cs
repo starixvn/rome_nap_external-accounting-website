@@ -3,41 +3,49 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Data;
-    using Fanex.Common.Extensions;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Interface.Statement;
-    using Fanex.ExternalAccount.DTO.Statement;
-    using Fanex.ExternalAccount.Utilities;
+    using System.Globalization;
+    using Base;
+    using Common.Extensions;
+    using DTO.Statement;
+    using Interface.Statement;
+    using Utilities;
 
     public class StatementDAO : DAOBase, IStatementDAO
     {
-        public List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate, DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal)
+        public List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate,
+            DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal)
         {
-            Hashtable parameters = new Hashtable();
-            parameters.Add("custid", custId);
-            parameters.Add("fromdate", fromDate);
-            parameters.Add("todate", toDate);
-            parameters.Add("balanceupday", balanceUpDay);
-            parameters.Add("movebetday", moveBetDay);
-            parameters.Add("includeaccbal", includeAccBal);
-            parameters.Add("showexchangerate", false);
+            var parameters = new Hashtable
+            {
+                {"custid", custId},
+                {"fromdate", fromDate},
+                {"todate", toDate},
+                {"balanceupday", balanceUpDay},
+                {"movebetday", moveBetDay},
+                {"includeaccbal", includeAccBal},
+                {"showexchangerate", false}
+            };
 
-            string type = string.Empty;
-            string remark = string.Empty;
+            var type = string.Empty;
+            var remark = string.Empty;
             var result = new List<Statement>();
 
-            using (IDataReader reader = ExecDataReader("Acc_AllStatement_Full", parameters))
+            using (var reader = ExecDataReader("Acc_AllStatement_Full", parameters))
             {
                 if (reader != null)
                 {
                     while (reader.Read())
                     {
-                        type = reader.IsDBNull(reader.GetOrdinal("TransType")) ? string.Empty : reader["TransType"].ToString().ToUpper(); 
-                        remark = reader.IsDBNull(reader.GetOrdinal("TransDesc")) ? string.Empty : reader["TransDesc"].ToString();
-                        bool isAccBal = string.Compare(remark.ToLowerInvariant(), "accumulated balance", true) == 0;
+                        type = reader.IsDBNull(reader.GetOrdinal("TransType"))
+                            ? string.Empty
+                            : reader["TransType"].ToString().ToUpper(CultureInfo.InvariantCulture);
+                        remark = reader.IsDBNull(reader.GetOrdinal("TransDesc"))
+                            ? string.Empty
+                            : reader["TransDesc"].ToString();
+                        var isAccBal = string.Compare(remark.ToLowerInvariant(), "accumulated balance",
+                                           StringComparison.OrdinalIgnoreCase) == 0;
 
-                        Statement entity = new Statement
+                        var entity = new Statement
                         {
                             AccDate = GetDate(type, isAccBal, Convert.ToDateTime(reader["AccDate"]), balanceUpDay),
                             RefNo = reader.ToLong("RefNo"),
@@ -53,23 +61,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
             return result;
         }
 
-        private string GetDate(string transType, bool isAccBal, DateTime accDate, DateTime balanceUpDay)
+        private static string GetDate(string transType, bool isAccBal, DateTime accDate, DateTime balanceUpDay)
         {
-            if (string.Compare(transType.ToLowerInvariant(), "bet", true) == 0 && accDate >= balanceUpDay)
+            if (string.Compare(transType.ToLowerInvariant(), "bet", StringComparison.OrdinalIgnoreCase) == 0
+                && accDate >= balanceUpDay)
             {
                 return accDate.DayOfWeek + "<br/>" + Utils.FormatDateOptionalTime(accDate);
             }
-            else
-            {
-                if (isAccBal)
-                {
-                    return "--";
-                }
-                else
-                {
-                    return accDate.DayOfWeek + " <br/>" + Utils.FormatDateOptionalTime(accDate);
-                }
-            }
+
+            return isAccBal ? "--" : accDate.DayOfWeek + " <br/>" + Utils.FormatDateOptionalTime(accDate);
         }
     }
 }

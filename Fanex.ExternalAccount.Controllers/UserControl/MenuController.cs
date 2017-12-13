@@ -4,141 +4,151 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Core.Base;
+    using Core.Context;
+    using CustomerSetting.Security.Authenticate;
+    using DTO.UserControl;
+    using Newtonsoft.Json;
+    using Service.Impl.UserControl;
+    using Service.Interface.UserControl;
 
     public class MenuController : BaseController
     {
-        private readonly IMenuService _menuService = null;
+        private readonly IMenuService _menuService;
 
         public MenuController()
         {
-            this._menuService = this._menuService ?? new MenuService();
+            _menuService = _menuService ?? new MenuService();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult MenuList()
-        {
-            return View();
-        }
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        public ActionResult MenuList() => View();
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult MenuListPost()
         {
-            var result = this.GetAllMenus();
+            var result = GetAllMenus();
 
-            return this.JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result }, new Newtonsoft.Json.JsonSerializerSettings());
+            return JsonBase(new {total = 1, page = 1, records = result.Count, rows = result},
+                new JsonSerializerSettings());
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AddMenu()
         {
-            var userCache = new CachingService().GetUserCache(CurrentSession.UserId);
+            ViewBag.FunctionList = GetFunctions();
+            ViewBag.MenuList = GetMenus();
 
-            ViewBag.FunctionList = this.GetFunctions();
-            ViewBag.MenuList = this.GetMenus();
-
-            return this.PartialViewBase(new Menu());
+            return PartialViewBase(new Menu());
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditMenu(int id)
         {
-            var model = this._menuService.GetAllMenus().Where(o => o.MenuID == id).FirstOrDefault();
-            var userCache = new CachingService().GetUserCache(CurrentSession.UserId);
+            var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
 
-            model.MenuName = HttpUtility.HtmlDecode(model.MenuName);
-            model.MenuDesc = HttpUtility.HtmlDecode(model.MenuDesc);
-            model.Url = HttpUtility.HtmlDecode(model.Url);
+            if (model != null)
+            {
+                model.MenuName = HttpUtility.HtmlDecode(model.MenuName);
+                model.MenuDesc = HttpUtility.HtmlDecode(model.MenuDesc);
+                model.Url = HttpUtility.HtmlDecode(model.Url);
 
-            ViewBag.FunctionList = this.GetFunctions();
-            ViewBag.MenuList = this.GetMenus();
+                ViewBag.FunctionList = GetFunctions();
+                ViewBag.MenuList = GetMenus();
+            }
 
-            return this.PartialViewBase(model);
+            return PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Add(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
+        public ActionResult Add(string name, string description, string url, int functionId, int parentId,
+            string parentName, int displayOrder)
         {
             var menuId = 0;
 
-            var result = this._menuService.CreateMenu(
-                    name,
-                    description,
-                    url,
-                    functionId,
-                    parentId,
-                    parentName,
-                    displayOrder,
-                    true,
-                    CurrentSession.CustId,
-                    CurrentContext.Ip4Address,
-                    out menuId);
+            var result = _menuService.CreateMenu(
+                name,
+                description,
+                url,
+                functionId,
+                parentId,
+                parentName,
+                displayOrder,
+                true,
+                CurrentSession.CustId,
+                CurrentContext.Ip4Address,
+                out menuId);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder)
+        public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId,
+            string parentName, int displayOrder)
         {
-            var result = this._menuService.UpdateMenu(
-                    menuId,
-                    name,
-                    description,
-                    url,
-                    functionId,
-                    parentId,
-                    parentName,
-                    displayOrder,
-                    CurrentSession.CustId,
-                    CurrentContext.Ip4Address);
+            var result = _menuService.UpdateMenu(
+                menuId,
+                name,
+                description,
+                url,
+                functionId,
+                parentId,
+                parentName,
+                displayOrder,
+                CurrentSession.CustId,
+                CurrentContext.Ip4Address);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateStatus(int menuId, bool isActive)
         {
-            var result = this._menuService.UpdateMenuStatus(
-                    menuId,
-                    isActive,
-                    CurrentSession.CustId);
+            var result = _menuService.UpdateMenuStatus(
+                menuId,
+                isActive,
+                CurrentSession.CustId);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult Delete(int menuId)
         {
-            var result = this._menuService.DeleteMenu(
-                    menuId,
-                    CurrentSession.CustId);
+            var result = _menuService.DeleteMenu(
+                menuId,
+                CurrentSession.CustId);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetAllMenus()
         {
-            var menuList = this._menuService.GetAllMenus();
-            var parents = menuList.Where(x => x.ParentID == 0);
+            var menuList = _menuService.GetAllMenus();
+            var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
             {
                 list.Add(parent);
-                var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.MenuID);
-                if (items.Count() > 0)
+                var items = menuList.Where(x => x.ParentId != 0 && x.ParentId == parent.MenuId);
+                if (items.Any())
                 {
                     list.AddRange(items);
                 }
@@ -147,11 +157,12 @@
             return list;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetMenus()
         {
             var menuList = new CachingService().GetUserCache(CurrentSession.UserId).MenuList;
-            var parents = menuList.Where(x => x.ParentID == 0);
+            var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
             {
@@ -161,7 +172,8 @@
             return list;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Function> GetFunctions()
         {
             var menuList = new CachingService().GetUserCache(CurrentSession.UserId).PolicyList;
@@ -171,7 +183,7 @@
             {
                 list.Add(parent);
                 var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.FuncID);
-                if (items.Count() > 0)
+                if (items.Any())
                 {
                     list.AddRange(items);
                 }

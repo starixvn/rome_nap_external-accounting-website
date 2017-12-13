@@ -1,171 +1,143 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Fanex.Data;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Utilities;
-    using Logging.Extensions.Database;
+    using Base;
+    using Data;
+    using DTO;
+    using DTO.UserControl;
+    using Interface.UserControl;
+    using Utilities;
 
     public class MenuDao : DAOBase, IMenuDao
     {
-        #region IMenuDao Members
-
         public IEnumerable<Menu> GetAllMenus()
         {
             var result = new List<Menu>();
 
             using (var db = new ObjectDb("EAS_MenuSel"))
             {
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new Menu
                             {
-                                result.Add(new Menu
-                                {
-                                    MenuID = reader.ToInt32("MenuID"),
-                                    MenuName = reader.ToString("MenuName"),
-                                    MenuDesc = reader.ToString("MenuDesc"),
-                                    ParentID = reader.ToInt32("ParentID"),
-                                    ParentName = reader.ToString("ParentName"),
-                                    Url = reader.ToString("Url"),
-                                    FuncID = reader.ToInt32("FuncID"),
-                                    FuncName = reader.ToString("FuncName"),
-                                    DisplayOrder = reader.ToInt32("DisplayOrder"),
-                                    ModifiedDate = reader.ToString("ModifiedDate"),
-                                    IsActive = reader.ToBoolean("Active")
-                                });
-                            }
-
-                            return result;
+                                MenuId = reader.ToInt32("MenuID"),
+                                MenuName = reader.ToString("MenuName"),
+                                MenuDesc = reader.ToString("MenuDesc"),
+                                ParentId = reader.ToInt32("ParentID"),
+                                ParentName = reader.ToString("ParentName"),
+                                Url = reader.ToString("Url"),
+                                FuncId = reader.ToInt32("FuncID"),
+                                FuncName = reader.ToString("FuncName"),
+                                DisplayOrder = reader.ToInt32("DisplayOrder"),
+                                ModifiedDate = reader.ToString("ModifiedDate"),
+                                IsActive = reader.ToBoolean("Active")
+                            });
                         }
-                    }
 
-                    return null;
+                        return result;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+
+                return null;
             }
         }
 
         public UserCache GetMenuByUserId(int userId)
         {
-            var menus = new List<Menu>();
-            var funcs = new List<Function>();
-
             using (var db = new ObjectDb("EAS_MenuSelByUserID"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
-
-                try
+                db.AddInParameter("UserID", DbType.Int32, userId);
+                using (var ds = db.ExecuteDataSet())
                 {
-                    using (var ds = db.ExecuteDataSet())
+                    if (ds?.Tables.Count == 2)
                     {
-                        if (ds != null && ds.Tables.Count == 2)
-                        {
-                            var menu = ds.Tables[0];
-                            var func = ds.Tables[1];
+                        var menu = ds.Tables[0];
+                        var func = ds.Tables[1];
 
-                            menus = (from c in menu.AsEnumerable()
-                                     let parentId = c.Field<int>("ParentID")
-                                     select new Menu
-                                     {
-                                         MenuID = c.Field<int>("MenuID"),
-                                         MenuName = c.Field<string>("MenuName"),
-                                         ParentID = c.Field<int>("ParentID"),
-                                         ParentName = c.Field<string>("ParentName"),
-                                         Url = c.Field<string>("Url"),
-                                         FuncID = c.Field<int>("FuncID"),
-                                         DisplayOrder = c.Field<int>("DisplayOrder"),
-                                         IsActive = c.Field<bool>("Active")
-                                     }).ToList();
-
-                            funcs = (from c in func.AsEnumerable()
-                                     select new Function
-                                     {
-                                         FuncID = c.Field<int>("funcid"),
-                                         ParentID = c.Field<int>("parentId"),
-                                         FuncName = c.Field<string>("funcName"),
-                                         FuncKey = c.Field<string>("funcKey"),
-                                         Policy = c.Field<EPolicy>("policy"),
-                                         IsTest = c.Field<bool>("IsTest")
-                                     }).ToList();
-
-                            return new UserCache
+                        var menus = (from c in menu.AsEnumerable()
+                            let parentId = c.Field<int>("ParentID")
+                            select new Menu
                             {
-                                MenuList = menus,
-                                PolicyList = funcs
-                            };
-                        }
-                    }
+                                MenuId = c.Field<int>("MenuID"),
+                                MenuName = c.Field<string>("MenuName"),
+                                ParentId = c.Field<int>("ParentID"),
+                                ParentName = c.Field<string>("ParentName"),
+                                Url = c.Field<string>("Url"),
+                                FuncId = c.Field<int>("FuncID"),
+                                DisplayOrder = c.Field<int>("DisplayOrder"),
+                                IsActive = c.Field<bool>("Active")
+                            }).ToList();
 
-                    return null;
+                        var funcs = (from c in func.AsEnumerable()
+                            select new Function
+                            {
+                                FuncID = c.Field<int>("funcid"),
+                                ParentID = c.Field<int>("parentId"),
+                                FuncName = c.Field<string>("funcName"),
+                                FuncKey = c.Field<string>("funcKey"),
+                                Policy = c.Field<EPolicy>("policy"),
+                                IsTest = c.Field<bool>("IsTest")
+                            }).ToList();
+
+                        return new UserCache
+                        {
+                            MenuList = menus,
+                            PolicyList = funcs
+                        };
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+
+                return null;
             }
         }
 
         public Result CreateMenu(
-            string name, 
+            string name,
             string description,
-            string url, 
+            string url,
             int functionId,
             int parentId,
             string parentName,
             int displayOrder,
             bool isActive,
-            int custId, 
-            string ip, 
+            int custId,
+            string ip,
             out int menuId)
         {
             menuId = 0;
 
             using (var db = new ObjectDb("EAS_MenuIns"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("FuncID", System.Data.DbType.Int32, functionId);
-                db.AddInParameter("ParentID", System.Data.DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", System.Data.DbType.Int32, displayOrder);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("FuncID", DbType.Int32, functionId);
+                db.AddInParameter("ParentID", DbType.Int32, parentId);
+                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
 
-                db.AddInParameter("MenuName", System.Data.DbType.String, name);
-                db.AddInParameter("MenuDesc", System.Data.DbType.String, description);
-                db.AddInParameter("ParentName", System.Data.DbType.String, parentName);
-                db.AddInParameter("URL", System.Data.DbType.String, url);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
+                db.AddInParameter("MenuName", DbType.String, name);
+                db.AddInParameter("MenuDesc", DbType.String, description);
+                db.AddInParameter("ParentName", DbType.String, parentName);
+                db.AddInParameter("URL", DbType.String, url);
+                db.AddInParameter("IP", DbType.String, ip);
                 db.AddOutParameter("MenuID", DbType.Int32, sizeof(int));
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
+                db.ExecuteNonQuery();
+
+                var result = GetResultParams(db.Database, db.DbCommand);
+
+                if (result.IsSuccess)
                 {
-                    db.ExecuteNonQuery();
-                    var result = this.GetResultParams(db.Database, db.DbCommand);
-
-                    if (result.IsSuccess)
-                    {
-                        menuId = (int)db.GetParameterValue("MenuID");
-                    }
-
-                    return result;
+                    menuId = (int) db.GetParameterValue("MenuID");
                 }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+
+                return result;
             }
         }
 
@@ -173,7 +145,7 @@
             int id,
             string name,
             string description,
-            string url, 
+            string url,
             int functionId,
             int parentId,
             string parentName,
@@ -183,30 +155,23 @@
         {
             using (var db = new ObjectDb("EAS_MenuUpd"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("MenuID", System.Data.DbType.Int32, id);
-                db.AddInParameter("FuncID", System.Data.DbType.Int32, functionId);
-                db.AddInParameter("ParentID", System.Data.DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", System.Data.DbType.Int32, displayOrder);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("MenuID", DbType.Int32, id);
+                db.AddInParameter("FuncID", DbType.Int32, functionId);
+                db.AddInParameter("ParentID", DbType.Int32, parentId);
+                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
 
-                db.AddInParameter("MenuName", System.Data.DbType.String, name);
-                db.AddInParameter("MenuDesc", System.Data.DbType.String, description);
-                db.AddInParameter("ParentName", System.Data.DbType.String, parentName);
-                db.AddInParameter("URL", System.Data.DbType.String, url);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
+                db.AddInParameter("MenuName", DbType.String, name);
+                db.AddInParameter("MenuDesc", DbType.String, description);
+                db.AddInParameter("ParentName", DbType.String, parentName);
+                db.AddInParameter("URL", DbType.String, url);
+                db.AddInParameter("IP", DbType.String, ip);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
@@ -214,22 +179,15 @@
         {
             using (var db = new ObjectDb("EAS_MenuUpdStatus"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("MenuID", System.Data.DbType.Int32, id);
-                db.AddInParameter("Active", System.Data.DbType.Boolean, isActive);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("MenuID", DbType.Int32, id);
+                db.AddInParameter("Active", DbType.Boolean, isActive);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
@@ -237,24 +195,15 @@
         {
             using (var db = new ObjectDb("EAS_MenuDel"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("MenuID", System.Data.DbType.Int32, id);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("MenuID", DbType.Int32, id);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
-
-        #endregion IMenuDao Members
     }
 }

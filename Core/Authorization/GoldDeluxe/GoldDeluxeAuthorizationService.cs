@@ -2,19 +2,20 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Core.Context;
+    using Context;
     using Fanex.GoldDeluxe.CoreSetting.Enumerations;
     using Fanex.GoldDeluxe.CoreSetting.Services;
 
     public class GoldDeluxeAuthorizationService : IGoldDeluxeAuthorizationService
     {
-        private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
-        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
+        private readonly ExternalAccountAuthenticateAttribute _authenticationService =
+            new ExternalAccountAuthenticateAttribute();
 
-        public bool IsAuthorizedRead(AuthorizationContext authorizationContext, int custId)
-        {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong(); ;
-        }
+        private readonly ExternalAccountAuthorization _authorization = new ExternalAccountAuthorization();
+
+        public bool IsAuthorizedRead(AuthorizationContext authorizationContext, int custId) =>
+            _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe)
+            && _authorization.IsBelong();
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, int custId)
         {
@@ -25,13 +26,14 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong(); 
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe)
+                   && _authorization.IsBelong();
         }
 
-        public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, IEnumerable<string> usernames)
-        {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong();
-        }
+        public bool
+            IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, IEnumerable<string> usernames) =>
+            _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe)
+            && _authorization.IsBelong();
 
         public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, IEnumerable<string> usernames)
         {
@@ -42,14 +44,13 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe) && authorization.IsBelong();
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.UpdateGoldDeluxe)
+                   && _authorization.IsBelong();
         }
 
-        private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
-        {
-            return valueProvider.GetValue(parameterName) != null
-                                ? valueProvider.GetValue(parameterName).AttemptedValue
-                                : string.Empty;
-        }
+        private string GetActionParameterValue(IValueProvider valueProvider, string parameterName) =>
+            valueProvider.GetValue(parameterName) != null
+                ? valueProvider.GetValue(parameterName).AttemptedValue
+                : string.Empty;
     }
 }

@@ -128,13 +128,16 @@
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
-                if (casinoCustomer.CasinoSync && (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0))
+                if (casinoCustomer.CasinoSync
+                    && (string.IsNullOrWhiteSpace(result.ErrorCode) || Utils.ToInt32(result.ErrorCode) == 0))
                 {
                     var cust = new CasinoLibrary.SBAgent.Customer();
 
-                    if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                    if (IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer,
+                        AuthenticateAction.AuthenticationType.Host, Request))
                     {
-                        cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address,
+                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
 
                     if (isMult)
@@ -142,9 +145,11 @@
                         return;
                     }
 
-                    if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                    if (IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer,
+                        AuthenticateAction.AuthenticationType.Host, Request))
                     {
-                        cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address,
+                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
             }
@@ -159,14 +164,18 @@
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                if (IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host, Request))
                 {
-                    cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId,
+                        CurrentSession.UserName, FromSystem);
                 }
 
-                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                if (IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer,
+                    AuthenticateAction.AuthenticationType.Host, Request))
                 {
-                    cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId,
+                        CurrentSession.UserName, FromSystem);
                 }
             }
             catch (Exception ex)
@@ -180,9 +189,11 @@
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                if (IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host, Request))
                 {
-                    cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId,
+                        CurrentSession.UserName, FromSystem);
                 }
             }
             catch (ErrorException casinoEx)
@@ -200,9 +211,11 @@
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (this.IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host, Request))
+                if (IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer,
+                    AuthenticateAction.AuthenticationType.Host, Request))
                 {
-                    cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                    cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId,
+                        CurrentSession.UserName, FromSystem);
                 }
             }
             catch (ErrorException casinoEx)
@@ -237,27 +250,36 @@
                     }
                 };
             }
-            else
+
+            return new ViewResult
             {
-                return new ViewResult
-                {
-                    ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
-                };
-            }
+                ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
+            };
         }
 
-        protected bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy, HttpRequestBase request)
+        protected bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy,
+            HttpRequestBase request)
         {
             var userCache = new CachingService().GetUserCache(userId);
             var menuList = userCache.MenuList;
             var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower().Contains("home/index") &&
-                !request.RawUrl.ToLower().Contains("exporttoexcel") && !request.IsAjaxRequest())
+            if (!request.RawUrl.Equals("/") && !request
+                    .RawUrl
+                    .ToLower(CultureInfo.InvariantCulture)
+                    .Contains("home/index")
+                && !request
+                    .RawUrl
+                    .ToLower(CultureInfo.InvariantCulture)
+                    .Contains("exporttoexcel") && !request.IsAjaxRequest())
             {
-                hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url) &&
-                    request.RawUrl.ToLower().Contains(o.Url.ToLower().Replace("~", string.Empty)));
+                hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url)
+                                            && request
+                                                .RawUrl
+                                                .ToLower(CultureInfo.InvariantCulture)
+                                                .Contains(o.Url.ToLower(CultureInfo.InvariantCulture)
+                                                    .Replace("~", string.Empty)));
             }
 
             if (!hasPerm && (foundItems == null || foundItems.Any()))
@@ -268,24 +290,16 @@
             if (foundItems.Any())
             {
                 var firstItem = foundItems.First();
-                switch (policy)
+
+                if (policy == AuthenticateAction.AuthenticationType.Read)
                 {
-                    case AuthenticateAction.AuthenticationType.Read:
-                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
-                            firstItem.Policy == EPolicy.Create)
-                        {
-                            return true;
-                        }
-
-                        break;
-                    case AuthenticateAction.AuthenticationType.Host:
-                        if (firstItem.Policy == EPolicy.Read)
-                        {
-                            return false;
-                        }
-
-                        return true;
+                    return firstItem.Policy == EPolicy.Read
+                           || firstItem.Policy == EPolicy.Update
+                           || firstItem.Policy == EPolicy.Delete
+                           || firstItem.Policy == EPolicy.Create;
                 }
+
+                return firstItem.Policy != EPolicy.Read;
             }
 
             return false;
@@ -293,21 +307,22 @@
 
         protected DataTable CheckVNIP(DataTable table, string ipFieldName = null)
         {
-            string fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
-            if (object.ReferenceEquals(null, table) || table.Rows.Count == 0 || !table.Columns.Contains(fieldName))
+            var fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
+            if (ReferenceEquals(null, table) || table.Rows.Count == 0 || !table.Columns.Contains(fieldName))
             {
                 return table;
             }
 
             foreach (DataRow row in table.Rows)
             {
-                string ip = row.ToString(fieldName);
+                var ip = row.ToString(fieldName);
                 if (string.IsNullOrWhiteSpace(ip) || !IpUtils.IsVnIp(ip))
                 {
                     continue;
                 }
 
-                if (!this.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read, Request))
+                if (!IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP,
+                    AuthenticateAction.AuthenticationType.Read, Request))
                 {
                     row[fieldName] = string.Empty;
                 }
@@ -331,20 +346,24 @@
             }
         }
 
-        protected bool IsAdminHasPermissionOnCustomer(string username, bool isSpecialSiteCustomer)
+        protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
         {
             var permisisonService = new ServiceBase();
             if (isSpecialSiteCustomer)
             {
-                var checkCustomerIsInternalAdminResult = permisisonService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
+                var checkCustomerIsInternalAdminResult =
+                    permisisonService.CheckCustomerIsInternalAdmin(
+                        new CheckCustomerIsInternalAdminCriteria {CustID = CurrentSession.CustId});
                 if (checkCustomerIsInternalAdminResult.IsInternalAdmin)
                 {
                     if (!checkCustomerIsInternalAdminResult.IsAllowAccess)
                     {
                         return false;
                     }
-                    
-                    bool isHasAccessSpecialSitePermission = permisisonService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
+
+                    var isHasAccessSpecialSitePermission =
+                        permisisonService.CheckCustomerHasSpecialSitePermission(
+                            new CheckCustomerHasSpecialSiteFunctionPermissionCriteria {CustID = CurrentSession.CustId});
                     if (!isHasAccessSpecialSitePermission)
                     {
                         return false;
@@ -358,7 +377,8 @@
         protected CheckCustomerBelongToSpecialSiteResult CheckCustomerBelongToSpecialSite(string username)
         {
             var permissionService = new ServiceBase();
-            return permissionService.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = username });
+            return permissionService.CheckCustomerBelongToSpecialSite(
+                new CheckCustomerIsSpecialSiteCriteria {UserName = username});
         }
 
         protected List<KeyValuePair<string, string>> GetProductList()
@@ -366,29 +386,33 @@
             var list = new List<KeyValuePair<string, string>>();
             var products = ProductsConfiguration.Instance.ProductCollection;
             IServiceBase permissionService = new ServiceBase();
-            var checkCustomerIsInternalAdminResult = permissionService.CheckCustomerIsInternalAdmin(new CheckCustomerIsInternalAdminCriteria() { CustID = CurrentSession.CustId });
-            bool isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(new CheckCustomerHasSpecialSiteFunctionPermissionCriteria() { CustID = CurrentSession.CustId });
+            var checkCustomerIsInternalAdminResult =
+                permissionService.CheckCustomerIsInternalAdmin(
+                    new CheckCustomerIsInternalAdminCriteria {CustID = CurrentSession.CustId});
+            var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
+                new CheckCustomerHasSpecialSiteFunctionPermissionCriteria {CustID = CurrentSession.CustId});
             foreach (ProductElementConfiguration product in products)
             {
                 if (product.IsSpecial)
                 {
-#pragma warning disable S2589       
-                    if (!IsHiddenProduct(product) && 
-                        (!checkCustomerIsInternalAdminResult.IsInternalAdmin || (checkCustomerIsInternalAdminResult.IsInternalAdmin && checkCustomerIsInternalAdminResult.IsAllowAccess && isAuthorized)))
-#pragma warning restore S2589       
+                    if (!IsHiddenProduct(product)
+                        && (!checkCustomerIsInternalAdminResult.IsInternalAdmin
+                            || (checkCustomerIsInternalAdminResult.IsInternalAdmin
+                            && checkCustomerIsInternalAdminResult.IsAllowAccess
+                            && isAuthorized)))
                     {
                         list.Add(new KeyValuePair<string, string>(
                             product.Id,
-                            product.ProductId == 0 ? product.Name : this.GetProductNameFromRemotingRef(product.ProductId)));
+                            product.ProductId == 0 ? product.Name : GetProductNameFromRemotingRef(product.ProductId)));
                     }
                 }
                 else
                 {
-                    if (!this.IsHiddenProduct(product))
+                    if (!IsHiddenProduct(product))
                     {
                         list.Add(new KeyValuePair<string, string>(
                             product.Id,
-                            product.ProductId == 0 ? product.Name : this.GetProductNameFromRemotingRef(product.ProductId)));
+                            product.ProductId == 0 ? product.Name : GetProductNameFromRemotingRef(product.ProductId)));
                     }
                 }
             }
@@ -408,27 +432,31 @@
                 return false;
             }
 
-            var groups = product.ShowForGroups.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            var requestURL = Request != null ? Request.UrlReferrer.AbsolutePath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries) : new string[0];
-            var groupName = requestURL.Length == 0 || !CurrentSession.IsInternalAdmin ? CurrentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
-
-            foreach (var group in groups)
+            var groups = product.ShowForGroups.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
+            if (Request?.UrlReferrer != null)
             {
-                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
+                var requestUrl =
+                    Request?.UrlReferrer.AbsolutePath.Split(new[] {"/"}, StringSplitOptions.RemoveEmptyEntries);
+                var groupName = requestUrl.Length == 0 || !CurrentSession.IsInternalAdmin
+                    ? CurrentSession.CurrencyGroup
+                    : requestUrl[requestUrl.Length - 1];
+
+                foreach (var group in groups)
                 {
-                    return false;
+                    if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
+                        || groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase)
+                        || groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase)
+                        || groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
                 }
             }
 
             return true;
         }
 
-        protected string GetProductNameFromRemotingRef(int productId)
-        {
-            return RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
-        }
+        protected static string GetProductNameFromRemotingRef(int productId) =>
+            RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
     }
 }

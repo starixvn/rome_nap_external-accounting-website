@@ -72,7 +72,7 @@
             {
                 var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
-                if (custInfo != null && custInfo.UplineCasinoSync && !custInfo.CasinoSync)
+                if (custInfo?.UplineCasinoSync == true && !custInfo.CasinoSync)
                 {
                     var isSuccess = new CasinoLibrary.SBAgent.Customer().AutoInsertAccount(
                         CasinoNo,

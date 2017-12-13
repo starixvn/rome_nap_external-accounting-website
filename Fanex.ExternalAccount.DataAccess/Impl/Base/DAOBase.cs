@@ -12,7 +12,7 @@
     {
         private const int DEFAULTTIMEOUT = 600;
 
-        public void AddResultParams(Database db, DbCommand command)
+        public static void AddResultParams(Database db, DbCommand command)
         {
             db.AddOutParameter(command, "ErrCode", DbType.String, 300);
             db.AddOutParameter(command, "ErrMsg", DbType.String, 4000);
