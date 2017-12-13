@@ -8,10 +8,9 @@
                 <span>@LayoutTexts.BetSetting</span>
             </td>
             <td colspan="2" class="header c b">
-                <input ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
+                <span ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
                        ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
-                       title="@LayoutTexts.lblCopyAllStatus"
-                       type="button" />
+                       title="@LayoutTexts.lblCopyAllStatus"></span>
                 <span>@LayoutTexts.EnableStatus</span>
                 <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
                        ng-click="!$parent.isBetSettingPartial||updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update" />

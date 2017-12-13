@@ -167,7 +167,7 @@ Fanex.ExtAcc.User = {
                     var groupName = cell.Value.GroupName;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowPermission(" + userId + ",'" + username + "','" + groupName + "')";
 
-                    return '<div class="edit" onclick="' + onclick + '"></div>';
+                    return '<div class="icon-clipboard-text" onclick="' + onclick + '"></div>';
                 }
             },
             { HeaderText: 'Active', Name: 'Enabled', CellAlign: 'center', Width: 50,
@@ -182,7 +182,7 @@ Fanex.ExtAcc.User = {
             },
             { HeaderText: 'Password', Name: 'ResetPwd', CellAlign: 'center', Width: 70,
                 CustomCellRender: function (cell) {
-                    var style = "menuResetPwd";
+                    var style = "icon-refresh";
                     var userId = cell.Value.UserID;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowResetPwd(" + userId + ", false, '" + cell.Value.Username + "')";
 

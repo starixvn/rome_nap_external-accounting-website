@@ -165,7 +165,7 @@ Fanex.ExtAcc.Group = {
                     },
                     { HeaderText: 'Delete', Name: 'Delete', Width: 50, CellAlign: 'center',
                         CustomCellRender: function (cell) {
-                            var style = "menuDelete";
+                            var style = "icon-delete";
                             var groupId = cell.Value.GroupID;
                             var groupName = cell.Value.GroupName;
                             var onclick = "javascript:Fanex.ExtAcc.Group.ShowDelete(" + groupId + ", '" + groupName + "')";

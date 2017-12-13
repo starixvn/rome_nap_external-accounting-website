@@ -76,7 +76,7 @@
         <link rel="stylesheet" href="@Url.Content("~/assets/styles/pages/default/common.css?v=2")" />
         <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
         <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
     }
     else
     {
@@ -116,12 +116,13 @@
                     <span class="text">S</span>
                 </div>
                 <span class="username">sa</span>
+                <div class="list-action">
+                    <button class="btn -reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">Reset Password</button>
+                    <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>
+                </div>
             </div>
             @Html.Action("_Menu", "Shared")
-            <div class="list-action">
-                <button class="btn -reset">Reset Password</button>
-                <button class="btn -logout">Log Out</button>
-            </div>
+           
         </div>
         <div id='mainContent' class="main-content">
             <div id="mainSplitter">

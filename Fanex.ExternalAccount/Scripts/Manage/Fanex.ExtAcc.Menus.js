@@ -190,7 +190,7 @@ Fanex.ExtAcc.Menus = {
             },
             { HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
-                    var style = "menuDelete";
+                    var style = "icon-delete";
                     var menuId = cell.Value.MenuID;
                     var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowDelete(" + menuId + ", '" + menuName + "')";

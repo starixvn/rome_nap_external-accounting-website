@@ -38,5 +38,21 @@
   {
     "outputFile": "assets/styles/pages/customer/customer.css",
     "inputFile": "assets/styles/pages/customer/customer.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/keno-setting.css",
+    "inputFile": "assets/styles/pages/customer/keno-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/customer-setting.css",
+    "inputFile": "assets/styles/pages/customer/customer-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/racing-setting.css",
+    "inputFile": "assets/styles/pages/customer/racing-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/bet-limit.css",
+    "inputFile": "assets/styles/pages/customer/bet-limit.scss"
   }
 ]

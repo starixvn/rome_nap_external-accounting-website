@@ -1,4 +1,16 @@
-﻿$font-size: 14px;
+﻿@font-face {
+  font-family: 'AlphaAdmin';
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$font-size: 14px;
+$font-icon: 'AlphaAdmin';
 $font-family: Arial, Tahoma, Helvetica, sans-serif;
 $text-color: #232428;
 $border-color: #c4c4c4;

@@ -11,6 +11,7 @@
 @import "../../components/textbox";
 @import "../../components/dropdown";
 @import "../../components/filterbox";
+@import "../../components/calendar";
 @import "../../layout/header";
 @import "../../layout/sidebar";
 
@@ -343,38 +344,52 @@ no-info {
 /* icons in tables */
 
 %icon-in-tables {
-    width: 15px;
-	height: 15px;
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
 }
 
-.edit {
+.icon-clipboard-text {
     @extend %icon-in-tables;
-	background: url(../../images/permission-icn.png) no-repeat;
+	
 }
 
-.menuDelete {
+.icon-delete {
     @extend %icon-in-tables;
-	background: url(../../images/delete-icn.png) no-repeat;
+	&:before{
+        color: #b81111;
+	}
 }
 
-.menuResetPwd {
+.icon-refresh {
     @extend %icon-in-tables;
-	background: url(../../images/password-icon.png) no-repeat;
+    font-weight: bold;
+    &:before {
+        color: #43aadc;
+    }
 }
 
 // checkbox in permission popups 
+[class^="menu"], [class^="perm"] {
+    &:before {
+        font-family: $font-icon !important;
+        font-size: 16px;
+
+    }
+}
 
 .menuActive, .permActive {
     @extend %icon-in-tables;
-	background: url(../../images/checkbox.png) no-repeat;
+    &:before {
+        content:'\e902';
+    }
 }
 
 .menuInactive, .permInactive {
     @extend %icon-in-tables;
-	background: url(../../images/checkbox.png) no-repeat -18px 0;
+    &:before {
+        content: '\e901';
+    }
 }
 
 
@@ -1517,7 +1532,7 @@ li:hover {
     color: #fff !important;
 }
 
-.ui-datepicker-header .ui-datepicker-prev-hover {
+/*.ui-datepicker-header .ui-datepicker-prev-hover {
     background-color: transparent !important;
     background-image: none !important;
     border: none !important;
@@ -1529,7 +1544,7 @@ li:hover {
     background-image: none !important;
     border: none !important;
     background-position: -48px -192px;
-}
+}*/
 
 .ui-datepicker-header .ui-state-hover .ui-icon, .ui-datepicker-header .ui-state-focus .ui-icon {
     background-color: transparent !important;

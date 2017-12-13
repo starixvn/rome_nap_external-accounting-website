@@ -1118,12 +1118,6 @@
     <Content Include="assets\js\libs\bootstrap\transition.js" />
     <Content Include="assets\js\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\styles\base\normalize.css" />
-    <Content Include="assets\styles\base\roboto-fonts.css">
-      <DependentUpon>roboto-fonts.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\base\roboto-fonts.min.css">
-      <DependentUpon>roboto-fonts.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\base\Validators.css" />
     <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.css" />
     <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.js" />
@@ -1176,11 +1170,11 @@
     <Content Include="assets\styles\pages\account\login.min.css">
       <DependentUpon>login.scss</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\customer\customer.css">
-      <DependentUpon>customer.scss</DependentUpon>
+    <Content Include="assets\styles\pages\customer\keno-setting.css">
+      <DependentUpon>keno-setting.scss</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\customer\customer.min.css">
-      <DependentUpon>customer.css</DependentUpon>
+    <Content Include="assets\styles\pages\customer\keno-setting.min.css">
+      <DependentUpon>keno-setting.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\default\common.css">
       <DependentUpon>common.scss</DependentUpon>
@@ -2917,7 +2911,7 @@
     <Content Include="assets\styles\pages\default\common.scss" />
     <Content Include="assets\styles\base\_scaffolding.scss" />
     <Content Include="assets\styles\layout\_header.scss" />
-    <Content Include="assets\styles\base\roboto-fonts.scss" />
+    <Content Include="assets\styles\base\_roboto-fonts.scss" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Bold.eot" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Bold.ttf" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Bold.woff" />
@@ -2955,11 +2949,14 @@
     <Content Include="assets\styles\pages\reports\daily-winloss.scss" />
     <Content Include="assets\styles\pages\reports\_report.scss" />
     <Content Include="assets\styles\components\_filterbox.scss" />
-    <Content Include="assets\styles\pages\customer\customer.scss" />
+    <Content Include="assets\styles\pages\customer\_customer.scss" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.eot" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.ttf" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.woff" />
     <Content Include="assets\styles\fonts\AlphaAdmin\selection.json" />
+    <Content Include="assets\styles\components\_calendar.scss" />
+    <Content Include="assets\styles\base\_alpha-admin-fonts.scss" />
+    <Content Include="assets\styles\pages\customer\keno-setting.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
