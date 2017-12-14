@@ -20,7 +20,7 @@
             <div class="headerLevel" data-ng-repeat="person in personalInfo.downlines">
                 <div class="title bold">{{person.text}}</div>
                 <div class="floatLeft bold detail" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
-                <div class="floatRight home" data-ng-click="Login('{{person.value}}')">&nbsp;&nbsp;</div>
+                <a class="floatRight home" href="~/User/InternalLogin/?username={{person.value}}" target="_blank"></a>
             </div>
         </div>
         <div id="customerInfo" data-ng-controller="PersonalInfoController" data-ng-hide="{{model==null}}">

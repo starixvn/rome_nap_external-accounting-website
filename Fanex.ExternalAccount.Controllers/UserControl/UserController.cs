@@ -304,7 +304,6 @@
             return JsonBase(result);
         }
 
-        [HttpPost]
         public ActionResult InternalLogin(string username)
         {
             string url;
@@ -325,7 +324,7 @@
                 url = Url.Content("~") + "Shared/NoPermission";
             }
 
-            return JsonBase(new {errorCode = 0, url});
+            return Redirect(url);
         }
 
         private string GetInternalLoginUrl(AlphaSiteCode siteCode)
