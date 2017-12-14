@@ -112,18 +112,21 @@ Fanex.ExtAcc.DailyWinLoss = {
             if (!$this.hidedMargin) {
                 $('#btnHideMG').val('Show Margin');
                 $this.hidedMargin = true;
-                $("#jqgrid").fanexGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
-                $('#HeaderWinlossMargin').html('Win/Loss');
+
+                $(".col-win-loss-margin").addClass("hide");
+                $(".col-percent").addClass("hide");
+                $(".col-win-loss").removeClass("hide");
             } else {
                 $('#btnHideMG').val('Hide Margin');
                 $this.hidedMargin = false;
-                $("#jqgrid").fanexGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
-                $('#HeaderWinlossMargin').html('Win/Loss & Margin');
+
+                $(".col-win-loss").addClass("hide");
+                $(".col-win-loss-margin").removeClass("hide");
+                $(".col-percent").removeClass("hide");
             }
         });
 
         $this.groupName = $('#selectedGroupName').html();
-        var source = [];
 
         $('#txtUserName').keypress(function (e) {
             if (typeof e == 'undefined') e = window.event;
@@ -141,13 +144,6 @@ Fanex.ExtAcc.DailyWinLoss = {
                 Fanex.ExtAcc.InitSuggestion();
             }
         });
-
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $("#jqgrid").fanexGrid("resizeGrid");
-            }
-            catch (err) { }
-        };
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
@@ -190,7 +186,6 @@ Fanex.ExtAcc.DailyWinLoss = {
     },
     GetDownlineDailyWinLoss: function (custId) {
         this.custId = custId;
-        //$("#txtUserName").val('');
         this.username = '';
         this.Databind();
     },
@@ -199,169 +194,8 @@ Fanex.ExtAcc.DailyWinLoss = {
         this.mrecommend = 0;
         this.recommend = 0;
         this.custId = 0;
-        this.username == '';
+        this.username = '';
         this.viewlevel = 4;
-    },
-    CalculatePercentGrandTotal: function (value1, value2) {
-        value1 = String(value1).replace(/,/g, '');
-        value2 = String(value2).replace(/,/g, '');
-        if (value2 != 0 && value2 != '0.00') {
-            return numeral(parseFloat(value1) / parseFloat(value2) * 100).format('0,0.00');
-        }
-        else {
-            return '0.00';
-        }
-    },
-    RenderUsernameColumn: function (cell) {
-        if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
-            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
-        }
-        else {
-            var func = "javascript: Fanex.ExtAcc.DailyWinLoss.GetDownlineDailyWinLoss('" + cell.Value.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;">' +
-                                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username  + '">' + cell.Value.Username + '</a>' +
-                           '</div>';
-        }
-    },
-    defaultColumns: [
-        { HeaderText: 'No.', Name: 'No', Width: 40, HeaderAlign: 'center', CellAlign: 'right' },
-        {
-            HeaderText: 'Username', Name: 'Username', Width: 130, HeaderAlign: 'center',
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
-        },
-        { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'ComTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Super', Name: 'SAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'SAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Master', Name: 'MAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'MAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Agent', Name: 'AgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'AgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'ComWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'ComWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Super', Name: 'SAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Master', Name: 'MAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Agent', Name: 'AgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'AgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
-    ],
-    Render: function () {
-        var gridOption = {
-            customizeHeader: true,
-            groupHeaderRows: [
-                    {
-                        Columns: [
-                                { HeaderText: "No.", Name: "No", MergeRowNumber: 2 },
-                                { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
-                                { HeaderText: "Total Turnover", Name: "TotalTO", MergeRowNumber: 2 },
-                                { HeaderText: "Turnover & Position Taking", Name: "ComTO", MergeColNumber: 8 },
-                                { HeaderText: '<div id="HeaderWinlossMargin">Win/Loss & Margin</div>', Name: "ComWinlost", MergeColNumber: 8 }
-                            ]
-                    }
-            ],
-            columns: $this.defaultColumns,
-            numberOfFrozenColumn: 3,
-            showFooter: true,
-            gridExpandHeight: 175,
-            autoResizeColumn: true,
-            showPager: true,
-            pagerOption: {
-                itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
-                totalItem: $this.totalRows,
-                itemsPerPage: 50
-            },
-            highlightFrozenWidth: 2,
-            marginRight: 2,
-            bottomBorderWidth: 0,
-            showDistinctRow: false,
-            allowTruncate: true,
-            columnsNeedHide: [12, 14, 16, 18],
-            showColumnsShowHide: !$this.hidedMargin
-        };
-
-        // For Summary Footer
-        this.SumTotalTO = 0;
-        this.SumComTO = 0;
-        this.SumSAgTO = 0;
-        this.SumMAgTO = 0;
-        this.SumAgTO = 0;
-        this.SumComWinlost = 0;
-        this.SumSAgWinlost = 0;
-        this.SumMAgWinlost = 0;
-        this.SumAgWinlost = 0;
-
-        //// Assing BodyData
-        var bodyData = [];
-        for (var i = 0; i < this.totalRows; i++) {
-            bodyData.push({
-                Columns: [
-                    { Name: "No", Value: (i + 1) },
-                    { Name: "Username", Value: this.dataSource[i] },
-                    { Name: "TotalTO", Value: this.dataSource[i].TotalTO },
-                    { Name: "ComTO", Value: this.dataSource[i].ComTO },
-                    { Name: "ComTOPercent", Value: this.dataSource[i].ComTOPercent },
-                    { Name: "SAgTO", Value: this.dataSource[i].SAgTO },
-                    { Name: "SAgTOPercent", Value: this.dataSource[i].SAgTOPercent },
-                    { Name: "MAgTO", Value: this.dataSource[i].MAgTO },
-                    { Name: "MAgTOPercent", Value: this.dataSource[i].MAgTOPercent },
-                    { Name: "AgTO", Value: this.dataSource[i].AgTO },
-                    { Name: "AgTOPercent", Value: this.dataSource[i].AgTOPercent },
-                    { Name: "ComWinlost", Value: this.dataSource[i].ComWinlost },
-                    { Name: "ComWinlostPercent", Value: this.dataSource[i].ComWinlostPercent },
-                    { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
-                    { Name: "SAgWinlostPercent", Value: this.dataSource[i].SAgWinlostPercent },
-                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
-                    { Name: "MAgWinlostPercent", Value: this.dataSource[i].MAgWinlostPercent },
-                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                    { Name: "AgWinlostPercent", Value: this.dataSource[i].AgWinlostPercent }
-                ]
-            })
-
-            this.SumTotalTO += this.dataSource[i].TotalTO;
-            this.SumComTO += this.dataSource[i].ComTO;
-            this.SumSAgTO += this.dataSource[i].SAgTO;
-            this.SumMAgTO += this.dataSource[i].MAgTO;
-            this.SumAgTO += this.dataSource[i].AgTO;
-            this.SumComWinlost += this.dataSource[i].ComWinlost;
-            this.SumSAgWinlost += this.dataSource[i].SAgWinlost;
-            this.SumMAgWinlost += this.dataSource[i].MAgWinlost;
-            this.SumAgWinlost += this.dataSource[i].AgWinlost;
-        }
-
-        gridOption.bodyRows = bodyData;
-        gridOption.pagerOption.totalItem = this.totalRows;
-                
-        //// Asign Footer Data
-        var footerData = [];
-        footerData.push(
-        {
-            Columns: [
-            { Name: "No", Value: "Grand Total", MergeColNumber: 2 },
-            { Name: "TotalTO", Value: this.SumTotalTO },
-            { Name: "ComTO", Value: this.SumComTO },
-            { Name: "ComTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumComTO, this.SumTotalTO) },
-            { Name: "SAgTO", Value: this.SumSAgTO },
-            { Name: "SAgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumSAgTO, this.SumTotalTO) },
-            { Name: "MAgTO", Value: this.SumMAgTO },
-            { Name: "MAgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumMAgTO, this.SumTotalTO) },
-            { Name: "AgTO", Value: this.SumAgTO },
-            { Name: "AgTOPercent", Value: $this.CalculatePercentGrandTotal(this.SumAgTO, this.SumTotalTO) },
-
-            { Name: "ComWinlost", Value: this.SumComWinlost },
-            { Name: "ComWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumComWinlost, this.SumComTO) },
-            { Name: "SAgWinlost", Value: this.SumSAgWinlost },
-            { Name: "SAgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumSAgWinlost, this.SumSAgTO) },
-            { Name: "MAgWinlost", Value: this.SumMAgWinlost },
-            { Name: "MAgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumMAgWinlost, this.SumMAgTO) },
-            { Name: "AgWinlost", Value: this.SumAgWinlost },
-            { Name: "AgWinlostPercent", Value: $this.CalculatePercentGrandTotal(this.SumAgWinlost, this.SumAgTO) }
-            ]
-        });
-        gridOption.footerRows = footerData;
-        return gridOption;
     },
     Databind: function () {
         if ($("#txtUserName").val() != '') {
@@ -425,8 +259,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $this.gridOptions = $this.Render();
-                    $("#jqgrid").fanexGrid($this.gridOptions);
+                    $this.renderReport();
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
@@ -435,6 +268,123 @@ Fanex.ExtAcc.DailyWinLoss = {
                 Fanex.ExtAcc.UnBlockUI();
             }
         })
+    },
+
+    percent: function (partialValue, total) {
+        total = String(total).replace(/,/g, '');
+        if (total == 0 || total == '0.00') {
+            return '0.00';
+        }
+
+        partialValue = String(partialValue).replace(/,/g, '');
+
+        return numeral(parseFloat(partialValue) / parseFloat(total) * 100).format('0,0.00');
+    },
+    calculateGrandTotalPercent: function (grandTotal) {
+        grandTotal.ComTOPercent = $this.percent(grandTotal.ComTO, grandTotal.TotalTO);
+        grandTotal.SAgTOPercent = $this.percent(grandTotal.SAgTO, grandTotal.TotalTO);
+        grandTotal.MAgTOPercent = $this.percent(grandTotal.MAgTO, grandTotal.TotalTO);
+        grandTotal.AgTOPercent = $this.percent(grandTotal.AgTO, grandTotal.TotalTO);
+
+        grandTotal.ComWinlostPercent = $this.percent(grandTotal.ComWinlost, grandTotal.ComTO);
+        grandTotal.SAgWinlostPercent = $this.percent(grandTotal.SAgWinlost, grandTotal.SAgTO);
+        grandTotal.MAgWinlostPercent = $this.percent(grandTotal.MAgWinlost, grandTotal.MAgTO);
+        grandTotal.AgWinlostPercent = $this.percent(grandTotal.AgWinlost, grandTotal.AgTO);
+    },
+    sumValues: function (row, grandTotal) {
+        grandTotal.TotalTO += row.TotalTO;
+        grandTotal.ComTO += row.ComTO;
+        grandTotal.SAgTO += row.SAgTO;
+        grandTotal.MAgTO += row.MAgTO;
+        grandTotal.AgTO += row.AgTO;
+        grandTotal.ComWinlost += row.ComWinlost;
+        grandTotal.SAgWinlost += row.SAgWinlost;
+        grandTotal.MAgWinlost += row.MAgWinlost;
+        grandTotal.AgWinlost += row.AgWinlost;
+    },
+    renderNegativeNumber: function (value) {
+        var html = numeral(value).format('0,0.00');
+
+        return value < 0 ? '<span class="format-negative">' + html + '</span>' : html;
+    },
+    renderUsernameColumn: function (username, custId) {
+        var html;
+
+        if ($this.viewlevel < 2) {
+            html = '<div class="text-truncate" class="col-username" title="' + username + '</div>';
+        }
+        else {
+            var func = "javascript: Fanex.ExtAcc.DailyWinLoss.GetDownlineDailyWinLoss('" + custId + "')";
+            html = '<div class="col-username">' +
+                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + username + '">' + username + '</a>' +
+                '</div>';
+        }
+
+        return html;
+    },
+    renderRow: function (row, isTotal, rowNo) {
+        var html;
+        if (isTotal) {
+            html = '<tr class="row-grand-total">\
+                        <td colspan="2" class="align-right">Grand Total</td>';
+        } else {
+            html = '<tr>\
+                        <td class="align-right">' + rowNo + '</td>\
+                        <td>' + $this.renderUsernameColumn(row.Username, row.CustId) + '</td>';
+        }
+
+        html += '<td class="align-right">' + $this.renderNegativeNumber(row.TotalTO) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.ComTO) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.ComTOPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.SAgTO) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.SAgTOPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.MAgTO) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.MAgTOPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.AgTO) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.AgTOPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.ComWinlost) + '</td>\
+                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.ComWinlostPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.SAgWinlost) + '</td>\
+                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.SAgWinlostPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.MAgWinlost) + '</td>\
+                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.MAgWinlostPercent) + '</td>\
+                <td class="align-right">' + $this.renderNegativeNumber(row.AgWinlost) + '</td>\
+                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.AgWinlostPercent) + '</td>\
+            </tr>';
+
+        return html;
+    },
+    renderBody: function () {
+        var html = '';
+        var grandTotal = {
+            TotalTO: 0,
+            ComTO: 0,
+            SAgTO: 0,
+            MAgTO: 0,
+            AgTO: 0,
+            ComWinlost: 0,
+            SAgWinlost: 0,
+            MAgWinlost: 0,
+            AgWinlost: 0
+        };
+
+        for (var i = 0; i < $this.totalRows; i++) {
+            var row = $this.dataSource[i];
+
+            html += $this.renderRow(row, false, i + 1);
+            $this.sumValues(row, grandTotal);
+        }
+
+        $this.calculateGrandTotalPercent(grandTotal);
+
+        html += $this.renderRow(grandTotal, true);
+
+        return html;
+    },
+    renderReport: function () {
+        var htmlContent = $this.renderBody();
+
+        $("#tbl-report tbody").empty().append(htmlContent);
     }
 };
 

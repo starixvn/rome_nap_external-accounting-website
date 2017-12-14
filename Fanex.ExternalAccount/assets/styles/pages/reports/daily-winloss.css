@@ -43,3 +43,30 @@
 .ui-jqgrid .ui-jqgrid-sortable {
   cursor: inherit !important; }
 
+.align-right {
+  text-align: right; }
+
+.format-negative {
+  color: #B50000; }
+
+#tbl-report thead th {
+  text-align: center; }
+
+#tbl-report thead .col-no {
+  width: 40px; }
+
+#tbl-report thead .col-username, #tbl-report thead .col-total-turnover, #tbl-report thead .col-company, #tbl-report thead .col-super, #tbl-report thead .col-master, #tbl-report thead .col-agent {
+  width: 130px; }
+
+#tbl-report thead .col-turnover-position-taking-percent, #tbl-report thead .col-percent {
+  width: 100px; }
+
+#tbl-report tbody .col-username {
+  text-align: left;
+  padding-left: 3px; }
+
+#tbl-report tbody .row-grand-total {
+  background: #f1f1a6;
+  color: #4F4F4F;
+  font-weight: bold; }
+
