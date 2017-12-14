@@ -1756,6 +1756,11 @@
     <Content Include="Scripts\_Libs\jQuery\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\_Libs\jQuery\knockout-2.1.0.js" />
     <Content Include="Scripts\_Libs\jQuery\modernizr-2.5.3.js" />
+    <Content Include="Scripts\_Libs\jQuery\pagination\jquery.draggable.js" />
+    <Content Include="Scripts\_Libs\jQuery\pagination\jquery.linkbutton.js" />
+    <Content Include="Scripts\_Libs\jQuery\pagination\jquery.pagination.js" />
+    <Content Include="Scripts\_Libs\jQuery\pagination\jquery.parser.js" />
+    <Content Include="Scripts\_Libs\jQuery\pagination\jquery.resizable.js" />
     <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_60_4264ac_40x100.png" />
     <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_75_5476bb_40x100.png" />
     <Content Include="Scripts\_Libs\jQuery\Styles\images\ui-bg_flat_90_466bb9_40x100.png" />

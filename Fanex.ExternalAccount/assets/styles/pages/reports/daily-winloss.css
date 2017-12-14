@@ -65,7 +65,7 @@
   text-align: left;
   padding-left: 3px; }
 
-#tbl-report tbody .row-grand-total {
+#tbl-report tfoot .row-grand-total {
   background: #f1f1a6;
   color: #4F4F4F;
   font-weight: bold; }

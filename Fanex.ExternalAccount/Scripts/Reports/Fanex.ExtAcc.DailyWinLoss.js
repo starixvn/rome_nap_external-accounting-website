@@ -328,7 +328,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             html = '<tr class="row-grand-total">\
                         <td colspan="2" class="align-right">Grand Total</td>';
         } else {
-            html = '<tr>\
+            html = '<tr class="hide">\
                         <td class="align-right">' + rowNo + '</td>\
                         <td>' + $this.renderUsernameColumn(row.Username, row.CustId) + '</td>';
         }
@@ -354,8 +354,32 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         return html;
     },
-    renderBody: function () {
+    renderBody: function (grandTotal) {
         var html = '';
+
+        for (var i = 0; i < $this.totalRows; i++) {
+            var row = $this.dataSource[i];
+
+            html += $this.renderRow(row, false, i + 1);
+            $this.sumValues(row, grandTotal);
+        }
+
+        $this.calculateGrandTotalPercent(grandTotal);
+
+        return html;
+    },
+    renderFooter: function (grandTotal) {
+        var html = $this.renderRow(grandTotal, true);
+        html += '<tr><td><div id="report-pager"></div></td></tr>';
+
+        return html;
+    },
+    renderReport: function () {
+        $this.totalRows = 1000;
+        for (var i = 0; i < 999; i++) {
+            $this.dataSource.push($this.dataSource[0]);
+        }
+
         var grandTotal = {
             TotalTO: 0,
             ComTO: 0,
@@ -368,23 +392,50 @@ Fanex.ExtAcc.DailyWinLoss = {
             AgWinlost: 0
         };
 
-        for (var i = 0; i < $this.totalRows; i++) {
-            var row = $this.dataSource[i];
+        var bodyContent = $this.renderBody(grandTotal);
+        var footerContent = $this.renderFooter(grandTotal);
 
-            html += $this.renderRow(row, false, i + 1);
-            $this.sumValues(row, grandTotal);
+        $("#tbl-report tbody").empty().append(bodyContent);
+        $("#tbl-report tfoot").empty().append(footerContent);
+        $this.renderPager();
+    },
+    pageSize: 50,
+    pageIndex: 1,
+    bodyRows: null,
+    renderPager: function () {
+        $this.bodyRows = $("#tbl-report > tbody > tr");
+        $("#report-pager").pagination({
+            pageList: [10, 50, 100, 500],
+            total: $this.totalRows,
+            pageSize: $this.pageSize,
+            pageNumber: $this.pageIndex,
+
+            showRefresh: false,
+            onSelectPage: $this.onSelectPage,
+            beforePageText: "Page",
+            afterPageTex: "of {pages}",
+            displayMsg: "Displaying {from} to {to} of {total} items"
+        });
+
+        $this.showBodyRows();
+    },
+    onSelectPage: function (pageNumber, pageSize) {
+        $this.pageSize = pageSize;
+        $this.pageIndex = pageNumber;
+        $this.showBodyRows();
+    },
+    showBodyRows: function () {
+        if (!$this.totalRows) {
+            return;
         }
 
-        $this.calculateGrandTotalPercent(grandTotal);
+        var startIndex = $this.pageSize * ($this.pageIndex - 1);
+        var endIndex = startIndex + $this.pageSize;
 
-        html += $this.renderRow(grandTotal, true);
-
-        return html;
-    },
-    renderReport: function () {
-        var htmlContent = $this.renderBody();
-
-        $("#tbl-report tbody").empty().append(htmlContent);
+        $this.bodyRows.addClass("hide");
+        for (var i = startIndex; i < endIndex && i < $this.totalRows; i++) {
+            $($this.bodyRows[i]).removeClass("hide");
+        }
     }
 };
 
