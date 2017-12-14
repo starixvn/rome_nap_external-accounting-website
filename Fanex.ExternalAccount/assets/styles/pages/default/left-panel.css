@@ -1,17 +1,23 @@
-﻿@font-face {
+﻿/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
-@font-face {
+  font-style: normal;
+}*/
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .btn {
   height: 32px;
   line-height: 32px;
@@ -61,13 +67,16 @@
       background-color: #637187;
       color: #fff; }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .nav-tabs {
   border-bottom: 1px solid #7b7c7e;
   list-style: none; }
@@ -121,13 +130,16 @@
   .nav.nav-tabs > li.ui-tabs-active:after {
     width: 100%; } }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 ::-webkit-scrollbar {
   height: 16px;
   overflow: visible;

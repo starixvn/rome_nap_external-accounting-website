@@ -11,6 +11,16 @@
     font-family: 'AlphaAdmin' !important;
     font-size: 20px; }
 
+.customerInfoBlock1, .customerInfoBlock2, .customerInfoBlock3, .customerInfoBlock4,
+.GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel,
+.BettingLimitItem9, .BettingLimitItem, .BettingLimitItem4, .BettingLimitItem5,
+.GroupSetLabel, .BettingLimitHeader, .BettingLimitHeaderCopied, .BettingLimitHeader2,
+.BettingLimitHeaderTop, .BettingLimitHeaderTop9, .BettingLimitHeaderTop4, .BettingLimitHeaderTop5,
+.BettingLimitLabel, .BettingLimitLabel1,
+.hint,
+.BettingLimitHeaderCopiedActive, .BetTypeHeaderActive {
+  box-sizing: content-box; }
+
 .allowDblComm:before, .onDblComm {
   content: '\e928';
   color: #82c341; }
@@ -96,6 +106,18 @@
 
 .BettingLimitHeaderCopiedActive:before, .BetTypeHeaderActive:before, .PTSportCopiedActive:before, .btnCopyAll:before, .bettingCommSportCopiedActive:before, .copied:before {
   content: '\e929'; }
+
+input[type='text'], input[type='password'], input[type='email'] {
+  -webkit-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  height: 20px;
+  border: 1px solid #bbb;
+  box-sizing: content-box;
+  padding: 0; }
 
 .status-select {
   float: left;

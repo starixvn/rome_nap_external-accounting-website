@@ -23,6 +23,30 @@
 	text-indent: 5px;
     padding: 5px 5px;
     font-weight: normal;
+    .ui-icon {
+        background: none !important;
+        font-size: 0;
+        text-indent: unset;
+        overflow: unset;
+        &:before {
+            font-family: 'AlphaAdmin' !important;
+            content: '\e909';
+            color: #fff;
+            font-size: 16px;
+        }
+    }
+    .ui-dialog-titlebar-close {
+        right: 8px;
+        margin: unset;
+        padding: unset;
+        top: unset;
+        height: unset;
+        width: unset;
+        &.ui-state-hover {
+            background: unset;
+            border: none;
+        }
+    }
 }
 
 .ui-dialog-buttonpane {

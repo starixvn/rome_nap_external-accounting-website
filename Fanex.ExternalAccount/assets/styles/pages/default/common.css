@@ -1,18 +1,25 @@
-﻿@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
-@font-face {
+﻿/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
-@font-face {
+  font-style: normal;
+}*/
+@import url(../../fonts/AlphaAdmin/style.css);
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
 ::-webkit-scrollbar {
   height: 16px;
   overflow: visible;
@@ -138,13 +145,16 @@ a {
 .text-center {
   text-align: center; }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .btn {
   height: 32px;
   line-height: 32px;
@@ -194,13 +204,16 @@ a {
       background-color: #637187;
       color: #fff; }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .main-menu > .menu {
   height: auto;
   -webkit-transition: all 0.2s ease-in 0.1s;
@@ -279,13 +292,16 @@ a {
     min-width: 140px;
     transition: all 0.2s ease-in 0.1s; } }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .freegrid .grid-container.container {
   padding: 0; }
 
@@ -349,13 +365,16 @@ a {
 .freegrid .column-truncate {
   display: block; }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .table {
   border: 1px solid #d3d3d3;
   border-collapse: collapse; }
@@ -372,13 +391,16 @@ a {
   .table .width-60 {
     width: 60px; }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .successMsg, .errMsg {
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
@@ -406,13 +428,16 @@ a {
   border: 1px solid #bcba7d;
   color: #7e3d00; }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 /* 4 corners */
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
   border-bottom-right-radius: 0px !important; }
@@ -432,6 +457,26 @@ a {
   text-indent: 5px;
   padding: 5px 5px;
   font-weight: normal; }
+  .ui-dialog .ui-dialog-titlebar .ui-icon {
+    background: none !important;
+    font-size: 0;
+    text-indent: unset;
+    overflow: unset; }
+    .ui-dialog .ui-dialog-titlebar .ui-icon:before {
+      font-family: 'AlphaAdmin' !important;
+      content: '\e909';
+      color: #fff;
+      font-size: 16px; }
+  .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    right: 8px;
+    margin: unset;
+    padding: unset;
+    top: unset;
+    height: unset;
+    width: unset; }
+    .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close.ui-state-hover {
+      background: unset;
+      border: none; }
 
 .ui-dialog-buttonpane .btn.-submit {
   background: #6f7d95 !important; }
@@ -578,13 +623,16 @@ textarea {
   padding: 12px 0; }
 
 /*********** Customize Calendar Jquery UI ************/
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 .ui-icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: "AlphaAdmin" !important;
@@ -598,7 +646,7 @@ textarea {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.ui-widget-header .ui-icon {
+.ui-datepicker-header .ui-icon {
   background-image: none;
   font-size: 0;
   width: unset;
@@ -845,13 +893,16 @@ textarea {
     -o-border-radius: 50%;
     border-radius: 50%; } }
 
-@font-face {
+/*@font-face {
   font-family: 'AlphaAdmin';
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0");
-  src: url("../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix") format("embedded-opentype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0") format("truetype"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0") format("woff"), url("../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin") format("svg");
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}*/
 /* Icons */
 .menu [class^="icon-"] {
   position: relative;
