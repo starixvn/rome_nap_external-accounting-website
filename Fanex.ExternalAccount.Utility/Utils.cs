@@ -211,7 +211,7 @@
             => date.Equals(DateTime.MinValue) ? string.Empty : date.ToString(format);
 
         private static bool IsEmptyData(object value) =>
-            value == null || value == DBNull.Value || value.ToString() == string.Empty;
+            value == null || value == DBNull.Value || value.ToString()?.Length == 0;
 
         private static void EnableBundle(
             this BundleCollection bundles,
