@@ -16,39 +16,43 @@
             {
                 if (value is string)
                 {
-                    cell.SetCellValue((string)value);
+                    cell.SetCellValue((string) value);
                 }
                 else if (value is int)
                 {
-                    cell.SetCellValue((int)value);
+                    cell.SetCellValue((int) value);
                 }
                 else if (value is long)
                 {
-                    cell.SetCellValue((long)value);
+                    cell.SetCellValue((long) value);
                 }
                 else if (value is double)
                 {
-                    cell.SetCellValue((double)value);
+                    cell.SetCellValue((double) value);
                 }
                 else if (value is decimal)
                 {
-                    cell.SetCellValue((decimal)value);
+                    SetCellValue(cell, (object) (decimal) value);
                 }
                 else if (value is bool)
                 {
-                    cell.SetCellValue((bool)value);
+                    cell.SetCellValue((bool) value);
                 }
-                else if (value is System.DateTime)
+                else if (value is DateTime)
                 {
-                    cell.SetCellValue((System.DateTime)value);
-                }
-                else if (value is IRichTextString)
-                {
-                    cell.SetCellValue((IRichTextString)value);
+                    cell.SetCellValue((DateTime) value);
                 }
                 else
                 {
-                    cell.SetCellValue("Undefined");
+                    var newValue = value as IRichTextString;
+                    if (newValue != null)
+                    {
+                        cell.SetCellValue(newValue);
+                    }
+                    else
+                    {
+                        cell.SetCellValue("Undefined");
+                    }
                 }
             }
         }
@@ -60,7 +64,7 @@
                 value = 0;
             }
 
-            cell.SetCellValue((double)value);
+            cell.SetCellValue((double) value);
         }
 
         public static void SetCellValue(this ICell cell, decimal value)
@@ -75,7 +79,7 @@
                 value = 0;
             }
 
-            cell.SetCellValue((decimal)value);
+            cell.SetCellValue((decimal) value);
         }
 
         public static void SetCellValue(this ICell cell, int value)
@@ -90,7 +94,7 @@
                 value = 0;
             }
 
-            cell.SetCellValue((int)value);
+            cell.SetCellValue((int) value);
         }
 
         public static void SetCellValue(this ICell cell, long value)
@@ -105,7 +109,7 @@
                 value = 0;
             }
 
-            cell.SetCellValue((long)value);
+            cell.SetCellValue((long) value);
         }
 
         public static void CopyFrom(this ICell cell, ICell sourceCell)
@@ -113,7 +117,7 @@
             CellRangeAddress sourceRange = null;
             for (var i = 0; i < sourceCell.Sheet.NumMergedRegions; i++)
             {
-                CellRangeAddress range = sourceCell.Sheet.GetMergedRegion(i);
+                var range = sourceCell.Sheet.GetMergedRegion(i);
                 if (range.FirstColumn <= sourceCell.ColumnIndex
                     && range.LastColumn >= sourceCell.ColumnIndex
                     && range.FirstRow <= sourceCell.RowIndex

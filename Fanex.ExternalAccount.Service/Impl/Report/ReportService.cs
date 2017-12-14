@@ -22,9 +22,9 @@
             _reportDao = reportRespository ?? new ReportDAO();
         }
 
-        public static DateTime BalanceUpDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
+        public static DateTime BalanceUpDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
 
-        public static DateTime MoveBetsDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
+        public static DateTime MoveBetsDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
 
         public DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.EAS_CustomerSelUserInfo(groupname, custId, userName, isGetUplineInfo);
@@ -59,7 +59,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate());
+            => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
 
         public List<WinLossDetail> GetWinLossDetailSuper(
             int custId,
@@ -67,7 +67,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate());
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate);
 
         public List<WinLossDetailMAg> GetWinLossDetailMAg(
             int custId,
@@ -75,7 +75,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate());
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate);
 
         public List<WinLossDetailAg> GetWinLossDetailAg(
             int custId,
@@ -83,7 +83,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate());
+            => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
 
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
@@ -104,7 +104,7 @@
             return balanceUpDay;
         }
 
-        private bool CheckConstraintMoveBetsDay(DateTime fromDate)
-            => DateTime.Compare(fromDate, MoveBetsDate()) > 0;
+        private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
+            => DateTime.Compare(fromDate, MoveBetsDate) > 0;
     }
 }

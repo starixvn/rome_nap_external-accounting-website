@@ -5,7 +5,6 @@
     using DataAccess.Impl.Statement;
     using DataAccess.Interface.Statement;
     using DTO.Statement;
-    using Interface.Report;
     using Interface.Statement;
     using Report;
 
@@ -20,10 +19,10 @@
 
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
         {
-            var includeAccBal = fromDate != ReportService.BalanceUpDate();
+            var includeAccBal = fromDate != ReportService.BalanceUpDate;
 
-            return StatementRepository.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate(),
-                ReportService.MoveBetsDate(), includeAccBal);
+            return StatementRepository.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate,
+                ReportService.MoveBetsDate, includeAccBal);
         }
     }
 }

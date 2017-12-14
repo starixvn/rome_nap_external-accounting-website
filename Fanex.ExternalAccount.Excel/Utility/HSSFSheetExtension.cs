@@ -107,9 +107,9 @@
                     continue;
                 }
 
-                SetColumnWidth(ref sheet, ref columnIndex, ref lastColumn, ref row, ref adjustColumn);
+                SetColumnWidth(sheet, columnIndex, lastColumn, row, adjustColumn);
 
-                MergeColumn(ref sheet, ref columnIndex, ref r);
+                MergeColumn(sheet, columnIndex, r);
 
                 adjustColumn = false;
             }
@@ -160,8 +160,7 @@
             }
         }
 
-        private static void SetColumnWidth(ref ISheet sheet, ref int columnIndex, ref int lastColumn, ref IRow row,
-            ref bool adjustColumn)
+        private static void SetColumnWidth(ISheet sheet, int columnIndex, int lastColumn, IRow row, bool adjustColumn)
         {
             for (var x = columnIndex; x < lastColumn; x++)
             {
@@ -171,32 +170,21 @@
                     row.RemoveCell(oldCell);
                 }
 
-                if (x < lastColumn)
+                var nextCell = row.GetCell(x + 1);
+                if (nextCell != null)
                 {
-                    var nextCell = row.GetCell(x + 1);
-                    if (nextCell != null)
+                    var newCell = row.CreateCell(x, nextCell.CellType);
+                    if (adjustColumn)
                     {
-                        var newCell = row.CreateCell(x, nextCell.CellType);
-                        if (adjustColumn)
-                        {
-                            sheet.SetColumnWidth(newCell.ColumnIndex, sheet.GetColumnWidth(nextCell.ColumnIndex));
-                        }
+                        sheet.SetColumnWidth(newCell.ColumnIndex, sheet.GetColumnWidth(nextCell.ColumnIndex));
+                    }
 
-                        CloneCell(newCell, nextCell);
-                    }
-                }
-                else
-                {
-                    var removeCell = row.GetCell(x);
-                    if (removeCell != null)
-                    {
-                        row.RemoveCell(removeCell);
-                    }
+                    CloneCell(newCell, nextCell);
                 }
             }
         }
 
-        private static void MergeColumn(ref ISheet sheet, ref int columnIndex, ref int rowIndex)
+        private static void MergeColumn(ISheet sheet, int columnIndex, int rowIndex)
         {
             for (var i = sheet.NumMergedRegions - 1; i >= 0; i--)
             {
