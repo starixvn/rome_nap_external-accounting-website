@@ -2,88 +2,85 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Web.Mvc;
-    using Fanex.Caching;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO.Statement;
-    using Fanex.ExternalAccount.Excel.Statement.StatementPage;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Impl.Statement;
-    using Fanex.ExternalAccount.Service.Interface.Report;
-    using Fanex.ExternalAccount.Service.Interface.Statement;
-    using Fanex.ExternalAccount.Utilities;
+    using Caching;
+    using Core.Base;
+    using Core.Context;
+    using CustomerSetting.Security.Authenticate;
+    using DTO.Statement;
+    using Excel.Statement.StatementPage;
+    using Newtonsoft.Json;
+    using Service.Impl.Statement;
+    using Service.Interface.Statement;
+    using Utilities;
 
     public class StatementController : BaseController
     {
-        #region Init Statement
-        private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private IStatementService _statementService = new StatementService();
-        private List<Statement> _listStatement = null;
+        private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly IStatementService _statementService = new StatementService();
+        private string _cacheList = string.Empty;
+        private int _custId;
         private DateTime _fromDate = DateTime.Today;
+        private string _groupname = string.Empty;
         private DateTime _toDate = DateTime.Today;
         private string _username = string.Empty;
-        private string _groupname = string.Empty;
-        private string _cacheList = string.Empty;
-        private int _custId = 0;
-        #endregion Init Statement
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Statement, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Statement,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult Index()
         {
             ViewBag.IsInternal = Utils.ToBoolean(Request.QueryString["isinternal"]);
-            return this.PartialViewBase();
+            return PartialViewBase();
         }
 
         public void GetRequestPage()
         {
-            this._username = CheckRequest.GetStringRequest("username", string.Empty);
-            this._custId = CheckRequest.GetIntRequest("custid", 0);
-            this._groupname = (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin) ?
-                CheckRequest.GetStringRequest("groupname", string.Empty) : CurrentSession.CurrencyGroup;
-            this._fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
-            this._toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
-            this._cacheList = "CacheList" + this._username + this._groupname + this._custId.ToString() + this._fromDate.ToString() + this._toDate.ToString();
+            _username = CheckRequest.GetStringRequest("username", string.Empty);
+            _custId = CheckRequest.GetIntRequest("custid", 0);
+            _groupname = CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin
+                ? CheckRequest.GetStringRequest("groupname", string.Empty)
+                : CurrentSession.CurrencyGroup;
+            _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
+            _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
+            _cacheList = "CacheList" + _username + _groupname + _custId + _fromDate + _toDate;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Statement, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Statement,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GetStatement()
         {
-            this.GetRequestPage();
-            if (this._custId > 0 && this.IsBelong(this._groupname, this._custId, null, true))
+            GetRequestPage();
+            if (_custId > 0 && IsBelong(_groupname, _custId, null, true))
             {
-                return this.LoadDataStatement();
+                return LoadDataStatement();
             }
-            else
-            {
-                return this.JsonBase(new { rows = string.Empty, username = this._username }, new Newtonsoft.Json.JsonSerializerSettings());
-            }
+            return JsonBase(new { rows = string.Empty, username = _username }, new JsonSerializerSettings());
         }
 
         public void GetExportToExcel()
         {
-            this.GetRequestPage();
-            if (this._custId > 0 && this.IsBelong(this._groupname, this._custId, null, true))
+            GetRequestPage();
+            if (_custId > 0 && IsBelong(_groupname, _custId, null, true))
             {
-                if (!Config.IsCache || this._cache.Get<List<Statement>>(this._cacheList) == null)
+                if (!Config.IsCache || _cache.Get<List<Statement>>(_cacheList) == null)
                 {
-                    this.GetStatement();
+                    GetStatement();
                 }
 
                 var builder = new StatementPageBuilder(
-                    this._cache.Get<List<Statement>>(this._cacheList),
+                    _cache.Get<List<Statement>>(_cacheList),
                     false,
-                    this._username,
-                    this._fromDate.ToString("MMM, dd yyyy"),
-                    this._toDate.ToString("MMM, dd yyyy"));
+                    _username,
+                    _fromDate.ToString("MMM, dd yyyy"),
+                    _toDate.ToString("MMM, dd yyyy"));
 
                 var excelStream = builder.Build();
                 if (excelStream != null)
                 {
-                    this.ExportToExcel(excelStream, "Statement_" + this._username + "_" + this._fromDate.ToString("yyyyMMdd") + "_" + this._toDate.ToString("yyyyMMdd") + ".xls");
+                    ExportToExcel(excelStream,
+                        "Statement_" + _username + "_" + _fromDate.ToString("yyyyMMdd") + "_" +
+                        _toDate.ToString("yyyyMMdd") + ".xls");
                     excelStream.Dispose();
                 }
             }
@@ -91,9 +88,9 @@
 
         private ActionResult LoadDataStatement()
         {
-            this._listStatement = this._statementService.GetStatement(this._custId, this._fromDate, this._toDate);
-            this._cache.Set<List<Statement>>(this._cacheList, this._listStatement, 120);
-            return this.JsonBase(new { rows = this._listStatement, username = this._username }, new Newtonsoft.Json.JsonSerializerSettings());
+            var listStatement = _statementService.GetStatement(_custId, _fromDate, _toDate);
+            _cache.Set(_cacheList, listStatement);
+            return JsonBase(new { rows = listStatement, username = _username }, new JsonSerializerSettings());
         }
     }
 }

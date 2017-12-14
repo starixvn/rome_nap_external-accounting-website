@@ -33,9 +33,8 @@
             string username,
             string subUsername)
         {
-            var errMsg = string.Empty;
             return UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username,
-                subUsername, out errMsg);
+                subUsername);
         }
 
         public bool UpdateCSStatus(
