@@ -6,7 +6,7 @@
     var subFuncs = (IEnumerable<Function>)ViewBag.UserSubFunc;
 }
 <div style="height: 25px; font-weight: bold;">@ViewLang.Username: <font color="#4b91be">@ViewBag.Username</font></div>
-<div id="errMsg" style="margin: 5px 0px 30px 0px; display: none;" class="successMsg">
+<div id="errMsg" style="margin: 5px 0 30px 0; display: none;" class="successMsg">
 </div>
 <table id="tblInner" style="width: 100%">
     <tr>
@@ -38,14 +38,7 @@
     {
         var className = "";
 
-        if (subFuncs.Where(o => o.ParentID == fn.FuncID).Count() > 0)
-        {
-            className = "permItemParent";
-        }
-        else
-        {
-            className = "permItemParentOnly";
-        }
+        className = subFuncs.Any(o => o.ParentID == fn.FuncID) ? "permItemParent" : "permItemParentOnly";
 
         string activeR = "permInactive";
         string activeW = "permInactive";

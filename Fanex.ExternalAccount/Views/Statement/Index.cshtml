@@ -1,18 +1,16 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.ExternalAccount.Controllers.Statement
 @using System.Web.Optimization
-@using Fanex.ExternalAccount.Core.Base;
 @using Fanex.Module.Statement.Resources;
 @using Fanex.Module.Statement.Configurations;
 @using Fanex.ExternalAccount.Service.Impl.Report;
 @{
     ViewBag.Title = "Statement";
-    var isInternalCustomer = 0;
+    const int isInternalCustomer = 0;
     var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
     var balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportService.BalanceUpDate);
-    var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate); 
+    var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate);
 }
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css")"  />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Statement/Views/Report/Styles/Statement.css?ver=1")" />
 @if (HttpContext.Current.IsDebuggingEnabled)
@@ -31,7 +29,7 @@ else
     </div>
     <div class="bgTitle titleSearch pdr-normal">
         <div class="searchBar floatL w100">
-            <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
+            <input type="hidden" id="MaxDate" value="@DateTime.Now" />
             <div class="wFrom">@ViewLang.From</div>
             <div class="floatL">
                 <input id="dtpFromDate" type="text" readonly="readonly" />
@@ -44,7 +42,7 @@ else
                 <input type="button" value="Submit" id='Submit' class="btnSearch" />
             </div>
             <span id="view-guidelines-icon" class="note-info-message" title=""></span>
-            <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" class="excel"/>
+            <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" class="excel" />
         </div>
     </div>
     <div id="mainGrid">
@@ -52,9 +50,10 @@ else
         </div>
         <div id="GridContainer" class="freegrid">
         </div>
-        </div>       
+    </div>
     <div id='msgNoinfo'>
-        There is no data.</div>  
+        There is no data.
+    </div>
 
     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
     <input type="hidden" id="CustId" value="@Request.QueryString["id"]" />
@@ -69,10 +68,10 @@ else
     var domain = '@Url.Content("~/")';
     var isInternalCustomer = @isInternalCustomer;
     var balanceUpDay = '@balanceUpDay';
-    var moveBetsDay = '@moveBetsDay'; 
+    var moveBetsDay = '@moveBetsDay';
     var newLayoutDate = '@newLayoutDate';
     var _username = $('#username').val();
-    var statementResources = {           
+    var statementResources = {
         Invalid_Date_Range: '@Labels.Invalid_Date_Range',
         Date: "@Labels.Date",
         Opening_Balance: "@Labels.Opening_Balance",
@@ -90,7 +89,7 @@ else
         GrandPrize: '@Labels.GrandPrize'
     };
 </script>
-<script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")" ></script>
+<script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")"></script>
 @if (HttpContext.Current.IsDebuggingEnabled)
 {
     <script src="@Url.Content("~/Scripts/Statement/Fanex.ExtAcc.Statement.js")" type="text/javascript"></script>

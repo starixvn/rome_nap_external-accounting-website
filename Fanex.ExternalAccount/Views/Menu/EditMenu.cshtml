@@ -5,12 +5,6 @@
     var menuList = (IEnumerable<Menu>)ViewBag.MenuList;
     var funcList = (IEnumerable<Function>)ViewBag.FunctionList;
 
-    var menuSelectList = menuList.Where(o => o.ParentId == 0).Select(o => new SelectListItem
-    {
-        Value = o.MenuId.ToString(),
-        Text = o.MenuName
-    }).ToList();
-
     var counter = 0;
     var index = 0;
 

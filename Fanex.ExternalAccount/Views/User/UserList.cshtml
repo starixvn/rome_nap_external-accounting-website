@@ -1,7 +1,7 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.DTO.UserControl
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
-<div id='jqWidget' style="background-color: #fff">
+<div id="jqWidget" style="background-color: #fff">
     <div class="bgTitle titleForm">
         <div style="float: left; margin: 5px; vertical-align: middle;">
             User Management
@@ -48,7 +48,8 @@
             <div style="float: left; font-weight: bold" id="activeUsers">
             </div>
             <div style="float: left; margin: 0px 10px 0px 10px; color: #C9C9C9">
-                |</div>
+                |
+            </div>
             <div style="float: left; font-weight: bold">
                 Inactive User:&nbsp;
             </div>
@@ -58,9 +59,10 @@
     </div>
     <div id="mainGrid" style="margin: 0px 3px 0px 3px">
         <div style="position: absolute" id="jqgrid" class="removeRadius freegrid content-grid">
-        </div>    
+        </div>
         <div id="msgNoinfo">
-            There is no data.</div>
+            There is no data.
+        </div>
     </div>
     @Html.AntiForgeryToken()
 </div>

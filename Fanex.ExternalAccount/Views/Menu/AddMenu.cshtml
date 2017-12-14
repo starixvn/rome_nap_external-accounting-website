@@ -5,11 +5,6 @@
     var menuList = (IEnumerable<Menu>)ViewBag.MenuList;
     var funcList = (IEnumerable<Function>)ViewBag.FunctionList;
 
-    var menuSelectList = menuList.Where(o => o.ParentId == 0).Select(o => new SelectListItem
-    {
-        Value = o.MenuId.ToString(),
-        Text = o.MenuName
-    }).ToList();
 }
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
 <div>
@@ -85,7 +80,7 @@
                     <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Menus.Add()" />
                 </div>
             </td>
-        </tr>        
+        </tr>
     </table>
 </div>
 <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>

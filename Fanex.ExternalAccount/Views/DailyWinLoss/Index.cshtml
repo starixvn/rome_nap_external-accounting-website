@@ -1,7 +1,7 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using System.Web.Optimization
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Daily WinLoss";
 }
 @if (HttpContext.Current.IsDebuggingEnabled)
 {
@@ -28,14 +28,15 @@ else
             <div class="pdCommon">@ViewLang.Date</div>
             <div class="floatL">
                 <input id="dtpWinLossDate" type="text" readonly="readonly" />
-                <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate"/>
+                <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate" />
             </div>
             <div class="float-padding-left-normal">
-                <input type="button" value="Submit" id='Submit' class="btnSearch" />
+                <input type="button" value="Submit" id="Submit" class="btnSearch" />
             </div>
         </div>
         <div class="HideMG">
-            <input type="button" value="Hide Margin" id='btnHideMG' style="display: none" /></div>
+            <input type="button" value="Hide Margin" id="btnHideMG" style="display: none" />
+        </div>
     </div>
     <div id="headlineDaily">
         <div id="InfoDate">
@@ -43,20 +44,24 @@ else
         </div>
         <div class="groupBack">
             <div id="tabAgent">
-                Agent</div>
+                Agent
+            </div>
             <div id="tabMaster">
-                Master</div>
+                Master
+            </div>
             <div id="tabSuper">
-                Super</div>
+                Super
+            </div>
         </div>
-        <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image"/>
+        <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" />
     </div>
     <div id="mainGrid">
         <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
     </div>
-    <div id='msgNoinfo'>
-        There is no data.</div>
+    <div id="msgNoinfo">
+        There is no data.
+    </div>
     @Html.AntiForgeryToken()
 </div>
 @if (HttpContext.Current.IsDebuggingEnabled)

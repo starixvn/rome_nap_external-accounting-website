@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using System.Web.Optimization
 @{
     ViewBag.Title = "Home Page";
 }
@@ -70,7 +69,7 @@
         </div>
         <div class="clearBoth">
             <div style="margin-left: 86px; float: left">
-                <input type="button" value="Submit" id='Submit' class="btnSearch" />
+                <input type="button" value="Submit" id="Submit" class="btnSearch" />
             </div>
             <div id="GroupViewHistory" class="pdCommon">
                 <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history">@ViewLang.ViewHistoryReport</span></div>
@@ -98,7 +97,7 @@
         <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
     </div>
-    <div id='msgNoinfo'>
+    <div id="msgNoinfo">
         There is no data.</div>
     @Html.AntiForgeryToken()
 </div>

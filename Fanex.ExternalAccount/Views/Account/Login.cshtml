@@ -1,6 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.ExternalAccount.Core.Context
-@using Fanex.ExternalAccount.Controllers
 @using System.Web.Optimization
 @using CaptchaMvc.HtmlHelpers
 @model Fanex.ExternalAccount.ViewModel.Account.LoginModel
@@ -28,7 +26,7 @@
     {
         <center style="margin-top: 100px">
             <div class="loginRegion">
-                <table border="0" width="350px" style="height: 260px" cellpadding="0" cellspacing="0">
+                <table border="0" width="350px" style="height: 260px" >
                     <tr>
                         <td colspan="2">
                             <div style="height: 64px">
@@ -93,7 +91,7 @@
                 </table>
                 @if (!string.IsNullOrWhiteSpace(Model.LoginFailedMessage))
                 {
-                    <table style="margin-top: 50px" border="0" width="350px" cellpadding="0" cellspacing="0">
+                    <table style="margin-top: 50px" border="0" width="350px" >
                         <tr>
                             <td class="errMsg">
                                 @Model.LoginFailedMessage
@@ -107,7 +105,7 @@
         @Html.AntiForgeryToken()
     }
 
-    <script type="text/javascript">        
+    <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }

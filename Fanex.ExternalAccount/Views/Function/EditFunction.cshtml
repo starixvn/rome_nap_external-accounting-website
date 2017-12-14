@@ -3,13 +3,6 @@
 @model Function
 @{
     var parentList = (IEnumerable<Function>)ViewBag.ParentList;
-    var groupList = (IEnumerable<Group>)ViewBag.GroupList;
-
-    var parentSelectList = parentList.Select(o => new SelectListItem
-    {
-        Value = o.ParentID.ToString(),
-        Text = o.ParentName
-    }).ToList();
 
     var oldGroups = (string)ViewBag.OldGroups;
     var oldIDs = (string)ViewBag.OldIDs;
@@ -81,9 +74,8 @@
             <td style="vertical-align: middle; text-align: right">
                 @Html.Label(ViewLang.AssignTo, new { @class = "divMargin" })
             </td>
-            <td style='height: 30px;'>
-                <select name="groups" id="groups" multiple="multiple" style="display: none;">
-                </select>
+            <td style="height: 30px;">
+                <select name="groups" id="groups" multiple="multiple" style="display: none;"></select>
                 <input type="hidden" id="newGroups" />
             </td>
         </tr>
@@ -93,7 +85,7 @@
                     <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Function.Edit()" />
                 </div>
             </td>
-        </tr>        
+        </tr>
     </table>
 </div>
 <script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>

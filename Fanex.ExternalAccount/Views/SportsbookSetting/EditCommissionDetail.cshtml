@@ -12,7 +12,8 @@
             <td>
                 <div class="commission">
                     <div class="headerTab" id="commissionHeader">
-                        @ViewLang.commission</div>
+                        @ViewLang.commission
+                    </div>
                     <div class="pt3 pb3">
                         @Html.Action("EditCommission", "SportsbookSetting")
                         <div id="commissionContainer">
@@ -24,10 +25,10 @@
         <tr>
             <td>
                 <div style="float: right;">
-                    <input id="btnUpdate" class="buttonPopup" type="button" value="Update" />
+                    <input id="btnUpdate" class="buttonPopup" type="button" value="Update"/>
                 </div>
             </td>
-        </tr>        
+        </tr>
     </table>
     @Html.AntiForgeryToken()
 </div>

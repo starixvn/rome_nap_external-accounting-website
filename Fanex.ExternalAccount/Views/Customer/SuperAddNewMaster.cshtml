@@ -1,8 +1,7 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
 @{
-    var parentUsername = Request["username"] == null ?
-        Request["groupname"].ToString() : Request["username"].ToString();
+    var parentUsername = Request["username"] ?? Request["groupname"];
 }
 
     <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
