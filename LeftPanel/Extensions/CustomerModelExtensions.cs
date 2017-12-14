@@ -16,6 +16,7 @@
     using Service.Impl.Report;
     using Service.Impl.UserControl;
     using Service.Interface.Report;
+    using Shared;
     using Utilities;
     using ViewModels;
 
@@ -234,38 +235,38 @@
 
         public static CustomerModel PersonalInfo(this CustomerModel model, DataSet ds)
         {
-            var tableCustomer = ds.Tables[0];
-            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
-            var enabled = tableCustomer.Rows[0].ToBoolean("enabled");
-            var closed = tableCustomer.Rows[0].ToBoolean("closed");
-            var suspended = tableCustomer.Rows[0].ToBoolean("suspended");
+            var customerRow = ds.Tables[0].Rows[0];
+            var roleId = Utils.ToInt32(customerRow["roleid"]);
+            var enabled = customerRow.ToBoolean("enabled");
+            var closed = customerRow.ToBoolean("closed");
+            var suspended = customerRow.ToBoolean("suspended");
             var status = "This account was ";
             var closedReason = string.Empty;
 
             if (closed)
             {
-                var customerClosedReason = new CustomerClosedReason(tableCustomer.Rows[0]["closedreason"]);
+                var customerClosedReason = new CustomerClosedReason(customerRow["closedreason"]);
                 closedReason = customerClosedReason.ClassName;
                 status = customerClosedReason.ClosedReason;
             }
 
             model.PersonalInfo = new PersonalInfo
             {
-                CustId = new ObjectInfo { Value = Utils.ToInt32(tableCustomer.Rows[0]["custid"]), Text = "Cust Id" },
-                Fax = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["fax"]), Text = "Fax" },
-                Mobile = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["mobilephone"]), Text = "Mobile" },
+                CustId = new ObjectInfo { Value = Utils.ToInt32(customerRow["custid"]), Text = "Cust Id" },
+                Fax = new ObjectInfo { Value = Utils.ToString(customerRow["fax"]), Text = "Fax" },
+                Mobile = new ObjectInfo { Value = Utils.ToString(customerRow["mobilephone"]), Text = "Mobile" },
                 Name = new ObjectInfo
                 {
-                    Value = Utils.ToString(tableCustomer.Rows[0]["firstname"]) + " " +
-                            Utils.ToString(tableCustomer.Rows[0]["lastname"]),
+                    Value = Utils.ToString(customerRow["firstname"]) + " " +
+                            Utils.ToString(customerRow["lastname"]),
                     Text = "Name"
                 },
                 Nickname = new ObjectInfo
                 {
-                    Value = Utils.ToString(tableCustomer.Rows[0]["username2"]),
+                    Value = Utils.ToString(customerRow["username2"]),
                     Text = "Nickname"
                 },
-                Phone = new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["phone"]), Text = "Phone" },
+                Phone = new ObjectInfo { Value = Utils.ToString(customerRow["phone"]), Text = "Phone" },
                 RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
                 CustList = new ObjectInfo
@@ -287,7 +288,7 @@
                 {
                     Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty
                 },
-                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(tableCustomer.Rows[0]["isinternal"]) }
+                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerRow["isinternal"]) }
             };
 
             return model;
@@ -295,37 +296,39 @@
 
         public static CustomerModel BalanceInfo(this CustomerModel model, DataSet ds)
         {
-            var tableCustomer = ds.Tables[0];
-            var tableCash = ds.Tables[2];
-            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
+
+            var cashRow = ds.Tables[2].Rows[0];
+            var customerRow = ds.Tables[0].Rows[0];
+            var roleId = Utils.ToInt32(customerRow["roleid"]);
+
 
             model.BalanceInfo = new BalanceInfo
             {
                 CurrencyId = new ObjectInfo
                 {
-                    Value = Utils.ToInt32(tableCustomer.Rows[0]["exchangeid"]),
+                    Value = Utils.ToInt32(customerRow["exchangeid"]),
                     Text = "Currency Id"
                 },
                 Currency =
-                    new ObjectInfo { Value = Utils.ToString(tableCustomer.Rows[0]["currency"]), Text = "Currency" },
+                    new ObjectInfo { Value = Utils.ToString(customerRow["currency"]), Text = "Currency" },
                 Balances = new List<ObjectInfo>
                 {
                     new ObjectInfo
                     {
-                        Value = Utils.ToDecimal(tableCash.Rows[0][GetCashColumn(roleId)]),
+                        Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]),
                         Text = "Total Cash"
                     },
                     new ObjectInfo
                     {
-                        Value = Utils.ToDecimal(tableCash.Rows[0][GetYesterdayCashColumn(roleId)]),
+                        Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]),
                         Text = "Yesterday Cash"
                     },
                     new ObjectInfo
                     {
-                        Value = Utils.ToDecimal(tableCash.Rows[0][GetOutstandingColumn(roleId)]),
+                        Value = Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)]),
                         Text = "Outstanding"
                     },
-                    new ObjectInfo {Value = Utils.ToDecimal(tableCustomer.Rows[0]["credit"]), Text = "Given Credit"}
+                    new ObjectInfo {Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit"}
                 },
                 IsUpdateCredit = IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit,
                     AuthenticateAction.AuthenticationType.Host)
@@ -343,7 +346,7 @@
             model.GetSuperMasterPtsOnMember(product);
             model.RemoveEnableAndPtforProducts(product);
 
-            if (product.RoleId == 4)
+            if (product.RoleId.IsSuper())
             {
                 model.CheckConfig();
 
@@ -419,7 +422,7 @@
             {
                 model.RemoveEnableProduct("EnableVirtualSports");
 
-                var hideVirtualSports = product.RoleId == 1
+                var hideVirtualSports = product.RoleId.IsMember()
                     ? product.UplineStatuses.HideVirtualSports
                     : product.HideVirtualSports;
 
@@ -476,8 +479,8 @@
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
                 0,
-                product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet,
-                product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideAllbet : product.HideAllbet,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncAllbet : product.SyncAllbet,
                 product.HideAllbet,
                 product.SyncAllbet,
                 product.SyncAllbetDownlines,
@@ -487,8 +490,8 @@
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
                 1,
-                product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
-                product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
                 product.HideVoidbridge,
                 product.SyncVoidbridge,
                 product.SyncVoidbridgeDownlines,
@@ -498,8 +501,8 @@
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
                 2,
-                product.RoleId < 4 ? product.UplineStatuses.HideNG2 : product.HideNG2,
-                product.RoleId < 4 ? product.UplineStatuses.SyncNG2 : product.SyncNG2,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideNG2 : product.HideNG2,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncNG2 : product.SyncNG2,
                 product.HideNG2,
                 product.SyncNG2,
                 true,
@@ -508,8 +511,8 @@
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
                 3,
-                product.RoleId < 4 ? product.UplineStatuses.HideFishingWorld : product.HideFishingWorld,
-                product.RoleId < 4 ? product.UplineStatuses.SyncFishingWorld : product.SyncFishingWorld,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideFishingWorld : product.HideFishingWorld,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncFishingWorld : product.SyncFishingWorld,
                 product.HideFishingWorld,
                 product.SyncFishingWorld,
                 product.SyncFishingWorldDownlines,
@@ -518,8 +521,8 @@
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
                 4,
-                product.RoleId < 4 ? product.UplineStatuses.HideLottery : product.HideLottery,
-                product.RoleId < 4 ? product.UplineStatuses.SyncLottery : product.SyncLottery,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideLottery : product.HideLottery,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncLottery : product.SyncLottery,
                 product.HideLottery,
                 product.SyncLottery,
                 product.SyncLotteryDownlines,
@@ -528,8 +531,8 @@
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
                 5,
-                product.RoleId < 4 ? product.UplineStatuses.HideLucky3 : product.HideLucky3,
-                product.RoleId < 4 ? product.UplineStatuses.SyncLucky3 : product.SyncLucky3,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideLucky3 : product.HideLucky3,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncLucky3 : product.SyncLucky3,
                 product.HideLucky3,
                 product.SyncLucky3,
                 product.SyncLucky3Downlines,
@@ -556,7 +559,7 @@
                 model.PersonalInfo.IsShowProducts[showProductIndex + 1].Value = false;
             }
 
-            if ((roleId == 4 || roleId == 3 || roleId == 2) && hide
+            if (((roleId == 4 || roleId == 3 || roleId == 2) && hide)
                 || roleId == 1 && hideUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);

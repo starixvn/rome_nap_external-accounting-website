@@ -12,16 +12,16 @@
     {
         public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds)
         {
-            SetBalanceInfo(model, ds);
+            SetSuperBalanceInfo(model, ds);
 
-            SetPersonalInfo(model, ds);
+            SetSuperPersonalInfo(model, ds);
 
-            SetSettingInfo(model, ds);
+            SetSuperSettingInfo(model, ds);
 
             return model;
         }
 
-        private static void SetPersonalInfo(CustomerModel model, DataSet ds)
+        private static void SetSuperPersonalInfo(CustomerModel model, DataSet ds)
         {
             var tableLine = ds.Tables[1];
 
@@ -39,7 +39,7 @@
                 new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" };
         }
 
-        private static void SetBalanceInfo(CustomerModel model, DataSet ds)
+        private static void SetSuperBalanceInfo(CustomerModel model, DataSet ds)
         {
             var tableCash = ds.Tables[2];
 
@@ -50,6 +50,7 @@
                             + Utils.ToDecimal(tableCash.Rows[0]["masterCash"])
                             + Utils.ToDecimal(tableCash.Rows[0]["agentCash"])
                             + Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
+
                     Text = "Total Balance"
                 });
             model.BalanceInfo.Balances.Add(new ObjectInfo
@@ -67,7 +68,7 @@
             });
         }
 
-        private static void SetSettingInfo(CustomerModel model, DataSet ds)
+        private static void SetSuperSettingInfo(CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
             var table3RdDcs = ds.Tables[4];
@@ -161,41 +162,41 @@
                 new ObjectInfo
                 {
                     Key = "HideAllbet",
-                    Value = !table3RdDcs.Select("ProductID = 21").Any()
+                    Value = table3RdDcs.Select("ProductID = 21").Length==0
                             || Utils.ToBoolean(table3RdDcs.Select("ProductID = 21").FirstOrDefault()?["IsHidden"])
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 21").FirstOrDefault()?["IsSync"])
                 },
                 new ObjectInfo
                 {
                     Key = "HideVoidbridge",
-                    Value = !table3RdDcs.Select("ProductID = 22").Any()
+                    Value = table3RdDcs.Select("ProductID = 22").Length==0
                             || Utils.ToBoolean(table3RdDcs.Select("ProductID = 22").FirstOrDefault()?["IsHidden"])
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 22").FirstOrDefault()?["IsSync"])
                 },
                 new ObjectInfo
                 {
                     Key = "HideNG2",
-                    Value = !table3RdDcs.Select("ProductID = 23").Any()
+                    Value = table3RdDcs.Select("ProductID = 23").Length==0
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 23").FirstOrDefault()?["IsSync"])
                 },
                 new ObjectInfo
                 {
                     Key = "HideFishingWorld",
-                    Value = !table3RdDcs.Select("ProductID = 24").Any()
+                    Value = table3RdDcs.Select("ProductID = 24").Length==0
                             || Utils.ToBoolean(table3RdDcs.Select("ProductID = 24").FirstOrDefault()?["IsHidden"])
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 24").FirstOrDefault()?["IsSync"])
                 },
                 new ObjectInfo
                 {
                     Key = "HideLottery",
-                    Value = !table3RdDcs.Select("ProductID = 28").Any()
+                    Value = table3RdDcs.Select("ProductID = 28").Length==0
                             || Utils.ToBoolean(table3RdDcs.Select("ProductID = 28").FirstOrDefault()?["IsHidden"])
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 28").FirstOrDefault()?["IsSync"])
                 },
                 new ObjectInfo
                 {
                     Key = "HideLucky3",
-                    Value = !table3RdDcs.Select("ProductID = 26").Any()
+                    Value = table3RdDcs.Select("ProductID = 26").Length==0
                             || Utils.ToBoolean(table3RdDcs.Select("ProductID = 26").FirstOrDefault()?["IsHidden"])
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 26").FirstOrDefault()?["IsSync"])
                 }

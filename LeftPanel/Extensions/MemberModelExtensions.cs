@@ -137,7 +137,7 @@
                 new ObjectInfo
                 {
                     Key = "HideNG2",
-                    Value = !table3RdDcs.Select("ProductID = 23").Any()
+                    Value = table3RdDcs.Select("ProductID = 23").Length==0
                             || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 23").FirstOrDefault()?["IsSync"])
                 },
                 new ObjectInfo
@@ -160,7 +160,7 @@
 
         private static bool Get3rdProductStatus(DataTable table3RdDcs, int productId)
         {
-            return !table3RdDcs.Select("ProductID = " + productId).Any()
+            return table3RdDcs.Select("ProductID = " + productId).Length == 0
                    || Utils.ToBoolean(table3RdDcs.Select("ProductID = " + productId).FirstOrDefault()?["IsHidden"])
                    || !Utils.ToBoolean(table3RdDcs.Select("ProductID = " + productId).FirstOrDefault()?["IsSync"]);
         }

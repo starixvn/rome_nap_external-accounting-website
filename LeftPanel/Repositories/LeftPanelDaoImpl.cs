@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories
 {
     using System;
     using System.Collections;
@@ -11,13 +11,13 @@
     using Data;
     using Data.DNAide;
     using DTO;
-    using Interface;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
+    using Shared;
     using Utilities;
     using ViewModels;
 
-    public class LeftPanelDao : ILeftPanelDao
+    public class LeftPanelDaoImpl : LeftPanelDao
     {
         public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
@@ -76,14 +76,14 @@
             return rs.ResultSet.Tables[0].Rows;
         }
 
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int role)
         {
-            if (roleId == 4)
+            if (role.IsSuper())
             {
                 return MasterUsedCreditItems(custId);
             }
 
-            return roleId == 3 ? AgentUsedCreditItems(custId) : null;
+            return role.IsMaster() ? AgentUsedCreditItems(custId) : null;
         }
 
         public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
@@ -427,11 +427,11 @@
             }
         }
 
-        public Result RemoveOTP(RemoveOTPCriteria criteria)
+        public Result RemoveOTP(RemoveOtpCriteria criteria)
         {
             if (criteria == null)
             {
-                throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
+                throw new ArgumentNullException(nameof(criteria));
             }
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -449,7 +449,7 @@
 
         private IList<MasterAgentUsedCreditItem> MasterUsedCreditItems(int custId)
         {
-            IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
+            var items = new List<MasterAgentUsedCreditItem>();
 
             using (var db = new ObjectDb("Acc_CustomerSelUsedCredit_SAg"))
             {
@@ -474,7 +474,7 @@
 
         private IList<MasterAgentUsedCreditItem> AgentUsedCreditItems(int custId)
         {
-            IList<MasterAgentUsedCreditItem> items = new List<MasterAgentUsedCreditItem>();
+            var items = new List<MasterAgentUsedCreditItem>();
 
             using (var db = new ObjectDb("Acc_CustomerSelUsedCredit_MAg"))
             {
@@ -499,7 +499,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        private Result ClearCredit(int userId, string username = null)
+        private static Result ClearCredit(int userId, string username = null)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
             {

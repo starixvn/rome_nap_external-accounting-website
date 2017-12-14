@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
     using System.Collections.Generic;
     using System.Data;
@@ -8,20 +8,19 @@
     using Criteria;
     using DTO;
     using Extensions;
-    using Repositories.Impl;
-    using Repositories.Interface;
+    using Repositories;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
     using ViewModels;
 
-    public class LeftPanelService : BaseService
+    public class LeftPanelServiceImpl : LeftPanelService
     {
-        private readonly ILeftPanelDao dataAccess = new LeftPanelDao();
+        private readonly LeftPanelDao dataAccess = new LeftPanelDaoImpl();
 
         public static int TotalPages { get; set; } = 1;
 
-        public override CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
+        public CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1)
         {
             var ds = dataAccess.GetCustomerInfo(username, groupName);
 
@@ -40,15 +39,15 @@
                 model.LoginInfo(ds);
                 model.CurrencyId = tableCustomer.Rows[0].ToInt32("exchangeid");
 
-                if (roleId == Role.Super)
+                if (roleId.IsSuper())
                 {
                     model.SuperInfo(ds);
                 }
-                else if (roleId == Role.Master)
+                else if (roleId.IsMaster())
                 {
                     model.MasterInfo(ds);
                 }
-                else if (roleId == Role.Agent)
+                else if (roleId.IsAgent())
                 {
                     model.AgentInfo(ds);
                 }
@@ -63,10 +62,10 @@
             return null;
         }
 
-        public override Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit) =>
+        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit) =>
             dataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
-        public override DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
+        public DataTable GetDownlineList(int custid, int pageSize, int pageIndex)
         {
             var dr = dataAccess.GetDownlineList(custid, pageSize, pageIndex);
 
@@ -80,42 +79,42 @@
             return null;
         }
 
-        public override DataRowCollection GetOnlineList(int custid) => dataAccess.GetOnlineList(custid);
+        public DataRowCollection GetOnlineList(int custid) => dataAccess.GetOnlineList(custid);
 
-        public override IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
+        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
             dataAccess.MasterAgentUsedCreditItems(custId, roleId);
 
-        public override IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId) =>
+        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId) =>
             dataAccess.MemberUsedCreditItems(custId);
 
-        public override Result ResetMemberCredit(int custId, int agentId, bool closedOnly) =>
+        public Result ResetMemberCredit(int custId, int agentId, bool closedOnly) =>
             dataAccess.ResetMemberCredit(custId, agentId, closedOnly);
 
-        public override Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip) =>
+        public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip) =>
             dataAccess.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip);
 
-        public override DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
+        public DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
 
-        public override Result CloseCutomer(int custId, bool close, bool clearCredit, string custName) =>
+        public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName) =>
             dataAccess.CloseCutomer(custId, close, clearCredit, custName);
 
-        public override Result SuspendCustomer(int custId, bool suspend) => dataAccess.SuspendCustomer(custId, suspend);
+        public Result SuspendCustomer(int custId, bool suspend) => dataAccess.SuspendCustomer(custId, suspend);
 
-        public override Result AllowOutright(int custId, bool allow) => dataAccess.AllowOutright(custId, allow);
+        public Result AllowOutright(int custId, bool allow) => dataAccess.AllowOutright(custId, allow);
 
-        public override Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName) =>
+        public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName) =>
             dataAccess.EnableCasino(id, enable, enableDownline, sync, custName);
 
-        public override Result EnableLiveCasino(int id, bool enable, bool enableDownline) =>
+        public Result EnableLiveCasino(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableLiveCasino(id, enable, enableDownline);
 
-        public override Result EnableNumberGame(int id, bool enable, bool enableDownline) =>
+        public Result EnableNumberGame(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableNumberGame(id, enable, enableDownline);
 
-        public override Result EnableESports(int id, bool enable, bool enableDownline) =>
+        public Result EnableESports(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableESports(id, enable, enableDownline);
 
-        public override Result AutoMasterPt(int id, bool allow, int uplineId)
+        public Result AutoMasterPt(int id, bool allow, int uplineId)
         {
             var result = dataAccess.AutoMasterPT(id, allow);
 
@@ -147,17 +146,17 @@
             return result;
         }
 
-        public override Result ResetSecurityCode(int id, string code, bool force) =>
+        public Result ResetSecurityCode(int id, string code, bool force) =>
             dataAccess.ResetSecurityCode(id, code, force);
 
-        public override Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) =>
+        public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableHRFixedOdds(id, enable, enableDownline);
 
-        public override Result
+        public Result
             UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId) =>
             dataAccess.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
 
-        public override Result RemoveOtp(int custId) => dataAccess.RemoveOTP(new RemoveOTPCriteria
+        public Result RemoveOtp(int custId) => dataAccess.RemoveOTP(new RemoveOtpCriteria
         {
             Custid = custId,
             Userid = CurrentSession.Instance.UserId,

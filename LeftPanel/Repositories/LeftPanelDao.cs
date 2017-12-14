@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Interface
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories
 {
     using System.Collections.Generic;
     using System.Data;
@@ -7,7 +7,7 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
-    public interface ILeftPanelDao
+    public interface LeftPanelDao
     {
         DataSet GetCustomerInfo(string username, string groupName = "ACCDDD");
 
@@ -17,7 +17,7 @@
 
         DataRowCollection GetOnlineList(int custid);
 
-        IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
+        IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int role);
 
         IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
 
@@ -49,6 +49,6 @@
 
         Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
 
-        Result RemoveOTP(RemoveOTPCriteria criteria);
+        Result RemoveOTP(RemoveOtpCriteria criteria);
     }
 }

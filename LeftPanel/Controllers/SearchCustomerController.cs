@@ -15,15 +15,23 @@
     using PTRacing.Services;
     using Security;
     using Service.Impl.Customer.Casino;
-    using Services.Impl;
-    using Services.Interface;
+    using Services;
+    using Shared;
     using Utilities;
     using ViewModels;
     using Result = DTO.Result;
 
     public class SearchCustomerController : BaseController
     {
-        private readonly ILeftPanelService _service = new LeftPanelService();
+        private const string MasterAgentCreditViewl = "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml";
+        private const string MemberCreditView = "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml";
+        private const string EnableRacingIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml";
+        private const string SecurityCodeIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml";
+        private const string LeftPanelIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml";
+        private const string LeftpanelBalanceIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml";
+        private const string LeftPanelOtpIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml";
+
+        private readonly LeftPanelService _service = new LeftPanelServiceImpl();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -31,7 +39,7 @@
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            return View("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml");
+            return View(LeftPanelIndexView);
         }
 
         public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
@@ -85,8 +93,7 @@
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
         {
@@ -100,8 +107,7 @@
             return JsonBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UsedCreditPage(int id, int roleId)
         {
             if (!IsBelong(Request["groupName"], id, null, true))
@@ -119,8 +125,7 @@
                     MasterAgentUsedCreditItems = items
                 };
 
-                return PartialViewBase(model,
-                    "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml");
+                return PartialViewBase(model, MasterAgentCreditViewl);
             }
             else
             {
@@ -130,12 +135,11 @@
                     MemberUsedCreditItems = items
                 };
 
-                return PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml");
+                return PartialViewBase(model, MemberCreditView);
             }
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
@@ -173,7 +177,7 @@
 
             ViewBag.CustId = custId;
             var result = _service.CustomerSelectClearBalance(custId);
-            return PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
+            return PartialViewBase(result, LeftpanelBalanceIndexView);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer,
@@ -303,7 +307,7 @@
             ViewBag.id = id;
             ViewBag.uplineId = uplineId;
 
-            return PartialViewBase("~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml");
+            return PartialViewBase(EnableRacingIndexView);
         }
 
         public ActionResult GetRacingData(int id, int uplineId, int roleId)
@@ -379,7 +383,7 @@
             var oldSetting = bettingLimitService.GetCustomer(requestContext);
             var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
 
-            return JsonBase(new {result.ErrorCode, result.ErrorMessage}, settings);
+            return JsonBase(new { result.ErrorCode, result.ErrorMessage }, settings);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
@@ -394,7 +398,7 @@
             ViewBag.custId = id;
             ViewBag.roleId = roleId;
             ViewBag.Username = username;
-            return PartialViewBase(viewName: "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml");
+            return PartialViewBase(SecurityCodeIndexView);
         }
 
         [HttpPost]
@@ -409,13 +413,14 @@
             }
 
             var hashCode = Encryption.CfsEnCode(code);
-            if (roleId != Member)
+            if (roleId.IsNotMember())
             {
                 var md5 = Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
                 hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
             }
 
-            var result = _service.ResetSecurityCode(id, hashCode, force || roleId != (int) CustomerRole.Super);
+            var result = _service.ResetSecurityCode(id, hashCode, force || roleId.IsNotSuper());
+
             return JsonBase(result);
         }
 
@@ -444,10 +449,10 @@
             {
                 model.Onlines.Add(new OnlineInfo
                 {
-                    IP = new ObjectInfo {Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip"))},
+                    IP = new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
                     LoginTime = new ObjectInfo
                     {
-                        Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt")
+                        Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()
                     }
                 });
             }
@@ -461,7 +466,7 @@
         {
             var downlines = _service.GetDownlineList(custId, 100, pageIndex);
             var model = new DownlineList();
-            var totalPages = LeftPanelService.TotalPages;
+            var totalPages = LeftPanelServiceImpl.TotalPages;
 
             if (downlines?.Rows.Count <= 0)
             {
@@ -472,7 +477,7 @@
             {
                 foreach (DataRow item in downlines?.Rows)
                 {
-                    model.Downlines.Add(new ObjectInfo {Text = item["username"].ToString()});
+                    model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
                 }
             }
 
@@ -482,12 +487,12 @@
             {
                 for (var i = 1; i <= totalPages; i++)
                 {
-                    model.Pages.Add(new ObjectInfo {Value = i, Text = i.ToString()});
+                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
                 }
             }
             else
             {
-                model.Pages.Add(new ObjectInfo {Value = 1, Text = "1"});
+                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
             }
 
             return JsonBase(model);
@@ -511,7 +516,7 @@
             }
             catch (Exception ex)
             {
-                return JsonBase(new {IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message});
+                return JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
             }
         }
 
@@ -521,8 +526,8 @@
         public ActionResult RemoveOTP(int custId, string username) =>
             !IsBelong(Request["groupName"], custId, null, true)
                 ? ActionDenied(Request)
-                : PartialViewBase(new {CustId = custId, Username = username},
-                    "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml");
+                : PartialViewBase(new { CustId = custId, Username = username },
+                    LeftPanelOtpIndexView);
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,

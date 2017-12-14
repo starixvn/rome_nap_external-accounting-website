@@ -2,7 +2,7 @@
 {
     using NAP.Framework.Data;
 
-    public class RemoveOTPCriteria : CriteriaBase
+    public class RemoveOtpCriteria : CriteriaBase
     {
         public int Custid { get; set; }
 
