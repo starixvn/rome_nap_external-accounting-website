@@ -12,20 +12,18 @@
     public class StatementService : IStatementService
     {
         private readonly IStatementDao StatementRepository;
-        private readonly IReportService _reportService;
 
-        public StatementService(IStatementDao statementRepository = null, IReportService reportService = null)
+        public StatementService(IStatementDao statementRepository = null)
         {
             StatementRepository = statementRepository ?? new StatementDAO();
-            _reportService = reportService ?? new ReportService();
         }
 
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)
         {
-            var includeAccBal = fromDate != _reportService.BalanceUpDate();
+            var includeAccBal = fromDate != ReportService.BalanceUpDate();
 
-            return StatementRepository.Acc_AllStatement_Full(custId, fromDate, toDate, _reportService.BalanceUpDate(),
-                _reportService.MoveBetsDate(), includeAccBal);
+            return StatementRepository.Acc_AllStatement_Full(custId, fromDate, toDate, ReportService.BalanceUpDate(),
+                ReportService.MoveBetsDate(), includeAccBal);
         }
     }
 }

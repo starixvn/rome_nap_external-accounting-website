@@ -22,9 +22,9 @@
             _reportDao = reportRespository ?? new ReportDAO();
         }
 
-        public DateTime BalanceUpDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
+        public static DateTime BalanceUpDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
 
-        public DateTime MoveBetsDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
+        public static DateTime MoveBetsDate() => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
 
         public DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.EAS_CustomerSelUserInfo(groupname, custId, userName, isGetUplineInfo);
@@ -88,12 +88,13 @@
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
 
-        public DataTable GetBalanceUpDay()
+        public static DataTable GetBalanceUpDay()
         {
             var balanceUpDay = Cache.Get<DataTable>(BalanceUpDayKey);
             if (balanceUpDay == null)
             {
-                balanceUpDay = _reportDao.Age_SelBalanceUpDay();
+                var reportDao = new ReportDAO();
+                balanceUpDay = reportDao.Age_SelBalanceUpDay();
                 if (balanceUpDay != null)
                 {
                     Cache.Set(BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
