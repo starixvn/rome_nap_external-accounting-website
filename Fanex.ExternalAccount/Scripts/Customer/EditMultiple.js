@@ -1830,18 +1830,18 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCasino = function () {
 
     switch (this.CurrentLevel) {
         case this.Master:
-            actionName += 'Master/EditMaster/' + this.Ids()[0] + '/' + this.superId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
+            actionName += 'Master/EditMaster?id=' + this.Ids()[0] + '&uplineid=' + this.superId + '&groupname=' + Fanex.ExtAcc.Customer.GroupName().groupName;
             break;
         case this.Agent:
-            actionName += 'Agent/EditAgent/' + this.Ids()[0] + '/' + this.masterId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
+            actionName += 'Agent/EditAgent?id=' + this.Ids()[0] + '&uplineid=' + this.masterId + '&groupname=' + Fanex.ExtAcc.Customer.GroupName().groupName;
             break;
         case this.Member:
             if (this.isSuperEditMember)
-                actionName += 'Member/EditMemberBySuper/' + this.Ids()[0] + '/' + this.superId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
+                actionName += 'Member/EditMemberBySuper?id=' + this.Ids()[0] + '&uplineid=' + this.superId + '&groupname=' + Fanex.ExtAcc.Customer.GroupName().groupName;
             else if (this.isMasterEditMember)
-                actionName += 'Member/EditMemberByMaster/' + this.Ids()[0] + '/' + this.masterId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
+                actionName += 'Member/EditMemberByMaster?id=' + this.Ids()[0] + '&uplineid=' + this.masterId + '&groupname=' + Fanex.ExtAcc.Customer.GroupName().groupName;
             else
-                actionName += 'Member/EditMember/' + this.Ids()[0] + '/' + this.agentId + '/' + Fanex.ExtAcc.Customer.GroupName().groupName;
+                actionName += 'Member/EditMember?id=' + this.Ids()[0] + '&uplineid=' + this.agentId + '&groupname=' + Fanex.ExtAcc.Customer.GroupName().groupName;
             break;
         default:
             break;

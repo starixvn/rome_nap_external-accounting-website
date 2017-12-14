@@ -776,7 +776,7 @@
     $scope.SuperCasino = function () {
         $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper/' + $scope.model.personalInfo.custId.value + '/' + superId + '/' + parent.$('#selectedGroupName').html()));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupname=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperRacing = function () {
@@ -831,7 +831,7 @@
     $scope.MasterCasino = function () {
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster/' + $scope.model.personalInfo.custId.value + '/' + masterId + '/' + parent.$('#selectedGroupName').html()));
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupname=' + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterRacing = function () {
