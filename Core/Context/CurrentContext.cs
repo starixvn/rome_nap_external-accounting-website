@@ -14,7 +14,7 @@
 
     public class CurrentContext : ICurrentContext
     {
-        private readonly string[] custIdNames = {"custId", "customerId"};
+        private readonly string[] custIdParamNames = {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId" };
         private readonly string[] custIdsNames = {"custIds", "customerIds"};
 
         public static string LoginErrorMessage { get; set; } = string.Empty;
@@ -133,16 +133,19 @@
 
         private int GetCustomerIdFromQueryString()
         {
-            var custId = 0;
-            var i = 0;
+            var request = HttpContext.Current.Request;
 
-            while (custId <= 0 && i < custIdNames.Length)
+            foreach (var custIdParamName in custIdParamNames)
             {
-                custId = Converter.ToInt(HttpContext.Current.Request[custIdNames[i]]);
-                i++;
+                var custId = Converter.ToInt(request[custIdParamName]);
+
+                if(custId > 0)
+                {
+                    return custId;
+                }
             }
 
-            return custId;
+            return 0;
         }
 
         private IEnumerable<int> GetCustomerIdsFromQueryString()
@@ -165,9 +168,9 @@
             var custId = 0;
             var i = 0;
 
-            while (custId <= 0 && i < custIdNames.Length)
+            while (custId <= 0 && i < custIdParamNames.Length)
             {
-                custId = GetCustomerId(custIdNames[i]);
+                custId = GetCustomerId(custIdParamNames[i]);
                 i++;
             }
 

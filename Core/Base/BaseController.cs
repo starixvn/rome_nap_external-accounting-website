@@ -4,37 +4,37 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
     using CasinoLibrary.Model.UserException;
+    using Context;
+    using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Services.Interface;
-    using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-    using Fanex.ExternalAccount.Service.Impl.Login;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.PTEngine.BusinessObjects;
-    using Logging.Extensions.Web;
+    using CustomerSetting.Module.Core.Web;
+    using CustomerSetting.Security.Authenticate;
+    using DTO;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using PTEngine.BusinessObjects;
+    using RemotingRef;
     using Reports.WinLossDetail;
-    using Context;
+    using Service.Impl.Customer.Casino;
+    using Service.Impl.UserControl;
+    using Utilities;
+    using CurrentContext = Context.CurrentContext;
+    using CurrentSession = Context.CurrentSession;
+    using Result = PTEngine.BusinessObjects.Result;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
-        #region Constant
-
         public const int Super = 4;
 
         public const int Master = 3;
@@ -49,73 +49,43 @@
 
         protected const string UAT = "UAT";
         protected const string PRO = "LIVE";
-
-        #endregion Constant
-
         private readonly ICurrentContext _currentContext;
 
         private readonly ICurrentSession _currentSession;
 
         protected BaseController()
         {
-            this._currentContext = new Fanex.ExternalAccount.Core.Context.CurrentContext();
-            this._currentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+            _currentContext = new CurrentContext();
+            _currentSession = new CurrentSession();
         }
 
-        protected string Environment
-        {
-            get { return Utils.ToString(ConfigurationManager.AppSettings["Environment"]); }
-        }
+        protected string Environment => Utils.ToString(ConfigurationManager.AppSettings["Environment"]);
 
-        protected bool IncludeAllFunctions
-        {
-            get { return this.Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase); }
-        }
+        protected bool IncludeAllFunctions => Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase);
 
-        protected virtual ICurrentContext CurrentContext
-        {
-            get
-            {
-                return this._currentContext ?? new Fanex.ExternalAccount.Core.Context.CurrentContext();
-            }
-        }
+        protected virtual ICurrentContext CurrentContext => _currentContext ?? new CurrentContext();
 
-        protected virtual ICurrentSession CurrentSession
-        {
-            get
-            {
-                return this._currentSession ?? new Fanex.ExternalAccount.Core.Context.CurrentSession();
-            }
-        }
+        protected virtual ICurrentSession CurrentSession => _currentSession ?? new CurrentSession();
 
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
+        => this.JsonExt(data, settings ?? new JsonSerializerSettings
         {
-            if (settings == null)
-            {
-                settings = new JsonSerializerSettings();
-                settings.NullValueHandling = NullValueHandling.Ignore;
-                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            }
+            NullValueHandling = NullValueHandling.Ignore,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        });
 
-            return this.JsonExt(data, settings);
-        }
+        protected virtual ActionResult JsonBase2(object data,
+            JsonRequestBehavior settings = JsonRequestBehavior.AllowGet) => Json(data, settings);
 
-        protected virtual ActionResult JsonBase2(object data, JsonRequestBehavior settings = JsonRequestBehavior.AllowGet)
-        {
-            return this.Json(data, settings);
-        }
-
-        protected virtual ActionResult PartialViewBase(object objModel = null, string viewName = null)
-        {
-            return string.IsNullOrWhiteSpace(viewName) ? this.PartialView(objModel) : this.PartialView(viewName, objModel);
-        }
+        protected virtual ActionResult PartialViewBase(object objModel = null, string viewName = null) =>
+            string.IsNullOrWhiteSpace(viewName) ? PartialView(objModel) : PartialView(viewName, objModel);
 
         protected virtual void ExportToExcel(MemoryStream excelStream, string fileName)
         {
             if (!Response.IsRequestBeingRedirected)
             {
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", fileName));
+                Response.AddHeader("Content-Disposition", $"attachment;filename={fileName}");
             }
 
             Response.Clear();
@@ -123,7 +93,7 @@
             Response.End();
         }
 
-        protected void UpdateCasinoStatus(int custId, Fanex.PTEngine.BusinessObjects.Result result, Customer customer, bool isMult = false)
+        protected void UpdateCasinoStatus(int custId, Result result, Customer customer, bool isMult = false)
         {
             try
             {
@@ -155,7 +125,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logs.Error(ex);
             }
         }
 
@@ -180,7 +150,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logs.Error(ex);
             }
         }
 
@@ -198,11 +168,11 @@
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                Logs.CasinoError(casinoEx);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logs.Error(ex);
             }
         }
 
@@ -220,20 +190,20 @@
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                Logs.CasinoError(casinoEx);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logs.Error(ex);
             }
         }
 
-        protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
-        {
-            var authorizationService = new ExternalAccountAuthorization();
+        ////protected bool IsBelong(string groupname, int custId, string userName, bool isGetUplineInfo)
+        ////{
+        ////    var authorizationService = new ExternalAccountAuthorization();
 
-            return authorizationService.IsBelong(groupname, custId, userName, isGetUplineInfo);
-        }
+        ////    return authorizationService.IsBelong(groupname, custId, userName, isGetUplineInfo);
+        ////}
 
         protected ActionResult ActionDenied(HttpRequestBase request)
         {

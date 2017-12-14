@@ -17,7 +17,6 @@
     using DTO;
     using Excel.Customer.CustomerListPage;
     using IBCUtils;
-    using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -34,6 +33,7 @@
     {
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
+        private readonly ExternalAccountAuthorization _authorization = new ExternalAccountAuthorization();
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly CustomerService _customerService = new CustomerService();
         private readonly MasterService _masterService = new MasterService();
@@ -62,13 +62,7 @@
                 errMsg = ViewLang.notExist;
             }
 
-            return JsonBase(
-                new {errCode, errMsg},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {errCode, errMsg});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
@@ -111,23 +105,10 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
-                customer.CurrencyId = parentCurrencyId;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+            customer.CurrencyId = parentCurrencyId;
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
@@ -141,12 +122,6 @@
         [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(Request["groupName"], parentId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -225,23 +200,10 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
-                customer.CurrencyId = parentCurrencyId;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+            customer.CurrencyId = parentCurrencyId;
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
@@ -255,12 +217,6 @@
         [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(Request["groupName"], parentId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -339,23 +295,10 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
-                customer.CurrencyId = parentCurrencyId;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+            customer.CurrencyId = parentCurrencyId;
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew,
@@ -369,12 +312,6 @@
         [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(Request["groupName"], parentId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -543,9 +480,7 @@
             bool? suspended = null)
         {
             _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true)
-                ? new DataTable()
-                : _superService.GetData(CurrentSession.UserId, custId: custId, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName);
+            var result = _superService.GetData(CurrentSession.UserId, custId: custId, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName);
             SetCacheList(result);
 
             SetEditAllBetVisibility(result);
@@ -563,9 +498,7 @@
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(srecommend), null, true)
-                ? new DataTable()
-                : _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
+            var result = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
 
             var superId = Utils.ToInt32(srecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], superId, null, true);
@@ -617,9 +550,7 @@
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(mrecommend), null, true)
-                ? new DataTable()
-                : _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
+            var result = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], masterId, null, true);
@@ -671,9 +602,7 @@
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var result = !IsBelong(Request["groupName"], Utils.ToInt32(recommend), null, true)
-                ? new DataTable()
-                : _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
+            var result = _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
 
             var agentId = Utils.ToInt32(recommend);
             var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], agentId, null, true);
@@ -755,11 +684,6 @@
         [AntiXSRFFilter]
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
-            if (!IsBelong(Request["groupName"], custid, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _superService.ConfigDoubleComm(
                 custid,
                 allow,
@@ -783,11 +707,6 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditInfo(int custId)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var model = _customerService.UserInfo(custId);
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
@@ -813,11 +732,6 @@
             string fax,
             string remark)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _customerService.EditUserInfo(
                 custId,
                 firstName,
@@ -839,36 +753,18 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id)
         {
-            if (!IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             ViewBag.RoleId = id;
             return PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult TransferCondition()
-        {
-            if (!IsBelong(Request["groupName"], Utils.ToInt32(Request["custId"]), null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            return PartialViewBase();
-        }
+        public ActionResult TransferCondition() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult EditTransferCondition(int custId)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             ViewBag.CustId = custId;
             var model = _masterService.GetTransferOption(custId);
             return PartialViewBase(model);
@@ -879,11 +775,6 @@
         [AntiXSRFFilter]
         public ActionResult EditTransferConditionPost(string transferOption, int custId)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId,
                 CurrentContext.Ip4Address, 0, "E");
 
@@ -894,11 +785,6 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult ResetPassword(int custId)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var user = _customerService.UserInfo(custId);
             return PartialViewBase(user);
         }
@@ -908,11 +794,6 @@
         [AntiXSRFFilter]
         public ActionResult UpdatePassword(int custId, string password)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _customerService.ResetPassword(
                 custId,
                 password,
@@ -1021,9 +902,7 @@
                     _cacheList = "CacheList" + groupName + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(custId), null, true)
-                            ? new DataTable()
-                            : _superService.GetData(CurrentSession.UserId, custId: id, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName));
+                        SetCacheList(_superService.GetData(CurrentSession.UserId, custId: id, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName));
                     }
 
                     break;
@@ -1033,10 +912,7 @@
                     _cacheList = "CacheList" + groupName + srecommend + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(srecommend), null, true)
-                            ? new DataTable()
-                            : _masterService.GetData(CurrentSession.UserId, srecommend, id, enabled, closed,
-                                suspended));
+                        SetCacheList(_masterService.GetData(CurrentSession.UserId, srecommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1046,9 +922,7 @@
                     _cacheList = "CacheList" + groupName + mrecommend + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(mrecommend), null, true)
-                            ? new DataTable()
-                            : _agentService.GetData(CurrentSession.UserId, mrecommend, id, enabled, closed, suspended));
+                        SetCacheList(_agentService.GetData(CurrentSession.UserId, mrecommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1058,9 +932,7 @@
                     _cacheList = "CacheList" + groupName + recommend + id + enabled + closed + suspended + username;
                     if (_cache.Get<DataTable>(_cacheList) == null)
                     {
-                        SetCacheList(!IsBelong(groupName, Utils.ToInt32(recommend), null, true)
-                            ? new DataTable()
-                            : _memberService.GetData(CurrentSession.UserId, recommend, id, enabled, closed, suspended));
+                        SetCacheList(_memberService.GetData(CurrentSession.UserId, recommend, id, enabled, closed, suspended));
                     }
 
                     break;
@@ -1112,7 +984,7 @@
                 switch (roleId)
                 {
                     case 4:
-                        result = !IsBelong(groupName, custId, null, true)
+                        result = !_authorization.IsBelong(groupName, custId, null, true)
                             ? null
                             : _superService.GetData(CurrentSession.UserId, null, custId == 0 ? id : custId, enabled,
                                 closed, suspended, groupName);
@@ -1120,7 +992,7 @@
                         break;
 
                     case 3:
-                        result = !IsBelong(groupName, srecommend, null, true)
+                        result = !_authorization.IsBelong(groupName, srecommend, null, true)
                             ? null
                             : _masterService.GetData(CurrentSession.UserId, srecommend, custId == 0 ? id : custId,
                                 enabled, closed, suspended);
@@ -1129,7 +1001,7 @@
                         break;
 
                     case 2:
-                        result = !IsBelong(groupName, mrecommend, null, true)
+                        result = !_authorization.IsBelong(groupName, mrecommend, null, true)
                             ? null
                             : _agentService.GetData(CurrentSession.UserId, mrecommend, custId == 0 ? id : custId,
                                 enabled, closed, suspended);
@@ -1138,7 +1010,7 @@
                         break;
 
                     default:
-                        result = !IsBelong(groupName, recommend, null, true)
+                        result = !_authorization.IsBelong(groupName, recommend, null, true)
                             ? null
                             : _memberService.GetData(CurrentSession.UserId, recommend, custId == 0 ? id : custId,
                                 enabled, closed, suspended);

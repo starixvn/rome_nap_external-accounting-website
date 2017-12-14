@@ -51,17 +51,22 @@
         public ActionResult GetStatement()
         {
             GetRequestPage();
-            if (_custId > 0 && IsBelong(_groupname, _custId, null, true))
+
+            if (_custId > 0)
             {
                 return LoadDataStatement();
             }
+
             return JsonBase(new { rows = string.Empty, username = _username }, new JsonSerializerSettings());
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.Statement,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public void GetExportToExcel()
         {
             GetRequestPage();
-            if (_custId > 0 && IsBelong(_groupname, _custId, null, true))
+            if (_custId > 0)
             {
                 if (!Config.IsCache || _cache.Get<List<Statement>>(_cacheList) == null)
                 {

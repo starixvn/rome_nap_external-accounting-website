@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
@@ -29,21 +30,13 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditBetSetting() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult EditBetSetting() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditBetSettingMasterGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
@@ -66,16 +59,7 @@
                 LangKey = "E"
             };
 
-            IBettingLimit<BettingLimitItem> bettingLimit = null;
-
-            try
-            {
-                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
             return JsonBase(new {betting = bettingLimit, context = currentContext}, settings);
         }
@@ -85,17 +69,6 @@
         [AntiXSRFFilter]
         public ActionResult EditBetSettingAgentGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
             var bettingLimitService = new BettingLimitService();
 
             var currentContext = new RequestContext
@@ -104,7 +77,7 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture),
                 CustId = parentId,
                 TargetCustId = custId,
-                RoleId = (int)CustomerRole.Master,
+                RoleId = (int) CustomerRole.Master,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 SiteName = SiteName,
@@ -112,18 +85,13 @@
                 LangKey = "E"
             };
 
-            IBettingLimit<BettingLimitItem> bettingLimit = null;
+            var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
-            try
-            {
-                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new {betting = bettingLimit, context = currentContext}, settings);
+            return JsonBase(new
+                {
+                    betting = bettingLimit,
+                    context = currentContext
+                });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -131,17 +99,6 @@
         [AntiXSRFFilter]
         public ActionResult EditBetSettingMemberGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
             var bettingLimitService = new BettingLimitService();
 
             IRequestContext currentContext = new RequestContext
@@ -150,7 +107,7 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture),
                 CustId = parentId,
                 TargetCustId = custId,
-                RoleId = (int)CustomerRole.Agent,
+                RoleId = (int) CustomerRole.Agent,
                 SubAccId = 0,
                 AdminId = CurrentSession.UserId,
                 SiteName = SiteName,
@@ -158,18 +115,9 @@
                 LangKey = "E"
             };
 
-            IBettingLimit<BettingLimitItem> bettingLimit = null;
+            var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
-            try
-            {
-                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new {betting = bettingLimit, context = currentContext}, settings);
+            return JsonBase(new {betting = bettingLimit, context = currentContext});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -177,11 +125,6 @@
         [AntiXSRFFilter]
         public ActionResult EditBetSettingPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
@@ -216,45 +159,22 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditCommission() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult EditCommission() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditCommissionDetail() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult EditCommissionDetail() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditCommissionMember() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult EditCommissionMember() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditCommissionMemberDetail() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult EditCommissionMemberDetail() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditCommissionGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
             var currentContext = new RequestContext
             {
                 FormId = FormType.EditPT,
@@ -269,18 +189,9 @@
                 LangKey = "E"
             };
 
-            ICommissionSetting commissionSetting = null;
+            var commissionSetting = _commissionService.GetCommission(currentContext);
 
-            try
-            {
-                commissionSetting = _commissionService.GetCommission(currentContext);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new {commission = commissionSetting, context = currentContext}, settings);
+            return JsonBase(new {commission = commissionSetting, context = currentContext});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -288,11 +199,6 @@
         [AntiXSRFFilter]
         public ActionResult EditCommissionPost(int custId, int parentId, int currentLevel, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var commissionSetting = JsonConvert.DeserializeObject<CommissionSetting>(txtCustomerObject, settings);
@@ -330,27 +236,17 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditPT() => !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-            ? ActionDenied(Request)
-            : PartialViewBase();
+        public ActionResult EditPT() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult SuperMasterEditSB() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult SuperMasterEditSB() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditPTSuperGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var setting = new CustomerService();
             var context = new RequestContext
             {
@@ -370,21 +266,11 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = setting.GetCustomerForCompanyEditSuper(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customer = setting.GetCustomerForCompanyEditSuper(context);
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
+            return JsonBase(new {
+                    context,
+                    customer
                 });
         }
 
@@ -393,11 +279,6 @@
         [AntiXSRFFilter]
         public ActionResult EditPTMasterGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var setting = new CustomerService();
             var context = new RequestContext
             {
@@ -418,21 +299,11 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = setting.GetCustomerForSuperEditMaster(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            setting.GetCustomerForSuperEditMaster(context);
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
+            return JsonBase(new {
+                context,
+                customer
                 });
         }
 
@@ -442,11 +313,6 @@
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject,
             bool isUpdateAllMember, decimal newPositionTaking)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var mult = Request["isMult"];
             var para = Request["para"];
             var param = new Hashtable();
@@ -492,11 +358,6 @@
         [AntiXSRFFilter]
         public ActionResult EditPTAgentGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var customerService = new CustomerService();
             var context = new RequestContext
             {
@@ -517,22 +378,9 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = customerService.GetCustomerForMasterEditAgent(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customerService.GetCustomerForMasterEditAgent(context);
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -541,11 +389,6 @@
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject,
             bool isUpdateAllMember, decimal newPositionTaking)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var mult = Request["isMult"];
             var para = Request["para"];
             var param = new Hashtable();
@@ -591,11 +434,6 @@
         [AntiXSRFFilter]
         public ActionResult EditPTMemberGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var setting = new CustomerService();
             var context = new RequestContext
             {
@@ -616,22 +454,9 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = setting.GetCustomerForAgentUpdateMember(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            setting.GetCustomerForAgentUpdateMember(context);
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -639,11 +464,6 @@
         [AntiXSRFFilter]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var mult = Request["isMult"];
             var para = Request["para"];
             var param = new Hashtable();
@@ -689,11 +509,6 @@
         [AntiXSRFFilter]
         public ActionResult SuperEditPTMemberGet(int custId, int parentId, int agentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var setting = new CustomerService();
             var context = new RequestContext
             {
@@ -715,22 +530,9 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = setting.GetCustomerForSuperEditMember(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            setting.GetCustomerForSuperEditMember(context);
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -738,11 +540,6 @@
         [AntiXSRFFilter]
         public ActionResult SuperEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
@@ -786,11 +583,6 @@
         [AntiXSRFFilter]
         public ActionResult MasterEditPTMemberGet(int custId, int parentId, int agentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var setting = new CustomerService();
             var context = new RequestContext
             {
@@ -812,22 +604,9 @@
             ICustomer customer = new Customer();
             customer.PtSetting = new PTGrid();
 
-            try
-            {
-                customer = setting.GetCustomerForMasterEditMember(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            setting.GetCustomerForMasterEditMember(context);
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -835,11 +614,6 @@
         [AntiXSRFFilter]
         public ActionResult MasterEditPTMemberPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var para = Request["para"];
             var param = new Hashtable();
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
@@ -880,34 +654,21 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditMultiplePT() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult EditMultiplePT() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult SuperMasterEditMultiplePTMember() =>
-            !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase();
+        public ActionResult SuperMasterEditMultiplePTMember() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult EditMinPT() => !IsBelong(GetGroupname(), Utils.ToInt32(Request["custId"]), null, true)
-            ? ActionDenied(Request)
-            : PartialViewBase();
+        public ActionResult EditMinPT() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
@@ -929,27 +690,14 @@
 
             var customerService = new CustomerService();
 
-            try
-            {
-                customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customerService.GetCustomerForSuperEditMinPTMaster(context);
 
             customer.BettingLimit = null;
             customer.StatusSetting = null;
             customer.CommissionSetting = null;
             customer.CommissionSetting2 = null;
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -957,11 +705,6 @@
         [AntiXSRFFilter]
         public ActionResult MasterEditMinPTAgentGet(int custId, int parentId)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var context = new RequestContext
             {
                 AdminId = CurrentSession.UserId,
@@ -983,27 +726,14 @@
 
             var customerService = new CustomerService();
 
-            try
-            {
-                customer = customerService.GetCustomerForMasterEditMinPTAgent(context);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+            customerService.GetCustomerForMasterEditMinPTAgent(context);
 
             customer.BettingLimit = null;
             customer.StatusSetting = null;
             customer.CommissionSetting = null;
             customer.CommissionSetting2 = null;
 
-            return JsonBase(
-                new {context, customer},
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                });
+            return JsonBase(new {context, customer});
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook,
@@ -1011,11 +741,6 @@
         [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var customer =
@@ -1042,11 +767,6 @@
         [AntiXSRFFilter]
         public ActionResult MasterEditMinPTAgentPost(int custId, int parentId, string txtCustomerObject)
         {
-            if (!IsBelong(GetGroupname(), custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
 
             var customer =

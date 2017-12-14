@@ -30,7 +30,7 @@
         url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateSecurityCode'),
         type: 'post',
         data: {
-            id: custId,
+            custId: custId,
             code: $('#securityCode').val(),
             force: document.getElementById('forceChange').checked,
             roleId: roleId,

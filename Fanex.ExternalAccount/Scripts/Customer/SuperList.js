@@ -290,7 +290,7 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.IsMultiple = false;
             var params = {
-                id: Fanex.ExtAcc.Customer.UserId,
+                custId: Fanex.ExtAcc.Customer.UserId,
                 roleId: 4,
                 username: Fanex.ExtAcc.Customer.TitleEditInfo,
                 groupName: Fanex.ExtAcc.Customer.GroupName().groupName

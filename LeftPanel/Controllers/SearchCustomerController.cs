@@ -53,11 +53,6 @@
                     "var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
             }
 
-            if (!IsBelong(uplineId, 0, id, true))
-            {
-                return Content("var model = null;");
-            }
-
             var model = _service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
                 pageIndex);
 
@@ -81,11 +76,6 @@
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            if (!IsBelong(uplineId, 0, id, true))
-            {
-                return Content("var model = null;");
-            }
-
             var model = _service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
                 pageIndex);
 
@@ -95,14 +85,9 @@
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
+        public ActionResult UpdateGivenCreditPost(int custId, int uplineId, decimal newGivenCredit)
         {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            var model = _service.UpdateGivenCredit(id, uplineId, newGivenCredit);
+            var model = _service.UpdateGivenCredit(custId, uplineId, newGivenCredit);
 
             return JsonBase(model);
         }
@@ -110,11 +95,6 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UsedCreditPage(int id, int roleId)
         {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             ViewBag.CustId = id;
 
             if (roleId == Super || roleId == Master)
@@ -143,11 +123,6 @@
         [AntiXSRFFilter]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
-            if (!IsBelong(Request["groupName"], agentId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
             return JsonBase(result);
         }
@@ -157,11 +132,6 @@
         [AntiXSRFFilter]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
             return JsonBase(result);
         }
@@ -170,11 +140,6 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult SelectClearBalance(int custId)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             ViewBag.CustId = custId;
             var result = _service.CustomerSelectClearBalance(custId);
             return PartialViewBase(result, LeftpanelBalanceIndexView);
@@ -185,11 +150,6 @@
         [AntiXSRFFilter]
         public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
             if (casinoCustomer?.RoleId == Super && !close
@@ -212,11 +172,6 @@
         [AntiXSRFFilter]
         public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
             if (casinoCustomer?.CasinoSync == true)
@@ -231,28 +186,19 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateOutright(int custId, bool allow) =>
-            !IsBelong(Request["groupName"], custId, null, true)
-                ? ActionDenied(Request)
-                : JsonBase(_service.AllowOutright(custId, allow));
+            JsonBase(_service.AllowOutright(custId, allow));
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId) =>
-            !IsBelong(Request["groupName"], custId, null, true)
-                ? ActionDenied(Request)
-                : JsonBase(_service.AutoMasterPt(custId, allow, uplineId));
+            JsonBase(_service.AutoMasterPt(custId, allow, uplineId));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
@@ -273,42 +219,20 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EnableESports,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline) =>
-            !IsBelong(Request["groupName"], custId, null, true)
-                ? ActionDenied(Request)
-                : JsonBase(_service.EnableESports(custId, enable, enableDownline));
+        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline) 
+            => JsonBase(_service.EnableESports(custId, enable, enableDownline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline) =>
-            !IsBelong(Request["groupName"], custId, null, true)
-                ? ActionDenied(Request)
-                : JsonBase(_service.EnableNumberGame(custId, enable, enableDownline));
+            JsonBase(_service.EnableNumberGame(custId, enable, enableDownline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline) =>
-            !IsBelong(Request["groupName"], custId, null, true)
-                ? ActionDenied(Request)
-                : JsonBase(_service.EnableLiveCasino(custId, enable, enableDownline));
-
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
-        {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            ViewBag.roleId = roleId;
-            ViewBag.id = id;
-            ViewBag.uplineId = uplineId;
-
-            return PartialViewBase(EnableRacingIndexView);
-        }
+            JsonBase(_service.EnableLiveCasino(custId, enable, enableDownline));
 
         public ActionResult GetRacingData(int id, int uplineId, int roleId)
         {
@@ -348,13 +272,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
+        public ActionResult UpdateRacing(int custId, int uplineId, string txtCustomerObject, int roleId)
         {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
@@ -368,7 +287,7 @@
                 CustId = uplineId,
                 AgentId = 0,
                 UserName = string.Empty,
-                TargetCustId = id,
+                TargetCustId = custId,
                 AdminId = CurrentSession.UserId,
                 SubAccId = 0,
                 RoleId = roleId + 1,
@@ -388,14 +307,9 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GetSecurityCode(int id, int roleId, string username)
+        public ActionResult GetSecurityCode(int custId, int roleId, string username)
         {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
-            ViewBag.custId = id;
+            ViewBag.custId = custId;
             ViewBag.roleId = roleId;
             ViewBag.Username = username;
             return PartialViewBase(SecurityCodeIndexView);
@@ -405,21 +319,16 @@
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 2)
+        public ActionResult UpdateSecurityCode(int custId, string code, bool force, int roleId = 2)
         {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var hashCode = Encryption.CfsEnCode(code);
             if (roleId.IsNotMember())
             {
-                var md5 = Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
+                var md5 = Cryptography.ComputeHash("MD5", custId.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
                 hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
             }
 
-            var result = _service.ResetSecurityCode(id, hashCode, force || roleId.IsNotSuper());
+            var result = _service.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
 
             return JsonBase(result);
         }
@@ -430,11 +339,6 @@
         [AntiXSRFFilter]
         public ActionResult UpdateHRFixedOdds(int id, bool enable, bool enableDownline)
         {
-            if (!IsBelong(Request["groupName"], id, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _service.EnableHrFixedOdds(id, enable, enableDownline);
 
             return JsonBase(result);
@@ -504,11 +408,6 @@
         public ActionResult UpdateGoldDeluxe(int custId, int uplineId, bool enable, bool enableDownline,
             string custName)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             try
             {
                 return JsonBase(_service.UpdateGoldDeluxe(custId, enable, enableDownline, custName,
@@ -524,9 +423,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult RemoveOTP(int custId, string username) =>
-            !IsBelong(Request["groupName"], custId, null, true)
-                ? ActionDenied(Request)
-                : PartialViewBase(new { CustId = custId, Username = username },
+            PartialViewBase(new { CustId = custId, Username = username },
                     LeftPanelOtpIndexView);
 
         [HttpPost]
@@ -535,11 +432,6 @@
         [AntiXSRFFilter]
         public ActionResult RemoveOTP(int custId)
         {
-            if (!IsBelong(Request["groupName"], custId, null, true))
-            {
-                return ActionDenied(Request);
-            }
-
             var result = _service.RemoveOtp(custId);
             return JsonBase(result);
         }

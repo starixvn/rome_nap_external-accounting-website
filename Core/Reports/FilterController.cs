@@ -9,9 +9,12 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Utilities;
+    using Context;
 
     public class FilterController : BaseController
     {
+        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
+
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             var list = new List<KeyValuePair<string, bool>>();
@@ -33,7 +36,7 @@
         {
             var groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
 
-            if (string.IsNullOrEmpty(groupName) || !IsBelong(groupName, 0, null, true))
+            if (string.IsNullOrEmpty(groupName) || !authorization.IsBelong(groupName, 0, null, true))
             {
                 return JsonBase(new {username = string.Empty});
             }

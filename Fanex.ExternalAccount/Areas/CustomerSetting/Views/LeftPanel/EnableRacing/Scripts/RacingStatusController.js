@@ -41,7 +41,7 @@ function RacingStatusController($scope) {
             type: 'post',
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateRacing'),
             data: {
-                id: custId,
+                custId: custId,
                 uplineId: uplineId,
                 txtCustomerObject: JSON.stringify(model),
                 roleId: roleId,

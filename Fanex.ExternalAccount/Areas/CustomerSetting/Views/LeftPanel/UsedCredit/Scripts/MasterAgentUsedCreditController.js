@@ -23,7 +23,7 @@
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
+                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
                     $.ajax({
                         url: url,
                         type: 'post'
@@ -80,7 +80,7 @@ function ResetAllAccountCredit(agentId) {
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
+                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
                     $.ajax({
                         url: url,
                         type: 'post'
