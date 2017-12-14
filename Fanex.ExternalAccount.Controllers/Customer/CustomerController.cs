@@ -392,7 +392,7 @@
                 SystemId = (byte) Config.SystemId
             };
 
-            var memberId = -1;
+            int memberId;
             var result = new PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
@@ -545,7 +545,7 @@
             _cacheList = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
             var result = !IsBelong(Request["groupName"], Utils.ToInt32(custId), null, true)
                 ? new DataTable()
-                : _superService.GetData(CurrentSession.UserId, null, custId, enabled, closed, suspended, groupName);
+                : _superService.GetData(CurrentSession.UserId, custId: custId, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName);
             SetCacheList(result);
 
             SetEditAllBetVisibility(result);
@@ -1023,8 +1023,7 @@
                     {
                         SetCacheList(!IsBelong(groupName, Utils.ToInt32(custId), null, true)
                             ? new DataTable()
-                            : _superService.GetData(CurrentSession.UserId, null, id, enabled, closed, suspended,
-                                groupName));
+                            : _superService.GetData(CurrentSession.UserId, custId: id, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName));
                     }
 
                     break;
@@ -1152,7 +1151,7 @@
             SetCacheList(result);
         }
 
-        private void SetEditAllBetVisibility(DataTable dataTable)
+        private static void SetEditAllBetVisibility(DataTable dataTable)
         {
             dataTable.AsEnumerable().ToList().ForEach(n =>
                 n["DisableAllBet"] = n.Field<bool>("DisableAllBet") && n.Field<bool>("DisableAllBetVIP"));

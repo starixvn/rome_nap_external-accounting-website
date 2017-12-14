@@ -6,10 +6,9 @@
 
     public class CasinoManager
     {
-        private static readonly CasinoManager instance = new CasinoManager();
         private readonly CasinoDao _casinoDao = new CasinoDao();
 
-        public static CasinoManager Instance => instance;
+        public static CasinoManager Instance { get; } = new CasinoManager();
 
         public bool UpdateCSStatus(
             int custid,

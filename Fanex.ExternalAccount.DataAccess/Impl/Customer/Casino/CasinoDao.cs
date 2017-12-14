@@ -92,14 +92,6 @@
             return customerDetail;
         }
 
-        public bool GetCasinoStatus(int custid)
-        {
-            var param = new Hashtable {{"custid", custid}};
-
-            var dr = DbHelper.ExecuteDbResult("Age_GetCSStatus", param, 300);
-            return Utils.ToBoolean(dr.Outputs["status"]);
-        }
-
         public bool UpdateCSStatus(
             int custid,
             bool syncCS,
