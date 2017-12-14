@@ -32,6 +32,7 @@
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
+        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly CustomerService _customerService = new CustomerService();
@@ -44,14 +45,11 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult CheckUsername(string username)
         {
-            var errCode = 0;
+            int errCode;
             string errMsg;
-            var roleId = 0;
-            var isSubAccount = false;
             int customerId;
 
-            var isValidUser = _customerService.IsValidUsername(username.Trim(), CurrentSession.CustId, out customerId,
-                out isSubAccount, out roleId);
+            var isValidUser = _customerService.IsValidUsername(username.Trim(), CurrentSession.CustId, out customerId);
 
             if (isValidUser)
             {
@@ -487,7 +485,7 @@
             var ret = JsonConvert.SerializeObject(
                 result == null ? new DataTable() : CheckVNIP(result),
                 Formatting.None,
-                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
+                new IsoDateTimeConverter {DateTimeFormat = DateTimeFormat});
 
             var syncCasino = true;
             var syncLiveCasino = true;
@@ -498,8 +496,7 @@
                 switch (roleId)
                 {
                     case Master:
-                        userInfo = _superService.GetData(CurrentSession.UserId, null, srecommend, null, null, null,
-                            groupName);
+                        userInfo = _superService.GetData(CurrentSession.UserId, custId: srecommend, groupName: groupName);
                         break;
 
                     case Agent:
@@ -555,7 +552,7 @@
 
             var ret = JsonConvert.SerializeObject(
                 CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
+                new IsoDateTimeConverter {DateTimeFormat = DateTimeFormat});
 
             return JsonBase(new {total = 1, page = 1, records = result.Rows.Count, rows = ret});
         }
@@ -596,7 +593,7 @@
 
             var ret = JsonConvert.SerializeObject(
                 CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
+                new IsoDateTimeConverter {DateTimeFormat = DateTimeFormat});
 
             return JsonBase(
                 new
@@ -650,7 +647,7 @@
 
             var ret = JsonConvert.SerializeObject(
                 CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
+                new IsoDateTimeConverter {DateTimeFormat = DateTimeFormat});
 
             return JsonBase(
                 new
@@ -701,7 +698,7 @@
 
             var ret = JsonConvert.SerializeObject(
                 CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter {DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt"});
+                new IsoDateTimeConverter {DateTimeFormat = DateTimeFormat});
 
             return JsonBase(
                 new

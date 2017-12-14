@@ -25,13 +25,10 @@
             int displayOrder,
             int custId,
             string ip,
-            string assignedGroupIDs,
-            out int functionId)
+            string assignedGroupIDs)
         {
-            functionId = 0;
-
             return _funcDao.CreateFunction(name, key, description, parentId, parentName, displayOrder, custId, ip,
-                    assignedGroupIDs, out functionId);
+                    assignedGroupIDs);
         }
 
         public Result UpdateFunction(

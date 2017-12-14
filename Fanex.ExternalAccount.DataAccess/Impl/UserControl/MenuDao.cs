@@ -61,29 +61,29 @@
                         var func = ds.Tables[1];
 
                         var menus = (from c in menu.AsEnumerable()
-                            let parentId = c.Field<int>("ParentID")
-                            select new Menu
-                            {
-                                MenuId = c.Field<int>("MenuID"),
-                                MenuName = c.Field<string>("MenuName"),
-                                ParentId = c.Field<int>("ParentID"),
-                                ParentName = c.Field<string>("ParentName"),
-                                Url = c.Field<string>("Url"),
-                                FuncId = c.Field<int>("FuncID"),
-                                DisplayOrder = c.Field<int>("DisplayOrder"),
-                                IsActive = c.Field<bool>("Active")
-                            }).ToList();
+                                     let parentId = c.Field<int>("ParentID")
+                                     select new Menu
+                                     {
+                                         MenuId = c.Field<int>("MenuID"),
+                                         MenuName = c.Field<string>("MenuName"),
+                                         ParentId = c.Field<int>("ParentID"),
+                                         ParentName = c.Field<string>("ParentName"),
+                                         Url = c.Field<string>("Url"),
+                                         FuncId = c.Field<int>("FuncID"),
+                                         DisplayOrder = c.Field<int>("DisplayOrder"),
+                                         IsActive = c.Field<bool>("Active")
+                                     }).ToList();
 
                         var funcs = (from c in func.AsEnumerable()
-                            select new Function
-                            {
-                                FuncID = c.Field<int>("funcid"),
-                                ParentID = c.Field<int>("parentId"),
-                                FuncName = c.Field<string>("funcName"),
-                                FuncKey = c.Field<string>("funcKey"),
-                                Policy = c.Field<EPolicy>("policy"),
-                                IsTest = c.Field<bool>("IsTest")
-                            }).ToList();
+                                     select new Function
+                                     {
+                                         FuncID = c.Field<int>("funcid"),
+                                         ParentID = c.Field<int>("parentId"),
+                                         FuncName = c.Field<string>("funcName"),
+                                         FuncKey = c.Field<string>("funcKey"),
+                                         Policy = c.Field<EPolicy>("policy"),
+                                         IsTest = c.Field<bool>("IsTest")
+                                     }).ToList();
 
                         return new UserCache
                         {
@@ -107,11 +107,8 @@
             int displayOrder,
             bool isActive,
             int custId,
-            string ip,
-            out int menuId)
+            string ip)
         {
-            menuId = 0;
-
             using (var db = new ObjectDb("EAS_MenuIns"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
@@ -130,14 +127,7 @@
 
                 db.ExecuteNonQuery();
 
-                var result = GetResultParams(db.Database, db.DbCommand);
-
-                if (result.IsSuccess)
-                {
-                    menuId = (int) db.GetParameterValue("MenuID");
-                }
-
-                return result;
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 

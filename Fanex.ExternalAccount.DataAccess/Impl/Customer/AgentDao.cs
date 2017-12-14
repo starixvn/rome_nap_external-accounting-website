@@ -19,13 +19,15 @@
             bool? closed = null, 
             bool? suspended = null)
         {
-            var param = new Hashtable();
-            param.Add("mrecommend", recommend);
-            param.Add("custid", custId);
-            param.Add("enabled", enabled);
-            param.Add("closed", closed);
-            param.Add("suspended", suspended);
-            param.Add("userid", userId);
+            var param = new Hashtable
+            {
+                {"mrecommend", recommend},
+                {"custid", custId},
+                {"enabled", enabled},
+                {"closed", closed},
+                {"suspended", suspended},
+                {"userid", userId}
+            };
 
             return DbHelper.ExecuteDataTable("EAS_CustomerSelByMAg", param);
         }

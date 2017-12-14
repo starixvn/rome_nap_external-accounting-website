@@ -4,12 +4,12 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using Fanex.Caching;
-    using Fanex.ExternalAccount.DataAccess.Impl.Report;
-    using Fanex.ExternalAccount.DataAccess.Interface.Report;
-    using Fanex.ExternalAccount.DTO.Report;
-    using Fanex.ExternalAccount.Service.Interface.Report;
-    using Fanex.ExternalAccount.Utilities;
+    using Caching;
+    using DataAccess.Impl.Report;
+    using DataAccess.Interface.Report;
+    using DTO.Report;
+    using Interface.Report;
+    using Utilities;
 
     public class ReportService : IReportService
     {
@@ -31,7 +31,6 @@
 
         public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)
             => _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
-
 
         public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
             => CheckConstraintMoveBetsDay(winlostDate)

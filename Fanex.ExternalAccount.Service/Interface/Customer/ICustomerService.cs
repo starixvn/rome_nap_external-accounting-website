@@ -5,7 +5,7 @@
 
     public interface ICustomerService
     {
-        bool IsValidUsername(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId);
+        bool IsValidUsername(string userName, int uplineId, out int custId);
 
         Customer UserInfo(int custId);
 

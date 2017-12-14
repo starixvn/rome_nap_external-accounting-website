@@ -20,8 +20,7 @@
             int displayOrder,
             bool isActive,
             int custId,
-            string ip,
-            out int menuId);
+            string ip);
 
         Result UpdateMenu(
             int id,

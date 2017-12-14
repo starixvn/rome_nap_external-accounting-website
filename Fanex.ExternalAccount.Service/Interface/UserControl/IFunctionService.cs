@@ -18,8 +18,7 @@
             int displayOrder,
             int custId,
             string ip,
-            string assignedGroupIDs,
-            out int functionId);
+            string assignedGroupIDs);
 
         Result UpdateFunction(
             int id,

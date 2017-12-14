@@ -73,8 +73,7 @@
         public ActionResult Add(string name, string description, string url, int functionId, int parentId,
             string parentName, int displayOrder)
         {
-            var menuId = 0;
-
+          
             var result = _menuService.CreateMenu(
                 name,
                 description,
@@ -85,8 +84,7 @@
                 displayOrder,
                 true,
                 CurrentSession.CustId,
-                CurrentContext.Ip4Address,
-                out menuId);
+                CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }

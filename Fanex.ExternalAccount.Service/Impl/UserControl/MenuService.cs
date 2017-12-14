@@ -36,13 +36,10 @@
             int displayOrder,
             bool isActive,
             int custId,
-            string ip,
-            out int menuId)
+            string ip)
         {
-            menuId = 0;
-
             var result = _menuDao.CreateMenu(name, description, path, functionId, parentId, parentName, displayOrder,
-                isActive, custId, ip, out menuId);
+                isActive, custId, ip);
 
             if (result.IsSuccess)
             {

@@ -2,73 +2,55 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
-    using Fanex.Data;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Utilities;
-    using Logging.Extensions.Database;
+    using Base;
+    using Data;
+    using DTO;
+    using DTO.UserControl;
+    using Interface.UserControl;
+    using Utilities;
 
     public class FunctionDao : DAOBase, IFunctionDao
     {
-        #region IFunctionDao Members
-
         public Result CreateFunction(
-            string name, 
-            string key, 
-            string description, 
+            string name,
+            string key,
+            string description,
             int parentId,
             string parentName,
-            int displayOrder, 
-            int custId, 
+            int displayOrder,
+            int custId,
             string ip,
-            string assignedGroupIDs, 
-            out int functionId)
+            string assignedGroupIDs)
         {
-            functionId = 0;
-
             using (var db = new ObjectDb("EAS_FunctionIns"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("ParentID", System.Data.DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", System.Data.DbType.Int32, displayOrder);
-                db.AddInParameter("IsTest", System.Data.DbType.Boolean, false);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("ParentID", DbType.Int32, parentId);
+                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
+                db.AddInParameter("IsTest", DbType.Boolean, false);
 
-                db.AddInParameter("ParentName", System.Data.DbType.String, parentName);
-                db.AddInParameter("FuncName", System.Data.DbType.String, name);
-                db.AddInParameter("FuncDesc", System.Data.DbType.String, description);
-                db.AddInParameter("FuncKey", System.Data.DbType.String, key);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddInParameter("AssigedGroupIDs", System.Data.DbType.String, assignedGroupIDs);
+                db.AddInParameter("ParentName", DbType.String, parentName);
+                db.AddInParameter("FuncName", DbType.String, name);
+                db.AddInParameter("FuncDesc", DbType.String, description);
+                db.AddInParameter("FuncKey", DbType.String, key);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
 
-                db.AddOutParameter("FuncID", System.Data.DbType.Int32, sizeof(int));
+                db.AddOutParameter("FuncID", DbType.Int32, sizeof(int));
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
-                    var result = this.GetResultParams(db.Database, db.DbCommand);
+                db.ExecuteNonQuery();
 
-                    if (result.IsSuccess)
-                    {
-                        functionId = (int)db.GetParameterValue("FuncID");
-                    }
-
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
         public Result UpdateFunction(
-            int id, 
-            string name, 
+            int id,
+            string name,
             string description,
             int parentId,
             string parentName,
@@ -80,30 +62,23 @@
         {
             using (var db = new ObjectDb("EAS_FunctionUpd"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("FuncID", System.Data.DbType.Int32, id);
-                db.AddInParameter("ParentID", System.Data.DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", System.Data.DbType.Int32, displayOrder);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("FuncID", DbType.Int32, id);
+                db.AddInParameter("ParentID", DbType.Int32, parentId);
+                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
 
-                db.AddInParameter("ParentName", System.Data.DbType.String, parentName);
-                db.AddInParameter("FuncName", System.Data.DbType.String, name);
-                db.AddInParameter("FuncDesc", System.Data.DbType.String, description);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddInParameter("AssigedGroupIDs", System.Data.DbType.String, assignedGroupIDs);
-                db.AddInParameter("OldAssigedGroupIDs", System.Data.DbType.String, oldAssignedGroupIDs);
+                db.AddInParameter("ParentName", DbType.String, parentName);
+                db.AddInParameter("FuncName", DbType.String, name);
+                db.AddInParameter("FuncDesc", DbType.String, description);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
+                db.AddInParameter("OldAssigedGroupIDs", DbType.String, oldAssignedGroupIDs);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
@@ -113,74 +88,60 @@
 
             using (var db = new ObjectDb("EAS_FunctionSel"))
             {
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new Function
                             {
-                                result.Add(new Function
-                                {
-                                    ModifiedDate = reader.ToString("ModifiedDate"),
-                                    DisplayOrder = reader.ToInt32("DisplayOrder"),
-                                    FuncDesc = reader.ToString("FuncDesc"),
-                                    FuncID = reader.ToInt32("FuncID"),
-                                    FuncKey = reader.ToString("FuncKey"),
-                                    FuncName = reader.ToString("FuncName"),
-                                    IsTest = reader.ToBoolean("IsTest"),
-                                    ParentID = reader.ToInt32("ParentID"),
-                                    ParentName = reader.ToString("ParentName")
-                                });
-                            }
-
-                            return result;
+                                ModifiedDate = reader.ToString("ModifiedDate"),
+                                DisplayOrder = reader.ToInt32("DisplayOrder"),
+                                FuncDesc = reader.ToString("FuncDesc"),
+                                FuncID = reader.ToInt32("FuncID"),
+                                FuncKey = reader.ToString("FuncKey"),
+                                FuncName = reader.ToString("FuncName"),
+                                IsTest = reader.ToBoolean("IsTest"),
+                                ParentID = reader.ToInt32("ParentID"),
+                                ParentName = reader.ToString("ParentName")
+                            });
                         }
 
-                        return null;
+                        return result;
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+
+                return null;
             }
         }
 
         public Function GetFunctionPolicy(int funcId)
         {
-            var func = this.GetAllFunctions().Where(o => o.FuncID == funcId).FirstOrDefault();
+            var func = GetAllFunctions().FirstOrDefault(o => o.FuncID == funcId);
 
             using (var db = new ObjectDb("EAS_FunctionSelEdit"))
             {
-                db.AddInParameter("funcId", System.Data.DbType.Int32, funcId);
+                db.AddInParameter("funcId", DbType.Int32, funcId);
 
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        var groups = new List<FunctionPolicy>();
+
+                        while (reader.Read())
                         {
-                            var groups = new List<FunctionPolicy>();
-
-                            while (reader.Read())
+                            groups.Add(new FunctionPolicy
                             {
-                                groups.Add(new FunctionPolicy
-                                {
-                                    GroupID = reader.ToInt32("GroupID"),
-                                    GroupName = reader.ToString("GroupName"),
-                                    HasPermission = Convert.ToBoolean(reader["HasPermission"])
-                                });
-                            }
-
-                            func.AssignGroups = groups;
+                                GroupID = reader.ToInt32("GroupID"),
+                                GroupName = reader.ToString("GroupName"),
+                                HasPermission = Convert.ToBoolean(reader["HasPermission"])
+                            });
                         }
+
+                        func.AssignGroups = groups;
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -191,26 +152,17 @@
         {
             using (var db = new ObjectDb("EAS_FuncUpdStatus"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, custId);
-                db.AddInParameter("FuncID", System.Data.DbType.Int32, id);
-                db.AddInParameter("IsTest", System.Data.DbType.Boolean, isTest);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
+                db.AddInParameter("UserID", DbType.Int32, custId);
+                db.AddInParameter("FuncID", DbType.Int32, id);
+                db.AddInParameter("IsTest", DbType.Boolean, isTest);
+                db.AddInParameter("IP", DbType.String, ip);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
-
-        #endregion IFunctionDao Members
     }
 }

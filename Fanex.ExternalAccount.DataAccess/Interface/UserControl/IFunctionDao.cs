@@ -6,7 +6,7 @@
 
     public interface IFunctionDao
     {
-        Result CreateFunction(string name, string key, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string assignedGroupIDs, out int functionId);
+        Result CreateFunction(string name, string key, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string assignedGroupIDs);
 
         Result UpdateFunction(int id, string name, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
 

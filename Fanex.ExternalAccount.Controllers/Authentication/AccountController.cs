@@ -97,9 +97,9 @@ using Fanex.Logging.Extensions.Web;
 
         private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
         {
-            var custId = 0;
-            var onuserId = 0;
-            var isInternalAdmin = true;
+            int custId;
+            int onuserId;
+            bool isInternalAdmin;
 
             var result = _userService.Login(
                 model.UserName,

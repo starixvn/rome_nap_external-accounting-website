@@ -86,10 +86,8 @@
         [AntiXSRFFilter]
         public ActionResult Add(string name, string description)
         {
-            var groupId = 0;
-
-            var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address,
-                out groupId);
+          
+            var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }

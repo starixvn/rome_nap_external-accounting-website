@@ -189,10 +189,9 @@
         public ActionResult Add(string name, string key, string desc, int parentId, string parent, int order,
             string groups)
         {
-            int funcId;
 
             var result = _funcService.CreateFunction(name, key, desc, parentId, parent, order, CurrentSession.CustId,
-                CurrentContext.Ip4Address, groups, out funcId);
+                CurrentContext.Ip4Address, groups);
 
             return JsonBase(result);
         }

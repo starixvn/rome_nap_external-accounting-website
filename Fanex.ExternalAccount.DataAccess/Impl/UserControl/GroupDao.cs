@@ -80,7 +80,7 @@
                             DisplayOrder = reader.ToInt("DisplayOrder"),
                             ParentID = reader.ToInt("ParentID"),
                             ParentName = reader.ToString("ParentName"),
-                            GroupPolicy = (EPolicy) Convert.ToInt32(reader["Policy"]),
+                            GroupPolicy = (EPolicy)Convert.ToInt32(reader["Policy"]),
                             FuncDesc = reader.ToString("FuncDesc")
                         });
                     }
@@ -113,10 +113,8 @@
             return null;
         }
 
-        public Result CreateGroup(string groupName, string description, int custId, string ip, out int groupId)
+        public Result CreateGroup(string groupName, string description, int custId, string ip)
         {
-            groupId = 0;
-
             using (var db = new ObjectDb("EAS_GroupInfoIns"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
@@ -129,14 +127,7 @@
 
                 db.ExecuteNonQuery();
 
-                var result = GetResultParams(db.Database, db.DbCommand);
-
-                if (result.IsSuccess)
-                {
-                    groupId = (int) db.GetParameterValue("GroupID");
-                }
-
-                return result;
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 

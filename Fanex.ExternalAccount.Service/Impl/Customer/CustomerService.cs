@@ -11,8 +11,8 @@
     {
         private readonly ICustomerDao _dao = new CustomerDao();
 
-        public bool IsValidUsername(string userName, int uplineId, out int custId, out bool isSubAcc, out int roleId)
-            => _dao.IsValidUsername(userName, uplineId, out custId, out isSubAcc, out roleId);
+        public bool IsValidUsername(string userName, int uplineId, out int custId)
+            => _dao.IsValidUsername(userName, uplineId, out custId);
 
         public Customer UserInfo(int custId) => _dao.UserInfo(custId);
 

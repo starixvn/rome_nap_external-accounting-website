@@ -10,7 +10,6 @@
     {
         public static CustomerModel AgentInfo(this CustomerModel model, DataSet ds)
         {
-
             SetAgentBalanceInfo(model, ds);
 
             SetAgentPersonalInfo(model, ds);
@@ -75,7 +74,6 @@
 
         private static void SetAgentSettingInfo(CustomerModel model, DataSet ds)
         {
-
             var table3RdDcs = ds.Tables[4];
             var customerRow = ds.Tables[0].Rows[0];
 

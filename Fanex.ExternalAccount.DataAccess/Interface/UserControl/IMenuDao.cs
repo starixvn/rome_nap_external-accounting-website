@@ -10,7 +10,7 @@
 
         UserCache GetMenuByUserId(int userId);
 
-        Result CreateMenu(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, bool isActive, int custId, string ip, out int menuId);
+        Result CreateMenu(string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, bool isActive, int custId, string ip);
 
         Result UpdateMenu(int id, string name, string description, string url, int functionId, int parentId, string parentName, int displayOrder, int custId, string ip);
 
