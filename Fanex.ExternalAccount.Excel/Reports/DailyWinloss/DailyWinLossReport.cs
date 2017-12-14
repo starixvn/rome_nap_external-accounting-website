@@ -33,28 +33,21 @@
 
             var rowId = 0;
             const int colId = 0;
-            const int id = 1;
-            var mainTitle = (_builder.RoleId == 5
-                                ? "Super"
-                                : _builder.RoleId == 4
-                                    ? "Master"
-                                    : _builder.RoleId == 3
-                                        ? "Agent"
-                                        : "Member") +
-                            " Daily Win Loss on " + _builder.WinlostDate;
+            var mainTitle = BuildMainTitle(_builder.WinlostDate, _builder.RoleId);
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
-            rowId = 3;
             if (data.Count > 0)
             {
-                WriteCells(ref resultSheet, ref templateSheet, rowId, colId, id);
+                WriteCells(resultSheet, templateSheet, colId);
             }
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
             return HssfWorkbook;
         }
 
-        private void WriteCells(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int id)
+        private void WriteCells(ISheet resultSheet, ISheet templateSheet, int colId)
         {
+            var id = 1;
+            var rowId = 3;
             const int totalColumn = 19;
             var lastColumnIndex = colId + totalColumn - 1;
             foreach (var item in _builder.Data)
@@ -88,10 +81,10 @@
                 rowId++;
             }
 
-            WriteTotal(ref resultSheet, ref templateSheet, rowId, colId, lastColumnIndex);
+            WriteTotal(resultSheet, templateSheet, rowId, colId, lastColumnIndex);
         }
 
-        private void WriteTotal(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId,
+        private void WriteTotal(ISheet resultSheet, ISheet templateSheet, int rowId, int colId,
             int lastColumnIndex)
         {
             var data = _builder.Data;
@@ -102,38 +95,42 @@
                 "Grand Total",
                 data.Sum(p => p.TotalTO),
                 data.Sum(p => p.ComTO),
-                data.Sum(p => p.TotalTO) != 0
+                !data.Sum(p => p.TotalTO).Equals(0)
                     ? data.Sum(p => p.ComTO) / data.Sum(p => p.TotalTO) * 100
                     : 0,
                 data.Sum(p => p.SAgTO),
-                data.Sum(p => p.TotalTO) != 0
+                !data.Sum(p => p.TotalTO).Equals(0)
                     ? data.Sum(p => p.SAgTO) / data.Sum(p => p.TotalTO) * 100
                     : 0,
                 data.Sum(p => p.MAgTO),
-                data.Sum(p => p.TotalTO) != 0
+                !data.Sum(p => p.TotalTO).Equals(0)
                     ? data.Sum(p => p.MAgTO) / data.Sum(p => p.TotalTO) * 100
                     : 0,
                 data.Sum(p => p.AgTO),
-                data.Sum(p => p.TotalTO) != 0
+                !data.Sum(p => p.TotalTO).Equals(0)
                     ? data.Sum(p => p.AgTO) / data.Sum(p => p.TotalTO) * 100
                     : 0,
                 data.Sum(p => p.ComWinlost),
-                data.Sum(p => p.ComTO) != 0
+                !data.Sum(p => p.ComTO).Equals(0)
                     ? data.Sum(p => p.ComWinlost) / data.Sum(p => p.ComTO) * 100
                     : 0,
                 data.Sum(p => p.SAgWinlost),
-                data.Sum(p => p.SAgTO) != 0
+                !data.Sum(p => p.SAgTO).Equals(0)
                     ? data.Sum(p => p.SAgWinlost) / data.Sum(p => p.SAgTO) * 100
                     : 0,
                 data.Sum(p => p.MAgWinlost),
-                data.Sum(p => p.MAgTO) != 0
+                !data.Sum(p => p.MAgTO).Equals(0)
                     ? data.Sum(p => p.MAgWinlost) / data.Sum(p => p.MAgTO) * 100
                     : 0,
                 data.Sum(p => p.AgWinlost),
-                data.Sum(p => p.AgTO) != 0
+                !data.Sum(p => p.AgTO).Equals(0)
                     ? data.Sum(p => p.AgWinlost) / data.Sum(p => p.AgTO) * 100
                     : 0            };
             resultSheet.GetRow(rowId).WriteCells(colId, values);
         }
+
+        private static string BuildMainTitle(string winlostDate, int roleId)
+            => $"{(roleId == 5 ? "Super" : roleId == 4 ? "Master" : roleId == 3 ? "Agent" : "Member")} Daily Win Loss on {winlostDate}";
+
     }
 }

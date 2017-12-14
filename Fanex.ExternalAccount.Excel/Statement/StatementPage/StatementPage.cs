@@ -17,9 +17,7 @@
         {
             _builder = builder;
         }
-
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
+        
         public HSSFWorkbook Build()
         {
             var data = _builder.Data;
@@ -39,8 +37,7 @@
             var rowId = 0;
             const int colId = 0;
 
-            var mainTitle = " Statement - " + _builder.Username + " - From " + _builder.FromDate + " To " +
-                            _builder.ToDate;
+            var mainTitle = BuildMainTitle();
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
@@ -111,6 +108,13 @@
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
             return HssfWorkbook;
+        }
+
+        private string BuildMainTitle()
+        {
+            var mainTitle = " Statement - " + _builder.Username + " - From " + _builder.FromDate + " To " +
+                            _builder.ToDate;
+            return mainTitle;
         }
     }
 }

@@ -443,35 +443,35 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             Username = reader.To<string>("username"),
             TotalTO = reader.ToDouble("totalTO"),
             ComTO = reader.ToDouble("ComTO"),
-            ComTOPercent = reader.ToDouble("totalTO") != 0
+            ComTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("ComTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
             SAgTO = reader.ToDouble("SAgTO"),
-            SAgTOPercent = reader.ToDouble("totalTO") != 0
+            SAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("SAgTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
             MAgTO = reader.ToDouble("MAgTO"),
-            MAgTOPercent = reader.ToDouble("totalTO") != 0
+            MAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("MAgTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
             AgTO = reader.ToDouble("AgTO"),
-            AgTOPercent = reader.ToDouble("totalTO") != 0
+            AgTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("AgTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
             ComWinlost = reader.ToDouble("ComWinlost"),
-            ComWinlostPercent = reader.ToDouble("ComTO") != 0
+            ComWinlostPercent = !reader.ToDouble("ComTO").Equals(0)
                 ? reader.ToDouble("ComWinlost") * 100 / reader.ToDouble("ComTO")
                 : 0,
             SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgWinlostPercent = reader.ToDouble("SAgTO") != 0
+            SAgWinlostPercent = !reader.ToDouble("SAgTO").Equals(0)
                 ? reader.ToDouble("SAgWinlost") * 100 / reader.ToDouble("SAgTO")
                 : 0,
             MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgWinlostPercent = reader.ToDouble("MAgTO") != 0
+            MAgWinlostPercent = !reader.ToDouble("MAgTO").Equals(0)
                 ? reader.ToDouble("MAgWinlost") * 100 / reader.ToDouble("MAgTO")
                 : 0,
             AgWinlost = reader.ToDouble("AgWinlost"),
-            AgWinlostPercent = reader.ToDouble("AgTO") != 0
+            AgWinlostPercent = !reader.ToDouble("AgTO").Equals(0)
                 ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
                 : 0
         };

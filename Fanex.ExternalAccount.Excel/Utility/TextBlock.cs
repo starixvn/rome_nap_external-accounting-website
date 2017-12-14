@@ -1,7 +1,7 @@
-﻿using NPOI.SS.UserModel;
-
-namespace Fanex.ExternalAccount.Excel.Utility
+﻿namespace Fanex.ExternalAccount.Excel.Utility
 {
+    using NPOI.SS.UserModel;
+
     public class TextBlock
     {
         private string _text;

@@ -17,4 +17,5 @@
     "RECS0018:Comparison of floating point numbers with equality operator",
     Justification = "<Pending>",
     Scope = "member",
-    Target = "~M:Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReport.WriteTotal(NPOI.SS.UserModel.ISheet@,NPOI.SS.UserModel.ISheet@,System.Int32,System.Int32,System.Int32)")]
+    Target =
+        "~M:Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport.DailyWinLossReport.WriteTotal(NPOI.SS.UserModel.ISheet@,NPOI.SS.UserModel.ISheet@,System.Int32,System.Int32,System.Int32)")]

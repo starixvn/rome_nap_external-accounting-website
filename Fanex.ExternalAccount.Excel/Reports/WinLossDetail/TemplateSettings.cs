@@ -1,29 +1,27 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
+    using System.IO;
     using System.Web;
 
     internal class TemplateSettings
     {
-        private string _dir;
+        private readonly string _dir;
 
         public TemplateSettings()
         {
-            this._dir = HttpContext.Current.Server.MapPath("~/") + "ExcelTemplates\\Reports";
+            _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports");
         }
 
         public string WinLossDetailPath(int roleId)
         {
-            if (roleId == 1)
+            switch (roleId)
             {
-                return this._dir + "\\" + "WinLossDetailAg.xls";
-            }
-            else if (roleId == 2)
-            {
-                return this._dir + "\\" + "WinLossDetailMAg.xls";
-            }
-            else
-            {
-                return this._dir + "\\" + "WinLossDetail.xls";
+                case 1:
+                    return Path.Combine(_dir, "WinLossDetailAg.xls");
+                case 2:
+                    return Path.Combine(_dir, "WinLossDetailMAg.xls");
+                default:
+                    return Path.Combine(_dir, "WinLossDetail.xls");
             }
         }
     }

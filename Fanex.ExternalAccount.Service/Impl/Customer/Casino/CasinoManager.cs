@@ -10,8 +10,6 @@
         private readonly CasinoDao _casinoDao = new CasinoDao();
 
         public static CasinoManager Instance => instance;
-        
-        public bool GetCasinoStatus(int custid) => _casinoDao.GetCasinoStatus(custid);
 
         public bool UpdateCSStatus(
             int custid,

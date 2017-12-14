@@ -1,84 +1,55 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
     using Utility;
 
     internal class WinLossDetailReport : TemplateReport, IReportBuilder
     {
-        private WinLossDetailReportBuilder _builder;
+        private readonly WinLossDetailReportBuilder _builder;
 
         public WinLossDetailReport(string filePath, WinLossDetailReportBuilder builder, string products = null)
             : base(filePath, products)
         {
-            this._builder = builder;
+            _builder = builder;
         }
-
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        
         public HSSFWorkbook Build()
         {
-            var data = this._builder.Data;
+            var data = _builder.Data;
             if (data == null)
             {
                 return null;
             }
 
-            ISheet templateSheet = HssfWorkbook.GetSheet("Template");
-            ISheet resultSheet = HssfWorkbook.GetSheet("WinLossDetail");
+            var templateSheet = HssfWorkbook.GetSheet("Template");
+            var resultSheet = HssfWorkbook.GetSheet("WinLossDetail");
 
-            if (this._builder.IsBold)
+            if (_builder.IsBold)
             {
-                this.BoldAllFonts();
+                BoldAllFonts();
             }
 
-            int rowId = 0;
-            int colId = 0;
+            var rowId = 0;
+            const int colId = 0;
 
-            string mainTitle = string.Empty;
-            if (this._builder.RoleId == 4)
-            {
-                mainTitle = "Super";
-            }
-            else if (this._builder.RoleId == 3)
-            {
-                mainTitle = "Master";
-            }
-
-            if (this._builder.FromDate.Equals(this._builder.ToDate))
-            {
-                mainTitle += " Win Loss Detail on " + this._builder.FromDate;
-            }
-            else
-            {
-                mainTitle += " Win Loss Detail From " + this._builder.FromDate + " To " + this._builder.ToDate;
-            }
-
-            mainTitle += " - " + this.Products;
+            var mainTitle = BuildMainTitle();
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
             rowId = 3;
-            int id = 1;
+            var id = 1;
 
             if (data.Count > 0)
             {
-                var values = new List<object> { };
-                int totalColumn = 17;
-                int lastColumnIndex = colId + totalColumn - 1;
+                const int totalColumn = 17;
+                const int lastColumnIndex = colId + totalColumn - 1;
 
+                List<object> values;
                 foreach (var item in data)
                 {
-                    if (id % 2 == 0)
-                    {
-                        resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                    }
-                    else
-                    {
-                        resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                    }
+                    resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
 
                     values = new List<object>
                     {
@@ -133,8 +104,31 @@
                 resultSheet.GetRow(rowId).WriteCells(colId, values);
             }
 
-            this.HssfWorkbook.RemoveSheetAt(this.HssfWorkbook.GetSheetIndex(templateSheet));
-            return this.HssfWorkbook;
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
+            return HssfWorkbook;
         }
+
+        private string BuildMainTitle()
+        {
+            var mainTitle = string.Empty;
+            switch (_builder.RoleId)
+            {
+                case 4:
+                    mainTitle = "Super";
+                    break;
+                case 3:
+                    mainTitle = "Master";
+                    break;
+            }
+
+            mainTitle += _builder.FromDate.Equals(_builder.ToDate)
+                ? " Win Loss Detail on " + _builder.FromDate
+                : " Win Loss Detail From " + _builder.FromDate + " To " + _builder.ToDate;
+
+            mainTitle += " - " + Products;
+
+            return mainTitle;
+        }
+
     }
 }

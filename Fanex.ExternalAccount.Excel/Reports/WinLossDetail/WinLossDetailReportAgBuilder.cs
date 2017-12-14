@@ -2,55 +2,45 @@
 {
     using System.Collections.Generic;
     using System.IO;
-    using Fanex.ExternalAccount.DTO.Report;
-    using NPOI.HSSF.UserModel;
+    using DTO.Report;
 
     public class WinLossDetailReportAgBuilder
     {
-        public WinLossDetailReportAgBuilder(List<WinLossDetailAg> winLossDetailAg, bool isBold, int roleId, string fromDate, string toDate)
+        public WinLossDetailReportAgBuilder(List<WinLossDetailAg> winLossDetailAg, bool isBold, int roleId,
+            string fromDate, string toDate)
         {
-            this.FromDate = fromDate;
-            this.ToDate = toDate;
-            this.IsBold = isBold;
-            this.RoleId = roleId;
-            this.Data = winLossDetailAg;
+            FromDate = fromDate;
+            ToDate = toDate;
+            IsBold = isBold;
+            RoleId = roleId;
+            Data = winLossDetailAg;
         }
 
-        public List<WinLossDetailAg> Data { get; private set; }
+        public List<WinLossDetailAg> Data { get; }
 
-        public bool IsBold { get; private set; }
+        public bool IsBold { get; }
 
-        public int RoleId { get; private set; }
+        public int RoleId { get; }
 
-        public string FromDate { get; private set; }
+        public string FromDate { get; }
 
-        public string ToDate { get; private set; }
+        public string ToDate { get; }
 
         public MemoryStream Build(string products = null)
         {
-            TemplateReport report = null;
-            TemplateSettings settings = new TemplateSettings();
-            string filePath = settings.WinLossDetailPath(this.RoleId);
-
-            report = new WinLossDetailReportAg(filePath, this, products);
-
-            if (report != null)
+            var settings = new TemplateSettings();
+            var filePath = settings.WinLossDetailPath(RoleId);
+            var mem = new MemoryStream();
+            using (var report = new WinLossDetailReportAg(filePath, this, products))
             {
-                if (report is IReportBuilder)
+                var hssfWorkbook = ((IReportBuilder)report).Build();
+                if (hssfWorkbook != null)
                 {
-                    MemoryStream mem = new MemoryStream();
-                    HSSFWorkbook hssfWorkbook = ((IReportBuilder)report).Build();
-                    if (hssfWorkbook != null)
-                    {
-                        hssfWorkbook.Write(mem);
-                        return mem;
-                    }
-
-                    report.Dispose();
+                    hssfWorkbook.Write(mem);
                 }
             }
 
-            return null;
+            return mem;
         }
     }
 }

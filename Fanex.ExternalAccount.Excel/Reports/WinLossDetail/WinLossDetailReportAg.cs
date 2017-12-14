@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using NPOI.HSSF.UserModel;
     using Utility;
@@ -35,11 +34,7 @@
             var rowId = 0;
             const int colId = 0;
 
-            var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
-                ? "Member Win Loss Detail on " + _builder.FromDate
-                : "Member Win Loss Detail From " + _builder.FromDate + " To " + _builder.ToDate;
-
-            mainTitle += " - " + Products;
+            var mainTitle = BuildMainTitle();
 
             resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
 
@@ -99,6 +94,17 @@
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
             return HssfWorkbook;
+        }
+
+        private string BuildMainTitle()
+        {
+            var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
+                ? "Member Win Loss Detail on " + _builder.FromDate
+                : "Member Win Loss Detail From " + _builder.FromDate + " To " + _builder.ToDate;
+
+            mainTitle += " - " + Products;
+
+            return mainTitle;
         }
     }
 }
