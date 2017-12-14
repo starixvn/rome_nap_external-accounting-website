@@ -126,7 +126,7 @@
             ExceptionHandler.Handle(Server.GetLastError());
         }
 
-        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
+        private static string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
             urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
 
         private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper,

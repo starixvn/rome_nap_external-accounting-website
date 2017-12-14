@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
@@ -36,7 +35,7 @@
                 BoldAllFonts();
             }
 
-            var rowId = 0;
+            const int rowId = 0;
             const int colId = 0;
 
             var mainTitle = BuildMainTitle(_builder.Status, _builder.RoleId);
@@ -135,6 +134,7 @@
             {
                 var custStatus = SetBackgroundRow(templateSheet, resultSheet, rowId, colId, lastColumnIndex, items);
                 if (_builder.RoleId != 1)
+                {
                     if (_builder.RoleId != 4 && Utils.ToBoolean(items["ismyanmarodds"]))
                     {
                         values = new List<object>
@@ -193,6 +193,7 @@
                             }
                         }
                     }
+                }
 
                 resultSheet.GetRow(rowId).WriteCells(colId, values);
 
