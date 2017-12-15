@@ -267,7 +267,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             error: function () {
                 Fanex.ExtAcc.UnBlockUI();
             }
-        })
+        });
     },
 
     percent: function (partialValue, total) {
@@ -311,7 +311,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         var html;
 
         if ($this.viewlevel < 2) {
-            html = '<div class="text-truncate" class="col-username" title="' + username + '</div>';
+            html = '<div class="text-truncate" class="col-username" title="' + username + '">' + username + '</div>';
         }
         else {
             var func = "javascript: Fanex.ExtAcc.DailyWinLoss.GetDownlineDailyWinLoss('" + custId + "')";
