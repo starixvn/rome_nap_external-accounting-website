@@ -22,16 +22,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             var table3rdDCS = ds.Tables[4];
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
+                Value = Utils.ToDecimal(tableCash.Rows[0]["masterCash"])
+                        + Utils.ToDecimal(tableCash.Rows[0]["agentCash"])
+                        + Utils.ToDecimal(tableCash.Rows[0]["customerCash"]),
                 Text = "Total Balance"
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"]) +
-                        Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
+                Value = Utils.ToDecimal(tableCash.Rows[0]["yesterday_masterCash"])
+                        + Utils.ToDecimal(tableCash.Rows[0]["yesterday_agentCash"])
+                        + Utils.ToDecimal(tableCash.Rows[0]["yesterday_customerCash"]),
                 Text = "Yesterday Balance"
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo { Value = Utils.ToDecimal(tableCash.Rows[0]["customerOutstanding"]), Text = "Agent Outstanding" });
@@ -40,15 +40,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" };
             model.PersonalInfo.Downlines = new List<ObjectInfo>
                     {
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("superID"), Value = Utils.ToString(tableLine.Rows[0]["superName"]), Text = "Super" },
-                        new ObjectInfo { Key = tableLine.Rows[0].ToInt32("masterID"), Value = Utils.ToString(tableLine.Rows[0]["masterName"]), Text = "Master" }
+                        new ObjectInfo
+                        {
+                            Key = tableLine.Rows[0].ToInt32("superID").ToString(),
+                            Value = Utils.ToString(tableLine.Rows[0]["superName"]),
+                            Text = "Super"
+                        },
+                        new ObjectInfo
+                        {
+                            Key = tableLine.Rows[0].ToInt32("masterID").ToString(),
+                            Value = Utils.ToString(tableLine.Rows[0]["masterName"]),
+                            Text = "Master"
+                        }
                     };
             model.MasterSettings(table3rdDCS, tableCustomer, tableCash);
 
             return model;
         }
-
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        
         private static CustomerModel MasterSettings(this CustomerModel model, DataTable table3rdDCS, DataTable tableCustomer, DataTable tableCash = null)
         {
             model.Setting = new Setting
@@ -90,37 +99,37 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo
                             {
                                 Key = "HideAllbet",
-                                Value = table3rdDCS.Select("ProductID = 21").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])) : true
+                                Value = table3rdDCS.Select("ProductID = 21").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"])
+                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideVoidbridge",
-                                Value = table3rdDCS.Select("ProductID = 22").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
+                                Value = table3rdDCS.Select("ProductID = 22").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"])
+                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideNG2",
-                                Value = table3rdDCS.Select("ProductID = 23").Any() ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
+                                Value = table3rdDCS.Select("ProductID = 23").Length>0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideFishingWorld",
-                                Value = table3rdDCS.Select("ProductID = 24").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
+                                Value = table3rdDCS.Select("ProductID = 24").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"])
+                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideLottery",
-                                Value = table3rdDCS.Select("ProductID = 28").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsSync"])) : true
+                                Value = table3rdDCS.Select("ProductID = 28").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsHidden"])
+                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsSync"])) : true
                             },
                             new ObjectInfo
                             {
                                 Key = "HideLucky3",
-                                Value = table3rdDCS.Select("ProductID = 26").Any() ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsHidden"]) ||
-                                !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])) : true
+                                Value = table3rdDCS.Select("ProductID = 26").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsHidden"])
+                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])) : true
                             }
                         },
                 EditItems = new List<ObjectInfo>

@@ -134,8 +134,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 switch (policy)
                 {
                     case AuthenticateAction.AuthenticationType.Read:
-                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete ||
-                            firstItem.Policy == EPolicy.Create)
+                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete
+                            || firstItem.Policy == EPolicy.Create)
                         {
                             return true;
                         }
@@ -539,8 +539,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             if (hideUpline || !syncUpline)
             {
                 model.RemoveEnableProduct("Enable" + productName);
-                if ((roleId != 4) ||
-                    (roleId == 4 && hideUpline))
+                if ((roleId != 4)
+                    || (roleId == 4 && hideUpline))
                 {
                     model.RemoveProduct(productName);
                 }
@@ -666,7 +666,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             int index = -1;
             for (int i = 0; i < model.Setting.Details.Count; i++)
             {
-                if (model.Setting.Details.ElementAt(i).Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.Details.ElementAt(i).Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     break;
@@ -686,7 +686,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             int index = -1;
             for (int i = 0; i < model.Setting.SuperPts.Count; i++)
             {
-                if (model.Setting.SuperPts.ElementAt(i).Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.SuperPts.ElementAt(i).Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     break;
@@ -706,7 +706,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             int index = -1;
             for (int i = 0; i < model.Setting.EnableItems.Count; i++)
             {
-                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.EnableItems.ElementAt(i).Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     model.Setting.EnableItems.RemoveAt(index);
@@ -718,7 +718,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             {
                 for (int i = 0; i < model.Setting.EditItems.Count; i++)
                 {
-                    if (model.Setting.EditItems.ElementAt(i).Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
+                    if (model.Setting.EditItems.ElementAt(i).Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                     {
                         index = i;
                         model.Setting.EditItems.RemoveAt(index);
@@ -735,7 +735,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             int index = -1;
             for (int i = 0; i < model.Setting.EnableItems.Count; i++)
             {
-                if (model.Setting.EnableItems.ElementAt(i).Key.ToString().Equals(key, StringComparison.OrdinalIgnoreCase))
+                if (model.Setting.EnableItems.ElementAt(i).Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     index = i;
                     break;
@@ -828,8 +828,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             product.HideGoldDeluxe = result.Rows[0].ToBoolean("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             product.HideSportsbook2 = result.Rows[0].ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
             product.HideCockfighting = result.Rows[0].ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
-            product.HideCricket = result.Rows[0].ToBoolean("HideCricket") ||
-                ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
+            product.HideCricket = result.Rows[0].ToBoolean("HideCricket")
+                || ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !result.Rows[0].ToBoolean("IsIMBC");
             product.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || result.Rows[0].ToBoolean("HideColossusBet");
 
             product.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0" || result.Rows[0].ToBoolean("HideAllbet");
@@ -865,8 +865,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino" ||
-                o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
+            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino"
+                || o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
@@ -921,8 +921,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         {
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = string.IsNullOrEmpty(editBettingLimitFunction) ? false : IsAuthorized(CurrentSession.Instance.UserId, editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read) });
-            if (table3rdDCS.Select("ProductID = " + productId).Length > 0 &&
-                Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
+            if (table3rdDCS.Select("ProductID = " + productId).Length > 0
+                && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);

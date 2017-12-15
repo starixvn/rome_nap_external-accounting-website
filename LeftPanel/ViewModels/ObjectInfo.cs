@@ -2,7 +2,7 @@
 {
     public class ObjectInfo
     {
-        public object Key { get; set; }
+        public string Key { get; set; }
 
         public object Value { get; set; }
 

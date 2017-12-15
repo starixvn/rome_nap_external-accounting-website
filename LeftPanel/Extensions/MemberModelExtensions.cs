@@ -11,7 +11,6 @@
     {
         public static CustomerModel MemberInfo(this CustomerModel model, DataSet ds)
         {
-
             SetPersonalInfo(model, ds);
             SetMemberSettings(model, ds);
 
@@ -38,19 +37,19 @@
             {
                 new ObjectInfo
                 {
-                    Key = lineRow.ToInt32("superID"),
+                    Key = lineRow.ToInt32("superID").ToString(),
                     Value = Utils.ToString(lineRow["superName"]),
                     Text = "Super"
                 },
                 new ObjectInfo
                 {
-                    Key = lineRow.ToInt32("masterID"),
+                    Key = lineRow.ToInt32("masterID").ToString(),
                     Value = Utils.ToString(lineRow["masterName"]),
                     Text = "Master"
                 },
                 new ObjectInfo
                 {
-                    Key = lineRow.ToInt32("agentID"),
+                    Key = lineRow.ToInt32("agentID").ToString(),
                     Value = Utils.ToString(lineRow["agentName"]),
                     Text = "Agent"
                 }
@@ -259,7 +258,7 @@
 
             foreach (var item in model.Setting.Details)
             {
-                if (!IgnoreOrExcludeProducts().Contains(item.Key.ToString()))
+                if (!IgnoreOrExcludeProducts().Contains(item.Key))
                 {
                     model.Setting.MasterPts.Add(new ObjectInfo { Key = item.Key, Value = item.Value });
                 }
@@ -267,9 +266,10 @@
 
             model.Setting.MasterPts.Add(
                 new ObjectInfo
-            {
-                Key = "SBPT", Value = "Sportsbook's PT"
-            });
+                {
+                    Key = "SBPT",
+                    Value = "Sportsbook's PT"
+                });
 
             model.AddDetailProductForCrossLevel("PT", "Sportsbook");
             model.AddDetailProductForCrossLevel("Racing", "Racing");
