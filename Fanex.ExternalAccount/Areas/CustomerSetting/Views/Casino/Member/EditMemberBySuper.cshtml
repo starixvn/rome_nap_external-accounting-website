@@ -30,7 +30,7 @@
     <div id="names" style="display: none;" class="names">
     </div>    
     <div>
-        <input class="buttonPopup" type="button" value="Submit" />
+        <input class="btn -submit buttonPopup" type="button" value="Submit" />
     </div>
     <div>
         @Html.Action("CustomerInfo", "CasinoCustomer", new { area = string.Empty, id = Utils.ToInt32(Request.QueryString["id"]), uplineId = Utils.ToInt32(Request.QueryString["uplineId"]) })
@@ -145,7 +145,7 @@
             </div>
         </div>
     <div>
-        <input class="buttonPopup" type="button" value="Submit" />
+        <input class="btn -submit buttonPopup" type="button" value="Submit" />
     </div>
 </div>
 </body>

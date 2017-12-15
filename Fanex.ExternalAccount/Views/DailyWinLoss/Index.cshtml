@@ -3,14 +3,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
-@if (HttpContext.Current.IsDebuggingEnabled)
-{
-    <link href="@Url.Content("~/assets/styles/pages/reports/daily-winloss.css")" rel="stylesheet" type="text/css" />
-}
-else
-{
-    <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/dailywinloss/css")" rel="stylesheet" type="text/css" />
-}
+
 <div>
     <div class="page-title">
         <div class="wlDetail">
@@ -67,7 +60,7 @@ else
                 Super
             </div>
         </div>
-        <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" />
+        <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
     </div>
     <div id="mainGrid" class="hide">
         <table id="tbl-report">

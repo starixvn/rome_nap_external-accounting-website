@@ -14,9 +14,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet" href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" />
+        
         <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/styles/pages/account/login.css")" />
     }
@@ -32,7 +33,7 @@
     {
         <div class="block-login">
             <div class="row">
-                <div class="login-logo"></div>
+                <div class="login-logo"><img src="~/assets/styles/images/login-logo.png"/></div>
             </div>
             <div class="row">
                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "UserName" })

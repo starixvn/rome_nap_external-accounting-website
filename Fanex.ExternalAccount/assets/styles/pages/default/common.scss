@@ -288,12 +288,19 @@
 }
 
 .icon-add {
-    display: inline-block;
-    position: relative;
-    top: 2px;    
+    @include border-radius(10px);
+    width: 16px;
     height: 16px;
-    width: 16px;    
-    background: url(../../images/sprites.png) no-repeat -143px -305px;
+    border: 1px solid #fff;
+    &:before {
+        font-family: AlphaAdmin !important;
+        content: '\e92a';
+        color: #fff;
+    }
+}
+
+.icon-excel {
+    font-size: 16px;
 }
 
 
@@ -365,6 +372,7 @@ no-info {
 .icon-refresh {
     @extend %icon-in-tables;
     font-weight: bold;
+    font-size: 16px;
     &:before {
         color: #43aadc;
     }

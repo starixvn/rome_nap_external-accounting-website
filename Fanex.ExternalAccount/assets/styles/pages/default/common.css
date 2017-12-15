@@ -93,7 +93,7 @@ body {
   margin: 0;
   padding: 0;
   color: #444;
-  font-size: 13px;
+  font-size: 13px !important;
   font-family: Arial, Tahoma, Helvetica, sans-serif; }
 
 * {
@@ -621,6 +621,15 @@ textarea {
 
 .filterbox {
   padding: 12px 0; }
+  .filterbox input[type='text'], .filterbox input[type='password'], .filterbox input[type='email'] {
+    height: 32px;
+    line-height: 32px;
+    border: none;
+    outline: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    /*width: 120px;*/
+    border: 1px solid #7b7c7e; }
 
 /*********** Customize Calendar Jquery UI ************/
 /*@font-face {
@@ -1244,12 +1253,22 @@ textarea {
     }*/ }
 
 .icon-add {
-  display: inline-block;
-  position: relative;
-  top: 2px;
-  height: 16px;
+  -webkit-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
   width: 16px;
-  background: url(../../images/sprites.png) no-repeat -143px -305px; }
+  height: 16px;
+  border: 1px solid #fff; }
+  .icon-add:before {
+    font-family: AlphaAdmin !important;
+    content: '\e92a';
+    color: #fff; }
+
+.icon-excel {
+  font-size: 16px; }
 
 /* Popup grant permission in group management*/
 .group-name {
@@ -1295,7 +1314,8 @@ no-info {
   color: #b81111; }
 
 .icon-refresh {
-  font-weight: bold; }
+  font-weight: bold;
+  font-size: 16px; }
   .icon-refresh:before {
     color: #43aadc; }
 

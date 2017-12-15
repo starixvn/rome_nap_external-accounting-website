@@ -137,7 +137,8 @@ input[type='text'], input[type='password'], input[type='email'] {
 
 #customerList #exporttoexcel {
   position: relative;
-  top: -15px; }
+  top: -15px;
+  border: none; }
 
 #product {
   font-size: 11px !important; }
