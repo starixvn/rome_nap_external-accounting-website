@@ -2,6 +2,32 @@
 {
     public class ObjectInfo
     {
+        public ObjectInfo()
+        {
+        }
+
+        public ObjectInfo(string key, object value)
+        {
+            Key = key;
+            Value = value;
+        }
+
+        public ObjectInfo(string key, object value, string text) : this(key, value)
+        {
+            Text = text;
+        }
+
+        public ObjectInfo(string key, object value, string text, string tooltip) : this(key, value, text)
+        {
+            Tooltip = tooltip;
+        }
+
+        public ObjectInfo(string key, object value, string text, string tooltip, bool disabled)
+            : this(key, value, text, tooltip)
+        {
+            Disabled = disabled;
+        }
+
         public string Key { get; set; }
 
         public object Value { get; set; }

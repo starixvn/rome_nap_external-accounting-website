@@ -58,23 +58,23 @@
 
         private static void SetMemberSettings(CustomerModel model, DataSet ds)
         {
-            var table3RdDcs = ds.Tables[4];
+            var table3rdDCS = ds.Tables[4];
             var customerRow = ds.Tables[0].Rows[0];
 
             model.Setting = new Setting
             {
-                EnableItems = EnableItems(customerRow, table3RdDcs),
-                SyncItems = SyncItems(customerRow, table3RdDcs),
+                EnableItems = EnableItems(customerRow, table3rdDCS),
+                SyncItems = SyncItems(customerRow, table3rdDCS),
                 EditItems = EditItems(),
                 Details = Details()
             };
 
-            model.AddEnableAndDetailProduct(table3RdDcs, 21, "Allbet", eFunctions.AllbetBetting, false);
-            model.AddEnableAndDetailProduct(table3RdDcs, 22, "Macau Games", eFunctions.VoidbridgeBetting);
-            model.AddEnableAndDetailProduct(table3RdDcs, 23, "NG2", eFunctions.NG2Betting, getFromRemotingRef: true);
-            model.AddEnableAndDetailProduct(table3RdDcs, 24, "Fishing World");
-            model.AddEnableAndDetailProduct(table3RdDcs, 28, "Lottery", eFunctions.LotteryBetting);
-            model.AddEnableAndDetailProduct(table3RdDcs, 26, "Lucky 3");
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, getFromRemotingRef: true);
+            model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
+            model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
+            model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
 
             model.Setting.EnableItems.Add(new ObjectInfo
             {
@@ -117,60 +117,41 @@
         {
             return new List<ObjectInfo>
             {
-                new ObjectInfo
-                {
-                    Key = "SyncCasino",
-                    Value = Utils.ToBoolean(customerRow["syncCasino"]),
-                    Text = "Casino Synced"
-                },
-                new ObjectInfo
-                {
-                    Key = "SyncLiveCasino",
-                    Value = Utils.ToBoolean(customerRow["syncLiveCasino"]),
-                    Text = "Live Casino Synced"
-                },
-                new ObjectInfo
-                {
-                    Key = "HideAllbet",
-                    Value = table3RdDcs.Select("ProductID = 21").Length <= 0
-                            || Utils.ToBoolean(table3RdDcs.Select("ProductID = 21").FirstOrDefault()["IsHidden"])
-                            || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 21").FirstOrDefault()["IsSync"])
-                },
-                new ObjectInfo
-                {
-                    Key = "HideVoidbridge",
-                    Value = table3RdDcs.Select("ProductID = 22").Length <= 0
-                            || Utils.ToBoolean(table3RdDcs.Select("ProductID = 22").FirstOrDefault()["IsHidden"])
-                            || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 22").FirstOrDefault()["IsSync"])
-                },
-                new ObjectInfo
-                {
-                    Key = "HideNG2",
-                    Value = table3RdDcs.Select("ProductID = 23").Length <= 0
-                            || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 23").FirstOrDefault()["IsSync"])
-                },
-                new ObjectInfo
-                {
-                    Key = "HideFishingWorld",
-                    Value = table3RdDcs.Select("ProductID = 24").Length <= 0
-                            || Utils.ToBoolean(table3RdDcs.Select("ProductID = 24").FirstOrDefault()["IsHidden"])
-                            || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 24").FirstOrDefault()["IsSync"])
-                },
-                new ObjectInfo
-                {
-                    Key = "HideLottery",
-                    Value = table3RdDcs.Select("ProductID = 28").Length <= 0
-                            || Utils.ToBoolean(table3RdDcs.Select("ProductID = 28").FirstOrDefault()["IsHidden"])
-                            || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 28").FirstOrDefault()["IsSync"])
-                },
-                new ObjectInfo
-                {
-                    Key = "HideLucky3",
-                    Value = table3RdDcs.Select("ProductID = 26").Length <= 0
-                            || Utils.ToBoolean(table3RdDcs.Select("ProductID = 26").FirstOrDefault()["IsHidden"])
-                            || !Utils.ToBoolean(table3RdDcs.Select("ProductID = 26").FirstOrDefault()["IsSync"])
-                }
+                new ObjectInfo("SyncCasino", Utils.ToBoolean(customerRow["syncCasino"]), "Casino Synced"),
+                new ObjectInfo("SyncLiveCasino", Utils.ToBoolean(customerRow["syncLiveCasino"]), "Live Casino Synced"),
+                new ObjectInfo("HideAllbet", Get3rdProductStatus(table3RdDcs, 21)),
+                new ObjectInfo("HideVoidbridge", Get3rdProductStatus(table3RdDcs, 22)),
+                new ObjectInfo("HideNG2", GetNG2ProductStatus(table3RdDcs)),
+                new ObjectInfo("HideFishingWorld", Get3rdProductStatus(table3RdDcs, 24)),
+                new ObjectInfo("HideLottery", Get3rdProductStatus(table3RdDcs, 28)),
+                new ObjectInfo("HideLucky3", Get3rdProductStatus(table3RdDcs, 26))
             };
+        }
+
+        private static DataRow GetProductRow(DataTable table3RdDcs, int productId)
+            => table3RdDcs.Select($"ProductID = {productId}").FirstOrDefault();
+
+        private static bool Get3rdProductStatus(DataTable table3RdDcs, int productId)
+        {
+            var productRow = GetProductRow(table3RdDcs, productId);
+
+            return productRow == null
+                   || Utils.ToBoolean(productRow["IsHidden"])
+                   || !Utils.ToBoolean(productRow["IsSync"]);
+        }
+
+        private static bool GetNG2ProductStatus(DataTable table3RdDcs)
+        {
+            var productRow = GetProductRow(table3RdDcs, 23);
+
+            return productRow == null || !Utils.ToBoolean(productRow["IsSync"]);
+        }
+
+        private static bool GetVirtualSportsStatus(DataTable table3rdDCS)
+        {
+            var drowVirtualSports = table3rdDCS.Select("ProductID = 5");
+
+            return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
         }
 
         private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
@@ -251,7 +232,7 @@
             };
         }
 
-        public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model, ProductStatuses product)
+        public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model)
         {
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
@@ -299,7 +280,7 @@
             var product = model
                 .Setting
                 .MasterPts
-                .Where(p => p.Key.ToString().Equals(productKey))
+                .Where(p => p.Key.Equals(productKey))
                 .ToList();
 
             if (product.Count > 0)
@@ -312,13 +293,6 @@
             model.Setting.SuperPts = model.Setting.MasterPts;
 
             return model;
-        }
-
-        private static bool GetVirtualSportsStatus(DataTable table3rdDCS)
-        {
-            var drowVirtualSports = table3rdDCS.Select("ProductID = 5");
-
-            return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
         }
     }
 }

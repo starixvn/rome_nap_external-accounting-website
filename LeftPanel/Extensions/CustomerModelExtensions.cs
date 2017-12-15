@@ -197,7 +197,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 model.OnlineList.Onlines.Add(new OnlineInfo
                 {
                     IP = new ObjectInfo { Text = CheckVNIP(row.ToString("ip")) },
-                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt") }
+                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt() }
                 });
             }
 
@@ -303,7 +303,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel GetProductStatuses(this CustomerModel model, int userId, string groupName, string username)
         {
             ProductStatuses product = model.Get3rdPartyProducts(userId, groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
-            model.GetSuperMasterPtsOnMember(product);
+            model.GetSuperMasterPtsOnMember();
             model.RemoveEnableAndPtforProducts(product);
 
             if (product.RoleId == 4)
@@ -775,18 +775,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                 }
                 else if (roleId == 3)
                 {
-                    result = new MasterService().GetData(userId, srecommend, custId, null, null, null);
+                    result = new MasterService().GetData(userId, srecommend, custId);
                     upperInfo = new SuperService().GetData(userId, null, uplineId, null, null, null, groupName);
                 }
                 else if (roleId == 2)
                 {
-                    result = new AgentService().GetData(userId, mrecommend, custId, null, null, null);
-                    upperInfo = new MasterService().GetData(userId, srecommend, uplineId, null, null, null);
+                    result = new AgentService().GetData(userId, mrecommend, custId);
+                    upperInfo = new MasterService().GetData(userId, srecommend, uplineId);
                 }
                 else
                 {
-                    result = new MemberService().GetData(userId, recommend, custId, null, null, null);
-                    upperInfo = new AgentService().GetData(userId, mrecommend, uplineId, null, null, null);
+                    result = new MemberService().GetData(userId, recommend, custId);
+                    upperInfo = new AgentService().GetData(userId, mrecommend, uplineId);
                 }
 
                 return model.GetProductStatusDetail(roleId, result, upperInfo);
@@ -798,9 +798,11 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private static ProductStatuses GetProductStatusDetail(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
         {
-            ProductStatuses product = new ProductStatuses();
-            product.UplineStatuses = new ProductStatuses();
-            product.RoleId = roleId;
+            var product = new ProductStatuses
+            {
+                UplineStatuses = new ProductStatuses(),
+                RoleId = roleId
+            };
             if (result.Rows.Count == 0)
             {
                 return product;
@@ -810,7 +812,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             product.SyncCasino = result.Rows[0].ToBoolean("syncCasino");
             product.SyncLiveCasino = result.Rows[0].ToBoolean("syncLiveCasino");
-            product.DisableTransfer = roleId == 4 ? false : result.Rows[0].ToBoolean("disableTransfer");
+            product.DisableTransfer = roleId != 4 && result.Rows[0].ToBoolean("disableTransfer");
             product.AllowDoubleComm = result.Rows[0].ToBoolean("doubleCommLosing");
             product.DisableVirtualSports = result.Rows[0].ToBoolean("disableVirtualSports");
             product.AllowOutright = !result.Rows[0].ToBoolean("disableOutright");
@@ -865,14 +867,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key.ToString() == "PT" || o.Key.ToString() == "Casino"
-                || o.Key.ToString() == "LiveCasino" || o.Key.ToString() == "VirtualSports" || o.Key.ToString() == "Racing").ToList();
+            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => o.Key == "PT" || o.Key == "Casino"
+                || o.Key == "LiveCasino" || o.Key == "VirtualSports" || o.Key == "Racing").ToList();
             if (roleId < 4 && upperInfo.Rows.Count > 0)
             {
                 product.UplineStatuses.RoleId = roleId + 1;
                 product.UplineStatuses.SyncCasino = upperInfo.Rows[0].ToBoolean("syncCasino");
                 product.UplineStatuses.SyncLiveCasino = upperInfo.Rows[0].ToBoolean("syncLiveCasino");
-                product.UplineStatuses.DisableTransfer = roleId + 1 == 4 ? false : upperInfo.Rows[0].ToBoolean("disableTransfer");
+                product.UplineStatuses.DisableTransfer = roleId + 1 != 4 && upperInfo.Rows[0].ToBoolean("disableTransfer");
                 product.UplineStatuses.AllowDoubleComm = upperInfo.Rows[0].ToBoolean("doubleCommLosing");
                 product.UplineStatuses.DisableVirtualSports = upperInfo.Rows[0].ToBoolean("disableVirtualSports");
                 product.UplineStatuses.AllowOutright = !upperInfo.Rows[0].ToBoolean("disableOutright");
@@ -920,7 +922,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
         public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBettingLimitFunction = "", bool checkboxType = true, bool getFromRemotingRef = false)
         {
             model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = string.IsNullOrEmpty(editBettingLimitFunction) ? false : IsAuthorized(CurrentSession.Instance.UserId, editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read) });
+            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = !string.IsNullOrEmpty(editBettingLimitFunction) && IsAuthorized(CurrentSession.Instance.UserId, editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read) });
             if (table3rdDCS.Select("ProductID = " + productId).Length > 0
                 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {

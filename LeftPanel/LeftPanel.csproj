@@ -214,6 +214,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Extensions\SuperModelExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LeftPanelDaoImpl.cs" />
     <Compile Include="Repositories\LeftPanelDao.cs" />

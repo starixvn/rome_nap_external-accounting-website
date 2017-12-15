@@ -1,9 +1,4 @@
-﻿
-
-
-
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
@@ -54,7 +49,6 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
             return model;
         }
 
-        
         private static CustomerModel SuperSettings(this CustomerModel model, DataTable tableCustomer, DataTable table3rdDCS)
         {
             model.Setting = new Setting
@@ -95,38 +89,32 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                             new ObjectInfo
                             {
                                 Key = "HideAllbet",
-                                Value = table3rdDCS.Select("ProductID = 21").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])) : true
+                                Value = table3rdDCS.Select("ProductID = 21").Length <= 0 || Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsHidden"]) || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()["IsSync"])
                             },
                             new ObjectInfo
                             {
                                 Key = "HideVoidbridge",
-                                Value = table3rdDCS.Select("ProductID = 22").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])) : true
-                            },
+                                Value = table3rdDCS.Select("ProductID = 22").Length<=0  || Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsHidden"])
+                                                                                        || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()["IsSync"])                             },
                             new ObjectInfo
                             {
                                 Key = "HideNG2",
-                                Value = table3rdDCS.Select("ProductID = 23").Length>0 ? !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"]) : true
-                            },
+                                Value = table3rdDCS.Select("ProductID = 23").Length<=0  || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()["IsSync"])                             },
                             new ObjectInfo
                             {
                                 Key = "HideFishingWorld",
-                                Value = table3rdDCS.Select("ProductID = 24").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])) : true
-                            },
+                                Value = table3rdDCS.Select("ProductID = 24").Length<=0  || Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsHidden"])
+                                                                                        || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()["IsSync"])                             },
                             new ObjectInfo
                             {
                                 Key = "HideLottery",
-                                Value = table3rdDCS.Select("ProductID = 28").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsSync"])) : true
-                            },
+                                Value = table3rdDCS.Select("ProductID = 28").Length<=0  || Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsHidden"])
+                                                                                        || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()["IsSync"])                             },
                             new ObjectInfo
                             {
                                 Key = "HideLucky3",
-                                Value = table3rdDCS.Select("ProductID = 26").Length>0 ? (Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])) : true
-                            }
+                                Value = table3rdDCS.Select("ProductID = 26").Length<=0  || Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsHidden"])
+                                                                                        || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()["IsSync"])                             }
                         },
                 EditItems = new List<ObjectInfo>
                         {
