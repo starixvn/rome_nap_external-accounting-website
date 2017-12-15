@@ -405,7 +405,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     renderPager: function () {
         $this.bodyRows = $("#tbl-report > tbody > tr");
         $("#report-pager").pagination({
-            pageList: [10, 50, 100, 500],
+            pageList: [50, 100, 500],
             total: $this.totalRows,
             pageSize: $this.pageSize,
             pageNumber: $this.pageIndex,
